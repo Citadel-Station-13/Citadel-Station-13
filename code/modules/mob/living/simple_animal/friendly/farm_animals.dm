@@ -28,8 +28,6 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-	devourable = TRUE
-	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
@@ -66,7 +64,7 @@
 	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in [p_their()] eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
-	..()
+	. = ..()
 	if(!stat)
 		eat_plants()
 
@@ -92,6 +90,16 @@
 	else
 		return ..()
 
+
+/mob/living/simple_animal/hostile/retaliate/goat/AttackingTarget()
+	. = ..()
+	if(. && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.dna.species, /datum/species/pod))
+			var/obj/item/bodypart/NB = pick(H.bodyparts)
+			H.visible_message("<span class='warning'>[src] takes a big chomp out of [H]!</span>", \
+								  "<span class='userdanger'>[src] takes a big chomp out of your [NB]!</span>")
+			NB.dismember()
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -117,10 +125,8 @@
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	devourable = TRUE
-	no_vore = FALSE
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -195,8 +201,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 2
-	devourable = TRUE
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
@@ -250,10 +255,8 @@
 	var/list/feedMessages = list("It clucks happily.","It clucks happily.")
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
-	devourable = TRUE
-	no_vore = FALSE
 
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()

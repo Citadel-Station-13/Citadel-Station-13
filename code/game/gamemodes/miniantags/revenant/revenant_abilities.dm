@@ -238,9 +238,10 @@
 			INVOKE_ASYNC(src, .proc/defile, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
-	if(T.flags_1 & NOJAUNT_1)
-		T.flags_1 &= ~NOJAUNT_1
+	for(var/obj/effect/blessing/B in T)
+		qdel(B)
 		new /obj/effect/temp_visual/revenant(T)
+
 	if(!isplatingturf(T) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
 		if(floor.intact && floor.floor_tile)
@@ -254,6 +255,9 @@
 	if(T.type == /turf/closed/wall/r_wall && prob(10))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
+	for(var/obj/effect/decal/cleanable/salt/salt in T)
+		new /obj/effect/temp_visual/revenant(T)
+		qdel(salt)
 	for(var/obj/structure/closet/closet in T.contents)
 		closet.open()
 	for(var/obj/structure/bodycontainer/corpseholder in T)

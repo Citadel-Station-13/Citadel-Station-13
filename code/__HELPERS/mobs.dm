@@ -20,32 +20,35 @@
 		else
 			return "000"
 
-/proc/random_underwear(gender)
+/proc/random_underwear(gender)//Cit change - makes random underwear always return nude
 	if(!GLOB.underwear_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	switch(gender)
+	return "Nude"
+	/*switch(gender)
 		if(MALE)
 			return pick(GLOB.underwear_m)
 		if(FEMALE)
 			return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)
+			return pick(GLOB.underwear_list)*/
 
-/proc/random_undershirt(gender)
+/proc/random_undershirt(gender)//Cit change - makes random underwear always return nude
 	if(!GLOB.undershirt_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	switch(gender)
+	return "Nude"
+	/*switch(gender)
 		if(MALE)
 			return pick(GLOB.undershirt_m)
 		if(FEMALE)
 			return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)
+			return pick(GLOB.undershirt_list)*/
 
-/proc/random_socks()
+/proc/random_socks()//Cit change - makes random underwear always return nude
 	if(!GLOB.socks_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return pick(GLOB.socks_list)
+	return "Nude"
+	//return pick(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
@@ -69,6 +72,7 @@
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 
+	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
 	if(!GLOB.vagina_shapes_list.len)
@@ -90,6 +94,7 @@
 			womb = 1
 			breasts = 1 */
 
+	//CIT CHANGE - changes this entire return to support cit's snowflake parts
 	return(list(
 		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -359,7 +364,7 @@ Proc for attack log creation, because really why not
 	if(!user)
 		return 0
 	var/atom/Tloc = null
-	if(target)
+	if(target && !isturf(target))
 		Tloc = target.loc
 
 	var/atom/Uloc = user.loc
@@ -473,7 +478,7 @@ Proc for attack log creation, because really why not
 	if(extra_args)
 		new_args += extra_args
 
- 	for(var/j in 1 to amount)
+	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(arglist(new_args))
 		X.admin_spawned = admin_spawn
 

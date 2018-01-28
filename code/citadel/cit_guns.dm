@@ -4,7 +4,6 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "lasernew"
 	item_state = "laser"
-	origin_tech = "combat=4;magnets=4"
 	force = 10
 	throwforce = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
@@ -22,7 +21,6 @@
 	name = "Laser Carbine"
 	desc = "Beefed up version of a standard laser gun."
 	id = "lasercarbine"
-	req_tech = list("combat" = 5, "magnets" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 2500, MAT_METAL = 5000, MAT_GLASS = 5000)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
@@ -40,7 +38,6 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 50
 	burst_size = 1
-	origin_tech = "combat=7"
 	can_suppress = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
@@ -60,7 +57,6 @@
 	name = "Syndicate Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
 
 /////////////spinfusor stuff////////////////
 
@@ -115,7 +111,6 @@
 	select = 0
 	actions_types = list()
 	casing_ejector = 0
-	origin_tech = "combat=6;magnets=6"
 
 /obj/item/gun/ballistic/automatic/spinfusor/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
@@ -163,7 +158,6 @@
 	icon_state = "x9"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=7;engineering=7"
 	mag_type = /obj/item/ammo_box/magazine/m556	//Uses the m90gl's magazine, just like the NT-ARG
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
@@ -194,7 +188,6 @@
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
@@ -215,7 +208,7 @@
 	damage = 15
 	armour_penetration = 10
 	light_range = 2
-	speed = 1.2
+	speed = 0.6
 	range = 25
 	light_color = LIGHT_COLOR_RED
 
@@ -224,10 +217,10 @@
 	icon_state = "magjectile-nl"
 	damage = 1
 	knockdown = 0
-	stamina = 30
+	stamina = 25
 	armour_penetration = -10
 	light_range = 2
-	speed = 1.2
+	speed = 0.7
 	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
@@ -254,17 +247,15 @@
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
-	origin_tech = "magnets=5"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
 	caliber = "mags"
-	max_ammo = 7
+	max_ammo = 15
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
 	name = "magpistol magazine (lethal)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
-	origin_tech = "combat=5"
 	ammo_type = /obj/item/ammo_casing/caseless/amags
 
 //////the gun itself//////
@@ -279,8 +270,7 @@
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
 	casing_ejector = 0
-	fire_delay = 5
-	origin_tech = "combat=4;magnets=4"
+	fire_delay = 2
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -301,7 +291,6 @@
 	name = "Magpistol"
 	desc = "A weapon which fires ferromagnetic slugs."
 	id = "magpisol"
-	req_tech = list("combat" = 5, "magnets" = 6, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
@@ -311,7 +300,6 @@
 	name = "Magpistol Magazine"
 	desc = "A 7 round magazine for the Magpistol."
 	id = "mag_magpistol"
-	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
@@ -321,7 +309,6 @@
 	name = "Magpistol Magazine (Non-Lethal)"
 	desc = "A 7 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
-	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5)
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
 
@@ -354,7 +341,6 @@
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/ammo_box/foambox/mag
 	name = "ammo box (Magnetic Foam Darts)"
@@ -389,19 +375,19 @@
 	damage = 20
 	armour_penetration = 25
 	light_range = 3
-	speed = 1.2
+	speed = 0.7
 	range = 35
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 1
+	damage = 0
 	knockdown = 0
-	stamina = 35
+	stamina = 20
 	armour_penetration = -10
 	light_range = 3
-	speed = 1.0
+	speed = 0.65
 	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
@@ -427,18 +413,17 @@
 	name = "magrifle magazine (non-lethal disabler)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	origin_tech = "magnets=6"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 15
+	max_ammo = 27
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
 	name = "magrifle magazine (lethal)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	origin_tech = "combat=6"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
+	max_ammo = 21
 
 ///the gun itself///
 
@@ -449,13 +434,12 @@
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=6;magnets=6"
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	spread = 30
+	spread = 20
 	recoil = 1
 	casing_ejector = 0
 
@@ -469,7 +453,6 @@
 	name = "Magrifle"
 	desc = "An upscaled Magpistol in rifle form."
 	id = "magrifle"
-	req_tech = list("combat" = 7, "magnets" = 7, "powerstorage" = 7)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
@@ -479,7 +462,6 @@
 	name = "Magrifle Magazine (Lethal)"
 	desc = "A 15 round magazine for the Magrifle."
 	id = "mag_magrifle"
-	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5, "syndicate" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
 	build_path = /obj/item/ammo_box/magazine/mmag/lethal
@@ -489,7 +471,6 @@
 	name = "Magrifle Magazine (Non-Lethal)"
 	desc = "A 15 round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
-	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5)
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 
@@ -511,7 +492,6 @@
 	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
-	origin_tech = "combat=1;engineering=1;magnets=1"
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -597,7 +577,6 @@
 	icon_state = "hyperburst"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=6;magnets=6;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mhyper
 	fire_sound = 'sound/weapons/magburst.ogg'
 	can_suppress = 0
@@ -645,7 +624,6 @@
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
@@ -668,7 +646,6 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "stealthpistol"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=3;materials=3;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 0
 	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
@@ -702,7 +679,6 @@
 	fire_delay = 0
 	spread = 60
 	actions_types = list()
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
 	..()
@@ -804,7 +780,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "flechette magazine (armor piercing)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "flechettemag"
-	origin_tech = "combat=5;syndicate=1"
 	ammo_type = /obj/item/ammo_casing/caseless/flechetteap
 	caliber = "flechette"
 	max_ammo = 40
@@ -825,7 +800,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = 0
 	/obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=6;materials=2;syndicate=5"
 	mag_type = /obj/item/ammo_box/magazine/flechette/
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
@@ -929,7 +903,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/toyray
 	name = "RayTag Gun"
@@ -1185,7 +1158,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_p37
 	name = "Foam Force Mk.37F"
@@ -1208,7 +1180,6 @@ obj/item/gun/energy/e_gun/cx
 	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-	origin_tech = "combat=4;magnets=3"
 	flight_x_offset = 15
 	flight_y_offset = 10
 	actions_types = list(/datum/action/item_action/pick_color)

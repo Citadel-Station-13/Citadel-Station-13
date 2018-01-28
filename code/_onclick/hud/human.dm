@@ -15,10 +15,10 @@
 			targetmob = M
 
 	if(usr.hud_used.inventory_shown && targetmob.hud_used)
-		usr.hud_used.inventory_shown = 0
+		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= targetmob.hud_used.toggleable_inventory
 	else
-		usr.hud_used.inventory_shown = 1
+		usr.hud_used.inventory_shown = TRUE
 		usr.client.screen += targetmob.hud_used.toggleable_inventory
 
 	targetmob.hud_used.hidden_inventory_update(usr)
@@ -280,10 +280,11 @@
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 
-	//citadel code
+	//CIT CHANGE - adds arousal to hud
 	arousal = new /obj/screen/arousal()
 	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
 	infodisplay += arousal
+	//END OF CIT CHANGES
 
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
@@ -437,7 +438,7 @@
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 0
+		hud_used.hotkey_ui_hidden = FALSE
 	else
 		client.screen -= hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 1
+		hud_used.hotkey_ui_hidden = TRUE

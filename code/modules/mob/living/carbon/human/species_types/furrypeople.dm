@@ -2,7 +2,7 @@
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
@@ -24,7 +24,7 @@
 	id = "avian"
 	say_mod = "chirps"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
 	default_features = list("snout" = "Sharp", "wings" = "None", "taur" = "None", "mam_body_markings" = "Hawk")
 	attack_verb = "peck"
@@ -45,7 +45,7 @@
 	name = "Aquatic"
 	id = "aquatic"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None", "mam_ears" = "None")
 	attack_verb = "bite"
@@ -66,7 +66,7 @@
 	name = "Insect"
 	id = "insect"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None")
 	attack_verb = "flutter" //wat?
@@ -90,10 +90,9 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
-	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,SPECIES_ORGANIC)
+	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "legs", "taur","mam_body_markings")
 	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
-	heatmod = 1.3
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -215,12 +214,12 @@
 	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
 
 // Fat Shark <3
-
+/*
 /datum/species/shark/datashark
 	name = "DataShark"
 	id = "datashark"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings")
 	default_features = list("mam_tail" = "datashark", "mam_body_markings" = "None")
 	attack_verb = "bite"
@@ -229,12 +228,13 @@
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
+	*/
 
 /datum/species/guilmon
 	name = "Guilmon"
 	id = "guilmon"
 	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
 	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
 	attack_verb = "claw"

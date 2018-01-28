@@ -44,11 +44,10 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
-	devourable = TRUE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
 
@@ -152,7 +151,7 @@
 	move_to_delay = 4
 	poison_type = "venom" //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -170,7 +169,7 @@
 	speed = 7
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/movement_delay()
 	var/turf/T = get_turf(src)
@@ -190,7 +189,7 @@
 	maxHealth = 40
 	health = 40
 	var/datum/action/innate/spider/comm/letmetalkpls
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
 	. = ..()
@@ -208,7 +207,7 @@
 	maxbodytemp = 1500
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice
 	name = "giant ice spider"
@@ -217,7 +216,7 @@
 	maxbodytemp = 1500
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
 	name = "giant ice spider"
@@ -226,7 +225,7 @@
 	maxbodytemp = 1500
 	poison_type = "frost_oil"
 	color = rgb(114,228,250)
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
 	if(!..()) //AIStatus is off
@@ -481,7 +480,7 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]", MAX_MESSAGE_LEN)
+	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()

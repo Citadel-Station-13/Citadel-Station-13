@@ -25,7 +25,6 @@
 	var/clean_on_move = FALSE
 
 	var/did_feedback = FALSE
-	var/feedback_key
 
 	var/hat_offset = -3
 
@@ -34,8 +33,8 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/robot_module/New()
-	..()
+/obj/item/robot_module/Initialize()
+	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
 		basic_modules += I
@@ -227,8 +226,7 @@
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
-	if(feedback_key && !did_feedback)
-		SSblackbox.inc(feedback_key, 1)
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.module)
 
 /obj/item/robot_module/standard
 	name = "Standard"
@@ -254,7 +252,6 @@
 		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
-	feedback_key = "cyborg_standard"
 	hat_offset = -3
 
 /obj/item/robot_module/medical
@@ -285,7 +282,6 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
-	feedback_key = "cyborg_medical"
 	can_be_pushed = FALSE
 	hat_offset = 3
 
@@ -321,7 +317,6 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
-	feedback_key = "cyborg_engineering"
 	magpulsing = TRUE
 	hat_offset = INFINITY // No hats
 
@@ -338,101 +333,8 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
-	feedback_key = "cyborg_security"
 	can_be_pushed = FALSE
 	hat_offset = 3
-
-/obj/item/robot_module/k9
-	name = "Security K-9 Unit module"
-	basic_modules = list(
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog,
-		/obj/item/dogborg/jaws/big,
-		/obj/item/dogborg/pounce,
-		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/soap/tongue,
-		/obj/item/device/analyzer/nose,
-		/obj/item/device/dogborg/sleeper/K9,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "k9"
-	moduleselect_icon = "k9"
-	feedback_key = "cyborg_k9"
-	can_be_pushed = FALSE
-	hat_offset = INFINITY
-
-/obj/item/robot_module/k9/do_transform_animation()
-	..()
-	to_chat(loc,"<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
-
-/obj/item/robot_module/medihound
-	name = "MediHound module"
-	basic_modules = list(
-		/obj/item/dogborg/jaws/small,
-		/obj/item/device/analyzer/nose,
-		/obj/item/soap/tongue,
-		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper/medihound,
-		/obj/item/twohanded/shockpaddles/hound,
-		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/device/sensor_device)
-	emag_modules = list(/obj/item/dogborg/pounce)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "medihound"
-	moduleselect_icon = "medihound"
-	feedback_key = "cyborg_medihound"
-	can_be_pushed = FALSE
-	hat_offset = INFINITY
-
-/obj/item/robot_module/medihound/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
-
-/obj/item/robot_module/scrubpup
-	name = "Janitor"
-	basic_modules = list(
-		/obj/item/dogborg/jaws/small,
-		/obj/item/device/analyzer/nose,
-		/obj/item/soap/tongue/scrubpup,
-		/obj/item/device/lightreplacer/cyborg,
-		/obj/item/device/dogborg/sleeper/compactor)
-	emag_modules = list(/obj/item/dogborg/pounce)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/replica_fabricator/cyborg)
-	cyborg_base_icon = "scrubpup"
-	moduleselect_icon = "scrubpup"
-	feedback_key = "cyborg_scrubpup"
-	hat_offset = INFINITY
-	clean_on_move = TRUE
-
-/obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
-	if(LR)
-		for(var/i in 1 to coeff)
-			LR.Charge(R)
-
-/obj/item/robot_module/scrubpup/do_transform_animation()
-	..()
-	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
-
 
 /obj/item/robot_module/security/do_transform_animation()
 	..()
@@ -467,7 +369,6 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
-	feedback_key = "cyborg_peacekeeper"
 	can_be_pushed = FALSE
 	hat_offset = -2
 
@@ -496,7 +397,6 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
-	feedback_key = "cyborg_janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
 
@@ -524,6 +424,37 @@
 	if(CL)
 		CL.reagents.add_reagent("lube", 2 * coeff)
 
+/obj/item/robot_module/clown
+	name = "Clown"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/device/instrument/bikehorn,
+		/obj/item/stamp/clown,
+		/obj/item/bikehorn,
+		/obj/item/bikehorn/airhorn,
+		/obj/item/paint/anycolor,
+		/obj/item/soap/nanotrasen,
+		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
+		/obj/item/razor,					//killbait material
+		/obj/item/lipstick/purple,
+		/obj/item/reagent_containers/spray/waterflower/cyborg,
+		/obj/item/borg/cyborghug/peacekeeper,
+		/obj/item/borg/lollipop/clown,
+		/obj/item/picket_sign/cyborg,
+		/obj/item/reagent_containers/borghypo/clown,
+		/obj/item/extinguisher/mini)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/clown/hacked,
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	moduleselect_icon = "service"
+	cyborg_base_icon = "clown"
+	hat_offset = -2
+
 /obj/item/robot_module/butler
 	name = "Service"
 	basic_modules = list(
@@ -548,7 +479,6 @@
 		/obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
 	special_light_key = "service"
-	feedback_key = "cyborg_service"
 	hat_offset = 0
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
@@ -601,7 +531,6 @@
 		/obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
-	feedback_key = "cyborg_miner"
 	hat_offset = 0
 
 /obj/item/robot_module/syndicate

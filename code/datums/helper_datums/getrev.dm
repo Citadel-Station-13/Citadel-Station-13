@@ -23,11 +23,10 @@
 			if(line)
 				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
@@ -45,6 +44,8 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
+	if(GLOB.round_id)
+		to_chat(src, "<b>Round ID:</b> [GLOB.round_id]")
 	if(GLOB.revdata.originmastercommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
 		var/prefix = ""

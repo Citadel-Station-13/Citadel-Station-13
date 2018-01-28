@@ -214,7 +214,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(heard_by_no_admins && usr && usr.ckey != initiator_ckey)
 		heard_by_no_admins = FALSE
 		send2irc(initiator_ckey, "Ticket #[id]: Answered by [key_name(usr)]")
-	_interactions += "[gameTimestamp()]: [formatted_message]"
+	_interactions += "[time_stamp()]: [formatted_message]"
 
 //Removes the ahelp verb and returns it after 2 minutes
 /datum/admin_help/proc/TimeoutVerb()
@@ -286,9 +286,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.resolved_tickets -= src
 	switch(state)
 		if(AHELP_CLOSED)
-			SSblackbox.dec("ahelp_close")
+			SSblackbox.record_feedback("tally", "ahelp_stats", -1, "closed")
 		if(AHELP_RESOLVED)
-			SSblackbox.dec("ahelp_resolve")
+			SSblackbox.record_feedback("tally", "ahelp_stats", -1, "resolved")
 	state = AHELP_ACTIVE
 	closed_at = null
 	if(initiator)
@@ -298,7 +298,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
 	message_admins(msg)
 	log_admin_private(msg)
-	SSblackbox.inc("ahelp_reopen")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "reopened")
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
@@ -320,7 +320,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	GLOB.ahelp_tickets.ListInsert(src)
 	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
-		SSblackbox.inc("ahelp_close")
+		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "closed")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
 		message_admins(msg)
 		log_admin_private(msg)
@@ -338,7 +338,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
 	if(!silent)
-		SSblackbox.inc("ahelp_resolve")
+		SSblackbox.record_feedback("tally", "ahelp_stats", 1, "resolved")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
 		message_admins(msg)
 		log_admin_private(msg)
@@ -357,7 +357,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
 		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
 
-	SSblackbox.inc("ahelp_reject")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "rejected")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -376,7 +376,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		to_chat(initiator, msg)
 
-	SSblackbox.inc("ahelp_icissue")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "IC")
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -393,7 +393,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		to_chat(initiator, msg)
 
-	SSblackbox.inc("ahelp_handleissue")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "handling")
 	msg = "Ticket [TicketHref("#[id]")] is being handled by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
@@ -494,6 +494,11 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
+// Used for methods where input via arg doesn't work
+/client/proc/get_adminhelp()
+	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text
+	adminhelp(msg)
+
 /client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
@@ -514,7 +519,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!msg)
 		return
 
-	SSblackbox.add_details("admin_verb","Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	if(current_ticket)
 		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
 			if(current_ticket)
@@ -615,15 +620,18 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)
-	if(comms_key)
-		var/list/message = list()
-		message["message_sender"] = source
-		message["message"] = msg
-		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
-		message["key"] = comms_key
-		message["crossmessage"] = type
+	if(!comms_key)
+		return
+	var/list/message = list()
+	message["message_sender"] = source
+	message["message"] = msg
+	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+	message["key"] = comms_key
+	message += type
 
-		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
+	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
+	for(var/I in servers)
+		world.Export("[servers[I]]?[list2params(message)]")
 
 
 /proc/ircadminwho()

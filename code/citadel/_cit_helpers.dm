@@ -121,7 +121,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	prefs.chat_toggles ^= CHAT_LOOC
 	prefs.save_preferences()
 	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
-	SSblackbox.add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()
 	set category = "Server"
@@ -130,7 +130,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	toggle_looc()
 	log_admin("[key_name(usr)] toggled LOOC.")
 	message_admins("[key_name_admin(usr)] toggled LOOC.")
-	SSblackbox.add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/toggle_looc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -150,7 +150,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 
 	log_admin("[key_name(usr)] toggled Dead LOOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead LOOC.")
-	SSblackbox.add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /mob/living/carbon/proc/has_penis()

@@ -259,7 +259,7 @@
 			to_chat(user,"<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			target.clean_blood()
+			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else if(ishuman(target))
 		if(src.emagged)
 			var/mob/living/silicon/robot.R = user
@@ -292,7 +292,7 @@
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			target.clean_blood()
+			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	return
 
 

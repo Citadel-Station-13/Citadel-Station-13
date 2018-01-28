@@ -301,10 +301,10 @@
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = TRUE
-			S.loc = get_turf(src)
+			S.forceMove(drop_location())
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(drop_location())
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in contents)
@@ -327,7 +327,7 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O, /obj/item/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/glass) || istype(O, /obj/item/reagent_containers/food/drinks) || istype(O, /obj/item/reagent_containers/food/condiment))
 		return TRUE
@@ -375,7 +375,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O, /obj/item/reagent_containers))
+	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE

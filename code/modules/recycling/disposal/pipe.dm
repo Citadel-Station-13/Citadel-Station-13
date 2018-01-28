@@ -26,7 +26,7 @@
 		make_from.forceMove(src)
 		stored = make_from
 	else
-		stored = new /obj/structure/disposalconstruct(src, make_from=src)
+		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
 	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
@@ -190,6 +190,7 @@
 		deconstruct()
 
 
+// Straight/bent pipe segment
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe"
 	initialize_dirs = DISP_DIR_FLIP
@@ -288,8 +289,8 @@
 		else
 			var/obj/machinery/disposal/D = linked
 			D.expel(H)	// expel at disposal
-	else
-		expel(H, get_turf(src), 0)	// expel at turf
+
+	// Returning null without expelling holder makes the holder expell itself
 	return null
 
 /obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/H)

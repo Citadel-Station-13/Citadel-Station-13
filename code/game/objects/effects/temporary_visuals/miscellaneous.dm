@@ -246,6 +246,11 @@
 	duration = 8
 	randomdir = 0
 
+/obj/effect/temp_visual/bluespace_fissure
+	name = "bluespace fissure"
+	icon_state = "bluestream_fade"
+	duration = 9
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
@@ -373,7 +378,7 @@
 		M = size_matrix*0.1
 	else
 		M = size_matrix*2
-	animate(src, alpha = 20, transform = M, time = duration, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 20, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/bleed/explode
 	icon_state = "bleed10"

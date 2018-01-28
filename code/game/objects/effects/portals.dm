@@ -1,3 +1,4 @@
+
 /proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
@@ -25,6 +26,7 @@
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
 	var/allow_anchored = FALSE
+	var/innate_accuracy_penalty = 0
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -41,6 +43,7 @@
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
 		user.forceMove(get_turf(src))
+		return TRUE
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
 	if(isobserver(AM))
@@ -74,6 +77,12 @@
 	creator = _creator
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+
+/obj/effect/portal/singularity_pull()
+	return
+
+/obj/effect/portal/singularity_act()
+	return
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
@@ -142,7 +151,7 @@
 		return
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
-	if(do_teleport(M, real_target, 0))
+	if(do_teleport(M, real_target, innate_accuracy_penalty))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M
 			P.ignore_source_check = TRUE
@@ -163,3 +172,4 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+

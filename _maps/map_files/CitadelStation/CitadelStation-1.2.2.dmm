@@ -36799,7 +36799,7 @@
 	},
 /area/hallway/primary/starboard)
 "bze" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
 "bzf" = (
@@ -36807,7 +36807,7 @@
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
 "bzg" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
 "bzh" = (
@@ -37256,7 +37256,7 @@
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
 "bAi" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
@@ -41880,7 +41880,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat)
 "bJa" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -43179,7 +43179,7 @@
 	name = "AI Maintenance"
 	})
 "bLq" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -47412,7 +47412,7 @@
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bTL" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bTM" = (

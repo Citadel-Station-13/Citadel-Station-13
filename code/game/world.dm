@@ -1,6 +1,11 @@
+#define RESTART_COUNTER_PATH "data/round_counter.txt"
+
 GLOBAL_VAR(security_mode)
+GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
+//This happens after the Master subsystem news (it's a global datum)
+//So subsystems globals exist, but are not initialised
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -12,68 +17,46 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	new /datum/controller/configuration
+	config.Load()
 
-	CheckSchemaVersion()
-	SetRoundID()
-
+	//SetupLogs depends on the RoundID, so lets check
+	//DB schema and set RoundID if we can
+	SSdbcore.CheckSchemaVersion()
+	SSdbcore.SetRoundID()
 	SetupLogs()
 
 	SERVER_TOOLS_ON_NEW
 
-	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
-	reload_custom_roundstart_items_list()
+	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
-	Master.Initialize(10, FALSE)
+	if(fexists(RESTART_COUNTER_PATH))
+		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
+		fdel(RESTART_COUNTER_PATH)
 
+	if("no-init" in params)
+		return
+
+	cit_initialize()
+
+	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
+	while(i<=GLOB.external_rsc_urls.len)
+		if(GLOB.external_rsc_urls[i])
 			i++
 		else
-			external_rsc_urls.Cut(i,i+1)
+			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
-
-/world/proc/CheckSchemaVersion()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			log_world("Database connection established.")
-			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
-			if(query_db_version.NextRow())
-				var/db_major = text2num(query_db_version.item[1])
-				var/db_minor = text2num(query_db_version.item[2])
-				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					var/which = "behind"
-					if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
-						which = "ahead of"
-					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-			else
-				message_admins("Could not get schema version from database")
-		else
-			log_world("Your server failed to establish a connection with the database.")
-
-/world/proc/SetRoundID()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_start.Execute()
-			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-			query_round_last_id.Execute()
-			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
@@ -121,6 +104,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
+
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
@@ -161,11 +145,29 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(SERVER_TOOLS_PRESENT)
+		var/do_hard_reboot
+		// check the hard reboot counter
+		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
+		switch(ruhr)
+			if(-1)
+				do_hard_reboot = FALSE
+			if(0)
+				do_hard_reboot = TRUE
+			else
+				if(GLOB.restart_counter >= ruhr)
+					do_hard_reboot = TRUE
+				else
+					text2file("[++GLOB.restart_counter]", RESTART_COUNTER_PATH)
+					do_hard_reboot = FALSE
+
+		if(do_hard_reboot)
+			log_world("World hard rebooted at [time_stamp()]")
+			SERVER_TOOLS_REBOOT_BYOND
+
 	log_world("World rebooted at [time_stamp()]")
 	..()
-
-/world/proc/load_motd()
-	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
 

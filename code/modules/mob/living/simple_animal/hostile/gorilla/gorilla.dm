@@ -35,8 +35,6 @@
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
-	devourable = TRUE
-	no_vore = FALSE
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -67,7 +65,7 @@
 		var/mob/living/L = target
 		if(prob(80))
 			var/atom/throw_target = get_edge_target_turf(L, dir)
-			L.throw_at(throw_target, rand(1,2), 7, src) 
+			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
 			L.Knockdown(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
@@ -76,8 +74,10 @@
 	var/list/parts = target_bodyparts(target)
 	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
 
+
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
 	return iswallturf(T)
+
 
 /mob/living/simple_animal/hostile/gorilla/gib(no_brain)
 	if(!no_brain)
@@ -103,3 +103,4 @@
 	if(oogas >= rand(2,6))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 		oogas = 0
+

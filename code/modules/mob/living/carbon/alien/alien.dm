@@ -5,7 +5,6 @@
 
 /mob/living/carbon/alien
 	name = "alien"
-	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
 	gender = FEMALE //All xenos are girls!!
 	dna = null
@@ -30,7 +29,6 @@
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
-	devourable = TRUE
 
 /mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
@@ -71,7 +69,7 @@
 		else
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
-	if(bodytemperature > 360.15)
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
@@ -147,8 +145,6 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
-
-	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

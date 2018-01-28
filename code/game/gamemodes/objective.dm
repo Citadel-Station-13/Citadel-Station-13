@@ -1,6 +1,6 @@
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
-	var/datum/objective_team/team       //An alternative to 'owner': a team. Use this when writing new code.
+	var/datum/team/team       //An alternative to 'owner': a team. Use this when writing new code.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
@@ -47,9 +47,9 @@
 	. = list()
 	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
 	var/list/datum/mind/owners = get_owners()
@@ -154,7 +154,7 @@
 	if(!target || !considered_alive(target) || considered_afk(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
-	return T && !(T.z in GLOB.station_z_levels)
+	return T && !is_station_level(T.z)
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -194,10 +194,8 @@
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
 		return TRUE
-
 	if(!target.current || !isbrain(target.current))
 		return FALSE
-
 	var/atom/A = target.current
 	var/list/datum/mind/owners = get_owners()
 
@@ -508,12 +506,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/download
 
 /datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(10,20)
-	explanation_text = "Download [target_amount] research level\s."
+	target_amount = rand(20,40)
+	explanation_text = "Download [target_amount] research node\s."
 	return target_amount
 
 /datum/objective/download/check_completion()
-	var/list/current_tech = list()
+	var/datum/techweb/checking = new
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/owner in owners)
 		if(ismob(owner.current))
@@ -522,21 +520,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				var/mob/living/carbon/human/H = M
 				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
 					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-					for(var/datum/tech/T in S.stored_research)
-						current_tech[T.id] = T.level? T.level : 0
+					S.stored_research.copy_research_to(checking)
 			var/list/otherwise = M.GetAllContents()
 			for(var/obj/item/disk/tech_disk/TD in otherwise)
-				for(var/datum/tech/T in TD.tech_stored)
-					if(!T.id || !T.level)
-						continue
-					else if(!current_tech[T.id])
-						current_tech[T.id] = T.level
-					else if(T.level > current_tech[T.id])
-						current_tech[T.id] = T.level
-	var/total = 0
-	for(var/i in current_tech)
-		total += current_tech[i]
-	return total >= target_amount
+				TD.stored_research.copy_research_to(checking)
+	return checking.researched_nodes.len >= target_amount
 
 /datum/objective/capture
 
@@ -549,25 +537,25 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/captured_amount = 0
 	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
+		if(M.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
-			if(M.stat==2)
+			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2
@@ -787,7 +775,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/changeling_team_objective/impersonate_department/check_completion()
 	if(!department_real_names.len || !department_minds.len)
-		return 1 //Something fucked up, give them a win
+		return TRUE //Something fucked up, give them a win
 
 	var/list/check_names = department_real_names.Copy()
 
@@ -799,14 +787,14 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
 			if(mloc.onCentCom() && (M.current.stat != DEAD))
-				return 0 //A Non-ling living target got to centcom, fail
+				return FALSE //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
 		for(var/datum/mind/changeling in get_antagonists(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
-				return 1
+				return TRUE
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
@@ -818,8 +806,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 							continue changelings
 
 	if(success >= department_minds.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 

@@ -1,18 +1,11 @@
-/datum
-	var/var_edited = FALSE //Warrenty void if seal is broken
-	var/fingerprintslast = null
-
 /datum/proc/can_vv_get(var_name)
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
-	switch(var_name)
-		if ("vars")
-			return FALSE
-		if ("var_edited")
-			return FALSE
-	var_edited = TRUE
+	if(var_name == NAMEOF(src, vars))
+		return FALSE
 	vars[var_name] = var_value
+	datum_flags |= DF_VAR_EDITED
 
 /datum/proc/vv_get_var(var_name)
 	switch(var_name)
@@ -31,7 +24,7 @@
 	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=[REF(src)]"
 
 
-/datum/proc/on_reagent_change()
+/datum/proc/on_reagent_change(changetype)
 	return
 
 
@@ -104,20 +97,12 @@
 	else
 		atomsnowflake += "<b>[D]</b>"
 
-	var/formatted_type = "[type]"
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
-
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 	var/marked
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
 	var/varedited_line = ""
-	if(!islist && D.var_edited)
+	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
 
 	var/list/dropdownoptions = list()
@@ -418,23 +403,8 @@
 		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
-/*		else if (istype(value, /image))
-		#ifdef VARSICON
-		var/rnd = rand(1, 10000)
-		var/image/I = value
-
-		src << browse_rsc(I.icon, "tmp[REF(value)][rnd].png")
-		html += "[name] = <img src=\"tmp[REF(value)][rnd].png\">"
-		#else
-		html += "[name] = /image (<span class='value'>[value]</span>)"
-		#endif
-*/
 	else if (isfile(value))
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
-
-	//else if (istype(value, /client))
-	//	var/client/C = value
-	//	item = "<a href='?_src_=vars;Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] [REF(value)]</a> = [C] [C.type]"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
@@ -927,6 +897,35 @@
 			src.cmd_admin_emp(A)
 			href_list["datumrefresh"] = href_list["emp"]
 
+		else if(href_list["modtransform"])
+			if(!check_rights(R_DEBUG))
+				return
+
+			var/atom/A = locate(href_list["modtransform"])
+			if(!istype(A))
+				to_chat(usr, "This can only be done to atoms.")
+				return
+
+			var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+			var/matrix/M = A.transform
+			switch(result)
+				if("Scale")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Scale(x,y)
+				if("Translate")
+					var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+					var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+					if(!isnull(x) && !isnull(y))
+						A.transform = M.Translate(x,y)
+				if("Rotate")
+					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+					if(!isnull(angle))
+						A.transform = M.Turn(angle)
+			
+			href_list["datumrefresh"] = href_list["modtransform"]
+
 		else if(href_list["rotatedatum"])
 			if(!check_rights(0))
 				return
@@ -954,6 +953,42 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["givetrauma"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["givetrauma"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/traumas = subtypesof(/datum/brain_trauma)
+			var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+			var/permanent = alert("Do you want to make the trauma unhealable?", "Permanently Traumatize", "Yes", "No")
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				C.gain_trauma(result, permanent)
+
+			href_list["datumrefresh"] = href_list["givetrauma"]
+
+		else if(href_list["curetraumas"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["curetraumas"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			C.cure_all_traumas(TRUE, TRUE)
+
+			href_list["datumrefresh"] = href_list["curetraumas"]
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(0))

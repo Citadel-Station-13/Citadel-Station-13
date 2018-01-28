@@ -12,7 +12,7 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			if(blood_DNA)
+			IF_HAS_BLOOD_DNA(src)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
@@ -51,6 +51,10 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 
+/obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
+	return OXYLOSS
+
 /obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == INTENT_HELP)
@@ -71,6 +75,9 @@
 					lung_strength = "<span class='danger'>strained</span>"
 					if(!(M.failed_last_breath || M.losebreath))
 						lung_strength = "healthy"
+
+			if(M.stat == DEAD && heart && world.time - M.timeofdeath < DEFIB_TIME_LIMIT * 10)
+				heart_strength = "<span class='boldannounce'>a faint, fluttery</span>"
 
 			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
 			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")

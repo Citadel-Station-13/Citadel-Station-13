@@ -51,7 +51,7 @@
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ChangeTurf(F.baseturf)
+			F.ScrapeAway()
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -65,7 +65,7 @@
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
-			W.ChangeTurf(/turf/open/floor/plating)
+			W.ScrapeAway()
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
@@ -187,7 +187,7 @@
 /datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
-		M.bodytemperature -= 15
+		M.bodytemperature = max(M.bodytemperature - 15,0)
 	..()
 
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)

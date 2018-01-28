@@ -13,11 +13,14 @@
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
-#define PRELOAD_RSC	1			/*set to:
-								0 to allow using external resources or on-demand behaviour;
-								1 to use the default behaviour;
-								2 for preloading absolutely everything;
-								*/
+#ifndef PRELOAD_RSC				//set to:
+#define PRELOAD_RSC	0			//	0 to allow using external resources or on-demand behaviour;
+#endif							//	1 to use the default behaviour;
+								//	2 for preloading absolutely everything;
+
+#ifdef LOWMEMORYMODE
+#define FORCE_MAP "_maps/runtimestation.json"
+#endif
 
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
@@ -35,7 +38,7 @@
 #define MAX_CHARTER_LEN			80
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN				17	//youngest a character can be
+#define AGE_MIN				18	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
@@ -79,5 +82,5 @@
 
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 3
-#define DB_MINOR_VERSION 4
+#define DB_MAJOR_VERSION 4
+#define DB_MINOR_VERSION 0

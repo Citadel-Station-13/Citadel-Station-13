@@ -12,6 +12,7 @@
 		new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
+	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
@@ -28,7 +29,7 @@
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/storage/belt/sabre(src)
-	new /obj/item/gun/energy/e_gun/cx(src)
+	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
@@ -51,9 +52,11 @@
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/gun/energy/e_gun/cx(src)
+	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
+	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civillian(src)
+	new /obj/item/circuitboard/machine/protolathe/department/service(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -67,8 +70,6 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
 	new /obj/item/clothing/under/hosparademale(src)
-	new /obj/item/clothing/under/rank/head_of_security/skirt(src)
-	new /obj/item/clothing/suit/armor/hos/trenchcoat/cloak(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
@@ -87,6 +88,7 @@
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/pinpointer/nuke(src)
+	new /obj/item/circuitboard/machine/protolathe/department/security(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -119,7 +121,6 @@
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	..()
-	new /obj/item/clothing/under/rank/security/skirt(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet/sec(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
@@ -188,7 +189,6 @@
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
 	new /obj/item/pinpointer/crew(src)
-	new /obj/item/device/mass_spectrometer(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

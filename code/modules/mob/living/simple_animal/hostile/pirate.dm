@@ -29,6 +29,15 @@
 			/obj/item/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
+	var/obj/effect/light_emitter/red_energy_sword/sord
+
+/mob/living/simple_animal/hostile/pirate/Initialize()
+	. = ..()
+	sord = new(src)
+
+/mob/living/simple_animal/hostile/pirate/Destroy()
+	QDEL_NULL(sord)
+	return ..()
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -51,6 +60,10 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
+
+/mob/living/simple_animal/hostile/pirate/space/Initialize()
+	. = ..()
+	set_light(3)
 
 /mob/living/simple_animal/hostile/pirate/space/ranged
 	name = "Space Pirate Gunner"

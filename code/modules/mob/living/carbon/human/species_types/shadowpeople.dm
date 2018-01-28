@@ -9,7 +9,7 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	species_traits = list(SPECIES_ORGANIC,NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
@@ -182,7 +182,9 @@
 		var/mob/living/L = AM
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			borg.update_headlamp(TRUE, 100)
+			if(!borg.lamp_cooldown)
+				borg.update_headlamp(TRUE, INFINITY)
+				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
 		else
 			for(var/obj/item/O in AM)
 				if(O.light_range && O.light_power)

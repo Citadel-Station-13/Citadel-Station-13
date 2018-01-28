@@ -13,7 +13,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	density = FALSE
 	canmove = 0
 	anchored = TRUE	//  don't get pushed around
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
@@ -32,7 +31,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
 	var/health_scan = FALSE //Are health scans currently enabled?
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -60,7 +59,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	verbs += list(
 		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu)
+		/mob/dead/observer/proc/open_spawners_menu,
+		/mob/dead/observer/proc/view_gas)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -107,9 +107,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
+			T = SSmapping.get_station_center()
 
-	loc = T
+	forceMove(T)
 
 	if(!name)							//To prevent nameless ghosts
 		name = random_unique_name(gender)
@@ -136,13 +136,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/narsie_act()
 	var/old_color = color
 	color = "#960000"
-	animate(src, color = old_color, time = 10, flags_1 = ANIMATION_PARALLEL)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/ratvar_act()
 	var/old_color = color
 	color = "#FAE48C"
-	animate(src, color = old_color, time = 10, flags_1 = ANIMATION_PARALLEL)
+	animate(src, color = old_color, time = 10, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
@@ -288,10 +288,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/oldloc = loc
 
 	if(NewLoc)
-		loc = NewLoc
+		forceMove(NewLoc)
 		update_parallax_contents()
 	else
-		loc = get_turf(src) //Get out of closets and such as a ghost
+		forceMove(get_turf(src))  //Get out of closets and such as a ghost
 		if((direct & NORTH) && y < world.maxy)
 			y++
 		else if((direct & SOUTH) && y > 1)
@@ -320,7 +320,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.change_view(world.view)
+	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
@@ -371,8 +371,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!L || !L.len)
 		to_chat(usr, "No area available.")
 
-	usr.loc = pick(L)
+	usr.forceMove(pick(L))
 	update_parallax_contents()
+
+/mob/dead/observer/proc/view_gas()
+	set category = "Ghost"
+	set name = "View Gases"
+	set desc= "View the atmospheric conditions in a location"
+
+	var/turf/loc = get_turf(src)
+	show_air_status_to(loc, usr)
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
@@ -445,7 +453,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/turf/T = get_turf(M) //Turf of the destination mob
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.loc = T
+				A.forceMove(T)
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
@@ -456,22 +464,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range."
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == world.view)
+	if(client.view == CONFIG_GET(string/default_view))
 		var/list/views = list()
 		for(var/i in 7 to max_view)
 			views |= i
 		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
 		if(new_view)
-			client.change_view(Clamp(new_view, 7, max_view))
+			client.change_view(CLAMP(new_view, 7, max_view))
 	else
-		client.change_view(world.view)
+		client.change_view(CONFIG_GET(string/default_view))
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
 	set hidden = TRUE
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
 	if(input)
-		client.change_view(Clamp(client.view + input, 7, max_view))
+		client.rescale_view(input, 15, (max_view*2)+1)
 
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -712,7 +720,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_icon()
 
-/mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
+/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
@@ -767,8 +775,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
-		client.screen = list()
 		if(mob_eye.hud_used)
+			client.screen = list()
 			LAZYINITLIST(mob_eye.observers)
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)

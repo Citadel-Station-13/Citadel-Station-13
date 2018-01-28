@@ -77,7 +77,6 @@
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = TRUE //stops it being moved
-	use_tag = TRUE
 
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
@@ -86,7 +85,7 @@
 	var/datum/game_mode/nuclear/NM = SSticker.mode
 	switch(off_station)
 		if(0)
-			if(istype(NM) && NM.syndies_didnt_escape)
+			if(istype(NM) && !NM.nuke_team.syndies_escaped())
 				return CINEMATIC_ANNIHILATION
 			else
 				return CINEMATIC_NUKE_WIN
@@ -96,16 +95,17 @@
 			return CINEMATIC_NUKE_FAR
 	return CINEMATIC_NUKE_FAR
 
-/obj/machinery/nuclearbomb/syndicate/Initialize()
-	. = ..()
-	var/obj/machinery/nuclearbomb/existing = locate("syndienuke") in GLOB.nuke_list
-	if(existing)
-		stack_trace("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
-		return INITIALIZE_HINT_QDEL
-	tag = "syndienuke"
+/obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/D)
+	if(D.fake)
+		say("Authentication failure; disk not recognised.")
+		return FALSE
+	else
+		return TRUE
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/nuclear))
+		if(!disk_check(I))
+			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		auth = I
@@ -313,7 +313,7 @@
 		if("insert_disk")
 			if(!auth)
 				var/obj/item/I = usr.is_holding_item_of_type(/obj/item/disk/nuclear)
-				if(I && usr.transferItemToLoc(I, src))
+				if(I && disk_check(I) && usr.transferItemToLoc(I, src))
 					auth = I
 					. = TRUE
 		if("keypad")
@@ -353,7 +353,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 				. = TRUE
 		if("safety")
 			if(auth && yes_code)
@@ -451,12 +451,12 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && (bomb_location.z in GLOB.station_z_levels))
+	if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_NEAR_MISS
-	else if((istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate)) && bomb_location.z == ZLEVEL_CENTCOM))
+	else if(bomb_location.onSyndieBase())
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_MISS_STATION
@@ -519,18 +519,37 @@ This is here to make the tiles around the station mininuke change when it's arme
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	persistence_replacement = /obj/item/disk/fakenucleardisk
+	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/fake = FALSE
 
-/obj/item/disk/nuclear/New()
-	..()
-	GLOB.poi_list |= src
-	set_stationloving(TRUE, inform_admins=TRUE)
+/obj/item/disk/nuclear/Initialize()
+	. = ..()
+	var/tell_the_admins
+	// Only tell the admins if a REAL nuke disk is relocated
+	if(fake)
+		tell_the_admins = FALSE
+	else
+		GLOB.poi_list |= src
+		tell_the_admins = TRUE
+
+	set_stationloving(TRUE, inform_admins=tell_the_admins)
+
+/obj/item/disk/nuclear/examine(mob/user)
+	. = ..()
+	if(!fake)
+		return
+
+	var/ghost = isobserver(user)
+	var/captain = user.mind && user.mind.assigned_role == "Captain"
+	var/nukie = user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop)
+	if(ghost || captain || nukie)
+		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/claymore/highlander))
+	if(istype(I, /obj/item/claymore/highlander) && !fake)
 		var/obj/item/claymore/highlander/H = I
 		if(H.nuke_disk)
 			to_chat(user, "<span class='notice'>Wait... what?</span>")
@@ -551,16 +570,17 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
+	playsound(src, 'sound/machines/alarm.ogg', 50, -1, 1)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
-	addtimer(CALLBACK(user, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY), 101)
-	addtimer(CALLBACK(user, /atom/proc/visible_message, "<span class='suicide'>[user] was destroyed by the nuclear blast!</span>"), 101)
-	addtimer(CALLBACK(user, /mob/living/proc/adjustOxyLoss, 200), 101)
-	addtimer(CALLBACK(user, /mob/proc/death, 0), 101)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
 
-/obj/item/disk/fakenucleardisk
-	name = "cheap plastic imitation of the nuclear authentication disk"
-	desc = "Broken dreams and a faint odor of cheese."
-	icon_state = "nucleardisk"
+/obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
+	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.adjustOxyLoss(200)
+	user.death(0)
+
+/obj/item/disk/nuclear/fake
+	fake = TRUE

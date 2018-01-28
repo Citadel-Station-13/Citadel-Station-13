@@ -76,7 +76,7 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.ChangeTurf(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open/floor/plating/foam)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
@@ -189,7 +189,7 @@
 		location = get_turf(loca)
 
 	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume, 4) //The foam holds 4 times the total reagents volume for balance purposes.
 
 /datum/effect_system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()
@@ -236,7 +236,7 @@
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/foamedmetal/attack_paw(mob/user)

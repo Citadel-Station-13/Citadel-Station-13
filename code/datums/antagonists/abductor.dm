@@ -1,25 +1,35 @@
+#define ABDUCTOR_MAX_TEAMS 4
+
 /datum/antagonist/abductor
 	name = "Abductor"
+	roundend_category = "abductors"
+	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
-	var/datum/objective_team/abductor_team/team
+	show_in_antagpanel = FALSE //should only show subtypes
+	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
 	var/landmark_type
 	var/greet_text
+	
 
 /datum/antagonist/abductor/agent
+	name = "Abductor Agent"
 	sub_role = "Agent"
 	outfit = /datum/outfit/abductor/agent
 	landmark_type = /obj/effect/landmark/abductor/agent
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
+	show_in_antagpanel = TRUE
 
 /datum/antagonist/abductor/scientist
+	name = "Abductor Scientist"
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
+	show_in_antagpanel = TRUE
 
-/datum/antagonist/abductor/create_team(datum/objective_team/abductor_team/new_team)
+/datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
 		return
 	if(!istype(new_team))
@@ -32,6 +42,7 @@
 /datum/antagonist/abductor/on_gain()
 	SSticker.mode.abductors += owner
 	owner.special_role = "[name] [sub_role]"
+	owner.assigned_role = "[name] [sub_role]"
 	owner.objectives += team.objectives
 	finalize_abductor()
 	return ..()
@@ -70,3 +81,102 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/datum/species/abductor/A = H.dna.species
 	A.scientist = TRUE
+
+/datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
+	var/list/current_teams = list()
+	for(var/datum/team/abductor_team/T in get_all_teams(/datum/team/abductor_team))
+		current_teams[T.name] = T
+	var/choice = input(admin,"Add to which team ?") as null|anything in (current_teams + "new team")
+	if (choice == "new team")
+		team = new
+	else if(choice in current_teams)
+		team = current_teams[choice]
+	else
+		return
+	new_owner.add_antag_datum(src)
+	log_admin("[key_name(usr)] made [key_name(new_owner.current)] [name] on [choice]!")
+	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner.current)] [name] on [choice] !")
+
+/datum/antagonist/abductor/get_admin_commands()
+	. = ..()
+	.["Equip"] = CALLBACK(src,.proc/admin_equip)
+
+/datum/antagonist/abductor/proc/admin_equip(mob/admin)
+	if(!ishuman(owner.current))
+		to_chat(admin, "<span class='warning'>This only works on humans!</span>")
+		return
+	var/mob/living/carbon/human/H = owner.current
+	var/gear = alert(admin,"Agent or Scientist Gear","Gear","Agent","Scientist")
+	if(gear)
+		if(gear=="Agent")
+			H.equipOutfit(/datum/outfit/abductor/agent)
+		else
+			H.equipOutfit(/datum/outfit/abductor/scientist)
+
+/datum/team/abductor_team
+	member_name = "abductor"
+	var/team_number
+	var/list/datum/mind/abductees = list()
+	var/static/team_count = 1
+
+/datum/team/abductor_team/New()
+	..()
+	team_number = team_count++
+	name = "Mothership [pick(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	add_objective(new/datum/objective/experiment)
+
+/datum/team/abductor_team/is_solo()
+	return FALSE
+
+/datum/team/abductor_team/proc/add_objective(datum/objective/O)
+	O.team = src
+	O.update_explanation_text()
+	objectives += O
+
+/datum/team/abductor_team/roundend_report()
+	var/list/result = list()
+
+	var/won = TRUE
+	for(var/datum/objective/O in objectives)
+		if(!O.check_completion())
+			won = FALSE
+	if(won)
+		result += "<span class='greentext big'>[name] team fulfilled its mission!</span>"
+	else
+		result += "<span class='redtext big'>[name] team failed its mission.</span>"
+
+	result += "<span class='header'>The abductors of [name] were:</span>"
+	for(var/datum/mind/abductor_mind in members)
+		result += printplayer(abductor_mind)
+		result += printobjectives(abductor_mind)
+
+	return result.Join("<br>")
+
+/datum/antagonist/abductee
+	name = "Abductee"
+	roundend_category = "abductees"
+	antagpanel_category = "Abductee"
+
+/datum/antagonist/abductee/on_gain()
+	give_objective()
+	. = ..()
+
+/datum/antagonist/abductee/greet()
+	to_chat(owner, "<span class='warning'><b>Your mind snaps!</b></span>")
+	to_chat(owner, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
+	owner.announce_objectives()
+
+/datum/antagonist/abductee/proc/give_objective()
+	var/mob/living/carbon/human/H = owner.current
+	if(istype(H))
+		H.gain_trauma_type(BRAIN_TRAUMA_MILD)
+	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
+	var/datum/objective/abductee/O = new objtype()
+	objectives += O
+	owner.objectives += objectives
+
+/datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
+	SSticker.mode.update_abductor_icons_added(mob_override ? mob_override.mind : owner)
+
+/datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
+	SSticker.mode.update_abductor_icons_removed(mob_override ? mob_override.mind : owner)

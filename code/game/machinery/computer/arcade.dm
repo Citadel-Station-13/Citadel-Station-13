@@ -44,8 +44,7 @@
 		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2,
-		/obj/item/toy/sword/cx									= 2)
+		/obj/item/toy/windupToolbox								= 2)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -229,7 +228,6 @@
 			playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
-				SSblackbox.inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -237,8 +235,9 @@
 				Reset()
 				emagged = FALSE
 			else
-				SSblackbox.inc("arcade_win_normal")
 				prizevend()
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (emagged ? "emagged":"normal")))
+
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
@@ -259,10 +258,8 @@
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
-				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
-			else
-				SSblackbox.inc("arcade_loss_mana_normal")
+			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (emagged ? "emagged":"normal")))
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
@@ -281,10 +278,8 @@
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
-			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
-		else
-			SSblackbox.inc("arcade_loss_hp_normal")
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal"))) 
 
 	blocked = FALSE
 	return
@@ -422,17 +417,17 @@
 				dat += "<br>You ran out of food and starved."
 				if(emagged)
 					user.nutrition = 0 //yeah you pretty hongry
-					to_chat(user, "<span class='userdanger'><font size=3>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
+					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
 				if(emagged)
 					var/mob/living/M = user
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
-					to_chat(user, "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
+					to_chat(user, "<span class='userdanger'>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
 
 		if(emagged)
-			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
+			to_chat(user, "<span class='userdanger'>You're never going to make it to Orion...</span>")
 			user.death()
 			emagged = FALSE //removes the emagged status after you lose
 			gameStatus = ORION_STATUS_START
@@ -532,7 +527,7 @@
 							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
-								F.ChangeTurf(F.baseturf)
+								F.ScrapeAway()
 							say("Something slams into the floor around [src], exposing it to space!")
 							if(hull)
 								sleep(10)

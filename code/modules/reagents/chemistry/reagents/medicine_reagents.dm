@@ -21,10 +21,10 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/M)
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
@@ -44,7 +44,7 @@
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.disabilities = 0
+	M.remove_all_disabilities()
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
@@ -59,6 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
+	M.cure_all_traumas(TRUE, TRUE)
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.severity == VIRUS_SEVERITY_POSITIVE)
@@ -128,31 +129,16 @@
 	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-9, 0)
-			M.adjustBruteLoss(-5, 0)
-			M.adjustFireLoss(-5, 0)
-			M.adjustToxLoss(-5, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-7, 0)
-			M.adjustBruteLoss(-3, 0)
-			M.adjustFireLoss(-3, 0)
-			M.adjustToxLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-5, 0)
-			M.adjustBruteLoss(-1, 0)
-			M.adjustFireLoss(-1, 0)
-			M.adjustToxLoss(-1, 0)
-			. = 1
+	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+	if(M.bodytemperature < T0C)
+		M.adjustOxyLoss(-3 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-power, 0)
+		M.adjustToxLoss(-power, 0)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
 /datum/reagent/medicine/clonexadone
@@ -666,16 +652,16 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.disabilities & BLIND)
+	if(M.has_disability(DISABILITY_BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
-			M.cure_blind()
-			M.cure_nearsighted()
+			M.cure_blind(EYE_DAMAGE)
+			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.disabilities & NEARSIGHT)
+	else if(M.has_disability(DISABILITY_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
-		M.cure_nearsighted()
+		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
@@ -764,7 +750,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.disabilities & NOCLONE) && !M.hellbound)
+		if(!M.suiciding && !(M.has_disability(DISABILITY_NOCLONE)) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
@@ -792,7 +778,13 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(-3*REM)
+	M.adjustBrainLoss(-2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
+			C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
+		if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
+			C.cure_trauma_type(BRAIN_TRAUMA_MILD)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1016,7 +1008,7 @@
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
@@ -1047,7 +1039,7 @@
 	if (M.hallucination >= 5)
 		M.hallucination -= 5
 	if(prob(20))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
 	..()
 	. = 1
@@ -1113,3 +1105,105 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+
+/datum/reagent/medicine/ketrazine
+	name = "Ketrazine"
+	id = "ketrazine"
+	description = "A powerful and addictive combat stimulant, capable of healing grievous wounds and enabling the user to shrug off stuns and heavy weights by stimulating tendons and muscle groups; however the strain on the body causes severe lasting damage. Use only in life-or-death situations. Overdose is almost invariably fatal."
+	reagent_state = LIQUID
+	color = "#5F42F4"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	addiction_threshold = 5
+
+/datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustBruteLoss(-5*REM, 0)
+	M.adjustFireLoss(-5*REM, 0)
+	M.adjustOxyLoss(-5*REM, 0)
+	M.AdjustStun(-80*REM, 0)
+	M.AdjustKnockdown(-70*REM, 0)
+	M.adjustStaminaLoss(-80*REM, 0)
+	M.AdjustUnconscious(-50*REM, 0)
+	M.adjustBrainLoss(0.5*REM,0)
+	switch(current_cycle)
+		if(2 to 12)
+			if(prob(15))
+				to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
+		if(12)
+			to_chat(M, "<span class='warning'>Your muscles begin to ache terribly... </span>" )
+		if(14)
+			to_chat(M, "<span class='warning'>You feel like your body is being ripped to shreds! </span>")
+		if(15 to 25)
+			M.drowsyness += 3
+			M.adjustBruteLoss(10*REM, 0)
+			M.adjustToxLoss(7*REM, 0)
+		if(25 to 30)
+			if(prob(33))
+				to_chat(M, "<span class='warning'>The pain is unbearable! You can barely stand! </span>")
+			M.Sleeping(40, 0)
+			M.AdjustKnockdown(40*REM,0)
+			M.drop_all_held_items()
+			M.Dizzy(3)
+			M.drowsyness +=4
+			M.adjustBruteLoss(15*REM,0)
+			M.adjustToxLoss(10*REM,0)
+			M.adjustStaminaLoss(30*REM,0)
+		if(30 to INFINITY)
+			if(prob(20))
+				to_chat(M, "<span class='warning'>Your body	can't handle the stress! </span>")
+			M.Sleeping(60, 0)
+			M.AdjustKnockdown(80*REM,0)
+			M.drop_all_held_items()
+			M.Dizzy(5)
+			M.drowsyness +=6
+			M.adjustBruteLoss(20*REM,0)
+			M.adjustToxLoss(15*REM,0)
+			M.adjustStaminaLoss(40*REM,0)
+			M.losebreath +=2
+
+
+	..()
+
+/datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
+	if(prob(66))
+		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
+		M.drop_all_held_items()
+		M.Dizzy(6)
+		M.Jitter(7)
+		M.adjustOxyLoss(40*REM,0)
+		M.adjustBruteLoss(40*REM,0)
+		M.losebreath +=10
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
+	if(prob(33))
+		to_chat(M, "<span class='warning'>You feel like you need more power... </span>")
+		M.drop_all_held_items()
+		M.Jitter(2)
+		M.Dizzy(2)
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
+	if(prob(50))
+		to_chat(M, "<span class='warning'>You feel weak and sore, you need something to amp you up! </span>")
+		M.drop_all_held_items()
+		M.adjustToxLoss(2*REM, 0)
+		M.adjustBruteLoss(4*REM,0)
+		M.adjustStaminaLoss(6*REM,0)
+		M.Dizzy(3)
+		M.Jitter(3)
+	..()
+
+/datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
+	if(prob(66))
+		to_chat(M, "<span class='warning'> You need ketrazine! You need it badly! You need it now! </span>")
+		M.drop_all_held_items()
+		M.adjustToxLoss(4*REM, 0)
+		M.adjustBruteLoss(5*REM,0)
+		M.adjustStaminaLoss(7*REM,0)
+		M.Dizzy(7)
+		M.Jitter(7)
+	..()

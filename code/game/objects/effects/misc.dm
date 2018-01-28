@@ -12,6 +12,12 @@
 	var/def_zone
 	pass_flags = PASSTABLE
 
+/obj/effect/beam/singularity_act()
+	return
+
+/obj/effect/beam/singularity_pull()
+	return
+
 /obj/effect/spawner
 	name = "object spawner"
 
@@ -59,3 +65,4 @@
 
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
+

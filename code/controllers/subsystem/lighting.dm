@@ -8,8 +8,6 @@ SUBSYSTEM_DEF(lighting)
 	init_order = INIT_ORDER_LIGHTING
 	flags = SS_TICKER
 
-	var/initialized = FALSE
-
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[GLOB.lighting_update_lights.len]|C:[GLOB.lighting_update_corners.len]|O:[GLOB.lighting_update_objects.len]")
 
@@ -24,7 +22,7 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-
+	
 	fire(FALSE, TRUE)
 
 	..()

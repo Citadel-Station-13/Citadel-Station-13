@@ -14,6 +14,7 @@
 	if(..(user))
 		return
 	add_fingerprint(usr)
+
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
@@ -22,7 +23,7 @@
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S))
+			if(!M.check_dock(S, silent=TRUE))
 				continue
 			destination_found = 1
 			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"

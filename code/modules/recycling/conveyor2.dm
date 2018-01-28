@@ -104,7 +104,7 @@
 		return
 	if(!operating)
 		return
-	use_power(100)
+	use_power(6)
 	affecting = loc.contents - src		// moved items will be all in loc
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
@@ -178,12 +178,6 @@
 	var/obj/machinery/conveyor/C = locate() in get_step(src, stepdir)
 	if(C)
 		C.set_operable(stepdir, id, op)
-
-/*
-/obj/machinery/conveyor/verb/destroy()
-	set src in view()
-	src.broken()
-*/
 
 /obj/machinery/conveyor/power_change()
 	..()

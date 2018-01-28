@@ -225,16 +225,16 @@ LINEN BINS
 
 
 /obj/item/bedsheet/random
-	icon_state = "sheetrainbow"
+	icon_state = "random_bedsheet"
 	item_color = "rainbow"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
 /obj/item/bedsheet/random/Initialize()
-	. = INITIALIZE_HINT_QDEL
 	..()
 	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"

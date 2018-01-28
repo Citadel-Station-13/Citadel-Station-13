@@ -86,7 +86,7 @@
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
 		var/repeal = (authorized.len < old_len)
-		var/remaining = auth_need - authorized.len
+		var/remaining = max(0, auth_need - authorized.len)
 		if(authorized.len && remaining)
 			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
+				if(initiate_docking(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
@@ -300,6 +300,7 @@
 				if(SSdbcore.Connect())
 					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
 					query_round_shuttle_name.Execute()
+
 
 		if(SHUTTLE_DOCKED)
 			if(time_left <= ENGINES_START_TIME)
@@ -473,7 +474,7 @@
 			turfs -= T
 			T = pick(turfs)
 		else
-			src.loc = T
+			forceMove(T)
 			break
 
 //Pod suits/pickaxes

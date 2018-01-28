@@ -40,7 +40,7 @@
 	to_chat(src, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 40 seconds).</span>")
 	to_chat(B.victim, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
-	var/delay = rand(150,250) + B.victim.brainloss
+	var/delay = rand(150,250) + B.victim.getBrainLoss()
 	addtimer(CALLBACK(src, .proc/return_control, src.loc), delay)
 
 /mob/living/captive_brain/proc/return_control(mob/living/simple_animal/borer/B)
@@ -315,7 +315,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 				if(prob(5))
 					victim.adjustBrainLoss(rand(1,2))
 
-				if(prob(victim.brainloss/10))
+				if(prob(victim.getBrainLoss()/10))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/proc/wakeup()
@@ -669,7 +669,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	bonding = TRUE
 
-	var/delay = 200+(victim.brainloss*5)
+	var/delay = 200+(victim.getBrainLoss()*5)
 	addtimer(CALLBACK(src, .proc/assume_control), delay)
 
 /mob/living/simple_animal/borer/proc/assume_control()

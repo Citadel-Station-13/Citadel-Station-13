@@ -1,4 +1,5 @@
 #define MAX_ADMIN_BANS_PER_ADMIN 1
+#define MAX_ADMIN_BANS_PER_HEADMIN 3
 
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
@@ -118,8 +119,11 @@
 			return
 		if(query_check_adminban_amt.NextRow())
 			var/adm_bans = text2num(query_check_adminban_amt.item[1])
-			if(adm_bans >= MAX_ADMIN_BANS_PER_ADMIN)
-				to_chat(usr, "<span class='danger'>You already logged [MAX_ADMIN_BANS_PER_ADMIN] admin ban(s) or more. Do not abuse this function!</span>")
+			var/max_bans = MAX_ADMIN_BANS_PER_ADMIN
+			if (check_rights(R_PERMISSIONS, FALSE))
+				max_bans = MAX_ADMIN_BANS_PER_HEADMIN
+			if(adm_bans >= max_bans)
+				to_chat(usr, "<span class='danger'>You already logged [max_bans] admin ban(s) or more. Do not abuse this function!</span>")
 				return
 	if(!computerid)
 		computerid = "0"
@@ -337,7 +341,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, page = 0)
+/datum/admins/proc/DB_ban_panel(playerckey, adminckey, ip, cid, page = 0)
 	if(!usr.client)
 		return
 
@@ -394,25 +398,29 @@
 	output += "<input type='hidden' name='src' value='[REF(src)]'>"
 	output += HrefTokenFormField()
 	output += "<b>Ckey:</b> <input type='text' name='dbsearchckey' value='[playerckey]'>"
-	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'>"
+	output += "<b>Admin ckey:</b> <input type='text' name='dbsearchadmin' value='[adminckey]'><br>"
+	output += "<b>IP:</b> <input type='text' name='dbsearchip' value='[ip]'>"
+	output += "<b>CID:</b> <input type='text' name='dbsearchcid' value='[cid]'>"
 	output += "<input type='submit' value='search'>"
 	output += "</form>"
 	output += "Please note that all jobban bans or unbans are in-effect the following round."
 
-	if(adminckey || playerckey)
-		playerckey = sanitizeSQL(ckey(playerckey))
-		adminckey = sanitizeSQL(ckey(adminckey))
-		var/playersearch = ""
-		var/adminsearch = ""
+	if(adminckey || playerckey || ip || cid)
+		var/list/searchlist = list()
 		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
+			searchlist += "ckey = '[sanitizeSQL(ckey(playerckey))]'"
 		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
+			searchlist += "a_ckey = '[sanitizeSQL(ckey(adminckey))]'"
+		if(ip)
+			searchlist += "ip = INET_ATON('[sanitizeSQL(ip)]')"
+		if(cid)
+			searchlist += "computerid = '[sanitizeSQL(cid)]'"
+		var/search = searchlist.Join(" AND ")
 		var/bancount = 0
 		var/bansperpage = 15
 		var/pagecount = 0
 		page = text2num(page)
-		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch]")
+		var/datum/DBQuery/query_count_bans = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("ban")] WHERE [search]")
 		if(!query_count_bans.warn_execute())
 			return
 		if(query_count_bans.NextRow())
@@ -438,7 +446,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			return
 

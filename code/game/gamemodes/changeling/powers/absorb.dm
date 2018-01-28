@@ -41,13 +41,13 @@
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
-		SSblackbox.add_details("changeling_powers","Absorb DNA|[i]")
+		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "[i]"))
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
-	SSblackbox.add_details("changeling_powers","Absorb DNA|4")
+	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 
@@ -58,6 +58,8 @@
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
 	if(target.mind)//if the victim has got a mind
+		// Absorb a lizard, speak Draconic.
+		user.copy_known_languages_from(target)
 
 		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
 
@@ -76,12 +78,12 @@
 				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
-			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")
+			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B><br>"
 			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
 			for(var/spoken_memory in recent_speech)
-				user.mind.store_memory("\"[recent_speech[spoken_memory]]\"")
+				changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
 				to_chat(user, "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>")
-			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
+			changeling.antag_memory += "<B>We have no more knowledge of [target]'s speech patterns.</B><br>"
 			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>")
 
 

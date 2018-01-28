@@ -1,7 +1,7 @@
 /obj/item/wallframe/camera
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
 	materials = list(MAT_METAL=400, MAT_GLASS=250)
 	result_path = /obj/structure/camera_assembly
@@ -10,7 +10,7 @@
 /obj/structure/camera_assembly
 	name = "camera assembly"
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera1"
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
@@ -100,9 +100,8 @@
 		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
 		return
 	state = 4
-	var/obj/machinery/camera/C = new(src.loc)
+	var/obj/machinery/camera/C = new(loc, src)
 	forceMove(C)
-	C.assembly = src
 	C.setDir(src.dir)
 
 	C.network = tempnetwork

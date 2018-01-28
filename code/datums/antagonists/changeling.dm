@@ -4,19 +4,18 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
+	roundend_category  = "changelings"
+	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
-	var/list/objectives = list()
 	var/team_mode = FALSE //Should assign team objectives ?
 
 	//Changeling Stuff
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	//var/list/absorbed_dna = list()
-	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	var/chem_charges = 20
@@ -42,11 +41,6 @@
 	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
 
 
-/datum/antagonist/changeling/New()
-	. = ..()
-	generate_name()
-	create_actions()
-
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
 	QDEL_NULL(emporium_action)
@@ -70,6 +64,8 @@
 	emporium_action = new(cellular_emporium)
 
 /datum/antagonist/changeling/on_gain()
+	generate_name()
+	create_actions()
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
@@ -80,7 +76,7 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
-	remove_changeling_powers(FALSE)
+	remove_changeling_powers()
 	owner.objectives -= objectives
 	. = ..()
 
@@ -102,11 +98,11 @@
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/datum/antagonist/changeling/proc/remove_changeling_powers(keep_free_powers=0)
+/datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
-			if((p.dna_cost == 0 && keep_free_powers) || p.always_keep)
+			if(p.always_keep)
 				continue
 			purchasedpowers -= p
 			p.on_refund(owner.current)
@@ -118,13 +114,13 @@
 
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
-		remove_changeling_powers(TRUE)
-	//Purchase free powers.
+		remove_changeling_powers()
+	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
 		if(!S.dna_cost)
 			if(!has_sting(S))
-				purchasedpowers+=S
+				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
@@ -179,7 +175,7 @@
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
 		canrespec = 0
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
+		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
 	else
 		to_chat(owner.current, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
@@ -225,7 +221,7 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+	if((target.has_disability(DISABILITY_NOCLONE)) || (target.has_disability(DISABILITY_NOCLONE)))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
@@ -279,7 +275,7 @@
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-	
+
 	if(!first_prof)
 		first_prof = prof
 
@@ -341,6 +337,9 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	owner.announce_objectives()
+
+/datum/antagonist/changeling/farewell()
+	to_chat(owner.current, "<span class='userdanger'>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</span>")
 
 /datum/antagonist/changeling/proc/forge_team_objectives()
 	if(GLOB.changeling_team_objective_type)
@@ -438,6 +437,25 @@
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
 
+/datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
+	. = ..()
+	to_chat(new_owner.current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [changelingID], a changeling!</span>")
+
+/datum/antagonist/changeling/get_admin_commands()
+	. = ..()
+	if(stored_profiles.len && (owner.current.real_name != first_prof.name))
+		.["Transform to initial appearance."] = CALLBACK(src,.proc/admin_restore_appearance)
+
+/datum/antagonist/changeling/proc/admin_restore_appearance(mob/admin)
+	if(!stored_profiles.len || !iscarbon(owner.current))
+		to_chat(admin, "<span class='danger'>Resetting DNA failed!</span>")
+	else
+		var/mob/living/carbon/C = owner.current
+		first_prof.dna.transfer_identity(C, transfer_SE=1)
+		C.real_name = first_prof.name
+		C.updateappearance(mutcolor_update=1)
+		C.domutcheck()
+
 // Profile
 
 /datum/changelingprofile
@@ -480,4 +498,41 @@
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
 	give_objectives = FALSE
+	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+
+/datum/antagonist/changeling/roundend_report()
+	var/list/parts = list()
+
+	var/changelingwin = 1
+	if(!owner.current)
+		changelingwin = 0
+
+	parts += printplayer(owner)
+
+	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+	parts += "<b>Changeling ID:</b> [changelingID]."
+	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
+	parts += " "
+	if(objectives.len)
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			else
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				changelingwin = 0
+			count++
+
+	if(changelingwin)
+		parts += "<span class='greentext'>The changeling was successful!</span>"
+	else
+		parts += "<span class='redtext'>The changeling has failed.</span>"
+
+	return parts.Join("<br>")
+
+/datum/antagonist/changeling/antag_listing_name()
+	return ..() + "([changelingID])"
+
+/datum/antagonist/changeling/xenobio/antag_listing_name()
+	return ..() + "(Xenobio)"
