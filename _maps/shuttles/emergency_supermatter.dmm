@@ -2,9 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "ac" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/mineral/titanium,
@@ -14,9 +11,6 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"af" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
@@ -39,10 +33,13 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "ak" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+=======
+>>>>>>> 249bb6b... mapmerge2 on lots of maps (#35023)
 "al" = (
 /obj/machinery/shower{
 	dir = 8
@@ -115,12 +112,6 @@
 "ax" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
-"ay" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"az" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -138,10 +129,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "aC" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+=======
+>>>>>>> 249bb6b... mapmerge2 on lots of maps (#35023)
 "aD" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/toxin,
@@ -166,17 +160,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"aG" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"aH" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aI" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
+<<<<<<< HEAD
 "aJ" = (
 /obj/structure/sign/radiation,
 /turf/closed/wall/mineral/titanium,
@@ -184,6 +172,8 @@
 "aK" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
+=======
+>>>>>>> 249bb6b... mapmerge2 on lots of maps (#35023)
 "aL" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Launch Catwalk";
@@ -385,8 +375,8 @@ aa
 aa
 "}
 (2,1,1) = {"
-af
-af
+ae
+ae
 ad
 ac
 aq
@@ -577,8 +567,8 @@ bc
 be
 "}
 (10,1,1) = {"
-af
-af
+ae
+ae
 ad
 ac
 aq
