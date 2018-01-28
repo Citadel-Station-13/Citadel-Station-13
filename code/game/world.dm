@@ -40,7 +40,11 @@ GLOBAL_PROTECT(security_mode)
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
 
+<<<<<<< HEAD
 	if("no-init" in params)
+=======
+	if(NO_INIT_PARAMETER in params)
+>>>>>>> 355c21a... Remove mobs/idlenpcpool Initializers, make mob/client expansion happen when maxz is incremented (#34987)
 		return
 
 	cit_initialize()
@@ -225,3 +229,8 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+
+/world/proc/incrementMaxZ()
+	maxz++
+	SSmobs.MaxZChanged()
+	SSidlenpcpool.MaxZChanged()
