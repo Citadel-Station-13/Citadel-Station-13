@@ -36,12 +36,7 @@
 # duncathan
 
 /code/__DEFINES/atmospherics.dm @duncathan
-<<<<<<< HEAD
-/code/controllers/subsystem/air.dm @duncathan
-/code/modules/atmospherics/* @duncathan
-=======
 /code/modules/atmospherics/ @duncathan
->>>>>>> 8ed12ef... Merge pull request #35050 from ShizCalev/codeowners-fix
 
 # Jordie0608
 
