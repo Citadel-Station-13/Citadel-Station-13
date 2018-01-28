@@ -413,11 +413,8 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
-<<<<<<< HEAD
-=======
 	aux_zone = "l_hand"
 	aux_layer = HANDS_PART_LAYER
->>>>>>> 9be14c0... Fixes hands missing (#34973)
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -452,11 +449,8 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
-<<<<<<< HEAD
-=======
 	aux_zone = "r_hand"
 	aux_layer = HANDS_PART_LAYER
->>>>>>> 9be14c0... Fixes hands missing (#34973)
 	held_index = 2
 	px_x = 6
 	px_y = 0
