@@ -77,7 +77,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HEAD_LAYER				6
 #define HANDCUFF_LAYER			5
 #define LEGCUFF_LAYER			4
-#define HANDS_LAYER				3
+#define HANDS_PART_LAYER			3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			30		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -93,6 +93,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
+#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
+#define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
 #define UNDER_SHOES_LAYER			SHOES_LAYER+1
 #define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
 #define UNDER_EARS_LAYER			EARS_LAYER+1
@@ -119,6 +121,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
+#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
+#define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
 #define ABOVE_SHOES_LAYER			SHOES_LAYER-1
 #define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
 #define ABOVE_EARS_LAYER			EARS_LAYER-1
