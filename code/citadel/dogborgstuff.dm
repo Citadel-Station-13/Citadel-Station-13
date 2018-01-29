@@ -31,32 +31,30 @@
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.emagged)
-		emagged = !emagged
-		if(emagged)
-			name = "combat jaws"
-			icon = 'icons/mob/dogborg.dmi'
-			icon_state = "jaws"
-			desc = "The jaws of the law."
-			flags_1 = CONDUCT_1
-			force = 12
-			throwforce = 0
-			hitsound = 'sound/weapons/bite.ogg'
-			attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
-			w_class = 3
-			sharpness = IS_SHARP
-		else
-			name = "puppy jaws"
-			icon = 'icons/mob/dogborg.dmi'
-			icon_state = "smalljaws"
-			desc = "The jaws of a small dog."
-			flags_1 = CONDUCT_1
-			force = 5
-			throwforce = 0
-			hitsound = 'sound/weapons/bite.ogg'
-			attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
-			w_class = 3
-			sharpness = IS_SHARP
-		update_icon()
+		name = "combat jaws"
+		icon = 'icons/mob/dogborg.dmi'
+		icon_state = "jaws"
+		desc = "The jaws of the law."
+		flags_1 = CONDUCT_1
+		force = 12
+		throwforce = 0
+		hitsound = 'sound/weapons/bite.ogg'
+		attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+		w_class = 3
+		sharpness = IS_SHARP
+	else
+		name = "puppy jaws"
+		icon = 'icons/mob/dogborg.dmi'
+		icon_state = "smalljaws"
+		desc = "The jaws of a small dog."
+		flags_1 = CONDUCT_1
+		force = 5
+		throwforce = 0
+		hitsound = 'sound/weapons/bite.ogg'
+		attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
+		w_class = 3
+		sharpness = IS_SHARP
+	update_icon()
 
 
 //Cuffs
@@ -189,107 +187,101 @@
 /obj/item/soap/tongue/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.emagged)
-		emagged = !emagged
-		if(emagged)
-			name = "hacked tongue of doom"
-			desc = "Your tongue has been upgraded successfully. Congratulations."
-			icon = 'icons/mob/dogborg.dmi'
-			icon_state = "syndietongue"
-			cleanspeed = 10 //(nerf'd)tator soap stat
-		else
-			name = "synthetic tongue"
-			desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
-			icon = 'icons/mob/dogborg.dmi'
-			icon_state = "synthtongue"
-			cleanspeed = initial(cleanspeed)
-		update_icon()
+		name = "hacked tongue of doom"
+		desc = "Your tongue has been upgraded successfully. Congratulations."
+		icon = 'icons/mob/dogborg.dmi'
+		icon_state = "syndietongue"
+		cleanspeed = 10 //(nerf'd)tator soap stat
+	else
+		name = "synthetic tongue"
+		desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
+		icon = 'icons/mob/dogborg.dmi'
+		icon_state = "synthtongue"
+		cleanspeed = initial(cleanspeed)
+	update_icon()
 
 /obj/item/soap/tongue/afterattack(atom/target, mob/user, proximity)
+	var/mob/living/silicon/robot.R = user
 	if(!proximity || !check_allowed_items(target))
 		return
-	if(user.client && (target in user.client.screen))
-		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
+	if(R.client && (target in R.client.screen))
+		to_chat(R, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
-		user.visible_message("[user] begins to lick off \the [target.name].", "<span class='warning'>You begin to lick off \the [target.name]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		R.visible_message("[R] begins to lick off \the [target.name].", "<span class='warning'>You begin to lick off \the [target.name]...</span>")
+		if(do_after(R, src.cleanspeed, target = target))
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't eat them.
-			to_chat(user, "<span class='notice'>You finish licking off \the [target.name].</span>")
+			to_chat(R, "<span class='notice'>You finish licking off \the [target.name].</span>")
 			qdel(target)
-			var/mob/living/silicon/robot.R = user
 			R.cell.give(50)
 	else if(istype(target,/obj/item)) //hoo boy. danger zone man
 		if(istype(target,/obj/item/trash))
-			user.visible_message("[user] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
-			if(do_after(user, src.cleanspeed, target = target))
+			R.visible_message("[R] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
+			if(do_after(R, src.cleanspeed, target = target))
 				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 					return //If they moved away, you can't eat them.
-				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
+				to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
 				qdel(target)
-				var/mob/living/silicon/robot.R = user
 				R.cell.give(250)
 			return
 		if(istype(target,/obj/item/stock_parts/cell))
-			user.visible_message("[user] begins cramming \the [target.name] down its throat.", "<span class='warning'>You begin cramming \the [target.name] down your throat...</span>")
-			if(do_after(user, 50, target = target))
+			R.visible_message("[R] begins cramming \the [target.name] down its throat.", "<span class='warning'>You begin cramming \the [target.name] down your throat...</span>")
+			if(do_after(R, 50, target = target))
 				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 					return //If they moved away, you can't eat them.
-				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
-				var/mob/living/silicon/robot.R = user
+				to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
 				var/obj/item/stock_parts/cell.C = target
 				R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
 				qdel(target)
 			return
 		var/obj/item/I = target //HAHA FUCK IT, NOT LIKE WE ALREADY HAVE A SHITTON OF WAYS TO REMOVE SHIT
-		if(!I.anchored && src.emagged)
-			user.visible_message("[user] begins chewing up \the [target.name]. Looks like it's trying to loophole around its diet restriction!", "<span class='warning'>You begin chewing up \the [target.name]...</span>")
-			if(do_after(user, 100, target = I)) //Nerf dat time yo
+		if(!I.anchored && R.emagged)
+			R.visible_message("[R] begins chewing up \the [target.name]. Looks like it's trying to loophole around its diet restriction!", "<span class='warning'>You begin chewing up \the [target.name]...</span>")
+			if(do_after(R, 100, target = I)) //Nerf dat time yo
 				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check. Even emags don't make you magically eat things at range.
 					return //If they moved away, you can't eat them.
-				visible_message("<span class='warning'>[user] chews up \the [target.name] and cleans off the debris!</span>")
-				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
+				visible_message("<span class='warning'>[R] chews up \the [target.name] and cleans off the debris!</span>")
+				to_chat(R, "<span class='notice'>You finish off \the [target.name].</span>")
 				qdel(I)
-				var/mob/living/silicon/robot.R = user
 				R.cell.give(500)
 			return
-		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
+		if(do_after(R, src.cleanspeed, target = target))
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't clean them.
-			to_chat(user,"<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(R,"<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else if(ishuman(target))
-		if(src.emagged)
-			var/mob/living/silicon/robot.R = user
+		if(R.emagged)
 			var/mob/living/L = target
 			if(R.cell.charge <= 666)
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
 			L.Knockdown(80)
 			L.apply_effect(STUTTER, 4)
-			L.visible_message("<span class='danger'>[user] has shocked [L] with its tongue!</span>", \
-								"<span class='userdanger'>[user] has shocked you with its tongue! You can feel the betrayal.</span>")
+			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
+								"<span class='userdanger'>[R] has shocked you with its tongue! You can feel the betrayal.</span>")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 			R.cell.use(666)
 		else
-			user.visible_message("<span class='warning'>\the [user] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
+			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
 			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 			return
 	else if(istype(target, /obj/structure/window))
-		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
+		if(do_after(R, src.cleanspeed, target = target))
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't clean them.
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(R, "<span class='notice'>You clean \the [target.name].</span>")
 			target.color = initial(target.color)
 	else
-		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
+		if(do_after(R, src.cleanspeed, target = target))
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't clean them.
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(R, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
