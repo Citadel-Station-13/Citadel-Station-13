@@ -190,7 +190,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	var/obj/structure/disposalholder/H = new()
+	var/obj/structure/disposalholder/H = new(src)
 	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()
