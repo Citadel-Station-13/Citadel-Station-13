@@ -2508,6 +2508,7 @@
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
+#include "modular_citadel\code\modules\cargo\console.dm"
 #include "modular_citadel\code\modules\client\preferences.dm"
 #include "modular_citadel\code\modules\client\preferences_savefile.dm"
 #include "modular_citadel\code\modules\client\loadout\_donator.dm"
