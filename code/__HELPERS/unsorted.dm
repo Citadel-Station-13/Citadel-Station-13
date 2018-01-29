@@ -1511,7 +1511,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	usr = M
 	. = CB.Invoke()
 	usr = temp
-  
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
