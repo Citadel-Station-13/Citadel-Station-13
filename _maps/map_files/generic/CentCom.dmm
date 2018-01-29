@@ -5758,6 +5758,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "pR" = (
+<<<<<<< HEAD
 /obj/structure/table/reinforced,
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -5809,13 +5810,21 @@
 	pixel_x = 32
 	},
 /obj/item/storage/fancy/donut_box,
+=======
+>>>>>>> 4168cf0... Merge pull request #35046 from WJohn/ferry_fix
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
+<<<<<<< HEAD
 	dir = 8
 	},
 /area/shuttle/syndicate/bridge)
+=======
+	dir = 5
+	},
+/area/centcom/ferry)
+>>>>>>> 4168cf0... Merge pull request #35046 from WJohn/ferry_fix
 "pX" = (
 /obj/item/storage/crayons,
 /obj/structure/table,
@@ -8646,6 +8655,7 @@
 	dwidth = 2;
 	height = 13;
 	id = "ferry_away";
+	json_key = "ferry";
 	name = "CentCom Ferry Dock";
 	width = 5
 	},
@@ -51067,7 +51077,7 @@ qb
 mD
 rs
 sw
-tw
+pR
 sw
 uQ
 mD
