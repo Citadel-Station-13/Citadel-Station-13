@@ -32,7 +32,7 @@
 		stored = make_from
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
-		stored = new /obj/structure/disposalconstruct(null, make_from = src)
+		stored = new /obj/structure/disposalconstruct(null, null , SOUTH , FALSE , src)
 
 	trunk_check()
 
@@ -189,7 +189,7 @@
 	sleep(5)
 	if(QDELETED(src))
 		return
-	var/obj/structure/disposalholder/H = new()
+	var/obj/structure/disposalholder/H = new(src)
 	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()
