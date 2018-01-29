@@ -291,12 +291,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.viruses)
 			A.cure(FALSE)
 
-
+//CITADEL EDIT
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
 	else
 		if(C.client)
 			C.canbearoused = C.client.prefs.arousable
+// EDIT ENDS
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -311,7 +312,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 
-	if(H.has_disability(DISABILITY_HUSK))
+	if(H.has_trait(TRAIT_HUSK))
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -452,7 +453,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(HD && !(H.has_disability(DISABILITY_HUSK)))
+	if(HD && !(H.has_trait(TRAIT_HUSK)))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -463,18 +464,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		var/mutable_appearance/eye_overlay
-		if(!has_eyes)
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
-		else
-			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
-		if((EYECOLOR in species_traits) && has_eyes)
-			eye_overlay.color = "#" + H.eye_color
-		if(OFFSET_FACE in H.dna.species.offset_features)
-			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-		standing += eye_overlay
+		if(!(NOEYES in species_traits))
+			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/eye_overlay
+			if(!has_eyes)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+			else
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			if((EYECOLOR in species_traits) && has_eyes)
+				eye_overlay.color = "#" + H.eye_color
+			if(OFFSET_FACE in H.dna.species.offset_features)
+				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -504,11 +506,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_TAUR_LAYER)
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_TAUR_LAYER)
 	var/list/standing	= list()
 
-	for(var/L in relevant_layers)
-		H.remove_overlay(L)
+	H.remove_overlay(BODY_BEHIND_LAYER)
+	H.remove_overlay(BODY_ADJ_LAYER)
+	H.remove_overlay(BODY_FRONT_LAYER)
+	//CITADEL EDIT - Do not forget to add this to relevent_layers list just above too!
+	H.remove_overlay(BODY_TAUR_LAYER)
 
 	if(!mutant_bodyparts)
 		return
@@ -572,6 +577,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+//CITADEL EDIT
 	//Race specific bodyparts:
 	//Xenos
 	if("xenodorsal" in mutant_bodyparts)
@@ -602,6 +608,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "taur"
+//END EDIT
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -634,7 +641,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/image/I
 
-	for(var/layer in relevant_layers)
+	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
 
 		for(var/bodypart in bodyparts_to_add)
@@ -668,8 +675,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				if("moth_wings")
+					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 
-				//Mammal Bodyparts (Canid/Felid, others maybe in the future)
+				//Mammal Bodyparts
 				if("mam_tail")
 					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
 				if("mam_waggingtail")
@@ -689,13 +698,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if("xenotail")
 					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
 
-				//Slimecoon Bodyparts
-			/*	if("slimecoontail")
-					S = /datum/sprite_accessory/slimecoon_tail
-				if("slimecoonears")
-					S = /datum/sprite_accessory/slimecoon_ears
-				if("slimecoonsnout")
-					S = /datum/sprite_accessory/slimecoon_snout*/
 			if(!S || S.icon_state == "none")
 				continue
 
@@ -723,7 +725,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			if(!(H.has_disability(DISABILITY_HUSK)))
+			if(!(H.has_trait(TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
@@ -837,12 +839,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						else
 							I.color = "#[H.hair_color]"
 				standing += I
-
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
 
-	for(var/L in relevant_layers)
-		H.apply_overlay(L)
+	H.apply_overlay(BODY_BEHIND_LAYER)
+	H.apply_overlay(BODY_ADJ_LAYER)
+	H.apply_overlay(BODY_FRONT_LAYER)
+	H.apply_overlay(BODY_TAUR_LAYER) // CITADEL EDIT
 
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
@@ -1101,17 +1104,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
-	//The fucking DISABILITY_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.has_disability(DISABILITY_FAT))//I share your pain, past coder.
+	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	if(H.has_trait(TRAIT_FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.remove_disability(DISABILITY_FAT, OBESITY)
+			H.remove_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
-			H.add_disability(DISABILITY_FAT, OBESITY)
+			H.add_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1219,13 +1222,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		flight = 1
 
 	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
-		if(H.status_flags & GOTTAGOFAST)
+		if(H.has_trait(TRAIT_GOTTAGOFAST))
 			. -= 1
-		if(H.status_flags & GOTTAGOREALLYFAST)
+		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
 		. += speedmod
 
-	if(H.status_flags & IGNORESLOWDOWN)
+	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
 
 	if(H.has_gravity())
@@ -1268,7 +1271,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 25)
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
-		if(H.has_disability(DISABILITY_FAT))
+		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
@@ -1283,7 +1286,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
+	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)
 		if(target != user)
 			add_logs(user, target, "shaked")
@@ -1314,7 +1317,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.has_disability(DISABILITY_PACIFISM))
+	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(target.check_block())
@@ -1369,6 +1372,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+// CITADEL EDIT slap mouthy gits
 	var/aim_for_mouth  = user.zone_selected == "mouth"
 	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
@@ -1380,7 +1384,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		"You hear a slap.")
 		target.endTailWag()
 		return FALSE
-	else if(target.check_block())
+	else if(target.check_block()) //END EDIT
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
