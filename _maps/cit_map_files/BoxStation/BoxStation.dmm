@@ -56902,7 +56902,7 @@
 /area/quartermaster/storage)
 "QoO" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "QoP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,

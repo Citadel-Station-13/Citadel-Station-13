@@ -105035,7 +105035,7 @@
 /area/quartermaster/office)
 "ehK" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "ehL" = (
 /obj/structure/cable/white{
