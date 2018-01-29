@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-
+	
 	var/auto_call = 99000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -424,6 +424,7 @@ SUBSYSTEM_DEF(shuttle)
 			return 2
 	return 0	//dock successful
 
+
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
@@ -447,13 +448,6 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(!(M in transit_requesters))
 			transit_requesters += M
-
-/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 3 hours has passed.
-	if(world.time > auto_call && EMERGENCY_IDLE_OR_RECALLED) //3 hours
-		SSshuttle.emergency.request(null, 1.5)
-		priority_announce("The shift has come to an end and the shuttle called.")
-		log_game("Round time limit reached. Shuttle has been auto-called.")
-		message_admins("Round time limit reached. Shuttle called.")
 
 /datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
