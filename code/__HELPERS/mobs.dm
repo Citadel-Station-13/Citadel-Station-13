@@ -111,7 +111,7 @@
 		"spines" = pick(GLOB.spines_list),
 		"body_markings" = pick(GLOB.body_markings_list),
 		"legs" = "Normal Legs",
-		"moth_wings" = pick(GLOB.moth_wings_list)
+		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
 		"mam_body_markings" = "None",
 		"mam_ears" 			= "None",

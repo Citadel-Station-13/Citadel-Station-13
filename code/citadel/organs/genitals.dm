@@ -260,7 +260,7 @@
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
 
-	if(H.has_disability(DISABILITY_HUSK))
+	if(H.has_trait(TRAIT_HUSK))
 		return
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again

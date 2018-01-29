@@ -55,7 +55,7 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
-
+//		var/mob/living/simple_animal/borer/B = has_brain_worms()
 		if(mind)
 			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 			if(changeling)
@@ -574,7 +574,7 @@
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-	threatcount += 6 //fuk u antags <3
+		threatcount += 6 //fuk u antags <3
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
@@ -1032,3 +1032,17 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+//CITADEL EDIT - TODO: Enable people to set custom races
+/mob/living/carbon/human/species/mammal
+	race = /datum/species/mammal
+/mob/living/carbon/human/species/avian
+	race = /datum/species/avian
+/mob/living/carbon/human/species/aquatic
+	race = /datum/species/aquatic
+/mob/living/carbon/human/species/insect
+	race = /datum/species/insect
+/mob/living/carbon/human/species/xeno
+	race = /datum/species/xeno
+/mob/living/carbon/human/species/guilmon
+	race = /datum/species/guilmon
