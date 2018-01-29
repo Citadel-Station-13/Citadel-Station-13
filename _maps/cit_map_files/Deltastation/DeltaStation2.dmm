@@ -105034,12 +105034,7 @@
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
 "ehK" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4;
-	output_dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/box,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
 "ehL" = (
@@ -105534,6 +105529,20 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"QOt" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 2;
+	output_dir = 1
+	},
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/southright{
+	name = "ORM Access";
+	req_access_txt = "64"
+	},
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningoffice)
 
 (1,1,1) = {"
 aaa
@@ -148817,7 +148826,7 @@ bgK
 bii
 bjU
 blR
-baU
+QOt
 boO
 bqZ
 bsT
@@ -149542,7 +149551,7 @@ afj
 ahH
 abi
 aip
-QOo
+QOn
 ajb
 ajo
 ajP
@@ -150314,7 +150323,7 @@ ahH
 abi
 ais
 aiI
-QOp
+QOn
 ajq
 aig
 akt
