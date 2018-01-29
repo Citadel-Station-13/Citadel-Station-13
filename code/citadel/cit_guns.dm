@@ -1215,5 +1215,4 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		. += body_inhand
 
 /obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
-	..()
 	materials = list(MAT_METAL = 200)
