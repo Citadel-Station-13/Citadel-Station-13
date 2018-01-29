@@ -13,11 +13,11 @@
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
-#define PRELOAD_RSC	1			/*set to:
-								0 to allow using external resources or on-demand behaviour;
-								1 to use the default behaviour;
-								2 for preloading absolutely everything;
-								*/
+#ifndef PRELOAD_RSC				//set to:
+#define PRELOAD_RSC	0			//	0 to allow using external resources or on-demand behaviour;
+#endif							//	1 to use the default behaviour;
+								//	2 for preloading absolutely everything;
+
 
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
