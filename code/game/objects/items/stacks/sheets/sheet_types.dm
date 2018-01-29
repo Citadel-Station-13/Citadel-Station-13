@@ -132,6 +132,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	recipes = GLOB.metal_recipes
 	return ..()
 
+/obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+	
 /*
  * Plasteel
  */
@@ -341,12 +345,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	return ..()
-
-/obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
-		return
-	..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes

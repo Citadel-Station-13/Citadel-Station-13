@@ -10,7 +10,6 @@
 	light_power = 3
 	light_color = "#6A4D2F"
 
-
 /obj/effect/clockwork/city_of_cogs_rift/singularity_act()
 	return
 
@@ -42,13 +41,20 @@
 
 /obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
 	if(!QDELETED(AM))
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client && !L.incapacitated())
+				L.visible_message("<span class='notice'>[L] starts climbing through [src]...</span>", \
+				"<span class='notice'>You begin climbing through [src]...</span>")
+				if(!do_after(L, 30, target = L))
+					return
 		beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
 	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))
 	if(is_servant_of_ratvar(AM))
 		T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
-	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", ignored_mob = AM)
+	AM.visible_message("<span class='danger'>[AM] passes through [src]!</span>", null, null, null, AM)
 	AM.forceMove(T)
 	AM.visible_message("<span class='danger'>[AM] materializes from the air!</span>", \
 	"<span class='boldannounce'>You pass through [src] and appear [is_servant_of_ratvar(AM) ? "back at the City of Cogs" : "somewhere unfamiliar. Looks like it was a one-way trip.."].</span>")

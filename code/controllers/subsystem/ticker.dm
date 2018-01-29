@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(ticker)
 		"aiff" = TRUE
 	)
 
-	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
@@ -125,8 +125,7 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "config/title_music/sounds/[pick(music)]"
-
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
