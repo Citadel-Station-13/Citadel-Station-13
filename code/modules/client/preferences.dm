@@ -86,6 +86,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"spines" = "None",
 							"body_markings" = "None",
 							"legs" = "Normal Legs",
+							"moth_wings" = "Plain",
 							"mcolor2" = "FFF",
 							"mcolor3" = "FFF",
 							"mam_body_markings" = "None",
@@ -472,6 +473,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
 			if("legs" in pref_species.mutant_bodyparts)
 				dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
+			if("moth_wings" in pref_species.mutant_bodyparts)
+				dat += "<b>Moth wings</b><a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+
 			if("taur" in pref_species.mutant_bodyparts)
 				dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 			if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
@@ -1191,6 +1195,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.r_wings_list
 					if(new_wings)
 						features["wings"] = new_wings
+						
+				if("moth_wings")
+					var/new_moth_wings
+					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
+					if(new_moth_wings)
+						features["moth_wings"] = new_moth_wings
 
 				if("frills")
 					var/new_frills
