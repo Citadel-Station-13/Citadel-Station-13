@@ -625,30 +625,30 @@
 				T.adjustFireLoss(3)
 				update_gut()
 
-	var/atom/target = pick(touchable_items)
-	if(iscarbon(target)) //Handle the target being a mob
-		var/mob/living/carbon/T = target
-		if(T.stat == DEAD && T.digestable)	//Mob is now dead
-			message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
-			to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
-			to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
-			src.hound.cell.give(30000) //Fueeeeellll
-			T.stop_sound_channel(CHANNEL_PRED)
-			playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
-			T.stop_sound_channel(CHANNEL_PRED)
-			T.playsound_local("death_prey",60)
-			qdel(T)
-			update_gut()
-//Handle the target being anything but a mob
-	else if(isobj(target))
-		var/obj/T = target
-		if(T.type in important_items) //If the object is in the items_preserved global list
-			src.items_preserved += T
-		//If the object is not one to preserve
-		else
-			qdel(T)
-			src.update_gut()
-			src.hound.cell.give(10)
+		var/atom/target = pick(touchable_items)
+		if(iscarbon(target)) //Handle the target being a mob
+			var/mob/living/carbon/T = target
+			if(T.stat == DEAD && T.digestable)	//Mob is now dead
+				message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
+				to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
+				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
+				src.hound.cell.give(30000) //Fueeeeellll
+				T.stop_sound_channel(CHANNEL_PRED)
+				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				T.stop_sound_channel(CHANNEL_PRED)
+				T.playsound_local("death_prey",60)
+				qdel(T)
+				update_gut()
+	//Handle the target being anything but a mob
+		else if(isobj(target))
+			var/obj/T = target
+			if(T.type in important_items) //If the object is in the items_preserved global list
+				src.items_preserved += T
+			//If the object is not one to preserve
+			else
+				qdel(T)
+				src.update_gut()
+				src.hound.cell.give(10)
 	else
 		testing("clean_cycle finished and reset")
 		cleaning_cycles = initial(cleaning_cycles)
