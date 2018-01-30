@@ -389,7 +389,7 @@
 	hound = loc
 	if(!proximity)
 		return
-	if(!ishuman(target))
+	if(!iscarbon(target))
 		return
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
@@ -398,7 +398,7 @@
 		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
 		return
 	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src.name].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
-	if(!patient && ishuman(target) && !target.buckled && do_after (user, 50, target = target))
+	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 50, target = target))
 
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 			return //If they moved away, you can't eat them.
@@ -406,10 +406,10 @@
 		if(patient) return //If you try to eat two people at once, you can only eat one.
 
 		else //If you don't have someone in you, proceed.
-			if(!isslimeperson(target) && ("toxin" in injection_chems))
+			if(!isjellyperson(target) && ("toxin" in injection_chems))
 				injection_chems -= "toxin"
 				injection_chems += "antitoxin"
-			if(isslimeperson(target) && !("toxin" in injection_chems))
+			if(isjellyperson(target) && !("toxin" in injection_chems))
 				injection_chems -= "antitoxin"
 				injection_chems += "toxin"
 			target.forceMove(src)
@@ -443,8 +443,8 @@
 	if(length(contents) > 0)
 		hound.visible_message("<span class='warning'>[hound.name] empties out their contents via their release port.</span>", "<span class='notice'>You empty your contents via your release port.</span>")
 		if(target)
-			if(ishuman(target))
-				var/mob/living/carbon/human/person = target
+			if(iscarbon(target))
+				var/mob/living/carbon/person = target
 				person.forceMove(get_turf(src))
 				person.reset_perspective()
 			else
@@ -452,8 +452,8 @@
 				T.loc = hound.loc
 		else
 			for(var/C in contents)
-				if(ishuman(C))
-					var/mob/living/carbon/human/person = C
+				if(iscarbon(C))
+					var/mob/living/carbon/person = C
 					person.forceMove(get_turf(src))
 					person.reset_perspective()
 				else
@@ -653,8 +653,8 @@
 		var/atom/target = pick(touchable_items)
 
 		//Handle the target being a mob
-		if(ishuman(target))
-			var/mob/living/carbon/human/T = target
+		if(iscarbon(target))
+			var/mob/living/carbon/T = target
 
 			//Mob is now dead
 			if(T.stat == DEAD && T.digestable)
@@ -729,8 +729,8 @@
 		return
 	if(target.anchored)
 		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/brigman = target
+	if(iscarbon(target))
+		var/mob/living/carbon/brigman = target
 		if (!brigman.devourable)
 			to_chat(user, "The target registers an error code. Unable to insert into [src.name].")
 			return
@@ -796,10 +796,13 @@
 			if(length(contents) > 11) //grow that tum after a certain junk amount
 				hound.sleeper_r = 1
 				hound.update_icons()
+			else
+				hound.sleeper_r = 0
+				hound.update_icons()
 		return
 
-	else if(ishuman(target))
-		var/mob/living/carbon/human/trashman = target
+	else if(iscarbon(target))
+		var/mob/living/carbon/trashman = target
 		if (!trashman.devourable)
 			to_chat(user, "<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
