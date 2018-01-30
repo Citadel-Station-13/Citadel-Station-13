@@ -1216,3 +1216,34 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 
 /obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
 	materials = list(MAT_METAL = 200)
+
+////// Cit-specific toy gun stuff to discourage being morons with riot darts as a non-antag //////
+/obj/item/ammo_box/magazine/toy
+	var/riotdartcompatible = FALSE
+
+/obj/item/ammo_box/magazine/toy/give_round(obj/item/ammo_casing/R, replace_spent = FALSE)
+	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
+		return FALSE
+	else
+		. = ..()
+
+/obj/item/ammo_box/magazine/internal/shot/toy
+	var/riotdartcompatible = FALSE
+
+/obj/item/ammo_box/magazine/internal/shot/toy/give_round(obj/item/ammo_casing/R, replace_spent = FALSE)
+	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
+		return FALSE
+	else
+		. = ..()
+
+/obj/item/ammo_box/magazine/toy/smg/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/pistol/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/smgm45/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/m762/riot
+	riotdartcompatible = TRUE
