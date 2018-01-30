@@ -16,9 +16,9 @@
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
-		new /datum/track("Basic Beat",				 					'sound/misc/disco.ogg', 	600, 	5),
-		new /datum/track("Domination Dance",			 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Superiority Shimmy", 							'sound/misc/paradox.ogg', 	2400, 	4),
+		new /datum/track("Basic Beat",									'sound/misc/disco.ogg', 	600, 	5),
+		new /datum/track("Domination Dance",							'sound/misc/e1m1.ogg', 		950, 	6),
+		new /datum/track("Superiority Shimmy",							'sound/misc/paradox.ogg', 	2400, 	4),
 		new /datum/track("Ultimate High-Energy Hustle",					'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
@@ -177,7 +177,7 @@
 	if (QDELETED(src) || !active || charge < 5)
 		to_chat(usr, "<span class='warning'>The device is not able to play more DJ sounds at this time.</span>")
 		return
-		charge -= 5
+	charge -= 5
 	playsound(src, S,300,1)
 
 /obj/machinery/disco/proc/dance_setup()
