@@ -8,7 +8,6 @@
 	anchored = FALSE
 	verb_say = "states"
 	density = TRUE
-	req_access = list(ACCESS_ENGINE)
 	var/active = FALSE
 	var/list/rangers = list()
 	var/charge = 35
@@ -16,10 +15,14 @@
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
-		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
-		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/paradox.ogg', 	2400, 	4),
-		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
+		new /datum/track("Basic Beat",				 					'sound/misc/disco.ogg', 	600, 	5),
+		new /datum/track("Domination Dance",			 				'sound/misc/e1m1.ogg', 		950, 	6),
+		new /datum/track("Superiority Shimmy", 							'sound/misc/paradox.ogg', 	2400, 	4),
+		new /datum/track("Ultimate High-Energy Hustle",					'sound/misc/boogie2.ogg',	1770, 	5),
+		new	/datum/track("This is how it goes", 						'sound/misc/Awoo1.ogg', 	2400, 	5),
+		new /datum/track("Telephone Number", 							'sound/misc/Awoo2.ogg', 	2400, 	6),
+		new /datum/track("Awoo", 										'sound/misc/Awoo3.ogg', 	2400, 	4),
+		new	/datum/track("Wolf instinct",								'sound/misc/Awoo4.ogg',		2400, 	20),
 		)
 	var/datum/track/selection = null
 
@@ -115,6 +118,7 @@
 	dat += "<A href='?src=[REF(src)];action=pop'>Gunshot</A>"
 	dat += "<A href='?src=[REF(src)];action=saber'>Esword</A>"
 	dat += "<A href='?src=[REF(src)];action=harm'>Harm Alarm</A>"
+	dat += "<A href='?src=[REF(src)];action=awoo'>Awoo</A>"
 	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -171,12 +175,14 @@
 			deejay('sound/weapons/saberon.ogg')
 		if("harm")
 			deejay('sound/ai/harmalarm.ogg')
+		if ("awoo")
+			deejay('sound/misc/Awoo.ogg')
 
 /obj/machinery/disco/proc/deejay(var/S)
 	if (QDELETED(src) || !active || charge < 5)
 		to_chat(usr, "<span class='warning'>The device is not able to play more DJ sounds at this time.</span>")
 		return
-	charge -= 5
+	charge -= 1
 	playsound(src, S,300,1)
 
 /obj/machinery/disco/proc/dance_setup()
