@@ -351,7 +351,8 @@
 		/obj/item/documents/syndicate,
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
-		/obj/item/grenade
+		/obj/item/grenade,
+		/obj/item/storage
 		)
 
 	var/list/important_items = list(
@@ -374,8 +375,10 @@
 		/obj/item/documents/syndicate,
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
-		/obj/item/grenade
+		/obj/item/grenade,
+		/obj/item/storage
 		)
+// Bags are prohibited from this due to the potential explotation of objects, same with brought
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
@@ -572,7 +575,6 @@
 			hound.update_icons()
 		//Return original patient
 		return(patient)
-
 	//Check for a new patient
 	else
 		for(var/mob/living/carbon/human/C in contents)
@@ -593,7 +595,6 @@
 	if(cleaning && !patient)
 		hound.sleeper_r = 1
 		hound.sleeper_g = 0
-
 	//Couldn't find anyone, and not cleaning
 	else if(!cleaning && !patient)
 		hound.sleeper_r = 0
@@ -607,18 +608,15 @@
 //Gurgleborg process
 /obj/item/device/dogborg/sleeper/proc/clean_cycle()
 	testing("clean_cycle activated")
-	//Sanity? Maybe not required. More like if indigestible person OOC escapes.
+	//Sanity
 	for(var/I in items_preserved)
 		if(!(I in contents))
 			items_preserved -= I
-
 	var/list/touchable_items = contents - items_preserved
-
 	if(cleaning_cycles)
 		testing("clean_cycle being used")
 		cleaning_cycles--
 		cleaning = TRUE
-		//Burn all the mobs or add them to the exclusion list
 		for(var/mob/living/carbon/human/T in (touchable_items))
 			if((T.status_flags & GODMODE) || !T.digestable)
 				src.items_preserved += T
@@ -626,34 +624,9 @@
 				T.adjustBruteLoss(2)
 				T.adjustFireLoss(3)
 				update_gut()
-				addtimer(CALLBACK(src, .proc/clean_cycle), 50)
-	else
-		testing("clean_cycle resetted")
-		cleaning_cycles = initial(cleaning_cycles)
-		cleaning = FALSE
-		update_gut()
-		to_chat(hound, "<span class='notice'>Your [src.name] chimes it ends its self-cleaning cycle.</span>")//Belly is entirely empty
 
-	if(!length(contents))
-		to_chat(hound, "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>")
-		cleaning = FALSE
-		update_gut()
-		return
-
-	//sound effects
-	for(var/mob/living/M in contents)
-		if(prob(50))
-			M.stop_sound_channel(CHANNEL_PRED)
-			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
-			M.stop_sound_channel(CHANNEL_PRED)
-			M.playsound_local("digest_prey",60)
-
-
-	//Pick a random item to deal with (if there are any)
 	var/atom/target = pick(touchable_items)
-
-	//Handle the target being a mob
-	if(iscarbon(target))
+	if(iscarbon(target)) //Handle the target being a mob
 		var/mob/living/carbon/T = target
 		if(T.stat == DEAD && T.digestable)	//Mob is now dead
 			message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
@@ -665,10 +638,9 @@
 			T.stop_sound_channel(CHANNEL_PRED)
 			T.playsound_local("death_prey",60)
 			qdel(T)
-			src.update_gut()
-
-	//Handle the target being anything but a /mob/living/carbon/human
-	else
+			update_gut()
+//Handle the target being anything but a mob
+	else if(isobj(target))
 		var/obj/T = target
 		if(T.type in important_items) //If the object is in the items_preserved global list
 			src.items_preserved += T
@@ -677,7 +649,29 @@
 			qdel(T)
 			src.update_gut()
 			src.hound.cell.give(10)
-	return
+	else
+		testing("clean_cycle finished and reset")
+		cleaning_cycles = initial(cleaning_cycles)
+		cleaning = FALSE
+		to_chat(hound, "<span class='notice'>Your [src.name] chimes it ends its self-cleaning cycle.</span>")//Belly is entirely empty
+		update_gut()
+
+	if(!length(contents))
+		to_chat(hound, "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>")
+		cleaning = FALSE
+		update_gut()
+		return
+
+//sound effects
+	for(var/mob/living/M in contents)
+		if(prob(50))
+			M.stop_sound_channel(CHANNEL_PRED)
+			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+			M.stop_sound_channel(CHANNEL_PRED)
+			M.playsound_local("digest_prey",60)
+
+	if(cleaning)
+		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
 
 /obj/item/device/dogborg/sleeper/proc/inject_chem(chem)
 	testing("inject chem triggered, checking power")
@@ -777,7 +771,7 @@
 		if(target_obj.type in important_items)
 			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
-		if(target_obj.w_class > WEIGHT_CLASS_BULKY)
+		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
