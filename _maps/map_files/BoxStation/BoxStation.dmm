@@ -55488,7 +55488,8 @@
 =======
 "nxv" = (
 /obj/machinery/power/apc{
-	name = Construction Area APC;
+	name = "Construction Area APC";
+	areastring = "/area/construction";
 	pixel_y = -24
 >>>>>>> e645319... Changes up the Construction Area on Box slightly. (#35009)
 	},
