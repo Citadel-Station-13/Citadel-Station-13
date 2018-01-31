@@ -16,7 +16,7 @@
 	var/list/fromitem = list(/obj/item/melee/baton, /obj/item/melee/baton/loaded) //what it needs
 	afterattack(obj/O, mob/user as mob)
 		if(istype(O, product))
-			user << "<span class='warning'>[O] is already modified!"
+			to_chat(user,"<span class='warning'>[O] is already modified!")
 		else if(O.type in fromitem) //makes sure O is the right thing
 			var/obj/item/melee/baton/B = O
 			if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
