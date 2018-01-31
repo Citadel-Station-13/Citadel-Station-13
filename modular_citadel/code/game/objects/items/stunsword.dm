@@ -10,7 +10,7 @@
 /obj/item/device/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"
-	icon = 'icons/obj/vending_restock.dmi' //woop woop placeholder icon
+	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_donksoft"
 	var/product = /obj/item/melee/baton/stunsword //what it makes
 	var/list/fromitem = list(/obj/item/melee/baton, /obj/item/melee/baton/loaded) //what it needs
