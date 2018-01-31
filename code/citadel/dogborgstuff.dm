@@ -30,9 +30,9 @@
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
-	if(R.emagged)
-		emagged = !emagged
-		if(emagged)
+	if(R.EMAGGED)
+		EMAGGED = !EMAGGED
+		if(obj_flags & EMAGGED)
 			name = "combat jaws"
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "jaws"
@@ -188,9 +188,9 @@
 
 /obj/item/soap/tongue/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
-	if(R.emagged)
-		emagged = !emagged
-		if(emagged)
+	if(R.EMAGGED)
+		EMAGGED = !EMAGGED
+		if(obj_flags & EMAGGED)
 			name = "hacked tongue of doom"
 			desc = "Your tongue has been upgraded successfully. Congratulations."
 			icon = 'icons/mob/dogborg.dmi'
@@ -241,7 +241,7 @@
 				qdel(target)
 			return
 		var/obj/item/I = target //HAHA FUCK IT, NOT LIKE WE ALREADY HAVE A SHITTON OF WAYS TO REMOVE SHIT
-		if(!I.anchored && src.emagged)
+		if(!I.anchored && obj_flags & EMAGGED)
 			user.visible_message("[user] begins chewing up \the [target.name]. Looks like it's trying to loophole around its diet restriction!", "<span class='warning'>You begin chewing up \the [target.name]...</span>")
 			if(do_after(user, 100, target = I)) //Nerf dat time yo
 				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check. Even emags don't make you magically eat things at range.
@@ -261,7 +261,7 @@
 			qdel(C)
 			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else if(ishuman(target))
-		if(src.emagged)
+		if(obj_flags & EMAGGED)
 			var/mob/living/silicon/robot.R = user
 			var/mob/living/L = target
 			if(R.cell.charge <= 666)
