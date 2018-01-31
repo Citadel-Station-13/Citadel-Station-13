@@ -20,7 +20,7 @@
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
 					)
-	premium = list()
+	premium = list(/obj/item/device/electropack/shockcollar = 1)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend
