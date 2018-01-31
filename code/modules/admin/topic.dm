@@ -874,9 +874,9 @@
 
 		//Borer
 		if(jobban_isbanned(M, "borer") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'><font color=red>Borer</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'><font color=red>Borer</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'>Borer</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'>Borer</a></td>"
 
 		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
