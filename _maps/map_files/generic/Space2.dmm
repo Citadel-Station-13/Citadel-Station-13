@@ -2,6 +2,7 @@
 "a" = (
 /turf/open/space/basic,
 /area/space)
+<<<<<<< HEAD:_maps/map_files/generic/SpaceDock.dmm
 "b" = (
 /obj/docking_port/stationary{
 	dheight = 0;
@@ -14,6 +15,8 @@
 	},
 /turf/open/space,
 /area/space)
+=======
+>>>>>>> 79f2084... Move the whiteship dock to a space ruin (#35128):_maps/map_files/generic/Space2.dmm
 
 (1,1,1) = {"
 a
@@ -48356,7 +48359,7 @@ a
 a
 a
 a
-b
+a
 a
 a
 a
