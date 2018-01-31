@@ -16,10 +16,10 @@
 	var/list/spotlights = list()
 	var/list/sparkles = list()
 	var/static/list/songs = list(
-		new /datum/track("Engineering's Basic Beat", 					'sound/misc/disco.ogg', 	600, 	5),
-		new /datum/track("Engineering's Domination Dance", 				'sound/misc/e1m1.ogg', 		950, 	6),
-		new /datum/track("Engineering's Superiority Shimmy", 			'sound/misc/paradox.ogg', 	2400, 	4),
-		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
+		new /datum/track("Basic Beat",									'sound/misc/disco.ogg', 	600, 	5),
+		new /datum/track("Domination Dance",							'sound/misc/e1m1.ogg', 		950, 	6),
+		new /datum/track("Superiority Shimmy",							'sound/misc/paradox.ogg', 	2400, 	4),
+		new /datum/track("Ultimate High-Energy Hustle",					'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
 
@@ -115,6 +115,7 @@
 	dat += "<A href='?src=[REF(src)];action=pop'>Gunshot</A>"
 	dat += "<A href='?src=[REF(src)];action=saber'>Esword</A>"
 	dat += "<A href='?src=[REF(src)];action=harm'>Harm Alarm</A>"
+	dat += "<A href='?src=[REF(src)];action=awoo'>Awoo</A>"
 	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
