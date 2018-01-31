@@ -546,7 +546,13 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
+<<<<<<< HEAD
 /obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
+=======
+/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
+	. = ..()
+
+>>>>>>> be30e32... Fix roundend splash screens
 	holder = C
 
 	if(!visible)
