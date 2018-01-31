@@ -84,6 +84,7 @@
 
 /obj/item/vending_refill/kink
 	machine_name 	= "KinkMate"
+	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
 	charges 		= list(8, 5, 0)// of 20 standard, 12 contraband, 0 premium
 	init_charges 	= list(8, 5, 0)
