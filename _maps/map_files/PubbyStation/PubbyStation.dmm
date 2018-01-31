@@ -2002,7 +2002,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /obj/machinery/door/firedoor,
@@ -2013,7 +2012,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /obj/machinery/door/firedoor,
@@ -2022,7 +2020,6 @@
 "agV" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "executionfireblast";
-	layer = 2.9;
 	name = "blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
@@ -12511,7 +12508,6 @@
 "aFA" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hop";
-	layer = 2.9;
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -12539,7 +12535,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "hop";
-	layer = 3.1;
 	name = "privacy shutters"
 	},
 /turf/open/floor/plasteel,
@@ -20237,7 +20232,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "papersplease";
-	layer = 3.1;
 	name = "privacy shutters"
 	},
 /obj/item/folder/red,
@@ -21968,7 +21962,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/poddoor/preopen{
 	id = "papersplease";
-	layer = 3.1;
 	name = "privacy shutters"
 	},
 /obj/item/crowbar,
@@ -37199,7 +37192,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plasteel/dark,
@@ -37208,7 +37201,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment,
@@ -39513,8 +39506,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	layer = 2.9;
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -39849,8 +39841,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	layer = 2.9;
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -41098,7 +41089,7 @@
 "bUo" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -41461,7 +41452,7 @@
 "bVc" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "atmos blast door"
+	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment{
