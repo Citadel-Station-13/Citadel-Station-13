@@ -30,9 +30,9 @@
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
-	if(R.emagged)
-		emagged = !emagged
-		if(emagged)
+	if(R.EMAGGED)
+		EMAGGED = !EMAGGED
+		if(obj_flags & EMAGGED)
 			name = "combat jaws"
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "jaws"
@@ -188,8 +188,8 @@
 
 /obj/item/soap/tongue/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
-	if(R.obj_flags & EMAGGED)
-		obj_flags & EMAGGED = !obj_flags & EMAGGED
+	if(R.EMAGGED)
+		EMAGGED = !EMAGGED
 		if(obj_flags & EMAGGED)
 			name = "hacked tongue of doom"
 			desc = "Your tongue has been upgraded successfully. Congratulations."
