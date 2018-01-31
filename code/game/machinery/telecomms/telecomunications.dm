@@ -80,7 +80,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	// return TRUE if found, FALSE if not found
 	return signal && (!freq_listening.len || (signal.frequency in freq_listening))
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c08934... Merge pull request #35162 from tgstation/Cyberboss-patch-2
 /obj/machinery/telecomms/New()
 	GLOB.telecomms_list += src
 	..()
