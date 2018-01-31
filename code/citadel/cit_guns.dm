@@ -1221,7 +1221,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 //////////////////////// Zero's Meme //////////////////////////
 *//////////////////////////////////////////////////////////////
 /obj/item/ammo_box/magazine/toy/AM4
-	name = "foam force AM4 magazine"
+	name = "foam force AM4-B magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "foamagmag-15"
 	max_ammo = 60
@@ -1239,38 +1239,65 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	can_suppress = 0
 	needs_permit = 0
 	casing_ejector = 0
-	spread = 45		//Assault Rifleeeeeee
+	spread = 30		//Assault Rifleeeeeee
 	w_class = WEIGHT_CLASS_NORMAL
-	weapon_weight = WEAPON_HEAVY
 	burst_size = 4	//Shh.
 	fire_delay = 1
-	var/body_color = "#252528"
+	var/body_color = "#3333aa"
 
 /obj/item/gun/ballistic/automatic/AM4/update_icon()
-	..()
 	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "AM4-Body")
 	if(body_color)
 		body_overlay.color = body_color
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
 	add_overlay(body_overlay)
-
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_hands()
-
-/obj/item/gun/ballistic/automatic/AM4/ui_action_click(mob/user, var/datum/action/A)
-	if(istype(A, /datum/action/item_action/pick_color))
-		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
-			var/body_color_input = input(usr,"Choose Body Color") as color|null
-			if(body_color_input)
-				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+/obj/item/gun/ballistic/automatic/AM4/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/body_color_input = input(usr,"Choose Shroud Color") as color|null
+		if(body_color_input)
+			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		A.UpdateButtonIcon()
-	else
-		..()
+/obj/item/gun/ballistic/automatic/AM4/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
-/obj/item/gun/ballistic/automatic/AM4/worn_overlays(isinhands, icon_file)
-	. = ..()
-	if(isinhands)
-		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "AM4-Body")
-		body_inhand.color = body_color
-		. += body_inhand
+/obj/item/ammo_box/magazine/toy/AM4C
+	name = "foam force AM4-C magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamagmag-15"
+	max_ammo = 32
+	multiple_sprites = 0
+	materials = list(MAT_METAL = 200)
+
+/obj/item/gun/ballistic/automatic/AM4/C
+	name = "AM4-C"
+	desc = "A Relic from a bygone age. This one seems newer, yet less effective."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4"
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4
+	can_suppress = 0
+	needs_permit = 0
+	casing_ejector = 0
+	spread = 45		//Assault Rifleeeeeee
+	w_class = WEIGHT_CLASS_NORMAL
+	burst_size = 4	//Shh.
+	fire_delay = 1
+	var/shroud_color = "#4B6923"
+
+/datum/design/am4c
+	name = "Foam Force AM4-C Rifle"
+	id = "foam_am4c"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
+	build_path = /obj/item/gun/ballistic/automatic/x9/toy
+	category = list("hacked", "Misc")
