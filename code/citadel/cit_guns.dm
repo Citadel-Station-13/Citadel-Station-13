@@ -1216,3 +1216,61 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 
 /obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
 	materials = list(MAT_METAL = 200)
+
+/*/////////////////////////////////////////////////////////////
+//////////////////////// Zero's Meme //////////////////////////
+*//////////////////////////////////////////////////////////////
+/obj/item/ammo_box/magazine/toy/AM4
+	name = "foam force AM4 magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamagmag-15"
+	max_ammo = 60
+	multiple_sprites = 0
+	materials = list(MAT_METAL = 200)
+
+/obj/item/gun/ballistic/automatic/AM4
+	name = "AM4-B"
+	desc = "A Relic from a bygone age. Nobody quite knows why it's here. Has a polychromic coating."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4"
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4
+	can_suppress = 0
+	needs_permit = 0
+	casing_ejector = 0
+	spread = 45		//Assault Rifleeeeeee
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_HEAVY
+	burst_size = 4	//Shh.
+	fire_delay = 1
+	var/body_color = "#252528"
+
+/obj/item/gun/ballistic/automatic/AM4/update_icon()
+	..()
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "AM4-Body")
+	if(body_color)
+		body_overlay.color = body_color
+	add_overlay(body_overlay)
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/gun/ballistic/automatic/AM4/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+			var/body_color_input = input(usr,"Choose Body Color") as color|null
+			if(body_color_input)
+				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		A.UpdateButtonIcon()
+	else
+		..()
+
+/obj/item/gun/ballistic/automatic/AM4/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "AM4-Body")
+		body_inhand.color = body_color
+		. += body_inhand
