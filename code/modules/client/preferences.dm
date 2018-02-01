@@ -1768,7 +1768,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update=0)
 
 	//citadel code
-	character.give_genitals()
+	character.give_genitals(TRUE)
 	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
 
