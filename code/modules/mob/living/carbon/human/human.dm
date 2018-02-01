@@ -1033,6 +1033,7 @@
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
 
+/*
 //CITADEL EDIT - TODO: Enable people to set custom races
 /mob/living/carbon/human/species/mammal
 	race = /datum/species/mammal
@@ -1045,4 +1046,4 @@
 /mob/living/carbon/human/species/xeno
 	race = /datum/species/xeno
 /mob/living/carbon/human/species/guilmon
-	race = /datum/species/guilmon
+	race = /datum/species/guilmon */

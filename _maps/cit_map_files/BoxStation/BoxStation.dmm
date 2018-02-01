@@ -2688,7 +2688,6 @@
 	areastring = "/area/security/warden";
 	dir = 1;
 	name = "Brig Control APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -58364,7 +58363,6 @@
 "QsG" = (
 /obj/machinery/flasher{
 	id = "brigentry";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -59064,7 +59062,6 @@
 	dir = 8;
 	name = "Security Checkpoint APC";
 	pixel_x = -24;
-	pixel_y = 0
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
