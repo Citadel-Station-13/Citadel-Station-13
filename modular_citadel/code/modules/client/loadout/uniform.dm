@@ -78,18 +78,6 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/kilt
 
-/datum/gear/secskirt
-	name = "Security skirt"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/security/skirt
-	restricted_roles = list("Security Officer", "Warden", "Head of Security")
-
-/datum/gear/hosskirt
-	name = "Head of security's skirt"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/head_of_security/skirt
-	restricted_roles = list("Head of Security")
-
 /datum/gear/navyblueuniformhos
  	name = "Head of Security navyblue uniform"
  	category = slot_w_uniform
