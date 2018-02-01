@@ -2514,6 +2514,7 @@
 #include "modular_citadel\code\modules\client\loadout\_donator.dm"
 #include "modular_citadel\code\modules\client\loadout\backpack.dm"
 #include "modular_citadel\code\modules\client\loadout\glasses.dm"
+#include "modular_citadel\code\modules\client\loadout\gloves.dm"
 #include "modular_citadel\code\modules\client\loadout\hands.dm"
 #include "modular_citadel\code\modules\client\loadout\head.dm"
 #include "modular_citadel\code\modules\client\loadout\loadout.dm"
