@@ -1223,9 +1223,9 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 /obj/item/ammo_box/magazine/toy/AM4
 	name = "foam force AM4-B magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
-	icon_state = "foamagmag-15"
+	icon_state = "AM4MAG-60"
 	max_ammo = 60
-	multiple_sprites = 0
+	multiple_sprites = 2
 	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/AM4
@@ -1269,12 +1269,12 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
-/obj/item/ammo_box/magazine/toy/AM4C
+/obj/item/ammo_box/magazine/toy/AM4/C
 	name = "foam force AM4-C magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
-	icon_state = "foamagmag-15"
+	icon_state = "AM4MAG-32"
 	max_ammo = 32
-	multiple_sprites = 0
+	multiple_sprites = 2
 	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/AM4/C
@@ -1284,7 +1284,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	icon_state = "AM4"
 	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
-	mag_type = /obj/item/ammo_box/magazine/toy/AM4
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4/C
 	can_suppress = 0
 	needs_permit = 0
 	casing_ejector = 0
@@ -1299,5 +1299,5 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	id = "foam_am4c"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/x9/toy
+	build_path = /obj/item/gun/ballistic/automatic/AM4/C
 	category = list("hacked", "Misc")
