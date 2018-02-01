@@ -1220,22 +1220,21 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 /*/////////////////////////////////////////////////////////////
 //////////////////////// Zero's Meme //////////////////////////
 *//////////////////////////////////////////////////////////////
-/obj/item/ammo_box/magazine/toy/AM4
+/obj/item/ammo_box/magazine/toy/AM4B
 	name = "foam force AM4-B magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "AM4MAG-60"
 	max_ammo = 60
-	multiple_sprites = 2
+	multiple_sprites = 0
 	materials = list(MAT_METAL = 200)
 
-/obj/item/gun/ballistic/automatic/AM4
+/obj/item/gun/ballistic/automatic/AM4B
 	name = "AM4-B"
 	desc = "A Relic from a bygone age. Nobody quite knows why it's here. Has a polychromic coating."
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "AM4"
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
-	mag_type = /obj/item/ammo_box/magazine/toy/AM4
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4B
 	can_suppress = 0
 	needs_permit = 0
 	casing_ejector = 0
@@ -1245,7 +1244,8 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	fire_delay = 1
 	var/body_color = "#3333aa"
 
-/obj/item/gun/ballistic/automatic/AM4/update_icon()
+/obj/item/gun/ballistic/automatic/AM4B/update_icon()
+	..()
 	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "AM4-Body")
 	if(body_color)
 		body_overlay.color = body_color
@@ -1254,7 +1254,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_hands()
-/obj/item/gun/ballistic/automatic/AM4/AltClick(mob/living/user)
+/obj/item/gun/ballistic/automatic/AM4B/AltClick(mob/living/user)
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
 	if(user.incapacitated() || !istype(user))
@@ -1265,26 +1265,25 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		if(body_color_input)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-/obj/item/gun/ballistic/automatic/AM4/examine(mob/user)
+/obj/item/gun/ballistic/automatic/AM4B/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
-/obj/item/ammo_box/magazine/toy/AM4/C
+/obj/item/ammo_box/magazine/toy/AM4C
 	name = "foam force AM4-C magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "AM4MAG-32"
 	max_ammo = 32
-	multiple_sprites = 2
+	multiple_sprites = 0
 	materials = list(MAT_METAL = 200)
 
-/obj/item/gun/ballistic/automatic/AM4/C
+/obj/item/gun/ballistic/automatic/AM4C
 	name = "AM4-C"
 	desc = "A Relic from a bygone age. This one seems newer, yet less effective."
 	icon = 'icons/obj/guns/cit_guns.dmi'
-	icon_state = "AM4"
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
-	mag_type = /obj/item/ammo_box/magazine/toy/AM4/C
+	icon_state = "AM4C"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4C
 	can_suppress = 0
 	needs_permit = 0
 	casing_ejector = 0
@@ -1298,5 +1297,5 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	id = "foam_am4c"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/AM4/C
+	build_path = /obj/item/gun/ballistic/automatic/AM4C
 	category = list("hacked", "Misc")
