@@ -506,7 +506,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_TAUR_LAYER, ABOVE_BODY_ADJ_LAYER, UNDER_BODY_ADJ_LAYER)
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_TAUR_LAYER)
 	var/list/standing	= list()
 
 	H.remove_overlay(BODY_BEHIND_LAYER)
@@ -514,9 +514,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.remove_overlay(BODY_FRONT_LAYER)
 	//CITADEL EDIT - Do not forget to add this to relevent_layers list just above too!
 	H.remove_overlay(BODY_TAUR_LAYER)
-	H.remove_overlay(ABOVE_BODY_ADJ_LAYER)
-	H.remove_overlay(ABOVE_BODY_FRONT_LAYER)
-	H.remove_overlay(ABOVE_BODY_BEHIND_LAYER)
 	//END EDIT
 
 	if(!mutant_bodyparts)
@@ -841,9 +838,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(BODY_TAUR_LAYER) // CITADEL EDIT
-	H.apply_overlay(ABOVE_BODY_ADJ_LAYER)
-	H.apply_overlay(ABOVE_BODY_FRONT_LAYER)
-	H.apply_overlay(ABOVE_BODY_BEHIND_LAYER)
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
@@ -858,12 +852,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//CITADEL EDIT
 		if(BODY_TAUR_LAYER)
 			return "TAUR"
-		if(ABOVE_BODY_ADJ_LAYER)
-			return "ABADJ"
-		if(ABOVE_BODY_FRONT_LAYER)
-			return "ABFRONT"
-		if(ABOVE_BODY_BEHIND_LAYER)
-			return "ABBEHIND"
 	//END EDIT
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
