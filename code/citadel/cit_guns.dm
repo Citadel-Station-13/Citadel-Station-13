@@ -1292,7 +1292,6 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	w_class = WEIGHT_CLASS_NORMAL
 	burst_size = 4	//Shh.
 	fire_delay = 1
-	var/shroud_color = "#4B6923"
 
 /datum/design/am4c
 	name = "Foam Force AM4-C Rifle"
