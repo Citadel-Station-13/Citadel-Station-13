@@ -10,7 +10,7 @@
 /mob/living/simple_animal/verb/toggle_digestion()
 	set name = "Toggle Animal's Digestion"
 	set desc = "Enables digestion on this mob for 20 minutes."
-	set category = "Vore"
+	set category = "Object"
 	set src in oview(1)
 
 	var/datum/belly/B = vore_organs[vore_selected]
