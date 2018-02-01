@@ -65873,6 +65873,9 @@
 /area/medical/medbay/aft)
 "cFU" = (
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cFV" = (
@@ -68982,8 +68985,10 @@
 	},
 /area/medical/virology)
 "cLT" = (
-/obj/structure/bodycontainer/crematorium,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cLU" = (
@@ -69294,9 +69299,6 @@
 "cMC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
-	},
-/obj/machinery/button/crematorium{
-	pixel_x = -25
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -69742,7 +69744,11 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "cNt" = (
-/obj/structure/bodycontainer/morgue,
+/obj/machinery/button/crematorium{
+	id = "cremawheat";
+	pixel_x = -26;
+	req_access_txt = "27"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNu" = (
@@ -70311,6 +70317,11 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -72353,17 +72364,12 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTf" = (
-/obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
-	},
-/obj/item/storage/box/bodybags{
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -75664,6 +75670,9 @@
 	c_tag = "Morgue";
 	dir = 2;
 	network = list("SS13","Medbay")
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -81255,9 +81264,29 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "QuX" = (
+<<<<<<< HEAD
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+=======
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuY" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
+"QuZ" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/office)
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 
 (1,1,1) = {"
 aaa
@@ -91165,6 +91194,7 @@ bOd
 aZZ
 bOd
 EDi
+<<<<<<< HEAD
 cVY
 cWp
 dlk
@@ -91179,6 +91209,10 @@ cXa
 dlp
 cYy
 cVF
+=======
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaa
 aaa
@@ -92695,11 +92729,19 @@ aVu
 bvF
 bxw
 aVs
+<<<<<<< HEAD
 cVn
 cVu
 cVv
 cVB
 cVn
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aVs
 aVu
 bMw
@@ -93710,6 +93752,7 @@ aWZ
 djz
 aZZ
 djC
+<<<<<<< HEAD
 bcT
 beC
 beC
@@ -93717,6 +93760,15 @@ beC
 beC
 beC
 bcT
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 djz
 bsk
 djC
@@ -94987,7 +95039,7 @@ auG
 dnd
 dhK
 dnk
-aRG
+dnH
 aSP
 dne
 dhM
@@ -96256,6 +96308,7 @@ doJ
 atq
 aaf
 aaa
+<<<<<<< HEAD
 awO
 ayh
 azi
@@ -96263,6 +96316,12 @@ azh
 azi
 aDf
 aEu
+=======
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 cUS
 cUV
@@ -96778,6 +96837,7 @@ awO
 awN
 awN
 aaa
+<<<<<<< HEAD
 cUS
 cUV
 cUV
@@ -96790,6 +96850,23 @@ cUV
 cUV
 cVg
 cVj
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aip
 doJ
@@ -101489,7 +101566,7 @@ cLT
 cMC
 cNt
 cTf
-cNt
+QuZ
 cMI
 cPC
 djX
@@ -104477,6 +104554,7 @@ aol
 apD
 aqW
 dne
+<<<<<<< HEAD
 atJ
 auS
 avV
@@ -104486,6 +104564,17 @@ ayt
 ayt
 aCi
 aDt
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 azC
 aFW
 aHv
@@ -106357,11 +106446,11 @@ cyf
 cyZ
 cAc
 ctA
-cCf
-cCf
+cCj
+cCj
 cDY
-cCf
-cCf
+cCj
+cCj
 cCe
 cHJ
 bTs
@@ -106615,9 +106704,9 @@ cyZ
 cAd
 ctA
 dbr
-cCj
+QuX
 dDC
-cCj
+QuX
 cFU
 cCe
 ctK
@@ -108437,6 +108526,7 @@ cQY
 cQK
 cQY
 cYJ
+<<<<<<< HEAD
 cYO
 cYO
 cZo
@@ -108450,6 +108540,21 @@ cYX
 cYV
 cZB
 cZe
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaa
 aaa
@@ -113838,15 +113943,15 @@ cRi
 cRe
 cRi
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cSd
 cSg
-cSo
+cSn
 cSn
 cRi
 cTA
@@ -114080,8 +114185,8 @@ cIg
 dDF
 dvY
 cNj
-dwN
-dwN
+ciL
+ciL
 cPg
 dvY
 aaa
@@ -114337,8 +114442,8 @@ cIg
 dxQ
 dvY
 cNk
-dwN
-dwN
+ciL
+ciL
 cPh
 dvY
 aaa
@@ -115140,7 +115245,7 @@ cTt
 daA
 cSn
 cSn
-cSo
+cSn
 daL
 cRi
 daQ
@@ -116408,15 +116513,15 @@ dcC
 dcM
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cSd
 cSn
-cSo
+cSn
 cSg
 cRi
 ddh
@@ -118934,7 +119039,7 @@ alq
 alq
 dvY
 ckx
-dwN
+ciL
 dwQ
 cot
 cnb
@@ -119191,10 +119296,10 @@ apc
 chE
 dvY
 cky
-dwN
+ciL
 dwX
-dwN
-dwN
+ciL
+ciL
 cou
 csb
 dvY
@@ -119448,10 +119553,10 @@ avr
 chF
 dvY
 ckz
-dwN
+ciL
 dwY
-dwN
-dwN
+ciL
+ciL
 cgs
 csc
 dvY
@@ -119709,7 +119814,7 @@ dwQ
 cnb
 cou
 cpK
-dwN
+ciL
 csc
 dvY
 Qtj
@@ -120938,7 +121043,7 @@ aFs
 aGT
 axY
 aJm
-aKy
+aJu
 aMb
 EDE
 axY
@@ -146794,3 +146899,4 @@ aaa
 aaa
 aaa
 "}
+

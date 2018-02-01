@@ -90910,18 +90910,24 @@
 	},
 /area/medical/morgue)
 "dDM" = (
-/obj/structure/bodycontainer/morgue,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dDN" = (
-/obj/structure/bodycontainer/morgue,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/medical/morgue)
 "dDO" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -90930,6 +90936,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 2
 	},
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -91423,7 +91432,7 @@
 "dEV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
 "dEW" = (
 /turf/open/floor/plasteel/neutral,
@@ -92749,6 +92758,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
 "dHK" = (
@@ -93405,6 +93415,9 @@
 "dIW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -93418,6 +93431,9 @@
 	},
 /obj/structure/sign/poster/official/bless_this_spess{
 	pixel_y = -32
+	},
+/obj/structure/bodycontainer/morgue{
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -93436,14 +93452,18 @@
 	},
 /area/medical/morgue)
 "dIZ" = (
-/obj/structure/bodycontainer/morgue,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dJa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct/small,
-/obj/effect/landmark/event_spawn,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dJb" = (
@@ -101277,10 +101297,11 @@
 /turf/closed/wall/r_wall,
 /area/chapel/office)
 "dZO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bodycontainer/crematorium{
+	dir = 4;
 	id = "cremawheat"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -105531,6 +105552,45 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"QOn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
+"QOo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
+"QOp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/neutral,
+/area/medical/morgue)
+"QOq" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/medical/morgue)
+"QOr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -127039,7 +127099,7 @@ dml
 dsX
 djb
 dvU
-dxC
+drv
 dru
 dhD
 aad
@@ -135518,7 +135578,7 @@ doy
 dqo
 drM
 dtf
-duB
+duz
 dwd
 djA
 dzp
@@ -136407,6 +136467,7 @@ aaa
 aaa
 aaa
 aaa
+<<<<<<< HEAD
 aap
 aaw
 aaM
@@ -136434,6 +136495,35 @@ aav
 aav
 acR
 acR
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaa
 aaa
@@ -140017,6 +140107,7 @@ aaa
 aaa
 aaa
 aaa
+<<<<<<< HEAD
 adI
 aed
 aeu
@@ -140029,6 +140120,20 @@ agV
 aeu
 aeu
 aeu
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aid
 aiA
 aeb
@@ -144384,6 +144489,7 @@ aad
 aad
 aaa
 acF
+<<<<<<< HEAD
 acZ
 adu
 adM
@@ -144400,6 +144506,24 @@ ahB
 ahU
 aif
 adw
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaO
 ajw
@@ -146319,10 +146443,10 @@ dzR
 dAU
 dCA
 dDM
-dDO
+QOp
 dGl
-dHG
-dDN
+dHH
+QOq
 dCy
 dKZ
 dMy
@@ -146575,7 +146699,7 @@ dym
 dzS
 dAV
 dCB
-dDJ
+QOn
 dEV
 dGm
 dHH
@@ -146833,10 +146957,10 @@ dzT
 dAW
 dCB
 dDN
-dDN
+dEW
 dGl
-dHG
-dDO
+dHH
+QOr
 dCy
 dKX
 dMA
@@ -146844,6 +146968,7 @@ dNS
 aaa
 aaa
 aaa
+<<<<<<< HEAD
 dQS
 dRY
 dSX
@@ -146868,6 +146993,32 @@ eeW
 eeW
 egI
 dSX
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaa
 aaa
@@ -147089,7 +147240,7 @@ dyo
 dzU
 dAX
 dCB
-dDJ
+QOn
 dEW
 dGn
 dHI
@@ -147347,9 +147498,9 @@ dzV
 dAY
 dCB
 dDO
-dDN
+dEW
 dGl
-dHG
+dHH
 dIZ
 dCy
 dKZ
@@ -152641,6 +152792,7 @@ atG
 auO
 aoF
 aaa
+<<<<<<< HEAD
 ayF
 azI
 aAM
@@ -152653,6 +152805,20 @@ aHZ
 aJw
 aKT
 aMa
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aad
 aQR
@@ -153176,6 +153342,7 @@ aWa
 aXH
 aQS
 aad
+<<<<<<< HEAD
 bcH
 bem
 bfK
@@ -153194,6 +153361,26 @@ byB
 bAa
 bBX
 bDU
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 bHs
 bJl
@@ -153433,6 +153620,7 @@ aQQ
 aXI
 aZj
 aad
+<<<<<<< HEAD
 bcI
 ben
 bfL
@@ -153440,6 +153628,12 @@ bgW
 biw
 bkh
 bmb
+=======
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 2db9ecb... Morgue and Crematorium Repositions (#35113)
 aaa
 aaa
 brd
@@ -171067,3 +171261,4 @@ aaa
 aaa
 aaa
 "}
+
