@@ -152,5 +152,5 @@
 /datum/gear/turtleneck
 	name = "Tactitool Turtleneck"
 	category = slot_w_uniform
-	path = /obj/item/clothing/under/syndicate/tacticool
+	path = /obj/item/clothing/under/syndicate/cosmetic
 
