@@ -373,6 +373,11 @@
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
+	if(istype(target,/obj/item))
+		var/obj/item/target_obj = target
+		if(target_obj.type in important_items)
+			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
+			return
 	if(patient)
 		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
 		return
