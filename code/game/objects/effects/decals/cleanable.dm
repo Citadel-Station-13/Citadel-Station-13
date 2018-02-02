@@ -23,14 +23,8 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
-<<<<<<< HEAD
-	. = ..()
-
-/obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
-=======
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
->>>>>>> 33aa169... Lavaland bomb runtime fix (#35183)
 	if(mergeable_decal)
 		return TRUE
 
