@@ -330,31 +330,7 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
-	var/list/items_preserved = list(
-		/obj/item/hand_tele,
-		/obj/item/card/id,
-		/obj/item/device/pda,
-		/obj/item/device/aicard,
-		/obj/item/gun,
-		/obj/item/pinpointer,
-		/obj/item/clothing/shoes/magboots,
-		/obj/item/clothing/head/helmet/space,
-		/obj/item/clothing/suit/space,
-		/obj/item/reagent_containers/hypospray/CMO,
-		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/clothing/accessory/medal/gold/captain,
-		/obj/item/clothing/suit/armor,
-		/obj/item/documents,
-		/obj/item/nuke_core,
-		/obj/item/nuke_core_container,
-		/obj/item/areaeditor/blueprints,
-		/obj/item/documents/syndicate,
-		/obj/item/disk/nuclear,
-		/obj/item/bombcore,
-		/obj/item/grenade,
-		/obj/item/storage
-		)
-
+	var/list/items_preserved = list()
 	var/list/important_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
