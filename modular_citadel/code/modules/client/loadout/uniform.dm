@@ -136,7 +136,7 @@
 	name = "Track Pants"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/pants/track
-  
+
 /datum/gear/secskirt
 	name = "Security skirt"
 	category = slot_w_uniform
@@ -148,4 +148,9 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/rank/head_of_security/skirt
 	restricted_roles = list("Head of Security")
-  
+
+/datum/gear/turtleneck
+	name = "Tactitool Turtleneck"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/syndicate/tacticool
+
