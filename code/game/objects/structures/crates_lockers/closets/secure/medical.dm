@@ -45,6 +45,7 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/gun/energy/sickshot(src)
 	return
 
 /obj/structure/closet/secure_closet/CMO
