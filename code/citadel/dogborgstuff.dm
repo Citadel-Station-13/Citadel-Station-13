@@ -616,7 +616,7 @@
 				T.stop_sound_channel(CHANNEL_PRED)
 				T.playsound_local("death_prey",60)
 				for(var/obj/item/W in T)
-					if(!T.doUnEquip(W))
+					if(!T.dropItemToGround(W))
 						qdel(W)
 				qdel(T)
 				update_gut()
