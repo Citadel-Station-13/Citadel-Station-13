@@ -615,6 +615,9 @@
 				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				T.stop_sound_channel(CHANNEL_PRED)
 				T.playsound_local("death_prey",60)
+				for(var/obj/item/W in T)
+					if(!T.doUnEquip(W))
+						qdel(W)
 				qdel(T)
 				update_gut()
 	//Handle the target being anything but a mob
