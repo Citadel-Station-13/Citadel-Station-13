@@ -331,9 +331,9 @@
 	var/message_cooldown
 	var/breakout_time = 300
 	var/list/items_preserved = list()
-	var/list/important_items = list(
+	var/static/list/important_items = typecacheof(list(
 		/obj/item/hand_tele,
-		/obj/item/card/id/captains_spare,
+		/obj/item/card/id,
 		/obj/item/device/aicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
@@ -353,7 +353,8 @@
 		/obj/item/bombcore,
 		/obj/item/grenade,
 		/obj/item/storage
-		)
+		))
+
 // Bags are prohibited from this due to the potential explotation of objects, same with brought
 
 /obj/item/device/dogborg/sleeper/New()
@@ -373,14 +374,10 @@
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
-	if(istype(target,/obj/item))
-		var/obj/item/target_obj = target
-		if(target_obj.type in important_items)
-			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
-			return
 	if(patient)
 		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
 		return
+	testing("using sleeper/afterattack")
 	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src.name].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
 	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 50, target = target))
 
@@ -654,6 +651,9 @@
 	if(cleaning)
 		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
 
+/obj/item/device/dogborg/sleeper/proc/CheckAccepted(obj/item/I)
+	return is_type_in_typecache(I, important_items)
+
 /obj/item/device/dogborg/sleeper/proc/inject_chem(chem)
 	testing("inject chem triggered, checking power")
 	if(hound.cell.charge <= 800) //This is so borgs don't kill themselves with it. Remember, 750 charge used every injection.
@@ -698,6 +698,9 @@
 		return
 	if(target.anchored)
 		return
+	if(isobj(target))
+		to_chat(user, "You are above putting such trash inside of yourself.")
+		return
 	if(iscarbon(target))
 		var/mob/living/carbon/brigman = target
 		if (!brigman.devourable)
@@ -737,7 +740,7 @@
 
 /obj/item/device/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
 	hound = loc
-
+	var/obj/item/target_obj = target
 	if(!istype(target))
 		return
 	if(!proximity)
@@ -747,14 +750,16 @@
 	if(length(contents) > (max_item_count - 1))
 		to_chat(user,"<span class='warning'>Your [src.name] is full. Eject or process contents to continue.</span>")
 		return
-	if(istype(target,/obj/item))
-		var/obj/item/target_obj = target
-		if(target_obj.type in important_items)
+	if(isobj(target))
+		testing("Checking target type")
+		if(CheckAccepted(target))
 			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
+		testing("Target not on the important list")
 		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
+		testing("Target not too large.")
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
 		if(do_after(user, 15, target = target) && length(contents) < max_item_count)
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
