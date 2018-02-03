@@ -546,7 +546,7 @@
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
-
+/* // Yeah no. - Pooj
 /datum/species/jelly/stargazer
 	name = "Stargazer"
 	id = "stargazer"
@@ -715,3 +715,4 @@
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
 			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+			*/
