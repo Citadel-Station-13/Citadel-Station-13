@@ -235,9 +235,17 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.ghostize()
 				qdel(M)
 
+<<<<<<< HEAD
 		for(var/obj/O in conts) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
+=======
+		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
+			qdel(O)
+
+		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
+			new/obj/effect/decal/cleanable/ash/crematorium(src)
+>>>>>>> df1a99e... [READY] Fixes de-initialization of cleanables-ash (#35191)
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
