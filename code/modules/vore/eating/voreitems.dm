@@ -1,13 +1,12 @@
 // -------------- Sickshot -------------
 /obj/item/gun/energy/sickshot
 	name = "\improper MPA6 \'Sickshot\'"
-	desc = "A device that can trigger convusions in specific areas to eject foreign material from a host. Must be used very close to a target"
+	desc = "A device that can trigger convusions in specific areas to eject foreign material from a host. Must be used very close to a target. Not for Combat usage."
 
 	icon_state = "dragnet"
 	item_state = "dragnet"
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/sickshot)
-	selfcharge = 1
 
 /obj/item/ammo_casing/energy/sickshot
 	projectile_type = /obj/item/projectile/sickshot
@@ -17,18 +16,14 @@
 /obj/item/projectile/sickshot
 	name = "sickshot pulse"
 	icon_state = "e_netting"
-	damage = 15
+	damage = 1
 	damage_type = STAMINA
 	range = 2
 
 /obj/item/projectile/sickshot/on_hit(var/atom/movable/target, var/blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/H = target
-		if(prob(10))
-			H.vomit(20)
-			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
- 						"<span class='userdanger'>You throw up on the floor!</span>")
-		if(prob(20))
+		if(prob(5))
 			for(var/X in H.vore_organs)
 				var/datum/belly/B = H.vore_organs[X]
 				B.release_all_contents()
