@@ -140,7 +140,7 @@
 			bodies = list(C)
 		else
 			bodies |= C
-      
+
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
 		var/datum/mind/M
@@ -345,3 +345,347 @@
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
+<<<<<<< HEAD
+=======
+
+
+///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
+
+//Luminescents are able to consume and use slime extracts, without them decaying.
+
+/datum/species/jelly/luminescent
+	name = "Luminescent"
+	id = "lum"
+	say_mod = "says"
+	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
+	var/obj/effect/dummy/luminescent_glow/glow
+	var/obj/item/slime_extract/current_extract
+	var/datum/action/innate/integrate_extract/integrate_extract
+	var/datum/action/innate/use_extract/extract_minor
+	var/datum/action/innate/use_extract/major/extract_major
+	var/extract_cooldown = 0
+
+/datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
+	..()
+	if(current_extract)
+		current_extract.forceMove(C.drop_location())
+		current_extract = null
+	qdel(glow)
+	if(integrate_extract)
+		integrate_extract.Remove(C)
+	if(extract_minor)
+		extract_minor.Remove(C)
+	if(extract_major)
+		extract_major.Remove(C)
+
+/datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	glow = new(C)
+	update_glow(C)
+	integrate_extract = new(src)
+	integrate_extract.Grant(C)
+	extract_minor = new(src)
+	extract_minor.Grant(C)
+	extract_major = new(src)
+	extract_major.Grant(C)
+
+/datum/species/jelly/luminescent/proc/update_slime_actions()
+	integrate_extract.update_name()
+	integrate_extract.UpdateButtonIcon()
+	extract_minor.UpdateButtonIcon()
+	extract_major.UpdateButtonIcon()
+
+/datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
+	if(intensity)
+		glow_intensity = intensity
+	glow.set_light(glow_intensity, glow_intensity, C.dna.features["mcolor"])
+
+/obj/effect/dummy/luminescent_glow
+	name = "luminescent glow"
+	desc = "Tell a coder if you're seeing this."
+	icon_state = "nothing"
+	light_color = "#FFFFFF"
+	light_range = LUMINESCENT_DEFAULT_GLOW
+
+/obj/effect/dummy/luminescent_glow/Initialize()
+	. = ..()
+	if(!isliving(loc))
+		return INITIALIZE_HINT_QDEL
+
+/datum/action/innate/integrate_extract
+	name = "Integrate Extract"
+	desc = "Eat a slime extract to use its properties."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimeconsume"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/datum/species/jelly/luminescent/species
+
+/datum/action/innate/integrate_extract/New(_species)
+	..()
+	species = _species
+
+/datum/action/innate/integrate_extract/proc/update_name()
+	if(!species || !species.current_extract)
+		name = "Integrate Extract"
+		desc = "Eat a slime extract to use its properties."
+	else
+		name = "Eject Extract"
+		desc = "Eject your current slime extract."
+
+/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
+	if(!species || !species.current_extract)
+		button_icon_state = "slimeconsume"
+	else
+		button_icon_state = "slimeeject"
+	..()
+
+/datum/action/innate/integrate_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+	..(current_button, TRUE)
+	if(species && species.current_extract)
+		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
+
+/datum/action/innate/integrate_extract/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+		return
+	CHECK_DNA_AND_SPECIES(H)
+
+	if(species.current_extract)
+		var/obj/item/slime_extract/S = species.current_extract
+		if(!H.put_in_active_hand(S))
+			S.forceMove(H.drop_location())
+		species.current_extract = null
+		to_chat(H, "<span class='notice'>You eject [S].</span>")
+		species.update_slime_actions()
+	else
+		var/obj/item/I = H.get_active_held_item()
+		if(istype(I, /obj/item/slime_extract))
+			var/obj/item/slime_extract/S = I
+			if(!S.Uses)
+				to_chat(H, "<span class='warning'>[I] is spent! You cannot integrate it.</span>")
+				return
+			if(!H.temporarilyRemoveItemFromInventory(S))
+				return
+			S.forceMove(H)
+			species.current_extract = S
+			to_chat(H, "<span class='notice'>You consume [I], and you feel it pulse within you...</span>")
+			species.update_slime_actions()
+		else
+			to_chat(H, "<span class='warning'>You need to hold an unused slime extract in your active hand!</span>")
+
+/datum/action/innate/use_extract
+	name = "Extract Minor Activation"
+	desc = "Pulse the slime extract with energized jelly to activate it."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimeuse1"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/activation_type = SLIME_ACTIVATE_MINOR
+	var/datum/species/jelly/luminescent/species
+
+/datum/action/innate/use_extract/New(_species)
+	..()
+	species = _species
+
+/datum/action/innate/use_extract/IsAvailable()
+	if(..())
+		if(species && species.current_extract && (world.time > species.extract_cooldown))
+			return TRUE
+		return FALSE
+
+/datum/action/innate/use_extract/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+	..(current_button, TRUE)
+	if(species && species.current_extract)
+		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
+
+/datum/action/innate/use_extract/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!is_species(H, /datum/species/jelly/luminescent) || !species)
+		return
+	CHECK_DNA_AND_SPECIES(H)
+
+	if(species.current_extract)
+		species.extract_cooldown = world.time + 100
+		var/cooldown = species.current_extract.activate(H, species, activation_type)
+		species.extract_cooldown = world.time + cooldown
+
+/datum/action/innate/use_extract/major
+	name = "Extract Major Activation"
+	desc = "Pulse the slime extract with plasma jelly to activate it."
+	button_icon_state = "slimeuse2"
+	activation_type = SLIME_ACTIVATE_MAJOR
+
+///////////////////////////////////STARGAZERS//////////////////////////////////////////
+
+//Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
+
+/datum/species/jelly/stargazer
+	name = "Stargazer"
+	id = "stargazer"
+	var/datum/action/innate/project_thought/project_thought
+	var/datum/action/innate/link_minds/link_minds
+	var/list/mob/living/linked_mobs = list()
+	var/list/datum/action/innate/linked_speech/linked_actions = list()
+	var/mob/living/carbon/human/slimelink_owner
+	var/current_link_id = 0
+
+/datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/C)
+	..()
+	for(var/M in linked_mobs)
+		unlink_mob(M)
+	if(project_thought)
+		project_thought.Remove(C)
+	if(link_minds)
+		link_minds.Remove(C)
+
+/datum/species/jelly/stargazer/spec_death(gibbed, mob/living/carbon/human/H)
+	..()
+	for(var/M in linked_mobs)
+		unlink_mob(M)
+
+/datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	project_thought = new(src)
+	project_thought.Grant(C)
+	link_minds = new(src)
+	link_minds.Grant(C)
+	slimelink_owner = C
+	link_mob(C)
+
+/datum/species/jelly/stargazer/proc/link_mob(mob/living/M)
+	if(QDELETED(M) || M.stat == DEAD)
+		return FALSE
+	if(M.isloyal()) //mindshield implant, no dice
+		return FALSE
+	if(M in linked_mobs)
+		return FALSE
+	linked_mobs.Add(M)
+	to_chat(M, "<span class='notice'>You are now connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	var/datum/action/innate/linked_speech/action = new(src)
+	linked_actions.Add(action)
+	action.Grant(M)
+	return TRUE
+
+/datum/species/jelly/stargazer/proc/unlink_mob(mob/living/M)
+	var/link_id = linked_mobs.Find(M)
+	if(!(link_id))
+		return
+	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
+	action.Remove(M)
+	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
+	linked_mobs[link_id] = null
+	linked_actions[link_id] = null
+
+/datum/action/innate/linked_speech
+	name = "Slimelink"
+	desc = "Send a psychic message to everyone connected to your slime link."
+	button_icon_state = "link_speech"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/datum/species/jelly/stargazer/species
+
+/datum/action/innate/linked_speech/New(_species)
+	..()
+	species = _species
+
+/datum/action/innate/linked_speech/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!species || !(H in species.linked_mobs))
+		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(H)
+		return
+
+	var/message = sanitize(input("Message:", "Slime Telepathy") as text|null)
+
+	if(!species || !(H in species.linked_mobs))
+		to_chat(H, "<span class='warning'>The link seems to have been severed...</span>")
+		Remove(H)
+		return
+
+	if(QDELETED(H) || H.stat == DEAD)
+		species.unlink_mob(H)
+		return
+
+	if(message)
+		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
+		log_talk(H,"SlimeLink: [key_name(H)] : [msg]",LOGSAY)
+		for(var/X in species.linked_mobs)
+			var/mob/living/M = X
+			if(QDELETED(M) || M.stat == DEAD)
+				species.unlink_mob(M)
+				continue
+			to_chat(M, msg)
+
+		for(var/X in GLOB.dead_mob_list)
+			var/mob/M = X
+			var/link = FOLLOW_LINK(M, H)
+			to_chat(M, "[link] [msg]")
+
+/datum/action/innate/project_thought
+	name = "Send Thought"
+	desc = "Send a private psychic message to someone you can see."
+	button_icon_state = "send_mind"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/project_thought/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!is_species(H, /datum/species/jelly/stargazer))
+		return
+	CHECK_DNA_AND_SPECIES(H)
+
+	var/list/options = list()
+	for(var/mob/living/Ms in oview(H))
+		options += Ms
+	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in options
+	if(!M)
+		return
+
+	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
+	if(msg)
+		log_talk(H,"SlimeTelepathy: [key_name(H)]->[M.key] : [msg]",LOGSAY)
+		to_chat(M, "<span class='notice'>You hear an alien voice in your head... </span><font color=#008CA2>[msg]</font>")
+		to_chat(H, "<span class='notice'>You telepathically said: \"[msg]\" to [M]</span>")
+		for(var/dead in GLOB.dead_mob_list)
+			if(!isobserver(dead))
+				continue
+			var/follow_link_user = FOLLOW_LINK(dead, H)
+			var/follow_link_target = FOLLOW_LINK(dead, M)
+			to_chat(dead, "[follow_link_user] <span class='name'>[H]</span> <span class='alertalien'>Slime Telepathy --> </span> [follow_link_target] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
+
+/datum/action/innate/link_minds
+	name = "Link Minds"
+	desc = "Link someone's mind to your Slime Link, allowing them to communicate telepathically with other linked minds."
+	button_icon_state = "mindlink"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/datum/species/jelly/stargazer/species
+
+/datum/action/innate/link_minds/New(_species)
+	..()
+	species = _species
+
+/datum/action/innate/link_minds/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!is_species(H, /datum/species/jelly/stargazer))
+		return
+	CHECK_DNA_AND_SPECIES(H)
+
+	if(!H.pulling || !isliving(H.pulling) || H.grab_state < GRAB_AGGRESSIVE)
+		to_chat(H, "<span class='warning'>You need to aggressively grab someone to link minds!</span>")
+		return
+
+	var/mob/living/target = H.pulling
+
+	to_chat(H, "<span class='notice'>You begin linking [target]'s mind to yours...</span>")
+	to_chat(target, "<span class='warning'>You feel a foreign presence within your mind...</span>")
+	if(do_after(H, 60, target = target))
+		if(H.pulling != target || H.grab_state < GRAB_AGGRESSIVE)
+			return
+		if(species.link_mob(target))
+			to_chat(H, "<span class='notice'>You connect [target]'s mind to your slime link!</span>")
+		else
+			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
+			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+>>>>>>> a104bff... Stops Luminous Slime spam (#35240)
