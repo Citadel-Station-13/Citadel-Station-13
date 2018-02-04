@@ -2522,6 +2522,7 @@
 #include "modular_citadel\code\modules\client\loadout\shoes.dm"
 #include "modular_citadel\code\modules\client\loadout\suit.dm"
 #include "modular_citadel\code\modules\client\loadout\uniform.dm"
+#include "modular_citadel\code\modules\clothing\under\turtlenecks.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
 #include "modular_citadel\code\modules\mining\mine_items.dm"
 #include "modular_citadel\code\modules\mob\living\banana_spider.dm"
