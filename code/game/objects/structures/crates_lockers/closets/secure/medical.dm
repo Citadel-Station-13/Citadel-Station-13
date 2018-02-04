@@ -45,6 +45,7 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/gun/energy/sickshot(src)
 	return
 
 /obj/structure/closet/secure_closet/CMO
@@ -74,6 +75,7 @@
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
+	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/protolathe/department/medical(src)
 
 /obj/structure/closet/secure_closet/animal

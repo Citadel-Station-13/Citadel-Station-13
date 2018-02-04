@@ -5,7 +5,6 @@
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if (notransform)
 		return
@@ -73,6 +72,7 @@
 			bodytemperature += max((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 		else
 			bodytemperature += min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		switch(bodytemperature)
