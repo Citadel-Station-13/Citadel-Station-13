@@ -137,12 +137,25 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	name = "morgue"
 	desc = "Used to keep bodies in until someone fetches them."
 	icon_state = "morgue1"
+<<<<<<< HEAD
 	opendir = EAST
+=======
+	dir = EAST
+	var/beeper = TRUE
+>>>>>>> b2c456d... Morgues now beep if the mob is clonable. (#34622)
 
 /obj/structure/bodycontainer/morgue/New()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
 	..()
+
+/obj/structure/bodycontainer/morgue/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	beeper = !beeper
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "off" : "on"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -159,6 +172,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			for(var/mob/living/M in compiled)
 				if(M.client && !M.suiciding)
 					icon_state = "morgue4" // Cloneable
+					if(mob_occupant.stat == DEAD && beeper)
+						playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
 					break
 
 /obj/item/paper/guides/jobs/medical/morgue
