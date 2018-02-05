@@ -2512,6 +2512,7 @@
 #include "modular_citadel\code\game\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\objects\ids.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"
+#include "modular_citadel\code\game\objects\items\stunsword.dm"
 #include "modular_citadel\code\game\objects\items\devices\aicard.dm"
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
