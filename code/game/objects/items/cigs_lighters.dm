@@ -693,7 +693,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			cut_overlays()
 
 	if(istype(O, /obj/item/device/multitool))
-		if(screw && !emagged)//also kinky
+		if(screw && !(obj_flags & EMAGGED))//also kinky
 			if(!super)
 				cut_overlays()
 				super = 1
@@ -705,15 +705,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='notice'>You decrease the voltage of [src].</span>")
 				add_overlay("vapeopen_low")
 
-		if(screw && emagged)
+		if(screw && (obj_flags & EMAGGED))
 			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
-		if(!emagged)
+		if(!(obj_flags & EMAGGED))
 			cut_overlays()
-			emagged = TRUE
+			obj_flags |= EMAGGED
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
 			add_overlay("vapeopen_high")
@@ -790,15 +790,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		s.start()
 		vapetime = 0
 
-<<<<<<< HEAD
-	if(emagged && vapetime > 3)
-		var/datum/effect_system/smoke_spread/chem/s = new
-		s.set_up(reagents, 4, loc, silent=TRUE)
-=======
 	if((obj_flags & EMAGGED) && vapetime > 3)
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 		s.set_up(reagents, 4, 24, loc)
->>>>>>> fc5c1fd... Fixes Vape Pen (e-cig) reagent spam (#35182)
 		s.start()
 		vapetime = 0
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
