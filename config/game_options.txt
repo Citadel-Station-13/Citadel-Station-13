@@ -136,10 +136,10 @@ MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
 
-## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
+## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
-## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
 ## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
 
 #MIN_POP TRAITOR 0
@@ -508,5 +508,13 @@ ALLOW_MISCREANTS
 ## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
 #ALLOW_EXTENDED_MISCREANTS
 
-## Uncomment to give players the choice of their species before they join the game
-JOIN_WITH_MUTANT_RACE
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING
+
+## NIGHT SHIFT ##
+## Comment to disable nightshift
+NIGHTSHIFT_ENABLED
+
+## These values determine the start and end of night shift. By default, night shift starts at 8 PM, and ends at 6 AM.
+NIGHTSHIFT_START 20
+NIGHTSHIFT_FINISH 6

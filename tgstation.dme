@@ -2503,6 +2503,7 @@
 #include "modular_citadel\code\init.dm"
 #include "modular_citadel\code\__HELPERS\lists.dm"
 #include "modular_citadel\code\__HELPERS\mobs.dm"
+#include "modular_citadel\code\controllers\subsystem\cit_nightshift.dm"
 #include "modular_citadel\code\controllers\subsystem\job.dm"
 #include "modular_citadel\code\controllers\subsystem\shuttle.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
