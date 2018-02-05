@@ -260,11 +260,10 @@
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
 
-	if(H.has_disability(DISABILITY_HUSK))
+	if(H.has_trait(TRAIT_HUSK))
 		return
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
-
 	for(var/obj/item/organ/O in H.internal_organs)
 		if(istype(O, /obj/item/organ/genital))
 			var/obj/item/organ/genital/G = O
@@ -272,7 +271,6 @@
 				genitals_to_add += H.getorganslot(G.slot)
 	//Now we added all genitals that aren't internal and should be rendered
 
-	var/image/I
 	//start applying overlays
 	for(var/layer in relevant_layers)
 		var/layertext = genitals_layertext(layer)
@@ -289,43 +287,42 @@
 
 			if(!S || S.icon_state == "none")
 				continue
-			var/icon_string
+			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
 			if(S.alt_aroused)
 				G.aroused_state = H.isPercentAroused(G.aroused_amount)
 			else
 				G.aroused_state = FALSE
-			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
-			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 
 			if(S.center)
-				I = center_image(I,S.dimension_x,S.dimension_y)
+				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
-				I.color = "#[skintone2hex(H.skin_tone)]"
+				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
 			else
 				switch(S.color_src)
 					if("cock_color")
-						I.color = "#[H.dna.features["cock_color"]]"
+						genital_overlay.color = "#[H.dna.features["cock_color"]]"
 					if("breasts_color")
-						I.color = "#[H.dna.features["breasts_color"]]"
+						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
-						I.color = "#[H.dna.features["vag_color"]]"
+						genital_overlay.color = "#[H.dna.features["vag_color"]]"
 					if(MUTCOLORS)
 						if(fixed_mut_color)
-							I.color = "#[fixed_mut_color]"
+							genital_overlay.color = "#[fixed_mut_color]"
 						else
-							I.color = "#[H.dna.features["mcolor"]]"
+							genital_overlay.color = "#[H.dna.features["mcolor"]]"
 					if(MUTCOLORS2)
 						if(fixed_mut_color2)
-							I.color = "#[fixed_mut_color2]"
+							genital_overlay.color = "#[fixed_mut_color2]"
 						else
-							I.color = "#[H.dna.features["mcolor2"]]"
+							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
 					if(MUTCOLORS3)
 						if(fixed_mut_color3)
-							I.color = "#[fixed_mut_color3]"
+							genital_overlay.color = "#[fixed_mut_color3]"
 						else
-							I.color = "#[H.dna.features["mcolor3"]]"
-			standing += I
+							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()
 			standing = list()

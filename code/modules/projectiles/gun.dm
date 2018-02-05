@@ -15,8 +15,7 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	needs_permit = TRUE
-	unique_rename = FALSE
+	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -153,10 +152,10 @@
 			return
 
 
-	//Exclude lasertag guns from the DISABILITY_CLUMSY check.
+	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
+			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
 				process_fire(user, user, FALSE, params, shot_leg)
@@ -191,7 +190,7 @@
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user) || pin.emagged)
+		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE
 		else
 			pin.auth_fail(user)
