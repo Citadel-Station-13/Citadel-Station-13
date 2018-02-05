@@ -254,10 +254,10 @@
 /datum/config_entry/flag/nightshift_enabled
 
 /datum/config_entry/number/nightshift_start
-	value = 20
+	config_entry_value = 20
 
 /datum/config_entry/number/nightshift_finish
-	value = 6
+	config_entry_value = 6
 //End of Cit changes
 
 /datum/config_entry/number/bombcap/ValidateAndSet(str_val)
