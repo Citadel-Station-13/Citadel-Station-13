@@ -55,6 +55,7 @@ GLOBAL_PROTECT(security_mode)
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
+
 #ifdef UNIT_TESTS
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
 #else
@@ -163,10 +164,11 @@ GLOBAL_PROTECT(security_mode)
 	if(GLOB)
 		if(GLOB.total_runtimes != 0)
 			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
+
 #ifdef UNIT_TESTS
 		if(GLOB.failed_any_test)
 			LAZYADD(fail_reasons, "Unit Tests failed!")
-#endif
+
 		if(!GLOB.log_directory)
 			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
 	else
