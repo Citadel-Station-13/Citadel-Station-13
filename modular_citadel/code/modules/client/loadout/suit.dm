@@ -57,3 +57,31 @@
 	name = "Winter coat"
 	category = slot_wear_suit
 	path = /obj/item/clothing/suit/hooded/wintercoat
+
+/datum/gear/militaryjacket
+	name = "Military Jacket"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/jacket/miljacket
+
+/datum/gear/ianshirt
+	name = "Ian Shirt"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/ianshirt
+
+/datum/gear/navybluejackethos
+	name = "head of security's navyblue jacket"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/security/hos
+	restricted_roles = list("Head of Security")
+
+/datum/gear/navybluejacketwarden
+	name = "warden navyblue jacket"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/security/warden
+	restricted_roles = list("Warden")
+
+/datum/gear/navybluejacketofficer
+	name = "security officer's navyblue jacket"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/security/officer
+	restricted_roles = list("Security Officer")
