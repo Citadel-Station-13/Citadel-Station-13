@@ -47,3 +47,15 @@
 	name = "Wallet"
 	category = slot_hands
 	path = /obj/item/storage/wallet
+
+/datum/gear/flask
+	name = "Flask"
+	category = slot_hands
+	path = /obj/item/reagent_containers/food/drinks/flask
+	cost = 2
+
+/datum/gear/zippolighter
+	name = "Zippo Lighter"
+	category = slot_hands
+	path = /obj/item/lighter
+	cost = 2
