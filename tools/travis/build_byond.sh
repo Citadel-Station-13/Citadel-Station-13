@@ -30,7 +30,14 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
 	if grep '^/*var/' code/**/*.dm; then
 		echo "Unmanaged global var use detected in code, please use the helpers."
-		grep '^var/' code/*.dm | echo
+		exit 1
+	fi;
+	if grep -i 'centcomm' code/**/*.dm; then
+		echo "Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
+		exit 1
+	fi;
+	if grep -i 'centcomm' _maps/**/*.dmm; then
+		echo "Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
 		exit 1
 	fi;
 
@@ -44,6 +51,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 	if [ "$BUILD_TESTING" = true ]; then
 		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS tgstation.dme
 	else
-		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
+		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme && DreamDaemon tgstation.dmb -close -trusted -params "test-run&log-directory=travis"
+		cat data/logs/travis/clean_run.lk
 	fi;
 fi;
