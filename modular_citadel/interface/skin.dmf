@@ -71,6 +71,7 @@ window "mainwindow"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
+		splitter = 75
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 0,0
