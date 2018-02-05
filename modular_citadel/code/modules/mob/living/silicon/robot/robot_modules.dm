@@ -128,6 +128,7 @@
 		if("Default - Treads")
 			cyborg_base_icon = "sec-tread"
 			special_light_key = "sec"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Droid")
 			cyborg_base_icon = "Security"
 			special_light_key = "service"
@@ -145,11 +146,12 @@
 		if("Default - Treads")
 			cyborg_base_icon = "engi-tread"
 			special_light_key = "engineer"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	return ..()
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Asteroid")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Asteroid", "Droid")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -158,4 +160,8 @@
 		if("Asteroid")
 			cyborg_base_icon = "minerOLD"
 			special_light_key = "miner"
+		if("Droid")
+			cyborg_base_icon = "miner"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			hat_offset = 4
 	return ..()

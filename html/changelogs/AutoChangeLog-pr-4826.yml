@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "New and random characters no longer get generated with underwear"
-  - bugfix: "Human tails and ears now save properly again! As a side effect, tails/ears that were previously exclusive to mammals are now available to humans."

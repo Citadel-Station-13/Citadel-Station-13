@@ -13,6 +13,10 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
 
+/datum/sprite_accessory/moth_wings/none
+	name = "None"
+	icon_state = "none"
+	
 /***************** Alphabetical Order please ***************
 ************* Keep it to Ears, Tails, Tails Animated *********/
 

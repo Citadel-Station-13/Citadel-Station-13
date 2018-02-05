@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	var/obj/machinery/shuttle_manipulator/manipulator
+
 	var/list/mobile = list()
 	var/list/stationary = list()
 	var/list/transit = list()
@@ -53,19 +55,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-
+	
 	var/auto_call = 99000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
-	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
-	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
-	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
-
 	ordernum = rand(1, 9000)
 
 	for(var/pack in subtypesof(/datum/supply_pack))
@@ -76,16 +69,37 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!transit_turfs.len)
 		setup_transit_zone()
-	initial_move()
+
+	initial_load()
+
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 	color_space()
 #endif
+
+	if(!arrivals)
+		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+	if(!emergency)
+		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+	if(!supply)
+		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	..()
+
+/datum/controller/subsystem/shuttle/proc/initial_load()
+	if(!istype(manipulator))
+		CRASH("No shuttle manipulator found.")
+
+	for(var/s in stationary)
+		var/obj/docking_port/stationary/S = s
+		S.load_roundstart()
+		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -94,8 +108,9 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/z = SSmapping.transit.z_value
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -434,14 +449,6 @@ SUBSYSTEM_DEF(shuttle)
 		if(!(M in transit_requesters))
 			transit_requesters += M
 
-
-/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 3 hours has passed.
-	if(world.time > auto_call && EMERGENCY_IDLE_OR_RECALLED) //3 hours
-		SSshuttle.emergency.request(null, 1.5)
-		priority_announce("The shift has come to an end and the shuttle called.")
-		log_game("Round time limit reached. Shuttle has been auto-called.")
-		message_admins("Round time limit reached. Shuttle called.")
-
 /datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
@@ -556,15 +563,7 @@ SUBSYSTEM_DEF(shuttle)
 		T.flags_1 &= ~(UNUSED_TRANSIT_TURF_1)
 
 	M.assigned_transit = new_transit_dock
-	return TRUE
-
-/datum/controller/subsystem/shuttle/proc/initial_move()
-	for(var/obj/docking_port/mobile/M in mobile)
-		if(!M.roundstart_move)
-			continue
-		M.dockRoundstart()
-		M.roundstart_move = FALSE
-		CHECK_TICK
+	return new_transit_dock
 
 /datum/controller/subsystem/shuttle/Recover()
 	if (istype(SSshuttle.mobile))

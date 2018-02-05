@@ -261,14 +261,14 @@
 	if(exposed_temperature > 300)
 		burnbabyburn()
 
-/obj/structure/falsewall/clown
+/obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	mineral = /obj/item/stack/sheet/mineral/bananium
-	walltype = /turf/closed/wall/mineral/clown
-	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/closed/wall/mineral/clown)
+	walltype = /turf/closed/wall/mineral/bananium
+	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
 
 
 /obj/structure/falsewall/sandstone
@@ -295,6 +295,7 @@
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
 	mineral = /obj/item/stack/rods
+	mineral_amount = 5
 	walltype = /turf/closed/wall/mineral/iron
 	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/closed/wall/mineral/iron)
 
