@@ -4,6 +4,8 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
+//This happens after the Master subsystem news (it's a global datum)
+//So subsystems globals exist, but are not initialised
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -15,11 +17,12 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	new /datum/controller/configuration
+	config.Load()
 
-	CheckSchemaVersion()
-	SetRoundID()
-
+	//SetupLogs depends on the RoundID, so lets check
+	//DB schema and set RoundID if we can
+	SSdbcore.CheckSchemaVersion()
+	SSdbcore.SetRoundID()
 	SetupLogs()
 
 	SERVER_TOOLS_ON_NEW
@@ -36,7 +39,7 @@ GLOBAL_PROTECT(security_mode)
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
-	
+
 	if(NO_INIT_PARAMETER in params)
 		return
 
@@ -52,11 +55,16 @@ GLOBAL_PROTECT(security_mode)
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
+
+#ifdef UNIT_TESTS
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
+#else
 	SSticker.force_ending = TRUE
+#endif
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	GLOB.external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=GLOB.external_rsc_urls.len)
 		if(GLOB.external_rsc_urls[i])
@@ -64,36 +72,6 @@ GLOBAL_PROTECT(security_mode)
 		else
 			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
-
-/world/proc/CheckSchemaVersion()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			log_world("Database connection established.")
-			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
-			if(query_db_version.NextRow())
-				var/db_major = text2num(query_db_version.item[1])
-				var/db_minor = text2num(query_db_version.item[2])
-				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-			else
-				message_admins("Could not get schema version from database")
-				log_sql("Could not get schema version from database")
-		else
-			log_sql("Your server failed to establish a connection with the database.")
-	else
-		log_sql("Database is not enabled in configuration.")
-
-/world/proc/SetRoundID()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_start.Execute()
-			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-			query_round_last_id.Execute()
-			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -113,6 +91,10 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
 	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
+#ifdef UNIT_TESTS
+	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
+	WRITE_FILE(GLOB.test_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+#endif
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
@@ -182,6 +164,11 @@ GLOBAL_PROTECT(security_mode)
 	if(GLOB)
 		if(GLOB.total_runtimes != 0)
 			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
+
+#ifdef UNIT_TESTS
+		if(GLOB.failed_any_test)
+			LAZYADD(fail_reasons, "Unit Tests failed!")
+
 		if(!GLOB.log_directory)
 			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
 	else
@@ -287,3 +274,8 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+
+/world/proc/incrementMaxZ()
+	maxz++
+	SSmobs.MaxZChanged()
+	SSidlenpcpool.MaxZChanged()

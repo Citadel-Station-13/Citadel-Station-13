@@ -18,6 +18,9 @@
 #endif							//	1 to use the default behaviour;
 								//	2 for preloading absolutely everything;
 
+#ifdef LOWMEMORYMODE
+#define FORCE_MAP "_maps/runtimestation.json"
+#endif
 
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.

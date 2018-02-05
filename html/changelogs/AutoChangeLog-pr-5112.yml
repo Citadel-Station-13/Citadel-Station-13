@@ -1,0 +1,4 @@
+author: "Epoc"
+delete-after: True
+changes: 
+  - tweak: "Removed Sulfuric Acid requirements from computer parts"

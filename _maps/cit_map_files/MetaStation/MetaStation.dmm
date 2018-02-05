@@ -3327,8 +3327,7 @@
 	real_name = "Sergeant Araneus";
 	movement_type = 1;
 	response_help = "pets";
-	turns_per_move = 10;
-	voice_name = "unidentifiable voice"
+	turns_per_move = 10
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -30887,6 +30886,10 @@
 "bmh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption,
+/obj/machinery/door/window/southright{
+	name = "ORM Access";
+	req_access_txt = "64"
+	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "bmi" = (

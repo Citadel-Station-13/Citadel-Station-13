@@ -7662,7 +7662,7 @@
 /obj/item/bikehorn/golden,
 /obj/item/ammo_box/a357,
 /obj/item/tank/internals/plasma/full,
-/obj/item/disk/fakenucleardisk,
+/obj/item/disk/nuclear/fake,
 /obj/item/ore/diamond,
 /obj/item/gun/energy/disabler,
 /turf/open/floor/plasteel/vault{
@@ -19777,6 +19777,10 @@
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 4;
 	output_dir = 8
+	},
+/obj/machinery/door/window/westright{
+	name = "ORM Access";
+	req_access_txt = "64"
 	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
@@ -50545,7 +50549,7 @@
 /area/library)
 "czp" = (
 /obj/structure/table/wood,
-/obj/item/disk/fakenucleardisk,
+/obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/plasteel/dark,
 /area/library)

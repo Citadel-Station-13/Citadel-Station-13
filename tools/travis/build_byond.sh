@@ -30,12 +30,22 @@ if [ "$BUILD_TOOLS" = false ]; then
 	fi;
 	if grep '^/*var/' code/**/*.dm; then
 		echo "Unmanaged global var use detected in code, please use the helpers."
-		grep '^var/' code/*.dm | echo
+		exit 1
+	fi;
+	if grep -i 'centcomm' code/**/*.dm; then
+		echo "Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
+		exit 1
+	fi;
+	if grep -i 'centcomm' _maps/**/*.dmm; then
+		echo "Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
 		exit 1
 	fi;
 
 	#config folder should not be mandatory
-	rm -rf config
+	rm -rf config/*
+	
+	#disable all ruins
+	echo -e "LAVALAND_BUDGET 0\nSPACE_BUDGET 0" > config/config.txt
 
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
 	if [ "$BUILD_TESTING" = true ]; then

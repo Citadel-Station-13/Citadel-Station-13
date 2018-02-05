@@ -15,10 +15,10 @@
 	return T ? T.loc : null
 
 /proc/get_area_name(atom/X, format_text = FALSE)
-	var/area/Y = get_area(X)
-	if(format_text)
-		return format_text(Y.name)
-	return Y.name
+	var/area/A = isarea(X) ? X : get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.name) : A.name
 
 /proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
@@ -241,9 +241,6 @@
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-
-	set background = BACKGROUND_ENABLED
-
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/device/radio/R in radios)

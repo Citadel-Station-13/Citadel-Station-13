@@ -17,10 +17,10 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
-	on_blueprints = TRUE
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
+	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -326,7 +326,7 @@ Pipelines + Other Objects -> Pipe network
 	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 		user.forceMove(loc)
 		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
-	
+
 	user.canmove = FALSE
 	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
 
@@ -345,10 +345,9 @@ Pipelines + Other Objects -> Pipe network
 	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
-	if(isborer(user))
-		user.sight |= (SEE_PIXELS)
-	else
-		user.sight |= (SEE_TURFS|BLIND)
+//	if(isborer(user))
+//		user.sight |= (SEE_PIXELS)
+	user.sight |= (SEE_TURFS|BLIND)
 
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
