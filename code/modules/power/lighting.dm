@@ -29,7 +29,7 @@
 	if(!..())
 		return
 	var/area/A = get_area(user)
-	if(A.dynamic_lighting != DYNAMIC_LIGHTING_ENABLED)
+	if(!IS_DYNAMIC_LIGHTING(A))
 		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return
 	return TRUE
@@ -311,8 +311,9 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		if(!light || light.light_range != brightness)
+		if(!light || light.light_range != brightness || SSnightshift.nightshift != nightshift) //Cit change - makes lights update when nightshift triggers
 			switchcount++
+			nightshift = SSnightshift.nightshift // Cit change - makes lights update when nightshift triggers
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
@@ -321,7 +322,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, bulb_power, bulb_colour)
+				set_light(brightness, ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_power : bulb_power), ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_color : bulb_colour)) // Citadel change. Allows nightshift and admins to modify station light power and color
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
