@@ -269,19 +269,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "carpspawn"
 	icon_state = "carp_spawn"
 
-// lightsout.
-/obj/effect/landmark/lightsout
-	name = "lightsout"
-
 // observer-start.
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
-
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-	icon_state = "revenant_spawn"
 
 // triple ais.
 /obj/effect/landmark/tripai
