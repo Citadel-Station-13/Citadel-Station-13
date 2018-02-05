@@ -17,10 +17,10 @@
 /obj/effect/landmark/singularity_pull()
 	return
 
+INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
-/obj/effect/landmark/New()
-	..()
-	tag = text("landmark*[]", name)
+/obj/effect/landmark/Initialize()
+	. = ..()
 	GLOB.landmarks_list += src
 
 /obj/effect/landmark/Destroy()
@@ -268,10 +268,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 	icon_state = "carp_spawn"
-
-// lightsout.
-/obj/effect/landmark/lightsout
-	name = "lightsout"
 
 // observer-start.
 /obj/effect/landmark/observer_start
