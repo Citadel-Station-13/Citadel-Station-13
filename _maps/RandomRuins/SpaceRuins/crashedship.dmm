@@ -16,7 +16,7 @@
 "ag" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
@@ -243,7 +243,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "aY" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Fore)
 "bb" = (
@@ -1860,7 +1860,7 @@
 "gl" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	installation = /obj/item/gun/energy/lasercannon
 	},
 /turf/open/floor/engine,
