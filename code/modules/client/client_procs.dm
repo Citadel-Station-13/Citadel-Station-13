@@ -87,6 +87,8 @@
 			hsrc = holder
 		if("usr")
 			hsrc = mob
+		if("mentor") // CITADEL
+			hsrc = mentor_datum // CITADEL END
 		if("prefs")
 			if (inprefs)
 				return
@@ -183,6 +185,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	else if(GLOB.deadmins[ckey])
 		verbs += /client/proc/readmin
 		connecting_admin = TRUE
+	mentor_datum_set()// Citadel mentor_holder setting
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]

@@ -1,8 +1,9 @@
 /client/proc/mentor_memo()
 	set name = "Mentor Memos"
 	set category = "Server"
-	if(!check_rights(0))	return
-	if(!GLOB.dbcon.IsConnected())
+	if(!check_rights(0))
+		return
+	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
@@ -13,8 +14,9 @@
 /client/proc/show_mentor_memo()
 	set name = "Show Memos"
 	set category = "Mentor"
-	if(!check_mentor())	return
-	if(!GLOB.dbcon.IsConnected())
+	if(!is_mentor())
+		return
+	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	mentor_memo_output("Show")
@@ -22,13 +24,13 @@
 /client/proc/mentor_memo_output(task)
 	if(!task)
 		return
-	if(!GLOB.dbcon.IsConnected())
+	if(!SSdbcore.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 	switch(task)
 		if("Write")
-			var/DBQuery/query_memocheck = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")] WHERE ckey = '[sql_ckey]'")
+			var/datum/DBQuery/query_memocheck = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")] WHERE ckey = '[sql_ckey]'")
 			if(!query_memocheck.Execute())
 				var/err = query_memocheck.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
@@ -41,7 +43,7 @@
 				return
 			memotext = sanitizeSQL(memotext)
 			var/timestamp = SQLtime()
-			var/DBQuery/query_memoadd = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("mentor_memo")] (ckey, memotext, timestamp) VALUES ('[sql_ckey]', '[memotext]', '[timestamp]')")
+			var/datum/DBQuery/query_memoadd = SSdbcore.NewQuery("INSERT INTO [format_table_name("mentor_memo")] (ckey, memotext, timestamp) VALUES ('[sql_ckey]', '[memotext]', '[timestamp]')")
 			if(!query_memoadd.Execute())
 				var/err = query_memoadd.ErrorMsg()
 				log_game("SQL ERROR adding new memo. Error : \[[err]\]\n")
@@ -49,7 +51,7 @@
 			log_admin("[key_name(src)] has set a mentor memo: [memotext]")
 			message_admins("[key_name_admin(src)] has set a mentor memo:<br>[memotext]")
 		if("Edit")
-			var/DBQuery/query_memolist = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
+			var/datum/DBQuery/query_memolist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
 			if(!query_memolist.Execute())
 				var/err = query_memolist.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
@@ -65,7 +67,7 @@
 			if(!target_ckey)
 				return
 			var/target_sql_ckey = sanitizeSQL(target_ckey)
-			var/DBQuery/query_memofind = GLOB.dbcon.NewQuery("SELECT memotext FROM [format_table_name("mentor_memo")] WHERE ckey = '[target_sql_ckey]'")
+			var/datum/DBQuery/query_memofind = SSdbcore.NewQuery("SELECT memotext FROM [format_table_name("mentor_memo")] WHERE ckey = '[target_sql_ckey]'")
 			if(!query_memofind.Execute())
 				var/err = query_memofind.ErrorMsg()
 				log_game("SQL ERROR obtaining memotext from memo table. Error : \[[err]\]\n")
@@ -78,7 +80,7 @@
 				new_memo = sanitizeSQL(new_memo)
 				var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from<br>[old_memo]<br>to<br>[new_memo]<hr>"
 				edit_text = sanitizeSQL(edit_text)
-				var/DBQuery/update_query = GLOB.dbcon.NewQuery("UPDATE [format_table_name("mentor_memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE ckey = '[target_sql_ckey]'")
+				var/datum/DBQuery/update_query = SSdbcore.NewQuery("UPDATE [format_table_name("mentor_memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE ckey = '[target_sql_ckey]'")
 				if(!update_query.Execute())
 					var/err = update_query.ErrorMsg()
 					log_game("SQL ERROR editing memo. Error : \[[err]\]\n")
@@ -90,7 +92,7 @@
 					log_admin("[key_name(src)] has edited [target_sql_ckey]'s mentor memo from [old_memo] to [new_memo]")
 					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s mentor memo from<br>[old_memo]<br>to<br>[new_memo]")
 		if("Show")
-			var/DBQuery/query_memoshow = GLOB.dbcon.NewQuery("SELECT ckey, memotext, timestamp, last_editor FROM [format_table_name("mentor_memo")]")
+			var/datum/DBQuery/query_memoshow = SSdbcore.NewQuery("SELECT ckey, memotext, timestamp, last_editor FROM [format_table_name("mentor_memo")]")
 			if(!query_memoshow.Execute())
 				var/err = query_memoshow.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey, memotext, timestamp, last_editor from memo table. Error : \[[err]\]\n")
@@ -110,7 +112,7 @@
 				return
 			to_chat(src, output)
 		if("Remove")
-			var/DBQuery/query_memodellist = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
+			var/datum/DBQuery/query_memodellist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
 			if(!query_memodellist.Execute())
 				var/err = query_memodellist.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
@@ -126,7 +128,7 @@
 			if(!target_ckey)
 				return
 			var/target_sql_ckey = sanitizeSQL(target_ckey)
-			var/DBQuery/query_memodel = GLOB.dbcon.NewQuery("DELETE FROM [format_table_name("memo")] WHERE ckey = '[target_sql_ckey]'")
+			var/datum/DBQuery/query_memodel = SSdbcore.NewQuery("DELETE FROM [format_table_name("memo")] WHERE ckey = '[target_sql_ckey]'")
 			if(!query_memodel.Execute())
 				var/err = query_memodel.ErrorMsg()
 				log_game("SQL ERROR removing memo. Error : \[[err]\]\n")
