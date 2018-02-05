@@ -376,7 +376,6 @@
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
 
-
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
 //Luminescents are able to consume and use slime extracts, without them decaying.
@@ -534,6 +533,8 @@
 	CHECK_DNA_AND_SPECIES(H)
 
 	if(species.current_extract)
+		species.extract_cooldown = world.time + 100
+
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 
@@ -547,6 +548,7 @@
 
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
 //Admin spawn only
+
 
 /datum/species/jelly/stargazer
 	name = "Stargazer"
