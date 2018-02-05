@@ -142,6 +142,7 @@
 	name = "Russian flask"
 	category = slot_in_backpack
 	path = /obj/item/reagent_containers/food/drinks/flask/russian
+	cost = 2
 	ckeywhitelist = list("slomka")
 
 /datum/gear/stalkermask
@@ -167,3 +168,9 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/suit/vermillion
 	ckeywhitelist = list("fractious")
+
+/datum/gear/AM4B
+	name = "Foam Force AM4-B"
+	category = slot_in_backpack
+	path = /obj/item/gun/ballistic/automatic/AM4B
+	ckeywhitelist = list("zeronetalpha")

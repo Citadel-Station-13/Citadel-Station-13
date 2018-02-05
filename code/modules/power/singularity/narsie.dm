@@ -77,7 +77,7 @@
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
-	sleep(1150)
+	sleep(850)
 	if(resolved == FALSE)
 		resolved = TRUE
 		sound_to_playing_players('sound/machines/alarm.ogg')
@@ -195,7 +195,6 @@
 	grav_pull = 0
 
 /obj/singularity/narsie/wizard/eat()
-	set background = BACKGROUND_ENABLED
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
