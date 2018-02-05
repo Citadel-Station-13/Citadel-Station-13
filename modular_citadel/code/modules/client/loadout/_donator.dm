@@ -142,6 +142,7 @@
 	name = "Russian flask"
 	category = slot_in_backpack
 	path = /obj/item/reagent_containers/food/drinks/flask/russian
+	cost = 2
 	ckeywhitelist = list("slomka")
 
 /datum/gear/stalkermask
