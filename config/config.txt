@@ -30,7 +30,9 @@ LOBBY_COUNTDOWN 120
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
 
-## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
 ADMIN_LEGACY_SYSTEM
 
 ## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
@@ -59,6 +61,7 @@ BAN_LEGACY_SYSTEM
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+
 
 ## log OOC channel
 LOG_OOC
@@ -120,6 +123,9 @@ LOG_MANIFEST
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
+
+## Job slot open/close by identification consoles delay in seconds
+ID_CONSOLE_JOBSLOT_DELAY 30
 
 ## If metadata is supported
 ALLOW_METADATA
@@ -199,7 +205,7 @@ CHECK_RANDOMIZER
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+# GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
@@ -250,6 +256,12 @@ TICKLAG 0.5
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
+
+### Comment these two out to prevent notes fading out over time for admins.
+## Notes older then this will start fading out.
+NOTE_FRESH_DAYS 91.31055
+## Notes older then this will be completely faded out.
+NOTE_STALE_DAYS 365.2422
 
 ##Note: all population caps can be used with each other if desired.
 

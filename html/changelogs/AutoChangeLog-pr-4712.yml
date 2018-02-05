@@ -1,4 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Blob Overminds should no longer to be able to spawn on ANY space tile"

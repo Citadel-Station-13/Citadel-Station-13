@@ -226,14 +226,14 @@
 	opacity = 0
 	glass = TRUE
 
-/obj/machinery/door/airlock/clown
+/obj/machinery/door/airlock/bananium
 	name = "bananium airlock"
 	desc = "Honkhonkhonk"
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
 	doorOpen = 'sound/items/bikehorn.ogg'
 
-/obj/machinery/door/airlock/clown/glass
+/obj/machinery/door/airlock/bananium/glass
 	opacity = 0
 	glass = TRUE
 
@@ -406,6 +406,7 @@
 	hackProof = TRUE
 	aiControlDisabled = TRUE
 	req_access = list(ACCESS_BLOODCULT)
+	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 
@@ -435,6 +436,9 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
+/obj/machinery/door/airlock/cult/emp_act(severity)
+	return
+
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
 
@@ -460,6 +464,13 @@
 
 /obj/machinery/door/airlock/cult/unruned/glass/friendly
 	friendly = TRUE
+
+/obj/machinery/door/airlock/cult/weak
+	name = "brittle cult airlock"
+	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
+	normal_integrity = 180
+	damage_deflection = 5
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 
 //Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
 /obj/machinery/door/airlock/clockwork

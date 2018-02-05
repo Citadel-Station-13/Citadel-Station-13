@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Things like thermite which burned through walls straight to space now stop on plating. You'll have to thermite it again to get to space."

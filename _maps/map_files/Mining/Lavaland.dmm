@@ -76,9 +76,6 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
-"ao" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -579,10 +576,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "bN" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA"
-	},
+/obj/structure/sign/warning/docking,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/production)
@@ -802,6 +796,9 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cr" = (
@@ -832,6 +829,9 @@
 /area/lavaland/surface/outdoors)
 "cw" = (
 /obj/machinery/computer/secure_data,
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cx" = (
@@ -924,11 +924,7 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cN" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE"
-	},
+/obj/structure/sign/warning/electricshock,
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (
@@ -1034,6 +1030,9 @@
 	},
 /obj/effect/turf_decal/loading_area{
 	dir = 8
+	},
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -1163,10 +1162,6 @@
 	dir = 4
 	},
 /area/mine/production)
-"dt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/production)
 "du" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -1188,7 +1183,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
 "dy" = (
@@ -1214,6 +1208,9 @@
 	c_tag = "Communications Relay";
 	dir = 8;
 	network = list("MINE")
+	},
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
 	},
 /turf/open/floor/circuit,
 /area/mine/maintenance)
@@ -3297,27 +3294,9 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Wt" = (
-/obj/effect/baseturf_helper/lava_land/surface,
+/obj/effect/baseturf_helper/picky/lava_land/plating,
 /turf/closed/wall,
 /area/mine/laborcamp/security)
-"Wu" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp)
-"Ww" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Wx" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/eva)
-"Wy" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plasteel,
-/area/mine/production)
 "Wz" = (
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/lava/smooth/lava_land_surface,
@@ -3365,6 +3344,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"WF" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"WG" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
+"WH" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/eva)
+"WI" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/production)
+"WJ" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall/r_wall,
+/area/mine/maintenance)
+"WK" = (
+/obj/effect/baseturf_helper/picky/lava_land/plating,
+/turf/closed/wall,
+/area/mine/living_quarters)
+"WL" = (
+/obj/effect/baseturf_helper/picky/lava_land/basalt{
+	whitelist = /turf/open/floor
+	},
+/turf/open/floor/plasteel/purple/corner{
+	dir = 8
+	},
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -8466,7 +8479,7 @@ aq
 WB
 aq
 bi
-aq
+WF
 WC
 aq
 bZ
@@ -8723,7 +8736,7 @@ aq
 ba
 aq
 bj
-az
+WG
 az
 aq
 ca
@@ -9755,7 +9768,7 @@ aq
 bA
 aq
 aq
-Wu
+aq
 aq
 aj
 aj
@@ -10791,7 +10804,7 @@ dg
 dg
 cQ
 dZ
-Ww
+dZ
 dZ
 cM
 fa
@@ -11817,7 +11830,7 @@ ai
 cQ
 dk
 dA
-cQ
+WJ
 ed
 er
 eM
@@ -12849,7 +12862,7 @@ dR
 ef
 es
 dZ
-cM
+WK
 fg
 cM
 cM
@@ -13106,7 +13119,7 @@ dQ
 ec
 er
 dZ
-eL
+WL
 fh
 ft
 eL
@@ -19012,7 +19025,7 @@ cI
 cP
 cn
 bP
-Wy
+bP
 bP
 bP
 eD
@@ -20035,9 +20048,9 @@ bt
 bH
 bV
 cq
-bf
+WH
 bq
-bq
+WI
 db
 bP
 bP
@@ -20290,7 +20303,7 @@ bf
 bp
 bu
 bI
-Wx
+bW
 cr
 bf
 ad

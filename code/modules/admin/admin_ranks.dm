@@ -122,7 +122,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(CONFIG_GET(flag/admin_legacy_system))
 		var/previous_rights = 0
 		//load text from file and process each line separately
-		for(var/line in world.file2list("config/admin_ranks.txt"))
+		for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
 			if(!line)
 				continue
 			if(findtextEx(line,"#",1,2))
@@ -143,8 +143,10 @@ GLOBAL_PROTECT(admin_ranks)
 			previous_rights = R.rights
 	else
 		if(!SSdbcore.Connect())
-			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			if(CONFIG_GET(flag/sql_enabled))
+				var/msg = "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+				log_world(msg)
+				WRITE_FILE(GLOB.world_game_log, msg)
 			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			load_admin_ranks()
 			return
@@ -193,7 +195,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	if(CONFIG_GET(flag/admin_legacy_system))
 		//load text from file
-		var/list/lines = world.file2list("config/admins.txt")
+		var/list/lines = world.file2list("[global.config.directory]/admins.txt")
 
 		//process each line separately
 		for(var/line in lines)

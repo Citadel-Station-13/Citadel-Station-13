@@ -19,8 +19,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_floor = TRUE), \
-
-	//CIT CHANGE - adds sofas to metal recipe list
+  //CIT CHANGE - adds sofas to metal recipe list
 	new/datum/stack_recipe_list("sofas", list( \
 		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa, one_per_turf = TRUE, on_floor = TRUE), \
 		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/left, one_per_turf = TRUE, on_floor = TRUE), \
@@ -131,6 +130,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /*
  * Plasteel
@@ -342,18 +345,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	return ..()
 
-/obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
-		return
-	..()
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
+
+/obj/item/stack/sheet/runed_metal/ten
+	amount = 10
 
 /obj/item/stack/sheet/runed_metal/five
 	amount = 5
