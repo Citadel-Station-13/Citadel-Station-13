@@ -249,6 +249,15 @@
 /datum/config_entry/flag/allow_miscreants
 
 /datum/config_entry/flag/allow_extended_miscreants
+
+
+/datum/config_entry/flag/nightshift_enabled
+
+/datum/config_entry/number/nightshift_start
+	config_entry_value = 20
+
+/datum/config_entry/number/nightshift_finish
+	config_entry_value = 6
 //End of Cit changes
 
 /datum/config_entry/number/bombcap/ValidateAndSet(str_val)
