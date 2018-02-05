@@ -1236,7 +1236,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/toy/AM4B
 	can_suppress = 0
-	needs_permit = 0
+	item_flags = NEEDS_PERMIT
 	casing_ejector = 0
 	spread = 30		//Assault Rifleeeeeee
 	w_class = WEIGHT_CLASS_NORMAL
@@ -1285,7 +1285,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/toy/AM4C
 	can_suppress = 0
-	needs_permit = 0
+	item_flags = NEEDS_PERMIT
 	casing_ejector = 0
 	spread = 45		//Assault Rifleeeeeee
 	w_class = WEIGHT_CLASS_NORMAL
