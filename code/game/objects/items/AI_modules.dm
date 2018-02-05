@@ -173,16 +173,16 @@ AI MODULES
 /******************** OneHuman ********************/
 
 /obj/item/aiModule/zeroth/oneHuman
-	name = "'OneCrew' AI Module"//CIT CHANGE - changes onehuman to onecrew
+	name = "'OneHuman' AI Module"
 	var/targetName = ""
-	laws = list("Only SUBJECT is crew.")
+	laws = list("Only SUBJECT is human.")
 
 /obj/item/aiModule/zeroth/oneHuman/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject who is the only crew.", "Who?", user.real_name,MAX_NAME_LEN)
+	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is crew"
+	laws[1] = "Only [targetName] is human"
 	..()
 
 /obj/item/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
@@ -408,9 +408,8 @@ AI MODULES
 
 		laws += line
 
-	if(!laws.len) //Failsafe if something goes wrong with silicon_laws.txt.
-		WARNING("ERROR: empty custom board created, empty custom board deleted. Please check silicon_laws.txt. (this may be intended by the server host)")
-		qdel(src)
+	if(!laws.len)
+		return INITIALIZE_HINT_QDEL
 
 
 /****************** T.Y.R.A.N.T. *****************/
