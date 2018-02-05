@@ -324,7 +324,7 @@
 /turf/closed/wall/mineral/plastitanium/explosive,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "dQ" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "dR" = (
@@ -1390,7 +1390,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fx" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fy" = (
@@ -1450,7 +1450,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "fD" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "fE" = (
@@ -1580,17 +1580,17 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gf" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gg" = (
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	pixel_y = 32
 	},
-/obj/structure/sign/xeno_warning_mining{
+/obj/structure/sign/warning/xeno_mining{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -1959,7 +1959,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/main)
 "gO" = (
-/obj/structure/sign/cargo,
+/obj/structure/sign/departments/cargo,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gP" = (
@@ -2260,7 +2260,7 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hv" = (
 /obj/machinery/disposal/bin,
-/obj/structure/sign/deathsposal{
+/obj/structure/sign/warning/deathsposal{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/red/box,
@@ -2373,7 +2373,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hI" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
@@ -2386,7 +2386,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
 /obj/structure/closet/emcloset/anchored,
@@ -2594,6 +2594,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2603,6 +2604,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2677,7 +2679,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iq" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ir" = (
@@ -2708,6 +2710,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -2715,6 +2718,7 @@
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3094,6 +3098,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3158,6 +3163,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -3528,7 +3534,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jU" = (
-/obj/structure/sign/engineering,
+/obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jV" = (
@@ -4053,7 +4059,7 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "kT" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
 "kU" = (
@@ -4065,7 +4071,7 @@
 	},
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable/yellow,
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4320,6 +4326,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4327,6 +4334,7 @@
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
 	baseturfs = /turf/open/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -4757,7 +4765,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mq" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
@@ -4769,7 +4777,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
 /obj/structure/closet/emcloset/anchored,
@@ -4946,7 +4954,7 @@
 /turf/open/floor/circuit/green,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mN" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mP" = (
@@ -5106,7 +5114,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nf" = (
-/obj/structure/sign/fire,
+/obj/structure/sign/warning/fire,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ng" = (
@@ -5439,13 +5447,6 @@
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "nJ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	freerange = 1;
-	listening = 1;
-	name = "Pirate Radio Listening Channel"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -5773,11 +5774,8 @@
 "oj" = (
 /obj/structure/table/reinforced,
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
 	freerange = 1;
-	listening = 0;
-	name = "Pirate Radio Broadcast Channel"
+	name = "Syndicate Radio Intercom"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -5928,9 +5926,7 @@
 	frequency = 1441;
 	id = "syndie_lavaland_inc_in"
 	},
-/obj/structure/sign/vacuum{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/engine{
@@ -5947,10 +5943,10 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oD" = (
-/obj/structure/sign/xeno_warning_mining{
+/obj/structure/sign/warning/xeno_mining{
 	pixel_x = -32
 	},
-/obj/structure/sign/fire{
+/obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
@@ -5971,7 +5967,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oF" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oG" = (
@@ -5994,7 +5990,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oI" = (
-/obj/structure/sign/vacuum{
+/obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
 /obj/machinery/light/small{
@@ -6003,7 +5999,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "oP" = (
-/obj/structure/sign/chemistry,
+/obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 
@@ -6305,7 +6301,7 @@ eh
 eh
 eh
 eh
-gj
+eh
 eh
 ab
 ab
@@ -6323,7 +6319,7 @@ ab
 ab
 ab
 mn
-mo
+mn
 mN
 nj
 mn
@@ -6559,8 +6555,8 @@ dG
 dG
 lS
 mn
-mo
 mn
+mo
 nL
 mn
 mn
@@ -6696,7 +6692,7 @@ je
 jk
 jx
 jx
-jP
+jy
 jy
 jy
 ms
@@ -6704,7 +6700,7 @@ mT
 no
 nN
 ol
-ow
+mT
 ab
 ab
 ab
@@ -6725,7 +6721,7 @@ ac
 ac
 ae
 ae
-aL
+ae
 ae
 fC
 gw
@@ -6767,7 +6763,7 @@ ab
 ae
 ae
 ae
-aL
+ae
 ae
 ae
 ae
@@ -6777,7 +6773,7 @@ ae
 fD
 ad
 eh
-gj
+eh
 eh
 hW
 dG
@@ -6923,10 +6919,10 @@ hK
 ha
 ha
 ha
-iN
 ha
 ha
-jy
+ha
+jP
 jM
 jN
 jZ
@@ -6939,7 +6935,7 @@ jy
 jy
 nS
 on
-ow
+mT
 ab
 ab
 ab
@@ -6966,7 +6962,7 @@ ae
 gB
 hb
 ha
-ha
+iN
 ha
 ii
 iw
@@ -7030,7 +7026,7 @@ lB
 lY
 lA
 mW
-jy
+jP
 nT
 op
 ox
@@ -7096,9 +7092,9 @@ ab
 ae
 ae
 ae
+ae
+ae
 aL
-ae
-ae
 ae
 ae
 ae
@@ -7115,7 +7111,7 @@ iR
 hz
 jn
 jA
-jP
+jy
 jy
 jy
 jy
@@ -7221,7 +7217,7 @@ jy
 nu
 nX
 om
-ow
+mT
 ab
 ab
 ab
@@ -7248,7 +7244,7 @@ fO
 gG
 hg
 hz
-hO
+hz
 hz
 hz
 iB
@@ -7262,7 +7258,7 @@ jy
 jy
 jy
 jy
-jP
+jy
 jy
 mX
 nv
@@ -7378,13 +7374,13 @@ ab
 ab
 ab
 as
-cO
+as
 as
 dI
 dZ
 ew
 as
-cO
+as
 as
 gJ
 hh
@@ -7397,7 +7393,7 @@ iX
 hz
 jq
 jA
-hO
+hz
 kg
 kt
 kQ
@@ -7426,7 +7422,7 @@ ab
 ab
 ab
 ac
-cO
+as
 as
 as
 as
@@ -7442,7 +7438,7 @@ hz
 iF
 iY
 hz
-hz
+hO
 hz
 hz
 kh
@@ -7456,7 +7452,7 @@ na
 nz
 ob
 os
-oy
+kQ
 ac
 ab
 ab
@@ -7486,7 +7482,7 @@ hz
 hz
 hz
 hz
-hO
+hz
 hz
 hz
 jr
@@ -7573,7 +7569,7 @@ ec
 ez
 eY
 ft
-dy
+dP
 gN
 hj
 hj
@@ -7635,13 +7631,13 @@ jF
 jT
 ju
 ju
+ju
+ju
+ju
 kU
 ju
 ju
 ju
-ju
-ju
-kU
 ju
 ju
 ju
@@ -7663,7 +7659,7 @@ ab
 ab
 ac
 dy
-dP
+dy
 eA
 fa
 dy
@@ -7820,7 +7816,7 @@ ha
 ha
 ju
 jJ
-jX
+kl
 kl
 kA
 kY
@@ -7901,7 +7897,7 @@ ab
 dy
 eF
 eF
-dP
+dy
 gf
 dy
 eF
@@ -7965,7 +7961,7 @@ ab
 ju
 kD
 lb
-kU
+ju
 kD
 lb
 ju
