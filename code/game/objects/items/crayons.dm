@@ -39,7 +39,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("secborg", "paint") // CIT CHANGE - removes yiff in hell graffiti
+	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
 	var/list/all_drawables
 
@@ -221,7 +221,7 @@
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
-				paint_color = input(usr,"Choose Color") as color
+				paint_color = input(usr,"","Choose Color",paint_color) as color|null
 				. = TRUE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",

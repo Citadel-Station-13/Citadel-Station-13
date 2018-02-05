@@ -179,7 +179,9 @@ function set_labels($payload, $labels, $remove) {
 
 	$tags = array_merge($labels, $existing);
 	$tags = array_unique($tags);
-	$tags = array_diff($tags, $remove);
+	if($remove) {
+		$tags = array_diff($tags, $remove);
+	}
 
 	$final = array();
 	foreach($tags as $t)
@@ -545,8 +547,8 @@ function auto_update($payload){
 	get_diff($payload);
 	$content = file_get_contents('https://raw.githubusercontent.com/' . $repoOwnerAndName . '/' . $tracked_branch . '/'. $path_to_script);
 	$content_diff = "### Diff not available. :slightly_frowning_face:";
-	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:^diff)?/sm', $github_diff, $matches)) {
-		$script_diff = matches[1];
+	if($github_diff && preg_match('/(diff --git a\/' . preg_quote($path_to_script, '/') . '.+?)(?:\Rdiff|$)/s', $github_diff, $matches)) {
+		$script_diff = $matches[1];
 		if($script_diff) {
 			$content_diff = "``" . "`DIFF\n" . $script_diff ."\n``" . "`";
 		}

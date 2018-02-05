@@ -1,6 +1,3 @@
-/mob
-	use_tag = TRUE
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -23,7 +20,6 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -38,7 +34,11 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 	hook_vr("mob_new",list(src))
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -125,8 +125,8 @@
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
-		else
-			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
+		else //CITADEL EDIT, required for vore code to remove (T != loc && T != src)) as a check
+			if(M.see_invisible<invisibility) //if src is invisible to us,
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
@@ -175,8 +175,7 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -991,7 +990,6 @@
 	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
 	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
 	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
 	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
 	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"

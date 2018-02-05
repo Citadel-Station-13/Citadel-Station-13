@@ -175,6 +175,7 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "sexymime"
 	item_state = "sexymime"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 
 /*Brian*/

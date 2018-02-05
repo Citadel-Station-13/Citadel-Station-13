@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - balance: "The chaplain's soul stone now requires death instead of (soft) crit."
-  - bugfix: "The examine text now properly states that it can only capture a single soul."

@@ -65,6 +65,7 @@ SUBSYSTEM_DEF(ticker)
 	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
+	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
 
 	//Crew Objective/Miscreant stuff
 	var/list/crewobjlist = list()
@@ -89,7 +90,7 @@ SUBSYSTEM_DEF(ticker)
 		"aiff" = TRUE
 	)
 
-	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
@@ -125,8 +126,7 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "config/title_music/sounds/[pick(music)]"
-
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
@@ -160,6 +160,8 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(!tumpedbuckets)
+				SStimer.tump_buckets()
 			if(!modevoted)
 				send_gamemode_vote()
 			if(isnull(timeLeft))
@@ -202,7 +204,7 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-			SSshuttle.autoEnd()
+			//SSshuttle.autoEnd()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED

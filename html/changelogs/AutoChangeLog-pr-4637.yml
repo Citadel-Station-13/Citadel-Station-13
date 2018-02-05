@@ -1,7 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "Ocular Restoration has been removed, its effect transfered on Sensory Restoration."
-  - balance: "Sensory Restoration now heals both eye and ear damage."
-  - balance: "Mind Restoration now no longer heals ear damage, but now heals brain damage by default."
-  - balance: "Mind Restoration's thresholds can now let the symptoms cure mild brain traumas at 6 resistance and severe ones at 9."

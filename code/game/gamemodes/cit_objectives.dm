@@ -98,7 +98,7 @@
 	for(var/mob/living/carbon/C in GLOB.mob_list)
 		var/mob/living/simple_animal/borer/D = C.has_brain_worms()
 		var/turf/location = get_turf(C)
-		if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+		if(is_centcom_level(location.z) && D && D.stat != DEAD)
 			total_borer_hosts++
 	if(target_amount <= total_borer_hosts)
 		return TRUE
