@@ -1,5 +1,6 @@
 macro "default"
 
+
 menu "menu"
 	elem 
 		name = "&File"
@@ -61,8 +62,8 @@ window "mainwindow"
 		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 3,0
-		size = 634x417
+		pos = 0,0
+		size = 637x440
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #272727
@@ -70,29 +71,7 @@ window "mainwindow"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
-	elem "input"
-		type = INPUT
-		pos = 5,420
-		size = 595x20
-		anchor1 = 0,100
-		anchor2 = 100,100
-		font-size = 10
-		background-color = #d3b5b5
-		is-default = true
-		saved-params = "command"
-	elem "say"
-		type = BUTTON
-		pos = 600,420
-		size = 37x20
-		anchor1 = 100,100
-		anchor2 = none
-		text-color = #ffffff
-		background-color = #272727
-		saved-params = "is-checked"
-		text = "Chat"
-		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
-		is-flat = true
-		button-type = pushbox
+		splitter = 75
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 0,0
@@ -130,7 +109,6 @@ window "mapwindow"
 		anchor2 = 100,100
 		font-family = "Arial"
 		font-size = 7
-		text-color = none
 		is-default = true
 		saved-params = "icon-size"
 		zoom-mode = distort
@@ -233,11 +211,39 @@ window "outputwindow"
 		anchor2 = none
 		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
 		is-pane = true
+	elem "input"
+		type = INPUT
+		pos = 2,460
+		size = 595x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		font-size = 10
+		background-color = #d3b5b5
+		is-default = true
+		saved-params = "command"
+	elem "say"
+		type = BUTTON
+		pos = 600,460
+		size = 37x20
+		anchor1 = 100,100
+		anchor2 = none
+		text-color = #ffffff
+		background-color = #272727
+		saved-params = "is-checked"
+		text = "Chat"
+		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
+		is-flat = true
+		button-type = pushbox
 	elem "browseroutput"
 		type = BROWSER
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #272727
@@ -248,7 +254,7 @@ window "outputwindow"
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x480
+		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
 		text-color = #40628a
@@ -259,7 +265,7 @@ window "outputwindow"
 window "statwindow"
 	elem "statwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
@@ -280,3 +286,4 @@ window "statwindow"
 		tab-background-color = #272727
 		prefix-color = #ebebeb
 		suffix-color = #ebebeb
+
