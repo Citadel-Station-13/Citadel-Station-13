@@ -182,7 +182,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toy9"
 	can_suppress = 0
-	needs_permit = 0
+	obj_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/x9
 	casing_ejector = 0
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
@@ -489,7 +489,7 @@
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = FALSE
+	obj_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
 	spread = 60
@@ -617,7 +617,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toyburst"
 	clumsy_check = FALSE
-	needs_permit = FALSE
+	obj_flags = 0
 	fire_delay = 40
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = TRUE
@@ -772,7 +772,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	caliber = "flechette"
 	throwforce = 2
 	throw_speed = 3
-	embed_chance = 75
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 40, "embedded_fall_chance" = 10)
 
 ///magazine///
 
@@ -858,7 +858,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "cde"
 	can_unsuppress = TRUE
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "cde",
 						"NT-99" = "n99",
 						"Stealth" = "stealthpistol",
@@ -1154,7 +1154,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon_state = "p37_foam"
 	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
-	needs_permit = FALSE
+	obj_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
