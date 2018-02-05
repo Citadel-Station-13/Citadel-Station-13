@@ -30,8 +30,8 @@
 
 /*				Goon's Miscreant Objectives				*/
 
-/datum/objective/miscreant/blockade
-	explanation_text = "Try to completely block off access to an area, under the pretense that it's too dangerous."
+///datum/objective/miscreant/blockade
+//	explanation_text = "Try to completely block off access to an area, under the pretense that it's too dangerous."
 
 /datum/objective/miscreant/incompetent
 	explanation_text = "Be as useless and incompetent as possible without getting killed."
@@ -39,17 +39,17 @@
 /datum/objective/miscreant/litterbug
 	explanation_text = "Make a huge mess wherever you go."
 
-/datum/objective/miscreant/stalk
-	explanation_text = "Single out a crew member and stalk them everywhere."
+///datum/objective/miscreant/stalk
+//	explanation_text = "Single out a crew member and stalk them everywhere."
 
 /datum/objective/miscreant/creepy
 	explanation_text = "Sneak around looking as suspicious as possible without actually doing anything illegal."
 
-/datum/objective/miscreant/construction
-	explanation_text = "Perform obnoxious construction and renovation projects. Insist that you're just doing your job."
+///datum/objective/miscreant/construction
+//	explanation_text = "Perform obnoxious construction and renovation projects. Insist that you're just doing your job."
 
-/datum/objective/miscreant/access
-	explanation_text = "Make as much of the station as possible accessible to the public."
+///datum/objective/miscreant/access
+//	explanation_text = "Make as much of the station as possible accessible to the public." //instigates greytiding
 
 /datum/objective/miscreant/whiny
 	explanation_text = "Complain incessantly about every minor issue you find."
@@ -57,10 +57,10 @@
 /*				Citadel's Miscreant Objectives				*/
 
 /datum/objective/miscreant/immersions
-	explanation_text = "Act as out of character as you possibly can."
+	explanation_text = "Act as uncharacteristic as you possibly can." // corrected from "Act as out of character as you can" people thought it meant to just ooc in ic
 
-/datum/objective/miscreant/racism
-	explanation_text = "Attempt to establish superiority of your species."
+///datum/objective/miscreant/racism
+//	explanation_text = "Attempt to establish superiority of your species." //just creates cancerous supremecist uprisings
 
 /datum/objective/miscreant/cargonia
 	explanation_text = "Attempt to establish independence of your department."
