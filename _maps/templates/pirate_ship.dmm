@@ -672,11 +672,8 @@
 	name = "Pirate Ship";
 	port_direction = 8;
 	preferred_direction = 1;
-<<<<<<< HEAD
 	roundstart_move = "pirateship_home";
-=======
 	timid = 0;
->>>>>>> e613e03... Mark pirate ship docking port non-timid (#35090)
 	width = 23
 	},
 /obj/docking_port/stationary{
