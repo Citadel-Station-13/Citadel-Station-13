@@ -1282,6 +1282,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "eggnog"
 	glass_desc = "For enjoying the most wonderful time of the year."
 
+
 /datum/reagent/consumable/ethanol/narsour
 	name = "Nar'Sour"
 	id = "narsour"
