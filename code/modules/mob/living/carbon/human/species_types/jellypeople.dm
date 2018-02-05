@@ -10,6 +10,9 @@
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	liked_food = MEAT
+	coldmod = 6   // = 3x cold damage
+	heatmod = 0.5 // = 1/4x heat damage
+	burnmod = 0.5 // = 1/2x generic burn damage
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -17,6 +20,7 @@
 	C.remove_language(/datum/language/slime, TRUE)
 	C.faction -= "slime"
 	..()
+	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -24,6 +28,7 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -42,7 +47,8 @@
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
-	H.update_action_buttons_icon()
+	if(regenerate_limbs)
+		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
@@ -97,10 +103,11 @@
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
-////////////////////////////////////////////////////////SLIME PEOPLE///////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
+
+//Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
@@ -109,29 +116,25 @@
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
-	burnmod = 0.5
-	coldmod = 2
-	heatmod = 0.5
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
-	if(slime_split)
+/*	if(slime_split)
 		slime_split.Remove(C)
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
-	bodies = null
-	C.faction -= "slime"
+	bodies = null */
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-		/*slime_split = new
+	/*	slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
 		swap_body.Grant(C)*/
@@ -143,26 +146,28 @@
 
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
-		var/datum/mind/M
-		for(var/mob/living/L in bodies)
-			if(L.mind && L.mind.active)
-				M = L.mind
-		if(!M || M != H.mind)
+		if(!H.mind || !H.mind.active)
 			return
+
 		var/list/available_bodies = (bodies - H)
+		for(var/mob/living/L in available_bodies)
+			if(!swap_body.can_swap(L))
+				available_bodies -= L
+
 		if(!LAZYLEN(available_bodies))
 			return
-		swap_body.swap_to_dupe(M, pick(available_bodies))
+
+		swap_body.swap_to_dupe(H.mind, pick(available_bodies))
 
 //If you're cloned you get your body pool back
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	/*if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
-			to_chat(H, "<span class='notice'>You feel very bloated!</span>")*/
-	if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
+	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
 		H.nutrition -= 2.5
 
@@ -219,7 +224,7 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-	H.blood_volume = BLOOD_VOLUME_SAFE
+	H.blood_volume *= 0.45
 	H.notransform = 0
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
@@ -237,7 +242,7 @@
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
-	check_flags = AB_CHECK_CONSCIOUS
+	check_flags = NONE
 	button_icon_state = "slimeswap"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
@@ -250,6 +255,7 @@
 		ui_interact(owner)
 
 /datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
@@ -282,24 +288,31 @@
 				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"
-		var/current = body.mind
-		var/is_conscious = (body.stat == CONSCIOUS)
+		var/occupied
+		if(body == H)
+			occupied = "owner"
+		else if(body.mind && body.mind.active)
+			occupied = "stranger"
+		else
+			occupied = "available"
 
 		L["status"] = stat
 		L["exoticblood"] = body.blood_volume
 		L["name"] = body.name
 		L["ref"] = "[REF(body)]"
-		L["is_current"] = current
+		L["occupied"] = occupied
 		var/button
-		if(current)
+		if(occupied == "owner")
 			button = "selected"
-		else if(is_conscious)
+		else if(occupied == "stranger")
+			button = "danger"
+		else if(can_swap(body))
 			button = null
 		else
 			button = "disabled"
 
 		L["swap_button_state"] = button
-		L["swappable"] = !current && is_conscious
+		L["swappable"] = (occupied == "available") && can_swap(body)
 
 		data["bodies"] += list(L)
 
@@ -311,43 +324,57 @@
 	var/mob/living/carbon/human/H = owner
 	if(!isslimeperson(owner))
 		return
-	var/datum/species/jelly/slime/SS = H.dna.species
-
-	var/datum/mind/M
-	for(var/mob/living/L in SS.bodies)
-		if(L.mind && L.mind.active)
-			M = L.mind
-	if(!M)
+	if(!H.mind || !H.mind.active)
 		return
-	if(!isslimeperson(M.current))
-		return
-
 	switch(action)
 		if("swap")
 			var/mob/living/carbon/human/selected = locate(params["ref"])
-			if(!(selected in SS.bodies))
+			if(!can_swap(selected))
 				return
-			if(!selected || QDELETED(selected) || !isslimeperson(selected))
-				SS.bodies -= selected
-				return
-			if(M.current == selected)
-				return
-			if(selected.stat != CONSCIOUS)
-				return
+			SStgui.close_uis(src)
+			swap_to_dupe(H.mind, selected)
 
-			swap_to_dupe(M, selected)
+/datum/action/innate/swap_body/proc/can_swap(mob/living/carbon/human/dupe)
+	var/mob/living/carbon/human/H = owner
+	if(!isslimeperson(H))
+		return FALSE
+	var/datum/species/jelly/slime/SS = H.dna.species
+
+	if(QDELETED(dupe)) 					//Is there a body?
+		SS.bodies -= dupe
+		return FALSE
+
+	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
+		SS.bodies -= dupe
+		return FALSE
+
+	if(dupe.stat == DEAD) 				//Is it alive?
+		return FALSE
+
+	if(dupe.stat != CONSCIOUS) 			//Is it awake?
+		return FALSE
+
+	if(dupe.mind && dupe.mind.active) 	//Is it unoccupied?
+		return FALSE
+
+	if(!(dupe in SS.bodies))			//Do we actually own it?
+		return FALSE
+
+	return TRUE
 
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
-	M.current.visible_message("<span class='notice'>[M.current] \
-		stops moving and starts staring vacantly into space.</span>",
-		"<span class='notice'>You stop moving this body...</span>")
+	if(!can_swap(dupe)) //sanity check
+		return
+	if(M.current.stat == CONSCIOUS)
+		M.current.visible_message("<span class='notice'>[M.current] \
+			stops moving and starts staring vacantly into space.</span>",
+			"<span class='notice'>You stop moving this body...</span>")
+	else
+		to_chat(M.current, "<span class='notice'>You abandon this body...</span>")
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
-<<<<<<< HEAD
-=======
-
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
@@ -507,6 +534,7 @@
 
 	if(species.current_extract)
 		species.extract_cooldown = world.time + 100
+
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 
@@ -519,6 +547,8 @@
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
+//Admin spawn only
+
 
 /datum/species/jelly/stargazer
 	name = "Stargazer"
@@ -687,5 +717,4 @@
 			to_chat(H, "<span class='notice'>You connect [target]'s mind to your slime link!</span>")
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
-			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
->>>>>>> a104bff... Stops Luminous Slime spam (#35240)
+			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>
