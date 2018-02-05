@@ -280,20 +280,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-<<<<<<< HEAD
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-	icon_state = "revenant_spawn"
-
-// triple ais.
-/obj/effect/landmark/tripai
-	name = "tripai"
-	icon_state = "ai_spawn"
-	layer = MOB_LAYER
-
-=======
->>>>>>> 34897d8... Removed tripAI landmark (#35256)
 // xenos.
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
