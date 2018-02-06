@@ -78,25 +78,6 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/kilt
 
-
-/datum/gear/navyblueuniformhos
- 	name = "Head of Security navyblue uniform"
- 	category = slot_w_uniform
- 	path = /obj/item/clothing/under/rank/head_of_security/navyblue
- 	restricted_roles = list("Head of Security")
-
-/datum/gear/navyblueuniformwarden
- 	name = "Warden navyblue uniform"
- 	category = slot_w_uniform
- 	path = /obj/item/clothing/under/rank/warden/navyblue
- 	restricted_roles = list("Warden")
-
-/datum/gear/navyblueuniformofficer
- 	name = "security officer navyblue uniform"
- 	category = slot_w_uniform
- 	path = /obj/item/clothing/under/rank/security/navyblue
- 	restricted_roles = list("Security officer")
-
 /datum/gear/camoshorts
 	name = "Camo Pants"
 	category = slot_w_uniform
@@ -137,20 +118,7 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/pants/track
 
-/datum/gear/secskirt
-	name = "Security skirt"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/security/skirt
-	restricted_roles = list("Security Officer", "Warden", "Head of Security")
-
-/datum/gear/hosskirt
-	name = "Head of security's skirt"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/head_of_security/skirt
-	restricted_roles = list("Head of Security")
-
 /datum/gear/turtleneck
 	name = "Tactitool Turtleneck"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/syndicate/cosmetic
-
