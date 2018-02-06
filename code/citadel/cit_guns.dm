@@ -1004,49 +1004,49 @@ obj/item/projectile/bullet/c10mm/soporific
 		switch(choice)
 
 			if("Frame Color")
-				var/frame_color_input = input(usr,"Choose Frame Color") as color|null
+				var/frame_color_input = input(usr,"","Choose Frame Color",frame_color) as color|null
 				if(frame_color_input)
 					frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Receiver Color")
-				var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
+				var/receiver_color_input = input(usr,"","Choose Receiver Color",receiver_color) as color|null
 				if(receiver_color_input)
 					receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Body Color")
-				var/body_color_input = input(usr,"Choose Body Color") as color|null
+				var/body_color_input = input(usr,"","Choose Body Color",body_color) as color|null
 				if(body_color_input)
 					body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Barrel Color")
-				var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
+				var/barrel_color_input = input(usr,"","Choose Barrel Color",barrel_color) as color|null
 				if(barrel_color_input)
 					barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Barrel Tip Color")
-				var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
+				var/tip_color_input = input(usr,"","Choose Barrel Tip Color",tip_color) as color|null
 				if(tip_color_input)
 					tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Grip Light Color")
-				var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
+				var/grip_color_input = input(usr,"","Choose Grip Light Color",grip_color) as color|null
 				if(grip_color_input)
 					grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Light Color")
-				var/energy_color_input = input(usr,"Choose Light Color") as color|null
+				var/energy_color_input = input(usr,"","Choose Light Color",energy_color) as color|null
 				if(energy_color_input)
 					energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Arm Color")
-				var/arm_color_input = input(usr,"Choose Arm Color") as color|null
+				var/arm_color_input = input(usr,"","Choose Arm Color",arm_color) as color|null
 				if(arm_color_input)
 					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
 				update_icon()
@@ -1182,7 +1182,6 @@ obj/item/gun/energy/e_gun/cx
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	flight_x_offset = 15
 	flight_y_offset = 10
-	actions_types = list(/datum/action/item_action/pick_color)
 	var/body_color = "#252528"
 
 obj/item/gun/energy/e_gun/cx/update_icon()
@@ -1196,16 +1195,17 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		var/mob/M = loc
 		M.update_inv_hands()
 
-obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
-	if(istype(A, /datum/action/item_action/pick_color))
-		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
-			var/body_color_input = input(usr,"Choose Body Color") as color|null
-			if(body_color_input)
-				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/body_color_input = input(usr,"","Choose Body Color",body_color) as color|null
+		if(body_color_input)
+			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		A.UpdateButtonIcon()
-	else
-		..()
 
 obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -1261,7 +1261,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(alert("Are you sure you want to recolor your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/body_color_input = input(usr,"Choose Shroud Color") as color|null
+		var/body_color_input = input(usr,"","Choose Shroud Color",body_color) as color|null
 		if(body_color_input)
 			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
