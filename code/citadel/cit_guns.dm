@@ -1155,7 +1155,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
 	obj_flags = 0
-	casing_ejector = 0
+	casing_ejector = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
