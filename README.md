@@ -16,12 +16,16 @@ Based and maintained from /tg/station.<BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
+<<<<<<< HEAD
 **Citadel Station Information** <BR>
 **Forums:** http://citadel-station.net/forum/ <BR>
 **Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
 **Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
 
+=======
+ 
+>>>>>>> e5a6de4... Merge pull request #35367 from Iamgoofball/patch-391
 ## DOWNLOADING
 
 There are a number of ways to download the source code. Some are described here, an alternative all-inclusive guide is also located at http://www.tgstation13.org/wiki/Downloading_the_source_code
