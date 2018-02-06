@@ -57,3 +57,13 @@
 	name = "Winter coat"
 	category = slot_wear_suit
 	path = /obj/item/clothing/suit/hooded/wintercoat
+
+/datum/gear/militaryjacket
+	name = "Military Jacket"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/jacket/miljacket
+
+/datum/gear/ianshirt
+	name = "Ian Shirt"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/ianshirt

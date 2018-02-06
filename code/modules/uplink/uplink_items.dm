@@ -1061,7 +1061,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
-	item = /obj/item/slimepotion/sentience/nuclear
+	item = /obj/item/slimepotion/slime/sentience/nuclear
 	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1293,6 +1293,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
+/datum/uplink_item/device_tools/clown_bomb
+	name = "Clown Bomb"
+	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
+			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
+			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+			be defused, and some crew may attempt to do so."
+	item = /obj/item/device/sbeacondrop/clownbomb
+	cost = 15
+	restricted_roles = list("Clown")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -1370,7 +1381,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
-	
+
 /datum/uplink_item/badass/surplus/super
 	name = "Super Surplus Crate"
 	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \

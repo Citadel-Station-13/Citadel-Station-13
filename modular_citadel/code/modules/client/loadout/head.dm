@@ -1,6 +1,6 @@
 /datum/gear/baseball
 	name = "Ballcap"
-	category = slot_head	
+	category = slot_head
 	path = /obj/item/clothing/head/soft/mime
 
 /datum/gear/beanie
@@ -37,3 +37,13 @@
 	name = "Slime hat"
 	category = slot_head
 	path = /obj/item/clothing/head/collectable/slime
+
+/datum/gear/fedora
+	name = "Fedora"
+	category = slot_head
+	path = /obj/item/clothing/head/fedora
+
+/datum/gear/that
+	name = "Top Hat"
+	category = slot_head
+	path = /obj/item/clothing/head/that

@@ -68,6 +68,7 @@ window "mainwindow"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
+		splitter = 75
 	elem "input"
 		type = INPUT
 		pos = 5,420
@@ -248,4 +249,3 @@ window "statwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
-

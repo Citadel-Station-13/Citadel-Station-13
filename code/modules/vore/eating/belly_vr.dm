@@ -287,7 +287,7 @@
 				internal_contents.Add(subprey)
 				to_chat(subprey, "As [M] melts away around you, you find yourself in [owner]'s [name]")
 
-	//Drop all items into the belly/floor.
+	//Drop all items into the belly
 	for(var/obj/item/W in M)
 		if(!M.dropItemToGround(W))
 			qdel(W)

@@ -65,6 +65,7 @@ SUBSYSTEM_DEF(ticker)
 	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
+	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
 
 	//Crew Objective/Miscreant stuff
 	var/list/crewobjlist = list()
@@ -159,6 +160,8 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(!tumpedbuckets)
+				SStimer.tump_buckets()
 			if(!modevoted)
 				send_gamemode_vote()
 			if(isnull(timeLeft))
