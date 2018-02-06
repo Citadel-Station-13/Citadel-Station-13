@@ -2017,8 +2017,8 @@
 "eX" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "eY" = (
@@ -2207,7 +2207,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fx" = (
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	piping_layer = 3;
 	pixel_x = 5;
