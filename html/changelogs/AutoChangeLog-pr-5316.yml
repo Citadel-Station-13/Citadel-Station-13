@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - tweak: "you can now construct kinkmates with the construction kits from cargo"
