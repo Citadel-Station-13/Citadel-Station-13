@@ -78,14 +78,47 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/kilt
 
-/datum/gear/secskirt
-	name = "Security skirt"
+/datum/gear/camoshorts
+	name = "Camo Pants"
 	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/security/skirt
-	restricted_roles = list("Security Officer", "Warden", "Head of Security")
+	path = /obj/item/clothing/under/pants/camo
 
-/datum/gear/hosskirt
-	name = "Head of security's skirt"
+/datum/gear/bjeans
+	name = "Black Jeans"
 	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/head_of_security/skirt
-	restricted_roles = list("Head of Security")
+	path = /obj/item/clothing/under/pants/blackjeans
+
+/datum/gear/cjeans
+	name = "Classic Jeans"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/classicjeans
+
+/datum/gear/khaki
+	name = "Khaki Pants"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/khaki
+
+/datum/gear/wpants
+	name = "White Pants"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/white
+
+/datum/gear/rpants
+	name = "Red Pants"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/red
+
+/datum/gear/tpants
+	name = "Tan Pants"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/tan
+
+/datum/gear/trpants
+	name = "Track Pants"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/pants/track
+
+/datum/gear/turtleneck
+	name = "Tactitool Turtleneck"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/syndicate/cosmetic

@@ -29,7 +29,7 @@
 	if(!..())
 		return
 	var/area/A = get_area(user)
-	if(A.dynamic_lighting != DYNAMIC_LIGHTING_ENABLED)
+	if(!IS_DYNAMIC_LIGHTING(A))
 		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return
 	return TRUE
@@ -227,6 +227,10 @@
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
+/obj/machinery/light/broken
+	status = LIGHT_BROKEN
+	icon_state = "tube-broken"
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
@@ -237,7 +241,9 @@
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
-
+/obj/machinery/light/small/broken
+	status = LIGHT_BROKEN
+	icon_state = "bulb-broken"
 
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
@@ -311,8 +317,9 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		if(!light || light.light_range != brightness)
+		if(!light || light.light_range != brightness || SSnightshift.nightshift != nightshift) //Cit change - makes lights update when nightshift triggers
 			switchcount++
+			nightshift = SSnightshift.nightshift // Cit change - makes lights update when nightshift triggers
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
@@ -321,7 +328,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, bulb_power, bulb_colour)
+				set_light(brightness, ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_power : bulb_power), ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_color : bulb_colour)) // Citadel change. Allows nightshift and admins to modify station light power and color
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
@@ -689,7 +696,7 @@
 	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
-	
+
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message("<span class='suicide'>[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
