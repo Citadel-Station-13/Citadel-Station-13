@@ -2548,6 +2548,7 @@
 #include "modular_citadel\code\modules\client\loadout\uniform.dm"
 #include "modular_citadel\code\modules\client\verbs\who.dm"
 #include "modular_citadel\code\modules\clothing\under.dm"
+#include "modular_citadel\code\modules\clothing\under\turtlenecks.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
 #include "modular_citadel\code\modules\mentor\follow.dm"
 #include "modular_citadel\code\modules\mentor\mentor.dm"
