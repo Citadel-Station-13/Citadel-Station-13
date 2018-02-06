@@ -14,4 +14,4 @@
 	name = "Space kiwi Crate"
 	cost = 2000
 	contains = list( /mob/living/simple_animal/kiwi)
-	crate_name = "space kiwi crate
+	crate_name = "space kiwi crate"
