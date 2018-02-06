@@ -489,7 +489,6 @@
 	id = "snowdindormresearch3";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -505,7 +504,6 @@
 	id = "snowdindormresearch2";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -531,7 +529,6 @@
 	id = "snowdindormresearch1";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -544,7 +541,6 @@
 	id = "snowdindormhydro2";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -559,7 +555,6 @@
 	id = "snowdindormhydro1";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -10908,7 +10903,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
