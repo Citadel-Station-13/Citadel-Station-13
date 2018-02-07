@@ -323,7 +323,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(staminaloss)
-		adjustStaminaLoss(-3)
+		adjustStaminaLoss(-1)//CIT CHANGE - decreases adjuststaminaloss to -1 to stop stamina damage from being such a joke
 
 	var/restingpwr = 1 + 4 * resting
 

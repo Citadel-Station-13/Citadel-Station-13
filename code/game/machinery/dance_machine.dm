@@ -400,15 +400,16 @@
 
 
 /obj/machinery/disco/proc/dance4(var/mob/living/M)
-	var/speed = rand(1,3)
+	//var/speed = rand(1,3) // CIT CHANGE
 	set waitfor = 0
-	var/time = 30
+	/*var/time = 30 CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
-		 time--
+		 time--*/
+	M.SpinAnimation(1,30)
 
 /obj/machinery/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)

@@ -314,6 +314,7 @@
 
 /mob/proc/get_contents()
 
+/*CIT CHANGE - comments out lay_down proc to be modified in modular_citadel
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -321,6 +322,7 @@
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
+*/
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(obj/item/storage/Storage = null)
@@ -580,9 +582,9 @@
 	if(buckled && last_special <= world.time)
 		resist_buckle()
 
-	// climbing out of a gut
+	// CIT CHANGE - climbing out of a gut
 	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
-	
+
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
 		var/obj/C = loc
@@ -599,6 +601,8 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
+		else if(resting) //cit change - allows resisting out of resting
+			resist_a_rest() // ditto
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
@@ -808,7 +812,8 @@
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(100)
+			resting = TRUE //Cit change - makes stamina force the poor sap to rest
+			Stun(100) //Cit change - makes stamina stun instead of knockdown to prevent infinite loops
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
@@ -961,21 +966,25 @@
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || move_and_fall || IsStun() || chokehold)
+	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
+	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
+		unset_machine() //Ditto!
+		if(pulling) //Ditto.
+			stop_pulling() //Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)
 		if(resting)
-			fall()
+			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
