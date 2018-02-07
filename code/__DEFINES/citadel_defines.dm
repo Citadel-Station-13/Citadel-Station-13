@@ -99,3 +99,5 @@
 
 //Brainslugs
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+
+#define CITADEL_MENTOR_OOC_COLOUR "#ad396e"

@@ -1,0 +1,7 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Added Polychromic Athletic Shorts"
+  - imageadd: "added greyscaled athletic shorts"
+  - tweak: "optimized polycloth code, modularized it more"
+  - tweak: "all polychromic color inputs now use the previously selected color as the default argument, as per #5090"

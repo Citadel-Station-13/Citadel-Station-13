@@ -86,6 +86,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"spines" = "None",
 							"body_markings" = "None",
 							"legs" = "Normal Legs",
+							"moth_wings" = "Plain",
 							"mcolor2" = "FFF",
 							"mcolor3" = "FFF",
 							"mam_body_markings" = "None",
@@ -185,9 +186,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
-	var/screenshake = 100
-	var/damagescreenshake = 2
-	var/arousable = TRUE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -385,6 +383,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "High"
 			dat += "</a><br>"
 
+			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 
 			if (!user.client.prefs.screenshake==0)
@@ -394,7 +394,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<h2>Special Role Settings</h2>"
 
-			if(jobban_isbanned(user, "Syndicate"))
+			if(jobban_isbanned(user, ROLE_SYNDICATE))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 				src.be_special = list()
 
@@ -472,6 +472,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
 			if("legs" in pref_species.mutant_bodyparts)
 				dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
+			if("moth_wings" in pref_species.mutant_bodyparts)
+				dat += "<b>Moth wings</b><a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+
 			if("taur" in pref_species.mutant_bodyparts)
 				dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 			if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
@@ -1192,6 +1195,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_wings)
 						features["wings"] = new_wings
 
+				if("moth_wings")
+					var/new_moth_wings
+					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
+					if(new_moth_wings)
+						features["moth_wings"] = new_moth_wings
+
 				if("frills")
 					var/new_frills
 					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in GLOB.frills_list
@@ -1555,6 +1564,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["exhibitionist"] = TRUE
 						else
 							features["exhibitionist"] = FALSE
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -1758,7 +1770,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update=0)
 
 	//citadel code
-	character.give_genitals()
+	character.give_genitals(TRUE)
 	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
 
