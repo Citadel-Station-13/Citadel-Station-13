@@ -1,0 +1,4 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - bugfix: "fixed the Foam Force Mk.37F pistol ejecting \"casings\" that are utterly broken"
