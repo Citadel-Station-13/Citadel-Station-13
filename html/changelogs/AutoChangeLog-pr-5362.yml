@@ -1,0 +1,4 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Readded classic kitty ears as \"neko\" ears and tails in the character creator"
