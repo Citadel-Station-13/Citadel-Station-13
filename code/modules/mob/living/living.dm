@@ -984,6 +984,8 @@
 	else if(!lying)
 		if(resting)
 			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
+			if(has_gravity()) // Ditto
+				playsound(src, "bodyfall", 50, 1) // Ditto!
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
 	canmove = !(ko || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting
