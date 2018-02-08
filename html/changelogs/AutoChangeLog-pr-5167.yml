@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "Cleaned up a bunch of useless ..()s in cit_screenshake.dm"

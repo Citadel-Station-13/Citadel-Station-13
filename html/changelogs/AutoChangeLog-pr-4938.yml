@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - tweak: "Reduce clock work mob death sound file's volume to 80%"

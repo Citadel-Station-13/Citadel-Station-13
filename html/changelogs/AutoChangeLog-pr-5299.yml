@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - rscadd: "Destroying windows will now spawn tiny shards"
