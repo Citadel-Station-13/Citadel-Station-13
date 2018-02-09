@@ -1,6 +1,0 @@
-author: "ORM Movement"
-delete-after: True
-changes: 
-  - tweak: "Box Station ORM Moved to 2 tiles south of Cargo Office Door."
-  - tweak: "Delta Station ORM moved to the southernmost window of Cargo."
-  - tweak: "Box, Delta, Meta stations now have Windoors with Mineral Storage access blocking them."

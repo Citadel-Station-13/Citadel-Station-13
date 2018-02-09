@@ -1,5 +1,0 @@
-author: "Cebutris"
-delete-after: True
-changes: 
-  - rscadd: "Knight badges, sprites courtesy of Toriate! They're functionally identical to IDs but look sexier and can be recolored!"
-  - rscadd: "Lavaknights now spawn with Knight Badges!"
