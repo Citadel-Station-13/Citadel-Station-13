@@ -72,11 +72,6 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 	. = ..()
 	CitDirtify(obj, oldloc)*/
 
-/mob/living/Move(atom/newloc, direct)
-	. = ..()
-	if(. && makesfootstepsounds)
-		CitFootstep(newloc)
-
 //Baystation-styled tile dirtification.
 /turf/open/floor/proc/CitDirtify(atom/obj, atom/oldloc)
 	if(prob(50))

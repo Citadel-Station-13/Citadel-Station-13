@@ -101,3 +101,9 @@
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#ad396e"
+
+//stamina stuff
+#define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL	0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT

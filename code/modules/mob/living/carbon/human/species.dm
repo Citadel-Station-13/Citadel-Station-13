@@ -1258,9 +1258,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 		if(health_deficiency >= 40)
 			if(flight)
-				. += (health_deficiency / 75)
+				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
 			else
-				. += (health_deficiency / 25)
+				. += ((health_deficiency-39) / 25) // CIT CHANGE - ditto
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
 		if(H.has_trait(TRAIT_FAT))

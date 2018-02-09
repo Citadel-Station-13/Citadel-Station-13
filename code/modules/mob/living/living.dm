@@ -807,15 +807,16 @@
 		return FALSE
 	return TRUE
 
+/*CIT CHANGE - comments out update_stamina to be modified in modular_citadel
 /mob/living/carbon/proc/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			resting = TRUE //Cit change - makes stamina force the poor sap to rest
-			Stun(100) //Cit change - makes stamina stun instead of knockdown to prevent infinite loops
+			Knockdown(100)
 			setStaminaLoss(health - 2)
 	update_health_hud()
+*/
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -964,6 +965,7 @@
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
@@ -974,9 +976,9 @@
 		if(pulling)
 			stop_pulling()
 	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
-		unset_machine() //Ditto!
-		if(pulling) //Ditto.
-			stop_pulling() //Ditto...
+		unset_machine() //CIT CHANGE - Ditto!
+		if(pulling) //CIT CHANGE - Ditto.
+			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
 	if(buckled)
@@ -984,11 +986,11 @@
 	else if(!lying)
 		if(resting)
 			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
-			if(has_gravity()) // Ditto
-				playsound(src, "bodyfall", 50, 1) // Ditto!
+			if(has_gravity()) // Cit change - Ditto
+				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting
+	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.

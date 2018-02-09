@@ -1,7 +1,36 @@
+/mob/living
+	var/recoveringstam = FALSE
+
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
 	if(resting)
 		. += 6
+
+/atom
+	var/pseudo_z_axis
+
+/atom/proc/get_fake_z()
+	return pseudo_z_axis
+
+/obj/structure/table
+	pseudo_z_axis = 8
+
+/turf/open/get_fake_z()
+	var/objschecked
+	for(var/obj/structure/structurestocheck in contents)
+		objschecked++
+		if(structurestocheck.pseudo_z_axis)
+			return structurestocheck.pseudo_z_axis
+		if(objschecked >= 25)
+			break
+	return pseudo_z_axis
+
+/mob/living/Move(atom/newloc, direct)
+	. = ..()
+	if(.)
+		if(makesfootstepsounds)
+			CitFootstep(newloc)
+		pixel_z = newloc.get_fake_z()
 
 /mob/living/proc/lay_down()
 	set name = "Rest"
@@ -20,8 +49,12 @@
 	if(ignoretimer)
 		resting = FALSE
 		update_canmove()
+		return TRUE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
+		if(staminaloss >= STAMINA_SOFTCRIT)
+			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
+			return FALSE
 		var/health_deficiency = max(maxHealth - (health - staminaloss), 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
@@ -42,7 +75,23 @@
 		if(do_after(src, totaldelay, target = src))
 			resting = FALSE
 			update_canmove()
+			return TRUE
 		else
 			visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
 			if(has_gravity())
 				playsound(src, "bodyfall", 20, 1)
+			return FALSE
+
+/mob/living/carbon/proc/update_stamina()
+	if(staminaloss)
+		var/total_health = (min(health*2,100) - staminaloss)
+		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
+			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			resting = TRUE
+			recoveringstam = TRUE
+			update_canmove()
+		if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
+			to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
+			recoveringstam = FALSE
+			update_canmove()
+	update_health_hud()
