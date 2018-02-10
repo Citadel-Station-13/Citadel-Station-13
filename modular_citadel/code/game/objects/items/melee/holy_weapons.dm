@@ -14,5 +14,4 @@ obj/item/nullrod/monkeyidol
 	else if(user.mind && (user.mind.isholy))
 		to_chat(user, "You are blessed by Harambe. Gorillas will no longer attack you.")
 		user.faction |= "jungle"
-		grant_language(monkey)
 		used_blessing = TRUE
