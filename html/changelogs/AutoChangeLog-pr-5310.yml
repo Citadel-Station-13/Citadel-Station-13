@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Research investigate logs now actually include the name of the researcher."

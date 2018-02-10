@@ -1,5 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added the CMO's Turtleneck, spawns in CMO's locker"
-  - imageadd: "added the CMO's Turtleneck sprites, worn and item"
