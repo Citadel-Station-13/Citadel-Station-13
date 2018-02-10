@@ -32,7 +32,7 @@
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		var/energy_color_input = input(usr,"","Choose Energy Color",id_color) as color|null
 		if(energy_color_input)
 			id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()

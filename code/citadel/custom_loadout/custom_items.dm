@@ -85,7 +85,7 @@
 	item_state = "labred"
 
 
-/*PLACEHOLDER*/
+/*Improvedname*/
 
 /obj/item/toy/plush/carrot
 	name = "carrot plushie"
@@ -107,6 +107,20 @@
 	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/storage/backpack/satchel/carrot
+	name = "carrot satchel"
+	desc = "An satchel that is designed to look like an carrot"
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "satchel_carrot"
+	item_state = "satchel_carrot"
+	icon_override = 'icons/mob/custom_w.dmi'
+
+/obj/item/storage/backpack/satchel/carrot/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
+
+/*PLACEHOLDER*/
 
 /obj/item/toy/plush/tree
 	name = "christmass tree plushie"

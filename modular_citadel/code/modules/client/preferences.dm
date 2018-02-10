@@ -7,6 +7,10 @@
 	var/list/gear_categories
 	var/list/chosen_gear
 	var/gear_tab
+	var/screenshake = 100
+	var/damagescreenshake = 2
+	var/arousable = TRUE
+	var/widescreenpref = TRUE
 
 /datum/preferences/New(client/C)
 	..()
