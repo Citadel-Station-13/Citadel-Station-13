@@ -323,7 +323,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(staminaloss && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(resting ? -2 : -1)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+		adjustStaminaLoss(resting ? -3 : -1)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	var/restingpwr = 1 + 4 * resting
 

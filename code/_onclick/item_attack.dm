@@ -50,6 +50,10 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
+		return // CIT CHANGE - ditto
+
 	if(force && user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
@@ -68,6 +72,8 @@
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
+	user.adjustStaminaLoss(w_class*3)//CIT CHANGE - makes attacking things cause stamina loss
+	return TRUE//CIT CHANGE - makes attack() return 1 if successful
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
