@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "You can now toggle between the server's 21x15 view resolution and TG's default 15x15 view resolution in the game options menu. Look for the \"Widescreen\" entry in the game options menu."

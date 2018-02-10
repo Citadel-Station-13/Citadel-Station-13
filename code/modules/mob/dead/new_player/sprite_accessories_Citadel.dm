@@ -16,7 +16,7 @@
 /datum/sprite_accessory/moth_wings/none
 	name = "None"
 	icon_state = "none"
-	
+
 /***************** Alphabetical Order please ***************
 ************* Keep it to Ears, Tails, Tails Animated *********/
 
@@ -513,6 +513,25 @@
 	name = "Murid"
 	icon_state = "murid"
 	color_src = 0
+
+/datum/sprite_accessory/mam_ears/neko
+	name = "Neko"
+	icon_state = "cat"
+	hasinner = 1
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/neko
+	name = "Neko"
+	icon_state = "cat"
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/neko
+	name = "Neko"
+	icon_state = "cat"
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_ears/otie
 	name = "Otusian"
