@@ -2521,6 +2521,7 @@
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
+#include "modular_citadel\code\game\objects\items\melee\holy_weapons.dm"
 #include "modular_citadel\code\modules\admin\admin.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
 #include "modular_citadel\code\modules\admin\secrets.dm"
