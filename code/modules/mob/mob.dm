@@ -285,7 +285,7 @@
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1 
+		return 1
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
@@ -438,6 +438,10 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+
+	if(!I)//CIT CHANGE - allows "using" empty hands
+		use_that_empty_hand() //CIT CHANGE - ditto
+		update_inv_hands() // CIT CHANGE - ditto.
 
 /mob/verb/memory()
 	set name = "Notes"
