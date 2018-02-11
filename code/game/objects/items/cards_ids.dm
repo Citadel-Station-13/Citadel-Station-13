@@ -78,9 +78,23 @@
 		return
 	A.emag_act(user)
 
+<<<<<<< HEAD
 /obj/item/card/emag/fake/afterattack()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
 	return
+=======
+/obj/item/card/emagfake
+	desc = "It's a card with a magnetic strip attached to some circuitry."
+	name = "cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+
+/obj/item/card/emagfake/afterattack()
+	. = ..()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+>>>>>>> f658044... Adds the fake honking emag to the arcade. (#35457)
 
 /obj/item/card/id
 	name = "identification card"
