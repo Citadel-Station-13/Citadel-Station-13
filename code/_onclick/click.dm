@@ -85,6 +85,10 @@
 		CtrlClickOn(A)
 		return
 
+	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
+		RightClickOn(A,params) //CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+
 	if(incapacitated(ignore_restraints = 1))
 		return
 
