@@ -137,9 +137,6 @@
 	r_hand = /obj/item/melee/transforming/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-<<<<<<< HEAD
-	l_pocket = /obj/item/card/id/syndicate/anyone
-=======
 
 /obj/item/clothing/mask/chameleon/gps/Initialize()
 	. = ..()
@@ -147,4 +144,3 @@
 
 /obj/item/device/gps/internal/lavaland_syndicate_base
 	gpstag = "Encrypted Signal"
->>>>>>> 47ed29c... Merge pull request #35514 from ShizCalev/ghost-role-syndi-access
