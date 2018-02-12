@@ -58,16 +58,6 @@
 		W.play_tool_sound(src)
 		qdel(src)
 
-<<<<<<< HEAD
-	else if(istype(W, /obj/item/weldingtool) && !anchored)
-		playsound(loc, W.usesound, 40, 1)
-		user.visible_message("[user] is slicing apart the [name].", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40*W.toolspeed, target = src))
-			if(!src.loc)
-				return
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-=======
 	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
@@ -75,7 +65,6 @@
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			deconstruct(TRUE)
