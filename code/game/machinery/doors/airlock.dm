@@ -996,12 +996,7 @@
 		beingcrowbarred = 0
 	if(panel_open && charge)
 		to_chat(user, "<span class='notice'>You carefully start removing [charge] from [src]...</span>")
-<<<<<<< HEAD
-		playsound(get_turf(src), I.usesound, 50, 1)
-		if(!do_after(user, 150*I.toolspeed, target = src))
-=======
 		if(!I.use_tool(src, user, 150, volume=50))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(EXPLODE_DEVASTATE)
 			user.Knockdown(60)
@@ -1014,16 +1009,9 @@
 	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-<<<<<<< HEAD
-		if(do_after(user,40*I.toolspeed, target = src))
-			if(src.loc)
-				deconstruct(TRUE, user)
-				return
-=======
 		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)
 			return
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 	else if(hasPower())
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)
