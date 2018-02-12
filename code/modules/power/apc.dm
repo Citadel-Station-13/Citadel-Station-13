@@ -417,22 +417,12 @@
 			else if(integration_cog)
 				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
 				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
-<<<<<<< HEAD
-				playsound(src, W.usesound, 50, TRUE)
-				if(!do_after(user, 100 * W.toolspeed, target = src))
-					return
-				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
-				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				QDEL_NULL(integration_cog)
-=======
 				W.play_tool_sound(src)
 				if(W.use_tool(src, user, 100))
 					user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
 					"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
 					playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 					QDEL_NULL(integration_cog)
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
