@@ -87,13 +87,8 @@
 
 		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
-<<<<<<< HEAD
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
-=======
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 40))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
