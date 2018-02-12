@@ -86,17 +86,6 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
-<<<<<<< HEAD
-			var/obj/item/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
-					if(!W.isOn())
-						return
-					to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
-					deconstruct()
-=======
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -104,7 +93,6 @@
 			if(I.use_tool(src, user, 20, volume=100) && panel_open)
 				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				deconstruct()
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			return
 
 	if(user.a_intent != INTENT_HARM)
