@@ -145,7 +145,7 @@
 				return
 
 			if(istype(P, /obj/item/wirecutters))
-				playsound(src.loc, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
@@ -155,7 +155,7 @@
 
 		if(3)
 			if(istype(P, /obj/item/crowbar))
-				playsound(src.loc, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				state = 2
 				circuit.forceMove(drop_location())
 				components.Remove(circuit)
@@ -179,7 +179,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					playsound(src.loc, P.usesound, 50, 1)
+					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
