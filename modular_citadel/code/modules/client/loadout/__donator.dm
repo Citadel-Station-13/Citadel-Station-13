@@ -174,3 +174,9 @@
 	category = slot_in_backpack
 	path = /obj/item/gun/ballistic/automatic/AM4B
 	ckeywhitelist = list("zeronetalpha")
+
+/datum/gear/carrotsatchel
+	name = "Carrot Satchel"
+	category = slot_hands
+	path = /obj/item/storage/backpack/satchel/carrot
+	ckeywhitelist = list("improvedname")
