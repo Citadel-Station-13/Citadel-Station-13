@@ -269,30 +269,6 @@
 	broadcast_status()
 	update_icon()
 
-<<<<<<< HEAD
-/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if (WT.remove_fuel(0, user))
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
-			if(do_after(user, W.toolspeed * 20, target = src))
-				if(!src || !WT.isOn())
-					return
-				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-				if(!welded)
-					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = TRUE
-				else
-					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = FALSE
-				update_icon()
-				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
-				pipe_vision_img.plane = ABOVE_HUD_PLANE
-			return 0
-	else
-		return ..()
-=======
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
@@ -308,7 +284,6 @@
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 	return TRUE
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()
