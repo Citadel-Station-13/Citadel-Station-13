@@ -181,16 +181,6 @@
 	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
 		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-<<<<<<< HEAD
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(src, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = max_integrity
-					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-					update_nearby_icons()
-					to_chat(user, "<span class='notice'>You repair [src].</span>")
-=======
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -199,7 +189,6 @@
 				obj_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
@@ -231,13 +220,8 @@
 
 		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
-<<<<<<< HEAD
-			playsound(src, I.usesound, 75, 1)
-			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-=======
 			I.play_tool_sound(src, 75)
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
