@@ -214,11 +214,7 @@
 	if(istype(O, /obj/item/crowbar))
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
-<<<<<<< HEAD
-		playsound(loc, O.usesound, 50, 1)
-=======
 		I.play_tool_sound(src)
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
 	else if(istype(O, /obj/item/weldingtool))
