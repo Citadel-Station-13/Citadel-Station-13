@@ -5,7 +5,7 @@
 
 	if(!A.alt_attack_hand(src))
 		A.attack_hand(src)
-		return FALSE
+		return TRUE
 	return TRUE
 
 /atom/proc/alt_attack_hand(mob/user)

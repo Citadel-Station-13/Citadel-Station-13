@@ -109,10 +109,17 @@
 	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent
-	using.icon = ui_style
+	//using.icon = ui_style CITADEL CHANGE - comments this out to stop mov_intent from having its overridden icon changed by ui style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
+
+	//CITADEL CHANGES - sprint button
+	using = new /obj/screen/sprintbutton
+	using.icon_state = (owner.sprinting ? "act_sprint_on" : "act_sprint")
+	using.screen_loc = ui_movi
+	static_inventory += using
+	//END OF CITADEL CHANGES
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
@@ -207,8 +214,18 @@
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
+	using.screen_loc = ui_overridden_resist // CIT CHANGE - changes this to overridden resist
 	hotkeybuttons += using
+
+	//CIT CHANGES - rest and combat mode buttons
+	using = new /obj/screen/restbutton()
+	using.screen_loc = ui_pull_resist
+	static_inventory += using
+
+	using = new /obj/screen/combattoggle()
+	using.screen_loc = ui_combat_toggle
+	static_inventory += using
+	//END OF CIT CHANGES
 
 	using = new /obj/screen/human/toggle()
 	using.icon = ui_style
@@ -314,7 +331,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
-	
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()

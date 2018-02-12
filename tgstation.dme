@@ -2516,6 +2516,7 @@
 #include "modular_citadel\code\_onclick\click.dm"
 #include "modular_citadel\code\_onclick\item_attack.dm"
 #include "modular_citadel\code\_onclick\other_mobs.dm"
+#include "modular_citadel\code\_onclick\hud\screen_objects.dm"
 #include "modular_citadel\code\controllers\configuration\entries\general.dm"
 #include "modular_citadel\code\controllers\subsystem\cit_nightshift.dm"
 #include "modular_citadel\code\controllers\subsystem\job.dm"

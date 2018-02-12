@@ -9,4 +9,7 @@
 		playsound_local(src, 'modular_citadel/sound/misc/ui_toggleoff.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above!
 	if(client)
 		client.show_popup_menus = !combatmode // So we can right-click for alternate actions and all that other good shit. Also moves examine to shift+rightclick to make it possible to attack while sprinting
+	if(hud_used && hud_used.static_inventory)
+		for(var/obj/screen/combattoggle/selector in hud_used.static_inventory)
+			selector.rebasetointerbay(src)
 	return TRUE
