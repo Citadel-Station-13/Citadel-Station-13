@@ -51,4 +51,4 @@
 
 	else
 		to_chat(user, "<span class='notice'>Your prayer to [deity_name] was interrupted.</span>")
-		praying = TRUE
+		praying = FALSE
