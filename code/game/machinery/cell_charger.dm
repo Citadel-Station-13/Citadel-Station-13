@@ -61,14 +61,6 @@
 			return
 		if(!charging && default_unfasten_wrench(user, W))
 			return
-<<<<<<< HEAD
-
-		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] [src] [anchored ? "to" : "from"] the ground</span>")
-		playsound(src.loc, W.usesound, 75, 1)
-	else
-=======
->>>>>>> 0b718fa... Cell chargers are now buildable and (upgradable!) machines. (#35517)
 		return ..()
 
 /obj/machinery/cell_charger/deconstruct()
