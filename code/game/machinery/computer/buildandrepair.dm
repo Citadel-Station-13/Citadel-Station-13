@@ -76,20 +76,6 @@
 				icon_state = "1"
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
-<<<<<<< HEAD
-				var/obj/item/stack/cable_coil/C = P
-				if(C.get_amount() >= 5)
-					playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-					to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
-					if(do_after(user, 20*P.toolspeed, target = src))
-						if(C.get_amount() >= 5 && state == 2)
-							C.use(5)
-							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
-							state = 3
-							icon_state = "3"
-				else
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the frame!</span>")
-=======
 				if(!P.tool_start_check(user, amount=5))
 					return
 				to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
@@ -99,7 +85,6 @@
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 					state = 3
 					icon_state = "3"
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				return
 		if(3)
 			if(istype(P, /obj/item/wirecutters))
