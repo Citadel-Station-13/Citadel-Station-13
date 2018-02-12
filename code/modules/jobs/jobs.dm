@@ -1,3 +1,4 @@
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(command_positions, list(
 	"Captain",
 	"Head of Personnel",
@@ -5,7 +6,7 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Chief Engineer",
 	"Research Director",
 	"Chief Medical Officer"))
-
+*/
 
 GLOBAL_LIST_INIT(engineering_positions, list(
 	"Chief Engineer",
@@ -26,13 +27,13 @@ GLOBAL_LIST_INIT(science_positions, list(
 	"Scientist",
 	"Roboticist"))
 
-
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(supply_positions, list(
 	"Head of Personnel",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner"))
-
+*/
 
 GLOBAL_LIST_INIT(civilian_positions, list(
 	"Bartender",
