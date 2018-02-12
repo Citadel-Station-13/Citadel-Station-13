@@ -674,13 +674,8 @@
 			if(istype(W, /obj/item/crowbar))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
-<<<<<<< HEAD
-				playsound(src.loc, W.usesound, 50, 1)
-				if (do_after(user, 20*W.toolspeed, target = src))
-=======
 				W.play_tool_sound(src)
 				if (W.use_tool(src, user, 20))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/electronics/airalarm( src.loc )
