@@ -132,18 +132,9 @@
 	if(!WT.remove_fuel(0, user))
 		return 0
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
-<<<<<<< HEAD
-	playsound(src.loc, WT.usesound, 50, 1)
-	if(do_after(user, 20*WT.toolspeed, target = src))
-		if(WT.isOn())
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
-			return 1
-	return 0
-=======
 	if(W.use_tool(src, user, 20, volume=50))
 		return TRUE
 	return FALSE
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
