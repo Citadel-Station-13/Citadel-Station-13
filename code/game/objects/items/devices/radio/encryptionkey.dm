@@ -94,13 +94,11 @@
 	icon_state = "cmo_cypherkey"
 	channels = list("Medical" = 1, "Command" = 1)
 
-/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 /obj/item/device/encryptionkey/heads/hop
 	name = "\proper the head of personnel's encryption key"
 	desc = "An encryption key for a radio headset.  Channels are as follows: :u - supply, :v - service, :c - command."
 	icon_state = "hop_cypherkey"
 	channels = list("Supply" = 1, "Service" = 1, "Command" = 1)
-*/
 
 /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio encryption key"

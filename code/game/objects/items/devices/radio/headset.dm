@@ -163,13 +163,11 @@
 	icon_state = "com_headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/cmo
 
-/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 /obj/item/device/radio/headset/heads/hop
 	name = "\proper the head of personnel's headset"
 	desc = "The headset of the guy who will one day be captain.\nChannels are as follows: :u - supply, :v - service, :c - command."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/hop
-*/
 
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"

@@ -5,8 +5,6 @@
 	channels = list("Supply" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/hop
-	name = "\proper the head of personnel's encryption key"
 	desc = "An encryption key for a radio headset.  Channels are as follows: :v - service, :c - command."
-	icon_state = "hop_cypherkey"
 	channels = list("Service" = 1, "Command" = 1)
 
