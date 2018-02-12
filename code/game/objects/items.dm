@@ -743,8 +743,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-<<<<<<< HEAD
-=======
 
 
 // Called when a mob tries to use the item as a tool.
@@ -814,4 +812,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
