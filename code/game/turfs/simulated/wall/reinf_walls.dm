@@ -203,15 +203,9 @@
 
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
-<<<<<<< HEAD
-				playsound(src, W.usesound, 100, 1)
-				if(do_after(user, 40*W.toolspeed, target = src))
-					if(!istype(src, /turf/closed/wall/r_wall) || !W || d_state != SUPPORT_RODS)
-=======
 				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 						return 1
 					d_state = BOLTS
 					update_icon()
