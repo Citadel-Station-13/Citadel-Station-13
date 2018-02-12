@@ -106,8 +106,6 @@
 				else
 					return
 
-<<<<<<< HEAD
-=======
 				user.visible_message("[user] disassembles the windoor assembly.",
 					"<span class='notice'>You start to disassemble the windoor assembly...</span>")
 
@@ -121,7 +119,6 @@
 					qdel(src)
 				return
 
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(istype(W, /obj/item/wrench) && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
@@ -223,14 +220,9 @@
 			else if(istype(W, /obj/item/electronics/airlock))
 				if(!user.transferItemToLoc(W, src))
 					return
-<<<<<<< HEAD
-				playsound(loc, W.usesound, 100, 1)
-				user.visible_message("[user] installs the electronics into the airlock assembly.", "<span class='notice'>You start to install electronics into the airlock assembly...</span>")
-=======
 				W.play_tool_sound(src, 100)
 				user.visible_message("[user] installs the electronics into the airlock assembly.",
 					"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)
