@@ -54,13 +54,13 @@
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 			if(istype(P, /obj/item/screwdriver) && circuit)
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You screw [circuit] into place.</span>")
 				state = 2
 				icon_state = "2"
 				return
 			if(istype(P, /obj/item/crowbar) && circuit)
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove [circuit].</span>")
 				state = 1
 				icon_state = "0"
@@ -70,12 +70,13 @@
 				return
 		if(2)
 			if(istype(P, /obj/item/screwdriver) && circuit)
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
+<<<<<<< HEAD
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
 					playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
@@ -88,10 +89,21 @@
 							icon_state = "3"
 				else
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the frame!</span>")
+=======
+				if(!P.tool_start_check(user, amount=5))
+					return
+				to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
+				if(P.use_tool(src, user, 20, volume=50, amount=5))
+					if(state != 2)
+						return
+					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					state = 3
+					icon_state = "3"
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				return
 		if(3)
 			if(istype(P, /obj/item/wirecutters))
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
 				icon_state = "2"
@@ -117,7 +129,7 @@
 				return
 		if(4)
 			if(istype(P, /obj/item/crowbar))
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
 				icon_state = "3"
@@ -125,7 +137,7 @@
 				G.add_fingerprint(user)
 				return
 			if(istype(P, /obj/item/screwdriver))
-				playsound(src, P.usesound, 50, 1)
+				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/B = new circuit.build_path (loc, circuit)
 				B.dir = dir

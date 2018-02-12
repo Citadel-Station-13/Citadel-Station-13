@@ -183,9 +183,12 @@
 
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
-				playsound(loc, W.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
+<<<<<<< HEAD
 				if(do_after(user, 40*W.toolspeed, 0, src, 1))
+=======
+				if(W.use_tool(src, user, 40, volume=100))
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++

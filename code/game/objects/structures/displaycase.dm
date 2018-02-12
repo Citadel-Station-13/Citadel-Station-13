@@ -99,10 +99,13 @@
 		var/obj/item/weldingtool/WT = W
 		if(obj_integrity < max_integrity && WT.remove_fuel(5, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
+<<<<<<< HEAD
 			playsound(loc, WT.usesound, 40, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
+=======
+			if(W.use_tool(src, user, 40, amount=5, volume=50))
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -177,15 +180,20 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench)) //The player can only deconstruct the wooden frame
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+<<<<<<< HEAD
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
+=======
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 30))
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/electronics/airlock))
 		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
 			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")

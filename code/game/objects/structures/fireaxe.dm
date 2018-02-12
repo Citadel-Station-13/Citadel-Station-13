@@ -28,10 +28,13 @@
 		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
+<<<<<<< HEAD
 			playsound(loc, WT.usesound, 40, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
+=======
+			if(I.use_tool(src, user, 40, volume=50, amount=2))
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else

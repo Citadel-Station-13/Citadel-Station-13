@@ -116,8 +116,7 @@
 	else if(istype(W, /obj/item/gun/energy/plasmacutter))
 		dismantle(user, TRUE)
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		D.playDigSound()
+		W.play_tool_sound(src)
 		dismantle(user, TRUE)
 	else
 		return ..()
@@ -125,7 +124,7 @@
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
-		playsound(src, tool.usesound, 100, 1)
+		tool.play_tool_sound(src, 100)
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)

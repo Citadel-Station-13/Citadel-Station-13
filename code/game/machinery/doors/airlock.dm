@@ -883,11 +883,11 @@
 			return
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
-		playsound(src.loc, C.usesound, 50, 1)
+		C.play_tool_sound(src)
 		src.update_icon()
 	else if(istype(C, /obj/item/wirecutters) && note)
 		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		C.play_tool_sound(src)
 		note.forceMove(get_turf(user))
 		note = null
 		update_icon()
@@ -932,6 +932,7 @@
 /obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/user)
 	if(!operating && density)
 		if(user.a_intent != INTENT_HELP)
+<<<<<<< HEAD
 			if(W.remove_fuel(0,user))
 				user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 								"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
@@ -942,6 +943,30 @@
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+=======
+			if(!W.tool_start_check(user, amount=0))
+				return
+			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
+							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+				welded = !welded
+				user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
+									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+				update_icon()
+		else
+			if(obj_integrity < max_integrity)
+				if(!W.tool_start_check(user, amount=0))
+					return
+				user.visible_message("[user] is welding the airlock.", \
+								"<span class='notice'>You begin repairing the airlock...</span>", \
+								"<span class='italics'>You hear welding.</span>")
+				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+					obj_integrity = max_integrity
+					stat &= ~BROKEN
+					user.visible_message("[user.name] has repaired [src].", \
+										"<span class='notice'>You finish repairing the airlock.</span>")
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 					update_icon()
 		else
 			if(obj_integrity < max_integrity)
@@ -971,8 +996,12 @@
 		beingcrowbarred = 0
 	if(panel_open && charge)
 		to_chat(user, "<span class='notice'>You carefully start removing [charge] from [src]...</span>")
+<<<<<<< HEAD
 		playsound(get_turf(src), I.usesound, 50, 1)
 		if(!do_after(user, 150*I.toolspeed, target = src))
+=======
+		if(!I.use_tool(src, user, 150, volume=50))
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(EXPLODE_DEVASTATE)
 			user.Knockdown(60)
@@ -983,13 +1012,18 @@
 		charge = null
 		return
 	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
-		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+<<<<<<< HEAD
 		if(do_after(user,40*I.toolspeed, target = src))
 			if(src.loc)
 				deconstruct(TRUE, user)
 				return
+=======
+		if(I.use_tool(src, user, 40, volume=100))
+			deconstruct(TRUE, user)
+			return
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 	else if(hasPower())
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)

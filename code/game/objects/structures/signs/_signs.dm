@@ -31,6 +31,7 @@
 	if(istype(O, /obj/item/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
+<<<<<<< HEAD
 		playsound(src, O.usesound, 50, 1)
 		if(!do_after(user, 30*O.toolspeed, target = src))
 			return
@@ -42,6 +43,19 @@
 		SB.sign_path = type
 		qdel(src)
 	else if(istype(O, /obj/item/pen) && buildable_sign)
+=======
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 40))
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+								 "<span class='notice'>You unfasten [src].</span>")
+			var/obj/item/sign_backing/SB = new (get_turf(user))
+			SB.icon_state = icon_state
+			SB.sign_path = type
+			qdel(src)
+		return
+	else if(istype(I, /obj/item/pen) && buildable_sign)
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type

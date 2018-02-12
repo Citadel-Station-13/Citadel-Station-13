@@ -42,10 +42,9 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>You smash through the girder!</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 
@@ -377,12 +376,11 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>Your jackhammer smashes through the girder!</span>")
 		var/obj/item/stack/sheet/runed_metal/R = new(get_turf(src))
 		R.amount = 2
 		transfer_fingerprints_to(R)
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))

@@ -82,6 +82,7 @@
 	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		var/obj/item/weldingtool/WT = O
 		if(stat & BROKEN)
+<<<<<<< HEAD
 			if(WT.remove_fuel(0,user))
 				user.visible_message("[user] is repairing [src].", \
 								"<span class='notice'>You begin repairing [src]...</span>", \
@@ -95,6 +96,20 @@
 					stat &= ~BROKEN
 					obj_integrity = max_integrity
 					update_icon()
+=======
+			if(!O.tool_start_check(user, amount=0))
+				return
+			user.visible_message("[user] is repairing [src].", \
+							"<span class='notice'>You begin repairing [src]...</span>", \
+							"<span class='italics'>You hear welding.</span>")
+			if(O.use_tool(src, user, 40, volume=50))
+				if(!(stat & BROKEN))
+					return
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				stat &= ~BROKEN
+				obj_integrity = max_integrity
+				update_icon()
+>>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 		else
 			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 	else
