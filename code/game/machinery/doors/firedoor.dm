@@ -372,12 +372,7 @@
 			if(istype(C, /obj/item/crowbar))
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
-<<<<<<< HEAD
-				playsound(get_turf(src), C.usesound, 50, 1)
-				if(!do_after(user, 50*C.toolspeed, target = src))
-=======
 				if(!C.use_tool(src, user, 50, volume=50))
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 					return
 				if(constructionStep != CONSTRUCTION_GUTTED)
 					return
@@ -407,15 +402,6 @@
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
 			if(istype(C, /obj/item/weldingtool))
-<<<<<<< HEAD
-				var/obj/item/weldingtool/W = C
-				if(W.remove_fuel(1,user))
-					playsound(get_turf(src), W.usesound, 50, 1)
-					user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
-										 "<span class='notice'>You begin slicing [src] apart...</span>")
-					if(!do_after(user, 80*C.toolspeed, target = src))
-						return
-=======
 				if(!C.tool_start_check(user, amount=1))
 					return
 				user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
@@ -423,7 +409,6 @@
 
 				if(C.use_tool(src, user, 40, volume=50, amount=1))
 					return
->>>>>>> c6e607d... Refactors use_sound and changes the way tools play sounds (#35521)
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
