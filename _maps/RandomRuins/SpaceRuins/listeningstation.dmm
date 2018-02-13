@@ -179,7 +179,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -651,7 +650,6 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "bc" = (
