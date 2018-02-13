@@ -263,3 +263,37 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
+
+/*TechnicalMagi*/
+/obj/item/clothing/under/bb_sweater/black/naomi
+	name = "worn black sweater"
+	desc = "A well-loved sweater, showing signs of several cleanings and re-stitchings. And a few stains. Is that cat fur?"
+
+/obj/item/clothing/neck/petcollar/naomi
+	name = "worn pet collar"
+	desc = "a pet collar that looks well used."
+
+/obj/item/clothing/neck/petcollar/naomi/examine(mob/user)
+	. = ..()
+	if(usr.ckey != "technicalmagi")
+		to_chat(user, "There's something odd about the it. You probably shouldn't wear it...")//warn people not to wear it if they're not Naomi, lest they become as crazy as she is
+
+/obj/item/clothing/neck/petcollar/naomi/equipped()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/neck/petcollar/naomi/dropped()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/neck/petcollar/naomi/process()
+	var/mob/living/carbon/human/H
+	if(ishuman(loc))
+		H = loc
+	if(!H)
+		return
+	else if(H.get_item_by_slot(slot_neck) == src)
+		if(H.arousalloss < H.max_arousal / 3)
+			H.arousalloss = H.max_arousal / 3
+		if(prob(5))
+			H.hallucination += 10
