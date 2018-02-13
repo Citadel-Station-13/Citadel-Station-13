@@ -1340,7 +1340,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage
+		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
+		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
+			damage = user.dna.species.punchstunthreshold - 1
 		if(user.resting)
 			damage *= 0.5
 		if(!user.combatmode)
@@ -1421,7 +1423,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!user.combatmode) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 
-		if(randn <= 60)
+		if(randn <= 35)//CIT CHANGE - changes this back to a 35% chance to accomodate for the above being commented out in favor of right-click pushing
 			var/obj/item/I = null
 			if(target.pulling)
 				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")

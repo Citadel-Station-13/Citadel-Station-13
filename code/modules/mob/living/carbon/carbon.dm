@@ -148,6 +148,11 @@
 	if(istype(target, /obj/screen))
 		return
 
+//CIT CHANGES - makes it impossible to throw while in stamina softcrit
+	if(staminaloss >= STAMINA_SOFTCRIT)
+		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
+		return
+
 	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
 
@@ -159,6 +164,7 @@
 				stop_pulling()
 				if(has_trait(TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+				adjustStaminaLoss(25)//CIT CHANGE - throwing an entire person shall be very tiring
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
@@ -173,6 +179,8 @@
 		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
+
+		adjustStaminaLoss(I.w_class*4)//CIT CHANGE - throwing items shall be more tiring than swinging em.
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
