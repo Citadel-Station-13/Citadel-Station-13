@@ -2513,6 +2513,7 @@
 #include "modular_citadel\dresscode_values.dm"
 #include "modular_citadel\simplemob_vore_values.dm"
 #include "modular_citadel\code\init.dm"
+#include "modular_citadel\code\__HELPERS\list2list.dm"
 #include "modular_citadel\code\__HELPERS\lists.dm"
 #include "modular_citadel\code\__HELPERS\mobs.dm"
 #include "modular_citadel\code\_globalvars\lists\mobs.dm"
@@ -2590,5 +2591,6 @@
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "modular_citadel\code\modules\mob\living\simple_animal\banana_spider.dm"
 #include "modular_citadel\code\modules\mob\living\simple_animal\kiwi.dm"
+#include "modular_citadel\code\modules\recycling\disposal\bin.dm"
 #include "modular_citadel\interface\skin.dmf"
 // END_INCLUDE
