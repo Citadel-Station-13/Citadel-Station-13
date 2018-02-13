@@ -47,7 +47,8 @@
 		/obj/item/toy/windupToolbox								= 2,
 		/obj/item/toy/clockwork_watch							= 2,
 		/obj/item/toy/toy_dagger								= 2,
-		/obj/item/extendohand/acme								= 1)
+		/obj/item/extendohand/acme								= 1,
+		/obj/item/card/emagfake									= 1)
 
 	light_color = LIGHT_COLOR_GREEN
 
