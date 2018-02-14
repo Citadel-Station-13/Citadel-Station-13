@@ -25,3 +25,12 @@
 			if(!M.equip_to_slot_if_possible(I, G.category, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(!M.equip_to_slot_if_possible(I, slot_in_backpack, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
 					I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
+
+/datum/controller/subsystem/job/proc/FreeRole(rank)
+	if(!rank)
+		return
+	Debug("Freeing role: [rank]")
+	var/datum/job/job = GetJob(rank)
+	if(!job)
+		return FALSE
+	job.current_positions = max(0, job.current_positions - 1)
