@@ -180,7 +180,7 @@
 	category = slot_hands
 	path = /obj/item/storage/backpack/satchel/carrot
 	ckeywhitelist = list("improvedname")
-
+  
 /datum/gear/naomisweater
 	name = "worn black sweater"
 	category = slot_w_uniform
@@ -192,3 +192,9 @@
 	category = slot_neck
 	path = /obj/item/clothing/neck/petcollar/naomi
 	ckeywhitelist = list("technicalmagi")
+  
+/datum/gear/gladiator
+    name = "Gladiator Armor"
+    category = slot_wear_suit
+    path = /obj/item/clothing/under/gladiator
+    ckeywhitelist = list("aroche")
