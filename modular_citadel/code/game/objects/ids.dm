@@ -44,3 +44,32 @@
 /obj/item/card/id/knight/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
+//=================================================
+
+/obj/item/card/emag_broken
+	desc = "It's a card with a melted magnetic strip, useless!"
+	name = "broken cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	flags_1 = NOBLUDGEON_1
+	flags_2 = NO_MAT_REDEMPTION_2
+	color = rgb(35, 20, 11)
+
+/obj/item/card/emag
+	var/uses = 10
+
+/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	uses--
+
+	if(uses<1)
+		user.visible_message("[src] fizzles and sparks. it is now burned out.")
+		user.dropItemToGround(src)
+		var/obj/item/card/emag_broken/junk = new(user.loc)
+		junk.add_fingerprint(user)
+		qdel(src)
+		return
+	..()
