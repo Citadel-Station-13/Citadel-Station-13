@@ -66,10 +66,9 @@
 	uses--
 
 	if(uses<1)
-		user.visible_message("[src] fizzles and sparks. it is now burned out.")
+		user.visible_message("[src] fizzles and sparks. It's burned out!")
 		user.dropItemToGround(src)
 		var/obj/item/card/emag_broken/junk = new(user.loc)
 		junk.add_fingerprint(user)
 		qdel(src)
 		return
-	..()
