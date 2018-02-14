@@ -3633,6 +3633,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/crew_quarters/electronic_marketing_den)
 "amQ" = (
@@ -58343,6 +58344,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -59600,7 +59604,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -60394,7 +60398,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -100691,6 +100695,12 @@
 	dir = 10
 	},
 /area/science/circuit)
+"hKW" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/locker)
 "hNZ" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -100855,6 +100865,11 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"pGS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -129899,7 +129914,7 @@ bWC
 bYL
 caE
 caE
-ceb
+pGS
 cea
 caE
 cjp
@@ -149439,7 +149454,7 @@ clt
 cnc
 coE
 cqd
-crr
+hKW
 csT
 cuy
 cvU
