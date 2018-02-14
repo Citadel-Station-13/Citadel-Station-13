@@ -2,9 +2,13 @@
 	var/sprinting = FALSE
 
 /mob/living/carbon/human/Move(NewLoc, direct)
+	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	if(. && sprinting && !resting && m_intent == MOVE_INTENT_RUN)
 		adjustStaminaLoss(0.3)
+		if((oldpseudoheight - pseudo_z_axis) >= 8)
+			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
+			Knockdown(80)
 
 /mob/living/carbon/human/movement_delay()
 	. = 0

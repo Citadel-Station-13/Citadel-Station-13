@@ -30,7 +30,8 @@
 	if(.)
 		if(makesfootstepsounds)
 			CitFootstep(newloc)
-		pixel_z = newloc.get_fake_z()
+		pseudo_z_axis = newloc.get_fake_z()
+		pixel_z = pseudo_z_axis
 
 /mob/living/proc/lay_down()
 	set name = "Rest"
