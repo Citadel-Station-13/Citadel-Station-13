@@ -829,23 +829,6 @@
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
-<<<<<<< HEAD
-		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>", "<span class='notice'>You start digging out [src]'s plants...</span>")
-		O.play_tool_sound(src)
-		if(!do_after(user, 50, target = src) || (!myseed && !weedlevel))
-			return
-		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
-		O.play_tool_sound(src)
-		if(myseed) //Could be that they're just using it as a de-weeder
-			age = 0
-			plant_health = 0
-			if(harvest)
-				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
-			qdel(myseed)
-			myseed = null
-		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-		update_icon()
-=======
 		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>",
 			"<span class='notice'>You start digging out [src]'s plants...</span>")
 		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
@@ -859,7 +842,6 @@
 				myseed = null
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 
 	else
 		return ..()
