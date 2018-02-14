@@ -60,7 +60,6 @@
 			return
 		last_act = world.time
 		to_chat(user, "<span class='notice'>You start picking...</span>")
-		P.playDigSound()
 
 		if(I.use_tool(src, user, 40, volume=50))
 			if(ismineralturf(src))

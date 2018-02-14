@@ -12,24 +12,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
-<<<<<<< HEAD
-	var/digspeed = 40
-	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-=======
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into their chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-<<<<<<< HEAD
-	if(do_after(user,30, target = user))
-		playDigSound()
-=======
 	if(use_tool(user, user, 30, volume=50))
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
@@ -43,9 +33,6 @@
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
-
-/obj/item/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),50,1)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -68,13 +55,8 @@
 	icon_state = "handdrill"
 	item_state = "jackhammer"
 	slot_flags = SLOT_BELT
-<<<<<<< HEAD
-	digspeed = 25 //available from roundstart, faster than a pickaxe.
-	digsound = list('sound/weapons/drill.ogg')
-=======
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
@@ -98,13 +80,8 @@
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-<<<<<<< HEAD
-	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	digsound = list('sound/weapons/sonic_jackhammer.ogg')
-=======
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
@@ -118,13 +95,9 @@
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	force = 8
-<<<<<<< HEAD
-	var/digspeed = 20
-=======
 	tool_behaviour = TOOL_SHOVEL
 	toolspeed = 1
 	usesound = 'sound/effects/shovel_dig.ogg'
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -134,12 +107,7 @@
 
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging their own grave!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-<<<<<<< HEAD
-	if(do_after(user,30, target = user))
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-=======
 	if(use_tool(user, user, 30, volume=50))
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME

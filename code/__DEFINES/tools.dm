@@ -5,8 +5,6 @@
 #define TOOL_WIRECUTTER 	"wirecutter"
 #define TOOL_WRENCH 		"wrench"
 #define TOOL_WELDER 		"welder"
-<<<<<<< HEAD
-=======
 #define TOOL_MINING			"mining"
 #define TOOL_SHOVEL			"shovel"
 
@@ -14,4 +12,3 @@
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20
->>>>>>> 960f42d... Merge pull request #35531 from ACCount12/mining_tool

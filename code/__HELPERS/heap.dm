@@ -38,7 +38,6 @@
 
 	while(parent > 0 && (call(cmp)(L[index],L[parent]) > 0))
 		L.Swap(index,parent)
-
 		index = parent
 		parent = round(index * 0.5)
 
@@ -68,6 +67,7 @@
 //Replaces a given node so it verify the heap condition
 /datum/Heap/proc/ReSort(atom/A)
 	var/index = L.Find(A)
+
 	Swim(index)
 	Sink(index)
 

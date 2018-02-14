@@ -1,3 +1,4 @@
+
 //Apprenticeship contract - moved to antag_spawner.dm
 
 ///////////////////////////Veil Render//////////////////////
