@@ -192,10 +192,10 @@
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
 	id = "foam_x9"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
-	category = list("hacked", "Misc")
+	category = list("initial", "Rifles")
 
 
 ////////XCOM2 Magpistol/////////
@@ -352,18 +352,18 @@
 /datum/design/magfoam_dart
 	name = "Box of MagFoam Darts"
 	id = "magfoam_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
 	build_path = /obj/item/ammo_box/foambox/mag
 	category = list("initial", "Misc")
 
 /datum/design/foam_magpistol
 	name = "Foam Force Magpistol"
 	id = "magfoam_launcher"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
 	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
-	category = list("hacked", "Misc")
+	category = list("initial", "Pistols")
 
 //////Magrifle//////
 
@@ -499,10 +499,10 @@
 /datum/design/foam_magrifle
 	name = "Foam Force MagRifle"
 	id = "foam_magrifle"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 7500)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
-	category = list("hacked", "Misc")
+	category = list("initial", "Rifles")
 
 
 //////Hyper-Burst Rifle//////
@@ -632,10 +632,10 @@
 /datum/design/foam_hyperburst
 	name = "MagTag Hyper Rifle"
 	id = "foam_hyperburst"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/hyperburst
-	category = list("hacked", "Misc")
+	category = list("initial", "Rifles")
 
 /*		made redundant by reskinnable stetchkins
 //////Stealth Pistol//////
@@ -692,10 +692,10 @@
 /datum/design/foam_sp
 	name = "Foam Force Stealth Pistol"
 	id = "foam_sp"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000)
 	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
-	category = list("hacked", "Misc")
+	category = list("initial", "Pistols")
 
 
 //////10mm soporific bullets//////
@@ -907,10 +907,10 @@ obj/item/projectile/bullet/c10mm/soporific
 /datum/design/toyray
 	name = "RayTag Gun"
 	id = "toyray"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/raygun
-	category = list("hacked", "Misc")
+	category = list("initial", "Pistols")
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Gun
@@ -1163,10 +1163,10 @@ obj/item/projectile/bullet/c10mm/soporific
 /datum/design/foam_p37
 	name = "Foam Force Mk.37F"
 	id = "foam_p37"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000, MAT_GLASS = 250)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
-	category = list("hacked", "Misc")
+	category = list("initial", "Pistols")
 
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
@@ -1296,7 +1296,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 /datum/design/am4c
 	name = "Foam Force AM4-C Rifle"
 	id = "foam_am4c"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
 	build_path = /obj/item/gun/ballistic/automatic/AM4C
-	category = list("hacked", "Misc")
+	category = list("initial", "Rifles")

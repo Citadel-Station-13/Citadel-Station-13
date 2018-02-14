@@ -263,7 +263,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC]?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -295,7 +295,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC]?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS] ?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY,D.materials[MAT_PLASTIC] ?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -337,7 +337,7 @@
 	if(D.materials[MAT_METAL])
 		dat += "[D.materials[MAT_METAL] * coeff] metal "
 	if(D.materials[MAT_GLASS])
-		dat += "[D.materials[MAT_GLASS] * coeff] glass"
+		dat += "[D.materials[MAT_GLASS] * coeff] glass "
 	if(D.materials[MAT_PLASTIC])
 		dat += "[D.materials[MAT_PLASTIC] * coeff] plastic"
 	return dat
