@@ -10,9 +10,9 @@
 			return TRUE
 		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
 		var/C = new item_chair(loc)
+		user.put_in_hands(C)
 		poordude.Knockdown(20)//rip in peace
 		user.adjustStaminaLoss(5)
-		user.put_in_hands(C)
 		unbuckle_all_mobs(TRUE)
 		qdel(src)
 		return TRUE

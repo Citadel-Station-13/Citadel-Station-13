@@ -407,11 +407,19 @@
 	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		return
 
-	dropItemToGround(I)
+	//dropItemToGround(I) CIT CHANGE - makes it so the item doesn't drop if the modifier rolls above 100
 
 	var/modifier = 0
 	if(has_trait(TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
+
+	//CIT CHANGES START HERE
+	else if(combatmode)
+		modifier += 50
+
+	if(modifier < 100)
+		dropItemToGround(I)
+	//END OF CIT CHANGES
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself

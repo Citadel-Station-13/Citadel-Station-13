@@ -8,6 +8,8 @@
 		adjustStaminaLoss(0.3)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
+			for(var/obj/item/I in held_items)
+				accident(I)
 			Knockdown(80)
 
 /mob/living/carbon/human/movement_delay()
