@@ -81,6 +81,19 @@
 
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
+
+//POWERLESS SLIME//
+/datum/species/slimeperson
+	name = "Slimeperson"
+	id = "slimeperson"
+	default_color = "00FFFF"
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	hair_color = "mutcolor"
+	hair_alpha = 150
+
+/datum/species/slimeperson/qualifies_for_rank(rank, list/features)
+	return TRUE
+
 //HERBIVOROUS//
 
 //Alien//
