@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(supply_positions, list(
 	"Cargo Technician",
 	"Shaft Miner"))
 */
-
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(civilian_positions, list(
 	"Bartender",
 	"Botanist",
@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(civilian_positions, list(
 	"Clown",
 	"Mime",
 	"Assistant"))
-
+*/
 
 GLOBAL_LIST_INIT(security_positions, list(
 	"Head of Security",
