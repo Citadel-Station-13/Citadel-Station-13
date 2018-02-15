@@ -80,9 +80,14 @@
 	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
+	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
+		return // CIT CHANGE - ditto
+	user.adjustStaminaLoss(w_class*3)//CIT CHANGE - makes attacking things cause stamina loss
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
+	return TRUE//CIT CHANGE - makes attack_obj() return 1 if successful
 
 /atom/movable/proc/attacked_by()
 	return

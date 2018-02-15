@@ -58,5 +58,5 @@
 
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()
-	if(force >= 20)
+	if(. && force >= 20)
 		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
