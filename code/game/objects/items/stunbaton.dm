@@ -115,6 +115,9 @@
 		deductcharge(hitcost)
 		return
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+
 	if(iscyborg(M))
 		..()
 		return
@@ -129,6 +132,7 @@
 		if(status)
 			if(baton_stun(M, user))
 				user.do_attack_animation(M)
+				user.adjustStaminaLoss(w_class*2)//CIT CHANGE - makes stunbatonning others cost stamina
 				return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \

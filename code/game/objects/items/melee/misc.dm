@@ -98,6 +98,9 @@
 	if(!on)
 		return ..()
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+
 	add_fingerprint(user)
 	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
@@ -137,6 +140,7 @@
 			else
 				target.LAssailant = user
 			cooldown = world.time + 40
+			user.adjustStaminaLoss(w_class*2)//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
