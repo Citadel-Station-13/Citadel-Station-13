@@ -6183,6 +6183,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
 	},
@@ -10835,7 +10838,7 @@
 /area/ai_monitored/storage/eva)
 "aCd" = (
 /obj/machinery/computer/cryopod{
-	pixel_y = 25;
+	pixel_y = 25
 	},
 /obj/structure/chair/office/dark{
 	dir = 4
@@ -53685,6 +53688,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"diE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/fore/secondary)
+"dpO" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/maintenance/fore/secondary)
 "dza" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot{
@@ -55117,6 +55133,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"tbp" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "thm" = (
 /obj/item/restraints/handcuffs/fake,
 /obj/effect/decal/cleanable/blood/old,
@@ -84470,7 +84492,7 @@ aiX
 anS
 aoy
 fbG
-anz
+tbp
 anz
 anz
 anz
@@ -84984,7 +85006,7 @@ aiX
 wno
 dLC
 apl
-aqc
+dpO
 aqc
 aqc
 aqc
@@ -86012,7 +86034,7 @@ srs
 jXb
 rWO
 obc
-aqe
+diE
 arf
 apY
 ate
