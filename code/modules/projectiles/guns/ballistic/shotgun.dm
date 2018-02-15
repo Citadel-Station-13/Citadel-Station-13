@@ -37,6 +37,9 @@
 /obj/item/gun/ballistic/shotgun/attack_self(mob/living/user)
 	if(recentpump > world.time)
 		return
+	if(istype(user) && user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return//CIT CHANGE - ditto
 	pump(user)
 	recentpump = world.time + 10
 	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.

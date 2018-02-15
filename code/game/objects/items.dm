@@ -507,6 +507,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
 
 	src.add_fingerprint(user)
 
