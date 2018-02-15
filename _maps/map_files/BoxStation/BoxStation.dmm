@@ -10836,7 +10836,6 @@
 "aCd" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 25;
-	step_y = 0
 	},
 /obj/structure/chair/office/dark{
 	dir = 4
