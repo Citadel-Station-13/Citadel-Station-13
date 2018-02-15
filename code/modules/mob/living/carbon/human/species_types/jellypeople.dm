@@ -121,23 +121,23 @@
 	var/datum/action/innate/swap_body/swap_body
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
-/*	if(slime_split)
+	if(slime_split)
 		slime_split.Remove(C)
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
-	bodies = null */
+	bodies = null
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-	/*	slime_split = new
+		slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
-		swap_body.Grant(C)*/
+		swap_body.Grant(C)
 
 		if(!bodies || !bodies.len)
 			bodies = list(C)
