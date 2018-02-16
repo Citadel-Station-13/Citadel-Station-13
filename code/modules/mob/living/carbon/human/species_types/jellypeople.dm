@@ -4,12 +4,14 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER) //CIT CHANGE - adds HAIR and FACEHAIR to species traits
+	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change
+	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -29,8 +31,8 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
-		slime_change = new
-		slime_change.Grant(C)
+		slime_change = new	//CIT CHANGE
+		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
@@ -111,12 +113,9 @@
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	name = "Xenobiological Slimeperson"
+	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
-	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
