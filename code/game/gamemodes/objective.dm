@@ -1,3 +1,7 @@
+//CITADEL EDIT
+GLOBAL_LIST_EMPTY(objectives)
+//END EDIT
+
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
 	var/datum/team/team       //An alternative to 'owner': a team. Use this when writing new code.
@@ -9,6 +13,7 @@
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
+	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS
 	if(text)
 		explanation_text = text
 
@@ -72,6 +77,8 @@
 			possible_targets = all_possible_targets
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
+	else
+		target = null//we'd rather have no target than an invalid one // CITADEL EDIT
 	update_explanation_text()
 	return target
 
@@ -818,6 +825,3 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/changeling_team_objective/impersonate_department/impersonate_heads
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
-
-
-
