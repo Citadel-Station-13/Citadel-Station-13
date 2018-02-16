@@ -241,7 +241,7 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
-
+//##########SLIMEPEOPLE##########
 
 /datum/species/jelly/roundstartslime
 	name = "Slimeperson"
@@ -261,7 +261,7 @@
 /datum/action/innate/slime_change
 	name = "Alter Form"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimesplit" //placeholder
+	button_icon_state = "alter_form" //placeholder
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
