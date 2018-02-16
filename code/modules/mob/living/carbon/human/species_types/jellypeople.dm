@@ -4,11 +4,12 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	var/datum/action/innate/slime_change/slime_change
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -28,6 +29,8 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+		slime_change = new
+		slime_change.Grant(C)
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
@@ -103,15 +106,123 @@
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
+/datum/action/innate/slime_change
+	name = "Alter Form"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimesplit" //placeholder
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/slime_change/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!isjellyperson(H))
+		return
+	else
+		H.visible_message("<span class='notice'>[owner] gains a look of \
+		concentration while standing perfectly still.\
+		 Their body seems to shift and starts getting more goo-like.</span>",
+		"<span class='notice'>You focus intently on altering your body while \
+		standing perfectly still...</span>")
+		change_form()
+
+/datum/action/innate/slime_change/proc/change_form()
+	var/mob/living/carbon/human/H = owner
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Ears", "Taur body", "Cancel")
+	if(select_alteration == "Hair Style")
+		if(H.gender == MALE)
+			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
+			if(new_style)
+				H.facial_hair_style = new_style
+		else
+			H.facial_hair_style = "Shaved"
+		//handle normal hair
+		var/new_style = input(owner, "Select a hair style", "Hair Alterations")  as null|anything in GLOB.hair_styles_list
+		if(new_style)
+			H.hair_style = new_style
+			H.update_hair()
+	else if (select_alteration == "Genitals")
+		var/list/organs = list()
+		var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add sexual organ", "remove sexual organ", "cancel")
+		switch(operation)
+			if("add sexual organ")
+				var/new_organ = input("Select sexual organ:", "Organ Manipulation") in list("Penis", "Testicles", "Breasts", "Vagina", "Womb", "Cancel")
+				if(new_organ == "Penis")
+					H.give_penis()
+				else if(new_organ == "Testicles")
+					H.give_balls()
+				else if(new_organ == "Breasts")
+					H.give_breasts()
+				else if(new_organ == "Vagina")
+					H.give_vagina()
+				else if(new_organ == "Womb")
+					H.give_womb()
+				else
+					return
+			if("remove sexual organ")
+				for(var/obj/item/organ/genital/X in H.internal_organs)
+					var/obj/item/organ/I = X
+					organs["[I.name] ([I.type])"] = I
+				var/obj/item/organ = input("Select sexual organ:", "Organ Manipulation", null) in organs
+				organ = organs[organ]
+				if(!organ)
+					return
+				var/obj/item/organ/genital/O
+				if(isorgan(organ))
+					O = organ
+					O.Remove(H)
+				organ.forceMove(get_turf(H))
+				qdel(organ)
+				H.update_body()
+	else if (select_alteration == "Ears")
+		var/new_ears
+		new_ears = input(owner, "Choose your character's ears:", "Ear Alteration") as null|anything in GLOB.mam_ears_list
+		if(new_ears)
+			H.dna.features["mam_ears"] = new_ears
+		H.update_body()
+	else if (select_alteration == "Tail")
+		var/new_tail
+		new_tail = input(owner, "Choose your character's tail:", "Tail Alteration") as null|anything in GLOB.mam_tails_list
+		if(new_tail)
+			H.dna.features["mam_tail"] = new_tail
+			if(new_tail != "None")
+				H.dna.features["taur"] = "None"
+		H.update_body()
+	else if (select_alteration == "Taur body")
+		var/new_taur
+		new_taur = input(owner, "Choose your character's tauric body:", "Taur Body Alteration") as null|anything in GLOB.taur_list
+		if(new_taur)
+			H.dna.features["taur"] = new_taur
+			if(new_taur != "None")
+				H.dna.features["mam_tail"] = "None"
+				H.dna.features["xenotail"] = "None"
+		H.update_body()
+	else
+		return
+
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
+
+/datum/species/jelly/roundstartslime
+	name = "Slimeperson"
+	id = "slimeperson"
+	default_color = "00FFFF"
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
+	say_mod = "says"
+	hair_color = "mutcolor"
+	hair_alpha = 180
+	liked_food = MEAT
+	coldmod = 12
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	name = "Slimeperson"
+	name = "Xenobiological Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
 	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -121,23 +232,23 @@
 	var/datum/action/innate/swap_body/swap_body
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
-/*	if(slime_split)
+	if(slime_split)
 		slime_split.Remove(C)
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
-	bodies = null */
+	bodies = null
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-	/*	slime_split = new
+		slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
-		swap_body.Grant(C)*/
+		swap_body.Grant(C)
 
 		if(!bodies || !bodies.len)
 			bodies = list(C)
@@ -718,3 +829,4 @@
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
 			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
+
