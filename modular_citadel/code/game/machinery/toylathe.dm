@@ -34,11 +34,13 @@
 
 	var/list/categories = list(
 							"Toys",
+							"Figurines",
 							"Pistols",
 							"Rifles",
+							"Heavy",
 							"Melee",
 							"Armor",
-							"Heavy",
+							"Adult"
 							"Misc",
 							"Imported"
 							)

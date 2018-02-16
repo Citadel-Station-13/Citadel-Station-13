@@ -1,0 +1,332 @@
+/datum/design/toy/talking/AI
+	name = "Toy AI"
+	id = "ToyAICore"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 250, MAT_METAL = 50)
+	build_path = /obj/item/toy/talking/AI
+	category = list("initial", "Toys")
+
+/datum/design/toy/talking/codex_gigas
+	name = "Toy Codex Gigas"
+	id = "ToyCodex"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 250, MAT_METAL = 50)
+	build_path = /obj/item/toy/talking/codex_gigas
+	category = list("initial", "Toys")
+
+/datum/design/toy/talking/owl
+	name = "Owl Action Figure"
+	id = "owlactionfig"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 250, MAT_METAL = 50)
+	build_path = /obj/item/toy/talking/owl
+	category = list("initial", "Figurines")
+
+/datum/design/toy/talking/griffin
+	name = "Griffon Action Figure"
+	id = "griffinactionfig"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 250, MAT_METAL = 50)
+	build_path = /obj/item/toy/talking/griffin
+	category = list("initial", "Figurines")
+
+/datum/design/toy/cards
+	name = "Deck of Cards"
+	id = "carddeck"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 250)
+	build_path = /obj/item/toy/cards/deck
+	category = list("initial", "Toys")
+
+/datum/design/toy/nuke
+	name = "Nuclear Fission Explosive Toy"
+	id = "nuketoy"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/nuke
+	category = list("initial", "Toys")
+
+/datum/design/toy/minimeteor
+	name = "Mini-Meteor"
+	id = "nuketoy"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/minimeteor
+	category = list("hacked", "Misc")
+
+/datum/design/toy/redbutton
+	name = "Big Red Button"
+	id = "redbutton"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/redbutton
+	category = list("initial", "Toys")
+
+/datum/design/toy/beach_ball
+	name = "Beach Ball"
+	id = "beachball"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500)
+	build_path = /obj/item/toy/beach_ball
+	category = list("initial", "Toys")
+
+/datum/design/toy/clockwork_watch
+	name = "Clockwork Watch"
+	id = "clockwatch"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 1000)
+	build_path = /obj/item/toy/clockwork_watch
+	category = list("initial", "misc")
+
+/datum/design/toy/dagger
+	name = "Toy Dagger"
+	id = "toydagger"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 1000)
+	build_path = /obj/item/toy/toy_dagger
+	category = list("initial", "Melee")
+
+/datum/design/toy/xeno
+	name = "Xenomorph"
+	id = "xenomorph"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/toy_xeno
+	category = list("initial", "Figurines")
+
+/datum/design/toy/cattoy
+	name = "Toy Mouse"
+	id = "cattoy"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500)
+	build_path = /obj/item/toy/cattoy
+	category = list("initial", "Toys")
+
+/datum/design/toy/figure/assistant
+	name = "Assistant"
+	id = "assfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/assistant
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/atmos
+	name = "Atmos Tech"
+	id = "atmfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/atmos
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/bartender
+	name = "Bartender"
+	id = "barfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/bartender
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/botanist
+	name = "Botanist"
+	id = "botfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/botanist
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/captain
+	name = "Captain"
+	id = "capfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/captain
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/cargotech
+	name = "Cargo Technician"
+	id = "carfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/cargotech
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/ce
+	name = "Chief Engineer"
+	id = "cefigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/ce
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/chaplain
+	name = "Chaplain"
+	id = "chafigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/chaplain
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/chef
+	name = "Chef"
+	id = "chefigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/chef
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/chemist
+	name = "Chemist"
+	id = "chmfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/chemist
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/Clown
+	name = "Clown"
+	id = "clnfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/clown
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/borg
+	name = "Cyborg"
+	id = "cybfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/borg
+	category = list("initial", "Figurines")
+
+/datum/design/toy/figure/detective
+	name = "Detective"
+	id = "detfigure"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+	build_path = /obj/item/toy/figure/detective
+	category = list("initial", "Figurines")
+
+  /datum/design/toy/figure/engineer
+  	name = "Engineer"
+  	id = "engfigure"
+  	build_type = AUTOYLATHE
+  	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
+  	build_path = /obj/item/toy/figure/engineer
+  	category = list("initial", "Figurines")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
