@@ -77,6 +77,7 @@ Last space-z level = empty
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
 
+
 //Ruin Generation
 
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)

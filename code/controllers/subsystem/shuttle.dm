@@ -197,6 +197,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
+/datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
+	emergencyNoRecall = TRUE
+	addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
+
+/datum/controller/subsystem/shuttle/proc/unblock_recall()
+	emergencyNoRecall = FALSE
+
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
@@ -309,9 +316,7 @@ SUBSYSTEM_DEF(shuttle)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL)
-		return
-	if(SSticker.mode.name == "meteor")
+	if(!emergency || emergency.mode != SHUTTLE_CALL || emergencyNoRecall || SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)

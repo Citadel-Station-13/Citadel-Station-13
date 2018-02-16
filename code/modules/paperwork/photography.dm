@@ -42,9 +42,9 @@
 
 /obj/item/photo/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!</span>")//when you wanna look at photo of waifu one last time before you die...
-	if (user.gender == MALE) 
+	if (user.gender == MALE)
 		playsound(user, 'sound/voice/human/manlaugh1.ogg', 50, 1)//EVERY TIME I DO IT MAKES ME LAUGH
-	else if (user.gender == FEMALE) 
+	else if (user.gender == FEMALE)
 		playsound(user, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 	return OXYLOSS
 
@@ -54,9 +54,12 @@
 
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
-		if(loc == user && user.stat == CONSCIOUS)
+		if(user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
 
@@ -609,11 +612,10 @@
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
-		playsound(loc, I.usesound, 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
-		deconstruct()
+			deconstruct()
 		return
 
 	else if(istype(I, /obj/item/photo))

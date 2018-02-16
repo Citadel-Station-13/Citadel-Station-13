@@ -215,7 +215,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 1
+	damage = 0
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -295,22 +295,25 @@
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol
 	name = "Magpistol Magazine"
-	desc = "A 7 round magazine for the Magpistol."
+	desc = "A 14 round magazine for the Magpistol."
 	id = "mag_magpistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol/nl
 	name = "Magpistol Magazine (Non-Lethal)"
-	desc = "A 7 round non-lethal magazine for the Magpistol."
+	desc = "A 14 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 //////toy memes/////
 
@@ -329,7 +332,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/toy/mag
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 7
+	max_ammo = 14
 
 /obj/item/gun/ballistic/shotgun/toy/mag
 	name = "foam force magpistol"
@@ -415,7 +418,7 @@
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 27
+	max_ammo = 24
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
@@ -423,7 +426,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
-	max_ammo = 21
+	max_ammo = 24
 
 ///the gun itself///
 
@@ -457,22 +460,25 @@
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle
 	name = "Magrifle Magazine (Lethal)"
-	desc = "A 15 round magazine for the Magrifle."
+	desc = "A 24-round magazine for the Magrifle."
 	id = "mag_magrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
 	build_path = /obj/item/ammo_box/magazine/mmag/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle/nl
 	name = "Magrifle Magazine (Non-Lethal)"
-	desc = "A 15 round non-lethal magazine for the Magrifle."
+	desc = "A 24- round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 ///foamagrifle///
 
@@ -480,7 +486,7 @@
 	name = "foam force magrifle magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "foamagmag"
-	max_ammo = 15
+	max_ammo = 24
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	materials = list(MAT_METAL = 200)
@@ -503,6 +509,19 @@
 	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
 	category = list("initial", "Rifles")
+
+/*
+// TECHWEBS IMPLEMENTATION
+*/
+
+/datum/techweb_node/magnetic_weapons
+	id = "magnetic_weapons"
+	display_name = "Magnetic Weapons"
+	description = "Weapons using magnetic technology"
+	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
+	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
+	research_cost = 2500
+	export_price = 5000
 
 
 //////Hyper-Burst Rifle//////
