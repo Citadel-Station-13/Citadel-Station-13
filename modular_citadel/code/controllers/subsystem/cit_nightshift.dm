@@ -31,6 +31,7 @@ SUBSYSTEM_DEF(nightshift)
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
 		if(!nightshift && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
 			nightshift = TRUE
+			updatenightlights()
 	. = ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = 0)

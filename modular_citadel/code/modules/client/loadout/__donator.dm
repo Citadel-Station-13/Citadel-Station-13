@@ -174,3 +174,15 @@
 	category = slot_in_backpack
 	path = /obj/item/gun/ballistic/automatic/AM4B
 	ckeywhitelist = list("zeronetalpha")
+
+/datum/gear/carrotsatchel
+	name = "Carrot Satchel"
+	category = slot_hands
+	path = /obj/item/storage/backpack/satchel/carrot
+	ckeywhitelist = list("improvedname")
+	
+/datum/gear/gladiator
+    name = "Gladiator Armor"
+    category = slot_wear_suit
+    path = /obj/item/clothing/under/gladiator
+    ckeywhitelist = list("aroche")
