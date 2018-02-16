@@ -40,7 +40,7 @@
 							"Heavy",
 							"Melee",
 							"Armor",
-							"Adult"
+							"Adult",
 							"Misc",
 							"Imported"
 							)
@@ -87,7 +87,7 @@
 		to_chat(user, "<span class=\"alert\">The autoylathe is busy. Please wait for completion of previous operation.</span>")
 		return TRUE
 
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autoylathe", O))
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
 		return TRUE
 
