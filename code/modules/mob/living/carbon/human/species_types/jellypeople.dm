@@ -213,6 +213,8 @@
 	hair_alpha = 180
 	liked_food = MEAT
 	coldmod = 12
+	heatmod = 1
+	burnmod = 1
 
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
