@@ -11,9 +11,9 @@
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change
 	liked_food = MEAT
-	coldmod = 6   // = 3x cold damage
-	heatmod = 0.5 // = 1/4x heat damage
-	burnmod = 0.5 // = 1/2x generic burn damage
+	coldmod = 6
+	heatmod = 0.5
+	burnmod = 0.5
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -212,7 +212,7 @@
 	hair_color = "mutcolor"
 	hair_alpha = 180
 	liked_food = MEAT
-	coldmod = 12
+	coldmod = 6
 	heatmod = 1
 	burnmod = 1
 
