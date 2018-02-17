@@ -270,6 +270,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+// CITADEL EDIT
+	if(istype(loc, /obj/machinery/cryopod))
+		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+		if(response != "Ghost")//darn copypaste
+			return
+		var/obj/machinery/cryopod/C = loc
+		C.despawn_occupant()
+		return
+// END EDIT
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
