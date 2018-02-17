@@ -4,6 +4,9 @@
 /datum/design/autoylathe/mech
   category = list("initial", "Figurines")
 
+/datum/design/autoylathe/mech/contraband
+  category = list("hacked", "Figurines")
+
 /datum/design/autoylathe/figure
   category = list("initial", "Figurines")
 
@@ -89,12 +92,11 @@
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/fireripley
 
-/datum/design/autoylathe/mech/model3
+/datum/design/autoylathe/mech/contraband/model3
 	name = "Toy Deathsquad fireripley "
 	id = "toymech3"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/deathripley
-  category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model4
 	name = "Toy Gygax"
@@ -108,32 +110,29 @@
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/durand
 
-/datum/design/autoylathe/mech/model6
+/datum/design/autoylathe/mech/contraband/model6
 	name = "Toy H.O.N.K."
 	id = "toymech6"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/honk
-  category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/model7
+/datum/design/autoylathe/mech/contraband/model7
 	name = "Toy Marauder"
 	id = "toymech7"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/marauder
 
-/datum/design/autoylathe/mech/model8
+/datum/design/autoylathe/mech/contraband/model8
 	name = "Toy Seraph"
 	id = "toymech8"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/seraph
-  category = list("hacked", "Figurines")
 
-/datum/design/autoylathe/mech/model9
+/datum/design/autoylathe/mech/contraband/model9
 	name = "Toy Mauler"
 	id = "toymech9"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/mauler
-  category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model10
 	name = "Toy Odysseus"
@@ -147,7 +146,7 @@
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/phazon
 
-/datum/design/autoylathe/mech/model12
+/datum/design/autoylathe/mech/contraband/model12
 	name = "Toy Reticence"
 	id = "toymech12"
 	materials = list(MAT_PLASTIC = 250)
