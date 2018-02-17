@@ -6,7 +6,7 @@
 
 /datum/objective/crew/morgue/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(H.stat == DEAD && H.z == ZLEVEL_STATION_PRIMARY)
+		if(H.stat == DEAD && H.z == SSmapping.station_start)
 			if(get_area(H) != /area/medical/morgue)
 				return FALSE
 	return TRUE
@@ -80,7 +80,7 @@
 /datum/objective/crew/noinfections/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
-			if(H.z == ZLEVEL_STATION_PRIMARY || SSshuttle.emergency.shuttle_areas[get_area(H)])
+			if(H.z == SSmapping.station_start || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.check_virus() == 2)
 					return FALSE
 	return TRUE

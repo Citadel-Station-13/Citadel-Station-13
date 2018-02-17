@@ -13013,6 +13013,7 @@
 	name = "mining shuttle bay";
 	width = 7;
 	roundstart_template = /datum/map_template/shuttle/mining/box;
+	
 	},
 /turf/open/space/basic,
 /area/space)
@@ -13219,6 +13220,7 @@
 	name = "fore bay 1";
 	width = 9;
 	roundstart_template = /datum/map_template/shuttle/labour/box;
+	
 	},
 /turf/open/space/basic,
 /area/space)
@@ -30988,6 +30990,7 @@
 	name = "arrivals";
 	width = 7;
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	
 	},
 /turf/open/space/basic,
 /area/space)

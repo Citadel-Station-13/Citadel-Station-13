@@ -65,7 +65,7 @@
 /datum/objective/crew/responsibility/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.drunkenness >= 80)
-			if(H.z == ZLEVEL_STATION_PRIMARY || SSshuttle.emergency.shuttle_areas[get_area(H)])
+			if(H.z == SSmapping.station_start || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				return FALSE
 	return TRUE
 
