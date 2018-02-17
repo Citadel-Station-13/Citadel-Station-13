@@ -257,7 +257,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return 1
 
 /mob/living/proc/InCritical()
