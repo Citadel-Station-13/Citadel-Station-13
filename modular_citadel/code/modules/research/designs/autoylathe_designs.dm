@@ -94,6 +94,7 @@
 	id = "toymech3"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/deathripley
+    category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model4
 	name = "Toy Gygax"
@@ -112,6 +113,7 @@
 	id = "toymech6"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/honk
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model7
 	name = "Toy Marauder"
@@ -124,12 +126,14 @@
 	id = "toymech8"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/seraph
+    category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model9
 	name = "Toy Mauler"
 	id = "toymech9"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/mauler
+    category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/mech/model10
 	name = "Toy Odysseus"
@@ -148,6 +152,7 @@
 	id = "toymech12"
 	materials = list(MAT_PLASTIC = 250)
 	build_path = /obj/item/toy/prize/reticence
+	category = list("hacked", "Figurines")
 
 /datum/design/autoylathe/talking/AI
 	name = "Toy AI"
@@ -191,7 +196,7 @@
 
 /datum/design/autoylathe/minimeteor
 	name = "Mini-Meteor"
-	id = "nuketoy"
+	id = "meattoy"
 	materials = list(MAT_PLASTIC = 500, MAT_METAL = 50)
 	build_path = /obj/item/toy/minimeteor
 	category = list("hacked", "Misc")
