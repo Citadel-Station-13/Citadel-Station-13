@@ -84,15 +84,15 @@
 			return FALSE
 
 /mob/living/carbon/proc/update_stamina()
+	var/total_health = (min(health*2,100) - staminaloss)
 	if(staminaloss)
-		var/total_health = (min(health*2,100) - staminaloss)
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
 			recoveringstam = TRUE
 			update_canmove()
-		if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
-			to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-			recoveringstam = FALSE
-			update_canmove()
+	if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
+		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
+		recoveringstam = FALSE
+		update_canmove()
 	update_health_hud()
