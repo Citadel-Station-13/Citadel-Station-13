@@ -3648,6 +3648,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/crew_quarters/electronic_marketing_den)
 "amQ" = (
@@ -15534,6 +15535,11 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (WEST)";
+	icon_state = "cryopod-open";
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -58502,6 +58508,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -59759,7 +59768,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -60553,7 +60562,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -101074,6 +101083,12 @@
 	dir = 10
 	},
 /area/science/circuit)
+"lel" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/locker)
 "loI" = (
 /obj/machinery/autolathe,
 /obj/machinery/door/window/southleft{
@@ -149815,7 +149830,7 @@ clt
 cnc
 coE
 cqd
-crr
+lel
 csT
 cuy
 cvU

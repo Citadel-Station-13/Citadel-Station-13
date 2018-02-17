@@ -6325,10 +6325,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aml" = (
-/obj/structure/closet/emcloset,
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -6338,12 +6334,8 @@
 	},
 /area/hallway/primary/central)
 "amm" = (
-/obj/structure/cable/white{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "amn" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -6720,7 +6712,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "and" = (
-/obj/structure/closet/firecloset,
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
@@ -6732,10 +6723,6 @@
 	dir = 8
 	},
 /area/hallway/primary/central)
-"ane" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva)
 "anf" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/end{
@@ -31829,6 +31816,22 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dqM" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
+"eJF" = (
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/medical/cryo";
+	dir = 2;
+	name = "Cryogenics APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "fWz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
@@ -31842,6 +31845,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"gHi" = (
+/obj/machinery/computer/cryopod{
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
+"icS" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "kKd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -34354,6 +34367,9 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"usJ" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "uxJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -77148,8 +77164,8 @@ ajx
 akA
 alt
 amm
-amm
-abt
+eJF
+usJ
 aoT
 apZ
 ara
@@ -77404,9 +77420,9 @@ abq
 ajy
 akB
 alk
-aae
-aae
-anQ
+amm
+amm
+dqM
 aoU
 aqa
 arg
@@ -77661,9 +77677,9 @@ aiC
 ajz
 akC
 alk
-aae
-aae
-anQ
+icS
+gHi
+dqM
 aoV
 aqb
 arh
@@ -77919,7 +77935,7 @@ ajA
 akq
 alu
 amn
-ane
+alu
 alu
 syT
 alu

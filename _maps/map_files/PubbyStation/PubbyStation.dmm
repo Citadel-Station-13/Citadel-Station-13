@@ -1475,9 +1475,6 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "afC" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -49975,6 +49972,26 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"cDX" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"gfg" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"gHc" = (
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"gOG" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -50007,6 +50024,29 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
+"kls" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
+"kFZ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lqy" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
@@ -50015,6 +50055,22 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"mTb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"oig" = (
+/obj/machinery/cryopod,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "oPy" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Dock Airlock";
@@ -50035,6 +50091,18 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/dock)
+"pCj" = (
+/obj/machinery/power/apc{
+	areastring = "/area/medical/cryo";
+	dir = 1;
+	name = "Cryogenics APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -50045,6 +50113,21 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"tBM" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/stairs,
+/area/crew_quarters/cryopod)
+"tWw" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"vvr" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -69659,7 +69742,7 @@ aem
 aem
 aeT
 afn
-aem
+kls
 afZ
 agn
 agy
@@ -86654,11 +86737,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-awd
-aHN
+vvr
+pCj
+gfg
+tBM
+kFZ
 aIU
 aJI
 aLe
@@ -86911,11 +86994,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-awd
-aHN
+vvr
+tWw
+gHc
+cDX
+mTb
 aIU
 aJH
 aLe
@@ -87168,10 +87251,10 @@ apX
 aBL
 aBL
 apX
-aaa
-aaa
-aaa
-aAN
+vvr
+oig
+gOG
+vvr
 aHN
 aIU
 aJI
