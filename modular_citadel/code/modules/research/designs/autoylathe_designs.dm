@@ -552,3 +552,75 @@
 	materials = list(MAT_PLASTIC = 16000, MAT_METAL = 4000, MAT_GLASS = 2000)
 	build_path = /obj/item/storage/box/redteam
 	category = list("initial", "Misc")
+
+/datum/design/foam_x9
+	name = "Foam Force X9 Rifle"
+	id = "foam_x9"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/automatic/x9/toy
+	category = list("initial", "Rifles")
+
+/datum/design/magfoam_dart
+	name = "Box of MagFoam Darts"
+	id = "magfoam_dart"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
+	build_path = /obj/item/ammo_box/foambox/mag
+	category = list("initial", "Misc")
+
+/datum/design/foam_magpistol
+	name = "Foam Force Magpistol"
+	id = "magfoam_launcher"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
+	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
+	category = list("initial", "Pistols")
+
+/datum/design/foam_magrifle
+	name = "Foam Force MagRifle"
+	id = "foam_magrifle"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
+	category = list("initial", "Rifles")
+
+/datum/design/foam_hyperburst
+	name = "MagTag Hyper Rifle"
+	id = "foam_hyperburst"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/gun/energy/laser/practice/hyperburst
+	category = list("initial", "Rifles")
+
+/datum/design/foam_sp
+	name = "Foam Force Stealth Pistol"
+	id = "foam_sp"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000)
+	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
+	category = list("initial", "Pistols")
+
+/datum/design/toyray
+	name = "RayTag Gun"
+	id = "toyray"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/gun/energy/laser/practice/raygun
+	category = list("initial", "Pistols")
+
+/datum/design/foam_p37
+	name = "Foam Force Mk.37F"
+	id = "foam_p37"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000, MAT_GLASS = 250)
+	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
+	category = list("initial", "Pistols")
+
+/datum/design/am4c
+	name = "Foam Force AM4-C Rifle"
+	id = "foam_am4c"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/automatic/AM4C
+	category = list("initial", "Rifles")
