@@ -2029,12 +2029,9 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
-<<<<<<< HEAD
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon_vore.dm"
-=======
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\drake.dm"
->>>>>>> a2ccca5... All medal methods are handled on SSmedals as opposed to global procs and also have proper defines. Killing with a crusher grants special medals. (#35673)
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\hierophant.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\legion.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\megafauna.dm"
