@@ -13,6 +13,8 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autoylathe
 
+/obj/machinery/autoylathe/Initialize()
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASTIC), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
@@ -22,16 +24,13 @@
 	var/hack_wire
 	var/disable_wire
 	var/shock_wire
-
 	var/busy = FALSE
 	var/prod_coeff = 1
-
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
-
 	var/list/categories = list(
 							"Toys",
 							"Figurines",
@@ -44,9 +43,6 @@
 							"Misc",
 							"Imported"
 							)
-
-/obj/machinery/autoylathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASTIC), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autoylathe(src)
