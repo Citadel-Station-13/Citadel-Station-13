@@ -57,7 +57,8 @@
 "o" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /obj/docking_port/mobile/emergency{
-	name = "The Arena"
+	name = "The Arena";
+	timid = 1
 	},
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
