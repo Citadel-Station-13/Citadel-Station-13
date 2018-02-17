@@ -72,7 +72,7 @@
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	user.adjustStaminaLoss(w_class*2)//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLoss(w_class*1.25)//CIT CHANGE - makes attacking things cause stamina loss
 	return TRUE//CIT CHANGE - makes attack() return 1 if successful
 
 //the equivalent of the standard version of attack() but for object targets.

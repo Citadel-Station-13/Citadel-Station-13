@@ -141,7 +141,7 @@
 			else
 				target.LAssailant = user
 			cooldown = world.time + 40
-			user.adjustStaminaLoss(w_class*2)//CIT CHANGE - makes swinging batons cost stamina
+			user.adjustStaminaLoss(w_class*1.25)//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
