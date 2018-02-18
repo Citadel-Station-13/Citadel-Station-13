@@ -370,7 +370,6 @@
 	name = "Sergal"
 	icon_state = "sergal"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = TRUE
 	color_src = MUTCOLORS2
 
 /******************************************
