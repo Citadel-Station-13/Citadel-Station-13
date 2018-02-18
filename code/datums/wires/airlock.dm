@@ -1,10 +1,9 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Airlock"
-	randomize = TRUE
 
 /datum/wires/airlock/secure
-	security_level = 3
+	randomize = TRUE
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
