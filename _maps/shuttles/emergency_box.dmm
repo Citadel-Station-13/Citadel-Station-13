@@ -203,7 +203,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle"
+	name = "Box emergency shuttle";
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
