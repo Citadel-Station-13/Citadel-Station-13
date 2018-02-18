@@ -80,6 +80,23 @@
 	icon_state = "cow"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	extra = TRUE
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	extra = TRUE
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
@@ -99,7 +116,7 @@
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = 0
+	hasinner = 1
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/fox
