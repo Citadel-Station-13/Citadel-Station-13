@@ -196,7 +196,6 @@
 #include "code\citadel\cit_spawners.dm"
 #include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\cit_vendors.dm"
-#include "code\citadel\dogborgstuff.dm"
 #include "code\citadel\plasmacases.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_cargo.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_civilian.dm"
