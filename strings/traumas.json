@@ -241,6 +241,31 @@
 	"YOU SHALL SURVIVE THIS, MY PRIEST.",
 	"BE HEALED, PRIEST.",
 	"YOUR LIFE IS IMPORTANT. KEEP IT."
-    ]
+    ],
 
+	"roles": [
+	"heds",
+	"ceptin",
+	"hop",
+	"arrdee",
+	"sek"
+	],
+	
+	"cargo": [
+	"GUNS",
+	"HATS",
+	"PIZEH",
+	"MEMES",
+	"GLOWY CYSTAL"
+	],
+	
+	"s_roles": [
+	"ert",
+	"shadowlig",
+	"ninja",
+	"admen",
+	"mantor",
+	"bluh daymon",
+	"wizzerd"
+	]
 }

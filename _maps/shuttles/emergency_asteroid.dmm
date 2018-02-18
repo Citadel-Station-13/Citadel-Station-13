@@ -35,7 +35,8 @@
 	dwidth = 10;
 	height = 13;
 	name = "Asteroid emergency shuttle";
-	width = 28
+	width = 28;
+	timid = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

@@ -13,7 +13,8 @@
 	dwidth = 1;
 	height = 10;
 	name = "Oh Hi Mark";
-	width = 12
+	width = 12;
+	timid = 1
 	},
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
