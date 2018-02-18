@@ -217,7 +217,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Scrapheap Challenge"
+	name = "Scrapheap Challenge";
+	timid = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

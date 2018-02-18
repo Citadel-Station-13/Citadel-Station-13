@@ -17,6 +17,7 @@
 	dwidth = 4;
 	height = 17;
 	name = "delta arrivals shuttle";
+	timid = 1;
 	width = 9
 	},
 /turf/closed/wall/mineral/plastitanium,

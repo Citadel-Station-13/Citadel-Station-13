@@ -189,15 +189,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 
-/datum/design/foam_x9
-	name = "Foam Force X9 Rifle"
-	id = "foam_x9"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/x9/toy
-	category = list("hacked", "Misc")
-
-
 ////////XCOM2 Magpistol/////////
 
 //////projectiles//////
@@ -352,22 +343,6 @@
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	max_ammo = 42
 
-/datum/design/magfoam_dart
-	name = "Box of MagFoam Darts"
-	id = "magfoam_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
-	build_path = /obj/item/ammo_box/foambox/mag
-	category = list("initial", "Misc")
-
-/datum/design/foam_magpistol
-	name = "Foam Force Magpistol"
-	id = "magfoam_launcher"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
-	category = list("hacked", "Misc")
-
 //////Magrifle//////
 
 ///projectiles///
@@ -501,14 +476,6 @@
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-
-/datum/design/foam_magrifle
-	name = "Foam Force MagRifle"
-	id = "foam_magrifle"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 7500)
-	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
-	category = list("hacked", "Misc")
 
 /*
 // TECHWEBS IMPLEMENTATION
@@ -648,14 +615,6 @@
 	name = "toy mag burst rifle power supply"
 	maxcharge = 4000
 
-/datum/design/foam_hyperburst
-	name = "MagTag Hyper Rifle"
-	id = "foam_hyperburst"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
-	build_path = /obj/item/gun/energy/laser/practice/hyperburst
-	category = list("hacked", "Misc")
-
 /*		made redundant by reskinnable stetchkins
 //////Stealth Pistol//////
 
@@ -707,15 +666,6 @@
 	else
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-
-/datum/design/foam_sp
-	name = "Foam Force Stealth Pistol"
-	id = "foam_sp"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
-	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
-	category = list("hacked", "Misc")
-
 
 //////10mm soporific bullets//////
 
@@ -922,14 +872,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
-
-/datum/design/toyray
-	name = "RayTag Gun"
-	id = "toyray"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/energy/laser/practice/raygun
-	category = list("hacked", "Misc")
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Gun
@@ -1179,15 +1121,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
 
-/datum/design/foam_p37
-	name = "Foam Force Mk.37F"
-	id = "foam_p37"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
-	category = list("hacked", "Misc")
-
-
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Energy Gun
 *//////////////////////////////////////////////////////////////////////////////////////////////
@@ -1311,11 +1244,3 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	w_class = WEIGHT_CLASS_NORMAL
 	burst_size = 4	//Shh.
 	fire_delay = 1
-
-/datum/design/am4c
-	name = "Foam Force AM4-C Rifle"
-	id = "foam_am4c"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/AM4C
-	category = list("hacked", "Misc")

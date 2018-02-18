@@ -41,6 +41,7 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
+	timid = 1;
 	width = 7
 	},
 /turf/open/floor/plating,

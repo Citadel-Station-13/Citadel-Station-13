@@ -458,6 +458,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	desc = "Compress dinosaur over millions of years, then refine, split and mold, and voila! You have plastic."
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
+	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
 	merge_type = /obj/item/stack/sheet/plastic
 
