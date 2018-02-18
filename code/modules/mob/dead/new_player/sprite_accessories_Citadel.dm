@@ -209,6 +209,22 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	hasinner= 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
@@ -332,6 +348,13 @@
 	icon_state = "otie"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
+
+/datum/sprite_accessory/snouts/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	color_src = MUTCOLORS2
 
 /******************************************
 ************ Actual Species ***************
@@ -708,8 +731,6 @@
 /datum/sprite_accessory/mam_body_markings/husky
 	name = "Husky"
 	icon_state = "husky"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/moth
