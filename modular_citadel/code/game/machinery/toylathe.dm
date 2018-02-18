@@ -12,13 +12,9 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autoylathe
-	var/operating = FALSE
 	var/hacked = FALSE
-	var/disabled = 0
+	var/disabled = FALSE
 	var/shocked = FALSE
-	var/hack_wire
-	var/disable_wire
-	var/shock_wire
 	var/busy = FALSE
 	var/prod_coeff = 1
 	var/datum/design/being_built
