@@ -33,7 +33,7 @@
 
 
 ////////////////////////// Anti-Noms Drugs //////////////////////////
-
+/*
 /datum/reagent/medicine/ickypak
 	name = "Ickypak"
 	id = "ickypak"
@@ -60,4 +60,4 @@
 	name = "Ickypak"
 	id = "ickypak"
 	results = list("ickypak" = 2)
-	required_reagents = list("chlorine" = 2 , "oil" = 1)
+	required_reagents = list("chlorine" = 2 , "oil" = 1) */

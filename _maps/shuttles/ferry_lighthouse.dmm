@@ -165,6 +165,7 @@
 	height = 27;
 	id = "ferry";
 	name = "The Lighthouse";
+	timid = 1;
 	port_direction = 2;
 	width = 16
 	},
