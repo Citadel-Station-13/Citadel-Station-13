@@ -117,9 +117,6 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-//CITADEL EDIT Vore code required overrides
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
-		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 //END EDIT
@@ -235,9 +232,6 @@
 	if(RESISTCOLD in dna.species.species_traits)
 		return TRUE
 		
-//CITADEL EDIT Mandatory for vore code.
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
-		return 1 //freezing to death in sleepers ruins fun.
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
 //END EDIT
