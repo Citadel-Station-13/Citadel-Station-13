@@ -2581,6 +2581,7 @@
 #include "modular_citadel\code\modules\jobs\jobs.dm"
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
 #include "modular_citadel\code\modules\jobs\job_types\cargo_service.dm"
+#include "modular_citadel\code\modules\jobs\job_types\engineering.dm"
 #include "modular_citadel\code\modules\mentor\follow.dm"
 #include "modular_citadel\code\modules\mentor\mentor.dm"
 #include "modular_citadel\code\modules\mentor\mentor_memo.dm"
