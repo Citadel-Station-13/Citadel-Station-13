@@ -252,6 +252,13 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "pink"
 
+/obj/item/clothing/neck/tie/bloodred
+	name = "Blood Red Tie"
+	desc = "A neosilk clip-on tie. This one has a black S on the tipping and looks rather unique."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "bloodredtie"
+	icon_override = 'icons/mob/custom_w.dmi'
+
 
 /*Fractious*/
 
