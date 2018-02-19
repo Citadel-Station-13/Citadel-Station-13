@@ -110,6 +110,8 @@
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
+		if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
+			user.adjustStaminaLoss(recoil) //CIT CHANGE - ditto
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
@@ -169,6 +171,10 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
+	//CIT CHANGES START HERE - adds bonus spread while not aiming
+	if(istype(user) && !user.aimingdownsights)
+		bonus_spread += weapon_weight*30
+	//END OF CIT CHANGES
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)

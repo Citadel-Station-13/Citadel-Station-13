@@ -322,8 +322,10 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(staminaloss && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
+	if(staminaloss && !combatmode && !aimingdownsights)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? -3 : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
+		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
 
 	var/restingpwr = 1 + 4 * resting
 

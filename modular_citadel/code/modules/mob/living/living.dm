@@ -1,5 +1,6 @@
 /mob/living
 	var/recoveringstam = FALSE
+	var/aimingdownsights = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -32,6 +33,9 @@
 			CitFootstep(newloc)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
+		if(aimingdownsights)
+			aimingdownsights = FALSE
+			to_chat(src, "<span class='notice'>You are no longer aiming down your weapon's sights.</span>")
 
 /mob/living/proc/lay_down()
 	set name = "Rest"

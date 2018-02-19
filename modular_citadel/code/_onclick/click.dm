@@ -62,7 +62,8 @@
 				UnarmedAttack(A,1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			if(!W.altafterattack(A, src, FALSE, params))
+				W.afterattack(A, src, FALSE, params)
 		else
 			if(!AltRangedAttack(A,params))
 				RangedAttack(A,params)
