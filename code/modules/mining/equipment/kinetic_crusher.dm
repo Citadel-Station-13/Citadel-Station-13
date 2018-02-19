@@ -110,6 +110,7 @@
 				if(!QDELETED(C))
 					C.total_damage += detonation_damage
 				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
+			user.adjustStaminaLoss(-13)//CIT CHANGE - makes crushers heal stamina
 
 /obj/item/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)
