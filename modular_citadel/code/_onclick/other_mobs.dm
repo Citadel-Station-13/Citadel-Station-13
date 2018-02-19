@@ -8,5 +8,18 @@
 		return TRUE
 	return TRUE
 
+/mob/living/carbon/human/AltRangedAttack(atom/A, params)
+	if(!has_active_hand())
+		to_chat(src, "<span class='notice'>You ponder your life choices and sigh.</span>")
+		return TRUE
+
+	if(!incapacitated())
+		switch(a_intent)
+			if(INTENT_HELP)
+				visible_message("<span class='notice'>[src] waves to [A].</span>", "<span class='notice'>You wave to [A].</span>")
+			if(INTENT_HARM)
+				visible_message("<span class='notice'>[src] shakes [p_their()] fist at [A]", "<span class='notice'>You shake your fist at [A]</span>")
+		return TRUE
+
 /atom/proc/alt_attack_hand(mob/user)
 	return FALSE

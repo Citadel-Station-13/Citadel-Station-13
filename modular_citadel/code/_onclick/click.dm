@@ -64,9 +64,13 @@
 		if(W)
 			W.afterattack(A,src,0,params)
 		else
-			RangedAttack(A,params)
+			if(!AltRangedAttack(A,params))
+				RangedAttack(A,params)
 
 /mob/proc/AltUnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
+	return FALSE
+
+/mob/proc/AltRangedAttack(atom/A, params)
 	return FALSE
