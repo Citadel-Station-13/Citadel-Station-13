@@ -8,6 +8,9 @@
 /modular_citadel/ @deathride58
 /code/citadel/ @deathride58
 
+#jakeramsay007
+/modular_citadel/code/modules/mob/living/carbon/human/species_types/jellypeople.dm @jakeramsay007
+
 #Poojawa
 
 /code/modules/vore @Poojawa
