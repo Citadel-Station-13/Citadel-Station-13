@@ -198,8 +198,8 @@
     category = slot_wear_suit
     path = /obj/item/clothing/under/gladiator
     ckeywhitelist = list("aroche")
-
-/datum/gear/tie
+	
+/datum/gear/bloodredtie
     name = "Blood Red Tie"
     category = slot_neck
     path = /obj/item/clothing/neck/tie/bloodred
