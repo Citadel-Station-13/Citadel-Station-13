@@ -202,5 +202,5 @@
 /datum/gear/tie
     name = "Blood Red Tie"
     category = slot_neck
-    path = /obj/item/clothing/neck/tie/red/special
+    path = /obj/item/clothing/neck/tie/bloodred
     ckeywhitelist = list("kyutness")
