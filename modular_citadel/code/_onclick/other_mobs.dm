@@ -18,7 +18,7 @@
 			if(INTENT_HELP)
 				visible_message("<span class='notice'>[src] waves to [A].</span>", "<span class='notice'>You wave to [A].</span>")
 			if(INTENT_HARM)
-				visible_message("<span class='notice'>[src] shakes [p_their()] fist at [A]", "<span class='notice'>You shake your fist at [A]</span>")
+				visible_message("<span class='notice'>[src] shakes [p_their()] fist at [A].</span>", "<span class='notice'>You shake your fist at [A].</span>")
 		return TRUE
 
 /atom/proc/alt_attack_hand(mob/user)
