@@ -5,7 +5,7 @@
 /obj/item/clothing/head/helmet/space/rig
 	name = "helmet"
 	item_flags = THICKMATERIAL
-	flags_inv = 		 HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
+	flags_inv = 		 HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	body_parts_covered = HEAD|FACE|EYES
 	heat_protection =    HEAD|FACE|EYES
 	cold_protection =    HEAD|FACE|EYES
@@ -38,22 +38,13 @@
 
 /obj/item/clothing/suit/space/rig
 	name = "chestpiece"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit)
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	heat_protection =    UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	cold_protection =    UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv =          HIDEJUMPSUIT|HIDETAIL
-	item_flags =              STOPPRESSUREDAMAGE | THICKMATERIAL | AIRTIGHT
+	allowed = list(/obj/item/device/flashlight,/obj/item/tank/internals/*,/obj/item/device/suit_cooling_unit*/)
+	body_parts_covered = slot_wear_suit
+	heat_protection =    slot_wear_suit
+	cold_protection =    slot_wear_suit
+	flags_inv =          HIDEJUMPSUIT
+	item_flags =              STOPSPRESSUREDMAGE_1
 	slowdown = 0
-	//will reach 10 breach damage after 25 laser carbine blasts, 3 revolver hits, or ~1 PTR hit. Completely immune to smg or sts hits.
-	breach_threshold = 38
-	resilience = 0.2
-	can_breach = 1
-	sprite_sheets = list(
-		"Tajara" = 'icons/mob/species/tajaran/suit.dmi',
-		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
-		"Vox" = 'icons/mob/species/vox/suit.dmi'
-		)
 	supporting_limbs = list()
 	var/obj/item/weapon/material/knife/tacknife
 

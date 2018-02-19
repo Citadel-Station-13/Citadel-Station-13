@@ -2573,7 +2573,6 @@
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\rig.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\rig_attackby.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\rig_pieces.dm"
-#include "modular_citadel\code\modules\clothing\spacesuits\rig\rig_pieces_vr.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\rig_verbs.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\rig_wiring.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\rig\modules\combat.dm"
