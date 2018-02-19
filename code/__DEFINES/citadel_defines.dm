@@ -7,6 +7,11 @@
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
 #define ui_combat_toggle "EAST-4:22,SOUTH:5"
 
+//1:1 HUD layout stuff
+#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
+#define ui_boxarea "EAST-4:6,SOUTH+1:6"
+#define ui_boxlang "EAST-5:22,SOUTH+1:6"
+
 
 //organ defines
 #define COCK_SIZE_MIN		1

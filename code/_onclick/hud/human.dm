@@ -89,19 +89,29 @@
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
+	var/widescreenlayout = FALSE //CIT CHANGE - adds support for different hud layouts depending on widescreen pref
+	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref) //CIT CHANGE - ditto
+		widescreenlayout = TRUE // CIT CHANGE - ditto
+
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
 	using = new /obj/screen/craft
 	using.icon = ui_style
+	if(!widescreenlayout) // CIT CHANGE
+		using.screen_loc = ui_boxcraft // CIT CHANGE
 	static_inventory += using
 
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
+	if(!widescreenlayout) // CIT CHANGE
+		using.screen_loc = ui_boxlang // CIT CHANGE
 	static_inventory += using
 
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
+	if(!widescreenlayout) // CIT CHANGE
+		using.screen_loc = ui_boxarea // CIT CHANGE
 	static_inventory += using
 
 	action_intent = new /obj/screen/act_intent/segmented
