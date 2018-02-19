@@ -152,6 +152,7 @@
 	if(staminaloss >= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
+//END OF CIT CHANGES
 
 	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
@@ -180,7 +181,7 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLoss(I.w_class*4)//CIT CHANGE - throwing items shall be more tiring than swinging em.
+		adjustStaminaLoss(I.w_class*2.5)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
