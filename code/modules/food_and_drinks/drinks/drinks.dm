@@ -372,18 +372,6 @@
 	volume = 30
 	spillable = TRUE
 
-///Lavaland bowls and bottles///
-
-/obj/item/reagent_containers/food/drinks/mushroom_bowl
-	name = "mushroom bowl"
-	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
-	icon_state = "mushroom_bowl"
-	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = NONE
-	isGlass = FALSE
-
-
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
 
