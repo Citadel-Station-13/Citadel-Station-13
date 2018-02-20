@@ -186,16 +186,16 @@
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = CLAMP(staminaloss + amount, 0, maxHealth*2)
-	if(updating_stamina)
-		update_stamina()
+	//if(updating_stamina) CIT CHANGE - makes staminaloss changes always call update_stamina
+	update_stamina()
 
 
 /mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
 	staminaloss = amount
-	if(updating_stamina)
-		update_stamina()
+	//if(updating_stamina) CIT CHANGE - makes staminaloss changes always call update_stamina
+	update_stamina()
 
 /mob/living/carbon/getBrainLoss()
 	. = 0
@@ -237,4 +237,3 @@
 	if(B)
 		var/adjusted_amount = amount - B.get_brain_damage()
 		B.adjust_brain_damage(adjusted_amount, null)
-
