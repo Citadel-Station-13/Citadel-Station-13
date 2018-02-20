@@ -173,7 +173,7 @@
 	var/loop_counter = 0
 	//CIT CHANGES START HERE - adds bonus spread while not aiming
 	if(istype(user) && !user.aimingdownsights)
-		bonus_spread += weapon_weight*30
+		bonus_spread += weapon_weight*55
 	//END OF CIT CHANGES
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
