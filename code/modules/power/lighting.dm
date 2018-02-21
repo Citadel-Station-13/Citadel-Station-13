@@ -314,17 +314,12 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-<<<<<<< HEAD
-		if(!light || light.light_range != brightness || SSnightshift.nightshift != nightshift) //Cit change - makes lights update when nightshift triggers
-=======
 		var/BR = nightshift_enabled? nightshift_brightness : brightness
 		var/PO = nightshift_enabled? nightshift_light_power : bulb_power
 		var/CO = nightshift_enabled? nightshift_light_color : bulb_colour
 		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
 		if(!matching)
->>>>>>> 3622768... Merge pull request #35775 from kevinz000/night_shift
 			switchcount++
-			nightshift = SSnightshift.nightshift // Cit change - makes lights update when nightshift triggers
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
@@ -333,11 +328,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-<<<<<<< HEAD
-				set_light(brightness, ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_power : bulb_power), ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_color : bulb_colour)) // Citadel change. Allows nightshift and admins to modify station light power and color
-=======
 				set_light(BR, PO, CO)
->>>>>>> 3622768... Merge pull request #35775 from kevinz000/night_shift
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
