@@ -84,12 +84,6 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				if(D.red_alert_access)
 					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
 					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
-    //Citadel change, makes red and delta alerts override nightshift lights
-			SSnightshift.nightshift_override = TRUE
-			if(SSnightshift.nightshift)
-				SSnightshift.nightshift = FALSE
-				SSnightshift.updatenightlights()
-		//End of citadel changes
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
 		SSnightshift.check_nightshift()
 	else
