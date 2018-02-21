@@ -1,8 +1,8 @@
-GLOBAL_VAR_INIT(security_level, 0)
-//0 = code green
-//1 = code blue
-//2 = code red
-//3 = code delta
+GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
+//SEC_LEVEL_GREEN = code green
+//SEC_LEVEL_BLUE = code blue
+//SEC_LEVEL_RED = code red
+//SEC_LEVEL_DELTA = code delta
 
 //config.alert_desc_blue_downto
 
@@ -91,6 +91,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 				SSnightshift.updatenightlights()
 		//End of citadel changes
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
+		SSnightshift.check_nightshift()
 	else
 		return
 
