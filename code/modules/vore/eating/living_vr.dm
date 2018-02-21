@@ -191,7 +191,7 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0)
+	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0,ignore_walls = FALSE)
 
 	// Actually shove prey into the belly.
 	belly_target.nom_mob(prey, user)
@@ -286,6 +286,16 @@
 				if(M.loc != src)
 					B.internal_contents.Remove(M)
 
+// internal slimy button in case the loop stops playing but the player wants to hear it
+/mob/living/proc/preyloop_refresh()
+	set name = "Internal loop refresh"
+	set category = "Vore"
+	if(ismob(src.loc))
+		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
+		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+		src.playsound_local(get_turf(src),preyloop,40,0, channel = CHANNEL_PREYLOOP)
+	else
+		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
 
 // OOC Escape code for pref-breaking or AFK preds
 //
@@ -398,7 +408,7 @@
 		taste_message += "[vore_taste]"
 	else
 		if(ishuman(src))
-			taste_message += "normal, like a critter should"
+			taste_message += "they haven't bothered to set their flavor text"
 		else
 			taste_message += "a plain old normal [src]"
 
