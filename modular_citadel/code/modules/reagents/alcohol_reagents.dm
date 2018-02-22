@@ -6,7 +6,7 @@
 	boozepwr = 100
 	taste_description = "acid and needles"
 	glass_name = "glass of stabsinthe"
-	glass_desc = "A waxy, thirst-quenching drink refined from ground Nettle needles. Inspires violence in whoever drinks it"
+	glass_desc = "Stabsinthe's like drinkin' a cool breeze. Just don't go spittin' needles everywhere"
 
 /datum/reagent/consumable/ethanol/stabsinthe/on_mob_life(mob/living/M) //TODO: Make this force the user into harm intent, and automatically attack people who attack them
 	if(prob(2.5)) //I don't know how likely this is to occur over periods of time because I don't know how quickly on_mob_life is called, so these values can be adjusted
