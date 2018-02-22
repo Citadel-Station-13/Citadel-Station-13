@@ -22,14 +22,14 @@
 		regenerate_limbs.Remove(C)
 	if(slime_change)	//CIT CHANGE
 		slime_change.Remove(C)	//CIT CHANGE
-	C.remove_language(/datum/language/slime, TRUE)
+	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime, TRUE)
+	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
