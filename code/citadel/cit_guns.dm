@@ -189,15 +189,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 
-/datum/design/foam_x9
-	name = "Foam Force X9 Rifle"
-	id = "foam_x9"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/x9/toy
-	category = list("hacked", "Misc")
-
-
 ////////XCOM2 Magpistol/////////
 
 //////projectiles//////
@@ -215,7 +206,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 1
+	damage = 0
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -295,22 +286,25 @@
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol
 	name = "Magpistol Magazine"
-	desc = "A 7 round magazine for the Magpistol."
+	desc = "A 14 round magazine for the Magpistol."
 	id = "mag_magpistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol/nl
 	name = "Magpistol Magazine (Non-Lethal)"
-	desc = "A 7 round non-lethal magazine for the Magpistol."
+	desc = "A 14 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 //////toy memes/////
 
@@ -329,7 +323,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/toy/mag
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 7
+	max_ammo = 14
 
 /obj/item/gun/ballistic/shotgun/toy/mag
 	name = "foam force magpistol"
@@ -348,22 +342,6 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	max_ammo = 42
-
-/datum/design/magfoam_dart
-	name = "Box of MagFoam Darts"
-	id = "magfoam_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
-	build_path = /obj/item/ammo_box/foambox/mag
-	category = list("initial", "Misc")
-
-/datum/design/foam_magpistol
-	name = "Foam Force Magpistol"
-	id = "magfoam_launcher"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
-	category = list("hacked", "Misc")
 
 //////Magrifle//////
 
@@ -415,7 +393,7 @@
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 27
+	max_ammo = 24
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
@@ -423,7 +401,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
-	max_ammo = 21
+	max_ammo = 24
 
 ///the gun itself///
 
@@ -457,22 +435,25 @@
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle
 	name = "Magrifle Magazine (Lethal)"
-	desc = "A 15 round magazine for the Magrifle."
+	desc = "A 24-round magazine for the Magrifle."
 	id = "mag_magrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
 	build_path = /obj/item/ammo_box/magazine/mmag/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle/nl
 	name = "Magrifle Magazine (Non-Lethal)"
-	desc = "A 15 round non-lethal magazine for the Magrifle."
+	desc = "A 24- round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 ///foamagrifle///
 
@@ -480,7 +461,7 @@
 	name = "foam force magrifle magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "foamagmag"
-	max_ammo = 15
+	max_ammo = 24
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	materials = list(MAT_METAL = 200)
@@ -496,13 +477,18 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 
-/datum/design/foam_magrifle
-	name = "Foam Force MagRifle"
-	id = "foam_magrifle"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 7500)
-	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
-	category = list("hacked", "Misc")
+/*
+// TECHWEBS IMPLEMENTATION
+*/
+
+/datum/techweb_node/magnetic_weapons
+	id = "magnetic_weapons"
+	display_name = "Magnetic Weapons"
+	description = "Weapons using magnetic technology"
+	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
+	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
+	research_cost = 2500
+	export_price = 5000
 
 
 //////Hyper-Burst Rifle//////
@@ -629,14 +615,6 @@
 	name = "toy mag burst rifle power supply"
 	maxcharge = 4000
 
-/datum/design/foam_hyperburst
-	name = "MagTag Hyper Rifle"
-	id = "foam_hyperburst"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
-	build_path = /obj/item/gun/energy/laser/practice/hyperburst
-	category = list("hacked", "Misc")
-
 /*		made redundant by reskinnable stetchkins
 //////Stealth Pistol//////
 
@@ -688,15 +666,6 @@
 	else
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-
-/datum/design/foam_sp
-	name = "Foam Force Stealth Pistol"
-	id = "foam_sp"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
-	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
-	category = list("hacked", "Misc")
-
 
 //////10mm soporific bullets//////
 
@@ -903,14 +872,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
-
-/datum/design/toyray
-	name = "RayTag Gun"
-	id = "toyray"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/energy/laser/practice/raygun
-	category = list("hacked", "Misc")
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Gun
@@ -1160,15 +1121,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
 
-/datum/design/foam_p37
-	name = "Foam Force Mk.37F"
-	id = "foam_p37"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
-	category = list("hacked", "Misc")
-
-
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Energy Gun
 *//////////////////////////////////////////////////////////////////////////////////////////////
@@ -1292,11 +1244,3 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	w_class = WEIGHT_CLASS_NORMAL
 	burst_size = 4	//Shh.
 	fire_delay = 1
-
-/datum/design/am4c
-	name = "Foam Force AM4-C Rifle"
-	id = "foam_am4c"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/AM4C
-	category = list("hacked", "Misc")

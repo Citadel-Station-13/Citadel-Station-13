@@ -34,9 +34,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		if(istype(ghost))
 			activate(ghost)
 
-/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
+/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade) // CITADEL EDIT sound change to 'sound/misc/server-ready.ogg'
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/misc/server-ready.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
@@ -64,6 +64,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(brainmob.client)
 		visible_message(success_message)
+		playsound(src, 'sound/machines/ping.ogg', 15, TRUE)
 	else
 		visible_message(fail_message)
 

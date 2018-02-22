@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - balance: "Printed power cells must now be charged before use"

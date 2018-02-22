@@ -181,14 +181,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
-	var/list/exp
+	var/list/exp = list()
 	var/list/menuoptions
 
 	var/action_buttons_screen_locs = list()
 
-	var/screenshake = 100
-	var/damagescreenshake = 2
-	var/arousable = TRUE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -385,6 +382,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "High"
 			dat += "</a><br>"
+
+			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 
@@ -1195,7 +1194,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.r_wings_list
 					if(new_wings)
 						features["wings"] = new_wings
-						
+
 				if("moth_wings")
 					var/new_moth_wings
 					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
@@ -1565,6 +1564,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["exhibitionist"] = TRUE
 						else
 							features["exhibitionist"] = FALSE
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -1673,14 +1675,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("load")
 					load_preferences()
 					load_character()
-					attempt_vr(parent.prefs_vr,"load_vore","")
+					if(parent && parent.prefs_vr)
+						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
 						save_character()
-					attempt_vr(parent.prefs_vr,"load_vore","")
+					if(parent && parent.prefs_vr)
+						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("tab")
 					if (href_list["tab"])

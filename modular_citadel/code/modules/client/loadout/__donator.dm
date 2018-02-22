@@ -174,3 +174,33 @@
 	category = slot_in_backpack
 	path = /obj/item/gun/ballistic/automatic/AM4B
 	ckeywhitelist = list("zeronetalpha")
+
+/datum/gear/carrotsatchel
+	name = "Carrot Satchel"
+	category = slot_hands
+	path = /obj/item/storage/backpack/satchel/carrot
+	ckeywhitelist = list("improvedname")
+
+/datum/gear/naomisweater
+	name = "worn black sweater"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/bb_sweater/black/naomi
+	ckeywhitelist = list("technicalmagi")
+
+/datum/gear/naomicollar
+	name = "worn pet collar"
+	category = slot_neck
+	path = /obj/item/clothing/neck/petcollar/naomi
+	ckeywhitelist = list("technicalmagi")
+
+/datum/gear/gladiator
+    name = "Gladiator Armor"
+    category = slot_wear_suit
+    path = /obj/item/clothing/under/gladiator
+    ckeywhitelist = list("aroche")
+	
+/datum/gear/bloodredtie
+    name = "Blood Red Tie"
+    category = slot_neck
+    path = /obj/item/clothing/neck/tie/bloodred
+    ckeywhitelist = list("kyutness")
