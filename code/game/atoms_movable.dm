@@ -530,7 +530,7 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
-
+// CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y, final_pixel_y, final_pixel_x)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
