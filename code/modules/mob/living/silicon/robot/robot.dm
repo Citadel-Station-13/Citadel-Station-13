@@ -594,7 +594,7 @@
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 
 	if(laser)
-		add_overlay("laser")//Is this even used???
+		add_overlay("module.laser")//Is this even used??? - Yes modular_citadel/borg/inventory.dm
 	if(disabler)
 		add_overlay("disabler")//ditto
 
