@@ -165,7 +165,7 @@
 				stop_pulling()
 				if(has_trait(TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
-				adjustStaminaLoss(25)//CIT CHANGE - throwing an entire person shall be very tiring
+				adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
@@ -181,7 +181,7 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLoss(I.w_class*2.5)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
+		adjustStaminaLossBuffered(I.getweight()*2)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")

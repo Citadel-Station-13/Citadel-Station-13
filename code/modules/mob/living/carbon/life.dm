@@ -327,6 +327,13 @@
 	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
 		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
 
+	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
+	if(bufferedstam && world.time > stambufferregentime)
+		var/drainrate = max((bufferedstam*(bufferedstam/(8)))*0.1,1)
+		bufferedstam = max(bufferedstam - drainrate, 0)
+		adjustStaminaLoss(drainrate*0.5)
+	//END OF CIT CHANGES
+
 	var/restingpwr = 1 + 4 * resting
 
 	//Dizziness

@@ -72,7 +72,7 @@
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-	user.adjustStaminaLoss(getweight())//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes attacking things cause stamina loss
 	return TRUE//CIT CHANGE - makes attack() return 1 if successful
 
 //the equivalent of the standard version of attack() but for object targets.
@@ -83,7 +83,7 @@
 	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
-	user.adjustStaminaLoss(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
+	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)

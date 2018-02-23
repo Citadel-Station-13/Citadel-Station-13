@@ -5,7 +5,7 @@
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
 	if(. && sprinting && !resting && m_intent == MOVE_INTENT_RUN)
-		adjustStaminaLoss(0.3)
+		adjustStaminaLossBuffered(0.3)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
 			for(var/obj/item/I in held_items)

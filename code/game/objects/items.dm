@@ -520,7 +520,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	user.do_attack_animation(M)
 
-	user.adjustStaminaLoss(10)//CIT CHANGE - makes eyestabbing cost stamina
+	user.adjustStaminaLossBuffered(10)//CIT CHANGE - makes eyestabbing cost stamina
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \

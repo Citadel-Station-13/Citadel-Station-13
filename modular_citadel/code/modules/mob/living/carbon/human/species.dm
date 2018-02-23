@@ -30,7 +30,7 @@
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		user.adjustStaminaLoss(4) //CITADEL CHANGE - makes disarmspam cause staminaloss
+		user.adjustStaminaLossBuffered(4) //CITADEL CHANGE - makes disarmspam cause staminaloss
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)

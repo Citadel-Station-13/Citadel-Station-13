@@ -1,5 +1,8 @@
 /mob/living
 	var/recoveringstam = FALSE
+	var/bufferedstam = 0
+	var/stambuffer = 20
+	var/stambufferregentime
 	var/aimingdownsights = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -60,7 +63,7 @@
 		if(staminaloss >= STAMINA_SOFTCRIT)
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
-		var/health_deficiency = max(maxHealth - (health - staminaloss), 0)
+		var/health_deficiency = max((maxHealth - (health - staminaloss))*0.5, 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
 		totaldelay += health_deficiency

@@ -1337,7 +1337,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		user.adjustStaminaLoss(5) //CITADEL CHANGE - makes punching cause staminaloss
+		user.adjustStaminaLossBuffered(5) //CITADEL CHANGE - makes punching cause staminaloss
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
@@ -1402,7 +1402,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		user.adjustStaminaLoss(3) //CITADEL CHANGE - makes disarmspam cause staminaloss
+		user.adjustStaminaLossBuffered(3) //CITADEL CHANGE - makes disarmspam cause staminaloss
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)

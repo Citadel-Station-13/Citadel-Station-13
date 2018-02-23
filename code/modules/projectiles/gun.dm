@@ -111,7 +111,7 @@
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 		if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
-			user.adjustStaminaLoss(recoil) //CIT CHANGE - ditto
+			user.adjustStaminaLossBuffered(recoil*5) //CIT CHANGE - ditto
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
