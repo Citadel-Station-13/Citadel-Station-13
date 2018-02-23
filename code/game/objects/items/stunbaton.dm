@@ -133,7 +133,7 @@
 		if(status)
 			if(baton_stun(M, user))
 				user.do_attack_animation(M)
-				user.adjustStaminaLoss(w_class*1.25)//CIT CHANGE - makes stunbatonning others cost stamina
+				user.adjustStaminaLoss(getweight())//CIT CHANGE - makes stunbatonning others cost stamina
 				return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \

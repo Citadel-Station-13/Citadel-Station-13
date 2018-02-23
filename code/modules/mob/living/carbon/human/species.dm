@@ -1255,7 +1255,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/obj/item/I in H.held_items)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
-		var/health_deficiency = (100 - H.health + (H.staminaloss*0.5))//CIT CHANGE - halves the impact of staminaloss on movement speed
+		var/health_deficiency = (100 - H.health + (H.staminaloss*0.75))//CIT CHANGE - halves the impact of staminaloss on movement speed
 		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
 		if(health_deficiency >= 40)
 			if(flight)
@@ -1499,8 +1499,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
+	//CIT CHANGES START HERE - combatmode and resting checks
+	var/totitemdamage = I.force
+	if(iscarbon(user))
+		var/mob/living/carbon/tempcarb = user
+		if(!tempcarb.combatmode)
+			totitemdamage *= 0.5
+	if(user.resting)
+		totitemdamage *= 0.5
+	if(istype(H))
+		if(!H.combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
 	H.send_item_attack_message(I, user, hit_area)
 

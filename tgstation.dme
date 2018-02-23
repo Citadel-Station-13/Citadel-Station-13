@@ -2557,6 +2557,7 @@
 #include "modular_citadel\code\game\machinery\vending.dm"
 #include "modular_citadel\code\game\machinery\computer\card.dm"
 #include "modular_citadel\code\game\objects\ids.dm"
+#include "modular_citadel\code\game\objects\items.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"
 #include "modular_citadel\code\game\objects\items\holy_weapons.dm"
 #include "modular_citadel\code\game\objects\items\stunsword.dm"

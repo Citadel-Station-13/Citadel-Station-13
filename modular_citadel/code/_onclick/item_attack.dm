@@ -17,3 +17,9 @@
 
 /obj/item/proc/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return FALSE
+
+/obj/item/proc/getweight()
+	if(total_mass)
+		return total_mass
+	else
+		return w_class*1.25
