@@ -125,7 +125,7 @@
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list("SS13")
+		builtInCamera.network = list("ss13")
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
@@ -594,7 +594,7 @@
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 
 	if(laser)
-		add_overlay("laser")//Is this even used???
+		add_overlay("module.laser")//Is this even used??? - Yes modular_citadel/borg/inventory.dm
 	if(disabler)
 		add_overlay("disabler")//ditto
 

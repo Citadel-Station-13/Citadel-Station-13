@@ -301,7 +301,7 @@
 						return
 
 					selected.release_all_contents()
-					playsound(user, 'sound/vore/pred/escape.ogg', vol=80)
+					playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
@@ -318,9 +318,7 @@
 						for(var/atom/movable/tgt in selected.internal_contents)
 							to_chat(tgt, "<span class='warning'>You're squished from [user]'s [selected] to their [B]!</span>")
 							selected.transfer_contents(tgt, B, 1)
-
-						for(var/mob/hearer in range(1,user))
-							hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
+						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
 		if(!(tgt in selected.internal_contents)) //Old menu, needs updating because they aren't really there.
@@ -337,7 +335,7 @@
 					return FALSE
 
 				selected.release_specific_contents(tgt)
-				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				playsound(get_turf(user),'sound/effects/splat.ogg',50,0,-5,0,ignore_walls = FALSE)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
@@ -354,8 +352,7 @@
 					if (!(tgt in selected.internal_contents))
 						return FALSE
 					to_chat(tgt, "<span class='warning'>You're moved from [user]'s [lowertext(selected.name)] to their [lowertext(B.name)]!</span>")
-					for(var/mob/hearer in range(1,user))
-						hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
+					playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
 					selected.transfer_contents(tgt, B)
 
 	if(href_list["newbelly"])

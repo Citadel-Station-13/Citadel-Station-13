@@ -74,9 +74,12 @@
 		if(gs==0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
 			grab_state = gs
+			if(istype(AM,/mob/living))
+				var/mob/living/AMob = AM
+				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)
@@ -527,8 +530,8 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
-
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+// CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y, final_pixel_y, final_pixel_x)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
@@ -536,9 +539,11 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
+	if(!final_pixel_y)// CITADEL CHANGE DOGBORG OFFSET
+		final_pixel_y = initial(pixel_y)
+
+	if(!final_pixel_x)
+		final_pixel_x = initial(pixel_x) //lol copypasta
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -552,7 +557,8 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2) //CITADEL CHANGE, DOGBORG OFFSET
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
