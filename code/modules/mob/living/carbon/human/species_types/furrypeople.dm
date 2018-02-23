@@ -254,7 +254,7 @@
 	hair_color = "mutcolor"
 	hair_alpha = 180
 	liked_food = MEAT
-	coldmod = 6
+	coldmod = 3
 	heatmod = 1
 	burnmod = 1
 

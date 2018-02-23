@@ -20,6 +20,8 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	if(slime_change)	//CIT CHANGE
+		slime_change.Remove(C)	//CIT CHANGE
 	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
