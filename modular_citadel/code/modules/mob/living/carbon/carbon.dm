@@ -2,6 +2,8 @@
 	var/combatmode = FALSE //literally lifeweb
 
 /mob/living/carbon/proc/toggle_combat_mode()
+	if(recoveringstam)
+		return TRUE
 	combatmode = !combatmode
 	if(combatmode)
 		playsound_local(src, 'modular_citadel/sound/misc/ui_toggle.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!

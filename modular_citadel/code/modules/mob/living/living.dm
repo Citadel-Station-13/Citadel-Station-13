@@ -93,6 +93,8 @@
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
+			if(combatmode)
+				toggle_combat_mode()
 			recoveringstam = TRUE
 			update_canmove()
 	if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
