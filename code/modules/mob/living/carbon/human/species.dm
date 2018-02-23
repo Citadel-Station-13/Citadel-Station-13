@@ -1419,6 +1419,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return*/
 
+		if(!target.combatmode) // CITADEL CHANGE
+			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(user.resting) //CITADEL CHANGE
 			randn += 60 //CITADEL CHANGE - No kosher disarming if you're resting
 		if(!user.combatmode) //CITADEL CHANGE

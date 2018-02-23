@@ -323,7 +323,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 	if(staminaloss && !combatmode && !aimingdownsights)//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(resting ? -3 : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
 		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
 
