@@ -1,6 +1,3 @@
-/mob/living/carbon/changeNext_move(num)
-	next_move = world.time + (((num+next_move_adjust)*next_move_modifier)*((staminaloss*0.01)+1))
-
 /mob/proc/RightClickOn(atom/A, params) //mostly a copy-paste from ClickOn()
 	var/list/modifiers = params2list(params)
 	if(incapacitated(ignore_restraints = 1))
