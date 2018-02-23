@@ -329,7 +329,7 @@
 
 	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
 	if(bufferedstam && world.time > stambufferregentime)
-		var/drainrate = max((bufferedstam*(bufferedstam/(8)))*0.1,1)
+		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
 		bufferedstam = max(bufferedstam - drainrate, 0)
 		adjustStaminaLoss(drainrate*0.5)
 	//END OF CIT CHANGES
