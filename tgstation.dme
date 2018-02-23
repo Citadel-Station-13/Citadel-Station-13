@@ -2561,6 +2561,7 @@
 #include "modular_citadel\code\game\objects\items\devices\radio\headset.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
+#include "modular_citadel\code\game\objects\items\melee\holy_weapons.dm"
 #include "modular_citadel\code\game\objects\structures\beds_chairs\sofa.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\fitness.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
