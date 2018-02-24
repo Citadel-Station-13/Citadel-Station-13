@@ -36316,7 +36316,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plasteel/dark,
@@ -36325,7 +36325,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment,
@@ -38613,7 +38613,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -38944,7 +38944,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -39248,6 +39248,11 @@
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "atmosdeliver"
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "atmospherics security door"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -39911,11 +39916,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bTG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/engine/engineering)
+/area/engine/break_room)
 "bTH" = (
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -40140,16 +40145,19 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 28
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Engineering Foyer APC";
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bUm" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -40158,8 +40166,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bUn" = (
 /obj/machinery/light{
 	dir = 1
@@ -40179,11 +40190,11 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bUo" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -40191,7 +40202,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/atmos)
 "bUp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 6
@@ -40489,12 +40500,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVa" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -40510,7 +40521,7 @@
 	dir = 4
 	},
 /turf/open/floor/goonplaque,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -40522,11 +40533,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVc" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
-	name = "Atmospherics Blast Door"
+	name = "atmospherics security door"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/disposalpipe/segment{
@@ -40537,9 +40548,8 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/atmos)
 "bVd" = (
-/obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_access_txt = "24"
@@ -40923,7 +40933,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -40934,7 +40944,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -40942,8 +40952,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 27;
+	pixel_y = -39
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 27;
+	pixel_y = -25
+	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
+/area/engine/break_room)
 "bVV" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
@@ -41267,6 +41287,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bWF" = (
@@ -41300,7 +41324,7 @@
 	dir = 9
 	},
 /turf/closed/wall,
-/area/engine/engineering)
+/area/engine/break_room)
 "bWI" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -46005,7 +46029,7 @@
 /obj/machinery/camera{
 	c_tag = "Telecomms External Fore";
 	dir = 1;
-	network = list("SS13", "tcomm");
+	network = list("SS13","tcomm");
 	start_active = 1
 	},
 /turf/open/space,
@@ -50032,6 +50056,7 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/dock)
+<<<<<<< HEAD
 "pCj" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/cryo";
@@ -50044,6 +50069,11 @@
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+=======
+"pps" = (
+/turf/closed/wall,
+/area/engine/break_room)
+>>>>>>> 44ede62... Merge pull request #35917 from ShizCalev/pubby-fixes
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -83400,7 +83430,7 @@ bOL
 bRp
 bRY
 bSM
-bTE
+pps
 bUl
 bUZ
 bVS
@@ -83914,7 +83944,7 @@ bmC
 bRo
 bmC
 bQD
-bTE
+pps
 bUn
 bVb
 bVU
