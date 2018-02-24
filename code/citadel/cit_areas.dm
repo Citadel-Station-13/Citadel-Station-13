@@ -11,3 +11,8 @@
 
 /area/crew_quarters/theatre/mime
 	name = "Mime's Office"
+
+/area/crew_quarters/cryopod
+	name = "Cryogenics"
+	icon = 'code/citadel/icons/areas.dmi'
+	icon_state = "cryo"

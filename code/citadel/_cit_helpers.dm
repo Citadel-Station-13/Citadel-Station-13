@@ -88,9 +88,6 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		"Purple"	= "#e300ff"//purple
 		))
 
-//mentor stuff
-GLOBAL_LIST_EMPTY(mentors)
-
 //Looc stuff
 GLOBAL_VAR_INIT(looc_allowed, 1)
 GLOBAL_VAR_INIT(dlooc_allowed, 1)

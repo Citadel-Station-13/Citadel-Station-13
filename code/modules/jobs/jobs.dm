@@ -1,3 +1,4 @@
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(command_positions, list(
 	"Captain",
 	"Head of Personnel",
@@ -5,7 +6,7 @@ GLOBAL_LIST_INIT(command_positions, list(
 	"Chief Engineer",
 	"Research Director",
 	"Chief Medical Officer"))
-
+*/
 
 GLOBAL_LIST_INIT(engineering_positions, list(
 	"Chief Engineer",
@@ -26,14 +27,14 @@ GLOBAL_LIST_INIT(science_positions, list(
 	"Scientist",
 	"Roboticist"))
 
-
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(supply_positions, list(
 	"Head of Personnel",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner"))
-
-
+*/
+/*CITADEL CHANGE - comments this out to be overridden in modular_citadel
 GLOBAL_LIST_INIT(civilian_positions, list(
 	"Bartender",
 	"Botanist",
@@ -45,7 +46,7 @@ GLOBAL_LIST_INIT(civilian_positions, list(
 	"Clown",
 	"Mime",
 	"Assistant"))
-
+*/
 
 GLOBAL_LIST_INIT(security_positions, list(
 	"Head of Security",
@@ -57,7 +58,7 @@ GLOBAL_LIST_INIT(security_positions, list(
 GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"AI",
 	"Cyborg",
-	"pAI"))
+	ROLE_PAI))
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(
 	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | civilian_positions | list("AI","Cyborg")), // crew positions

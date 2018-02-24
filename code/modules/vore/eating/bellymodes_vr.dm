@@ -23,7 +23,7 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
@@ -52,7 +52,7 @@
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_digest)
 				digestion_death(M)
@@ -71,7 +71,7 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
@@ -88,7 +88,7 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(35))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
@@ -99,7 +99,7 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 

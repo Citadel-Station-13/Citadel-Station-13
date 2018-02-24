@@ -107,6 +107,8 @@
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
+		if("mentor_log")
+			CitadelMentorLogSecret()
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
 			for(var/line in SSjob.job_debug)
