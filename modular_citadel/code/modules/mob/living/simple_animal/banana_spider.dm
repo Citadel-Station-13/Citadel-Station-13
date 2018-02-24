@@ -129,6 +129,8 @@
 /mob/living/simple_animal/banana_spider/ex_act()
 	return
 
+/mob/living/simple_animal/banana_spider/start_pulling()
+	return FALSE			//No.
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider
 	name = "dead banana spider"
