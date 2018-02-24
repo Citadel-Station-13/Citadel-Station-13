@@ -50056,7 +50056,6 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/dock)
-<<<<<<< HEAD
 "pCj" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/cryo";
@@ -50069,11 +50068,6 @@
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
-=======
-"pps" = (
-/turf/closed/wall,
-/area/engine/break_room)
->>>>>>> 44ede62... Merge pull request #35917 from ShizCalev/pubby-fixes
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
