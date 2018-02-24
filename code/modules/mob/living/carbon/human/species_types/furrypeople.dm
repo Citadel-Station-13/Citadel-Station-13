@@ -247,14 +247,14 @@
 	name = "Slimeperson"
 	id = "slimeperson"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER,NOLIVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 180
 	liked_food = MEAT
-	coldmod = 6
+	coldmod = 3
 	heatmod = 1
 	burnmod = 1
 

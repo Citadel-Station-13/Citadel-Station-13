@@ -4,7 +4,7 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER,NOLIVER) //CIT CHANGE - adds HAIR and FACEHAIR to species traits
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER) //CIT CHANGE - adds HAIR and FACEHAIR to species traits
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
@@ -20,6 +20,8 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	if(slime_change)	//CIT CHANGE
+		slime_change.Remove(C)	//CIT CHANGE
 	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()

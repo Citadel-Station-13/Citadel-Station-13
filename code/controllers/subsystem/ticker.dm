@@ -144,6 +144,10 @@ SUBSYSTEM_DEF(ticker)
 
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	if(CONFIG_GET(flag/randomize_shift_time))
+		gametime_offset = rand(0, 23) HOURS
+	else if(CONFIG_GET(flag/shift_time_realtime))
+		gametime_offset = world.timeofday
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
