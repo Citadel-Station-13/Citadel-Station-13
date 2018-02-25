@@ -1040,6 +1040,9 @@
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
 
+/mob/living/carbon/human/species/ipc
+	race = /datum/species/ipc
+  
 /*
 //CITADEL EDIT - TODO: Enable people to set custom races
 /mob/living/carbon/human/species/mammal
