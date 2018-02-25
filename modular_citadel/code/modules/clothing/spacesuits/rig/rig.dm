@@ -43,7 +43,7 @@
 	var/air_type =   /obj/item/tank/internals
 
 	//Component/device holders.
-	var/obj/item/weapon/tank/air_supply                       // Air tank, if any.
+	var/obj/item/tank/internals        					              // Air tank, if any.
 	var/obj/item/clothing/shoes/boots = null                  // Deployable boots, if any.
 	var/obj/item/clothing/suit/space/rig/chest                // Deployable chestpiece, if any.
 	var/obj/item/clothing/head/helmet/space/rig/helmet = null // Deployable helmet, if any.
