@@ -4,9 +4,14 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
+<<<<<<< HEAD
 	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER) //CIT CHANGE - adds HAIR and FACEHAIR to species traits
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
+=======
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
+>>>>>>> b49798c... Converts several species traits into generic traits (#35743)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
@@ -118,6 +123,10 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
+<<<<<<< HEAD
+=======
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+>>>>>>> b49798c... Converts several species traits into generic traits (#35743)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
