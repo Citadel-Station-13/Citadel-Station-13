@@ -117,7 +117,8 @@
 		return 0
 	for (var/atom/movable/M in internal_contents)
 		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
-		M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
+		for(var/mob/living/W in M)
+			W.stop_sound_channel(CHANNEL_PREYLOOP)
 		internal_contents.Remove(M)  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
@@ -135,7 +136,8 @@
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
-	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
+	for(var/mob/living/W in M)
+		W.stop_sound_channel(CHANNEL_PREYLOOP)
 	src.internal_contents.Remove(M)  // Remove from the belly contents
 
 	var/datum/belly/B = check_belly(owner)
@@ -150,15 +152,11 @@
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
 /datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
-//	if (prey.buckled)
-//		prey.buckled.unbuckle_mob()
+	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 
 	prey.forceMove(owner)
 	internal_contents.Add(prey)
-
-//	var/datum/belly/B = check_belly(owner)
-//	if(B.silenced == FALSE) //this needs more testing later
-	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
+	prey.playsound_local(get_turf(prey),preyloop,40,0, channel = CHANNEL_PREYLOOP)
 
 	// Handle prey messages
 	if(inside_flavor)
@@ -274,7 +272,7 @@
 /datum/belly/proc/digestion_death(var/mob/living/M)
 	is_full = TRUE
 	internal_contents.Remove(M)
-	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
+	M.stop_sound_channel(CHANNEL_PREYLOOP)
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if(is_vore_predator(M))
 		for(var/bellytype in M.vore_organs)
@@ -287,7 +285,7 @@
 				internal_contents.Add(subprey)
 				to_chat(subprey, "As [M] melts away around you, you find yourself in [owner]'s [name]")
 
-	//Drop all items into the belly/floor.
+	//Drop all items into the belly
 	for(var/obj/item/W in M)
 		if(!M.dropItemToGround(W))
 			qdel(W)
@@ -336,12 +334,10 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-//	for(var/mob/M in hearers(4, owner))
-//		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(get_turf(owner),"struggle_sound",35,0,-6,1,channel=151)
+	playsound(get_turf(owner),"struggle_sound",35,0,-6,1,channel=151,ignore_walls = FALSE)
 	R.stop_sound_channel(151)
-	R.playsound_local(get_turf(R), null, 45, S = prey_struggle)
+	R.playsound_local(get_turf(R),prey_struggle,45,0)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name].</span>")
@@ -393,8 +389,7 @@
 	// Re-use nom_mob
 	target.nom_mob(content, target.owner)
 	if(!silent)
-		for(var/mob/hearer in range(1,owner))
-			hearer << sound(target.vore_sound,volume=80)
+		playsound(get_turf(owner),"[target].vore_sound",35,0,-6,1,ignore_walls = FALSE)
 /*
 //Handles creation of temporary 'vore chest' upon digestion
 /datum/belly/proc/slimy_mass(var/obj/item/content, var/mob/living/M)

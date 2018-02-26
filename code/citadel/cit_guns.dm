@@ -182,21 +182,12 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toy9"
 	can_suppress = 0
-	needs_permit = 0
+	obj_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/x9
 	casing_ejector = 0
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-
-/datum/design/foam_x9
-	name = "Foam Force X9 Rifle"
-	id = "foam_x9"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
-	build_path = /obj/item/gun/ballistic/automatic/x9/toy
-	category = list("hacked", "Misc")
-
 
 ////////XCOM2 Magpistol/////////
 
@@ -215,7 +206,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 1
+	damage = 0
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -295,22 +286,25 @@
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol
 	name = "Magpistol Magazine"
-	desc = "A 7 round magazine for the Magpistol."
+	desc = "A 14 round magazine for the Magpistol."
 	id = "mag_magpistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magpistol/nl
 	name = "Magpistol Magazine (Non-Lethal)"
-	desc = "A 7 round non-lethal magazine for the Magpistol."
+	desc = "A 14 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 //////toy memes/////
 
@@ -329,7 +323,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/toy/mag
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 7
+	max_ammo = 14
 
 /obj/item/gun/ballistic/shotgun/toy/mag
 	name = "foam force magpistol"
@@ -348,22 +342,6 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	max_ammo = 42
-
-/datum/design/magfoam_dart
-	name = "Box of MagFoam Darts"
-	id = "magfoam_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
-	build_path = /obj/item/ammo_box/foambox/mag
-	category = list("initial", "Misc")
-
-/datum/design/foam_magpistol
-	name = "Foam Force Magpistol"
-	id = "magfoam_launcher"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
-	category = list("hacked", "Misc")
 
 //////Magrifle//////
 
@@ -415,7 +393,7 @@
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 27
+	max_ammo = 24
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
@@ -423,7 +401,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
-	max_ammo = 21
+	max_ammo = 24
 
 ///the gun itself///
 
@@ -457,22 +435,25 @@
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
 	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle
 	name = "Magrifle Magazine (Lethal)"
-	desc = "A 15 round magazine for the Magrifle."
+	desc = "A 24-round magazine for the Magrifle."
 	id = "mag_magrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
 	build_path = /obj/item/ammo_box/magazine/mmag/lethal
 	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_magrifle/nl
 	name = "Magrifle Magazine (Non-Lethal)"
-	desc = "A 15 round non-lethal magazine for the Magrifle."
+	desc = "A 24- round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 ///foamagrifle///
 
@@ -480,7 +461,7 @@
 	name = "foam force magrifle magazine"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "foamagmag"
-	max_ammo = 15
+	max_ammo = 24
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
 	materials = list(MAT_METAL = 200)
@@ -489,20 +470,25 @@
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = FALSE
+	obj_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 
-/datum/design/foam_magrifle
-	name = "Foam Force MagRifle"
-	id = "foam_magrifle"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 7500)
-	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
-	category = list("hacked", "Misc")
+/*
+// TECHWEBS IMPLEMENTATION
+*/
+
+/datum/techweb_node/magnetic_weapons
+	id = "magnetic_weapons"
+	display_name = "Magnetic Weapons"
+	description = "Weapons using magnetic technology"
+	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
+	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
+	research_cost = 2500
+	export_price = 5000
 
 
 //////Hyper-Burst Rifle//////
@@ -617,7 +603,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toyburst"
 	clumsy_check = FALSE
-	needs_permit = FALSE
+	obj_flags = 0
 	fire_delay = 40
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = TRUE
@@ -628,14 +614,6 @@
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
 	maxcharge = 4000
-
-/datum/design/foam_hyperburst
-	name = "MagTag Hyper Rifle"
-	id = "foam_hyperburst"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
-	build_path = /obj/item/gun/energy/laser/practice/hyperburst
-	category = list("hacked", "Misc")
 
 /*		made redundant by reskinnable stetchkins
 //////Stealth Pistol//////
@@ -688,15 +666,6 @@
 	else
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-
-/datum/design/foam_sp
-	name = "Foam Force Stealth Pistol"
-	id = "foam_sp"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
-	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
-	category = list("hacked", "Misc")
-
 
 //////10mm soporific bullets//////
 
@@ -772,7 +741,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	caliber = "flechette"
 	throwforce = 2
 	throw_speed = 3
-	embed_chance = 75
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 40, "embedded_fall_chance" = 10)
 
 ///magazine///
 
@@ -858,7 +827,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "cde"
 	can_unsuppress = TRUE
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "cde",
 						"NT-99" = "n99",
 						"Stealth" = "stealthpistol",
@@ -903,14 +872,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
-
-/datum/design/toyray
-	name = "RayTag Gun"
-	id = "toyray"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
-	build_path = /obj/item/gun/energy/laser/practice/raygun
-	category = list("hacked", "Misc")
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Gun
@@ -1004,49 +965,49 @@ obj/item/projectile/bullet/c10mm/soporific
 		switch(choice)
 
 			if("Frame Color")
-				var/frame_color_input = input(usr,"Choose Frame Color") as color|null
+				var/frame_color_input = input(usr,"","Choose Frame Color",frame_color) as color|null
 				if(frame_color_input)
 					frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Receiver Color")
-				var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
+				var/receiver_color_input = input(usr,"","Choose Receiver Color",receiver_color) as color|null
 				if(receiver_color_input)
 					receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Body Color")
-				var/body_color_input = input(usr,"Choose Body Color") as color|null
+				var/body_color_input = input(usr,"","Choose Body Color",body_color) as color|null
 				if(body_color_input)
 					body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Barrel Color")
-				var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
+				var/barrel_color_input = input(usr,"","Choose Barrel Color",barrel_color) as color|null
 				if(barrel_color_input)
 					barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Barrel Tip Color")
-				var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
+				var/tip_color_input = input(usr,"","Choose Barrel Tip Color",tip_color) as color|null
 				if(tip_color_input)
 					tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Grip Light Color")
-				var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
+				var/grip_color_input = input(usr,"","Choose Grip Light Color",grip_color) as color|null
 				if(grip_color_input)
 					grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Light Color")
-				var/energy_color_input = input(usr,"Choose Light Color") as color|null
+				var/energy_color_input = input(usr,"","Choose Light Color",energy_color) as color|null
 				if(energy_color_input)
 					energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 
 			if("Arm Color")
-				var/arm_color_input = input(usr,"Choose Arm Color") as color|null
+				var/arm_color_input = input(usr,"","Choose Arm Color",arm_color) as color|null
 				if(arm_color_input)
 					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
 				update_icon()
@@ -1154,19 +1115,11 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon_state = "p37_foam"
 	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
-	needs_permit = FALSE
+	obj_flags = 0
+	casing_ejector = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
-
-/datum/design/foam_p37
-	name = "Foam Force Mk.37F"
-	id = "foam_p37"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
-	category = list("hacked", "Misc")
-
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////
 							The Recolourable Energy Gun
@@ -1182,7 +1135,6 @@ obj/item/gun/energy/e_gun/cx
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	flight_x_offset = 15
 	flight_y_offset = 10
-	actions_types = list(/datum/action/item_action/pick_color)
 	var/body_color = "#252528"
 
 obj/item/gun/energy/e_gun/cx/update_icon()
@@ -1196,16 +1148,17 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		var/mob/M = loc
 		M.update_inv_hands()
 
-obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
-	if(istype(A, /datum/action/item_action/pick_color))
-		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
-			var/body_color_input = input(usr,"Choose Body Color") as color|null
-			if(body_color_input)
-				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/body_color_input = input(usr,"","Choose Body Color",body_color) as color|null
+		if(body_color_input)
+			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		A.UpdateButtonIcon()
-	else
-		..()
 
 obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -1215,5 +1168,79 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		. += body_inhand
 
 /obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
-	..()
 	materials = list(MAT_METAL = 200)
+
+/*/////////////////////////////////////////////////////////////
+//////////////////////// Zero's Meme //////////////////////////
+*//////////////////////////////////////////////////////////////
+/obj/item/ammo_box/magazine/toy/AM4B
+	name = "foam force AM4-B magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4MAG-60"
+	max_ammo = 60
+	multiple_sprites = 0
+	materials = list(MAT_METAL = 200)
+
+/obj/item/gun/ballistic/automatic/AM4B
+	name = "AM4-B"
+	desc = "A Relic from a bygone age. Nobody quite knows why it's here. Has a polychromic coating."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4B
+	can_suppress = 0
+	item_flags = NEEDS_PERMIT
+	casing_ejector = 0
+	spread = 30		//Assault Rifleeeeeee
+	w_class = WEIGHT_CLASS_NORMAL
+	burst_size = 4	//Shh.
+	fire_delay = 1
+	var/body_color = "#3333aa"
+
+/obj/item/gun/ballistic/automatic/AM4B/update_icon()
+	..()
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "AM4-Body")
+	if(body_color)
+		body_overlay.color = body_color
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+	add_overlay(body_overlay)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+/obj/item/gun/ballistic/automatic/AM4B/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/body_color_input = input(usr,"","Choose Shroud Color",body_color) as color|null
+		if(body_color_input)
+			body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+/obj/item/gun/ballistic/automatic/AM4B/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
+
+/obj/item/ammo_box/magazine/toy/AM4C
+	name = "foam force AM4-C magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4MAG-32"
+	max_ammo = 32
+	multiple_sprites = 0
+	materials = list(MAT_METAL = 200)
+
+/obj/item/gun/ballistic/automatic/AM4C
+	name = "AM4-C"
+	desc = "A Relic from a bygone age. This one seems newer, yet less effective."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "AM4C"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/toy/AM4C
+	can_suppress = 0
+	item_flags = NEEDS_PERMIT
+	casing_ejector = 0
+	spread = 45		//Assault Rifleeeeeee
+	w_class = WEIGHT_CLASS_NORMAL
+	burst_size = 4	//Shh.
+	fire_delay = 1

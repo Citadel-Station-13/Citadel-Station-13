@@ -13,6 +13,10 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
 
+/datum/sprite_accessory/moth_wings/none
+	name = "None"
+	icon_state = "none"
+
 /***************** Alphabetical Order please ***************
 ************* Keep it to Ears, Tails, Tails Animated *********/
 
@@ -76,6 +80,23 @@
 	icon_state = "cow"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	extra = TRUE
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	extra = TRUE
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
@@ -95,7 +116,7 @@
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = 0
+	hasinner = 1
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/fox
@@ -203,6 +224,22 @@
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	hasinner= 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/sergal
+	name = "Sergal"
+	icon_state = "sergal"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/skunk
@@ -328,6 +365,12 @@
 	icon_state = "otie"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
+
+/datum/sprite_accessory/snouts/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS2
 
 /******************************************
 ************ Actual Species ***************
@@ -510,6 +553,25 @@
 	icon_state = "murid"
 	color_src = 0
 
+/datum/sprite_accessory/mam_ears/neko
+	name = "Neko"
+	icon_state = "cat"
+	hasinner = 1
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/neko
+	name = "Neko"
+	icon_state = "cat"
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/neko
+	name = "Neko"
+	icon_state = "cat"
+	color_src = HAIR
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
 /datum/sprite_accessory/mam_ears/otie
 	name = "Otusian"
 	icon_state = "otie"
@@ -685,8 +747,6 @@
 /datum/sprite_accessory/mam_body_markings/husky
 	name = "Husky"
 	icon_state = "husky"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/moth

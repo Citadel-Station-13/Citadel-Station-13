@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
 //This datum creates 3 async tasks
@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 /datum/explosion
 	var/explosion_id
+	var/atom/explosion_source
 	var/started_at
 	var/running = TRUE
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
@@ -37,6 +38,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/id = ++id_counter
 	explosion_id = id
+	explosion_source = epicenter
 
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
@@ -323,6 +325,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(stopped < 2)	//wait for main thread and spiral_range thread
 		return QDEL_HINT_IWILLGC
 	GLOB.explosions -= src
+	explosion_source = null
 	return ..()
 
 /client/proc/check_bomb_impacts()
@@ -398,7 +401,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
 	if(!power)
 		return
 	var/range = 0

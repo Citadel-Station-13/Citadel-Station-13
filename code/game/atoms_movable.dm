@@ -74,9 +74,12 @@
 		if(gs==0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
 			grab_state = gs
+			if(istype(AM,/mob/living))
+				var/mob/living/AMob = AM
+				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)
@@ -157,36 +160,47 @@
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			moving_diagonally = FIRST_DIAG_STEP
-			if (direct & 1)
-				if (direct & 4)
+			var/first_step_dir
+			if (direct & NORTH)
+				if (direct & EAST)
 					if (step(src, NORTH))
+						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
+						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
-				else if (direct & 8)
+				else if (direct & WEST)
 					if (step(src, NORTH))
+						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
+						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
+			else if (direct & SOUTH)
+				if (direct & EAST)
 					if (step(src, SOUTH))
+						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
+						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
-				else if (direct & 8)
+				else if (direct & WEST)
 					if (step(src, SOUTH))
+						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
+						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
+			if(!. && moving_diagonally == SECOND_DIAG_STEP)
+				setDir(first_step_dir)
 			moving_diagonally = 0
 			return
 
@@ -516,8 +530,8 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
-
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+// CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y, final_pixel_y, final_pixel_x)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
@@ -525,9 +539,11 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
+	if(!final_pixel_y)// CITADEL CHANGE DOGBORG OFFSET
+		final_pixel_y = initial(pixel_y)
+
+	if(!final_pixel_x)
+		final_pixel_x = initial(pixel_x) //lol copypasta
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -541,7 +557,8 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2) //CITADEL CHANGE, DOGBORG OFFSET
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -646,7 +663,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
+	var/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -690,9 +707,9 @@
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-/atom/movable/proc/grant_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-	H.grant_language(dt)
+/atom/movable/proc/grant_language(datum/language/dt, body = FALSE)
+	var/datum/language_holder/H = get_language_holder(!body)
+	H.grant_language(dt, body)
 
 /atom/movable/proc/grant_all_languages(omnitongue=FALSE)
 	var/datum/language_holder/H = get_language_holder()
@@ -702,9 +719,9 @@
 	var/datum/language_holder/H = get_language_holder()
 	. = H.get_random_understood_language()
 
-/atom/movable/proc/remove_language(datum/language/dt)
-	var/datum/language_holder/H = get_language_holder()
-	H.remove_language(dt)
+/atom/movable/proc/remove_language(datum/language/dt, body = FALSE)
+	var/datum/language_holder/H = get_language_holder(!body)
+	H.remove_language(dt, body)
 
 /atom/movable/proc/remove_all_languages()
 	var/datum/language_holder/H = get_language_holder()

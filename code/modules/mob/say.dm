@@ -20,7 +20,7 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as text)
+/mob/verb/me_verb(message as message) // CIT CHANGE - makes me command input box bigger
 	set name = "Me"
 	set category = "IC"
 

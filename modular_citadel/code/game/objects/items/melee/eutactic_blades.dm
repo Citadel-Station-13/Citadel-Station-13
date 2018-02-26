@@ -18,8 +18,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embed_chance = 40
-	embedded_impact_pain_multiplier = 10
+	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 40, "embedded_fall_chance" = 10)
 	armour_penetration = 0
 	block_chance = 60
 	light_color = "#37FFF7"
@@ -84,7 +83,7 @@
 		return
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
@@ -166,7 +165,7 @@
 		return
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
@@ -283,7 +282,7 @@
 		return
 
 	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
-		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		var/energy_color_input = input(usr,"","Choose Energy Color",light_color) as color|null
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
@@ -317,7 +316,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
+	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 
@@ -392,7 +391,7 @@
 			It appears to have a wooden grip and a shaved down guard."
 	icon_state = "cxsword_hilt_traitor"
 	armour_penetration = 35
-	embed_chance = 75
+	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 70, "embedded_fall_chance" = 0)
 	block_chance = 50
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	light_color = "#37F0FF"

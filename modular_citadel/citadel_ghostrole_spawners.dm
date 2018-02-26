@@ -17,7 +17,8 @@
 /obj/effect/mob_spawn/human/lavaknight/special(mob/living/new_spawn)
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
-		H.dna.features["ears"] = "Cat"	//cat people
+		H.dna.features["mam_ears"] = "Cat, Big"	//cat people
+		H.dna.features["mcolor"] = H.hair_color
 		H.update_body()
 
 /obj/effect/mob_spawn/human/lavaknight/Destroy()
@@ -32,6 +33,34 @@
 	r_pocket = /obj/item/melee/transforming/energy/sword/cx
 	suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 	suit_store = /obj/item/tank/internals/oxygen
+	id = /obj/item/card/id/knight
+
+/datum/outfit/lavaknight/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/knight/W = H.wear_id
+	W.assignment = "Knight"
+	W.registered_name = H.real_name
+	W.id_color = "#0000FF" //Regular knights get simple blue. Doesn't matter much because it's variable anyway
+	W.update_label(H.real_name)
+	W.update_icon()
+
+/datum/outfit/lavaknight/captain
+	name ="Cydonian Knight Captain"
+	l_pocket = /obj/item/twohanded/hypereutactic
+
+/datum/outfit/lavaknight/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/knight/W = H.wear_id
+	W.assignment = "Knight Captain"
+	W.registered_name = H.real_name
+	W.id_color = "#FFD700" //Captains get gold, duh. Doesn't matter because it's variable anyway
+	W.update_label(H.real_name)
+	W.update_icon()
+
 
 /obj/effect/mob_spawn/human/lavaknight/captain
 	name = "odd gilded cryogenics pod"
@@ -40,4 +69,4 @@
 	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
 	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth. \
 	You feel a natural instict to lead, and as such, you should strive to lead your comrades to safety, and hopefully home. You also feel a burning determination to uphold your vow, as well as your fellow comrade's."
-	l_pocket = /obj/item/twohanded/hypereutactic
+	outfit = /datum/outfit/lavaknight/captain

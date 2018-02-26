@@ -107,6 +107,8 @@
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
+		if("mentor_log")
+			CitadelMentorLogSecret()
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
 			for(var/line in SSjob.job_debug)
@@ -345,7 +347,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new(H.mind)
+				var/datum/antagonist/traitor/human/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -422,7 +424,7 @@
 				L.fix()
 
 		if("floorlava")
-			SSweather.run_weather("the floor is lava")
+			SSweather.run_weather(/datum/weather/floor_is_lava)
 
 		if("virus")
 			if(!check_rights(R_FUN))

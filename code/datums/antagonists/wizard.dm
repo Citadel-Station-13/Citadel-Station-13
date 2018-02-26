@@ -6,6 +6,7 @@
 /datum/antagonist/wizard
 	name = "Space Wizard"
 	roundend_category = "wizards/witches"
+	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
@@ -160,12 +161,20 @@
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
-	M.faction |= "wizard"
+	M.faction |= ROLE_WIZARD
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_removed(M)
-	M.faction -= "wizard"
+	M.faction -= ROLE_WIZARD
+
+
+/datum/antagonist/wizard/get_admin_commands()
+	. = ..()
+	.["Send to Lair"] = CALLBACK(src,.proc/admin_send_to_lair)
+
+/datum/antagonist/wizard/proc/admin_send_to_lair(mob/admin)
+	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"

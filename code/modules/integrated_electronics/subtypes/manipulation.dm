@@ -23,6 +23,7 @@
 	)
 	var/obj/item/gun/energy/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 0
 	var/mode = FALSE
 
@@ -142,6 +143,7 @@
 	outputs = list()
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_MOVEMENT
 	power_draw_per_use = 100
 
 /obj/item/integrated_circuit/manipulation/locomotion/do_work()
@@ -163,7 +165,7 @@
 
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
-	desc = "This circuit comes with the ability to attach most types of grenades at prime them at will."
+	desc = "This circuit comes with the ability to attach most types of grenades and prime them at will."
 	extended_desc = "Time between priming and detonation is limited to between 1 to 12 seconds but is optional. \
 					If unset, not a number, or a number less than 1 then the grenade's built-in timing will be used. \
 					Beware: Once primed there is no aborting the process!"
@@ -173,6 +175,7 @@
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
@@ -292,9 +295,9 @@
 
 /obj/item/integrated_circuit/manipulation/grabber
 	name = "grabber"
-	desc = "A circuit with it's own inventory for tiny/small items, used to grab and store things."
+	desc = "A circuit with it's own inventory for items, used to grab and store things."
 	icon_state = "grabber"
-	extended_desc = "The circuit accepts a reference to thing to be grabbed. It can store up to 10 things. Modes: 1 for grab. 0 for eject the first thing. -1 for eject all."
+	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 
@@ -304,19 +307,22 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
 	var/max_items = 10
-
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
+	var/max_w_class = assembly.w_class
 	var/atom/movable/acting_object = get_object()
 	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(AM)
 		var/mode = get_pin_data(IC_INPUT, 2)
-
 		if(mode == 1)
 			if(check_target(AM))
-				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
+				var/weightcheck = FALSE
+				if (AM.w_class < max_w_class)
+					weightcheck = TRUE
+				else
+					weightcheck = FALSE
+				if((contents.len < max_items) && (weightcheck))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
@@ -353,7 +359,7 @@
 	name = "pulling claw"
 	desc = "Circuit which can pull things.."
 	icon_state = "pull_claw"
-	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release.1 for pull. 2 for gressive grab."
+	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release. 1 for pull."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 
@@ -363,14 +369,13 @@
 	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
-	var/max_grab = 2 //change it to 1 if you tired of drone kung-fu.Return it to 2 if you miss it.
+	var/max_grab = GRAB_PASSIVE
 
 /obj/item/integrated_circuit/manipulation/claw/do_work()
 	var/obj/acting_object = get_object()
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/mode = get_pin_data(IC_INPUT, 2)
-	if(mode>max_grab)
-		return
+	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
 	if(AM)
 		if(check_target(AM, exclude_contents = TRUE))
 			acting_object.start_pulling(AM,mode)
@@ -408,10 +413,11 @@
 		"fire" = IC_PINTYPE_PULSE_IN
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 50
-	var/max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
+	var/max_w_class = assembly.w_class
 	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
