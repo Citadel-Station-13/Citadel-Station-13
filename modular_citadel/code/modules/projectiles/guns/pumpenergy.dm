@@ -62,13 +62,13 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(chambered)
 		add_overlay("[icon_state]_rack_[shot.select_name]")
-	if(!chambered)
+	else
 		add_overlay("[icon_state]_rack_empty")
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(cell.charge < shot.e_cost)
-		playsound(M, 'modular_citadel/sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps from highly processed electric guitar noise
+		playsound(M, 'modular_citadel/sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps made from highly processed knife honing noises
 	else
 		playsound(M, 'modular_citadel/sound/weapons/laserPump.ogg', 100, 1)		//Ends with high pitched charging noise
 	recharge_newshot() //try to charge a new shot
