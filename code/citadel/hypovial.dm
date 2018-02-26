@@ -4,9 +4,9 @@
 	icon = 'icons/obj/citadel/vial.dmi'
 	icon_state = "hypovial"
 	w_class = WEIGHT_CLASS_SMALL //Why would it be the same size as a beaker?
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/comes_with = list() //Easy way of doing this.
-	volume = 20
+	volume = 30
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
