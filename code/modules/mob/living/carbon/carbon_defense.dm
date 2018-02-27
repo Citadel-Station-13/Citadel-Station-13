@@ -76,7 +76,7 @@
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	send_item_attack_message(I, user, affecting.name)
-	if(src.reagents) //CIT CHANGE. Handles datum/reagent/proc/on_mob_attacked
+	if(reagents) //CIT CHANGE. Handles datum/reagent/proc/on_mob_attacked
 		for(var/datum/reagent/R in reagents.reagent_list) //CIT CHANGE
 			R.on_mob_attacked(src) //CIT CHANGE
 	if(I.force)

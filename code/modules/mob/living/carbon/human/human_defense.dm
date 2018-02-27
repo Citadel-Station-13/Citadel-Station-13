@@ -112,7 +112,7 @@
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
-	if(src.reagents) //CIT CHANGE. Handles datum/reagent/proc/on_mob_attacked
+	if(reagents) //CIT CHANGE. Handles datum/reagent/proc/on_mob_attacked
 		for(var/datum/reagent/R in reagents.reagent_list) //CIT CHANGE
 			R.on_mob_attacked(src) //CIT CHANGE
 	if(mind)
