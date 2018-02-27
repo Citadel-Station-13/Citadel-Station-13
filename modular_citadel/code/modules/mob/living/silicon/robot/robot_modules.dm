@@ -156,6 +156,49 @@
 	cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	has_snowflake_deadsprite = TRUE
 
+/obj/item/robot_module/borgi/do_transform_animation()
+	var/mob/living/silicon/robot/R = loc
+	R.cut_overlays()
+	R.setDir(SOUTH)
+	flick("borgi_transform", R)
+	do_transform_delay()
+	R.update_headlamp()
+
+/obj/item/robot_module/orepup
+	name = "Ore Pup"
+	basic_modules = list(
+		/obj/item/storage/bag/ore/cyborg,
+		/obj/item/device/analyzer/nose,
+		/obj/item/storage/bag/borgdelivery,
+		/obj/item/device/dogborg/sleeper/ore,
+		/obj/item/pickaxe/drill/cyborg,
+		/obj/item/shovel,
+		/obj/item/crowbar/cyborg,
+		/obj/item/weldingtool/mini,
+		/obj/item/extinguisher/mini,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/device/gps/cyborg)
+	emag_modules = list(/obj/item/dogborg/pounce)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/miner,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/borg/sight/xray/truesight_lens)
+	cyborg_base_icon = "orepup"
+	moduleselect_icon = "orepup"
+	sleeper_overlay = "osleeper"
+	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	has_snowflake_deadsprite = TRUE
+	cyborg_pixel_offset = -16
+
+/obj/item/robot_module/miner/do_transform_animation()
+	var/mob/living/silicon/robot/R = loc
+	R.cut_overlays()
+	R.setDir(SOUTH)
+	flick("orepup_transform", R)
+	do_transform_delay()
+	R.update_headlamp()
+
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Droid")
