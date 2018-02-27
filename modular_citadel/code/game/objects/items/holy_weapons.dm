@@ -30,7 +30,7 @@
 		"<span class='info'>You kneel[M == user ? null : " next to [M]"] and begin a prayer to [deity_name].</span>")
 
 	praying = TRUE
-	if(do_after(user, 150, target = M))
+	if(do_after(user, 100, target = M))
 		if(istype(M, /mob/living/carbon/human)) // This probably should not work on catpeople. They're unholy abominations.
 			var/mob/living/carbon/human/target = M
 
@@ -40,12 +40,11 @@
 				else if(is_servant_of_ratvar(M))
 					remove_servant_of_ratvar(M)
 
-			if(prob(25))
-				to_chat(target, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
-				target.adjustToxLoss(-5)
-				target.adjustOxyLoss(-5)
-				target.adjustBruteLoss(-5)
-				target.adjustFireLoss(-5)
+			to_chat(target, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
+			target.adjustToxLoss(-5)
+			target.adjustOxyLoss(-5)
+			target.adjustBruteLoss(-5)
+			target.adjustFireLoss(-5)
 
 			praying = FALSE
 
