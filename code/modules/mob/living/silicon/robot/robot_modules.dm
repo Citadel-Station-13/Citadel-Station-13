@@ -543,6 +543,14 @@
 			hat_offset = INFINITY //He is already wearing a hat
 	return ..()
 
+/obj/item/robot_module/butler/do_transform_animation()
+	var/mob/living/silicon/robot/R = loc
+	R.cut_overlays()
+	R.setDir(SOUTH)
+	flick("tophat_transform", R)
+	do_transform_delay()
+	R.update_headlamp()
+
 /obj/item/robot_module/miner
 	name = "Miner"
 	basic_modules = list(
@@ -567,7 +575,7 @@
 	moduleselect_icon = "miner"
 	hat_offset = 0
 
-/obj/item/robot_module/peacekeeper/do_transform_animation()
+/obj/item/robot_module/miner/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
 	R.cut_overlays()
 	R.setDir(SOUTH)
