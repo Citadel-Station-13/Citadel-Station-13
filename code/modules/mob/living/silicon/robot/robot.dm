@@ -612,11 +612,12 @@
 		add_overlay("[module.sleeper_overlay]_g")
 	if(sleeper_r && module.sleeper_overlay)
 		add_overlay("[module.sleeper_overlay]_r")
-	if(resting)
-		cut_overlays()
-		icon_state = "[module.cyborg_base_icon]-rest"
-	else
-		icon_state = "[module.cyborg_base_icon]"
+	if(module.dogborg == TRUE)
+		if(resting)
+			cut_overlays()
+			icon_state = "[module.cyborg_base_icon]-rest"
+		else
+			icon_state = "[module.cyborg_base_icon]"
 
 	if(stat == DEAD && module.has_snowflake_deadsprite)
 		icon_state = "[module.cyborg_base_icon]-wreck"
