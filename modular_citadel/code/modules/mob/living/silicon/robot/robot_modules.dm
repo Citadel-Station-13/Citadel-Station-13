@@ -55,11 +55,8 @@
 
 /obj/item/robot_module/k9/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("k9_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 	to_chat(loc,"<span class='userdanger'>While you have picked the Security K-9 module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
@@ -90,13 +87,8 @@
 
 /obj/item/robot_module/medihound/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("medihound_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
+	..()
 
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
@@ -129,11 +121,8 @@
 
 /obj/item/robot_module/scrubpup/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("scrubpup_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
 
 /obj/item/robot_module/borgi
@@ -158,12 +147,10 @@
 
 /obj/item/robot_module/borgi/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("borgi_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
+/*
 /obj/item/robot_module/orepup
 	name = "Ore Pup"
 	basic_modules = list(
@@ -198,6 +185,7 @@
 	flick("orepup_transform", R)
 	do_transform_delay()
 	R.update_headlamp()
+*/
 
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
