@@ -220,9 +220,11 @@
 	set src in usr
 	if(usr.incapacitated())
 		return
-	spray_mode = !spray_mode
-		if(!spray_mode)
+	var/choice = alert(usr, "Which application mode should this be? Current mode is: [src.mode ? "Spray" : "Inject"]", "", "Spray", "Cancel", "Inject")
+	switch(choice)
+		if("Cancel")
+			return
+		if("Inject")
 			src.mode = HYPO_INJECT
-		else
+		if("Spray")
 			src.mode = HYPO_SPRAY
-		to_chat(usr, "<span class='notice'>You switch the nozzle setting to [spray_mode ? "\"spray\"":"\"inject\""].</span>")
