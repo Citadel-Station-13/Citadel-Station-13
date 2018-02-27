@@ -41,7 +41,7 @@
 					remove_servant_of_ratvar(M)
 
 			to_chat(target, "<span class='notice'>[user]'s prayer to [deity_name] has eased your pain!</span>")
-			target.adjustToxLoss(-5)
+			target.adjustToxLoss(-5, TRUE, TRUE)
 			target.adjustOxyLoss(-5)
 			target.adjustBruteLoss(-5)
 			target.adjustFireLoss(-5)
