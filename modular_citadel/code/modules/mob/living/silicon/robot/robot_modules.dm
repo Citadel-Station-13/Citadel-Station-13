@@ -1,3 +1,15 @@
+/mob/living/silicon/robot/modules/medihound
+	set_module = /obj/item/robot_module/medihound
+
+/mob/living/silicon/robot/modules/k9
+	set_module = /obj/item/robot_module/k9
+
+/mob/living/silicon/robot/modules/scrubpup
+	set_module = /obj/item/robot_module/scrubpup
+
+/mob/living/silicon/robot/modules/borgi
+	set_module = /obj/item/robot_module/borgi
+
 /mob/living/silicon/robot/proc/get_cit_modules()
 	var/list/modulelist = list()
 	modulelist["MediHound"] = /obj/item/robot_module/medihound

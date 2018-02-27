@@ -307,6 +307,8 @@
 	check_range()
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
+	if(!req_defib)
+		return
 	if(!in_range(src,defib))
 		var/mob/living/L = loc
 		if(istype(L))

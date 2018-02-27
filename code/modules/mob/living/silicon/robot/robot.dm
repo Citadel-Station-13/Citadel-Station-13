@@ -159,6 +159,8 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
+	verbs += /mob/living/proc/lay_down //CITADEL EDIT borgs have rest verb now for snowflake reasons
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
@@ -366,7 +368,7 @@
 			if(!W.use_tool(src, user, 50))
 				return
 
-		adjustBruteLoss(-30)
+		adjustBruteLoss(-10)
 		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
@@ -381,8 +383,8 @@
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
-				adjustFireLoss(-30)
-				adjustToxLoss(-30)
+				adjustFireLoss(-10)
+				adjustToxLoss(-10)
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
@@ -592,21 +594,20 @@
 
 	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
-	if(module.dogborg == TRUE && stat != DEAD && !(IsUnconscious()))
-		if(laser)
-			add_overlay("laser")//Is this even used??? - Yes borg/inventory.dm
-		if(disabler)
-			add_overlay("disabler")//ditto
+	if(laser)
+		add_overlay("laser")//Is this even used??? - Yes borg/inventory.dm
+	if(disabler)
+		add_overlay("disabler")//ditto
 
-		if(sleeper_g && module.sleeper_overlay)
-			add_overlay("[module.sleeper_overlay]_g")
-		if(sleeper_r && module.sleeper_overlay)
-			add_overlay("[module.sleeper_overlay]_r")
-		if(resting)
-			cut_overlays()
-			icon_state = "[module.cyborg_base_icon]-resting"
-		else
-			icon_state = "[module.cyborg_base_icon]"
+	if(sleeper_g && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_g")
+	if(sleeper_r && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_r")
+	if(resting)
+		cut_overlays()
+		icon_state = "[module.cyborg_base_icon]-rest"
+	else
+		icon_state = "[module.cyborg_base_icon]"
 
 	if(stat == DEAD && module.has_snowflake_deadsprite)
 		icon_state = "[module.cyborg_base_icon]-wreck"
