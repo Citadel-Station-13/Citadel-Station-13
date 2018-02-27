@@ -1819,7 +1819,6 @@
 	name = "Bicycle"
 	cost = 1000000
 	contains = list(/obj/vehicle/ridden/bicycle)
-	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
 =======
 /datum/supply_pack
@@ -3656,4 +3655,3 @@
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
->>>>>>> 16584b1... Crab Rockets #35959
