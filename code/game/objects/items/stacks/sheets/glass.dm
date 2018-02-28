@@ -10,8 +10,10 @@
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-))
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fishbowl", /obj/machinery/fishtank/bowl, 5, time = 5, on_floor = FALSE, window_checks = FALSE), \
+	new/datum/stack_recipe("fishtank", /obj/machinery/fishtank/tank, 15, time = 10, on_floor = FALSE, window_checks = FALSE) \
+)) //CITADEL CHANGE - ADDED FISHBOWL AND FISHTANK
 
 /obj/item/stack/sheet/glass
 	name = "glass"
@@ -123,8 +125,9 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	null, \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
-))
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("wall aquarium", /obj/machinery/fishtank/wall, 10, time = 10, on_floor = TRUE, window_checks = TRUE) \
+)) //CITADEL CHANGE - ADDED WALL AQUARIUM
 
 
 /obj/item/stack/sheet/rglass
