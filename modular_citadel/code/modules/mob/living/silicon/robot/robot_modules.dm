@@ -54,8 +54,6 @@
 	cyborg_pixel_offset = -16
 
 /obj/item/robot_module/k9/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	flick("k9_transform", R)
 	..()
 	to_chat(loc,"<span class='userdanger'>While you have picked the Security K-9 module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
@@ -84,11 +82,6 @@
 	has_snowflake_deadsprite = TRUE
 	dogborg = TRUE
 	cyborg_pixel_offset = -16
-
-/obj/item/robot_module/medihound/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	flick("medihound_transform", R)
-	..()
 
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
@@ -120,8 +113,6 @@
 			LR.Charge(R)
 
 /obj/item/robot_module/scrubpup/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	flick("scrubpup_transform", R)
 	..()
 	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
 
@@ -144,11 +135,6 @@
 	hat_offset = INFINITY
 	cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	has_snowflake_deadsprite = TRUE
-
-/obj/item/robot_module/borgi/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	flick("borgi_transform", R)
-	..()
 
 /*
 /obj/item/robot_module/orepup
