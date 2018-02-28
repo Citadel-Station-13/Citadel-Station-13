@@ -1,5 +1,5 @@
 /datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, updating_canmove)
-	if(istype(new_owner) && isnum(set_duration))
+	if(iscarbon(new_owner) && isnum(set_duration))
 		new_owner.resting = TRUE
 		new_owner.adjustStaminaLoss(set_duration*0.25)
 		if(set_duration > 80)
@@ -9,3 +9,5 @@
 		else if(updating_canmove)
 			new_owner.update_canmove()
 		qdel(src)
+	else
+		. = ..()
