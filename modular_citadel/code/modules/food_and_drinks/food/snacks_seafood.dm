@@ -1,5 +1,3 @@
-
-////////////////////////////////////////////SUSHI+AQUARIUM MODULA////////////////////////////////////////////
 /obj/item/reagent_containers/food/snacks/fish
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 
