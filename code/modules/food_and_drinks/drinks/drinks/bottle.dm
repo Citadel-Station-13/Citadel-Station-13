@@ -25,7 +25,7 @@
 		thrower.put_in_hands(B)
 	B.icon_state = icon_state
 
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	var/icon/I = new(src.icon, src.icon_state) //CIT CHANGE- Allows modular bottles to have proper smashed sprites
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
