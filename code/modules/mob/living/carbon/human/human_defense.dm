@@ -112,6 +112,9 @@
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
+	if(reagents) //CIT CHANGE. Handles datum/reagent/proc/on_mob_attacked
+		for(var/datum/reagent/R in reagents.reagent_list) //CIT CHANGE
+			R.on_mob_attacked(src) //CIT CHANGE
 	if(mind)
 		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
 			return TRUE
@@ -164,7 +167,6 @@
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(!I || !user)
 		return 0
-
 	var/obj/item/bodypart/affecting
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
