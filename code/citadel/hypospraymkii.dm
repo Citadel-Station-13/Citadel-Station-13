@@ -40,22 +40,23 @@
 	update_icon()
 
 /obj/item/reagent_containers/hypospray/mkii/examine(mob/user)
+	. = ..()
 	to_chat(user, "[src] is set to [src.mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
-	if(src.contents == null)
+	if(contents == null)
 		to_chat(user, "This doesn't have a vial!")
 		return
 	else
-		src.reagents.trans_to(W, src.volume)
-		src.volume = 0
+		reagents.trans_to(W, volume)
+		volume = 0
 		W.loc = get_turf(user.loc)
 		W.update_icon()
 		user.put_in_hands(W)
-		src.contents -= W
+		contents -= W
 		to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
 		update_icon()
-		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 
 /obj/item/reagent_containers/hypospray/mkii/proc/load_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
 	if(!is_type_in_list(W, allowed_containers))
@@ -63,19 +64,19 @@
 		to_chat(user, "<span class='notice'>\The [src] only accepts hypospray vials!</span>")
 		return
 	else
-		if(src.contents.len == 1)
+		if(contents.len == 1)
 			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 			return
 		else
 			user.visible_message("<span class='notice'>[user] begins loading a vial into \the [src].</span>","<span class='notice'>You start loading [W] into \the [src].</span>")
 			if(!do_after(user,30) || W || !(W in user))
 				return FALSE
-			src.contents += W
-			src.volume = W.volume
+			contents += W
+			volume = W.volume
 			W.reagents.trans_to(src, W.volume)
 			user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded [W] into \the [src].</span>")
 			update_icon()
-			playsound(src.loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
+			playsound(loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
 
 /obj/item/reagent_containers/hypospray/mkii/attackby(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
 	load_hypo(src, W)
@@ -123,10 +124,10 @@
 					return
 				if(L.reagents.total_volume >= L.reagents.maximum_volume)
 					return
-				if(src.possible_transfer_amounts >= 15)
+				if(possible_transfer_amounts >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				else
-					playsound(loc, pick(src.inject_sounds), 50, 1, -1)
+					playsound(loc, "inject_sounds", 50, 1, -1)
 				L.visible_message("<span class='danger'>[user] injects [L] with the [src]!", \
 								"<span class='userdanger'>[user] injects [L] with the [src]!</span>")
 
@@ -136,9 +137,9 @@
 				if(src.possible_transfer_amounts >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				else
-					playsound(loc, pick(src.inject_sounds), 50, 1, -1)
-				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
-				L.log_message("<font color='orange'>Injected themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
+					playsound(loc, "inject_sounds", 50, 1, -1)
+				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+				L.log_message("<font color='orange'>Injected themselves ([contained]) with [src].</font>", INDIVIDUAL_ATTACK_LOG)
 
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)
@@ -176,7 +177,7 @@
 				if(src.possible_transfer_amounts >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				else
-					playsound(loc, pick(src.inject_sounds), 50, 1, -1)
+					playsound(loc, "inject_sounds", 50, 1, -1)
 				L.visible_message("<span class='danger'>[user] injects [L] with the [src]!", \
 								"<span class='userdanger'>[user] injects [L] with the [src]!</span>")
 
@@ -186,7 +187,7 @@
 				if(src.possible_transfer_amounts >= 15)
 					playsound(loc,'sound/items/hypospray_long.ogg',50, 1, -1)
 				else
-					playsound(loc, pick(src.inject_sounds), 50, 1, -1)
+					playsound(loc, "inject_sounds", 50, 1, -1)
 				log_attack("<font color='red'>[user.name] ([user.ckey]) sprayed [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				L.log_message("<font color='orange'>Sprayed themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
@@ -208,7 +209,7 @@
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(src.contents == null)
+	if(contents == null)
 		to_chat(usr, "This Hypo needs to be loaded first!")
 		return
 	else
@@ -220,11 +221,11 @@
 	set src in usr
 	if(usr.incapacitated())
 		return
-	var/choice = alert(usr, "Which application mode should this be? Current mode is: [src.mode ? "Spray" : "Inject"]", "", "Spray", "Cancel", "Inject")
+	var/choice = alert(usr, "Which application mode should this be? Current mode is: [mode ? "Spray" : "Inject"]", "", "Spray", "Cancel", "Inject")
 	switch(choice)
 		if("Cancel")
 			return
 		if("Inject")
-			src.mode = HYPO_INJECT
+			mode = HYPO_INJECT
 		if("Spray")
-			src.mode = HYPO_SPRAY
+			mode = HYPO_SPRAY
