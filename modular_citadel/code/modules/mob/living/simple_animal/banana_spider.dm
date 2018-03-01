@@ -66,6 +66,7 @@
 	response_disarm = "shoos"
 	response_harm   = "splats"
 	speak_emote = list("chitters")
+	mouse_opacity = 2
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -99,7 +100,7 @@
 		return
 	src.sentience_act()
 	src.key = user.key
-
+	density = TRUE
 
 /mob/living/simple_animal/banana_spider/ComponentInitialize()
 	. = ..()
@@ -128,6 +129,8 @@
 /mob/living/simple_animal/banana_spider/ex_act()
 	return
 
+/mob/living/simple_animal/banana_spider/start_pulling()
+	return FALSE			//No.
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider
 	name = "dead banana spider"
