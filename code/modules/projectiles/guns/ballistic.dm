@@ -7,6 +7,7 @@
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
+	var/energyhybrid = FALSE //CITADEL CHANGE, OVERWRITE WHEN KEVINZ REDOES WEAPONS UPSTREAM
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -127,11 +128,12 @@
 		magazine = null
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 	else if(chambered)
-		AC.forceMove(drop_location())
-		AC.bounce_away()
-		chambered = null
-		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
-		playsound(src, "gun_slide_lock", 70, 1)
+		if(!energyhybrid) //CITADEL CHANGE, OVERWRITE WHEN KEVINZ REWORKS WEAPONS UPSTREAM
+			AC.forceMove(drop_location())
+			AC.bounce_away()
+			chambered = null
+			to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
+			playsound(src, "gun_slide_lock", 70, 1)
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
