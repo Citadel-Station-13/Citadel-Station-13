@@ -41,7 +41,7 @@
 
 /obj/item/reagent_containers/hypospray/mkii/examine(mob/user)
 	. = ..()
-	to_chat(user, "[src] is set to [src.mode ? "Inject" : "Spray"] contents on application.")
+	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
 	if(contents == null)
