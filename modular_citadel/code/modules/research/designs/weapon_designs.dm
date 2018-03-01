@@ -9,8 +9,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/triphasicammo
- 	name = "Triphase power pack"
- 	desc = "A rechargeable, detachable battery that serves as a magazine for the triphase laser rifle. It can store enough power for five shots."
+	name = "Triphase power pack"
+	desc = "A rechargeable, detachable battery that serves as a magazine for the triphase laser rifle. It can store enough power for five shots."
 	id = "triphasicammo"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 800, MAT_DIAMOND = 300, MAT_URANIUM = 300, MAT_SILVER = 1000, MAT_GOLD = 1000)
