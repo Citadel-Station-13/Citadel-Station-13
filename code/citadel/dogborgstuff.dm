@@ -309,6 +309,11 @@
 		R.cell.use(1000)
 	return ..()
 
+//HoundHypo
+/obj/item/reagent_containers/borghypo/hound
+	charge_cost = 325
+	reagent_ids = list("kelotane", "bicaridine", "salbutamol", "antitoxin", "epinephrine")
+	accepts_reagent_upgrades = FALSE
 
 //Sleeper
 
@@ -371,6 +376,9 @@
 		return
 	if(!iscarbon(target))
 		return
+	if(!target.devourable)
+		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
+		return		
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
