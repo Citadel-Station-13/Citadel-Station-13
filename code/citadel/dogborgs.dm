@@ -70,7 +70,7 @@
 	modules += new /obj/item/soap/tongue(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/dogborg/sleeper(src)
-	modules += new /obj/item/reagent_containers/borghypo/hound(src)
+	modules += new /obj/item/reagent_containers/borghypo(src)
 	modules += new /obj/item/twohanded/shockpaddles/hound(src)
 	modules += new /obj/item/device/sensor_device(src)
 	emag = new /obj/item/dogborg/pounce(src)

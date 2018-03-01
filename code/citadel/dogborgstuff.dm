@@ -309,12 +309,6 @@
 		R.cell.use(1000)
 	return ..()
 
-//HoundHypo
-/obj/item/reagent_containers/borghypo/hound
-	charge_cost = 325
-	reagent_ids = list("kelotane", "bicaridine", "salbutamol", "antitoxin", "epinephrine")
-	accepts_reagent_upgrades = FALSE
-
 //Sleeper
 
 /obj/item/device/dogborg/sleeper
@@ -376,7 +370,7 @@
 		return
 	if(!iscarbon(target))
 		return
-	if(!target.devourable)
+	if(!target.sleeperable)
 		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
 		return		
 	if(target.buckled)

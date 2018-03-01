@@ -40,6 +40,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	//Actual preferences
 	var/digestable = TRUE
 	var/devourable = FALSE
+	var/sleeperable = TRUE
 	var/list/belly_prefs = list()
 	var/vore_taste
 
@@ -101,6 +102,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	S["digestable"] >> digestable
 	S["devourable"] >> devourable
+	S["sleeperable"] >> sleeperable
 	S["belly_prefs"] >> belly_prefs
 	S["vore_taste"] >> vore_taste
 
@@ -108,6 +110,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		digestable = TRUE
 	if(isnull(devourable))
 		devourable = FALSE
+	if(isnull(sleeperable))
+		sleeperable = TRUE
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
@@ -122,6 +126,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	WRITE_FILE(S["digestable"], digestable)
 	WRITE_FILE(S["devourable"], devourable)
+	WRITE_FILE(S["sleeperable"], sleeperable)
 	WRITE_FILE(S["belly_prefs"], belly_prefs)
 	WRITE_FILE(S["vore_taste"], vore_taste)							
 
