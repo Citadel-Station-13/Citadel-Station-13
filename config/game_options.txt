@@ -511,10 +511,11 @@ ALLOW_MISCREANTS
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
-## NIGHT SHIFT ##
-## Comment to disable nightshift
-NIGHTSHIFT_ENABLED
+## Enable night shifts ##
+ENABLE_NIGHT_SHIFTS
 
-## These values determine the start and end of night shift. By default, night shift starts at 8 PM, and ends at 6 AM.
-NIGHTSHIFT_START 20
-NIGHTSHIFT_FINISH 6
+## Enable randomized shift start times##
+RANDOMIZE_SHIFT_TIME
+
+## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
+#SHIFT_TIME_REALTIME

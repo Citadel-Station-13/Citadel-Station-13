@@ -612,7 +612,7 @@
 				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
 				src.hound.cell.give(30000) //Fueeeeellll
 				T.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				T.stop_sound_channel(CHANNEL_PRED)
 				T.playsound_local("death_prey",60)
 				for(var/obj/item/W in T)
@@ -647,7 +647,7 @@
 	for(var/mob/living/M in contents)
 		if(prob(50))
 			M.stop_sound_channel(CHANNEL_PRED)
-			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+			playsound(get_turf(hound),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 			M.stop_sound_channel(CHANNEL_PRED)
 			M.playsound_local("digest_prey",60)
 
