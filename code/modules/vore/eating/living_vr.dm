@@ -4,7 +4,6 @@
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
-	var/sleeperable = TRUE              // Can MediHounds put you in their sleeper?
 //	var/feeding = FALSE					// Are we going to feed someone else?
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
@@ -356,7 +355,6 @@
 
 	P.digestable = src.digestable
 	P.devourable = src.devourable
-	P.sleeperable = src.sleeperable
 	P.belly_prefs = src.vore_organs
 	P.vore_taste = src.vore_taste
 
@@ -374,7 +372,6 @@
 
 	src.digestable = P.digestable
 	src.devourable = P.devourable
-	src.sleeperable = P.sleeperable
 	src.vore_organs = list()
 	src.vore_taste = P.vore_taste
 

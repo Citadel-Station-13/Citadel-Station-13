@@ -196,12 +196,6 @@
 		if(FALSE)
 			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
 
-	switch(user.sleeperable)
-		if(TRUE)
-			dat += "<a href='?src=\ref[src];togglehsleeper=1'>Toggle MediHound Sleeper (Currently: ON)</a>"
-		if(FALSE)
-			dat += "<a href='?src=\ref[src];togglehsleeper=1'>Toggle MediHound Sleeper (Currently: OFF)</a>"
-
 	//Returns the dat html to the vore_look
 	return dat
 
@@ -631,19 +625,6 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable
-
-	if(href_list["togglehsleeper"])
-		var/choice = alert(user, "This button is for those who don't like being put in a MediHound's internal sleeper. MediHound sleeper use on you is currently: [user.sleeperable ? "Allowed" : "Prevented"]", "", "Allow Sleeper", "Cancel", "Prevent Sleeper")
-		switch(choice)
-			if("Cancel")
-				return
-			if("Allow Sleeper")
-				user.sleeperable = TRUE
-			if("Prevent Sleeper")
-				user.sleeperable = FALSE
-
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.sleeperable = user.sleeperable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return TRUE

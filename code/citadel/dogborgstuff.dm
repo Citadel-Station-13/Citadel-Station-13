@@ -370,7 +370,7 @@
 		return
 	if(!iscarbon(target))
 		return
-	if(!target.sleeperable)
+	if(!(target.client && target.client.prefs && (target.client.prefs.toggles & MEDIHOUND_SLEEPER)))
 		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
 		return		
 	if(target.buckled)
