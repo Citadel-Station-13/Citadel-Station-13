@@ -24,4 +24,4 @@
 	if(!iscarbon(user) || user.aimingdownsights)
 		return 0
 	else
-		return weapon_weight * 35
+		return weapon_weight * 25

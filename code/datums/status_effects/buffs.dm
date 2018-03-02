@@ -295,7 +295,7 @@
 		owner.toxloss *= 10
 		owner.oxyloss *= 10
 		owner.cloneloss *= 10
-		owner.staminaloss *= 10
+		owner.staminaloss += -10 // CIT CHANGE - makes blooddrunk status effect not exhaust you
 		owner.updatehealth()
 		last_health = owner.health
 		last_bruteloss = owner.getBruteLoss()
@@ -353,7 +353,7 @@
 
 		var/new_staminaloss = owner.getStaminaLoss()
 		if(new_staminaloss < last_staminaloss)
-			var/heal_amount = (new_staminaloss - last_staminaloss) * 10
+			var/heal_amount = -5 // CIT CHANGE - makes blood drunk status effect not exhaust you
 			owner.adjustStaminaLoss(heal_amount, updating_health = FALSE)
 			new_staminaloss = owner.getStaminaLoss()
 			needs_health_update = TRUE
