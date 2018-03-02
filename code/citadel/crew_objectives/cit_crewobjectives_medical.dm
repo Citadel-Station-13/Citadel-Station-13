@@ -19,7 +19,7 @@
 
 /datum/objective/crew/chems/New()
 	. = ..()
-	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingadrenaline, /datum/reagent/medicine/changelinghaste)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
 	var/chemlist = drugs + meds

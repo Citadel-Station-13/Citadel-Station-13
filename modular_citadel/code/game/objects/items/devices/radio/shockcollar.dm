@@ -12,6 +12,13 @@
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	var/tagname = null
 
+/datum/design/electropack/shockcollar
+	name = "Shockcollar"
+	id = "shockcollar"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	category = list("hacked", "Misc")
+	
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_NECK)
