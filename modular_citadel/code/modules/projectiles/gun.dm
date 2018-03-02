@@ -2,7 +2,7 @@
 	altafterattack(A, user, TRUE, params)
 	return TRUE
 
-/obj/item/gun/altafterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/gun/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)
 	if(istype(user))
 		if(!user.aimingdownsights)
 			user.visible_message("<span class='warning'>[user] brings [src]'s sights up to [user.p_their()] eyes, aiming directly at [target].</span>", "<span class='warning'>You bring [src]'s sights up to your eyes, aiming directly at [target].</span>")

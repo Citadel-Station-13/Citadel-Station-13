@@ -19,4 +19,5 @@
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
+		stat(null, "Stamina: [100 - staminaloss]")
 		stat(null, "Stamina buffer: [stambuffer - bufferedstam]")
