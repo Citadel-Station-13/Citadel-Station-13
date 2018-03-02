@@ -11,7 +11,6 @@
 	var/damagescreenshake = 2
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
-	var/hound_sleeper = TRUE
 
 /datum/preferences/New(client/C)
 	..()
