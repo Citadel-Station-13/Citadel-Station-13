@@ -111,7 +111,7 @@
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 		if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
-			user.adjustStaminaLossBuffered(recoil*5) //CIT CHANGE - ditto
+			user.adjustStaminaLossBuffered(getstamcost(user)) //CIT CHANGE - ditto
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
@@ -171,10 +171,9 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	//CIT CHANGES START HERE - adds bonus spread while not aiming
-	if(istype(user) && !user.aimingdownsights)
-		bonus_spread += weapon_weight*55
-	//END OF CIT CHANGES
+
+	bonus_spread += getinaccuracy(user) //CIT CHANGES START HERE - adds bonus spread while not aiming
+
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)

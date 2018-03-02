@@ -16,3 +16,12 @@
 	. = ..()
 	if(istype(user))
 		user.aimingdownsights = FALSE
+
+/obj/item/gun/proc/getstamcost(mob/living/carbon/user)
+	return recoil*5
+
+/obj/item/gun/proc/getinaccuracy(mob/living/user)
+	if(!iscarbon(user) || user.aimingdownsights)
+		return 0
+	else
+		return weapon_weight * 35
