@@ -11,9 +11,8 @@
 	volume = 0
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5,10,15)
-	var/spray_mode = 0
 	var/mode = HYPO_INJECT
-	var/obj/item/reagent_containers/glass/bottle/vial/cart = null
+	var/obj/item/reagent_containers/glass/bottle/vial
 	var/loaded_vial = /obj/item/reagent_containers/glass/bottle/vial
 	var/spawnwithvial = TRUE
 	var/start_vial = null
@@ -39,47 +38,63 @@
 		start_vial = new loaded_vial(src)
 	update_icon()
 
+/obj/item/reagent_containers/hypospray/mkii/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][loaded_vial ? "" : "-e"]"
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+	return
+
 /obj/item/reagent_containers/hypospray/mkii/examine(mob/user)
 	. = ..()
 	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
-	if(contents == null)
+	if(!W)
 		to_chat(user, "This doesn't have a vial!")
 		return
-	else
-		reagents.trans_to(W, volume)
-		volume = 0
-		W.loc = get_turf(user.loc)
-		W.update_icon()
-		user.put_in_hands(W)
-		contents -= W
-		to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
-		update_icon()
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
+	testing("passed hypo check in unload_hypo")
+	vial = W
+	testing("vial = W")
+	reagents.trans_to(vial, volume)
+	volume = 0
+	testing("attempting forcemove")
+	vial.forceMove(drop_location())
+	testing("forceMove valid, testing put_in_hands")
+	user.put_in_hands(vial)
+	testing("put_in_hands passed")
+	contents -= vial
+	to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
+	update_icon()
+	playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 
 /obj/item/reagent_containers/hypospray/mkii/proc/load_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
 	if(!is_type_in_list(W, allowed_containers))
 		. = 1 //no afterattack
 		to_chat(user, "<span class='notice'>\The [src] only accepts hypospray vials!</span>")
 		return
-	else
-		if(contents.len == 1)
-			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
-			return
-		else
-			user.visible_message("<span class='notice'>[user] begins loading a vial into \the [src].</span>","<span class='notice'>You start loading [W] into \the [src].</span>")
-			if(!do_after(user,30) || W || !(W in user))
-				return FALSE
-			contents += W
-			volume = W.volume
-			W.reagents.trans_to(src, W.volume)
-			user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded [W] into \the [src].</span>")
-			update_icon()
-			playsound(loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
+	testing("passed check for vial")
+	if(contents.len == 1)
+		to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
+		return
+	testing("doesn't already have a vial")
+	if(user.transferItemToLoc(W,src))
+		testing("starting to stuff [W] into the [src]")
+		vial = W
+		testing("vial is now W")
+		user.visible_message("<span class='notice'>[user] begins loading a vial into \the [src].</span>","<span class='notice'>You start loading [vial] into \the [src].</span>")
+		if(!do_after(user,30) || vial || !(vial in user))
+			return FALSE
+		contents += vial
+		volume = vial.volume
+		vial.reagents.trans_to(src, vial.volume)
+		user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded [vial] into \the [src].</span>")
+		update_icon()
+		playsound(loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
 
 /obj/item/reagent_containers/hypospray/mkii/attackby(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
-	load_hypo(src, W)
+	load_hypo(W, src)
 
 /obj/item/reagent_containers/hypospray/mkii/attack(obj/item/I, mob/user, params)
 	return
@@ -195,25 +210,17 @@
 		reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You spray [amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [reagents.total_volume] units.</span>")
 
-/obj/item/reagent_containers/hypospray/mkii/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][loaded_vial ? "" : "-e"]"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
-
 /obj/item/reagent_containers/hypospray/mkii/AltClick(var/obj/item/reagent_containers/glass/bottle/vial/W, mob/living/user)
-	if(!in_range(src, user))
-		return
+	testing("Altclick registered, check mob stat")
 	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(contents == null)
+	testing("Check for hypo")
+	if(!contents)
 		to_chat(usr, "This Hypo needs to be loaded first!")
 		return
-	else
-		unload_hypo(src, W)
+	testing("Has hypo")
+	var/obj/item/reagent_containers/glass/bottle/vial/W
+	unload_hypo(W,src)
 
 /obj/item/reagent_containers/hypospray/mkii/verb/modes()
 	set name = "Change Application Method"
