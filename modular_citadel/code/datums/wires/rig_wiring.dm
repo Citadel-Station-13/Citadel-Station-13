@@ -1,14 +1,21 @@
 /datum/wires/rig
-	random = 1
 	holder_type = /obj/item/weapon/rig
-	wire_count = 5
+	proper_name = "Hardsuit Maintenance"
 
-#define RIG_SECURITY 1
+/datum/wires/rig/New(atom/holder)
+	wires = list(
+		RIG_SECURITY, RIG_AI_OVERRIDE,
+		RIG_SYSTEM_CONTROL, RIG_INTERFACE_LOCK,
+		RIG_INTERFACE_SHOCK
+	)
+	add_duds(6)
+	..()
+/*#define RIG_SECURITY 1
 #define RIG_AI_OVERRIDE 2
 #define RIG_SYSTEM_CONTROL 4
 #define RIG_INTERFACE_LOCK 8
 #define RIG_INTERFACE_SHOCK 16
-/*
+
  * Rig security can be snipped to disable ID access checks on rig.
  * Rig AI override can be pulsed to toggle whether or not the AI can take control of the suit.
  * System control can be pulsed to toggle some malfunctions.

@@ -6,7 +6,7 @@
  * Defines the behavior of hardsuits/rigs/power armour.
  */
 
-/obj/item/weapon/rig
+/obj/item/storage/backpack/rig
 
 	name = "hardsuit control module"
 	icon = 'icons/obj/rig_modules.dmi'
@@ -18,9 +18,9 @@
 	action_button_name = "Toggle Heatsink"
 
 	// These values are passed on to all component pieces.
-	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
-	//min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	//max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 20,"energy" = 5, "bomb" = 35, "bio" = 100, "rad" = 20, "fire" = 80, "acid" = 100)
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0.2
 	permeability_coefficient = 0.1
 	flags = UNACIDABLE
@@ -200,7 +200,7 @@
 		if(!piece) continue
 		piece.icon_state = "[initial(icon_state)]"
 		if(airtight)
-			piece.item_flags &= ~(STOPPRESSUREDAMAGE|AIRTIGHT)
+			piece.item_flags &= ~(STOPPRESSUREDAMAGE_0|THICKMATERIAL_0|AIRTIGHT)
 	update_icon(1)
 
 /obj/item/weapon/rig/proc/toggle_seals(var/mob/living/carbon/human/M,var/instant)
@@ -328,9 +328,9 @@
 /obj/item/weapon/rig/proc/update_component_sealed()
 	for(var/obj/item/piece in list(helmet,boots,gloves,chest))
 		if(canremove)
-			piece.item_flags &= ~(STOPPRESSUREDAMAGE|AIRTIGHT)
+			piece.item_flags &= ~(STOPPRESSUREDAMAGE_1|THICKMATERIAL_1|AIRTIGHT)
 		else
-			piece.item_flags |=  (STOPPRESSUREDAMAGE|AIRTIGHT)
+			piece.item_flags |=  (STOPPRESSUREDAMAGE_1|THICKMATERIAL_1|AIRTIGHT)
 	update_icon(1)
 
 /obj/item/weapon/rig/ui_action_click()
