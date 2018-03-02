@@ -1657,7 +1657,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					chat_toggles ^= CHAT_PULLR
 
 				if("hound_sleeper")
-					chat_toggles ^= MEDIHOUND_SLEEPER
+					toggles ^= MEDIHOUND_SLEEPER
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
