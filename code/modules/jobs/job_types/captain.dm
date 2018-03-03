@@ -69,12 +69,8 @@ Head of Personnel
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-<<<<<<< HEAD
 //	exp_type_department = EXP_TYPE_SUPPLY - CITADEL CHANGE
-=======
-	exp_type_department = EXP_TYPE_SUPPLY
 	antag_rep = 16
->>>>>>> 937ad3a... Antagonist reputation system (#35485)
 
 	outfit = /datum/outfit/job/hop
 
