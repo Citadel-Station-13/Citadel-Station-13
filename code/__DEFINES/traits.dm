@@ -24,8 +24,6 @@
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
 
-<<<<<<< HEAD
-=======
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -38,7 +36,6 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
