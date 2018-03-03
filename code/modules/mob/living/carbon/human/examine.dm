@@ -323,14 +323,13 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
-<<<<<<< HEAD
+
+	else if(isobserver(user) && traitstring)
+		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
+
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
 		
-=======
-	else if(isobserver(user) && traitstring)
-		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
