@@ -488,7 +488,6 @@ MICE_ROUNDSTART 10
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
-<<<<<<< HEAD
 ## CITADEL Races
 ROUNDSTART_RACES mammal
 ROUNDSTART_RACES avian
@@ -511,10 +510,9 @@ ALLOW_MISCREANTS
 
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
-=======
+
 ## Uncomment to allow roundstart trait selection in the character setup menu.
 ROUNDSTART_TRAITS
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 
 ## Enable night shifts ##
 ENABLE_NIGHT_SHIFTS
