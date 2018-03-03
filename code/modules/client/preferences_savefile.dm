@@ -553,15 +553,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
-<<<<<<< HEAD
-	cit_character_pref_save(S)
-=======
 	//Traits
 	WRITE_FILE(S["all_traits"]		, all_traits)
 	WRITE_FILE(S["positive_traits"]		, positive_traits)
 	WRITE_FILE(S["negative_traits"]		, negative_traits)
 	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
+
+	cit_character_pref_save(S)
 
 	return 1
 
