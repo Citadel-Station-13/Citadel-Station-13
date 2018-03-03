@@ -483,14 +483,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-<<<<<<< HEAD
-	cit_character_pref_load(S)
-=======
 	all_traits = SANITIZE_LIST(all_traits)
 	positive_traits = SANITIZE_LIST(positive_traits)
 	negative_traits = SANITIZE_LIST(negative_traits)
 	neutral_traits = SANITIZE_LIST(neutral_traits)
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
+
+	cit_character_pref_load(S)
 
 	return 1
 
