@@ -17,7 +17,7 @@
 	else
 		to_chat(user, "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers.")
 		if(alert("Are you really sure?", "Confirm decision", "Yes", "No") == "Yes")
-			if(alert("Are you really, really sure?", "Confirm decision", "Yes", "No") == "Yes")					if(alert("Do you really want to become an antagonist and do anything you want?", "Confirm decision", "Yes", "No") == "Yes")
+			if(alert("Are you really, really sure?", "Confirm decision", "Yes", "No") == "Yes")
 				if(alert("You have a chance of being dusted if you keep clicking yes. Are you sure?", "Confirm decision", "Yes", "No") == "Yes")
 					if(alert("Do you want to self-antag so badly you'd risk being dusted?", "Confirm decision", "Yes", "No") == "Yes")
 						if(alert("Really?", "Confirm decision", "Yes", "No") == "Yes")
