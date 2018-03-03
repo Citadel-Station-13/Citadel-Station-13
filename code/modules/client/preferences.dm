@@ -1908,10 +1908,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
-<<<<<<< HEAD
 		character.update_genitals()
-=======
 
 	if(CONFIG_GET(flag/roundstart_traits))
 		SStraits.AssignTraits(character, parent)
->>>>>>> ab9e2e8... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
