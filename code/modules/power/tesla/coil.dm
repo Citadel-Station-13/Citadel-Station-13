@@ -114,8 +114,6 @@
 /obj/machinery/power/tesla_coil/research/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)
