@@ -84,7 +84,11 @@
 #define SUPERMATTER_WARNING 3		// Ambient temp > CRITICAL_TEMPERATURE OR integrity damaged
 #define SUPERMATTER_DANGER 4		// Integrity < 50%
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
+<<<<<<< HEAD
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
 
 //R&D Snowflakes
 #define RD_CONSOLE_LOCKED_SCREEN 0.2
+=======
+#define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
+>>>>>>> 440e888... Clean up all sorts of crap, mostly defines (#36105)
