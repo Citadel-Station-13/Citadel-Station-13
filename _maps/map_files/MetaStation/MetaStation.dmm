@@ -11247,6 +11247,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "axN" = (
@@ -11359,6 +11362,9 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -12260,6 +12266,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -12457,6 +12466,9 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
 	},
@@ -16090,6 +16102,9 @@
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -21282,6 +21297,7 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/light,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "aTI" = (
@@ -22514,9 +22530,7 @@
 	req_access = null;
 	req_access_txt = "32"
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "aWv" = (
 /turf/closed/wall,
@@ -47824,6 +47838,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bXc" = (
@@ -56896,6 +56913,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -71873,9 +71893,10 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
+/obj/machinery/light/small{
+	dir = 1
 	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "cXR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -71892,9 +71913,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "cYc" = (
 /obj/structure/table/optable{
@@ -71916,9 +71935,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "cYE" = (
 /obj/structure/closet/toolcloset,
@@ -72232,6 +72249,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -73759,6 +73779,12 @@
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/delivery,
 /obj/item/clothing/glasses/meson/engine,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"dgA" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dgI" = (
@@ -76162,6 +76188,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"dPp" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -76470,6 +76503,10 @@
 	dir = 4
 	},
 /area/engine/engineering)
+"iYY" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "jjF" = (
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -76517,9 +76554,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard)
 "jIV" = (
 /obj/structure/closet/secure_closet/engineering_personal,
@@ -76536,6 +76571,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"jYQ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "kfu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -76890,11 +76931,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"oUD" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/engine/break_room)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77015,6 +77051,12 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"rFx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/engine/engineering)
 "rQK" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -77100,6 +77142,14 @@
 "sSU" = (
 /turf/closed/wall/r_wall,
 /area/space)
+"tdB" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/starboard/fore)
 "tjH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -77221,6 +77271,12 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
+"vAk" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "vLD" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -77287,6 +77343,9 @@
 /area/science/misc_lab)
 "xcM" = (
 /obj/structure/closet/firecloset,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -117840,7 +117899,7 @@ arJ
 arI
 dnh
 dqu
-doh
+tdB
 axO
 axY
 aAo
@@ -118886,8 +118945,8 @@ dfh
 aBO
 aBO
 aBK
-aTK
-aVe
+dPp
+rFx
 axY
 aYu
 aYu
@@ -119900,7 +119959,7 @@ axY
 axY
 ayW
 bTq
-aBO
+dgA
 aBO
 aBO
 aFC
@@ -119913,7 +119972,7 @@ aNu
 axY
 dfp
 aBO
-aBO
+dgA
 dfP
 dfY
 axY
@@ -120177,11 +120236,11 @@ axY
 atm
 dgc
 alq
-apf
+apc
 aWu
-oUD
-oUD
-oUD
+bif
+bif
+bif
 bhT
 bhT
 brK
@@ -120411,7 +120470,7 @@ ati
 ajb
 avB
 axY
-aJu
+jYQ
 bUw
 aJu
 axY
@@ -120430,7 +120489,7 @@ axY
 axY
 aJu
 bUw
-aJu
+iYY
 axY
 alq
 alq
@@ -121436,7 +121495,7 @@ apn
 aqy
 arT
 apm
-dnS
+vAk
 avB
 axY
 goZ
