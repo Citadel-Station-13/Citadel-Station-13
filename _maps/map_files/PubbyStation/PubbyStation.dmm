@@ -45129,9 +45129,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chz" = (
@@ -45139,9 +45136,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chA" = (
@@ -45250,10 +45244,6 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chQ" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -45412,14 +45402,13 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cit" = (
-/obj/machinery/the_singularitygen,
+/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ciu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "civ" = (
@@ -49952,21 +49941,7 @@
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cBR" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/item/tank/internals/plasma,
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "cBS" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
@@ -50388,9 +50363,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"uTf" = (
+/turf/closed/wall/r_wall,
+/area/space)
 "vpU" = (
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+"vyc" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -79160,8 +79142,8 @@ bXk
 bXk
 bXk
 bXk
-aaa
-aaa
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -79416,9 +79398,9 @@ chR
 cgt
 cjT
 ckq
+ckq
 bXk
-aaa
-aaa
+uTf
 aaa
 aaa
 aaa
@@ -79673,9 +79655,9 @@ chS
 cfV
 cgS
 cfV
+cfV
 bXk
-aaa
-aaa
+uTf
 aaa
 aaa
 aaa
@@ -79929,10 +79911,10 @@ cfV
 cfV
 cfV
 cgT
+cfV
 ckr
 bXk
-aaa
-aaa
+uTf
 aaa
 aaa
 aaa
@@ -80179,7 +80161,7 @@ cfU
 cgu
 cgU
 chw
-cBR
+chw
 chw
 chw
 chw
@@ -80187,9 +80169,9 @@ chw
 cjs
 cfV
 cfV
-bTE
-aaa
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -80444,9 +80426,9 @@ chQ
 chx
 cfV
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -80694,16 +80676,16 @@ cgv
 cgV
 bBW
 bBW
-aaa
 cgV
+aht
 aaa
 bBW
 bBW
 cgV
 cfV
-bTE
-abI
-abI
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -80951,16 +80933,16 @@ cgv
 bBW
 bBW
 bBW
-aaa
+vyc
 abI
 aaa
 bBW
 bBW
 bBW
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -81215,9 +81197,9 @@ aaa
 bBW
 bBW
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -81469,12 +81451,12 @@ cii
 cis
 ciG
 aaa
-aaa
-aaa
+vyc
+cgV
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -81719,7 +81701,7 @@ cfd
 cfw
 cfW
 cgw
-cgV
+aht
 abI
 abI
 cij
@@ -81727,11 +81709,11 @@ cit
 ciH
 abI
 abI
-cgV
+aht
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -81976,8 +81958,8 @@ cfe
 cfx
 cfa
 cgv
-aaa
-aaa
+cgV
+vyc
 aaa
 cik
 ciu
@@ -81986,9 +81968,9 @@ aaa
 aaa
 aaa
 cfV
-bTE
-aaa
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -82243,9 +82225,9 @@ aaa
 bBW
 bBW
 cfV
-bTE
-aaa
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -82495,14 +82477,14 @@ bBW
 aaa
 aaa
 abI
-aaa
+vyc
 aaa
 bBW
 bBW
 cfV
-bTE
-aaa
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -82751,15 +82733,15 @@ cgV
 bBW
 aaa
 aaa
+aht
 cgV
-aaa
 bBW
 bBW
 cgV
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 aaa
 aaa
 aaa
@@ -83014,9 +82996,9 @@ cBS
 chz
 cfV
 cfV
-bTE
-abI
-abI
+cfV
+bXk
+uTf
 abI
 abI
 aaa
@@ -83271,9 +83253,9 @@ chA
 cjt
 cfV
 cfV
-bTE
-abI
-aaa
+cfV
+bXk
+uTf
 abI
 aaa
 aaa
@@ -83527,10 +83509,10 @@ cfV
 cfV
 cfV
 cgY
+cfV
 cks
 bXk
-abI
-aaa
+uTf
 aaa
 aaa
 aaa
@@ -83785,9 +83767,9 @@ chO
 cfV
 cgZ
 cfV
+cfV
 bXk
-abI
-abI
+uTf
 abI
 aaa
 aaa
@@ -84042,9 +84024,9 @@ chP
 cgt
 cjU
 ckq
+ckq
 bXk
-abI
-aaa
+uTf
 aaa
 aaa
 aaa
@@ -84299,9 +84281,9 @@ bXk
 bXk
 bXk
 bXk
+bXk
 ckJ
-abI
-aaa
+uTf
 aaa
 aaa
 aaa
