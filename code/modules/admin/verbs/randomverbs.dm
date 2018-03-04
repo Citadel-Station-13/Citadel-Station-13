@@ -45,8 +45,6 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-<<<<<<< HEAD
-=======
 /client/proc/cmd_admin_mod_antag_rep(client/C in GLOB.clients, var/operation)
 	set category = "Special Verbs"
 	set name = "Modify Antagonist Reputation"
@@ -93,7 +91,6 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)]: Modified [key_name(C)]'s antagonist reputation ([log_text])</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Modify Antagonist Reputation") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
->>>>>>> 5bcf8b2... Little changes and standardisation of some admin commands (#36091)
 /client/proc/cmd_admin_world_narrate()
 	set category = "Special Verbs"
 	set name = "Global Narrate"
