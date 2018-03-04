@@ -34,10 +34,10 @@
 
 	vore_fullness = new_fullness
 
-
+/*
 /mob/living/simple_animal/proc/swallow_check()
 	for(var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
+		var/obj/belly/B = vore_organs[I]
 		if(vore_active)
 			update_fullness()
 			if(!vore_fullness)
@@ -48,16 +48,14 @@
 
 /mob/living/simple_animal/proc/swallow_mob()
 	for(var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		for(var/mob/living/M in B.internal_contents)
-			B.transfer_contents(M, B.transferlocation)
-
+		var/obj/belly/B = vore_organs[I]
+		for(var/mob/living/M in B.contents)
+			B.transfer_contents(M, transferlocation)
+*/
 
 /mob/living/simple_animal/death()
-	for(var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		B.release_all_contents() // When your stomach is empty
-	..() // then you have my permission to die.
+	release_vore_contents()
+	. = ..()
 
 // Simple animals have only one belly.  This creates it (if it isn't already set up)
 /mob/living/simple_animal/proc/init_belly()

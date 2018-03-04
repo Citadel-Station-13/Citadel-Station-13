@@ -120,33 +120,37 @@
 	var/belly = user.vore_selected
 	return perform_dragon(user, prey, user, belly)
 
-/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 20)
+/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/obj/belly/belly, swallow_time = 20)
 	//Sanity
-	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
+		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 
 	// The belly selected at the time of noms
-	var/datum/belly/belly_target = pred.vore_organs[belly]
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
+/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
+	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
+	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
+
 		// Prepare messages
 	if(user == pred) //Feeding someone to yourself
-		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
+		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
-	if(!do_mob(src, user, swallow_time)) // one second should be good enough, right?
+	if(!do_mob(user, swallow_time, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0)
+	playsound(get_turf(user), belly.vore_sound,75,0,-6,0)
 
 	// Actually shove prey into the belly.
-	belly_target.nom_mob(prey, user)
+	belly.nom_mob(prey, user)
 	if (pred == user)
 		message_admins("[key_name(pred)] ate [key_name(prey)].")
 		log_attack("[key_name(pred)] ate [key_name(prey)]")
@@ -155,42 +159,54 @@
 // Master vore proc that actually does vore procedures
 //
 
-/mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 100)
+/mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/obj/belly/belly, var/delay)
 	//Sanity
-	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
+		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 	if (!prey.devourable)
 		to_chat(user, "This can't be eaten!")
 		return
 	// The belly selected at the time of noms
-	var/datum/belly/belly_target = pred.vore_organs[belly]
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
+/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
+	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
+	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
+
 	// Prepare messages
 	if(user == pred) //Feeding someone to yourself
-		attempt_msg = text("<span class='warning'>[] is attemping to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		attempt_msg = text("<span class='warning'>[] is attemping to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
+		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 	else //Feeding someone to another person
-		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
+		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
+	var/swallow_time = delay || istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
-	if(!do_mob(src, user, swallow_time))
+
+	if(!do_mob(user, swallow_time, prey))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0,ignore_walls = FALSE)
+	for(var/mob/M in oview(7))
+		if(M.client.prefs.toggles & EATING_NOISES)
+			playsound(get_turf(user),"[belly.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	// Actually shove prey into the belly.
-	belly_target.nom_mob(prey, user)
+	belly.nom_mob(prey, user)
 //	user.update_icons()
 	stop_pulling()
+
+	// Flavor handling
+	if(belly.can_taste && prey.get_taste_message(FALSE))
+		to_chat(belly.owner, "<span class='notice'>[prey] tastes of [prey.get_taste_message(FALSE)].</span>")
 
 	// Inform Admins
 	var/prey_braindead
@@ -312,7 +328,7 @@
 		var/confirm = alert(src, "You're in a mob. Use this as a trick to get out of hostile animals. If you are in more than one pred, use this more than once.", "Confirmation", "Okay", "Cancel")
 		if(confirm == "Okay")
 			for(var/I in pred.vore_organs)
-				var/datum/belly/B = pred.vore_organs[I]
+				var/obj/belly/B = pred.vore_organs[I]
 				B.release_specific_contents(src)
 
 			for(var/mob/living/simple_animal/SA in range(10))

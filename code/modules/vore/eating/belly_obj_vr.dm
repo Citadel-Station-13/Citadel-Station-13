@@ -27,12 +27,17 @@
 	var/digestchance = 0					// % Chance of stomach beginning to digest if prey struggles
 	var/absorbchance = 0					// % Chance of stomach beginning to absorb if prey struggles
 	var/escapechance = 100 					// % Chance of prey beginning to escape if prey struggles.
-	var/transferchance = 0 					// % Chance of prey being
 	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
 	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
-	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
 	var/silent = FALSE
+
+	var/transferlocation = null	// Location that the prey is released if they struggle and get dropped off.
+	var/transferchance = 0 					// % Chance of prey being transferred to transfer location when resisting
+	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
+	var/autotransferwait = 10 				// Time between trying to transfer.
+	var/swallow_time = 10 SECONDS			// for mob transfering automation
+	var/vore_capacity = 1					// simple animal nom capacity
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY)	// Possible digest modes
@@ -247,6 +252,35 @@
 
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
+
+	// Setup the autotransfer checks if needed
+	if(transferlocation && autotransferchance > 0)
+		addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+
+/obj/belly/proc/check_autotransfer(var/mob/prey)
+	// Some sanity checks
+	if(transferlocation && (autotransferchance > 0) && (prey in contents))
+		if(prob(autotransferchance))
+			// Double check transferlocation isn't insane
+			if(verify_transferlocation())
+				transfer_contents(prey, transferlocation)
+		else
+			// Didn't transfer, so wait before retrying
+			addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
+
+/obj/belly/proc/verify_transferlocation()
+	for(var/I in owner.vore_organs)
+		var/obj/belly/B = owner.vore_organs[I]
+		if(B == transferlocation)
+			return TRUE
+
+	for(var/I in owner.vore_organs)
+		var/obj/belly/B = owner.vore_organs[I]
+		if(B.name == transferlocation)
+			transferlocation = B
+			return TRUE
+	return FALSE
+
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
