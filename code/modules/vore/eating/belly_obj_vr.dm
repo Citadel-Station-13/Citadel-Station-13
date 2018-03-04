@@ -13,22 +13,22 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = "Gulp"					// Sound when ingesting someone
+	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'	// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
 	var/emote_time = 60 SECONDS				// How long between stomach emotes at prey
 	var/digest_brute = 2					// Brute damage per tick in digestion mode
 	var/digest_burn = 2						// Burn damage per tick in digestion mode
-	var/immutable = 0						// Prevents this belly from being deleted
+	var/immutable = FALSE					// Prevents this belly from being deleted
 	var/escapable = TRUE					// Belly can be resisted out of at any time
 	var/escapetime = 20 SECONDS				// Deciseconds, how long to escape this belly
 	var/digestchance = 0					// % Chance of stomach beginning to digest if prey struggles
 	var/absorbchance = 0					// % Chance of stomach beginning to absorb if prey struggles
 	var/escapechance = 100 					// % Chance of prey beginning to escape if prey struggles.
 	var/transferchance = 0 					// % Chance of prey being
-	var/can_taste = 0						// If this belly prints the flavor of prey when it eats someone.
-//	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
+	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
+	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
 	var/release_sound = TRUE				// Boolean for now, maybe replace with something else later
@@ -118,8 +118,7 @@
 		"escapechance",
 		"transferchance",
 		"transferlocation",
-//		"bulge_size",
-//		"shrink_grow_size",
+		"bulge_size",
 		"struggle_messages_outside",
 		"struggle_messages_inside",
 		"digest_messages_owner",
@@ -128,10 +127,12 @@
 		"emote_lists"
 		)
 
-/obj/belly/initialize()
-	. = ..()
+		//ommitted list
+		// "shrink_grow_size",
+/obj/belly/New(var/newloc)
+	. = ..(newloc)
 	//If not, we're probably just in a prefs list or something.
-	if(isliving(loc))
+	if(isliving(newloc))
 		owner = loc
 		owner.vore_organs |= src
 		SSbellies.belly_list += src
@@ -196,7 +197,7 @@
 // Returns the number of atoms so released.
 /obj/belly/proc/release_specific_contents(var/atom/movable/M)
 	if (!(M in contents))
-		return 0 // They weren't in this belly anyway
+		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
 	items_preserved -= M
@@ -209,7 +210,7 @@
 		var/mob/living/ML = M
 		var/mob/living/OW = owner
 		if(ML.absorbed)
-			ML.absorbed = 0
+			ML.absorbed = FALSE
 			if(ishuman(M) && ishuman(OW))
 				var/mob/living/carbon/human/Prey = M
 				var/mob/living/carbon/human/Pred = OW
@@ -221,7 +222,7 @@
 
 	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
-	return 1
+	return TRUE
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
@@ -363,7 +364,7 @@
 
 // Handle a mob being absorbed
 /obj/belly/proc/absorb_living(var/mob/living/M)
-	M.absorbed = 1
+	M.absorbed = TRUE
 	to_chat(M,"<span class='notice'>[owner]'s [lowertext(name)] absorbs your body, making you part of them.</span>")
 	to_chat(owner,"<span class='notice'>Your [lowertext(name)] absorbs [M]'s body, making them part of you.</span>")
 
@@ -561,7 +562,7 @@
 	dupe.escapechance = escapechance
 	dupe.transferchance = transferchance
 	dupe.transferlocation = transferlocation
-//	dupe.bulge_size = bulge_size
+	dupe.bulge_size = bulge_size
 //	dupe.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
