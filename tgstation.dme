@@ -2604,6 +2604,7 @@
 #include "modular_citadel\code\modules\clothing\under\polychromic_clothes.dm"
 #include "modular_citadel\code\modules\clothing\under\turtlenecks.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
+#include "modular_citadel\code\modules\events\blob.dm"
 #include "modular_citadel\code\modules\jobs\jobs.dm"
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
 #include "modular_citadel\code\modules\jobs\job_types\cargo_service.dm"
