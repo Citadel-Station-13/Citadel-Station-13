@@ -6,7 +6,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	
+
 	))
 
 #define LIMITER_SIZE	5
@@ -88,6 +88,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	// Mentor PM
+	if(href_list["mentor_msg"])
+		if(CONFIG_GET(flag.mentors_mobname_only))
+			var/mob/M = locate(href_list["mentor_msg"])
+			cmd_mentor_pm(M,null)
+		else
+			cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -164,12 +173,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
+	holder = GLOB.admin_datums[ckey]
+	if(holder)
+		GLOB.admins |= src
+		holder.owner = src
+		connecting_admin = TRUE
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -235,7 +246,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
 		if(connecting_admin)
 			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-		else 
+		else
 			qdel(src)
 			return
 	#endif
@@ -398,21 +409,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				"Someone come hold me :(",\
 				"I need someone on me :(",\
 				"What happened? Where has everyone gone?",\
-				"Forever alone :(",\
-				"My nipples are so stiff, but Zelda ain't here. :(",\
-				"Leon senpai, play more Spessmans. :(",\
-				"If only Serdy were here...",\
-				"Panic bunker can't keep my love for you out.",\
-				"Cebu needs to Awoo herself back into my heart.",\
-				"I don't even have a Turry to snuggle viciously here.",\
-				"MOM, WHERE ARE YOU??? D:",\
-				"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
-				"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
-				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
-				"i shure hop dere are no PRED arund!!!!",\
-				"NO PRED CAN eVER CATCH MI",\
-				"help, the clown is honking his horn in front of dorms and its interrupting everyones erp"\
+				"Forever alone :("\
 			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
@@ -718,12 +715,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
-//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
-	if(prefs && CONFIG_GET(string/default_view))
-		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-			new_size = "15x15"
-//END OF CIT CHANGES
 
 	view = new_size
 	apply_clickcatcher()
