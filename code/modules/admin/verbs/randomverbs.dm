@@ -64,7 +64,7 @@
 		if(operation == "set")
 			prompt = "Please enter the new reputation value:"
 
-    	msg = input("Message:", prompt) as num|null
+		msg = input("Message:", prompt) as num|null
 
 		if (!msg)
 			return
