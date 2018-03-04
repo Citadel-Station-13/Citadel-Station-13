@@ -1,3 +1,5 @@
+// THIS IS NOW MERELY LEGACY, because memes. hopefully it won't be dumb.
+
 //
 //	The belly object is what holds onto a mob while they're inside a predator.
 //	It takes care of altering the pred's decription, digesting the prey, relaying struggles etc.
@@ -390,78 +392,71 @@
 	target.nom_mob(content, target.owner)
 	if(!silent)
 		playsound(get_turf(owner),"[target].vore_sound",35,0,-6,1,ignore_walls = FALSE)
-/*
-//Handles creation of temporary 'vore chest' upon digestion
-/datum/belly/proc/slimy_mass(var/obj/item/content, var/mob/living/M)
-	if(!content in internal_contents)
-		return
-	internal_contents += new /obj/structure/closet/crate/vore(src)
-	internal_contents.Remove(content)
-	M.transferItemToLoc(content, /obj/structure/closet/crate/vore)
-	if(!M.transferItemToLoc(W))
-		qdel(W)
 
-/datum/belly/proc/regurgitate_items(var/obj/structure/closet/crate/vore/C)
-	*/
-
-// Belly copies and then returns the copy
-// Needs to be updated for any var changes
-/datum/belly/proc/copy(mob/new_owner)
-	var/datum/belly/dupe = new /datum/belly(new_owner)
+//OLD: This only exists for legacy conversion purposes
+//It's called whenever an old datum-style belly is loaded
+/datum/belly/proc/copy(obj/belly/new_belly)
 
 	//// Non-object variables
-	dupe.name = name
-	dupe.inside_flavor = inside_flavor
-	dupe.vore_sound = vore_sound
-	dupe.vore_verb = vore_verb
-	dupe.human_prey_swallow_time = human_prey_swallow_time
-	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
-	dupe.emoteTime = emoteTime
-	dupe.digest_brute = digest_brute
-	dupe.digest_burn = digest_burn
-	dupe.digest_tickrate = digest_tickrate
-	dupe.immutable = immutable
-	dupe.can_taste = can_taste
-	dupe.escapable = escapable
-	dupe.escapetime = escapetime
-	dupe.digestchance = digestchance
-	dupe.escapechance = escapechance
-	dupe.transferchance = transferchance
-	dupe.transferlocation = transferlocation
-	dupe.autotransferchance = autotransferchance
-	dupe.autotransferwait = autotransferwait
+	new_belly.name = name
+	new_belly.desc = inside_flavor
+	new_belly.vore_sound = vore_sound
+	new_belly.vore_verb = vore_verb
+	new_belly.human_prey_swallow_time = human_prey_swallow_time
+	new_belly.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
+	new_belly.emote_time = emoteTime
+	new_belly.digest_brute = digest_brute
+	new_belly.digest_burn = digest_burn
+	new_belly.digest_tickrate = digest_tickrate
+	new_belly.immutable = immutable
+	new_belly.can_taste = can_taste
+	new_belly.escapable = escapable
+	new_belly.escapetime = escapetime
+	new_belly.digestchance = digestchance
+	new_belly.absorbchance = absorbchance
+	new_belly.escapechance = escapechance
+	new_belly.transferchance = transferchance
+	new_belly.transferlocation = transferlocation
+	new_belly.bulge_size = bulge_size
+	new_belly.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings
-	dupe.struggle_messages_outside.Cut()
+	new_belly.struggle_messages_outside.Cut()
 	for(var/I in struggle_messages_outside)
-		dupe.struggle_messages_outside += I
+		new_belly.struggle_messages_outside += I
 
 	//struggle_messages_inside - strings
-	dupe.struggle_messages_inside.Cut()
+	new_belly.struggle_messages_inside.Cut()
 	for(var/I in struggle_messages_inside)
-		dupe.struggle_messages_inside += I
+		new_belly.struggle_messages_inside += I
 
 	//digest_messages_owner - strings
-	dupe.digest_messages_owner.Cut()
+	new_belly.digest_messages_owner.Cut()
 	for(var/I in digest_messages_owner)
-		dupe.digest_messages_owner += I
+		new_belly.digest_messages_owner += I
 
 	//digest_messages_prey - strings
-	dupe.digest_messages_prey.Cut()
+	new_belly.digest_messages_prey.Cut()
 	for(var/I in digest_messages_prey)
-		dupe.digest_messages_prey += I
+		new_belly.digest_messages_prey += I
 
 	//examine_messages - strings
-	dupe.examine_messages.Cut()
+	new_belly.examine_messages.Cut()
 	for(var/I in examine_messages)
-		dupe.examine_messages += I
+		new_belly.examine_messages += I
 
 	//emote_lists - index: digest mode, key: list of strings
-	dupe.emote_lists.Cut()
+	new_belly.emote_lists.Cut()
 	for(var/K in emote_lists)
-		dupe.emote_lists[K] = list()
+		new_belly.emote_lists[K] = list()
 		for(var/I in emote_lists[K])
-			dupe.emote_lists[K] += I
+			new_belly.emote_lists[K] += I
 
-	return dupe
+	return new_belly
+
+// // // // // // // // // // // //
+// // // LEGACY USE ONLY!! // // //
+// // // // // // // // // // // //
+//       See top of file!        //
+// // // // // // // // // // // //

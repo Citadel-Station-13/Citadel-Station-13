@@ -16,9 +16,7 @@
 
 // Release belly contents beforey being gc'd!
 /mob/living/simple_animal/Destroy()
-	for(var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		B.release_all_contents() // When your stomach is empty
+	release_vore_contents()
 	prey_excludes.Cut()
 	. = ..()
 
@@ -66,18 +64,19 @@
 	if(no_vore) //If it can't vore, let's not give it a stomach.
 		return
 
-	var/datum/belly/B = new /datum/belly(src)
-	B.immutable = TRUE
+	var/obj/belly/B = new /obj/belly(src)
+	vore_selected = B
+	B.immutable = 1
 	B.name = vore_stomach_name ? vore_stomach_name : "stomach"
-	B.inside_flavor = vore_stomach_flavor ? vore_stomach_flavor : "Your surroundings are warm, soft, and slimy. Makes sense, considering you're inside \the [name]."
+	B.desc = vore_stomach_flavor ? vore_stomach_flavor : "Your surroundings are warm, soft, and slimy. Makes sense, considering you're inside \the [name]."
 	B.digest_mode = vore_default_mode
 	B.escapable = vore_escape_chance > 0
 	B.escapechance = vore_escape_chance
 	B.digestchance = vore_digest_chance
+	B.absorbchance = vore_absorb_chance
 	B.human_prey_swallow_time = swallowTime
 	B.nonhuman_prey_swallow_time = swallowTime
 	B.vore_verb = "swallow"
-	// TODO - Customizable per mob
 	B.emote_lists[DM_HOLD] = list( // We need more that aren't repetitive. I suck at endo. -Ace
 		"The insides knead at you gently for a moment.",
 		"The guts glorp wetly around you as some air shifts.",
@@ -98,5 +97,21 @@
 		"The juices pooling beneath you sizzle against your sore skin.",
 		"The churning walls slowly pulverize you into meaty nutrients.",
 		"The stomach glorps and gurgles as it tries to work you into slop.")
-	src.vore_organs[B.name] = B
-	src.vore_selected = B.name
+/*	B.emote_lists[DM_ITEMWEAK] = list(
+		"The burning acids eat away at your form.",
+		"The muscular stomach flesh grinds harshly against you.",
+		"The caustic air stings your chest when you try to breathe.",
+		"The slimy guts squeeze inward to help the digestive juices soften you up.",
+		"The onslaught against your body doesn't seem to be letting up; you're food now.",
+		"The predator's body ripples and crushes against you as digestive enzymes pull you apart.",
+		"The juices pooling beneath you sizzle against your sore skin.",
+		"The churning walls slowly pulverize you into meaty nutrients.",
+		"The stomach glorps and gurgles as it tries to work you into slop.")*/
+
+//Grab = Nomf
+/*
+/mob/living/simple_animal/UnarmedAttack(var/atom/A, var/proximity)
+	. = ..()
+
+	if(a_intent == I_GRAB && isliving(A) && !has_hands)
+		animal_nom(A)*/

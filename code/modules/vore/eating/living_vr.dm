@@ -1,23 +1,23 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/digestable = TRUE					// Can the mob be digested inside a belly?
-	var/datum/belly/vore_selected		// Default to no vore capability.
+	var/obj/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
 //	var/feeding = FALSE					// Are we going to feed someone else?
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0					// Is the vore panel open?
+	var/noisy = FALSE
 
 //
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
+	M.verbs += /mob/living/proc/escapeOOC
 	M.verbs += /mob/living/proc/lick
-	M.verbs += /mob/living/proc/preyloop_refresh
-	if(M.no_vore) //If the mob isn's supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
-		M << "<span class='warning'>The creature that you are can not eat others.</span>"
-		return TRUE
+	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
+		return 1
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
@@ -27,42 +27,32 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
-					return FALSE
+					to_chat(M,"<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>")
+					return 0
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
 
 			if(!M.vore_organs || !M.vore_organs.len)
 				if(!M.vore_organs)
 					M.vore_organs = list()
-				var/datum/belly/B = new /datum/belly(M)
-				B.immutable = TRUE
+				var/obj/belly/B = new /obj/belly(M)
+				M.vore_selected = B
+				B.immutable = 1
 				B.name = "Stomach"
-				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]"
-				B.can_taste = TRUE
-				M.vore_organs[B.name] = B
-				M.vore_selected = B.name
-
-				//Simple_animal gets emotes. move this to that hook instead?
-				if(istype(src,/mob/living/simple_animal))
-					B.emote_lists[DM_HOLD] = list(
-						"The insides knead at you gently for a moment.",
-						"The guts glorp wetly around you as some air shifts.",
-						"Your predator takes a deep breath and sighs, shifting you somewhat.",
-						"The stomach squeezes you tight for a moment, then relaxes.",
-						"During a moment of quiet, breathing becomes the most audible thing.",
-						"The warm slickness surrounds and kneads on you.")
-
-					B.emote_lists[DM_DIGEST] = list(
-						"The caustic acids eat away at your form.",
-						"The acrid air burns at your lungs.",
-						"Without a thought for you, the stomach grinds inwards painfully.",
-						"The guts treat you like food, squeezing to press more acids against you.",
-						"The onslaught against your body doesn't seem to be letting up; you're food now.",
-						"The insides work on you like they would any other food.")
+				B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
+				B.can_taste = 1
 
 	//Return 1 to hook-caller
 	return 1
+
+//
+// Hide vore organs in contents
+//
+/mob/living/view_variables_filter_contents(list/L)
+	. = ..()
+	var/len_before = L.len
+	L -= vore_organs
+	. += len_before - L.len
 
 //
 // Handle being clicked, perhaps with something to devour
@@ -256,13 +246,12 @@
 /mob/living/proc/vore_process_resist()
 
 	//Are we resisting from inside a belly?
-	var/datum/belly/B = check_belly(src)
-	if(B)
-		spawn()	B.relay_resist(src)
+	if(isbelly(loc))
+		var/obj/belly/B = loc
+		B.relay_resist(src)
 		return TRUE //resist() on living does this TRUE thing.
 
 	//Other overridden resists go here
-
 
 	return FALSE
 
@@ -355,8 +344,14 @@
 
 	P.digestable = src.digestable
 	P.devourable = src.devourable
-	P.belly_prefs = src.vore_organs
 	P.vore_taste = src.vore_taste
+
+	var/list/serialized = list()
+	for(var/belly in src.vore_organs)
+		var/obj/belly/B = belly
+		serialized += list(B.serialize()) //Can't add a list as an object to another list in Byond. Thanks.
+
+	P.belly_prefs = serialized
 
 	return TRUE
 
@@ -370,16 +365,52 @@
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
-	src.digestable = P.digestable
-	src.devourable = P.devourable
-	src.vore_organs = list()
-	src.vore_taste = P.vore_taste
+	digestable = P.digestable
+	devourable = P.devourable
+	vore_taste = P.vore_taste
 
-	for(var/I in P.belly_prefs)
-		var/datum/belly/Bp = P.belly_prefs[I]
-		src.vore_organs[Bp.name] = Bp.copy(src)
+	vore_organs.Cut()
+	for(var/entry in P.belly_prefs)
+		list_to_object(entry,src)
 
 	return TRUE
+
+//
+// Returns examine messages for bellies
+//
+/mob/living/proc/examine_bellies()
+	if(!show_pudge()) //Some clothing or equipment can hide this.
+		return ""
+
+	var/message = ""
+	for (var/belly in vore_organs)
+		var/obj/belly/B = belly
+		message += B.get_examine_msg()
+
+	return message
+
+//
+// Whether or not people can see our belly messages
+//
+/mob/living/proc/show_pudge()
+	return TRUE //Can override if you want.
+
+/mob/living/carbon/human/show_pudge()
+	//A uniform could hide it.
+	if(istype(w_uniform,/obj/item/clothing))
+		var/obj/item/clothing/under = w_uniform
+		if(under.hides_bulges)
+			return FALSE
+
+	//We return as soon as we find one, no need for 'else' really.
+	if(istype(wear_suit,/obj/item/clothing))
+		var/obj/item/clothing/suit = wear_suit
+		if(suit.hides_bulges)
+			return FALSE
+
+
+	return ..()
+
 //
 // Clearly super important. Obviously.
 //
