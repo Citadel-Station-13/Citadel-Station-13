@@ -13,8 +13,9 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'	// Sound when ingesting someone
+	var/vore_sound = "Gulp"					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
+	var/release_sound = "Splatter"
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
 	var/emote_time = 60 SECONDS				// How long between stomach emotes at prey
@@ -31,7 +32,7 @@
 	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
-	var/release_sound = TRUE				// Boolean for now, maybe replace with something else later
+	var/silent = FALSE
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY)	// Possible digest modes
@@ -104,6 +105,7 @@
 		"desc",
 		"vore_sound",
 		"vore_verb",
+		"release_sound",
 		"human_prey_swallow_time",
 		"nonhuman_prey_swallow_time",
 		"emote_time",
@@ -124,7 +126,8 @@
 		"digest_messages_owner",
 		"digest_messages_prey",
 		"examine_messages",
-		"emote_lists"
+		"emote_lists",
+		"silent"
 		)
 
 		//ommitted list
@@ -153,11 +156,11 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(vore_sound && !recent_sound)
-		var/soundfile = vore_sounds[vore_sound]
-		if(soundfile)
-			playsound(src, soundfile, vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises)
-			recent_sound = TRUE
+	if(!silent && !recent_sound)
+		for(var/mob/M in oview(7))
+			if(M.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+				recent_sound = TRUE
 
 	//Messages if it's a mob
 	if(isliving(thing))
@@ -185,11 +188,13 @@
 			W.stop_sound_channel(CHANNEL_PREYLOOP)
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
+	for(var/mob/M in oview(7))
+		if(M.client.prefs.toggles & EATING_NOISES)
+			playsound(get_turf(owner),"[release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	items_preserved.Cut()
 	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
-	if(release_sound)
-		playsound(src, 'sound/effects/splat.ogg', vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises)
+
 	return count
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
@@ -202,9 +207,11 @@
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
 	items_preserved -= M
 	for(var/mob/living/P in M)
-			P.stop_sound_channel(CHANNEL_PREYLOOP)
+		P.stop_sound_channel(CHANNEL_PREYLOOP)
 	if(release_sound)
-		playsound(src, 'sound/effects/splat.ogg', vol = 100, vary = 1, falloff = VORE_SOUND_FALLOFF, preference = /datum/client_preference/eating_noises)
+		for(var/mob/H in oview(7))
+			if(H.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
@@ -218,7 +225,7 @@
 				for(var/mob/living/P in contents)
 					if(P.absorbed)
 						absorbed_count++
-				Pred.bloodstr.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
+				Pred.reagents.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
 
 	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
@@ -256,7 +263,7 @@
 		formatted_message = replacetext(formatted_message,"%prey",english_list(contents))
 		for(var/mob/living/P in contents)
 			if(!P.absorbed) //This is required first, in case there's a person absorbed and not absorbed in a stomach.
-				total_bulge += P.size_multiplier
+				total_bulge += P.mob_size
 		if(total_bulge >= bulge_size && bulge_size != 0)
 			return("<span class='warning'>[formatted_message]</span><BR>")
 		else
@@ -293,12 +300,12 @@
 	var/list/raw_list = text2list(html_encode(raw_text),delim)
 	if(raw_list.len > 10)
 		raw_list.Cut(11)
-		log_debug("[owner] tried to set [lowertext(name)] with 11+ messages")
+		testing("[owner] tried to set [lowertext(name)] with 11+ messages")
 
 	for(var/i = 1, i <= raw_list.len, i++)
 		if(length(raw_list[i]) > 160 || length(raw_list[i]) < 10) //160 is fudged value due to htmlencoding increasing the size
 			raw_list.Cut(i,i)
-			log_debug("[owner] tried to set [lowertext(name)] with >121 or <10 char message")
+			testing("[owner] tried to set [lowertext(name)] with >121 or <10 char message")
 		else
 			raw_list[i] = readd_quotes(raw_list[i])
 			//Also fix % sign for var replacement
@@ -406,7 +413,7 @@
 		items_preserved |= item
 	else
 //		owner.nutrition += (5 * digested) // haha no.
-		if(isrobot(owner))
+		if(iscyborg(owner))
 			var/mob/living/silicon/robot/R = owner
 			R.cell.charge += (50 * digested)
 
@@ -417,10 +424,13 @@
 	if(owner)
 		return owner.loc
 	//Sketchy fallback for safety, put them somewhere safe.
+	else if(ismob(src))
+		testing("[src] (\ref[src]) doesn't have an owner, and dropped someone at a latespawn point!")
+		SSjob.SendToLateJoin(src)
+		// wew lad. let's see if this never gets used, hopefully
 	else
-		log_debug("[src] (\ref[src]) doesn't have an owner, and dropped someone at a latespawn point!")
-		var/fallback = pick(latejoin)
-		return get_turf(fallback)
+		qdel(src) //final option, I guess.
+		testing("[src] (\ref[src]) was QDEL'd for not having a drop_location!")
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()
@@ -434,11 +444,11 @@
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 
-		if(do_after(R, escapetime, owner, incapacitation_flags = INCAPACITATION_DEFAULT & ~INCAPACITATION_RESTRAINED))
-			if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
+		if(do_after(R, escapetime, owner))
+			if((owner.stat || escapable) && (R in contents)) //Can still escape?
 				release_specific_contents(R)
 				return
-			else if(R.loc != src) //Aren't even in the belly. Quietly fail.
+			else if(!(R in contents)) //Aren't even in the belly. Quietly fail.
 				return
 			else //Belly became inescapable or mob revived
 				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
@@ -459,27 +469,31 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	for(var/mob/M in hearers(4, owner))
+	for(var/mob/M in oview(7))
 		M.show_message(struggle_outer_message, 2) // hearable
-	to_chat(R,struggle_user_message)
+		to_chat(R,struggle_user_message)
 
-	playsound(get_turf(owner),"struggle_sound",35,0,-6,1,channel=151,ignore_walls = FALSE)
-	R.stop_sound_channel(151)
-	R.playsound_local(get_turf(R),prey_struggle,45,0)
+	if(!silent)
+		for(var/mob/M in oview(7))
+			if(M.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"struggle_sound",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
+		R.stop_sound_channel(CHANNEL_PRED)
+		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
+		R.playsound_local(get_turf(R),prey_struggle,45,0)
 
 	if(escapable || R.a_intent != "help") //If the stomach has escapable enabled. or non help intent
 		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
 			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 			if(do_after(R, escapetime))
-				if(R.loc == src) && !R.absorbed) //Does the owner still have escapable enabled?
+				if(ismob(R.loc) && !R.absorbed) //Does the owner still have escapable enabled?
 					release_specific_contents(R)
 					to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")
 					to_chat(owner,"<span class='warning'>[R] climbs out of your [lowertext(name)]!</span>")
 					for(var/mob/M in hearers(4, owner))
 						M.show_message("<span class='warning'>[R] climbs out of [owner]'s [lowertext(name)]!</span>", 2)
 					return
-				else if(!(R.loc == src)) //Aren't even in the belly. Quietly fail.
+				else if(!ismob(R.loc)) //Aren't even in the belly. Quietly fail.
 					return
 				else //Belly became inescapable.
 					to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
@@ -504,7 +518,7 @@
 			to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
 			transfer_contents(R, dest_belly)
 			return
-
+/*
 		else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
 			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
 			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
@@ -521,19 +535,27 @@
 			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get even more active!</span>")
 			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become even more active!</span>")
 			digest_mode = DM_DIGEST
+			return */
+		else if(prob(digestchance)) //Finally, let's see if it should run the digest chance.)
+			to_chat(R, "<span class='warning'>In response to your struggling, \the [name] begins to get more active...</span>")
+			to_chat(owner, "<span class='warning'>You feel your [name] beginning to become active!</span>")
+			digest_mode = DM_DIGEST
 			return
+
 		else //Nothing interesting happened.
 			to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
 			to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
 			return
 
 //Transfers contents from one belly to another
-/obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = 0)
+/obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
 	target.nom_mob(content, target.owner)
 	if(!silent)
-		playsound(get_turf(owner),"[target].vore_sound",35,0,-6,1,ignore_walls = FALSE)
+		for(var/mob/M in oview(7))
+			if(M.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
@@ -548,6 +570,7 @@
 	dupe.desc = desc
 	dupe.vore_sound = vore_sound
 	dupe.vore_verb = vore_verb
+	dupe.release_sound = release_sound
 	dupe.human_prey_swallow_time = human_prey_swallow_time
 	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
 	dupe.emote_time = emote_time
@@ -597,5 +620,6 @@
 		dupe.emote_lists[K] = list()
 		for(var/I in emote_lists[K])
 			dupe.emote_lists[K] += I
+	dupe.silent = silent
 
 	return dupe

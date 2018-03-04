@@ -8,7 +8,8 @@
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0					// Is the vore panel open?
-	var/noisy = FALSE
+	var/noisy = FALSE					// tummies are rumbly?
+	var/absorbed = FALSE				//are we absorbed?
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -45,16 +46,19 @@
 	//Return 1 to hook-caller
 	return 1
 
-//
+/*
 // Hide vore organs in contents
 //
+/datum/proc/view_variables_filter_contents(list/L)
+	return 0
+
 /mob/living/view_variables_filter_contents(list/L)
 	. = ..()
 	var/len_before = L.len
 	L -= vore_organs
 	. += len_before - L.len
 
-//
+*/
 // Handle being clicked, perhaps with something to devour
 //
 
@@ -240,6 +244,15 @@
 
 	return 0
 */
+
+//
+// Release everything in every vore organ
+//
+/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE)
+	for(var/belly in vore_organs)
+		var/obj/belly/B = belly
+		B.release_all_contents(include_absorbed)
+
 //
 // Custom resist catches for /mob/living
 //
@@ -258,6 +271,7 @@
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
+/*
 /mob/living/proc/handle_internal_contents()
 	if(SSmobs.times_fired%6==1)
 		return //The accursed timer
@@ -274,7 +288,7 @@
 			for(var/atom/movable/M in B.internal_contents)
 				if(M.loc != src)
 					B.internal_contents.Remove(M)
-
+*/
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
 	set name = "Internal loop refresh"

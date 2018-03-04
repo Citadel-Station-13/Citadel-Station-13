@@ -91,9 +91,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		return FALSE //Need to know what character to load!
 
 	slot = client.prefs.default_slot
-	
+
 	load_path(client_ckey,slot)
-	
+
 	if(!path) return FALSE //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore() //Make the file first
@@ -132,7 +132,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 /datum/vore_preferences/proc/save_vore()
 	if(!path)				return FALSE
-	
+
 	var/version = 1	//For "good times" use in the future
 	var/list/settings_list = list(
 			"version"				= version,
@@ -141,24 +141,24 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"vore_taste"			= vore_taste,
 			"belly_prefs"			= belly_prefs,
 		)
-		
+
 	/* commented out list things
 	"allowmobvore"			= allowmobvore,
 	"can_be_drop_prey"		= can_be_drop_prey,
 	"can_be_drop_pred"		= can_be_drop_pred, */
-	
+
 	//List to JSON
 	var/json_to_file = json_encode(settings_list)
 	if(!json_to_file)
-		log_debug("Saving: [path] failed jsonencode")
+		testing("Saving: [path] failed jsonencode")
 		return FALSE
-	
+
 	//Write it out
 	if(fexists(path))
 		fdel(path) //Byond only supports APPENDING to files, not replacing.
 	text2file(json_to_file,path)
 	if(!fexists(path))
-		log_debug("Saving: [path] failed file write")
+		testing("Saving: [path] failed file write")
 		return FALSE
 
 	return TRUE

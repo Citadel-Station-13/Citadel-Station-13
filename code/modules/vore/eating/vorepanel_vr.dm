@@ -28,9 +28,9 @@
 		picker_holder.loop = picker_holder
 		picker_holder.selected = vore_selected
 
-		var/dat = picker_holder.gen_ui(src)
+		var/dat = picker_holder.gen_vui(src)
 
-		picker_holder.popup = new(src, "insidePanel","Inside!", 400, 600, picker_holder)
+		picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
 		picker_holder.popup.set_content(dat)
 		picker_holder.popup.open()
 
@@ -114,7 +114,7 @@
 			if(DM_NOISY)
 				spanstyle = "color:purple;"
 
-		dat += "<span style='[spanstyle]'> ([B.internal_contents.len])</span></a></li>"
+		dat += "<span style='[spanstyle]'> ([B.contents.len])</span></a></li>"
 
 	if(user.vore_organs.len < BELLIES_MAX)
 		dat += "<li style='float: left'><a href='?src=\ref[src];newbelly=1'>New+</a></li>"
@@ -164,11 +164,15 @@
 
 		//Inside flavortext
 		dat += "<br><a href='?src=\ref[src];b_desc=\ref[selected]'>Flavor Text:</a>"
-		dat += " '[selected.inside_flavor]'"
+		dat += " '[selected.desc]'"
 
 		//Belly sound
 		dat += "<br><a href='?src=\ref[src];b_sound=\ref[selected]'>Set Vore Sound</a>"
 		dat += "<a href='?src=\ref[src];b_soundtest=\ref[selected]'>Test</a>"
+
+		//Release sound
+		dat += "<br><a href='?src=\ref[src];b_release=\ref[selected]'>Set Release Sound</a>"
+		dat += "<a href='?src=\ref[src];b_releasesoundtest=\ref[selected]'>Test</a>"
 
 		//Belly messages
 		dat += "<br><a href='?src=\ref[src];b_msgs=\ref[selected]'>Belly Messages</a>"
@@ -208,6 +212,10 @@
 			dat += "<br><a href='?src=\ref[src];b_digestchance=\ref[selected]'>Set Belly Digest Chance</a>"
 			dat += " [selected.digestchance]%"
 			dat += "<HR>"
+
+			// Belly Silence
+			dat += "<br><a href='?src=\ref[src];b_silent=\ref[selected]'>Belly Silence (for not belly bellies):</a>"
+			dat += " [selected.silent ? "Yes" : "No"]"
 
 		//Delete button
 		dat += "<br><a style='background:#990000;' href='?src=\ref[src];b_del=\ref[selected]'>Delete Belly</a>"
@@ -314,7 +322,7 @@
 
 		else if(istype(tgt,/obj/item))
 			var/obj/item/T = tgt
-			if(!(tgt in OB.internal_contents))
+			if(!(tgt in OB.contents))
 				//Doesn't exist anymore, update.
 				return TRUE
 			intent = alert("What do you want to do to that?","Query","Examine","Use Hand")
@@ -346,7 +354,9 @@
 						return
 
 					selected.release_all_contents()
-					playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE)
+					for(var/mob/H in oview(7))
+						if(H.client.prefs.toggles & EATING_NOISES)
+							playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
@@ -359,9 +369,11 @@
 						return FALSE
 
 					for(var/atom/movable/tgt in selected)
-						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
 						selected.transfer_contents(tgt, choice, 1)
-						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
+						for(var/mob/H in oview(7))
+							if(H.client.prefs.toggles & EATING_NOISES)
+								playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
 		if(!(tgt in selected)) //Old menu, needs updating because they aren't really there.
@@ -378,7 +390,9 @@
 					return FALSE
 
 				selected.release_specific_contents(tgt)
-				playsound(get_turf(user),'sound/effects/splat.ogg',50,0,-5,0,ignore_walls = FALSE)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & EATING_NOISES)
+						playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
@@ -392,7 +406,9 @@
 
 				to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(choice.name)]!</span>")
 				selected.transfer_contents(tgt, choice)
-				playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & EATING_NOISES)
+						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(href_list["newbelly"])
 		if(user.vore_organs.len >= BELLIES_MAX)
@@ -448,8 +464,6 @@
 
 	if(href_list["b_mode"])
 		var/list/menu_list = selected.digest_modes
-		if(istype(usr,/mob/living/carbon/human))
-			menu_list += selected.transform_modes
 
 		var/new_mode = input("Choose Mode (currently [selected.digest_mode])") as null|anything in menu_list
 		if(!new_mode)
@@ -524,6 +538,19 @@
 			return 0
 
 		selected.vore_verb = new_verb
+
+	if(href_list["b_release"])
+		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.release_sound
+
+		if(!choice)
+			return
+
+		selected.release_sound = GLOB.release_sound[choice]
+
+	if(href_list["b_releasesoundtest"])
+		var/soundfile = GLOB.release_sound[selected.release_sound]
+		if(soundfile)
+			user << soundfile
 
 	if(href_list["b_sound"])
 		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.pred_vore_sounds
@@ -601,6 +628,9 @@
 		var/digest_chance_input = input(user, "Set belly digest mode chance on resist (as %)", "Prey Digest Chance") as num|null
 		if(!isnull(digest_chance_input))
 			selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(selected.digestchance))
+
+	if(href_list["b_silent"])
+		selected.silent = !selected.silent
 
 	if(href_list["b_del"])
 		var/alert = alert("Are you sure you want to delete your [lowertext(selected.name)]?","Confirmation","Delete","Cancel")

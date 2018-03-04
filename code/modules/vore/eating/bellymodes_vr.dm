@@ -1,34 +1,53 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
-// Called from /mob/living/Life() proc.
-/datum/belly/proc/process_Life()
-	var/sound/prey_gurgle = sound(get_sfx("digest_prey"))
-	var/sound/prey_digest = sound(get_sfx("death_prey"))
+/obj/belly/proc/process_belly(var/times_fired,var/wait) //Passed by controller
+	if((times_fired < next_process) || !contents.len)
+		recent_sound = FALSE
+		return SSBELLIES_IGNORED
+
+	if(loc != owner)
+		if(istype(owner))
+			loc = owner
+		else
+			qdel(src)
+			return SSBELLIES_PROCESSED
+
+	next_process = times_fired + (6 SECONDS/wait) //Set up our next process time.
 
 /////////////////////////// Auto-Emotes ///////////////////////////
-	if((digest_mode in emote_lists) && !emotePend)
-		emotePend = TRUE
+	if(contents.len && next_emote <= times_fired)
+		next_emote = times_fired + round(emote_time/wait,1)
+		var/list/EL = emote_lists[digest_mode]
+		for(var/mob/living/M in contents)
+			if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
+				to_chat(M,"<span class='notice'>[pick(EL)]</span>")
 
-		spawn(emoteTime)
-			var/list/EL = emote_lists[digest_mode]
-			for(var/mob/living/M in internal_contents)
-				M << "<span class='notice'>[pick(EL)]</span>"
-			src.emotePend = FALSE
+/////////////////////////// Exit Early ////////////////////////////
+	var/list/touchable_items = contents - items_preserved
+	if(!length(touchable_items))
+		return SSBELLIES_PROCESSED
+
+////////////////////////// Sound vars /////////////////////////////
+	var/sound/prey_digest = sound(get_sfx("digest_prey"))
+	var/sound/prey_death = sound(get_sfx("death_prey"))
+
 
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)
-		return //Pretty boring, huh
+		return SSBELLIES_PROCESSED
 
 //////////////////////////// DM_DIGEST ////////////////////////////
-	if(digest_mode == DM_DIGEST)
-		for (var/mob/living/M in internal_contents)
+	else if(digest_mode == DM_DIGEST)
+		for (var/mob/living/M in contents)
 			if(prob(25))
-				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				M.playsound_local(get_turf(M), prey_digest, 45)
 
 			//Pref protection!
-			if (!M.digestable)
+			if (!M.digestable || M.absorbed)
 				continue
 
 			//Person just died in guts!
@@ -51,10 +70,13 @@
 				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_digest)
+				M.stop_sound_channel(DIGESTION_NOISES)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(DIGESTION_NOISES)
+				M.stop_sound_channel(CHANNEL_PREYLOOP)
+				M.playsound_local(get_turf(M), prey_death, 65)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -64,44 +86,51 @@
 			if(!(M.status_flags & GODMODE))
 				M.adjustFireLoss(digest_burn)
 				owner.nutrition += 1
-		return
+
+		owner.updateVRPanel()
 
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
-		for (var/mob/living/M in internal_contents)
+		for (var/mob/living/M in contents)
 			if(prob(25))
-				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				M.playsound_local(get_turf(M), prey_digest, 65)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
-					M.adjustBruteLoss(-1)
-					M.adjustFireLoss(-1)
-					owner.nutrition -= 10
+					M.adjustBruteLoss(-3)
+					M.adjustFireLoss(-3)
+					owner.nutrition -= 5
 		return
 
 ////////////////////////// DM_NOISY /////////////////////////////////
 //for when you just want people to squelch around
 	if(digest_mode == DM_NOISY)
-		for (var/mob/living/M in internal_contents)
+		for (var/mob/living/M in contents)
 			if(prob(35))
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
+				M.playsound_local(get_turf(M), prey_digest, 65)
 
 
 //////////////////////////DM_DRAGON /////////////////////////////////////
 //because dragons need snowflake guts
 	if(digest_mode == DM_DRAGON)
-		for (var/mob/living/M in internal_contents)
+		for (var/mob/living/M in contents)
 			if(prob(25))
-				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				M.playsound_local(get_turf(M), prey_digest, 65)
 
 		//No digestion protection for megafauna.
 
@@ -124,12 +153,14 @@
 				to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
 				M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
 
-				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
-				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M), null, 45, S = prey_digest)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in oview(7))
+					if(H.client.prefs.toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				M.playsound_local(get_turf(M), prey_death, 65)
 				M.spill_organs(FALSE,TRUE,TRUE)
-				M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
+				M.stop_sound_channel(CHANNEL_PREYLOOP)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -138,6 +169,6 @@
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
 				M.adjustFireLoss(digest_burn)
-				M.adjustToxLoss(4) // something something plasma based acids
-				M.adjustCloneLoss(3) // eventually this'll kill you if you're healing everything else, you nerds.
+				M.adjustToxLoss(2) // something something plasma based acids
+				M.adjustCloneLoss(1) // eventually this'll kill you if you're healing everything else, you nerds.
 		return

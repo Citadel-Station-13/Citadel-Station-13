@@ -407,18 +407,14 @@
 	new_belly.emote_time = emoteTime
 	new_belly.digest_brute = digest_brute
 	new_belly.digest_burn = digest_burn
-	new_belly.digest_tickrate = digest_tickrate
 	new_belly.immutable = immutable
 	new_belly.can_taste = can_taste
 	new_belly.escapable = escapable
 	new_belly.escapetime = escapetime
 	new_belly.digestchance = digestchance
-	new_belly.absorbchance = absorbchance
 	new_belly.escapechance = escapechance
 	new_belly.transferchance = transferchance
 	new_belly.transferlocation = transferlocation
-	new_belly.bulge_size = bulge_size
-	new_belly.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings

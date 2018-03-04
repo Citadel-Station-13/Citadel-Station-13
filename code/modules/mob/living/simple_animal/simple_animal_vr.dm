@@ -7,11 +7,13 @@
 	var/vore_default_mode = DM_DIGEST	// Default bellymode (DM_DIGEST, DM_HOLD, DM_ABSORB)
 	var/vore_digest_chance = 25			// Chance to switch to digest mode if resisted
 	var/vore_escape_chance = 25			// Chance of resisting out of mob
+	var/vore_absorb_chance = 0			// chance of absorbtion by mob
 
 	var/vore_stomach_name				// The name for the first belly if not "stomach"
 	var/vore_stomach_flavor				// The flavortext for the first belly if not the default
 
 	var/vore_fullness = 0				// How "full" the belly is (controls icons)
+	var/list/living_mobs = list()
 
 
 // Release belly contents beforey being gc'd!
