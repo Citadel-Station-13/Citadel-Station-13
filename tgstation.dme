@@ -2602,6 +2602,7 @@
 #include "modular_citadel\code\modules\clothing\under.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\flightsuit.dm"
 #include "modular_citadel\code\modules\clothing\under\polychromic_clothes.dm"
+#include "modular_citadel\code\modules\clothing\under\syndicate.dm"
 #include "modular_citadel\code\modules\clothing\under\turtlenecks.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
 #include "modular_citadel\code\modules\events\blob.dm"
