@@ -1,9 +1,22 @@
+/mob/living/silicon/robot/modules/medihound
+	set_module = /obj/item/robot_module/medihound
+
+/mob/living/silicon/robot/modules/k9
+	set_module = /obj/item/robot_module/k9
+
+/mob/living/silicon/robot/modules/scrubpup
+	set_module = /obj/item/robot_module/scrubpup
+
+/mob/living/silicon/robot/modules/borgi
+	set_module = /obj/item/robot_module/borgi
+
 /mob/living/silicon/robot/proc/get_cit_modules()
 	var/list/modulelist = list()
 	modulelist["MediHound"] = /obj/item/robot_module/medihound
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security K-9"] = /obj/item/robot_module/k9
 	modulelist["Scrub Puppy"] = /obj/item/robot_module/scrubpup
+	modulelist["Borgi"] = /obj/item/robot_module/borgi
 	return modulelist
 
 /obj/item/robot_module
@@ -12,11 +25,13 @@
 	var/has_snowflake_deadsprite
 	var/cyborg_pixel_offset
 	var/moduleselect_alternate_icon
+	var/dogborg = FALSE
 
 /obj/item/robot_module/k9
-	name = "Security K-9 Unit module"
+	name = "Security K-9 Unit"
 	basic_modules = list(
 		/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog,
+		/obj/item/storage/bag/borgdelivery,
 		/obj/item/dogborg/jaws/big,
 		/obj/item/dogborg/pounce,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
@@ -29,12 +44,13 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
-	moduleselect_icon = "security"
+	moduleselect_icon = "k9"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "ksleeper"
 	cyborg_icon_override = 'icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
+	dogborg = TRUE
 	cyborg_pixel_offset = -16
 
 /obj/item/robot_module/k9/do_transform_animation()
@@ -43,33 +59,30 @@
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
 /obj/item/robot_module/medihound
-	name = "MediHound module"
+	name = "MediHound"
 	basic_modules = list(
 		/obj/item/dogborg/jaws/small,
+		/obj/item/storage/bag/borgdelivery,
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
 		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/twohanded/shockpaddles/hound,
+		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
-	moduleselect_icon = "medical"
+	moduleselect_icon = "medihound"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "msleeper"
 	cyborg_icon_override = 'icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
+	dogborg = TRUE
 	cyborg_pixel_offset = -16
-
-/obj/item/robot_module/medihound/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
@@ -91,6 +104,7 @@
 	cyborg_icon_override = 'icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
 	cyborg_pixel_offset = -16
+	dogborg = TRUE
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -103,6 +117,62 @@
 	..()
 	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
 
+/obj/item/robot_module/borgi
+	name = "Borgi"
+	basic_modules = list(
+		/obj/item/dogborg/jaws/small,
+		/obj/item/storage/bag/borgdelivery,
+		/obj/item/device/analyzer/nose,
+		/obj/item/soap/tongue,
+		/obj/item/device/healthanalyzer,
+		/obj/item/borg/cyborghug)
+	emag_modules = list(/obj/item/dogborg/pounce)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "borgi"
+	moduleselect_icon = "borgi"
+	hat_offset = INFINITY
+	cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+	has_snowflake_deadsprite = TRUE
+
+/*
+/obj/item/robot_module/orepup
+	name = "Ore Pup"
+	basic_modules = list(
+		/obj/item/storage/bag/ore/cyborg,
+		/obj/item/device/analyzer/nose,
+		/obj/item/storage/bag/borgdelivery,
+		/obj/item/device/dogborg/sleeper/ore,
+		/obj/item/pickaxe/drill/cyborg,
+		/obj/item/shovel,
+		/obj/item/crowbar/cyborg,
+		/obj/item/weldingtool/mini,
+		/obj/item/extinguisher/mini,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/device/gps/cyborg)
+	emag_modules = list(/obj/item/dogborg/pounce)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/miner,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/borg/sight/xray/truesight_lens)
+	cyborg_base_icon = "orepup"
+	moduleselect_icon = "orepup"
+	sleeper_overlay = "osleeper"
+	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	has_snowflake_deadsprite = TRUE
+	cyborg_pixel_offset = -16
+
+/obj/item/robot_module/miner/do_transform_animation()
+	var/mob/living/silicon/robot/R = loc
+	R.cut_overlays()
+	R.setDir(SOUTH)
+	flick("orepup_transform", R)
+	do_transform_delay()
+	R.update_headlamp()
+*/
 
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
@@ -148,6 +218,10 @@
 			cyborg_base_icon = "engi-tread"
 			special_light_key = "engineer"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+		if("Loader")
+			cyborg_base_icon = "loader"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			has_snowflake_deadsprite = TRUE
 	return ..()
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)

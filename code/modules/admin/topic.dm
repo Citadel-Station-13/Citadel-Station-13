@@ -1707,6 +1707,25 @@
 
 		src.manage_free_slots()
 
+
+	else if(href_list["customjobslot"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/Add = href_list["customjobslot"]
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title == Add)
+				var/newtime = null
+				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
+				if(!newtime)
+					to_chat(src.owner, "Setting to amount of positions filled for the job")
+					job.total_positions = job.current_positions
+					break
+				job.total_positions = newtime
+
+		src.manage_free_slots()
+
 	else if(href_list["removejobslot"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1904,7 +1923,7 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
-	
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1913,7 +1932,7 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs")
 			return
 		M.mind_initialize()
-		
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -2412,6 +2431,15 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+
+	else if(href_list["modantagrep"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
+		var/client/C = M.client
+		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
+		show_player_panel(M)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

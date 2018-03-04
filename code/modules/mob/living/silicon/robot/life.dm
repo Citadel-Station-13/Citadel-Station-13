@@ -93,7 +93,7 @@
 		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_canmove()
-	if(stat || buckled || lockcharge)
+	if(stat || buckled || lockcharge || resting) //CITADEL EDIT resting dogborg-os
 		canmove = 0
 	else
 		canmove = 1

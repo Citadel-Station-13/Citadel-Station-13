@@ -61,10 +61,10 @@
 
 /obj/item/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user)
 	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		playsound(loc, 'sound/weapons/cablecuff.ogg', 60, 1, -2)
 		C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
 							"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-		if(do_mob(user, C, 30))
+		if(do_mob(user, C, 60))
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 				C.update_inv_handcuffed(0)
@@ -143,6 +143,8 @@
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
+/obj/item/device/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+	. = ..()
 
 //Delivery
 
@@ -206,7 +208,7 @@
 		return
 	if(R.client && (target in R.client.screen))
 		to_chat(R, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
-	else if(istype(target,/obj/effect/decal/cleanable))
+	else if(is_cleanable(target))
 		R.visible_message("[R] begins to lick off \the [target.name].", "<span class='warning'>You begin to lick off \the [target.name]...</span>")
 		if(do_after(R, src.cleanspeed, target = target))
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
@@ -214,7 +216,7 @@
 			to_chat(R, "<span class='notice'>You finish licking off \the [target.name].</span>")
 			qdel(target)
 			R.cell.give(50)
-	else if(istype(target,/obj/item)) //hoo boy. danger zone man
+	else if(isobj(target)) //hoo boy. danger zone man
 		if(istype(target,/obj/item/trash))
 			R.visible_message("[R] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
 			if(do_after(R, src.cleanspeed, target = target))
@@ -291,23 +293,12 @@
 
 //Defibs
 
-/obj/item/twohanded/shockpaddles/hound
+/obj/item/twohanded/shockpaddles/cyborg/hound
 	name = "defibrillator paws"
 	desc = "MediHound specific shock paws."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
-	req_defib = 0
-	wielded = 1
-
-/obj/item/twohanded/shockpaddles/hound/attack(mob/M, mob/user)
-	var/mob/living/silicon/robot.R = user
-	if(R.cell.charge < 1000)
-		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
-		return
-	if(src.cooldown == 0)
-		R.cell.use(1000)
-	return ..()
 
 //Sleeper
 
