@@ -50094,7 +50094,15 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
-<<<<<<< HEAD
+"dse" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
+"dMB" = (
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
 "eHp" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
@@ -50111,16 +50119,6 @@
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
-=======
-"dse" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
-"dMB" = (
-/turf/open/floor/plasteel,
-/area/quartermaster/sorting)
 "fwl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50144,7 +50142,6 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
->>>>>>> 40b6e6b... Merge pull request #36065 from 81Denton/pubby-shutters-firelocks
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -50154,7 +50151,10 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
-<<<<<<< HEAD
+"iKb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/sorting)
 "iVb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -50167,12 +50167,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-=======
-"iKb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/quartermaster/sorting)
->>>>>>> 40b6e6b... Merge pull request #36065 from 81Denton/pubby-shutters-firelocks
 "jgr" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
@@ -50184,25 +50178,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/library)
-<<<<<<< HEAD
-"jZg" = (
-/obj/machinery/cryopod,
-/turf/open/floor/plasteel/darkpurple,
-/area/crew_quarters/cryopod)
-"kdc" = (
-/obj/machinery/cryopod,
-/obj/machinery/light/small/built{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkpurple,
-/area/crew_quarters/cryopod)
-"khx" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/stairs,
-/area/crew_quarters/cryopod)
-=======
 "jvi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -50228,7 +50203,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
->>>>>>> 40b6e6b... Merge pull request #36065 from 81Denton/pubby-shutters-firelocks
+"jZg" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"kdc" = (
+/obj/machinery/cryopod,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"khx" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/stairs,
+/area/crew_quarters/cryopod)
 "kjK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -50308,7 +50300,16 @@
 "pps" = (
 /turf/closed/wall,
 /area/engine/break_room)
-<<<<<<< HEAD
+"pXc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/carpet,
+/area/library)
+"qOE" = (
+/turf/open/floor/plasteel/dark,
+/area/library/lounge)
 "qWK" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -50321,17 +50322,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-=======
-"pXc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/library)
-"qOE" = (
-/turf/open/floor/plasteel/dark,
-/area/library/lounge)
 "rxV" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -50356,7 +50346,6 @@
 	dir = 1
 	},
 /area/security/brig)
->>>>>>> 40b6e6b... Merge pull request #36065 from 81Denton/pubby-shutters-firelocks
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
