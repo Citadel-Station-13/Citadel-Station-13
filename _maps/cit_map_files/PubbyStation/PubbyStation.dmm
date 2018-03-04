@@ -45243,12 +45243,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"chQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "chR" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -49941,12 +49935,6 @@
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cBS" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "cBT" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
@@ -50075,9 +50063,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"dwC" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "dMB" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -50212,10 +50197,6 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
-"kMN" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "lqy" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
@@ -50370,9 +50351,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"uTf" = (
+/turf/closed/wall/r_wall,
+/area/space)
 "vpU" = (
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+"vyc" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -79143,7 +79131,7 @@ bXk
 bXk
 bXk
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -79400,7 +79388,7 @@ cjT
 ckq
 ckq
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -79657,7 +79645,7 @@ cgS
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -79914,7 +79902,7 @@ cgT
 cfV
 ckr
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -80161,17 +80149,17 @@ cfU
 cgu
 cgU
 chw
+cgU
 chw
+cgU
 chw
-chw
-chw
-chw
+cgU
 cjs
 cfV
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -80418,17 +80406,17 @@ cfV
 cgv
 cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
 cfV
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -80685,7 +80673,7 @@ cgV
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -80933,7 +80921,7 @@ cgv
 bBW
 bBW
 bBW
-kMN
+vyc
 abI
 aaa
 bBW
@@ -80942,7 +80930,7 @@ bBW
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -81199,7 +81187,7 @@ bBW
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -81451,12 +81439,12 @@ cii
 cis
 ciG
 aaa
-kMN
+vyc
 cgV
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -81713,7 +81701,7 @@ aht
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -81959,7 +81947,7 @@ cfx
 cfa
 cgv
 cgV
-kMN
+vyc
 aaa
 cik
 ciu
@@ -81970,7 +81958,7 @@ aaa
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -82227,7 +82215,7 @@ bBW
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -82477,14 +82465,14 @@ bBW
 aaa
 aaa
 abI
-kMN
+vyc
 aaa
 bBW
 bBW
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -82741,7 +82729,7 @@ cgV
 cfV
 cfV
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -82988,17 +82976,17 @@ cfV
 cgv
 cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
 cfV
 cfV
 cfV
 bXk
-dwC
+uTf
 abI
 abI
 aaa
@@ -83245,17 +83233,17 @@ cfU
 cgx
 cgU
 chA
+cgU
 chA
+cgU
 chA
-chA
-chA
-chA
+cgU
 cjt
 cfV
 cfV
 cfV
 bXk
-dwC
+uTf
 abI
 aaa
 aaa
@@ -83512,7 +83500,7 @@ cgY
 cfV
 cks
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -83769,7 +83757,7 @@ cgZ
 cfV
 cfV
 bXk
-dwC
+uTf
 abI
 aaa
 aaa
@@ -84026,7 +84014,7 @@ cjU
 ckq
 ckq
 bXk
-dwC
+uTf
 aaa
 aaa
 aaa
@@ -84283,7 +84271,7 @@ bXk
 bXk
 bXk
 ckJ
-dwC
+uTf
 aaa
 aaa
 aaa

@@ -45243,12 +45243,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"chQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "chR" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -49940,12 +49934,6 @@
 "cBQ" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
-/area/engine/engineering)
-"cBS" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cBT" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
@@ -80161,11 +80149,11 @@ cfU
 cgu
 cgU
 chw
+cgU
 chw
+cgU
 chw
-chw
-chw
-chw
+cgU
 cjs
 cfV
 cfV
@@ -80418,11 +80406,11 @@ cfV
 cgv
 cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
 cfV
 cfV
@@ -82988,11 +82976,11 @@ cfV
 cgv
 cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
 cfV
 cfV
@@ -83245,11 +83233,11 @@ cfU
 cgx
 cgU
 chA
+cgU
 chA
+cgU
 chA
-chA
-chA
-chA
+cgU
 cjt
 cfV
 cfV

@@ -243,7 +243,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aaU" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/floorgrime,
@@ -52122,14 +52122,14 @@
 	},
 /obj/machinery/power/tesla_coil,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cSK" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/tesla_coil,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cSL" = (
 /obj/machinery/button/door{
 	id = "atmos";
@@ -52644,6 +52644,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"fdi" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "fgi" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
@@ -53450,6 +53455,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/fore/secondary)
+"mWO" = (
+/turf/open/floor/plating/airless,
+/area/space)
 "mXj" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/space)
@@ -54679,6 +54687,10 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"yck" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "ycu" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -77658,10 +77670,10 @@ abc
 abc
 afu
 abc
-aaa
-aaa
-aaa
-aaa
+abc
+abc
+abc
+abc
 aaa
 aaa
 aaa
@@ -80596,17 +80608,17 @@ ccw
 pmD
 aaa
 aaa
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
 aaa
 aaa
 aaa
 aaa
 aaa
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
 hCi
 hCi
 aaa
@@ -80852,18 +80864,18 @@ cig
 ccw
 pmD
 pmD
-ctv
-ctv
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
+uvy
+uvy
 aaa
 aaa
 aaa
-ctv
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
+uvy
 uvy
 hCi
 hCi
@@ -81381,7 +81393,7 @@ mzz
 mzz
 ccw
 uvy
-aaf
+yck
 aaa
 aaa
 aaa
@@ -81895,7 +81907,7 @@ gre
 iqO
 ccw
 uvy
-eRz
+fdi
 aaa
 aaa
 aaa
@@ -82396,15 +82408,15 @@ csP
 gre
 gre
 cAq
-aaH
+mWO
 cSH
-aaH
+mWO
 cSH
-aaH
+mWO
 cSH
-aaH
+mWO
 cSH
-aaH
+mWO
 gre
 gre
 ccw
@@ -82662,7 +82674,7 @@ aaa
 aoV
 aoV
 cFK
-aaH
+mWO
 gre
 ccw
 uvy
@@ -82910,7 +82922,7 @@ cqY
 cqY
 cqY
 cAq
-aah
+aoV
 aoV
 aoV
 hCi
@@ -82919,7 +82931,7 @@ aaa
 aoV
 aoV
 aoV
-aaH
+mWO
 gre
 ccw
 uvy
@@ -83167,7 +83179,7 @@ cEv
 ugZ
 cqY
 cAq
-aah
+aoV
 aoV
 aaa
 aaa
@@ -83176,7 +83188,7 @@ aaa
 aaa
 aoV
 aoV
-aaH
+mWO
 gre
 ccw
 uvy
@@ -83424,7 +83436,7 @@ cEw
 ejb
 cqY
 cAq
-pmD
+aaa
 aaa
 aaa
 cDO
@@ -83433,7 +83445,7 @@ sWi
 aaa
 hCi
 cFK
-aaH
+mWO
 gre
 ccw
 uvy
@@ -83690,7 +83702,7 @@ tHc
 aaf
 aaf
 gXs
-aaH
+mWO
 gre
 ccw
 uvy
@@ -83947,7 +83959,7 @@ ieW
 aaa
 aaa
 aaa
-aaH
+mWO
 gre
 ccw
 uvy
@@ -84195,7 +84207,7 @@ cMD
 cEy
 cqY
 cAq
-aah
+aoV
 aoV
 aaa
 aaa
@@ -84204,7 +84216,7 @@ aaa
 aaa
 aoV
 aoV
-aaH
+mWO
 gre
 ccw
 uvy
@@ -84452,7 +84464,7 @@ cqY
 cqY
 cqY
 cAq
-aah
+aoV
 aoV
 aaa
 aaa
@@ -84461,7 +84473,7 @@ hCi
 aaa
 aoV
 aoV
-aaH
+mWO
 gre
 ccw
 uvy
@@ -84718,7 +84730,7 @@ cFK
 aoV
 aoV
 cFK
-aaH
+mWO
 gre
 ccw
 uvy
@@ -84966,15 +84978,15 @@ csP
 gre
 gre
 cAq
-aaH
+mWO
 cSK
-aaH
+mWO
 cSK
-aaH
+mWO
 cSK
-aaH
+mWO
 cSK
-aaH
+mWO
 gre
 gre
 ccw
@@ -86007,7 +86019,7 @@ mzz
 mzz
 ccw
 uvy
-aaf
+yck
 aaf
 aaa
 aaa
@@ -86514,13 +86526,13 @@ hQd
 pmD
 pmD
 pmD
-ctv
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
+uvy
 uvy
 aaa
-aaf
+yck
 hCi
 aaa
 aaa
@@ -86772,9 +86784,9 @@ aaa
 aaa
 aaa
 pmD
-ctv
-ctv
-ctv
+uvy
+uvy
+uvy
 hCi
 hCi
 hCi
