@@ -1881,6 +1881,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\corporate.dm"
 #include "code\modules\mob\living\carbon\human\species_types\dullahan.dm"
 #include "code\modules\mob\living\carbon\human\species_types\flypeople.dm"
+#include "code\modules\mob\living\carbon\human\species_types\furrypeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\golems.dm"
 #include "code\modules\mob\living\carbon\human\species_types\humans.dm"
 #include "code\modules\mob\living\carbon\human\species_types\jellypeople.dm"
