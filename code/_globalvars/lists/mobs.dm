@@ -30,8 +30,5 @@ GLOBAL_LIST_EMPTY(living_cameras)
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
 
-<<<<<<< HEAD
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
-=======
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
->>>>>>> dedf5f5... Disease antagonist (#35988)
