@@ -21,8 +21,6 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
-<<<<<<< HEAD
-=======
 #define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTCOLD		"resist_cold"
@@ -39,7 +37,6 @@
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
->>>>>>> 3369627... Adds the Ancient Cloning Lab ruin (#35976)
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
