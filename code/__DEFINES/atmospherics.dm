@@ -68,14 +68,6 @@
 #define REACTING		1
 #define STOP_REACTIONS 	2
 
-<<<<<<< HEAD
-//HUMANS
-//Hurty numbers
-#define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin
-#define AIR_DAMAGE_MODIFIER		1.025	//More means less damage from hot air scalding lungs, less = more damage //CITADEL EDIT 1.025
-
-=======
->>>>>>> 440e888... Clean up all sorts of crap, mostly defines (#36105)
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define WARNING_HIGH_PRESSURE				325		//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
@@ -120,7 +112,7 @@
 #define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE			16		// CITADEL CHANGES Max to 16, low to 8. 
+#define MAX_HIGH_PRESSURE_DAMAGE			16		// CITADEL CHANGES Max to 16, low to 8.
 #define LOW_PRESSURE_DAMAGE					8		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
