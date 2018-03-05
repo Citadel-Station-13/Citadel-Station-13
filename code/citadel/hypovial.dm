@@ -5,8 +5,10 @@
 	icon_state = "hypovial"
 	w_class = WEIGHT_CLASS_SMALL //Why would it be the same size as a beaker?
 	container_type = OPENCONTAINER
+	spillable = FALSE
+	resistance_flags = ACID_PROOF
 	var/comes_with = list() //Easy way of doing this.
-	volume = 30
+	volume = 10
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -38,6 +40,9 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
+/obj/item/reagent_containers/glass/bottle/vial/small
+	volume = 30
+
 /obj/item/reagent_containers/glass/bottle/vial/large
 	name = "large hypospray vial"
 	desc = "This is a vial suitable for loading into the Chief Medical Officer's Hypospray mk II."
@@ -49,27 +54,27 @@
 	for(var/R in comes_with)
 		reagents.add_reagent(R,comes_with[R])
 
-/obj/item/reagent_containers/glass/bottle/vial/preloaded/bicaridine
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine
 	name = "vial (bicaridine)"
 	icon_state = "hypovial-b"
 	comes_with = list("bicaridine" = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/preloaded/antitoxin
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin
 	name = "vial (Anti-Tox)"
 	icon_state = "hypovial-a"
 	comes_with = list("antitoxin" = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/preloaded/kelotane
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane
 	name = "vial (kelotane)"
 	icon_state = "hypovial-k"
 	comes_with = list("kelotane" = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/preloaded/dexalin
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin
 	name = "vial (dexalin)"
 	icon_state = "hypovial-d"
 	comes_with = list("dexalin" = 30)
 
-/obj/item/reagent_containers/glass/bottle/vial/preloaded/tricordrazine
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricordrazine
 	name = "vial (tricordrazine)"
 	icon_state = "hypovial"
 	comes_with = list("tricordrazine" = 30)
