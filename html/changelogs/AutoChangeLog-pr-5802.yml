@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - tweak: "Deltastation: Removed a windoor to make the northern chemistry fridge more accessible."

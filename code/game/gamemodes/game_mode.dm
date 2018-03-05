@@ -165,7 +165,7 @@
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
 	log_game("Roundtype converted to [replacementmode.name]")
-	
+
 	. = 1
 
 	sleep(rand(600,1800))
@@ -425,7 +425,7 @@
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
+	var/list/msg = list("<span class='boldnotice'>Roundstart logout report\n\n</span>")
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/mob/living/carbon/C = L
@@ -462,7 +462,7 @@
 				SSpersistence.antag_rep_change[p_ckey] = 0
 
 			continue //Happy connected client
-		for(var/mob/dead/observer/D in GLOB.mob_list)
+		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
@@ -480,7 +480,7 @@
 
 
 	for (var/C in GLOB.admins)
-		to_chat(C, msg)
+		to_chat(C, msg.Join())
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)

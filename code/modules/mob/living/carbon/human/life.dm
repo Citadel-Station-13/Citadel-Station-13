@@ -244,11 +244,7 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
-
-	if(dna.check_mutation(COLDRES))
-		return TRUE //Fully protected from the cold.
-
-	if(RESISTCOLD in dna.species.species_traits)
+	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 		
 //CITADEL EDIT Mandatory for vore code.
@@ -301,16 +297,14 @@
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(glasses)
 		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(head)
 		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
-	if(NOBREATH in dna.species.species_traits)
-		. = 1
-	return .
+			return TRUE
+	return ..()
 
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
@@ -337,7 +331,7 @@
 	if(!can_heartattack())
 		return
 
-	var/we_breath = (!(NOBREATH in dna.species.species_traits))
+	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
 
 	if(!undergoing_cardiac_arrest())
