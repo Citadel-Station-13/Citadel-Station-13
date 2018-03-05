@@ -132,11 +132,33 @@
 			icon_state = "rpcoil_open[anchored]"
 		else
 			icon_state = "rpcoil[anchored]"
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
 
 /obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
+
+	if(exchange_parts(user, W))
+		return
+
+	if(default_unfasten_wrench(user, W))
+		return
+
+	if(default_deconstruction_crowbar(W))
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
+		return
+
+	return ..()
+
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
