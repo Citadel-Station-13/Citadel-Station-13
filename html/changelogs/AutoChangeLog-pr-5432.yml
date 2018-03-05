@@ -1,7 +1,0 @@
-author: "RealDonaldTrump"
-delete-after: True
-changes: 
-  - rscadd: "Added a QM Command Headset and Encryption key"
-  - tweak: "Removed the HoP's Cargo access and supply comms access."
-  - tweak: "The QM is immune to revolutionaries now and must be murdered, as a head of staff."
-  - rscdel: "Removed QM access from Shaft Miners and Cargo Techs during skeleton shifts."

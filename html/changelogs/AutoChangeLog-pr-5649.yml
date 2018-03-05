@@ -1,5 +1,0 @@
-author: "RealDonaldTrump"
-delete-after: True
-changes: 
-  - balance: "Rebalanced cold damage on slimepeople"
-  - bugfix: "Transform potions no longer give more than one alter form ability"
