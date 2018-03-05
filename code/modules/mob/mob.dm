@@ -322,63 +322,6 @@
 
 	return 1
 
-<<<<<<< HEAD
-//this and stop_pulling really ought to be /mob/living procs
-/mob/start_pulling(atom/movable/AM, supress_message = 0)
-	if(!AM || !src)
-		return FALSE
-	if(!(AM.can_be_pulled(src)))
-		return FALSE
-	if(throwing || incapacitated())
-		return FALSE
-
-	AM.add_fingerprint(src)
-
-	// If we're pulling something then drop what we're currently pulling and pull this instead.
-	if(pulling)
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-		if(AM == pulling)
-			return
-		stop_pulling()
-
-	changeNext_move(CLICK_CD_GRABBING)
-
-	if(AM.pulledby)
-		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
-		add_logs(AM, AM.pulledby, "pulled from", src)
-		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-
-	pulling = AM
-	AM.pulledby = src
-	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	update_pull_hud_icon()
-
-	if(ismob(AM))
-		var/mob/M = AM
-
-		//Share diseases that are spread by touch
-		for(var/thing in viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				M.ContactContractDisease(D)
-
-		for(var/thing in M.viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
-
-		add_logs(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
-
-=======
->>>>>>> dedf5f5... Disease antagonist (#35988)
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
