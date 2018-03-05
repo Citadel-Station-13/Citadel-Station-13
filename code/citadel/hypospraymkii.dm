@@ -55,8 +55,8 @@
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		testing("passed hypo check in unload_hypo")
-		reagents.trans_to(V, volume)
-		volume = 0
+		reagents.trans_to(V, reagents.total_volume)
+		reagents.maximum_volume = 0
 		testing("put_in_hands")
 		V.forceMove(user.loc)
 		user.put_in_hands(V)
@@ -82,9 +82,9 @@
 			return
 		vial = V
 		testing("correct sized vial")
-		volume = V.volume
+		reagents.maximum_volume = V.volume
 		testing("trans_to triggered")
-		V.reagents.trans_to(src, V.volume)
+		V.reagents.trans_to(src, V.reagents.total_volume)
 		if(!user.transferItemToLoc(V,src))
 			return
 		testing("able to transferitemtoloc")
