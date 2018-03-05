@@ -287,8 +287,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
 
+<<<<<<< HEAD
 	if(VIRUSIMMUNE in species_traits)
 		for(var/datum/disease/A in C.viruses)
+=======
+	for(var/X in inherent_traits)
+		C.add_trait(X, SPECIES_TRAIT)
+
+	if(TRAIT_VIRUSIMMUNE in inherent_traits)
+		for(var/datum/disease/A in C.diseases)
+>>>>>>> dedf5f5... Disease antagonist (#35988)
 			A.cure(FALSE)
 
 //CITADEL EDIT

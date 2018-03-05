@@ -11,7 +11,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -287,16 +286,6 @@
 				client.eye = loc
 		return 1
 
-/mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		if(client.eye && client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
-		update_pipe_vision()
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -333,6 +322,7 @@
 
 	return 1
 
+<<<<<<< HEAD
 //this and stop_pulling really ought to be /mob/living procs
 /mob/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
@@ -387,6 +377,8 @@
 		else
 			M.LAssailant = usr
 
+=======
+>>>>>>> dedf5f5... Disease antagonist (#35988)
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
@@ -408,15 +400,6 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-
-/mob/stop_pulling()
-	..()
-	update_pull_hud_icon()
-
-/mob/verb/stop_pulling1()
-	set name = "Stop Pulling"
-	set category = "IC"
-	stop_pulling()
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -927,39 +910,6 @@
 		if (L)
 			L.alpha = lighting_alpha
 
-/mob/living/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if("stat")
-			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
-			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
-	. = ..()
-	switch(var_name)
-		if("knockdown")
-			SetKnockdown(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
-		if("eye_blind")
-			set_blindness(var_value)
-		if("eye_damage")
-			set_eye_damage(var_value)
-		if("eye_blurry")
-			set_blurriness(var_value)
-		if("maxHealth")
-			updatehealth()
-		if("resize")
-			update_transform()
-		if("lighting_alpha")
-			sync_lighting_plane_alpha()
-
-
 /mob/proc/is_literate()
 	return 0
 
@@ -968,15 +918,6 @@
 
 /mob/proc/get_idcard()
 	return
-
-/mob/proc/get_static_viruses() //used when creating blood and other infective objects
-	if(!LAZYLEN(viruses))
-		return
-	var/list/datum/disease/diseases = list()
-	for(var/datum/disease/D in viruses)
-		var/static_virus = D.Copy()
-		diseases += static_virus
-	return diseases
 
 
 /mob/vv_get_dropdown()
