@@ -40,8 +40,8 @@
 		for (var/mob/living/M in contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 45)
@@ -71,8 +71,8 @@
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(DIGESTION_NOISES)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(DIGESTION_NOISES)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
@@ -87,6 +87,12 @@
 				M.adjustFireLoss(digest_burn)
 				owner.nutrition += 1
 
+		//Contaminate or gurgle items
+		var/obj/item/T = pick(touchable_items)
+		if(istype(T))
+			if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
+				digest_item(T)
+
 		owner.updateVRPanel()
 
 ///////////////////////////// DM_HEAL /////////////////////////////
@@ -94,8 +100,8 @@
 		for (var/mob/living/M in contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 65)
@@ -113,8 +119,8 @@
 		for (var/mob/living/M in contents)
 			if(prob(35))
 				M.stop_sound_channel(CHANNEL_DIGEST)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), prey_digest, 65)
@@ -126,8 +132,8 @@
 		for (var/mob/living/M in contents)
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 65)
@@ -154,8 +160,8 @@
 				M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
 
 				M.stop_sound_channel(CHANNEL_DIGEST)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & DIGESTION_NOISES)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_death, 65)
@@ -171,4 +177,10 @@
 				M.adjustFireLoss(digest_burn)
 				M.adjustToxLoss(2) // something something plasma based acids
 				M.adjustCloneLoss(1) // eventually this'll kill you if you're healing everything else, you nerds.
-		return
+			//Contaminate or gurgle items
+		var/obj/item/T = pick(touchable_items)
+		if(istype(T))
+			if(istype(T,/obj/item/reagent_containers/food) || istype(T,/obj/item/organ))
+				digest_item(T)
+
+		owner.updateVRPanel()

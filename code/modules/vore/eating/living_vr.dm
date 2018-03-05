@@ -15,7 +15,7 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/escapeOOC
+	M.verbs += /mob/living/proc/preyloop_refresh
 	M.verbs += /mob/living/proc/lick
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return 1
@@ -38,10 +38,10 @@
 					M.vore_organs = list()
 				var/obj/belly/B = new /obj/belly(M)
 				M.vore_selected = B
-				B.immutable = 1
+				B.immutable = TRUE
 				B.name = "Stomach"
 				B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
-				B.can_taste = 1
+				B.can_taste = FALSE
 
 	//Return 1 to hook-caller
 	return 1
@@ -56,9 +56,8 @@
 	. = ..()
 	var/len_before = L.len
 	L -= vore_organs
-	. += len_before - L.len
+	. += len_before - L.len*/
 
-*/
 // Handle being clicked, perhaps with something to devour
 //
 
@@ -142,12 +141,12 @@
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
-	if(!do_mob(user, swallow_time, prey))
+	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(get_turf(user), belly.vore_sound,75,0,-6,0)
+	playsound(get_turf(user), "[belly.vore_sound]",75,0,-6,0)
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
@@ -187,16 +186,16 @@
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
-	var/swallow_time = delay || istype(prey, /mob/living/carbon/human) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
+	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
 
 
-	if(!do_mob(user, swallow_time, prey))
+	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	for(var/mob/M in oview(7))
-		if(M.client.prefs.toggles & EATING_NOISES)
+	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+		if(M.client && M.client.prefs.toggles & EATING_NOISES)
 			playsound(get_turf(user),"[belly.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	// Actually shove prey into the belly.
@@ -284,35 +283,14 @@
 
 	return FALSE
 
-//
-//	Proc for updating vore organs and digestion/healing/absorbing
-//
-/*
-/mob/living/proc/handle_internal_contents()
-	if(SSmobs.times_fired%6==1)
-		return //The accursed timer
-
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			B.process_Life() //AKA 'do bellymodes_vr.dm'
-
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			listclearnulls(B.internal_contents)
-			for(var/atom/movable/M in B.internal_contents)
-				if(M.loc != src)
-					B.internal_contents.Remove(M)
-*/
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
 	set name = "Internal loop refresh"
 	set category = "Vore"
-	if(ismob(src.loc))
+	if(istype(src.loc, /obj/belly))
 		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
-		src.playsound_local(get_turf(src),preyloop,40,0, channel = CHANNEL_PREYLOOP)
+		src.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
 

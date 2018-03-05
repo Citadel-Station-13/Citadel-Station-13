@@ -13,9 +13,9 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = "Gulp"					// Sound when ingesting someone
+	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
-	var/release_sound = "Splatter"
+	var/release_sound = 'sound/effects/splat.ogg'
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
 	var/emote_time = 60 SECONDS				// How long between stomach emotes at prey
@@ -162,9 +162,9 @@
 
 	//Sound w/ antispam flag setting
 	if(!silent && !recent_sound)
-		for(var/mob/M in oview(7))
-			if(M.client.prefs.toggles & EATING_NOISES)
-				playsound(get_turf(owner),"[vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+			if(M.client && M.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				recent_sound = TRUE
 
 	//Messages if it's a mob
@@ -193,9 +193,9 @@
 			W.stop_sound_channel(CHANNEL_PREYLOOP)
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
-	for(var/mob/M in oview(7))
-		if(M.client.prefs.toggles & EATING_NOISES)
-			playsound(get_turf(owner),"[release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+		if(M.client && M.client.prefs.toggles & EATING_NOISES)
+			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	items_preserved.Cut()
 	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
@@ -214,9 +214,9 @@
 	for(var/mob/living/P in M)
 		P.stop_sound_channel(CHANNEL_PREYLOOP)
 	if(release_sound)
-		for(var/mob/H in oview(7))
-			if(H.client.prefs.toggles & EATING_NOISES)
-				playsound(get_turf(owner),"[release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+		for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+			if(H.client && H.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
@@ -247,7 +247,7 @@
 		prey.buckled.unbuckle_mob(prey,TRUE)
 
 	prey.forceMove(src)
-	prey.playsound_local(loc,preyloop,40,0, channel = CHANNEL_PREYLOOP)
+	prey.playsound_local(loc,preyloop,70,0, channel = CHANNEL_PREYLOOP)
 	owner.updateVRPanel()
 
 	for(var/mob/living/M in contents)
@@ -276,7 +276,7 @@
 
 	for(var/I in owner.vore_organs)
 		var/obj/belly/B = owner.vore_organs[I]
-		if(B.name == transferlocation)
+		if(B == transferlocation)
 			transferlocation = B
 			return TRUE
 	return FALSE
@@ -369,6 +369,7 @@
 	//M.death(1) // "Stop it he's already dead..." Basically redundant and the reason behind screaming mouse carcasses.
 	if(M.ckey)
 		message_admins("[key_name(owner)] has digested [key_name(M)] in their [lowertext(name)] ([owner ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[owner.x];Y=[owner.y];Z=[owner.z]'>JMP</a>" : "null"])")
+		log_attack("[key_name(owner)] digested [key_name(M)].")
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if(is_vore_predator(M))
@@ -397,9 +398,6 @@
 		else if(M.reagents)
 			M.reagents.trans_to_holder(Pred.bloodstr, M.reagents.total_volume, 0.5, TRUE) */
 
-	//Tell Admins about your nom
-	message_admins("[key_name(owner)] digested [key_name(M)].")
-	log_attack("[key_name(owner)] digested [key_name(M)].")
 	// Delete the digested mob
 	qdel(M)
 
@@ -474,12 +472,12 @@
 
 	R.setClickCooldown(50)
 
-	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
-		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")
+	if(owner.stat || !owner.client && R.a_intent != INTENT_HELP) //If owner is stat (dead, KO) we can actually escape
+		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around 5 seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 
-		if(do_after(R, escapetime, owner))
-			if((owner.stat || escapable) && (R in contents)) //Can still escape?
+		if(do_after(R, 50, owner))
+			if(owner.stat && (R in contents) && R.a_intent != INTENT_HELP) //Can still escape and want to?
 				release_specific_contents(R)
 				return
 			else if(!(R in contents)) //Aren't even in the belly. Quietly fail.
@@ -503,55 +501,53 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	for(var/mob/M in oview(7))
+	for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
 		M.show_message(struggle_outer_message, 2) // hearable
 		to_chat(R,struggle_user_message)
 
 	if(!silent)
-		for(var/mob/M in oview(7))
-			if(M.client.prefs.toggles & EATING_NOISES)
+		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+			if(M.client && M.client.prefs.toggles & EATING_NOISES)
 				playsound(get_turf(owner),"struggle_sound",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
 		R.stop_sound_channel(CHANNEL_PRED)
 		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
 		R.playsound_local(get_turf(R),prey_struggle,45,0)
 
-	if(escapable || R.a_intent != "help") //If the stomach has escapable enabled. or non help intent
-		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
-			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
-			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-			if(do_after(R, escapetime))
-				if(ismob(R.loc) && !R.absorbed) //Does the owner still have escapable enabled?
-					release_specific_contents(R)
-					to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")
-					to_chat(owner,"<span class='warning'>[R] climbs out of your [lowertext(name)]!</span>")
-					for(var/mob/M in hearers(4, owner))
-						M.show_message("<span class='warning'>[R] climbs out of [owner]'s [lowertext(name)]!</span>", 2)
-					return
-				else if(!ismob(R.loc)) //Aren't even in the belly. Quietly fail.
-					return
-				else //Belly became inescapable.
-					to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
-					to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
-					return
-
-		else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
-			var/obj/belly/dest_belly
-			for(var/belly in owner.vore_organs)
-				var/obj/belly/B = belly
-				if(B.name == transferlocation)
-					dest_belly = B
-					break
-
-			if(!dest_belly)
-				to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had it's transfer chance and transfer location cleared as a precaution.</span>")
-				transferchance = 0
-				transferlocation = null
+	if(R.a_intent != INTENT_HELP) //If on non help intent
+		to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
+		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
+		if(do_after(R, escapetime, owner))
+			if((owner.stat || !owner.client || escapable) && (R in contents))
+				release_specific_contents(R)
+				to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")
+				to_chat(owner,"<span class='warning'>[R] climbs out of your [lowertext(name)]!</span>")
+				for(var/mob/M in hearers(4, owner))
+					M.show_message("<span class='warning'>[R] climbs out of [owner]'s [lowertext(name)]!</span>", 2)
+				return
+			else if(!istype(loc, /obj/belly)) //Aren't even in the belly. Quietly fail.
+				return
+			else //Belly became inescapable.
+				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
+				to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
 				return
 
-			to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed and your struggles only results in you sliding into [owner]'s [transferlocation]!</span>")
-			to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
-			transfer_contents(R, dest_belly)
+	else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
+		var/obj/belly/dest_belly
+		for(var/belly in owner.vore_organs)
+			var/obj/belly/B = belly
+			if(B.name == transferlocation)
+				dest_belly = B
+				break
+		if(!dest_belly)
+			to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had it's transfer chance and transfer location cleared as a precaution.</span>")
+			transferchance = 0
+			transferlocation = null
 			return
+
+		to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed and your struggles only results in you sliding into [owner]'s [transferlocation]!</span>")
+		to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
+		transfer_contents(R, dest_belly)
+		return
 /*
 		else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
 			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
@@ -570,16 +566,16 @@
 			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become even more active!</span>")
 			digest_mode = DM_DIGEST
 			return */
-		else if(prob(digestchance)) //Finally, let's see if it should run the digest chance.)
-			to_chat(R, "<span class='warning'>In response to your struggling, \the [name] begins to get more active...</span>")
-			to_chat(owner, "<span class='warning'>You feel your [name] beginning to become active!</span>")
-			digest_mode = DM_DIGEST
-			return
+	else if(prob(digestchance)) //Finally, let's see if it should run the digest chance.)
+		to_chat(R, "<span class='warning'>In response to your struggling, \the [name] begins to get more active...</span>")
+		to_chat(owner, "<span class='warning'>You feel your [name] beginning to become active!</span>")
+		digest_mode = DM_DIGEST
+		return
 
-		else //Nothing interesting happened.
-			to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
-			to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
-			return
+	else //Nothing interesting happened.
+		to_chat(R,"<span class='warning'>You make no progress in escaping [owner]'s [lowertext(name)].</span>")
+		to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
+		return
 
 //Transfers contents from one belly to another
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
@@ -587,9 +583,9 @@
 		return
 	target.nom_mob(content, target.owner)
 	if(!silent)
-		for(var/mob/M in oview(7))
-			if(M.client.prefs.toggles & EATING_NOISES)
-				playsound(get_turf(owner),"[vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+			if(M.client && M.client.prefs.toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()

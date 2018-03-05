@@ -1,17 +1,18 @@
 /mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
+	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	// Create and register 'stomachs'
 	var/obj/belly/megafauna/dragon/maw/maw = new(src)
 	var/obj/belly/megafauna/dragon/gullet/gullet = new(src)
 	var/obj/belly/megafauna/dragon/gut/gut = new(src)
-	for(var/obj/belly/X in list(maw, gullet, gut))
-		vore_organs[X.name] = X
+//	for(var/obj/belly/X in list(maw, gullet, gut))
+//		vore_organs[X.name] = X
 	// Connect 'stomachs' together
 	maw.transferlocation = gullet
 	gullet.transferlocation = gut
-	vore_selected = maw.name  // NPC eats into maw
+	vore_selected = maw  // NPC eats into maw
 	return ..()
 
 /obj/belly/megafauna/dragon

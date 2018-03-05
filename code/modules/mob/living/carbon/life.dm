@@ -52,6 +52,8 @@
 		return
 	if(ismob(loc))
 		return
+	if(istype(loc, /obj/belly))
+		return
 
 	var/datum/gas_mixture/environment
 	if(loc)

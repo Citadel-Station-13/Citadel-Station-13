@@ -96,8 +96,8 @@
 	dat += "<HR>"
 
 	dat += "<ol style='list-style: none; padding: 0; overflow: auto;'>"
-	for(var/K in user.vore_organs) //Fuggin can't iterate over values
-		var/obj/belly/B = user.vore_organs[K]
+	for(var/belly in user.vore_organs)
+		var/obj/belly/B = belly
 		if(B == selected)
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else
@@ -354,8 +354,8 @@
 						return
 
 					selected.release_all_contents()
-					for(var/mob/H in oview(7))
-						if(H.client.prefs.toggles & EATING_NOISES)
+					for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+						if(M.client && M.client.prefs.toggles & EATING_NOISES)
 							playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
@@ -370,8 +370,8 @@
 
 					for(var/atom/movable/tgt in selected)
 						selected.transfer_contents(tgt, choice, 1)
-						for(var/mob/H in oview(7))
-							if(H.client.prefs.toggles & EATING_NOISES)
+						for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+							if(M.client && M.client.prefs.toggles & EATING_NOISES)
 								playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
 
@@ -390,8 +390,8 @@
 					return FALSE
 
 				selected.release_specific_contents(tgt)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & EATING_NOISES)
+				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+					if(M.client && M.client.prefs.toggles & EATING_NOISES)
 						playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
@@ -406,8 +406,8 @@
 
 				to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(choice.name)]!</span>")
 				selected.transfer_contents(tgt, choice)
-				for(var/mob/H in oview(7))
-					if(H.client.prefs.toggles & EATING_NOISES)
+				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+					if(M.client && M.client.prefs.toggles & EATING_NOISES)
 						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(href_list["newbelly"])

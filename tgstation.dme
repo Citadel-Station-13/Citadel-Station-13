@@ -2540,6 +2540,7 @@
 #include "modular_citadel\cydonian_armor.dm"
 #include "modular_citadel\dresscode_values.dm"
 #include "modular_citadel\hopefully_temporary_patches.dm"
+#include "modular_citadel\simplemob_vore_values.dm"
 #include "modular_citadel\code\init.dm"
 #include "modular_citadel\code\__HELPERS\lists.dm"
 #include "modular_citadel\code\__HELPERS\mobs.dm"

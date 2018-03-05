@@ -19,21 +19,17 @@
 /////////////
 // Some indigestible stuff
 /////////////
-/obj/item/weapon/hand_tele/digest_act(...)
+/obj/item/hand_tele/digest_act(...)
 	return FALSE
-/obj/item/weapon/card/id/digest_act(...)
+/obj/item/card/id/digest_act(...)
 	return FALSE
-/obj/item/device/aicard/digest_act(...)
+/obj/item/aicard/digest_act(...)
 	return FALSE
-/obj/item/device/paicard/digest_act(...)
+/obj/item/paicard/digest_act(...)
 	return FALSE
-/obj/item/weapon/gun/digest_act(...)
+/obj/item/pinpointer/digest_act(...)
 	return FALSE
-/obj/item/weapon/pinpointer/digest_act(...)
-	return FALSE
-/obj/item/blueprints/digest_act(...)
-	return FALSE
-/obj/item/weapon/disk/nuclear/digest_act(...)
+/obj/item/disk/nuclear/digest_act(...)
 	return FALSE
 /obj/item/device/perfect_tele_beacon/digest_act(...)
 	return FALSE //Sorta important to not digest your own beacons.
@@ -65,8 +61,6 @@
 	return FALSE
 /obj/item/documents/syndicate/digest_act(...)
 	return FALSE
-/obj/item/disk/nuclear/digest_act(...)
-	return FALSE
 /obj/item/bombcore/digest_act(...)
 	return FALSE
 /obj/item/grenade/digest_act(...)
@@ -86,7 +80,7 @@
 	. = ..()
 */
 
-/obj/item/weapon/reagent_containers/food/digest_act(var/atom/movable/item_storage = null)
+/obj/item/reagent_containers/food/digest_act(var/atom/movable/item_storage = null)
 	if(isbelly(item_storage))
 		var/obj/belly/B = item_storage
 		if(ishuman(B.owner))

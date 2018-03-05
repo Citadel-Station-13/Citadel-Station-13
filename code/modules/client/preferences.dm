@@ -323,6 +323,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
+			//VORE SOUNDS
+			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
 			if(CONFIG_GET(flag/allow_metadata))
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
@@ -1764,6 +1767,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+				// VORE SOUND TOGGLES
+				if("toggleeatingnoise")
+					toggles ^= EATING_NOISES
+
+				if("toggledigestionnoise")
+					toggles ^= DIGESTION_NOISES
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS

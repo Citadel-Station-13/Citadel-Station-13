@@ -2,8 +2,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleeatingnoise)()
 	set name = "Toggle Eating Noises"
 	set category = "Preferences"
 	set desc = "Hear Eating noises"
-	usr.client.prefs.current_tab = 1
-	usr.client.prefs.ShowChoices(usr)
 	usr.client.prefs.toggles ^= EATING_NOISES
 	usr.client.prefs.save_preferences()
 	usr.stop_sound_channel(CHANNEL_PRED)
