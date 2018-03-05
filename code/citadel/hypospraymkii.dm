@@ -50,51 +50,57 @@
 	. = ..()
 	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
-/obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/living/user)
-	if(!W)
-		to_chat(user, "This doesn't have a vial!")
-		return
-
+/obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(mob/user)
+	testing("unload_hypo triggered")
+	if(vial && contents >= 1)
+		var/obj/item/reagent_containers/glass/bottle/vial/V = vial
+		testing("passed hypo check in unload_hypo")
+		reagents.trans_to(V, volume)
+		volume = 0
+		testing("put_in_hands")
+		V.forceMove(user.loc)
+		user.put_in_hands(V)
+		to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
+		vial = null
+		testing("put_in_hands passed or dropped it")
+		update_icon()
+		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
 	else
-		if(W)
-			testing("passed hypo check in unload_hypo")
-			vial = W
-			testing("vial = W")
-			reagents.trans_to(vial, volume)
-			volume = 0
-			testing("put_in_hands")
-			usr.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
-			vial = null
-			testing("put_in_hands passed or dropped it")
-			update_icon()
-			playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
-
-/obj/item/reagent_containers/hypospray/mkii/proc/load_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/living/user)
-	if(!is_type_in_list(W, allowed_containers))
-		. = 1 //no afterattack
-		to_chat(user, "<span class='notice'>\The [src] only accepts hypospray vials!</span>")
+		to_chat(user, "<span class='notice'>This hypo isn't loaded!</span>")
 		return
-	testing("passed check for vial")
-	if(contents.len == 1)
+
+/obj/item/reagent_containers/hypospray/mkii/proc/load_hypo(obj/item/I, mob/user)
+	testing("load_hypo triggered")
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial) && contents >= 1))
 		to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 		return
-	testing("doesn't already have a vial")
-	if(user.transferItemToLoc(W,src))
-		testing("starting to stuff [W] into the [src]")
-		vial = W
-		testing("vial is now W")
-		user.visible_message("<span class='notice'>[user] begins loading a vial into \the [src].</span>","<span class='notice'>You start loading [vial] into \the [src].</span>")
-		if(!do_after(user,30) || vial || !(vial in user))
+	testing("we don't already have a vial in the hypo")
+	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
+		var/obj/item/reagent_containers/glass/bottle/vial/V = I
+		testing("item is a vial")
+		if(!is_type_in_list(V, allowed_containers))
+			to_chat(user, "<span class='notice'>\The [src] doesn't accept this vial.</span>")
+			return
+		testing("correct sized vial")
+		. = 1 //no afterattack
+		if(!user.transferItemToLoc(V,src))
+			return
+		testing("able to transferitemtoloc")
+		if(!do_after(user,30) || V || !(V in user))
 			return FALSE
-		volume = vial.volume
-		vial.reagents.trans_to(src, vial.volume)
-		user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded [vial] into \the [src].</span>")
+		testing("passed do_after check")
+		volume = V.volume
+		testing("trans_to triggered")
+		V.reagents.trans_to(src, V.volume)
+		user.visible_message("<span class='notice'>[user] has loads vial into \the [src].</span>","<span class='notice'>You have loaded [vial] into \the [src].</span>")
 		update_icon()
 		playsound(loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
+	else
+		to_chat(user, "<span class='notice'>This doesn't fit in \the [src].</span>")
+		return
 
-/obj/item/reagent_containers/hypospray/mkii/attackby(obj/item/reagent_containers/glass/bottle/vial/W, mob/living/user)
-	load_hypo(W, src)
+/obj/item/reagent_containers/hypospray/mkii/attackby(obj/item/I, mob/living/user)
+	load_hypo(I, src)
 
 /obj/item/reagent_containers/hypospray/mkii/attack(obj/item/I, mob/user, params)
 	return
@@ -176,9 +182,9 @@
 			to_chat(user, "This Hypo needs to be loaded first!")
 			return
 		else
-			for(var/obj/item/reagent_containers/glass/bottle/vial/W in contents)
-				testing("Has hypo")
-				unload_hypo(W,src)
+			for(var/obj/item/I in contents)
+				testing("Has contents, unload_hypo please")
+				unload_hypo(I,user)
 
 /obj/item/reagent_containers/hypospray/mkii/verb/modes(mob/living/user)
 	set name = "Change Application Method"
