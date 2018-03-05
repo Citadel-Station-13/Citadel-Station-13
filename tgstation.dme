@@ -2265,12 +2265,9 @@
 #include "code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
-<<<<<<< HEAD
 #include "code\modules\projectiles\guns\energy\megabuster.dm"
-#include "code\modules\projectiles\guns\energy\plasma.dm"
-=======
 #include "code\modules\projectiles\guns\energy\mounted.dm"
->>>>>>> f5ae065... Splits up projectile files (#36018)
+#include "code\modules\projectiles\guns\energy\plasma.dm"
 #include "code\modules\projectiles\guns\energy\pulse.dm"
 #include "code\modules\projectiles\guns\energy\special.dm"
 #include "code\modules\projectiles\guns\energy\stun.dm"
@@ -2285,12 +2282,8 @@
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"
-<<<<<<< HEAD
 #include "code\modules\projectiles\projectile\megabuster.dm"
 #include "code\modules\projectiles\projectile\plasma.dm"
-#include "code\modules\projectiles\projectile\reusable.dm"
-#include "code\modules\projectiles\projectile\special.dm"
-=======
 #include "code\modules\projectiles\projectile\bullets\_incendiary.dm"
 #include "code\modules\projectiles\projectile\bullets\dart_syringe.dm"
 #include "code\modules\projectiles\projectile\bullets\dnainjector.dm"
@@ -2325,7 +2318,6 @@
 #include "code\modules\projectiles\projectile\special\rocket.dm"
 #include "code\modules\projectiles\projectile\special\temperature.dm"
 #include "code\modules\projectiles\projectile\special\wormhole.dm"
->>>>>>> f5ae065... Splits up projectile files (#36018)
 #include "code\modules\reagents\chem_splash.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
