@@ -1,5 +1,0 @@
-author: "CameronWoof"
-delete-after: True
-changes: 
-  - tweak: "The MediHound's now has a unique preference, which defaults to on."
-  - rscadd: "MediHound now has a cyborg hypospray, to help tend to patients with their sleeper preference off."
