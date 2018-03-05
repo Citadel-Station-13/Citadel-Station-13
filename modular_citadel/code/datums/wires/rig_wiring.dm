@@ -1,15 +1,71 @@
 /datum/wires/rig
-	holder_type = /obj/item/weapon/rig
+	holder_type = /obj/item/storage/backpack/rig
 	proper_name = "Hardsuit Maintenance"
 
 /datum/wires/rig/New(atom/holder)
 	wires = list(
-		RIG_SECURITY, RIG_AI_OVERRIDE,
-		RIG_SYSTEM_CONTROL, RIG_INTERFACE_LOCK,
-		RIG_INTERFACE_SHOCK
+		WIRE_HACK,
+		WIRE_SHOCK,
+		WIRE_ZAP,
+		WIRE_RIG_INTERFACE_LOCK,
+		WIRE_RIG_AI_OVERRIDE,
 	)
 	add_duds(6)
 	..()
+
+/datum/wires/rig/interactable(mob/user)
+	var/obj/item/storage/backpack/rig/A = holder
+	if(A.panel_open)
+		return TRUE
+
+/datum/wires/rig/get_status()
+	var/obj/item/storage/backpack/rig/A = holder
+	var/list/status = list()
+	status += "The red light is [A.disabled ? "on" : "off"]."
+	status += "The blue light is [A.hacked ? "on" : "off"]."
+	status += "The green light is [A.aicontrol ? "on" : "off"]."
+	status += "The control interface is [A.locked ? "unlocked" : "locked"]."
+	return status
+
+//Pulsing Wires
+/datum/wires/rig/on_pulse(wire)
+	var/obj/item/storage/backpack/rig/A = holder
+	switch(wire)
+		if(WIRE_HACK)
+			A.adjust_hacked(!A.hacked)
+			addtimer(CALLBACK(A, /obj/item/storage/backpack/rig.proc/reset, wire), 60)
+		if(WIRE_SHOCK)
+			A.shocked = !A.shocked
+			addtimer(CALLBACK(A, /obj/item/storage/backpack/rig.proc/reset, wire), 60)
+		if(WIRE_DISABLE)
+			A.disabled = !A.disabled
+			addtimer(CALLBACK(A, /obj/item/storage/backpack/rig.proc/reset, wire), 60)
+		if(WIRE_RIG_INTERFACE_LOCK)
+			A.locked = !A.locked
+			addtimer(CALLBACK(A, /obj/item/storage/backpack/rig.proc/reset, wire), 60)
+
+//Cutting Wires
+var/obj/item/storage/backpack/rig/A = holder
+	switch(wire)
+		if(WIRE_HACK)
+			A.adjust_hacked(!mend)
+		if(WIRE_HACK)
+			A.shocked = !mend
+		if(WIRE_DISABLE)
+			A.disabled = !mend
+		if(WIRE_RIG_INTERFACE_LOCK)
+			A.locked = !mend
+		if(WIRE_ZAP)
+			A.shock(usr, 50)
+
+/*/datum/wires/rig/get_status()
+	var/obj/item/storage/backpack/rig/A = holder
+	var/list/status = list()
+	status += "The red light is [A.disabled ? "on" : "off"]."
+	status += "The blue light is [A.hacked ? "on" : "off"]."
+	return status
+
+
 /*#define RIG_SECURITY 1
 #define RIG_AI_OVERRIDE 2
 #define RIG_SYSTEM_CONTROL 4
@@ -20,7 +76,7 @@
  * Rig AI override can be pulsed to toggle whether or not the AI can take control of the suit.
  * System control can be pulsed to toggle some malfunctions.
  * Interface lock can be pulsed to toggle whether or not the interface can be accessed.
- */
+ *
 
 /datum/wires/rig/UpdateCut(var/index, var/mended)
 
@@ -61,4 +117,4 @@
 	var/obj/item/weapon/rig/rig = holder
 	if(rig.open)
 		return 1
-	return 0
+	return 0*/

@@ -57,40 +57,34 @@
 	var/list/installed_modules = list()                       // Power consumption/use bookkeeping.
 
 	// Cooling system vars.
-	var/cooling_on = 0					//is it turned on?
-	var/max_cooling = 15				// in degrees per second - probably don't need to mess with heat capacity here
-	var/charge_consumption = 2			// charge per second at max_cooling		//more effective on a rig, because it's all built in already
+	var/cooling_on = FALSE																		//is it turned on?
+	var/max_cooling = 15																			// in degrees per second - probably don't need to mess with heat capacity here
+	var/charge_consumption = 2																// charge per second at max_cooling		//more effective on a rig, because it's all built in already
 	var/thermostat = T20C
 
 	// Rig status vars.
-	var/open = 0                                              // Access panel status.
-	var/locked = 1                                            // Lock status.
-	var/subverted = 0
-	var/interface_locked = 0
-	var/control_overridden = 0
-	var/ai_override_enabled = 0
-	var/security_check_enabled = 1
-	var/malfunctioning = 0
-	var/malfunction_delay = 0
-	var/electrified = 0
-	var/locked_down = 0
+	var/open = FALSE		// Access panel status.
+	var/locked = TRUE	// Lock status.
+	var/hacked = FALSE
+	var/interface_locked = FALSE
+	var/control_overridden = FALSE
+	var/ai_override_enabled = FALSE
+	var/security_check_enabled = struggle
+	var/malfunctioning = FALSE
+	var/malfunction_delay = FALSE
+	var/electrified = FALSE
+	var/locked_down = FALSE
 
 	var/seal_delay = SEAL_DELAY
 	var/sealing                                               // Keeps track of seal status independantly of canremove.
-	var/offline = 1                                           // Should we be applying suit maluses?
+	var/offline = TRUE																				// Should we be applying suit maluses?
 	var/offline_slowdown = 3                                  // If the suit is deployed and unpowered, it sets slowdown to this.
 	var/vision_restriction
 	var/offline_vision_restriction = 1                        // 0 - none, 1 - welder vision, 2 - blind. Maybe move this to helmets.
-	var/airtight = 1 //If set, will adjust AIRTIGHT and STOPPRESSUREDAMAGE flags on components. Otherwise it should leave them untouched.
-
+	var/airtight = FALSE 																			//If set, will adjust AIRTIGHT and STOPPRESSUREDAMAGE flags on components. Otherwise it should leave them untouched.
 	var/emp_protection = 0
-	//item_flags = PHORONGUARD //VOREStation add
 
-	// Wiring! How exciting.
-	var/datum/wires/rig/wires
-	var/datum/effect/effect/system/spark_spread/spark_system
-
-/obj/item/weapon/rig/examine()
+/*/obj/item/weapon/rig/examine()
 	usr << "This is \icon[src][src.name]."
 	usr << "[src.desc]"
 	if(wearer)
@@ -200,7 +194,7 @@
 		if(!piece) continue
 		piece.icon_state = "[initial(icon_state)]"
 		if(airtight)
-			piece.item_flags &= ~(STOPPRESSUREDAMAGE_0|THICKMATERIAL_0|AIRTIGHT)
+			piece.item_flags &= ~(STOPPRESSUREDAMAGE_1|THICKMATERIAL_1|AIRTIGHT)
 	update_icon(1)
 
 /obj/item/weapon/rig/proc/toggle_seals(var/mob/living/carbon/human/M,var/instant)
@@ -328,7 +322,7 @@
 /obj/item/weapon/rig/proc/update_component_sealed()
 	for(var/obj/item/piece in list(helmet,boots,gloves,chest))
 		if(canremove)
-			piece.item_flags &= ~(STOPPRESSUREDAMAGE_1|THICKMATERIAL_1|AIRTIGHT)
+			piece.item_flags &= ~()
 		else
 			piece.item_flags |=  (STOPPRESSUREDAMAGE_1|THICKMATERIAL_1|AIRTIGHT)
 	update_icon(1)
@@ -537,7 +531,7 @@
 	data["maxcharge"] =    cell ? cell.maxcharge : 0
 	data["chargestatus"] = cell ? Floor((cell.charge/cell.maxcharge)*50) : 0
 
-	data["emagged"] =       subverted
+	data["emagged"] =       hacked
 	data["coverlock"] =     locked
 	data["interfacelock"] = interface_locked
 	data["aicontrol"] =     control_overridden
@@ -1033,7 +1027,7 @@
 	plane = PLANE_FULLSCREEN
 	mouse_opacity = 0
 	alpha = 20 //Animated up when loading
-
+*/
 #undef ONLY_DEPLOY
 #undef ONLY_RETRACT
 #undef SEAL_DELAY
