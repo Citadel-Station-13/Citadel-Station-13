@@ -1,7 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added magnetic weapons to techwebs nodes"
-  - tweak: "Magrifle magazine now has 24-round capacity, magpistol has 14-round capacity"
-  - balance: "rebalanced magrifle projectiles to deal more damage overall on a full burst, but less individually"
-  - bugfix: "fixed broken sprites for magrifles"

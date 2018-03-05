@@ -1,4 +1,0 @@
-author: "ZeroNetAlpha"
-delete-after: True
-changes: 
-  - tweak: "Blobs now start at 60 minutes and only if 50 players are online."
