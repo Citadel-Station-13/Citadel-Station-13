@@ -543,10 +543,7 @@
 /obj/item/circuitboard/machine/tesla_coil/Initialize()
 	. = ..()
 	if(build_path)
-<<<<<<< HEAD
 		name = "Tesla Coil (Machine Board)"
-=======
->>>>>>> 2e03d27... Tesla researchers are fixed now I swears (#36136)
 		build_path = PATH_POWERCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
