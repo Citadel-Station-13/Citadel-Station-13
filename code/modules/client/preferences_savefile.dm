@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
-//	Only raise this value when changing the meaning/format/name/layout of an existing value 
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
 
@@ -34,7 +34,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
-//should these procs get fairly long 
+//should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
 //from these procs.
@@ -45,16 +45,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
-<<<<<<< HEAD
-	if(current_version < 16)
-		var/berandom
-		S["userandomjob"] >> berandom
-		if (berandom)
-			joblessrole = BERANDOMJOB
-		else
-			joblessrole = BEASSISTANT
-	if(current_version < 17)
-		features["legs"] = "Normal Legs"
 	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
@@ -87,8 +77,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
-=======
->>>>>>> e83c662... Cleans up save file update code. (#36031)
+
 	if(current_version < 19)
 		pda_style = "mono"
 	if(current_version < 20)
