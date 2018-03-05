@@ -1,0 +1,10 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "fixed borg defibs, fix is upstream as well"
+  - bugfix: "fixed missing borg animations, should've been readded ages ago"
+  - rscadd: "Hound Barometers are now functional."
+  - rscadd: "Fetch modules readded!"
+  - rscadd: "Borgi's added!"
+  - tweak: "K9 cuffs take 6 seconds, for balance reasons."
+  - tweak: "self repair nerfed, healing others takes a short time but amounts are unaffected. Promoting teamwork over engiborg invincibility"

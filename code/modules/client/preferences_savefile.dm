@@ -369,6 +369,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
+	//Traits
+	S["all_traits"]			>> all_traits
+	S["positive_traits"]	>> positive_traits
+	S["negative_traits"]	>> negative_traits
+	S["neutral_traits"]		>> neutral_traits
+
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
@@ -477,6 +483,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
+	all_traits = SANITIZE_LIST(all_traits)
+	positive_traits = SANITIZE_LIST(positive_traits)
+	negative_traits = SANITIZE_LIST(negative_traits)
+	neutral_traits = SANITIZE_LIST(neutral_traits)
+
 	cit_character_pref_load(S)
 
 	return 1
@@ -541,6 +552,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
+
+	//Traits
+	WRITE_FILE(S["all_traits"]		, all_traits)
+	WRITE_FILE(S["positive_traits"]		, positive_traits)
+	WRITE_FILE(S["negative_traits"]		, negative_traits)
+	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
 
 	cit_character_pref_save(S)
 

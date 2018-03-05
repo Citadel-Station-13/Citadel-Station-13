@@ -22,8 +22,6 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	citaTopic(href, href_list) // Citadel
-	
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -272,6 +270,50 @@
 			to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
+
+	else if(href_list["mentor"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["mentor"])
+		if(!ismob(M))
+			to_chat(usr, "<span class='danger'>this can be only used on instances of type /mob!</span>")
+			return
+
+		if(!M.client)
+			to_chat(usr, "<span class='danger'>No client.</span>")
+			return
+
+		log_admin("[key_name(usr)] has granted [key_name(M)] mentor access")
+		message_admins("<span class='adminnotice'> [key_name_admin(usr)] has granted [key_name_admin(M)] mentor access.</span>")
+
+		var/datum/DBQuery/query_add_mentors = SSdbcore.NewQuery("INSERT INTO [format_table_name("mentor")] (ckey) VALUES ('[M.client.ckey]')")
+		if(!query_add_mentors.Execute())
+			var/err = query_add_mentors.ErrorMsg()
+			log_game("SQL ERROR during adding new mentor. Error : \[[err]\]\n")
+		load_mentors()
+		M.verbs += /client/proc/cmd_mentor_say
+		M.verbs += /client/proc/show_mentor_memo
+		to_chat(M, "<span class='adminnotice'> You've been granted mentor access! Help people who send mentor-pms.</span>")
+
+	else if(href_list["removementor"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/living/carbon/human/M = locate(href_list["removementor"])
+		if(!ismob(M))
+			usr << "this can be only used on instances of type /mob"
+			return
+
+		log_admin("[key_name(usr)] has removed mentor access from [key_name(M)]")
+		message_admins("<span class='adminnotice'> [key_name_admin(usr)] has removed mentor access from [key_name_admin(M)].</span>")
+
+		var/datum/DBQuery/query_remove_mentors = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[M.client.ckey]'")
+		if(!query_remove_mentors.Execute())
+			var/err = query_remove_mentors.ErrorMsg()
+			log_game("SQL ERROR during removing mentor. Error : \[[err]\]\n")
+		load_mentors()
+		to_chat(M, "<span class='adminnotice'>Your mentor access has been revoked.</span>")
+		M.verbs -= /client/proc/cmd_mentor_say
+		M.verbs -= /client/proc/show_mentor_memo
 
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
@@ -1707,6 +1749,25 @@
 
 		src.manage_free_slots()
 
+
+	else if(href_list["customjobslot"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/Add = href_list["customjobslot"]
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title == Add)
+				var/newtime = null
+				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
+				if(!newtime)
+					to_chat(src.owner, "Setting to amount of positions filled for the job")
+					job.total_positions = job.current_positions
+					break
+				job.total_positions = newtime
+
+		src.manage_free_slots()
+
 	else if(href_list["removejobslot"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1904,7 +1965,7 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
-	
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1913,7 +1974,7 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs")
 			return
 		M.mind_initialize()
-		
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -2412,6 +2473,15 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+
+	else if(href_list["modantagrep"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
+		var/client/C = M.client
+		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
+		show_player_panel(M)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

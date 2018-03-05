@@ -34,7 +34,7 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "atp"
 	item_state = "pistol"
-	recoil = 6
+	recoil = 4
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 50
 	burst_size = 1
@@ -42,7 +42,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
 	fire_sound = 'sound/weapons/blastcannon.ogg'
-	spread = 30		//damn thing has no rifling.
+	spread = 20		//damn thing has no rifling.
 
 /obj/item/gun/ballistic/automatic/pistol/antitank/update_icon()
 	..()
@@ -262,6 +262,7 @@
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 2
+	recoil = 0.2
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -362,7 +363,7 @@
 	icon_state = "magjectile-large-nl"
 	damage = 0
 	knockdown = 0
-	stamina = 20
+	stamina = 25
 	armour_penetration = -10
 	light_range = 3
 	speed = 0.65
@@ -417,8 +418,8 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	spread = 20
-	recoil = 1
+	spread = 5
+	recoil = 0.15
 	casing_ejector = 0
 
 ///research///
@@ -655,7 +656,7 @@
 	suppressed = TRUE
 	burst_size = 1
 	fire_delay = 0
-	spread = 60
+	spread = 20
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
@@ -775,7 +776,8 @@ obj/item/projectile/bullet/c10mm/soporific
 	burst_size = 5
 	fire_delay = 1
 	casing_ejector = 0
-	spread = 20
+	spread = 10
+	recoil = 0.05
 
 /obj/item/gun/ballistic/automatic/flechette/update_icon()
 	..()
@@ -808,7 +810,8 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofillament flechettes."
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/flechette/shredder
-	spread = 30
+	spread = 15
+	recoil = 0.1
 
 /obj/item/gun/ballistic/automatic/flechette/shredder/update_icon()
 	..()
