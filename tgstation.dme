@@ -2590,6 +2590,7 @@
 #include "modular_citadel\code\game\machinery\computer\card.dm"
 #include "modular_citadel\code\game\objects\ids.dm"
 #include "modular_citadel\code\game\objects\tools.dm"
+#include "modular_citadel\code\game\objects\effects\spawner\spawners.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\projectiles\impact.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\projectiles\muzzle.dm"
 #include "modular_citadel\code\game\objects\effects\temporary_visuals\projectiles\tracer.dm"
