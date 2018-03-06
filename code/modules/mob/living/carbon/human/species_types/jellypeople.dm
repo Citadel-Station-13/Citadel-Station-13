@@ -4,7 +4,8 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,HAIR,FACEHAIR,TOXINLOVER) //CIT CHANGE - adds HAIR and FACEHAIR to species traits
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,,HAIR,FACEHAIR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
@@ -118,6 +119,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150

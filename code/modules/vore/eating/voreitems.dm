@@ -16,7 +16,7 @@
 /obj/item/projectile/sickshot
 	name = "sickshot pulse"
 	icon_state = "e_netting"
-	damage = 1
+	damage = 0
 	damage_type = STAMINA
 	range = 2
 
@@ -25,8 +25,7 @@
 		var/mob/living/carbon/H = target
 		if(prob(5))
 			for(var/X in H.vore_organs)
-				var/datum/belly/B = H.vore_organs[X]
-				B.release_all_contents()
+				H.release_vore_contents()
 				H.visible_message("<span class='danger'>[H] contracts strangely, spewing out contents on the floor!</span>", \
  						"<span class='userdanger'>You spew out everything inside you on the floor!</span>")
 		return
