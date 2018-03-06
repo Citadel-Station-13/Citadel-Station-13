@@ -68,7 +68,6 @@
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial) && vial != null))
 		to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 		return FALSE
-	testing("we don't already have a vial in the hypo")
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		if(!is_type_in_list(V, allowed_containers))
