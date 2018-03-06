@@ -32,6 +32,7 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
+	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
 	return ..()
 
 /mob/living/carbon/human/OpenCraftingMenu()

@@ -14,7 +14,7 @@
 
 	var/datum/vore_look/picker_holder = new()
 	picker_holder.loop = picker_holder
-	picker_holder.selected = vore_organs[vore_selected]
+	picker_holder.selected = vore_selected
 
 	var/dat = picker_holder.gen_vui(src)
 
@@ -22,11 +22,23 @@
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
 
+/mob/living/proc/updateVRPanel() //Panel popup update call from belly events.
+	if(src.openpanel == 1)
+		var/datum/vore_look/picker_holder = new()
+		picker_holder.loop = picker_holder
+		picker_holder.selected = vore_selected
+
+		var/dat = picker_holder.gen_vui(src)
+
+		picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
+		picker_holder.popup.set_content(dat)
+		picker_holder.popup.open()
+
 //
 // Callback Handler for the Inside form
 //
 /datum/vore_look
-	var/datum/belly/selected
+	var/obj/belly/selected
 	var/show_interacts = TRUE
 	var/datum/browser/popup
 	var/loop = null;  // Magic self-reference to stop the handler from being GC'd before user takes action.
@@ -44,29 +56,38 @@
 /datum/vore_look/proc/gen_vui(var/mob/living/user)
 	var/dat
 
-	if (is_vore_predator(user.loc))
-		var/mob/living/eater = user.loc
-		var/datum/belly/inside_belly
+	var/atom/userloc = user.loc
+	if (isbelly(userloc))
+		var/obj/belly/inside_belly = userloc
+		var/mob/living/eater = inside_belly.owner
 
-		//This big block here figures out where the prey is
-		inside_belly = check_belly(user)
-
+	//Don't display this part if we couldn't find the belly since could be held in hand.
 		if(inside_belly)
-			dat += "<font color = 'green'>You are currently inside</font> <font color = 'yellow'>[eater]'s</font> <font color = 'red'>[inside_belly]</font>!<br><br>"
+			dat += "<font color = 'green'>You are currently [user.absorbed ? "absorbed into " : "inside "]</font> <font color = 'yellow'>[eater]'s</font> <font color = 'red'>[inside_belly]</font>!<br><br>"
 
-			if(inside_belly.inside_flavor)
-				dat += "[inside_belly.inside_flavor]<br><br>"
+			if(inside_belly.desc)
+				dat += "[inside_belly.desc]<br><br>"
 
-			if (inside_belly.internal_contents.len > 1)
+			if (inside_belly.contents.len > 1)
 				dat += "You can see the following around you:<br>"
-				for (var/atom/movable/O in inside_belly.internal_contents)
+				for (var/atom/movable/O in inside_belly)
 					if(istype(O,/mob/living))
 						var/mob/living/M = O
 						//That's just you
 						if(M == user)
 							continue
+
+						//That's an absorbed person you're checking
+						if(M.absorbed)
+							if(user.absorbed)
+								dat += "<a href='?src=\ref[src];outsidepick=\ref[O];outsidebelly=\ref[inside_belly]'><span style='color:purple;'>[O]</span></a>"
+								continue
+							else
+								continue
+
 					//Anything else
-					dat += "<a href='?src=\ref[src];outsidepick=\ref[O];outsidebelly=\ref[inside_belly]'>[O]</a>"
+					dat += "<a href='?src=\ref[src];outsidepick=\ref[O];outsidebelly=\ref[inside_belly]'>[O]&#8203;</a>"
+
 					//Zero-width space, for wrapping
 					dat += "&#8203;"
 	else
@@ -75,8 +96,8 @@
 	dat += "<HR>"
 
 	dat += "<ol style='list-style: none; padding: 0; overflow: auto;'>"
-	for(var/K in user.vore_organs) //Fuggin can't iterate over values
-		var/datum/belly/B = user.vore_organs[K]
+	for(var/belly in user.vore_organs)
+		var/obj/belly/B = belly
 		if(B == selected)
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else
@@ -90,8 +111,10 @@
 				spanstyle = "color:red;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
+			if(DM_NOISY)
+				spanstyle = "color:purple;"
 
-		dat += "<span style='[spanstyle]'> ([B.internal_contents.len])</span></a></li>"
+		dat += "<span style='[spanstyle]'> ([B.contents.len])</span></a></li>"
 
 	if(user.vore_organs.len < BELLIES_MAX)
 		dat += "<li style='float: left'><a href='?src=\ref[src];newbelly=1'>New+</a></li>"
@@ -102,15 +125,27 @@
 	if(!selected)
 		dat += "No belly selected. Click one to select it."
 	else
-		if(selected.internal_contents.len > 0)
+		if(selected.contents.len)
 			dat += "<b>Contents:</b> "
-			for(var/O in selected.internal_contents)
+			for(var/O in selected)
+
+				//Mobs can be absorbed, so treat them separately from everything else
+				if(istype(O,/mob/living))
+					var/mob/living/M = O
+
+					//Absorbed gets special color OOoOOOOoooo
+					if(M.absorbed)
+						dat += "<a href='?src=\ref[src];insidepick=\ref[O]'><span style='color:purple;'>[O]</span></a>"
+						continue
+
+				//Anything else
 				dat += "<a href='?src=\ref[src];insidepick=\ref[O]'>[O]</a>"
 
 				//Zero-width space, for wrapping
 				dat += "&#8203;"
+
 			//If there's more than one thing, add an [All] button
-			if(selected.internal_contents.len > 1)
+			if(selected.contents.len > 1)
 				dat += "<a href='?src=\ref[src];insidepick=1;pickall=1'>\[All\]</a>"
 
 			dat += "<HR>"
@@ -129,14 +164,15 @@
 
 		//Inside flavortext
 		dat += "<br><a href='?src=\ref[src];b_desc=\ref[selected]'>Flavor Text:</a>"
-		dat += " '[selected.inside_flavor]'"
+		dat += " '[selected.desc]'"
 
 		//Belly sound
 		dat += "<br><a href='?src=\ref[src];b_sound=\ref[selected]'>Set Vore Sound</a>"
 		dat += "<a href='?src=\ref[src];b_soundtest=\ref[selected]'>Test</a>"
 
-	//	//Belly silence
-	//	dat += "<br><a href='?src=\ref[src];silenced=\ref[selected]'>Belly Silence ([selected.silenced ? "Silenced" : "Noisy"])</a>"
+		//Release sound
+		dat += "<br><a href='?src=\ref[src];b_release=\ref[selected]'>Set Release Sound</a>"
+		dat += "<a href='?src=\ref[src];b_releasesoundtest=\ref[selected]'>Test</a>"
 
 		//Belly messages
 		dat += "<br><a href='?src=\ref[src];b_msgs=\ref[selected]'>Belly Messages</a>"
@@ -144,6 +180,10 @@
 		//Can belly taste?
 		dat += "<br><a href='?src=\ref[src];b_tastes=\ref[selected]'>Can Taste:</a>"
 		dat += " [selected.can_taste ? "Yes" : "No"]"
+
+		//Minimum size prey must be to show up.
+		dat += "<br><a href='?src=\ref[src];b_bulge_size=\ref[selected]'>Required examine size:</a>"
+		dat += " [selected.bulge_size*100]%"
 
 		//Belly escapability
 		dat += "<br><a href='?src=\ref[src];b_escapable=\ref[selected]'>Belly Interactions ([selected.escapable ? "On" : "Off"])</a>"
@@ -173,15 +213,21 @@
 			dat += " [selected.digestchance]%"
 			dat += "<HR>"
 
+			// Belly Silence
+			dat += "<br><a href='?src=\ref[src];b_silent=\ref[selected]'>Belly Silence (for not belly bellies):</a>"
+			dat += " [selected.silent ? "Yes" : "No"]"
+
 		//Delete button
 		dat += "<br><a style='background:#990000;' href='?src=\ref[src];b_del=\ref[selected]'>Delete Belly</a>"
+
+	dat += "<a href='?src=\ref[src];setflavor=1'>Set Flavor</a>"
+	dat += "<a href='?src=\ref[src];togglenoisy=1'>Toggle Hunger Noises</a>"
 
 	dat += "<HR>"
 
 	//Under the last HR, save and stuff.
 	dat += "<a href='?src=\ref[src];saveprefs=1'>Save Prefs</a>"
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
-	dat += "<a href='?src=\ref[src];setflavor=1'>Set Flavor</a>"
 
 	dat += "<HR>"
 	switch(user.digestable)
@@ -221,8 +267,8 @@
 
 	if(href_list["outsidepick"])
 		var/atom/movable/tgt = locate(href_list["outsidepick"])
-		var/datum/belly/OB = locate(href_list["outsidebelly"])
-		if(!(tgt in OB.internal_contents)) //Aren't here anymore, need to update menu.
+		var/obj/belly/OB = locate(href_list["outsidebelly"])
+		if(!(tgt in OB)) //Aren't here anymore, need to update menu.
 			return TRUE
 		var/intent = "Examine"
 
@@ -234,42 +280,49 @@
 					M.examine(user)
 
 				if("Help Out") //Help the inside-mob out
-					to_chat(user, "<font color='green'>You begin to push [M] to freedom!</font>")
-					to_chat(M, "[usr] begins to push you to freedom!")
-					M.loc << "<span class='warning'>Someone is trying to escape from inside you!</span>"
+					if(user.stat || user.absorbed || M.absorbed)
+						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+						return 1
+
+					to_chat(user,"<font color='green'>You begin to push [M] to freedom!</font>")
+					to_chat(M,"[usr] begins to push you to freedom!")
+					to_chat(M.loc,"<span class='warning'>Someone is trying to escape from inside you!</span>")
 					sleep(50)
 					if(prob(33))
 						OB.release_specific_contents(M)
-						to_chat(usr, "<font color='green'>You manage to help [M] to safety!</font>")
-						to_chat(M, "<font color='green'>[user] pushes you free!</font>")
-						M.loc << "<span class='alert'>[M] forces free of the confines of your body!</span>"
+						to_chat(usr,"<font color='green'>You manage to help [M] to safety!</font>")
+						to_chat(M,"<font color='green'>[user] pushes you free!</font>")
+						to_chat(OB.owner,"<span class='alert'>[M] forces free of the confines of your body!</span>")
 					else
-						to_chat(user, "<span class='alert'>[M] slips back down inside despite your efforts.</span>")
-						to_chat(M, "<span class='alert'> Even with [user]'s help, you slip back inside again.</span>")
-						M.loc << "<font color='green'>Your body efficiently shoves [M] back where they belong.</font>"
+						to_chat(user,"<span class='alert'>[M] slips back down inside despite your efforts.</span>")
+						to_chat(M,"<span class='alert'> Even with [user]'s help, you slip back inside again.</span>")
+						to_chat(OB.owner,"<font color='green'>Your body efficiently shoves [M] back where they belong.</font>")
+
 
 				if("Devour") //Eat the inside mob
+					if(user.absorbed || user.stat)
+						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+						return 1
+
 					if(!user.vore_selected)
-						to_chat(user, "<span class='warning'>Pick a belly on yourself first!</span>")
-						return
+						to_chat(user,"<span class='warning'>Pick a belly on yourself first!</span>")
+						return 1
 
-					var/datum/belly/TB = user.vore_organs[user.vore_selected]
-					to_chat(user, "<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
-					to_chat(M, "<span class='warning'>[user] begins to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
-					M.loc << "<span class='warning'>Someone inside you is eating someone else!</span>"
+					var/obj/belly/TB = user.vore_selected
+					to_chat(user,"<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
+					to_chat(M,"<span class='warning'>[user] begins to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
+					to_chat(OB.owner,"<span class='warning'>Someone inside you is eating someone else!</span>")
 
-					sleep(TB.nonhuman_prey_swallow_time)
-					if((user in OB.internal_contents) && (M in OB.internal_contents))
-						to_chat(user, "<span class='warning'>You manage to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
-						to_chat(M, "<span class='warning'>[user] manages to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
-						M.loc << "<span class='warning'>Someone inside you has eaten someone else!</span>"
-						M.loc = user
+					sleep(TB.nonhuman_prey_swallow_time) //Can't do after, in a stomach, weird things abound.
+					if((user in OB) && (M in OB)) //Make sure they're still here.
+						to_chat(user,"<span class='warning'>You manage to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
+						to_chat(M,"<span class='warning'>[user] manages to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
+						to_chat(OB.owner,"<span class='warning'>Someone inside you has eaten someone else!</span>")
 						TB.nom_mob(M)
-						OB.internal_contents -= M
 
 		else if(istype(tgt,/obj/item))
 			var/obj/item/T = tgt
-			if(!(tgt in OB.internal_contents))
+			if(!(tgt in OB.contents))
 				//Doesn't exist anymore, update.
 				return TRUE
 			intent = alert("What do you want to do to that?","Query","Examine","Use Hand")
@@ -301,27 +354,29 @@
 						return
 
 					selected.release_all_contents()
-					playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE)
+					for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+						if(M.client && M.client.prefs.toggles & EATING_NOISES)
+							playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
 					if(user.stat)
 						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return
+						return FALSE
 
-					var/choice = input("Move all where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
+					var/obj/belly/choice = input("Move all where?","Select Belly") as null|anything in user.vore_organs
+					if(!choice)
+						return FALSE
 
-					if(choice == "Cancel - Don't Move")
-						return
-					else
-						var/datum/belly/B = user.vore_organs[choice]
-						for(var/atom/movable/tgt in selected.internal_contents)
-							to_chat(tgt, "<span class='warning'>You're squished from [user]'s [selected] to their [B]!</span>")
-							selected.transfer_contents(tgt, B, 1)
-						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
+					for(var/atom/movable/tgt in selected)
+						selected.transfer_contents(tgt, choice, 1)
+						for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+							if(M.client && M.client.prefs.toggles & EATING_NOISES)
+								playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
-		if(!(tgt in selected.internal_contents)) //Old menu, needs updating because they aren't really there.
+		if(!(tgt in selected)) //Old menu, needs updating because they aren't really there.
 			return TRUE//Forces update
 		intent = "Examine"
 		intent = alert("Examine, Eject, Move? Examine if you want to leave this box.","Query","Examine","Eject","Move")
@@ -335,48 +390,54 @@
 					return FALSE
 
 				selected.release_specific_contents(tgt)
-				playsound(get_turf(user),'sound/effects/splat.ogg',50,0,-5,0,ignore_walls = FALSE)
+				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+					if(M.client && M.client.prefs.toggles & EATING_NOISES)
+						playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
 				if(user.stat)
-					to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-					return FALSE
+					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+					return 0
 
-				var/choice = input("Move [tgt] where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
+				var/obj/belly/choice = input("Move [tgt] where?","Select Belly") as null|anything in user.vore_organs
+				if(!choice || !(tgt in selected))
+					return 0
 
-				if(choice == "Cancel - Don't Move")
-					return
-				else
-					var/datum/belly/B = user.vore_organs[choice]
-					if (!(tgt in selected.internal_contents))
-						return FALSE
-					to_chat(tgt, "<span class='warning'>You're moved from [user]'s [lowertext(selected.name)] to their [lowertext(B.name)]!</span>")
-					playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE)
-					selected.transfer_contents(tgt, B)
+				to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(choice.name)]!</span>")
+				selected.transfer_contents(tgt, choice)
+				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
+					if(M.client && M.client.prefs.toggles & EATING_NOISES)
+						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(href_list["newbelly"])
 		if(user.vore_organs.len >= BELLIES_MAX)
-			return TRUE
+			return 0
 
 		var/new_name = html_encode(input(usr,"New belly's name:","New Belly") as text|null)
 
+		var/failure_msg
 		if(length(new_name) > BELLIES_NAME_MAX || length(new_name) < BELLIES_NAME_MIN)
-			to_chat(usr, "<span class='warning'>Entered belly name is too long.</span>")
-			return FALSE
-		if(new_name in user.vore_organs)
-			to_chat(usr, "<span class='warning'>No duplicate belly names, please.</span>")
-			return FALSE
+			failure_msg = "Entered belly name length invalid (must be longer than [BELLIES_NAME_MIN], no more than than [BELLIES_NAME_MAX])."
+		// else if(whatever) //Next test here.
+		else
+			for(var/belly in user.vore_organs)
+				var/obj/belly/B = belly
+				if(lowertext(new_name) == lowertext(B.name))
+					failure_msg = "No duplicate belly names, please."
+					break
 
-		var/datum/belly/NB = new(user)
+		if(failure_msg) //Something went wrong.
+			alert(user,failure_msg,"Error!")
+			return 0
+
+		var/obj/belly/NB = new(user)
 		NB.name = new_name
-		NB.owner = user //might be the thing we all needed.
-		user.vore_organs[new_name] = NB
 		selected = NB
 
 	if(href_list["bellypick"])
 		selected = locate(href_list["bellypick"])
-		user.vore_selected = selected.name
+		user.vore_selected = selected
 
 	////
 	//Please keep these the same order they are on the panel UI for ease of coding
@@ -384,41 +445,40 @@
 	if(href_list["b_name"])
 		var/new_name = html_encode(input(usr,"Belly's new name:","New Name") as text|null)
 
+		var/failure_msg
 		if(length(new_name) > BELLIES_NAME_MAX || length(new_name) < BELLIES_NAME_MIN)
-			to_chat(usr, "<span class='warning'>Entered belly name length invalid (must be longer than 2, shorter than 12).</span>")
-			return FALSE
-		if(new_name in user.vore_organs)
-			to_chat(usr, "<span class='warning'>No duplicate belly names, please.</span>")
-			return FALSE
+			failure_msg = "Entered belly name length invalid (must be longer than [BELLIES_NAME_MIN], no more than than [BELLIES_NAME_MAX])."
+		// else if(whatever) //Next test here.
+		else
+			for(var/belly in user.vore_organs)
+				var/obj/belly/B = belly
+				if(lowertext(new_name) == lowertext(B.name))
+					failure_msg = "No duplicate belly names, please."
+					break
 
-		user.vore_organs[new_name] = selected
-		user.vore_organs -= selected.name
+		if(failure_msg) //Something went wrong.
+			alert(user,failure_msg,"Error!")
+			return 0
+
 		selected.name = new_name
 
 	if(href_list["b_mode"])
 		var/list/menu_list = selected.digest_modes
 
-		if(selected.digest_modes.len == 1) // Don't do anything
-			return 1
-		if(selected.digest_modes.len == 2) // Just toggle... there's probably a more elegant way to do this...
-			var/index = selected.digest_modes.Find(selected.digest_mode)
-			switch(index)
-				if(1)
-					selected.digest_mode = selected.digest_modes[2]
-				if(2)
-					selected.digest_mode = selected.digest_modes[1]
-		else
-			selected.digest_mode = input("Choose Mode (currently [selected.digest_mode])") in menu_list
+		var/new_mode = input("Choose Mode (currently [selected.digest_mode])") as null|anything in menu_list
+		if(!new_mode)
+			return 0
+		selected.digest_mode = new_mode
 
 	if(href_list["b_desc"])
-		var/new_desc = html_encode(input(usr,"Belly Description (1024 char limit):","New Description",selected.inside_flavor) as message|null)
+		var/new_desc = html_encode(input(usr,"Belly Description ([BELLIES_DESC_MAX] char limit):","New Description",selected.desc) as message|null)
+
 		if(new_desc)
 			new_desc = readd_quotes(new_desc)
 			if(length(new_desc) > BELLIES_DESC_MAX)
-				to_chat(usr, "<span class='warning'>Entered belly desc too long. [BELLIES_DESC_MAX] character limit.</span>")
+				alert("Entered belly desc too long. [BELLIES_DESC_MAX] character limit.","Error")
 				return FALSE
-
-			selected.inside_flavor = new_desc
+			selected.desc = new_desc
 		else //Returned null
 			return FALSE
 
@@ -429,12 +489,11 @@
 			"Struggle Message (outside)",
 			"Struggle Message (inside)",
 			"Examine Message (when full)",
-			"Reset All To Default",
-			"Cancel - No Changes"
+			"Reset All To Default"
 		)
 
 		alert(user,"Setting abusive or deceptive messages will result in a ban. Consider this your warning. Max 150 characters per message, max 10 messages per topic.","Really, don't.")
-		var/choice = input(user,"Select a type to modify. Messages from each topic are pulled at random when needed.","Pick Type") in messages
+		var/choice = input(user,"Select a type to modify. Messages from each topic are pulled at random when needed.","Pick Type") as null|anything in messages
 		var/help = " Press enter twice to separate messages. '%pred' will be replaced with your name. '%prey' will be replaced with the prey's name. '%belly' will be replaced with your belly's name."
 
 		switch(choice)
@@ -459,7 +518,7 @@
 					selected.set_messages(new_message,"smi")
 
 			if("Examine Message (when full)")
-				var/new_message = input(user,"These are sent to people who examine you when this belly has contents. Write them in 3rd person ('Their %belly is bulging'). "+help,"Examine Message (when full)",selected.get_messages("em")) as message
+				var/new_message = input(user,"These are sent to people who examine you when this belly has contents. Write them in 3rd person ('Their %belly is bulging')."+help,"Examine Message (when full)",selected.get_messages("em")) as message
 				if(new_message)
 					selected.set_messages(new_message,"em")
 
@@ -471,39 +530,56 @@
 					selected.struggle_messages_outside = initial(selected.struggle_messages_outside)
 					selected.struggle_messages_inside = initial(selected.struggle_messages_inside)
 
-			if("Cancel - No Changes")
-				return
-
 	if(href_list["b_verb"])
 		var/new_verb = html_encode(input(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb") as text|null)
 
 		if(length(new_verb) > BELLIES_NAME_MAX || length(new_verb) < BELLIES_NAME_MIN)
-			to_chat(usr, "<span class='warning'>Entered verb length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).</span>")
-			return FALSE
+			alert("Entered verb length invalid (must be longer than [BELLIES_NAME_MIN], no longer than [BELLIES_NAME_MAX]).","Error")
+			return 0
 
 		selected.vore_verb = new_verb
 
-	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.pred_vore_sounds + "Cancel - No Changes"
+	if(href_list["b_release"])
+		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.release_sound
 
-		if(choice == "Cancel")
+		if(!choice)
+			return
+
+		selected.release_sound = GLOB.release_sound[choice]
+
+	if(href_list["b_releasesoundtest"])
+		var/soundfile = GLOB.release_sound[selected.release_sound]
+		if(soundfile)
+			user << soundfile
+
+	if(href_list["b_sound"])
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.pred_vore_sounds
+
+		if(!choice)
 			return
 
 		selected.vore_sound = GLOB.pred_vore_sounds[choice]
 
 	if(href_list["b_soundtest"])
-		user << selected.vore_sound
-/*
-	if(href_list["silenced"])
-		if(selected.silenced == FALSE)
-			selected.silenced = TRUE
-			to_chat(usr,"<span class='warning'>The [selected.name] is now silenced, it will not play the internal loop to prey within it.</span>")
-		else if(selected.silenced == TRUE)
-			selected.silenced = FALSE
-			to_chat(usr,"<span class='warning'>The [selected.name] will play the internal loop to prey within it.</span>")
-*/
+		var/soundfile = GLOB.pred_vore_sounds[selected.vore_sound]
+		if(soundfile)
+			user << soundfile
+
 	if(href_list["b_tastes"])
 		selected.can_taste = !selected.can_taste
+
+	if(href_list["b_bulge_size"])
+		var/new_bulge = input(user, "Choose the required size prey must be to show up on examine, ranging from 25% to 200% Set this to 0 for no text on examine.", "Set Belly Examine Size.") as num|null
+		if(new_bulge == null)
+			return
+		if(new_bulge == 0) //Disable.
+			selected.bulge_size = 0
+			to_chat(user,"<span class='notice'>Your stomach will not be seen on examine.</span>")
+		else if (!IsInRange(new_bulge,25,200))
+			selected.bulge_size = 0.25 //Set it to the default.
+			to_chat(user,"<span class='notice'>Invalid size.</span>")
+		else if(new_bulge)
+			selected.bulge_size = (new_bulge/100)
 
 	if(href_list["b_escapable"])
 		if(selected.escapable == FALSE) //Possibly escapable and special interactions.
@@ -515,7 +591,7 @@
 			show_interacts = FALSE //Force the hiding of the panel
 		else
 			to_chat(usr,"<span class='warning'>Something went wrong. Your stomach will now not have special interactions. Press the button enable them again and tell a dev.") //If they somehow have a varable that's not 0 or 1
-			selected.escapable = FALSE
+			selected.escapable = TRUE
 			show_interacts = FALSE //Force the hiding of the panel
 
 	if(href_list["b_escapechance"])
@@ -537,68 +613,73 @@
 		var/choice = input("Where do you want your [selected.name] to lead if prey resists?","Select Belly") as null|anything in (user.vore_organs + "None - Remove" - selected.name)
 
 		if(!choice) //They cancelled, no changes
-			return
+			return FALSE
 		else if(choice == "None - Remove")
 			selected.transferlocation = null
 		else
 			selected.transferlocation = user.vore_organs[choice]
+
+	if(href_list["b_absorbchance"])
+		var/absorb_chance_input = input(user, "Set belly absorb mode chance on resist (as %)", "Prey Absorb Chance") as num|null
+		if(!isnull(absorb_chance_input))
+			selected.absorbchance = sanitize_integer(absorb_chance_input, 0, 100, initial(selected.absorbchance))
 
 	if(href_list["b_digestchance"])
 		var/digest_chance_input = input(user, "Set belly digest mode chance on resist (as %)", "Prey Digest Chance") as num|null
 		if(!isnull(digest_chance_input))
 			selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(selected.digestchance))
 
+	if(href_list["b_silent"])
+		selected.silent = !selected.silent
+
 	if(href_list["b_del"])
-		var/dest_for = FALSE //Check to see if it's the destination of another vore organ.
-		for(var/I in user.vore_organs)
-			var/datum/belly/B = user.vore_organs[I]
+		var/alert = alert("Are you sure you want to delete your [lowertext(selected.name)]?","Confirmation","Delete","Cancel")
+		if(!alert == "Delete")
+			return FALSE
+
+		var/failure_msg = ""
+
+		var/dest_for //Check to see if it's the destination of another vore organ.
+		for(var/belly in user.vore_organs)
+			var/obj/belly/B = belly
 			if(B.transferlocation == selected)
 				dest_for = B.name
+				failure_msg += "This is the destiantion for at least '[dest_for]' belly transfers. Remove it as the destination from any bellies before deleting it. "
 				break
 
-		if(dest_for)
-			alert("This is the destiantion for at least '[dest_for]' belly transfers. Remove it as the destination from any bellies before deleting it.","Error")
-			return TRUE
-		else if(selected.internal_contents.len)
-			alert("Can't delete bellies with contents!","Error")
-			return TRUE
-		if(selected.internal_contents.len)
-			to_chat(usr, "<span class='warning'>Can't delete bellies with contents!</span>")
-			return
-		else if(selected.immutable)
-			to_chat(usr, "<span class='warning'>This belly is marked as undeletable.</span>")
-			return
-		else if(user.vore_organs.len == 1)
-			to_chat(usr, "<span class='warning'>You must have at least one belly.</span>")
-			return
-		else
-			var/alert = alert("Are you sure you want to delete [selected]?","Confirmation","Delete","Cancel")
-			if(alert == "Delete" && !selected.internal_contents.len)
-				user.vore_organs -= selected.name
-				user.vore_organs.Remove(selected)
-				selected = user.vore_organs[1]
-				user.vore_selected = user.vore_organs[1]
-				to_chat(usr,"<span class='warning'>Note: If you had this organ selected as a transfer location, please remove the transfer location by selecting Cancel - None - Remove on this stomach.</span>")
+		if(selected.contents.len)
+			failure_msg += "You cannot delete bellies with contents! " //These end with spaces, to be nice looking. Make sure you do the same.
+		if(selected.immutable)
+			failure_msg += "This belly is marked as undeletable. "
+		if(user.vore_organs.len == 1)
+			failure_msg += "You must have at least one belly. "
+
+		if(failure_msg)
+			alert(user,failure_msg,"Error!")
+			return FALSE
+
+		qdel(selected)
+		selected = user.vore_organs[1]
+		user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(user.save_vore_prefs())
-			to_chat(user, "<span class='notice'>Belly Preferences saved!</span>")
+		if(!user.save_vore_prefs())
+			to_chat(user, "<span class='warning'>Belly Preferences not saved!</span>")
 
 		else
-			to_chat(user, "<span class='warning'>ERROR: Belly Preferences were not saved!</span>")
+			to_chat(user, "<span class='notice'>Belly Preferences were saved!</span>")
 			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["setflavor"])
 		var/new_flavor = html_encode(input(usr,"What your character tastes like (40ch limit). This text will be printed to the pred after 'X tastes of...' so just put something like 'strawberries and cream':","Character Flavor",user.vore_taste) as text|null)
+		if(!new_flavor)
+			return 0
 
-		if(new_flavor)
-			new_flavor = readd_quotes(new_flavor)
-			if(length(new_flavor) > FLAVOR_MAX)
-				alert("Entered flavor/taste text too long. [FLAVOR_MAX] character limit.","Error")
-				return FALSE
-			user.vore_taste = new_flavor
-		else //Returned null
-			return FALSE
+		new_flavor = readd_quotes(new_flavor)
+		if(length(new_flavor) > FLAVOR_MAX)
+			alert("Entered flavor/taste text too long. [FLAVOR_MAX] character limit.","Error!")
+			return 0
+		user.vore_taste = new_flavor
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
@@ -626,5 +707,15 @@
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable
 
+	if(href_list["togglenoisy"])
+		var/choice = alert(user, "Toggle audible hunger noises. Currently: [user.noisy ? "Enabled" : "Disabled"]", "", "Enable audible hunger", "Cancel", "Disable audible hunger")
+		switch(choice)
+			if("Cancel")
+				return 0
+			if("Enable audible hunger")
+				user.noisy = TRUE
+			if("Disable audible hunger")
+				user.noisy = FALSE
+
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
-	return TRUE
+	return 1

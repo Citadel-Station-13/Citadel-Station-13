@@ -351,3 +351,10 @@
 		H.update_body()
 	else
 		return
+
+//misc
+/mob/living/carbon/human/dummy
+	no_vore = TRUE
+
+/mob/living/carbon/human/vore
+	devourable = TRUE
