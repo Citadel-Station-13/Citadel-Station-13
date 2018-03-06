@@ -1,0 +1,6 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Hypospray mk IIs are being deployed to stations, these should provide an easier time for medical staff! They come with both inject and spray modes! Spray mode acts like a patch for applying meds"
+  - soundadd: "Hyposprays are fancy, you'll know when they're being used."
+  - server: "Due to fucky-ness, you'll need to unload, then reload the hypos at least once. just how it be."

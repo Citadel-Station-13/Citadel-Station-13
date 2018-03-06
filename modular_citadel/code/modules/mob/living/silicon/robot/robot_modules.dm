@@ -67,6 +67,7 @@
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
 		/obj/item/device/dogborg/sleeper/medihound,
+		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)

@@ -361,6 +361,9 @@
 		return
 	if(!iscarbon(target))
 		return
+	if(!(target.client && target.client.prefs && target.client.prefs.toggles && (target.client.prefs.toggles & MEDIHOUND_SLEEPER)))
+		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
+		return		
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
@@ -605,6 +608,12 @@
 				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
 				T.stop_sound_channel(CHANNEL_PRED)
 				T.playsound_local("death_prey",60)
+				for(var/belly in T.vore_organs)
+					var/obj/belly/B = belly
+					for(var/atom/movable/thing in B)
+						thing.forceMove(src)
+						if(ismob(thing))
+							to_chat(thing, "As [T] melts away around you, you find yourself in [hound]'s [name]")
 				for(var/obj/item/W in T)
 					if(!T.dropItemToGround(W))
 						qdel(W)

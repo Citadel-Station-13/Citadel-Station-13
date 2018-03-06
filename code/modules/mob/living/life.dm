@@ -54,9 +54,6 @@
 
 	handle_fire()
 
-	// Citadel Vore code for belly processes
-	handle_internal_contents()
-	
 	//stuff in the stomach
 	handle_stomach()
 
