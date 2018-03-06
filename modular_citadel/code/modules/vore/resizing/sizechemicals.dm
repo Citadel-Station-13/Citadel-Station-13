@@ -110,6 +110,6 @@
 		for(var/atom/movable/A in B.internal_contents)
 			if(prob(55))
 				playsound(M, 'sound/effects/splat.ogg', 50, 1)
-				B.release_specific_contents(A)
+				B.release_vore_contents(A)
 	..()
 	. = 1
