@@ -624,3 +624,27 @@
 	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
 	build_path = /obj/item/gun/ballistic/automatic/AM4C
 	category = list("initial", "Rifles")
+
+/datum/design/foam_f3
+	name = "Replica F3 Justicar"
+	id = "foam_f3"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
+	build_path = /obj/item/toy/gun/justicar
+	category = list("initial", "Pistols")
+
+/datum/design/toy_blaster
+	name = "pump-action plastic blaster"
+	id = "toy_blaster"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 750, MAT_GLASS = 1000)
+	build_path = /obj/item/gun/energy/pumpaction/toy
+	category = list("initial", "Rifles")
+
+/datum/design/capammo
+	name = "Box of Caps"
+	id = "capammo"
+	build_type = AUTOYLATHE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
+	build_path = /obj/item/toy/ammo/gun
+	category = list("initial", "Misc")

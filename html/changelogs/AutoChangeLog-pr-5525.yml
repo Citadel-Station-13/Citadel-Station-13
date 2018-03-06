@@ -1,7 +1,0 @@
-author: "RealDonaldTrump"
-delete-after: True
-changes: 
-  - rscadd: "Slimepeople (And all types, including Jelly, Xenobio Slimeperson, Stargazer and Luminescent) now have the ability to utilise the 'Alter Form' ability, allowing them to change most things about their body's form."
-  - rscadd: "Re-added the slime split and bodyswap ability to Xenobiological Slimepeople, only obtainable through xenobio."
-  - rscadd: "Slimepeople can now select tails, taur bodies and ears at roundstart. YOU WILL NEED TO SET YOUR COLOURS; otherwise you'll be rainbow coloured and not exactly slime-like. And nobody wants that."
-  - config: "Changed the ID for the roundstart slimepeople (Without the body swap and slime split abilities) to slimeperson. This will need set in the config on Jay's end."

@@ -1,5 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - imageadd: "added new egun and laser sprites, including inhands!"
-  - code_imp: "Added OVERRIDE .dmis which are copypasted upstream .dmis with changes for selective sprite changes"
