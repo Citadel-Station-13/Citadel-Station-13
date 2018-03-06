@@ -59,6 +59,7 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'modular_citadel/icons/obj/genitals/effects.dmi'
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
