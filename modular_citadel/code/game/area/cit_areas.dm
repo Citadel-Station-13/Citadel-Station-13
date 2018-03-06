@@ -1,6 +1,6 @@
 /area/maintenance/bar
 	name = "Maintenance Bar"
-	icon = 'code/citadel/icons/areas.dmi'
+	icon = 'modular_citadel/code/game/area/areas.dmi'
 	icon_state = "maintbar"
 
 /area/maintenance/bar/cafe
@@ -14,5 +14,5 @@
 
 /area/crew_quarters/cryopod
 	name = "Cryogenics"
-	icon = 'code/citadel/icons/areas.dmi'
+	icon = 'modular_citadel/code/game/area/areas.dmi'
 	icon_state = "cryo"
