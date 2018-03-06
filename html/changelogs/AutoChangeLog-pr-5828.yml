@@ -1,0 +1,8 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscdel: "Removed old things in .dms we weren't using anymore"
+  - tweak: "subtle messages are now italic'd, so there's better context on whispering"
+  - tweak: "broke apart the cit_gun.dm file, they're decently spaced out now"
+  - tweak: "dogborg_sleeper is now standalone from dogborg_equipment because too lazy to debug why it was breaking backpacks."
+  - tweak: "does that thing I've been meaning to do with Xenobio. additional tools have been provided."
