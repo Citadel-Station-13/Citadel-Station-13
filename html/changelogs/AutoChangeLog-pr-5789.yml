@@ -1,0 +1,12 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added release sound effects for choosing. If having a non-belly, belly."
+  - rscadd: "Added a 'silent' modifier to bellies."
+  - rscadd: "Added a vore subsystem to handle belly processing, should be less clunky"
+  - balance: "rebalanced heal mode and dragon digestion."
+  - soundadd: "added client preference based sound toggles to both eating/release/struggle and digestion noises seperately."
+  - refactor: "vore prefs save to JSON now instead of .sav. much easier really.
+refractor: dragon vore is working, though with this game who knows."
+  - server: "your prefs should automatically transfer, but it's likely you'll lose pre-loaded bellies, BACK UP EVERYTHING. (you should be doing this anyway too)"
+  - server: "Creating new characters will import the previous' bellies. but once you click 'save' they'll make the new JSON file will all the info. This is per slot, so if you change your character, you'll have to change belly stuff."
