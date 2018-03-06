@@ -1,7 +1,7 @@
 /obj/structure/reagent_dispensers/keg
 	name = "keg"
 	desc = "A keg."
-	icon = 'code/citadel/icons/objects.dmi'
+	icon = 'modular_citadel/icons/obj/objects.dmi'
 	icon_state = "keg"
 	reagent_id = "water"
 

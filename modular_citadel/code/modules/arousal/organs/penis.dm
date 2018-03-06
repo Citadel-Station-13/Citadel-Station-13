@@ -2,7 +2,7 @@
 	name 					= "penis"
 	desc 					= "A male reproductive organ."
 	icon_state 				= "penis"
-	icon 					= 'code/citadel/icons/penis.dmi'
+	icon 					= 'modular_citadel/icons/obj/genitals/penis.dmi'
 	zone 					= "groin"
 	slot 					= "penis"
 	w_class 				= 3

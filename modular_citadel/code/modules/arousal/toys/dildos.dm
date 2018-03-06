@@ -4,7 +4,7 @@
 obj/item/dildo
 	name 				= "dildo"
 	desc 				= "Floppy!"
-	icon 				= 'code/citadel/icons/dildo.dmi'
+	icon 				= 'modular_citadel/icons/obj/genitals/dildo.dmi'
 	damtype 			= BRUTE
 	force 				= 0
 	throwforce			= 0

@@ -4,7 +4,7 @@
 //A vial-loaded hypospray. Cartridge-based!
 /obj/item/reagent_containers/hypospray/mkii
 	name = "hypospray mk.II"
-	icon = 'icons/obj/citadel/hypospray.dmi'
+	icon = 'modular_citadel/icons/obj/hypospraymkii.dmi'
 	icon_state = "hypo2"
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small)
 	desc = "A new development from DeForest Medical, this new hypospray takes 30-unit vials as the drug supply for easy swapping."
@@ -110,6 +110,15 @@
 	if(target.reagents.total_volume >= target.reagents.maximum_volume)
 		to_chat(user, "<span class='notice'>[target] is full.</span>")
 		return
+
+	if(ishuman(L))
+		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
+		if(!affecting)
+			to_chat(user, "<span class='warning'>The limb is missing!</span>")
+			return
+		if(affecting.status != BODYPART_ORGANIC)
+			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+			return
 
 	var/contained = reagents.log_list()
 	add_logs(user, L, "attemped to inject", src, addition="which had [contained]")

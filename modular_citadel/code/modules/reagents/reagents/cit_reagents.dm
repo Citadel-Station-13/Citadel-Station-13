@@ -29,7 +29,7 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'code/citadel/icons/effects.dmi'
+	icon = 'modular_citadel/icons/obj/genitals/effects.dmi'
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
 
@@ -59,7 +59,6 @@
 	gender = PLURAL
 	density = 0
 	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'code/citadel/icons/effects.dmi'
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
@@ -260,7 +259,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/sake
 	name = "Traditional Sake"
 	desc = "Sweet as can be, and burns like foxfire going down."
-	icon = 'code/citadel/icons/drinks.dmi'
+	icon = 'modular_citadel/icons/obj/drinks.dmi'
 	icon_state = "sakebottle"
 	list_reagents = list("sake" = 100)
 

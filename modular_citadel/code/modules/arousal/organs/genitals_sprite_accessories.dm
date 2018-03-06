@@ -4,7 +4,7 @@
 
 //DICKS,COCKS,PENISES,WHATEVER YOU WANT TO CALL THEM
 /datum/sprite_accessory/penis
-	icon = 'code/citadel/icons/penis_onmob.dmi'
+	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
 	icon_state = null
 	name = "penis"			//the preview name of the accessory
 	gender_specific = 0	//Might be needed somewhere down the list.
@@ -35,21 +35,21 @@
 // Taur cocks go here //
 ////////////////////////
 /datum/sprite_accessory/penis/taur_flared
-	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
 	icon_state = "flared"
 	name = "Taur, Flared"
 	center = TRUE //Center the image 'cause 2-tile wide.
 	dimension_x = 64
 
 /datum/sprite_accessory/penis/taur_knotted
-	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
 	icon_state = "knotted"
 	name = "Taur, Knotted"
 	center = TRUE //Center the image 'cause 2-tile wide.
 	dimension_x = 64
 
 /datum/sprite_accessory/penis/taur_tapered
-	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon = 'modular_citadel/icons/obj/genitals/taur_penis_onmob.dmi' //Needed larger width
 	icon_state = "tapered"
 	name = "Taur, Tapered"
 	center = TRUE //Center the image 'cause 2-tile wide.
@@ -60,7 +60,7 @@
 
 //Vaginas
 /datum/sprite_accessory/vagina
-	icon = 'code/citadel/icons/vagina_onmob.dmi'
+	icon = 'modular_citadel/icons/obj/genitals/vagina_onmob.dmi'
 	icon_state = null
 	name = "vagina"
 	gender_specific = 0
@@ -90,7 +90,7 @@
 
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts
-	icon = 'code/citadel/icons/breasts_onmob.dmi'
+	icon = 'modular_citadel/icons/obj/genitals/breasts_onmob.dmi'
 	icon_state = null
 	name = "breasts"
 	gender_specific = 0
@@ -104,7 +104,7 @@
 
 //OVIPOSITORS BE HERE
 /datum/sprite_accessory/ovipositor
-	icon = 'code/citadel/icons/penis_onmob.dmi'
+	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
 	icon_state = null
 	name = "Ovipositor"			//the preview name of the accessory
 	gender_specific = 0			//Might be needed somewhere down the list.

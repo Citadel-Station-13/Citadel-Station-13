@@ -2,7 +2,7 @@
 	name 			= "Egg sack"
 	desc 			= "An egg producing reproductive organ."
 	icon_state 		= "egg_sack"
-	icon 			= 'code/citadel/icons/ovipositor.dmi'
+	icon 			= 'modular_citadel/icons/obj/genitals/ovipositor.dmi'
 	zone 			= "groin"
 	slot 			= "testicles"
 	color			= null //don't use the /genital color since it already is colored

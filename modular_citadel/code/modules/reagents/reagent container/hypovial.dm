@@ -1,20 +1,28 @@
 /obj/item/reagent_containers/glass/bottle/vial
 	name = "hypospray vial"
 	desc = "This is a vial suitable for loading into mk II hyposprays."
-	icon = 'icons/obj/citadel/vial.dmi'
+	icon = 'modular_citadel/icons/obj/vial.dmi'
 	icon_state = "hypovial"
-	w_class = WEIGHT_CLASS_SMALL //Why would it be the same size as a beaker?
-	container_type = OPENCONTAINER
 	spillable = FALSE
-	resistance_flags = ACID_PROOF
 	var/comes_with = list() //Easy way of doing this.
 	volume = 10
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Hypospray vial" = "hypovial",
+						"Red hypospray vial" = "hypovial-b",
+						"Blue hypospray vial" = "hypovial-d",
+						"Green hypospray vial" = "hypovial-a",
+						"Orange hypospray vial" = "hypovial-k",
+						"Purple hypospray vial" = "hypovial-p",
+						"Black hypospray vial" = "hypovial-t"
+						)
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
 	if(!icon_state)
 		icon_state = "hypovial"
 	update_icon()
+	for(var/R in comes_with)
+		reagents.add_reagent(R,comes_with[R])
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
 	update_icon()
@@ -22,7 +30,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/update_icon()
 	cut_overlays()
 	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/citadel/vial.dmi', "[icon_state]10")
+		var/mutable_appearance/filling = mutable_appearance('modular_citadel/icons/obj/vial.dmi', "[icon_state]10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -48,11 +56,14 @@
 	desc = "This is a vial suitable for loading into the Chief Medical Officer's Hypospray mk II."
 	icon_state = "hypoviallarge"
 	volume = 60
-
-/obj/item/reagent_containers/glass/bottle/vial/New()
-	..()
-	for(var/R in comes_with)
-		reagents.add_reagent(R,comes_with[R])
+	unique_reskin = list("Large hypospray vial" = "hypoviallarge",
+						"Red hypospray vial" = "hypoviallarge-b",
+						"Blue hypospray vial" = "hypoviallarge-d",
+						"Green hypospray vial" = "hypoviallarge-a",
+						"Orange hypospray vial" = "hypoviallarge-k",
+						"Purple hypospray vial" = "hypoviallarge-p",
+						"Black hypospray vial" = "hypoviallarge-t"
+						)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine
 	name = "vial (bicaridine)"

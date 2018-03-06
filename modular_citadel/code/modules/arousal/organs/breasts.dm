@@ -2,7 +2,7 @@
 	name 					= "breasts"
 	desc 					= "Female milk producing organs."
 	icon_state 				= "breasts"
-	icon 					= 'code/citadel/icons/breasts.dmi'
+	icon 					= 'modular_citadel/icons/obj/genitals/breasts.dmi'
 	zone 					= "chest"
 	slot 					= "breasts"
 	w_class 				= 3
