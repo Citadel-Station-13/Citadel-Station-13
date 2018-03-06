@@ -24,7 +24,7 @@
 			to_chat(user, "You have a very great feeling about this!")
 		else
 			to_chat(user, "The Wish Granter awaits your wish.")
-			var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","For The Station To Disappear","To Kill","Nothing")
+			var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","The Station To Disappear","To Kill","Nothing")
 			switch(wish)
 				if("Power")	//Gives infinite power in exchange for infinite power going off in your face!
 					to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
@@ -51,9 +51,9 @@
 					insisting = FALSE
 					if(!charges)
 						qdel(src)
-				if("For The Station To Disappear")	//teleports you to the station and makes you blind, making the station disappear for you!
+				if("The Station To Disappear")	//teleports you to the station and makes you blind, making the station disappear for you!
 					to_chat(user, "<B>Your wish is 'granted', but at a terrible cost...</B>")
-					to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
+					to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your eyes to match the darkness in your heart.")
 					user.dna.add_mutation(BLINDMUT)
 					user.adjust_eye_damage(100)
 					var/list/destinations = list()
@@ -71,12 +71,19 @@
 						qdel(src)
 				if("To Kill")	//Makes you kill things in exchange for rewards!
 					to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
-					to_chat(user, "The Wish Granter punishes you for your wickedness, morphing into a dastardly creature for you to kill!")
-					var/mob/living/simple_animal/hostile/megafauna/colossus/killwish = new /mob/living/simple_animal/hostile/megafauna/colossus(loc)
-					killwish.maxHealth = 3000
+					to_chat(user, "The Wish Granter punishes you for your wickedness, warping itself into a dastardly creature for you to kill! ...but it almost seems to reward you for this.")
+					var/obj/item/melee/transforming/energy/sword/cx/killreward = new /obj/item/melee/transforming/energy/sword/cx(get_turf(user))
+					if(user.put_in_hands(killreward))
+						to_chat(user, "[killreward] materializes into your hands!")
+					else
+						to_chat(user, "[killreward] materializes onto the floor.")
+					var/mob/living/simple_animal/hostile/venus_human_trap/killwish = new /mob/living/simple_animal/hostile/venus_human_trap(loc)
+					killwish.maxHealth = 2500
 					killwish.health = killwish.maxHealth
-					user.dna.add_mutation(HULK)
-					user.dna.add_mutation(LASEREYES)
+					killwish.grasp_range = 6
+					killwish.melee_damage_upper = 30
+					killwish.grasp_chance = 50
+					killwish.loot = list(/obj/item/twohanded/hypereutactic)
 					charges--
 					insisting = FALSE
 					if(!charges)
