@@ -85,7 +85,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 2)
+			linked_techweb.research_points += min(power_produced, 1)
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -118,7 +118,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 15)
+			linked_techweb.research_points += min(power_produced, 3) // 4 coils makes ~720/m bonus for R&D, 
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
