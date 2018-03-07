@@ -390,7 +390,7 @@
 //////////////////////////////			Feel free to try cleaning it up if you think of a better way to do it.
 
 /obj/machinery/fishtank/examine(mob/user)
-	..(user)
+	. = ..()
 	var/examine_message = ""
 	//Approximate water level
 
