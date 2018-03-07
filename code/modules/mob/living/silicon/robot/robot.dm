@@ -600,7 +600,6 @@
 	icon_state = module.cyborg_base_icon
 
 	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
-	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 	if(laser)
 		add_overlay("laser")//Is this even used??? - Yes borg/inventory.dm
