@@ -12686,7 +12686,6 @@
 /area/storage/primary)
 "aGk" = (
 /obj/machinery/vending/boozeomat{
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1, /obj/item/reagent_containers/food/drinks/bottle/wine = 1, /obj/item/reagent_containers/food/drinks/ale = 1, /obj/item/reagent_containers/food/drinks/drinkingglass = 6, /obj/item/reagent_containers/food/drinks/ice = 1, /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
 	req_access_txt = "20"
 	},
 /turf/open/floor/plasteel/vault{
@@ -27811,6 +27810,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "brQ" = (
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Port";
 	dir = 8;
@@ -28602,11 +28604,11 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "btD" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/xenobiology)
 "btE" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/xenobiology)
 "btF" = (
 /obj/structure/chair{
@@ -29227,7 +29229,12 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Kill Room";
+	dir = 8;
+	network = list("ss13","rd")
+	},
+/turf/open/floor/plating/airless,
 /area/science/xenobiology)
 "bva" = (
 /turf/closed/wall,
@@ -31294,22 +31301,16 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bzi" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 3
 	},
-/obj/structure/table/glass,
 /obj/item/extinguisher,
-/obj/item/extinguisher{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/extinguisher{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bzj" = (
+/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -31317,7 +31318,6 @@
 	pixel_x = 32;
 	receive_ore_updates = 1
 	},
-/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bzk" = (
@@ -33793,8 +33793,7 @@
 	dir = 1
 	},
 /obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/spray/medical/sterilizer = 1)
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/blobstart,
@@ -35454,8 +35453,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/spray/medical/sterilizer = 1)
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -36332,8 +36330,7 @@
 /area/medical/medbay/central)
 "bKw" = (
 /obj/machinery/vending/wallmed{
-	pixel_y = 28;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 1, /obj/item/reagent_containers/pill/patch/silver_sulf = 1, /obj/item/reagent_containers/spray/medical/sterilizer = 1)
+	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -49831,7 +49828,6 @@
 /area/maintenance/department/engine)
 "cBk" = (
 /obj/machinery/vending/boozeomat{
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1, /obj/item/reagent_containers/food/drinks/bottle/absinthe = 1, /obj/item/reagent_containers/food/drinks/bottle/limejuice = 1, /obj/item/reagent_containers/food/drinks/bottle/cream = 1, /obj/item/reagent_containers/food/drinks/soda_cans/tonic = 1, /obj/item/reagent_containers/food/drinks/drinkingglass = 10, /obj/item/reagent_containers/food/drinks/ice = 3, /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6, /obj/item/reagent_containers/food/drinks/flask = 1);
 	req_access_txt = "0"
 	},
 /turf/closed/wall,
@@ -50178,6 +50174,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"gFV" = (
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "izp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -93281,7 +93283,7 @@ bkE
 aht
 bnd
 boh
-bpn
+gFV
 bqx
 brQ
 btr

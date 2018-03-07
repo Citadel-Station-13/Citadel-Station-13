@@ -112,6 +112,30 @@
 /obj/structure/cable,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aap" = (
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
+"aaq" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology - Killroom Chamber";
+	dir = 2;
+	name = "xenobiology camera";
+	network = list("ss13","xeno","rd")
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
+"aar" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 2;
+	external_pressure_bound = 140;
+	name = "killroom vent";
+	pressure_checks = 0
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -131,6 +155,35 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aav" = (
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
+"aaw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 2;
+	external_pressure_bound = 120;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
+"aax" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
+"aay" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
+"aaz" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
 "aaA" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -149,6 +202,52 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aaF" = (
+/obj/structure/cable/white{
+	icon_state = "0-4"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/open/floor/plating,
+/area/science/xenobiology)
+"aaG" = (
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenobiology Kill Room";
+	req_access_txt = "47"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
+"aaH" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1;
+	min_temperature = 80;
+	on = 1;
+	target_temperature = 80
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
+"aaI" = (
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/turf/open/floor/circuit/green,
+/area/science/xenobiology)
 "aaO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -67532,20 +67631,6 @@
 	dir = 5
 	},
 /area/science/xenobiology)
-"cNi" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology - Killroom Chamber";
-	dir = 2;
-	name = "xenobiology camera";
-	network = list("ss13","xeno","rd")
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -69713,32 +69798,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"cSf" = (
-/obj/structure/cable/white{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/science/xenobiology)
-"cSg" = (
-/obj/structure/cable/white{
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "2-8"
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Xenobiology Isolation Pin";
-	req_access_txt = "47"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "cSh" = (
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -70515,22 +70574,6 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
-"cTR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table/glass,
-/obj/item/extinguisher,
-/obj/item/extinguisher{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/extinguisher{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTS" = (
@@ -72224,12 +72267,6 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
-"cXm" = (
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cXn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -101123,13 +101160,6 @@
 "saw" = (
 /turf/closed/wall,
 /area/science/circuit)
-"shc" = (
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/obj/structure/reagent_dispensers/watertank/high,
-/turf/open/floor/circuit/green,
-/area/science/xenobiology)
 "tdp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -132544,9 +132574,9 @@ cHA
 cjp
 cKl
 cLI
-cNd
-cNd
-cNd
+aap
+aap
+aap
 cNc
 cTQ
 cVI
@@ -132801,11 +132831,11 @@ cHB
 cjp
 cKj
 cLI
-cNd
-cNd
-cNd
-cSf
-cTR
+aap
+aar
+aax
+aaF
+aaH
 cVP
 cXi
 cYX
@@ -133058,10 +133088,10 @@ cHD
 caE
 cKm
 cLI
-cNi
-cNd
-cNd
-cSg
+aaq
+aav
+aay
+aaG
 cTS
 cVQ
 cXj
@@ -133315,9 +133345,9 @@ cHB
 cjp
 cKk
 cLI
-cNd
-cNd
-cNd
+aap
+aaw
+aaz
 cSh
 cTT
 cVR
@@ -133572,9 +133602,9 @@ cHA
 ceb
 cKk
 cLI
-cNd
-cNd
-cNd
+aap
+aap
+aap
 cNc
 cTU
 cVS
@@ -133835,9 +133865,9 @@ cMY
 cMY
 cTV
 cVT
-cXm
+aaI
 cZb
-shc
+aaI
 dcu
 ddV
 cMY
