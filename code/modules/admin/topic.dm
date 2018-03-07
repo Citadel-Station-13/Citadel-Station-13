@@ -271,50 +271,6 @@
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
 
-	else if(href_list["mentor"])
-		if(!check_rights(R_ADMIN))	return
-
-		var/mob/M = locate(href_list["mentor"])
-		if(!ismob(M))
-			to_chat(usr, "<span class='danger'>this can be only used on instances of type /mob!</span>")
-			return
-
-		if(!M.client)
-			to_chat(usr, "<span class='danger'>No client.</span>")
-			return
-
-		log_admin("[key_name(usr)] has granted [key_name(M)] mentor access")
-		message_admins("<span class='adminnotice'> [key_name_admin(usr)] has granted [key_name_admin(M)] mentor access.</span>")
-
-		var/datum/DBQuery/query_add_mentors = SSdbcore.NewQuery("INSERT INTO [format_table_name("mentor")] (ckey) VALUES ('[M.client.ckey]')")
-		if(!query_add_mentors.Execute())
-			var/err = query_add_mentors.ErrorMsg()
-			log_game("SQL ERROR during adding new mentor. Error : \[[err]\]\n")
-		load_mentors()
-		M.verbs += /client/proc/cmd_mentor_say
-		M.verbs += /client/proc/show_mentor_memo
-		to_chat(M, "<span class='adminnotice'> You've been granted mentor access! Help people who send mentor-pms.</span>")
-
-	else if(href_list["removementor"])
-		if(!check_rights(R_ADMIN))	return
-
-		var/mob/living/carbon/human/M = locate(href_list["removementor"])
-		if(!ismob(M))
-			usr << "this can be only used on instances of type /mob"
-			return
-
-		log_admin("[key_name(usr)] has removed mentor access from [key_name(M)]")
-		message_admins("<span class='adminnotice'> [key_name_admin(usr)] has removed mentor access from [key_name_admin(M)].</span>")
-
-		var/datum/DBQuery/query_remove_mentors = SSdbcore.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[M.client.ckey]'")
-		if(!query_remove_mentors.Execute())
-			var/err = query_remove_mentors.ErrorMsg()
-			log_game("SQL ERROR during removing mentor. Error : \[[err]\]\n")
-		load_mentors()
-		to_chat(M, "<span class='adminnotice'>Your mentor access has been revoked.</span>")
-		M.verbs -= /client/proc/cmd_mentor_say
-		M.verbs -= /client/proc/show_mentor_memo
-
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
@@ -915,12 +871,6 @@
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'><font color=red>Abductor</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'>Abductor</a></td>"
-
-		//Borer
-		if(jobban_isbanned(M, "borer") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'><font color=red>Borer</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'>Borer</a></td>"
 
 		//Alien
 		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
@@ -1709,7 +1659,7 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (CONSCIOUS)
+				if(CONSCIOUS)
 					status = "Alive"
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"
