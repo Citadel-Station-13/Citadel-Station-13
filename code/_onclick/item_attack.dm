@@ -77,7 +77,6 @@
 	add_fingerprint(user)
 
 	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes attacking things cause stamina loss
-	return TRUE//CIT CHANGE - makes attack() return 1 if successful
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -91,7 +90,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
-	return TRUE//CIT CHANGE - makes attack_obj() return 1 if successful
 
 /atom/movable/proc/attacked_by()
 	return

@@ -46,7 +46,7 @@
 
 /obj/item/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(. && force >= 15)
+	if(force >= 15)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
 		if(M.client)
 			switch (M.client.prefs.damagescreenshake)
@@ -58,5 +58,5 @@
 
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()
-	if(. && force >= 20)
+	if(force >= 20)
 		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
