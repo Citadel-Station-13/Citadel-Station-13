@@ -77,8 +77,8 @@
 	desc = "A small bio-luminescent fish. Not very bright, but at least it's pretty!"
 	icon_state = "glofish"
 
-/obj/item/fish/glofish/New()
-		..()
+/obj/item/fish/glofish/Initialize()
+		. = ..()
 		set_light(2,1,"#99FF66")
 
 /obj/item/fish/electric_eel
@@ -100,7 +100,7 @@
 		new /obj/item/shard/shark_teeth(get_turf(src))
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/fish/toothless_shark
 	name = "toothless shark"
@@ -117,9 +117,10 @@
 	throwforce = 5.0
 	materials = list()
 
-/obj/item/shard/shark_teeth/New()
-	src.pixel_x = rand(-5,5)
-	src.pixel_y = rand(-5,5)
+/obj/item/shard/shark_teeth/Initialize()
+	. = ..()
+	pixel_x = rand(-5,5)
+	pixel_y = rand(-5,5)
 
 /obj/item/fish/catfish
 	name = "catfish"
@@ -133,7 +134,7 @@
 		new /obj/item/reagent_containers/food/snacks/fish/catfishmeat(get_turf(src))
 		qdel(src)
 		return
-	..()
+ . = ..()
 
 /obj/item/fish/goldfish
 	name = "goldfish"
@@ -152,7 +153,7 @@
 		new /obj/item/reagent_containers/food/snacks/fish/salmonmeat(get_turf(src))
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/fish/babycarp
 	name = "baby space carp"
@@ -167,7 +168,7 @@
 		new /obj/item/reagent_containers/food/snacks/carpmeat(get_turf(src)) //just one fillet; this is a baby, afterall.
 		qdel(src)
 		return
-	..()
+	. = ..()
 
 
 /obj/item/grown/bananapeel/clownfishpeel
