@@ -561,12 +561,12 @@
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
 	category = list("initial", "Rifles")
 
-/datum/design/magfoam_dart
-	name = "Box of MagFoam Darts"
-	id = "magfoam_dart"
+/datum/design/foam_dart
+	name = "Box of Foam Darts"
+	id = "foam_dart"
 	build_type = AUTOYLATHE
 	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
-	build_path = /obj/item/ammo_box/foambox/mag
+	build_path = /obj/item/ammo_box/foambox
 	category = list("initial", "Misc")
 
 /datum/design/foam_magpistol
@@ -648,3 +648,67 @@
 	materials = list(MAT_METAL = 10, MAT_GLASS = 10)
 	build_path = /obj/item/toy/ammo/gun
 	category = list("initial", "Misc")
+
+/datum/design/foam_smg
+	name = "Foam Force SMG"
+	id = "foam_smg"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
+	build_path = /obj/item/gun/ballistic/automatic/toy/unrestricted
+	category = list("initial", "Pistols")
+
+/datum/design/foam_pistol
+	name = "Foam Force Pistol"
+	id = "foam_pistol"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
+	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/unrestricted
+	category = list("initial", "Pistols")
+
+/datum/design/foam_shotgun
+	name = "Foam Force Shotgun"
+	id = "foam_shotgun"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/shotgun/toy/unrestricted
+	category = list("initial", "Rifles")
+
+/datum/design/foam_dartred
+	name = "Box of Lastag Red Foam Darts"
+	id = "redfoam_dart"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
+	build_path = /obj/item/ammo_box/foambox/tag/red
+	category = list("initial", "Misc")
+
+/datum/design/foam_dartred
+	name = "Box of Lastag Red Foam Darts"
+	id = "redfoam_dart"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
+	build_path = /obj/item/ammo_box/foambox/tag/red
+	category = list("initial", "Misc")
+
+/datum/design/foam_bow
+	name = "Foam Force Crossbow"
+	id = "foam_bow"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 250)
+	build_path = /obj/item/gun/ballistic/shotgun/toy/crossbow
+	category = list("initial", "Pistols")
+
+/datum/design/foam_c20
+	name = "Donksoft C20R"
+	id = "foam_c20"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted
+	category = list("hacked", "Rifles")
+
+/datum/design/foam_l6
+	name = "Donksoft LMG"
+	id = "foam_LMG"
+	build_type = AUTOYLATHE
+	materials = list(MAT_PLASTIC = 4000, MAT_METAL = 500)
+	build_path = /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted
+	category = list("hacked", "Rifles")
