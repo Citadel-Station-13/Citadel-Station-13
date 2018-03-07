@@ -2690,16 +2690,13 @@
 #include "modular_citadel\code\modules\mentor\mentorpm.dm"
 #include "modular_citadel\code\modules\mentor\mentorsay.dm"
 #include "modular_citadel\code\modules\mining\mine_items.dm"
-<<<<<<< HEAD
+#include "modular_citadel\code\modules\mob\cit_emotes.dm"
 #include "modular_citadel\code\modules\mob\mob.dm"
 #include "modular_citadel\code\modules\mob\living\damage_procs.dm"
 #include "modular_citadel\code\modules\mob\living\living.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\carbon.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\damage_procs.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human.dm"
-=======
-#include "modular_citadel\code\modules\mob\cit_emotes.dm"
->>>>>>> remotes/Citadel-Station-13/master
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_movement.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\life.dm"
@@ -2718,21 +2715,16 @@
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\handguns.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\magweapon.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\revolver.dm"
-<<<<<<< HEAD
-#include "modular_citadel\code\modules\projectiles\projectile\energy.dm"
-#include "modular_citadel\code\modules\projectiles\guns\energy\energy_gun.dm"
-#include "modular_citadel\code\modules\projectiles\guns\energy\laser.dm"
-#include "modular_citadel\code\modules\recycling\disposal\bin.dm"
-=======
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\rifles.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\spinfusor.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\laser.dm"
+#include "modular_citadel\code\modules\projectiles\projectile\energy.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\cit_kegs.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\hypospraymkii.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\hypovial.dm"
 #include "modular_citadel\code\modules\reagents\reagents\cit_reagents.dm"
->>>>>>> remotes/Citadel-Station-13/master
+#include "modular_citadel\code\modules\recycling\disposal\bin.dm"
 #include "modular_citadel\code\modules\research\designs\autoylathe_designs.dm"
 #include "modular_citadel\code\modules\research\designs\machine_designs.dm"
 #include "modular_citadel\code\modules\research\techweb\_techweb.dm"
