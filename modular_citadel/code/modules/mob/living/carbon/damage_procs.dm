@@ -5,6 +5,6 @@
 	if(directstamloss > 0)
 		adjustStaminaLoss(directstamloss)
 	bufferedstam = CLAMP(bufferedstam + amount, 0, stambuffer)
-	stambufferregentime = world.time + 5 SECONDS
+	stambufferregentime = world.time + 3 SECONDS
 	if(updating_stamina)
 		update_health_hud()
