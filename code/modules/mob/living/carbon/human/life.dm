@@ -64,6 +64,10 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
+	if(istype(loc, /obj/belly))
+		return ONE_ATMOSPHERE
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return ONE_ATMOSPHERE
 	else
 		return pressure
 
@@ -137,6 +141,8 @@
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	if(istype(loc, /obj/belly))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 //END EDIT
 	if(wear_suit)
@@ -246,10 +252,12 @@
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
-		
+
 //CITADEL EDIT Mandatory for vore code.
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return 1 //freezing to death in sleepers ruins fun.
+	if(istype(loc, /obj/belly))
+		return 1
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
 //END EDIT
