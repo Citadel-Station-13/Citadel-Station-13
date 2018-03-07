@@ -35104,6 +35104,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
 "bvU" = (
@@ -40974,8 +40977,11 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "bIv" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "bIw" = (
 /obj/machinery/light,
 /obj/machinery/camera{
@@ -67898,6 +67904,15 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"cLE" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1;
+	name = "euthanization chamber freezer";
+	on = 1;
+	target_temperature = 80
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "cLF" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -71575,7 +71590,7 @@
 "cTT" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "cUH" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/white,
@@ -72047,6 +72062,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"cZv" = (
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "cZR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -72192,6 +72210,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 6
+	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -72201,14 +72222,24 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
+"daR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1;
+	external_pressure_bound = 140;
+	name = "server vent";
+	pressure_checks = 0
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "daS" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/department/science/xenobiology)
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "daW" = (
 /obj/machinery/button/door{
 	id = "engpa";
@@ -72343,10 +72374,17 @@
 "dbv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
+"dbw" = (
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Kill Chamber";
+	dir = 1;
+	network = list("ss13","rd","xeno");
+	start_active = 1
 	},
-/area/maintenance/department/science/xenobiology)
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "dbE" = (
 /obj/machinery/plantgenes,
 /obj/effect/turf_decal/stripes/line{
@@ -72753,18 +72791,15 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/camera_advanced/xenobio,
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table/glass,
-/obj/item/extinguisher,
-/obj/item/extinguisher{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/extinguisher{
-	pixel_x = 5;
-	pixel_y = 5
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -72788,6 +72823,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/machinery/computer/camera_advanced/xenobio,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -72857,6 +72893,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -72871,6 +72910,9 @@
 /area/science/xenobiology)
 "dcx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -72948,13 +72990,18 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcJ" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/extinguisher,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcK" = (
@@ -73380,8 +73427,11 @@
 	},
 /obj/structure/chair,
 /obj/item/cigbutt,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "ddy" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -73389,8 +73439,9 @@
 /area/maintenance/department/science/xenobiology)
 "ddz" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "ddA" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -73400,15 +73451,23 @@
 	opacity = 0;
 	req_access_txt = "55"
 	},
-/turf/closed/wall/r_wall,
-/area/maintenance/department/science/xenobiology)
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
+"ddB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 1;
+	external_pressure_bound = 120;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "ddC" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "ddE" = (
 /obj/effect/landmark/start/cook,
 /obj/machinery/holopad,
@@ -73720,12 +73779,6 @@
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/delivery,
 /obj/item/clothing/glasses/meson/engine,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"dgA" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "dgI" = (
@@ -74831,6 +74884,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /obj/machinery/door/airlock/research{
 	glass = 1;
 	name = "Slime Euthanization Chamber";
@@ -74841,7 +74897,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "dmr" = (
 /obj/machinery/door/airlock/research{
 	glass = 1;
@@ -74853,7 +74909,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/maintenance/department/science/xenobiology)
+/area/science/xenobiology)
 "dmD" = (
 /obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
@@ -76126,13 +76182,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"dPp" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -76234,6 +76283,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"eHX" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "eXy" = (
 /obj/machinery/airalarm{
 	pixel_y = 32
@@ -76441,10 +76496,6 @@
 	dir = 4
 	},
 /area/engine/engineering)
-"iYY" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "jjF" = (
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -76485,10 +76536,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"jzw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "jFx" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -76513,12 +76560,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"jYQ" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "kfu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -76873,6 +76914,14 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"oWo" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/starboard/fore)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76928,6 +76977,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"pYA" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "qnJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -76942,6 +76998,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/science/circuit)
+"qoX" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -76992,12 +77054,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
-"rFx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
 /area/engine/engineering)
 "rQK" = (
 /obj/structure/cable/yellow{
@@ -77051,6 +77107,10 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"swQ" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "sGh" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -77084,14 +77144,12 @@
 "sSU" = (
 /turf/closed/wall/r_wall,
 /area/space)
-"tdB" = (
-/obj/machinery/light/small{
-	dir = 8
+"sZQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/starboard/fore)
+/turf/closed/wall,
+/area/engine/engineering)
 "tjH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -77213,7 +77271,7 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
-"vAk" = (
+"vHD" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -110259,7 +110317,7 @@ cRi
 cRi
 cRi
 daP
-cTA
+cLE
 dlV
 aaa
 aaa
@@ -110516,10 +110574,10 @@ daF
 daJ
 cRi
 bvT
-dlV
-dlV
-dlV
-dlV
+cRi
+cRi
+cRi
+cRi
 aaa
 aai
 aaa
@@ -110773,10 +110831,10 @@ cSn
 cSn
 cRi
 dmq
-dlV
-ddj
-ddj
-dlV
+cRi
+cZv
+cZv
+cRi
 aaf
 aag
 aaa
@@ -111031,9 +111089,9 @@ cSn
 cRi
 ddx
 ddz
-ddj
-ddj
-jzw
+daR
+cZv
+cRe
 aaa
 aaa
 aaa
@@ -111545,9 +111603,9 @@ daK
 cRi
 bIv
 ddz
-ddj
-ddj
-jzw
+ddB
+cZv
+cRe
 aaa
 aaf
 aaa
@@ -111801,10 +111859,10 @@ cSn
 daN
 cRi
 dmr
-dlV
-ddj
-ddj
-dlV
+cRi
+cZv
+dbw
+cRi
 aaa
 aag
 aaa
@@ -112058,10 +112116,10 @@ daI
 daM
 cRi
 cTA
-dlV
-dlV
-dlV
-dlV
+cRi
+cRi
+cRi
+cRi
 aaf
 aag
 aaa
@@ -117841,7 +117899,7 @@ arJ
 arI
 dnh
 dqu
-tdB
+oWo
 axO
 axY
 aAo
@@ -118887,8 +118945,8 @@ dfh
 aBO
 aBO
 aBK
-dPp
-rFx
+pYA
+sZQ
 axY
 aYu
 aYu
@@ -119901,7 +119959,7 @@ axY
 axY
 ayW
 bTq
-dgA
+eHX
 aBO
 aBO
 aFC
@@ -119914,7 +119972,7 @@ aNu
 axY
 dfp
 aBO
-dgA
+eHX
 dfP
 dfY
 axY
@@ -120412,7 +120470,7 @@ ati
 ajb
 avB
 axY
-jYQ
+qoX
 bUw
 aJu
 axY
@@ -120431,7 +120489,7 @@ axY
 axY
 aJu
 bUw
-iYY
+swQ
 axY
 alq
 alq
@@ -121437,7 +121495,7 @@ apn
 aqy
 arT
 apm
-vAk
+vHD
 avB
 axY
 goZ

@@ -129,7 +129,7 @@
 	display_name = "Basic Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
 	prereq_ids = list("base")
-	design_ids = list("beacon") //CIT CHANGE removed xenobioconsole from here.
+	design_ids = list("beacon", "xenobioconsole")
 	research_cost = 2500
 	export_price = 5000
 
@@ -148,7 +148,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick", "xenobioconsole") //CIT CHANGE added xenobioconsole here
+	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
 	research_cost = 5000
 	export_price = 5000
 
