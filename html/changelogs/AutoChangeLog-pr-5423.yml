@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - admin: "The notify irc/discord bot chat command no longer requires admin privileges."

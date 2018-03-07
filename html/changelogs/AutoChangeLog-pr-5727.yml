@@ -1,4 +1,0 @@
-author: "RealDonaldTrump"
-delete-after: True
-changes: 
-  - tweak: "Removed the probability check from prayer beads for their low amount of healing, as well as lowering the time needed to heal from 15 seconds to 10 seconds. Slimepeople won't get harmed by prayer beads either."

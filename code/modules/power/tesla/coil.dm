@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src)
+//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -35,6 +35,10 @@
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
+
+/obj/machinery/power/tesla_coil/on_construction()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
@@ -75,8 +79,6 @@
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("coilhit", src)
@@ -110,8 +112,6 @@
 /obj/machinery/power/tesla_coil/research/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)

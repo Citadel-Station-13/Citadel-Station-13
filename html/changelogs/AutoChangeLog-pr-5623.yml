@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Fixed preferences from overridding vore bellies on different characters with the last saved. Maybe. Worked on local."
-  - soundadd: "added a button for prey to restart their sound loop, if it cut out and they want it back on."
-  - soundadd: "Vore sounds respect walls, people can stop bitching about dorm room vore RP."

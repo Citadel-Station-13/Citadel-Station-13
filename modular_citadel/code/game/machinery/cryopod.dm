@@ -396,7 +396,7 @@
 	if(target == user && world.time - target.client.cryo_warned > 5 * 600)//if we haven't warned them in the last 5 minutes
 		var/caught = FALSE
 		if(target.mind.assigned_role in GLOB.command_positions)
-			alert("<span class='userdanger'>You're a Head of Staff![generic_plsnoleave_message]</span>")
+			alert("<span class='userdanger'>You're a Head of Staff![generic_plsnoleave_message] Be sure to put your locker items back into your locker!</span>")
 			caught = TRUE
 		if(iscultist(target) || is_servant_of_ratvar(target))
 			to_chat(target, "<span class='userdanger'>You're a Cultist![generic_plsnoleave_message]</span>")
