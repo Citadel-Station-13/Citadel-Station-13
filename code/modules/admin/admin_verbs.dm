@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/cmd_admin_ticket_panel,
+	/client/proc/panicbunker,
 	/client/proc/stop_sounds
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
@@ -116,7 +117,6 @@ GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 	/client/proc/toggle_random_events,
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
-	/client/proc/panicbunker,
 	/client/proc/toggle_hub
 	)
 GLOBAL_PROTECT(admin_verbs_debug)

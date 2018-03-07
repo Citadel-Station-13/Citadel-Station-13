@@ -87,12 +87,22 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
+	// Mentor PM
+	if(href_list["mentor_msg"])
+		if(CONFIG_GET(flag.mentors_mobname_only))
+			var/mob/M = locate(href_list["mentor_msg"])
+			cmd_mentor_pm(M,null)
+		else
+			cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
 
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
 		if("usr")
 			hsrc = mob
+		if("mentor") // CITADEL
+			hsrc = mentor_datum // CITADEL END
 		if("prefs")
 			if (inprefs)
 				return
@@ -376,6 +386,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
+	hook_vr("client_new",list(src)) // CIT CHANGE - hook for client/New() changes
+
 	Master.UpdateTickRate()
 
 //////////////
@@ -604,7 +616,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
-	
+
 /client/proc/add_system_note(system_ckey, message)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
@@ -713,6 +725,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
+//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
+	if(prefs && CONFIG_GET(string/default_view))
+		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
+			new_size = "15x15"
+//END OF CIT CHANGES
 	view = new_size
 	apply_clickcatcher()
 	if (isliving(mob))
