@@ -409,7 +409,21 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				"Someone come hold me :(",\
 				"I need someone on me :(",\
 				"What happened? Where has everyone gone?",\
-				"Forever alone :("\
+				"Forever alone :(",\
+				"My nipples are so stiff, but Zelda ain't here. :(",\
+				"Leon senpai, play more Spessmans. :(",\
+				"If only Serdy were here...",\
+				"Panic bunker can't keep my love for you out.",\
+				"Cebu needs to Awoo herself back into my heart.",\
+				"I don't even have a Turry to snuggle viciously here.",\
+				"MOM, WHERE ARE YOU??? D:",\
+				"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
+				"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
+				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
+				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
+				"i shure hop dere are no PRED arund!!!!",\
+				"NO PRED CAN eVER CATCH MI",\
+				"help, the clown is honking his horn in front of dorms and its interrupting everyones erp"\
 			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
@@ -715,6 +729,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
+
+//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
+	if(prefs && CONFIG_GET(string/default_view))
+		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
+			new_size = "15x15"
+//END OF CIT CHANGES
 
 	view = new_size
 	apply_clickcatcher()

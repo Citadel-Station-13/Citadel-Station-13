@@ -1,7 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added pump action particle blasters. Shotgun eguns!"
-  - rscadd: "Added the Particle Defender, unique pump action particle blaster variant that replaces the warden's taser"
-  - soundadd: "added new sounds for pump action particle blaster, mostly recorded by yours truly"
-  - imageadd: "added new sprites for pump action particle blasters"

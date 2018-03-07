@@ -198,3 +198,4 @@ tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompile
 
 #GitHub Atom
 .atom-build.json
+cfg/admin.txt

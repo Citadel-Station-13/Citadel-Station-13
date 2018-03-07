@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Sleeping Carp and Psychotic Brawl will now both use Knockdown() instead of Stun() for their stuns, making things a lot more consistent with the recent stun nerfs."
