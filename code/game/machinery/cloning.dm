@@ -402,7 +402,6 @@
 /obj/machinery/clonepod/container_resist(mob/living/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
-		mob_occupant.apply_vore_prefs()
 
 /obj/machinery/clonepod/emp_act(severity)
 	var/mob/living/mob_occupant = occupant

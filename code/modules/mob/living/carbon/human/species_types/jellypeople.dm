@@ -4,12 +4,15 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -18,6 +21,8 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	if(slime_change)	//CIT CHANGE
+		slime_change.Remove(C)	//CIT CHANGE
 	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
@@ -29,6 +34,8 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+		slime_change = new	//CIT CHANGE
+		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
