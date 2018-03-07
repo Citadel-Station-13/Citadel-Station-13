@@ -1312,7 +1312,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "afV" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -35704,7 +35704,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -45268,7 +45268,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -46320,7 +46320,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -47105,7 +47105,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bXz" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
@@ -53410,7 +53410,7 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "cjY" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
@@ -58216,7 +58216,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -60886,7 +60886,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "czU" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral,
 /area/ai_monitored/storage/eva)
 "czV" = (
@@ -77248,7 +77248,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/research)
 "dhZ" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -77486,7 +77486,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whiteblue,
 /area/medical/medbay/central)
@@ -89819,7 +89819,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/blobstart,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -91509,7 +91509,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "dLF" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
@@ -93879,7 +93879,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "dQR" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "dQU" = (

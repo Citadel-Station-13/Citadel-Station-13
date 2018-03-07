@@ -1455,7 +1455,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "afy" = (
 /obj/effect/landmark/start/cyborg,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afz" = (
@@ -7515,7 +7515,7 @@
 	},
 /area/bridge)
 "atU" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
@@ -9537,7 +9537,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayQ" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayR" = (
@@ -16445,7 +16445,7 @@
 /area/storage/eva)
 "aPM" = (
 /obj/structure/table,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 10
@@ -25241,7 +25241,7 @@
 /area/science/server)
 "blP" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -25812,7 +25812,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bnq" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
@@ -36373,7 +36373,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKA" = (
@@ -39638,7 +39638,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bSG" = (
@@ -39754,7 +39754,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSS" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bST" = (
@@ -46040,7 +46040,7 @@
 /turf/closed/mineral/random/low_chance,
 /area/asteroid/nearstation/bomb_site)
 "ckL" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plating/airless,
 /area/asteroid/nearstation/bomb_site)
 "ckM" = (
@@ -46319,7 +46319,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "clS" = (
@@ -47188,7 +47188,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "coT" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "coV" = (
@@ -47342,7 +47342,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cpt" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
