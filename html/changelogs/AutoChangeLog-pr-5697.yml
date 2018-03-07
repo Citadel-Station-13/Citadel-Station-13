@@ -1,5 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added a syndicate exclusive .357. Replaces the original one in the uplink. All other .357s are untouched."
-  - imageadd: "added new sprites for crowbars, wrenches, syndicate .357, and eguns"
