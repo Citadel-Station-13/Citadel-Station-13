@@ -102,7 +102,7 @@
 //Middle right (status indicators)
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
-#define ui_internal "EAST-1:28,CENTER:17"
+#define ui_internal "EAST-1:28,CENTER+1:19"//CIT CHANGE - moves internal icon up a little bit to accommodate for the stamina meter
 
 //borgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"		//borgs have the health display where humans have the pressure damage indicator.

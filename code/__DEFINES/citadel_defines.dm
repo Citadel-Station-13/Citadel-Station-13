@@ -4,6 +4,7 @@
 
 //HUD stuff
 #define  ui_arousal "EAST-1:28,CENTER-3:11"//Below the health doll
+#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
 #define ui_combat_toggle "EAST-4:22,SOUTH:5"
 

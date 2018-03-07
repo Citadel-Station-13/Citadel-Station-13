@@ -6,3 +6,5 @@
 		adjustStaminaLoss(directstamloss)
 	bufferedstam = CLAMP(bufferedstam + amount, 0, stambuffer)
 	stambufferregentime = world.time + 5 SECONDS
+	if(updating_stamina)
+		update_health_hud()

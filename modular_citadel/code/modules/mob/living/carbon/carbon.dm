@@ -15,9 +15,3 @@
 		for(var/obj/screen/combattoggle/selector in hud_used.static_inventory)
 			selector.rebasetointerbay(src)
 	return TRUE
-
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Stamina: [100 - staminaloss]")
-		stat(null, "Stamina buffer: [stambuffer - bufferedstam]")
