@@ -681,12 +681,12 @@
 	build_path = /obj/item/ammo_box/foambox/tag/red
 	category = list("initial", "Misc")
 
-/datum/design/foam_dartred
-	name = "Box of Lastag Red Foam Darts"
-	id = "redfoam_dart"
+/datum/design/foam_dartblue
+	name = "Box of Lastag Blue Foam Darts"
+	id = "bluefoam_dart"
 	build_type = AUTOYLATHE
 	materials = list(MAT_PLASTIC = 500, MAT_METAL = 100)
-	build_path = /obj/item/ammo_box/foambox/tag/red
+	build_path = /obj/item/ammo_box/foambox/tag/blue
 	category = list("initial", "Misc")
 
 /datum/design/foam_bow
