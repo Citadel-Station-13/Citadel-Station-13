@@ -55,6 +55,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=ak47s'>AK-47s For Everyone!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
@@ -106,6 +107,9 @@
 			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
+
+		if("mentor_log")
+			CitadelMentorLogSecret()
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
@@ -474,6 +478,13 @@
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
+
+		if("ak47s")
+			if(!check_rights(R_FUN))
+				return
+			message_admins("[key_name_admin(usr)] activated AK-47s for Everyone!")
+			usr.client.ak47s()
+			sound_to_playing_players('sound/misc/ak47s.ogg')
 
 		if("guns")
 			if(!check_rights(R_FUN))

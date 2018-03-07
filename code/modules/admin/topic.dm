@@ -22,6 +22,8 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
+	citaTopic(href, href_list) //CITADEL EDIT, MENTORS
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
