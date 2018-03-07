@@ -98,7 +98,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
-	message = "<b>[user]</b> " + "<i>[message]</i>"
+	message = "<b>[user]</b> " + message
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
