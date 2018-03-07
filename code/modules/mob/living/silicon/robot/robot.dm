@@ -159,8 +159,6 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
-	verbs += /mob/living/proc/lay_down //CITADEL EDIT borgs have rest verb now for snowflake reasons
-
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
@@ -211,8 +209,6 @@
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
-
-	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -367,12 +363,8 @@
 			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 			if(!W.use_tool(src, user, 50))
 				return
-			adjustBruteLoss(-10)
-		else
-			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-			if(!do_after(user, 30, target = src))
-				return
-			adjustBruteLoss(-30)
+
+		adjustBruteLoss(-30)
 		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
@@ -382,16 +374,11 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user && coil.use(1))
+			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
-				adjustFireLoss(-10)
-				adjustToxLoss(-10)
 			if (coil.use(1))
-				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-				if(!do_after(user, 30, target = src))
-					return
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
@@ -600,36 +587,6 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-
-	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
-	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
-	if(laser)
-		add_overlay("laser")//Is this even used??? - Yes borg/inventory.dm
-	if(disabler)
-		add_overlay("disabler")//ditto
-
-	if(sleeper_g && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_g")
-	if(sleeper_r && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_r")
-	if(module.dogborg == TRUE)
-		if(resting)
-			cut_overlays()
-			icon_state = "[module.cyborg_base_icon]-rest"
-		else
-			icon_state = "[module.cyborg_base_icon]"
-
-	if(stat == DEAD && module.has_snowflake_deadsprite)
-		icon_state = "[module.cyborg_base_icon]-wreck"
-
-	if(module.cyborg_pixel_offset)
-		pixel_x = module.cyborg_pixel_offset
-	//End of citadel changes
-
-	if(module.cyborg_base_icon == "robot")
-		icon = 'icons/mob/robots.dmi'
-		pixel_x = initial(pixel_x)
-
 	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
@@ -1023,7 +980,6 @@
 	designation = module.name
 	if(hands)
 		hands.icon_state = module.moduleselect_icon
-		hands.icon = (module.moduleselect_alternate_icon ? module.moduleselect_alternate_icon : initial(hands.icon)) //CITADEL CHANGE - allows module select icons to use a different icon file
 	if(module.can_be_pushed)
 		status_flags |= CANPUSH
 	else

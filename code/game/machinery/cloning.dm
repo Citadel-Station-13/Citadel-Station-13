@@ -126,7 +126,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/traits)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -197,6 +197,9 @@
 
 	if(H)
 		H.faction |= factions
+
+		for(var/V in traits)
+			new V(H)
 
 		H.set_cloned_appearance()
 
@@ -316,6 +319,7 @@
 			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
+			mob_occupant.apply_vore_prefs()
 	else
 		return ..()
 
@@ -398,6 +402,7 @@
 /obj/machinery/clonepod/container_resist(mob/living/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
+		mob_occupant.apply_vore_prefs()
 
 /obj/machinery/clonepod/emp_act(severity)
 	var/mob/living/mob_occupant = occupant
@@ -405,6 +410,7 @@
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
 		go_out()
+		mob_occupant.apply_vore_prefs()
 	..()
 
 /obj/machinery/clonepod/ex_act(severity, target)

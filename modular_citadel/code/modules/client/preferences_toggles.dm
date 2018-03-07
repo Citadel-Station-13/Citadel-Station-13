@@ -20,3 +20,17 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggledigestionnoise)()
 	to_chat(usr, "You will [(usr.client.prefs.toggles & DIGESTION_NOISES) ? "now" : "no longer"] hear digestion noises.")
 /datum/verbs/menu/Settings/Sound/toggledigestionnoise/Get_checked(client/C)
 	return !(C.prefs.toggles & DIGESTION_NOISES)
+
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglehoundsleeper)()
+	set name = "Allow/Deny Hound Sleeper"
+	set category = "Preferences"
+	set desc = "Allow MediHound Sleepers"
+	usr.client.prefs.toggles ^= MEDIHOUND_SLEEPER
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & MEDIHOUND_SLEEPER)
+		to_chat(usr, "You will now allow MediHounds to place you in their sleeper.")
+	else
+		to_chat(usr, "You will no longer allow MediHounds to place you in their sleeper.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle MediHound Sleeper", "[usr.client.prefs.toggles & MEDIHOUND_SLEEPER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/Settings/Sound/togglehoundsleeper/Get_checked(client/C)
+	return C.prefs.toggles & MEDIHOUND_SLEEPER
