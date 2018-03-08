@@ -1,2 +1,0 @@
-poojawa role=admin
-junozumori role=admin
