@@ -110,8 +110,9 @@
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
-		if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
-			user.adjustStaminaLossBuffered(getstamcost(user)) //CIT CHANGE - ditto
+
+	if(iscarbon(user)) //CIT CHANGE - makes gun recoil cause staminaloss
+		user.adjustStaminaLossBuffered(getstamcost(user)*(firing_burst && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
