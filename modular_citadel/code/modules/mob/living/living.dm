@@ -4,6 +4,7 @@
 	var/stambuffer = 20
 	var/stambufferregentime
 	var/aimingdownsights = FALSE
+	var/attemptingstandup = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -51,14 +52,15 @@
 	else
 		resist_a_rest()
 
-/mob/living/proc/resist_a_rest(ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
-	if(!resting || stat)
+/mob/living/proc/resist_a_rest(nomessage = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
+	if(!resting || stat || attemptingstandup)
 		return FALSE
 	if(ignoretimer)
 		resting = FALSE
 		update_canmove()
 		return TRUE
 	else
+		attemptingstandup = TRUE
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
 		if(staminaloss >= STAMINA_SOFTCRIT)
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
@@ -79,13 +81,17 @@
 				standupwarning = "[src] weakly attempts to stand up."
 			if(80 to INFINITY)
 				standupwarning = "[src] struggles to stand up."
-		visible_message("<span class='notice'>[standupwarning]</span>", "<span class='notice'>You are now getting up.</span>", vision_distance = 5)
+		var/usernotice = nomessage ? "" : "<span class='notice'>You are now getting up.</span>"
+		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
 		if(do_after(src, totaldelay, target = src))
 			resting = FALSE
+			attemptingstandup = FALSE
 			update_canmove()
 			return TRUE
 		else
-			visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
+			var/altnotice = nomessage ? "" : "<span class='notice'>You fall right back down.</span>"
+			visible_message("<span class='notice'>[src] falls right back down.</span>", altnotice)
+			attemptingstandup = FALSE
 			if(has_gravity())
 				playsound(src, "bodyfall", 20, 1)
 			return FALSE
