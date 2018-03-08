@@ -25,9 +25,9 @@
 	throw_speed = 3
 	throw_range = 7
 
-	suicide_act(mob/user)			//"A tiny net is a death sentence: it's a net and it's tiny!" https://www.youtube.com/watch?v=FCI9Y4VGCVw
-		to_chat(viewers(user), "<span class='warning'>[user] places the [src.name] on top of \his head, \his fingers tangled in the netting! It looks like \he's trying to commit suicide.</span>")
-		return(OXYLOSS)
+/obj/item/weapon/fish_net/suicide_act(mob/user)			//"A tiny net is a death sentence: it's a net and it's tiny!" https://www.youtube.com/watch?v=FCI9Y4VGCVw
+	to_chat(viewers(user), "<span class='warning'>[user] places the [src.name] on top of \his head, \his fingers tangled in the netting! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
 
 /obj/item/weapon/fishfood
 	name = "fish food can"
@@ -51,9 +51,9 @@
 	throw_range = 7
 	attack_verb = list("scrubbed", "brushed", "scraped")
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "<span class='warning'>[user] is vigorously scrubbing \himself raw with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-		return(BRUTELOSS|FIRELOSS)
+/obj/item/weapon/tank_brush/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='warning'>[user] is vigorously scrubbing \himself raw with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	return(BRUTELOSS|FIRELOSS)
 
 //////////////////////////////////////////////
 //				Fish Items					//
