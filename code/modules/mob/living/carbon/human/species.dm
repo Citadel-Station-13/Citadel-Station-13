@@ -683,7 +683,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
-<<<<<<< HEAD
+				if("caps")
+					S = GLOB.caps_list[H.dna.features["caps"]]
 
 				//Mammal Bodyparts
 				if("mam_tail")
@@ -705,10 +706,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if("xenotail")
 					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
 
-=======
-				if("caps")
-					S = GLOB.caps_list[H.dna.features["caps"]]
->>>>>>> 84d4b3a... Mushroom people, revived! (#35858)
 			if(!S || S.icon_state == "none")
 				continue
 
