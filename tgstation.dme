@@ -2672,6 +2672,7 @@
 #include "modular_citadel\code\modules\fish\fishtank.dm"
 #include "modular_citadel\code\modules\food_and_drinks\food\snacks_seafood.dm"
 #include "modular_citadel\code\modules\food_and_drinks\recipes\tablecraft\recipes_seafood.dm"
+#include "modular_citadel\code\modules\food_and_drinks\snacks\meat.dm"
 #include "modular_citadel\code\modules\jobs\jobs.dm"
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
 #include "modular_citadel\code\modules\jobs\job_types\cargo_service.dm"
