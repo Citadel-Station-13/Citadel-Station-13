@@ -48,10 +48,9 @@
 
 	if(client && client.prefs && client.prefs.autostand)
 		intentionalresting = !intentionalresting
-		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "stay down" : "stay standing up"].</span>")
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "[!resting ? "lay down and ": ""]stay down" : "[resting ? "get up and ": ""]stay up"].</span>")
 		if(intentionalresting && !resting)
 			resting = TRUE
-			to_chat(src, "<span class='notice'>You are now laying down.</span>")
 			update_canmove()
 		else
 			resist_a_rest()
