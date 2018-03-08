@@ -52,7 +52,7 @@
 	else
 		resist_a_rest()
 
-/mob/living/proc/resist_a_rest(nomessage = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
+/mob/living/proc/resist_a_rest(automatic = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
 	if(!resting || stat || attemptingstandup)
 		return FALSE
 	if(ignoretimer)
@@ -81,7 +81,7 @@
 				standupwarning = "[src] weakly attempts to stand up."
 			if(80 to INFINITY)
 				standupwarning = "[src] struggles to stand up."
-		var/usernotice = nomessage ? "" : "<span class='notice'>You are now getting up.</span>"
+		var/usernotice = automatic ? "<span class='notice'>You are now getting up. (Auto)</span>" : "<span class='notice'>You are now getting up.</span>"
 		visible_message("<span class='notice'>[standupwarning]</span>", usernotice, vision_distance = 5)
 		if(do_after(src, totaldelay, target = src))
 			resting = FALSE
@@ -89,8 +89,7 @@
 			update_canmove()
 			return TRUE
 		else
-			var/altnotice = nomessage ? "" : "<span class='notice'>You fall right back down.</span>"
-			visible_message("<span class='notice'>[src] falls right back down.</span>", altnotice)
+			visible_message("<span class='notice'>[src] falls right back down.</span>", "<span class='notice'>You fall right back down.</span>")
 			attemptingstandup = FALSE
 			if(has_gravity())
 				playsound(src, "bodyfall", 20, 1)
