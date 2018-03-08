@@ -1060,7 +1060,7 @@
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
-	if(canmove && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
+	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
 		resist_a_rest(TRUE)//CIT CHANGE - ditto
 	return canmove
 

@@ -5,6 +5,7 @@
 	var/stambufferregentime
 	var/aimingdownsights = FALSE
 	var/attemptingstandup = FALSE
+	var/intentionalresting = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -45,12 +46,22 @@
 	set name = "Rest"
 	set category = "IC"
 
-	if(!resting)
-		resting = TRUE
-		to_chat(src, "<span class='notice'>You are now laying down.</span>")
-		update_canmove()
+	if(client && client.prefs && client.prefs.autostand)
+		intentionalresting = !intentionalresting
+		to_chat(src, "<span class='notice'>You are now attempting to [intentionalresting ? "stay down" : "stay standing up"].</span>")
+		if(intentionalresting && !resting)
+			resting = TRUE
+			to_chat(src, "<span class='notice'>You are now laying down.</span>")
+			update_canmove()
+		else
+			resist_a_rest()
 	else
-		resist_a_rest()
+		if(!resting)
+			resting = TRUE
+			to_chat(src, "<span class='notice'>You are now laying down.</span>")
+			update_canmove()
+		else
+			resist_a_rest()
 
 /mob/living/proc/resist_a_rest(automatic = FALSE, ignoretimer = FALSE) //Lets mobs resist out of resting. Major QOL change with combat reworks.
 	if(!resting || stat || attemptingstandup)
@@ -60,11 +71,11 @@
 		update_canmove()
 		return TRUE
 	else
-		attemptingstandup = TRUE
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
 		if(staminaloss >= STAMINA_SOFTCRIT)
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
+		attemptingstandup = TRUE
 		var/health_deficiency = max((maxHealth - (health - staminaloss))*0.5, 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
