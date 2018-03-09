@@ -67542,9 +67542,7 @@
 	name = "xenobiology camera";
 	network = list("ss13","xeno","rd")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
+/turf/open/floor/plasteel/vault/killroom,
 /area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
@@ -69718,6 +69716,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cSg" = (
@@ -69728,7 +69727,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/door/airlock/research/glass{
-	name = "Xenobiology Isolation Pin";
+	name = "Xenobiology Kill Room";
 	req_access_txt = "47"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -70518,19 +70517,13 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1;
+	min_temperature = 80;
+	on = 1;
+	target_temperature = 80
 	},
-/obj/structure/table/glass,
-/obj/item/extinguisher,
-/obj/item/extinguisher{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/extinguisher{
-	pixel_x = 5;
-	pixel_y = 5
-	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTS" = (
@@ -72226,6 +72219,9 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cXm" = (
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -100786,6 +100782,12 @@
 	dir = 8
 	},
 /area/science/misc_lab)
+"gPz" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
 "gQS" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 9
@@ -100927,10 +100929,21 @@
 "jKb" = (
 /turf/open/space,
 /area/space/nearstation)
+"jRX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 2;
+	external_pressure_bound = 120;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "kwx" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
+"kwP" = (
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
 "kyo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -101036,6 +101049,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"npb" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/vault/killroom,
+/area/science/xenobiology)
+"nGW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 2;
+	external_pressure_bound = 140;
+	name = "killroom vent";
+	pressure_checks = 0
+	},
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "nJG" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -101070,6 +101098,9 @@
 	dir = 1
 	},
 /area/science/circuit)
+"pqQ" = (
+/turf/open/floor/circuit/killroom,
+/area/science/xenobiology)
 "psi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -101191,12 +101222,11 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"vyI" = (
-/obj/machinery/status_display{
-	pixel_x = 32
+"vOd" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 8
 	},
-/obj/structure/reagent_dispensers/watertank/high,
-/turf/open/floor/circuit/green,
+/turf/open/floor/plasteel/vault/killroom,
 /area/science/xenobiology)
 "wei" = (
 /obj/effect/turf_decal/stripes/line,
@@ -132544,9 +132574,9 @@ cHA
 cjp
 cKl
 cLI
-cNd
-cNd
-cNd
+kwP
+kwP
+kwP
 cNc
 cTQ
 cVI
@@ -132801,9 +132831,9 @@ cHB
 cjp
 cKj
 cLI
-cNd
-cNd
-cNd
+kwP
+nGW
+vOd
 cSf
 cTR
 cVP
@@ -133059,8 +133089,8 @@ caE
 cKm
 cLI
 cNi
-cNd
-cNd
+pqQ
+gPz
 cSg
 cTS
 cVQ
@@ -133315,9 +133345,9 @@ cHB
 cjp
 cKk
 cLI
-cNd
-cNd
-cNd
+kwP
+jRX
+npb
 cSh
 cTT
 cVR
@@ -133572,9 +133602,9 @@ cHA
 ceb
 cKk
 cLI
-cNd
-cNd
-cNd
+kwP
+kwP
+kwP
 cNc
 cTU
 cVS
@@ -133837,7 +133867,7 @@ cTV
 cVT
 cXm
 cZb
-vyI
+cXm
 dcu
 ddV
 cMY

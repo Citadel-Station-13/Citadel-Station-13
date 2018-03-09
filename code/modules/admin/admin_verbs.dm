@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/pump_random_event,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
-	/datum/admins/proc/create_or_modify_area
+	/datum/admins/proc/create_or_modify_area,
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
@@ -267,11 +267,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
 
-		for(var/path in holder.rank.adds)
-			verbs += path
-		for(var/path in holder.rank.subs)
-			verbs -= path
-
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		GLOB.admin_verbs_default,
@@ -306,8 +301,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/cmd_admin_areatest_station,
 		/client/proc/readmin
 		)
-	if(holder)
-		verbs.Remove(holder.rank.adds)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
@@ -528,8 +521,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
 	var/ex_power = input("Explosive Power:") as null|num
+	if (isnull(ex_power))
+		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
+	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
 /client/proc/get_dynex_power()
 	set category = "Debug"
@@ -537,6 +532,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
+	if (isnull(ex_range))
+		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
