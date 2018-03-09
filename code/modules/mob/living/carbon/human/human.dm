@@ -30,10 +30,16 @@
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
+
+/mob/living/carbon/human/ComponentInitialize()
+	if(!CONFIG_GET(flag/disable_human_mood))
+		AddComponent(/datum/component/mood)
+
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
 	return ..()
+
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -223,6 +229,9 @@
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+					GET_COMPONENT_FROM(mood, /datum/component/mood, usr)
+					if(mood)
+						mood.clear_event("embeddedobject")
 			return
 
 		if(href_list["item"])
@@ -651,6 +660,9 @@
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+		if(mood)
+			mood.add_event("perform_cpr", /datum/mood_event/perform_cpr)
 		C.cpr_time = world.time
 		add_logs(src, C, "CPRed")
 
