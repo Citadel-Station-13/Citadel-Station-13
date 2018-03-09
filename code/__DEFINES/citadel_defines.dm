@@ -3,7 +3,7 @@
 //Measurements are in imperial units. Inches, feet, yards, miles. Tsp, tbsp, cups, quarts, gallons, etc
 
 //arousal HUD location
-#define  ui_arousal "EAST-1:28,CENTER-3:11"//Below the health doll
+#define  ui_arousal "EAST-1:28,CENTER-4:8"//Below the health doll
 
 
 //organ defines
