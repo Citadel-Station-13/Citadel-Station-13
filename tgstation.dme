@@ -2703,6 +2703,7 @@
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\spinfusor.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "modular_citadel\code\modules\projectiles\guns\energy\laser.dm"
+#include "modular_citadel\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\cit_kegs.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\hypospraymkii.dm"
 #include "modular_citadel\code\modules\reagents\reagent container\hypovial.dm"
