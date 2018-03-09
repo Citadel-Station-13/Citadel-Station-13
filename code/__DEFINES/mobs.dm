@@ -86,8 +86,6 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
-<<<<<<< HEAD
-=======
 //Moods levels for humans
 #define MOOD_LEVEL_HAPPY4 15
 #define MOOD_LEVEL_HAPPY3 10
@@ -107,7 +105,6 @@
 
 
 
->>>>>>> 0bc8550... Small moodie balance changes (#36242)
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550

@@ -458,7 +458,7 @@ SUBSYSTEM_DEF(timer)
 	if (wait >= 1 && callback && callback.object && callback.object != GLOBAL_PROC && QDELETED(callback.object))
 		stack_trace("addtimer called with a callback assigned to a qdeleted object")
 
-	wait = max(wait, world.tick_lag)
+	wait = max(wait, 0)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")

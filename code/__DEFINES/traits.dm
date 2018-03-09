@@ -39,13 +39,12 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
+#define TRAIT_DEPRESSION			"depression"
+#define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 0bc8550... Small moodie balance changes (#36242)
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"

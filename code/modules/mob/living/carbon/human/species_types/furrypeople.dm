@@ -53,7 +53,8 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT
 	disliked_food = TOXIC
-
+	meat = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
+	
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
