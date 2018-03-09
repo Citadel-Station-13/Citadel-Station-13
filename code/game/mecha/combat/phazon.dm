@@ -27,3 +27,4 @@
 	..()
 	switch_damtype_action.Remove(user)
 	phasing_action.Remove(user)
+

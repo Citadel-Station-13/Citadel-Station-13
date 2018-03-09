@@ -547,7 +547,6 @@
 /obj/item/circuitboard/machine/tesla_coil/Initialize()
 	. = ..()
 	if(build_path)
-		name = "Tesla Coil (Machine Board)"
 		build_path = PATH_POWERCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
