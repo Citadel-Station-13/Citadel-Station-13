@@ -42,6 +42,7 @@
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
 
+
 /obj/item/toy/balloon/New()
 	create_reagents(10)
 	..()
@@ -286,6 +287,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
+
 /obj/item/toy/windupToolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
@@ -332,7 +334,7 @@
 
 /obj/item/toy/katana
 	name = "replica katana"
-	desc = "Woefully underpowered in D20. Almost has a sharp edge."
+	desc = "Woefully underpowered in D20."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"

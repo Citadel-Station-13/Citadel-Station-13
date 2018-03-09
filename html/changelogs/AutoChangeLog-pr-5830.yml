@@ -1,0 +1,5 @@
+author: "ZeroNetAlpha"
+delete-after: True
+changes: 
+  - tweak: "Makes all darts deletable with nothing more than a little space cleaner."
+  - tweak: "Makes in-flight foam darts dissolve when hit with space cleaner, be it foam, smoke, or a janitor being a badass with a spraybottle."

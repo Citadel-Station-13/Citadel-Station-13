@@ -111,6 +111,7 @@
 		"spines" = pick(GLOB.spines_list),
 		"body_markings" = pick(GLOB.body_markings_list),
 		"legs" = "Normal Legs",
+		"caps" = pick(GLOB.caps_list),
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
 		"mam_body_markings" = "None",
@@ -166,6 +167,7 @@
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
 		"flavor_text"		= ""))
+
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)

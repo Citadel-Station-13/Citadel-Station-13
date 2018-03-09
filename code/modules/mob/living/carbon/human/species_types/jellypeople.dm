@@ -384,6 +384,7 @@
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
 
+
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
 //Luminescents are able to consume and use slime extracts, without them decaying.
@@ -542,7 +543,6 @@
 
 	if(species.current_extract)
 		species.extract_cooldown = world.time + 100
-
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 
@@ -555,8 +555,6 @@
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
-//Admin spawn only
-
 
 /datum/species/jelly/stargazer
 	name = "Stargazer"
@@ -726,4 +724,3 @@
 		else
 			to_chat(H, "<span class='warning'>You can't seem to link [target]'s mind...</span>")
 			to_chat(target, "<span class='warning'>The foreign presence leaves your mind.</span>")
-
