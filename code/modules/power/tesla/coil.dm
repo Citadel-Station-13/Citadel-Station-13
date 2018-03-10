@@ -85,7 +85,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 10)
+			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -118,7 +118,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 200)
+			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -136,6 +136,13 @@
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
 
+<<<<<<< HEAD
+=======
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
+
+>>>>>>> 1293873... Adjust Tesla RP maths (#36229)
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
 	desc = "Keep an area from being fried from Edison's Bane."
