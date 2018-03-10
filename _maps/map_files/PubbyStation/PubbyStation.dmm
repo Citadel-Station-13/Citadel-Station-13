@@ -27810,9 +27810,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "brQ" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Port";
 	dir = 8;
@@ -27821,6 +27818,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "brR" = (
@@ -28604,11 +28602,11 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "btD" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/science/xenobiology)
 "btE" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/science/xenobiology)
 "btF" = (
 /obj/structure/chair{
@@ -29234,7 +29232,7 @@
 	dir = 8;
 	network = list("ss13","rd")
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/science/xenobiology)
 "bva" = (
 /turf/closed/wall,
@@ -50358,8 +50356,15 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "gFV" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
+/obj/structure/table/glass,
+/obj/item/extinguisher{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)

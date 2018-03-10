@@ -9,9 +9,21 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/camera_advanced/xenobio,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/structure/table/glass,
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/extinguisher{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -23,7 +35,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/machinery/computer/camera_advanced/xenobio,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -35,9 +46,6 @@
 "aae" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
-	},
-/obj/structure/chair/comfy/black{
-	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -338,9 +346,6 @@
 /area/security/prison)
 "aaU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -350,26 +355,18 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
 "aaW" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/extinguisher{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/extinguisher,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "aaX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -412,9 +409,6 @@
 /area/security/prison)
 "abd" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -842,20 +836,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research{
-	glass = 1;
-	name = "Slime Euthanization Chamber";
-	opacity = 0;
-	req_access_txt = "55"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "ace" = (
 /obj/machinery/vending/sustenance{
 	desc = "A vending machine normally reserved for work camps.";
@@ -2115,11 +2097,8 @@
 	},
 /obj/structure/chair,
 /obj/item/cigbutt,
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "aeE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2850,11 +2829,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "afR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -3823,11 +3799,8 @@
 	},
 /area/maintenance/fore)
 "ahT" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10
-	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "ahU" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table,
@@ -4424,18 +4397,6 @@
 /obj/item/restraints/handcuffs/cable/pink,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"ajk" = (
-/obj/machinery/door/airlock/research{
-	glass = 1;
-	name = "Slime Euthanization Chamber";
-	opacity = 0;
-	req_access_txt = "55"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "ajl" = (
 /obj/item/soap/deluxe,
 /obj/item/storage/secure/safe{
@@ -4524,15 +4485,6 @@
 	dir = 4
 	},
 /area/security/warden)
-"aju" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	name = "euthanization chamber freezer";
-	on = 1;
-	target_temperature = 80
-	},
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "ajv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -5465,9 +5417,8 @@
 /area/maintenance/starboard)
 "alr" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plating,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "als" = (
 /obj/machinery/light{
 	dir = 8
@@ -6284,7 +6235,7 @@
 	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel/white,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "amW" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
@@ -6530,9 +6481,6 @@
 /obj/item/paper,
 /turf/open/floor/plasteel,
 /area/security/main)
-"anz" = (
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
 "anA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -6969,15 +6917,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/security/warden)
-"aov" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1;
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
-	},
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
 "aow" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/yellow{
@@ -7662,10 +7601,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
-"apP" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
 "apQ" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -7718,14 +7653,6 @@
 /obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel,
 /area/security/main)
-"apX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	external_pressure_bound = 120;
-	name = "server vent"
-	},
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
 "apY" = (
 /obj/structure/table,
 /obj/item/folder/red,
@@ -7772,8 +7699,8 @@
 "aqe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "aqf" = (
 /obj/structure/closet/lasertag/blue,
 /turf/open/floor/plasteel/vault,
@@ -8239,8 +8166,8 @@
 	network = list("ss13","rd","xeno");
 	start_active = 1
 	},
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "ari" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -8436,7 +8363,7 @@
 "arF" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "arG" = (
 /obj/structure/closet,
 /obj/item/storage/box/lights/mixed,
@@ -9509,7 +9436,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/science/xenobiology)
+/area/maintenance/department/science/xenobiology)
 "atD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76215,12 +76142,6 @@
 "eln" = (
 /turf/open/space/basic,
 /area/engine/engineering)
-"emG" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/maintenance/disposal/incinerator)
 "enN" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -76455,6 +76376,16 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hpE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
+"hxK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "hyP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -76656,10 +76587,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"lhQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/maintenance/disposal/incinerator)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_circuit_printer,
@@ -76943,12 +76870,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"pcc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
-/area/maintenance/disposal/incinerator)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77024,6 +76945,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"qxG" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/disposal/incinerator)
 "qBh" = (
 /obj/structure/table,
 /obj/item/device/paicard,
@@ -77127,6 +77055,10 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"sto" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "sGh" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -77173,6 +77105,12 @@
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"trj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "tsx" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -77188,13 +77126,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"tyF" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/floorgrime,
-/area/maintenance/disposal/incinerator)
 "tDM" = (
 /obj/item/wrench,
 /turf/open/floor/plating,
@@ -77234,10 +77165,6 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"uvn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/maintenance/disposal/incinerator)
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -110346,11 +110273,11 @@ cRi
 cRi
 cRi
 aaX
-aju
+cTA
 dlV
 aaa
 aaa
-aaf
+sOW
 aag
 aaa
 aaa
@@ -110603,10 +110530,10 @@ daF
 daJ
 cRi
 abd
-cRi
-cRi
-cRi
-cRi
+dlV
+dlV
+dlV
+dlV
 aaa
 aai
 aaa
@@ -110860,11 +110787,11 @@ cSn
 cSn
 cRi
 acd
-cRi
-anz
-anz
-cRi
-aaf
+dlV
+cTA
+cTA
+dlV
+sOW
 aag
 aaa
 aaa
@@ -111118,9 +111045,9 @@ cSn
 cRi
 aeD
 alr
-aov
-anz
-cRe
+cTA
+cTA
+alr
 aaa
 aaa
 aaa
@@ -111375,7 +111302,7 @@ daL
 cRi
 afQ
 amV
-apP
+cTC
 aqe
 arF
 atC
@@ -111632,9 +111559,9 @@ daK
 cRi
 ahT
 alr
-apX
-anz
-cRe
+cTA
+cTA
+alr
 aaa
 aaf
 aaa
@@ -111887,11 +111814,11 @@ cSn
 cSn
 daN
 cRi
-ajk
-cRi
-anz
+ahT
+dlV
+cTA
 arh
-cRi
+dlV
 aaa
 aag
 aaa
@@ -112145,11 +112072,11 @@ daI
 daM
 cRi
 cTA
-cRi
-cRi
-cRi
-cRi
-aaf
+dlV
+dlV
+dlV
+dlV
+sOW
 aag
 aaa
 aaa
@@ -116959,10 +116886,10 @@ caX
 ccH
 cec
 cfp
-tyF
+qxG
 chJ
-lhQ
-emG
+sto
+hxK
 cgz
 cgz
 cgz
@@ -117987,10 +117914,10 @@ bxc
 ccL
 bxl
 cft
-uvn
-uvn
-uvn
-pcc
+hpE
+hpE
+hpE
+trj
 cgz
 cng
 cgz
