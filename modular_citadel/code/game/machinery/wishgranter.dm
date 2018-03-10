@@ -14,11 +14,13 @@
 	else
 		if(is_special_character(user))
 			to_chat(user, "You speak.  [pick("I want power","Humanity is corrupt, mankind must be destroyed", "I want to rule the world","I want immortality")].  The Wish Granter answers.")
-			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter has given you limitless power, and it's all yours!")
+			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter, sensing the darkness in your heart, has given you limitless power, and it's all yours!")
 			user.dna.add_mutation(HULK)
 			user.dna.add_mutation(XRAY)
 			user.dna.add_mutation(COLDRES)
 			user.dna.add_mutation(TK)
+			user.next_move_modifier *= 0.5	//half the delay between attacks!
+			to_chat(user, "Things around you feel slower!")
 			charges--
 			insisting = FALSE
 			to_chat(user, "You have a very great feeling about this!")
@@ -77,8 +79,10 @@
 						to_chat(user, "[killreward] materializes into your hands!")
 					else
 						to_chat(user, "[killreward] materializes onto the floor.")
+					user.next_move_modifier *= 0.8	//20% less delay between attacks!
+					to_chat(user, "Things around you feel slightly slower!")
 					var/mob/living/simple_animal/hostile/venus_human_trap/killwish = new /mob/living/simple_animal/hostile/venus_human_trap(loc)
-					killwish.maxHealth = 2500
+					killwish.maxHealth = 1500
 					killwish.health = killwish.maxHealth
 					killwish.grasp_range = 6
 					killwish.melee_damage_upper = 30

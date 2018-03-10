@@ -392,8 +392,9 @@
 			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
 			It appears to have a wooden grip and a shaved down guard."
 	icon_state = "cxsword_hilt_traitor"
+	force_on = 30
 	armour_penetration = 35
-	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 70, "embedded_fall_chance" = 0)
+	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 75, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 10)
 	block_chance = 50
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	light_color = "#37F0FF"
