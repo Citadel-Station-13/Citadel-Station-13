@@ -141,7 +141,7 @@
 		// Really no idea what needs to be returned but everything else is TRUE
 		return TRUE
 
-	if(on_fire || buckled || restrained())
+	if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - adds (resting && canmove) to make monkey ai attempt to resist out of resting
 		if(!resisting && prob(MONKEY_RESIST_PROB))
 			resisting = TRUE
 			walk_to(src,0)

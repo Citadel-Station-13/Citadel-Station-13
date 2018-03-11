@@ -320,7 +320,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return 1
 
 /mob/living/proc/InCritical()
@@ -377,6 +377,7 @@
 
 /mob/proc/get_contents()
 
+/*CIT CHANGE - comments out lay_down proc to be modified in modular_citadel
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -384,6 +385,7 @@
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
+*/
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(obj/item/storage/Storage = null)
@@ -643,9 +645,9 @@
 	if(buckled && last_special <= world.time)
 		resist_buckle()
 
-	// climbing out of a gut
+	// CIT CHANGE - climbing out of a gut
 	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
-	
+
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
 		var/obj/C = loc
@@ -662,6 +664,8 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
+		else if(resting) //cit change - allows resisting out of resting
+			resist_a_rest() // ditto
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
@@ -865,6 +869,7 @@
 		return FALSE
 	return TRUE
 
+/*CIT CHANGE - comments out update_stamina to be modified in modular_citadel
 /mob/living/carbon/proc/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
@@ -873,6 +878,7 @@
 			Knockdown(100)
 			setStaminaLoss(health - 2)
 	update_health_hud()
+*/
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -1027,25 +1033,32 @@
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || move_and_fall || IsStun() || chokehold)
+	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
+	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
+		unset_machine() //CIT CHANGE - Ditto!
+		if(pulling) //CIT CHANGE - Ditto.
+			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)
 		if(resting)
-			fall()
+			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
+			if(has_gravity()) // Cit change - Ditto
+				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -1058,6 +1071,8 @@
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
+	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
+		resist_a_rest(TRUE)//CIT CHANGE - ditto
 	return canmove
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)

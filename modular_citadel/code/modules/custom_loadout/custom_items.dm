@@ -85,6 +85,15 @@
 	item_state = "labred"
 
 
+/obj/item/clothing/suit/toggle/labcoat/labredblack
+	name = "Black and Red Coat"
+	desc = "An oddly special looking coat."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "labredblack"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "labredblack"
+
+
 /*Improvedname*/
 
 /obj/item/toy/plush/carrot
@@ -258,6 +267,15 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "bloodredtie"
 	icon_override = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/suit/puffydress
+	name = "Puffy Dress"
+	desc = "A formal puffy black and red Victorian dress."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "puffydress"
+	item_state = "puffydress"
+	body_parts_covered = CHEST|GROIN|LEGS
 
 
 /*Fractious*/

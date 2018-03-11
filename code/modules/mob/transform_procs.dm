@@ -76,6 +76,7 @@
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
 		O.setBrainLoss(getBrainLoss(), 0)
+		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -233,6 +234,7 @@
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
 		O.setBrainLoss(getBrainLoss(), 0)
+		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
 
