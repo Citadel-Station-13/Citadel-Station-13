@@ -1281,7 +1281,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 								snowflake_tails_list[S.name] = path
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_human
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in snowflake_tails_list
 					if(new_tail)
 						features["tail_human"] = new_tail
 						if(new_tail != "None")
@@ -1344,8 +1344,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["horns"] = new_horns
 
 				if("ears")
+					var/list/snowflake_ears_list = list("Normal" = null)
+					for(var/path in GLOB.ears_list)
+						var/datum/sprite_accessory/ears/instance = GLOB.ears_list[path]
+						if(istype(instance, /datum/sprite_accessory))
+							var/datum/sprite_accessory/S = instance
+							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+								snowflake_ears_list[S.name] = path
 					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in GLOB.ears_list
+					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in snowflake_ears_list
 					if(new_ears)
 						features["ears"] = new_ears
 

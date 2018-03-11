@@ -97,6 +97,12 @@
 	extra = TRUE
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+//datum/sprite_accessory/ears/elf
+//	name = "Elf"
+//	icon_state = "elf"
+//	icon = 'icons/mob/mam_bodyparts.dmi'
+//	ckeys_allowed = list("atiefling")
+
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
@@ -977,7 +983,7 @@
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	has_inner = 1
+	hasinner = 1
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
 	ckeys_allowed = list("poojawa")
