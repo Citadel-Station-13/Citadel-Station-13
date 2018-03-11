@@ -215,7 +215,7 @@
     name = "Black and Red Coat"
     category = slot_wear_suit
     path = /obj/item/clothing/suit/toggle/labcoat/mad/labredblack
-    ckeywhitelist = list("Blakeryan")
+    ckeywhitelist = list("blakeryan")
 
 
 
