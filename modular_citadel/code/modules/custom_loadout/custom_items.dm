@@ -85,7 +85,7 @@
 	item_state = "labred"
 
 
-/obj/item/clothing/suit/toggle/labcoat/mad/labredblack
+/obj/item/clothing/suit/toggle/labcoat/labredblack
 	name = "Black and Red Coat"
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
