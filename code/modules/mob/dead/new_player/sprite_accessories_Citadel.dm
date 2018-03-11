@@ -971,13 +971,13 @@
 	icon_state = "sabresune"
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
-	ckeys_allowed = list("Poojawa")
+	ckeys_allowed = list("poojawa")
 
 /datum/sprite_accessory/mam_tails/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
 	extra = TRUE
-	ckeys_allowed = list("Poojawa")
+	ckeys_allowed = list("poojawa")
 
 
 /datum/sprite_accessory/mam_tails_animated/sabresune
@@ -991,5 +991,5 @@
 	color_src = MUTCOLORS2
 	extra = FALSE
 	extra2 = FALSE
-	ckeys_allowed = list("Poojawa")
+	ckeys_allowed = list("poojawa")
 
