@@ -3,6 +3,7 @@
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
+	antag_moodlet = /datum/mood_event/focused
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -156,12 +157,12 @@
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
-	M.faction |= "wizard"
+	M.faction |= ROLE_WIZARD
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_wiz_icons_removed(M)
-	M.faction -= "wizard"
+	M.faction -= ROLE_WIZARD
 
 
 /datum/antagonist/wizard/get_admin_commands()

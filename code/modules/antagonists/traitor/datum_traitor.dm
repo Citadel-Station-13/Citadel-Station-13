@@ -3,15 +3,16 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
+	antag_moodlet = /datum/mood_event/focused
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = /datum/antagonist/traitor/AI
 	var/human_datum = /datum/antagonist/traitor/human
-	var/special_role = "traitor"
+	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 
-	
+
 
 /datum/antagonist/traitor/human
 	show_in_antagpanel = FALSE
@@ -85,7 +86,9 @@
 	return
 
 /datum/antagonist/traitor/human/forge_traitor_objectives()
-	var/is_hijacker = prob(10)
+	var/is_hijacker = FALSE
+	if (GLOB.joined_player_list.len >= 30) // Less murderboning on lowpop thanks
+		is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
 	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
@@ -219,6 +222,18 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.current.grant_language(/datum/language/codespeak)
 
+/datum/antagonist/traitor/AI/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/A = mob_override || owner.current
+	if(istype(A))
+		A.hack_software = TRUE
+	
+/datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/silicon/ai/A = mob_override || owner.current
+	if(istype(A))
+		A.hack_software = FALSE
+
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
 	if(should_equip)
@@ -329,7 +344,7 @@
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
-	
+
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)

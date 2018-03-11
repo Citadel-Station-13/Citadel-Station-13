@@ -47,21 +47,3 @@
 	name = "Top Hat"
 	category = slot_head
 	path = /obj/item/clothing/head/that
-
-/datum/gear/navybluehosberet
-	name = "Head of security's Naviblue beret"
-	category = slot_head
-	path = /obj/item/clothing/head/beret/sec/navyhos
-	restricted_roles = list("Head of Security")
-
-/datum/gear/navyblueofficerberet
-	name = "Security officer's Navyblue beret"
-	category = slot_head
-	path = /obj/item/clothing/head/beret/sec/navyofficer
-	restricted_roles = list("Security Officer")
-
-/datum/gear/navybluewardenberet
-	name = "Warden's navyblue beret"
-	category = slot_head
-	path = /obj/item/clothing/head/beret/sec/navywarden
-	restricted_roles = list("Warden")

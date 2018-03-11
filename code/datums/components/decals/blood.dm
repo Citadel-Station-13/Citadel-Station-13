@@ -24,6 +24,7 @@
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
 	var/index = "[REF(icon)]-[icon_state]"
 	pic = blood_splatter_appearances[index]
+
 	if(!pic)
 		var/icon/blood_splatter_icon = icon(initial(I.icon), initial(I.icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)

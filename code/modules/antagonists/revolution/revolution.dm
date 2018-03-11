@@ -6,6 +6,7 @@
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
+	antag_moodlet = /datum/mood_event/revolution
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
@@ -184,7 +185,7 @@
 			carbon_mob.flash_act(1, 1)
 		rev_mind.current.Stun(100)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
-	rev_mind.special_role = "Revolutionary"
+	rev_mind.special_role = ROLE_REV
 	return TRUE
 
 /datum/antagonist/rev/head/proc/demote()

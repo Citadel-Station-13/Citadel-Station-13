@@ -31,7 +31,7 @@
 
 	max_integrity = 160		//the turret's health
 	integrity_failure = 80
-	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
@@ -62,12 +62,13 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implantd
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
 	var/on = TRUE				//determines if the turret is on
 
-	var/faction = "turret" // Same faction mobs will never be shot at, no matter the other settings
+	var/list/faction = list("turret") // Same faction mobs will never be shot at, no matter the other settings
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
@@ -177,6 +178,7 @@
 		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -208,6 +210,8 @@
 				stun_all = !stun_all
 			if("checkxenos")
 				check_anomalies = !check_anomalies
+			if("checkloyal")
+				shoot_unloyal = !shoot_unloyal
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
@@ -232,7 +236,7 @@
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
-			if(do_after(user, 20*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 20))
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
@@ -484,13 +488,18 @@
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
+	if(shoot_unloyal)
+		if (!perp.isloyal())
+			threatcount += 4
+
 	return threatcount
 
 
 /obj/machinery/porta_turret/proc/in_faction(mob/target)
-	if(!(faction in target.faction))
-		return 0
-	return 1
+	for(var/faction1 in faction)
+		if(faction1 in target.faction)
+			return TRUE
+	return FALSE
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
@@ -570,7 +579,7 @@
 	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = ROLE_SYNDICATE
+	faction = list(ROLE_SYNDICATE)
 	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
 
@@ -592,6 +601,7 @@
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
+
 /obj/machinery/porta_turret/syndicate/setup()
 	return
 
@@ -605,7 +615,7 @@
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
 /obj/machinery/porta_turret/ai
-	faction = "silicon"
+	faction = list("silicon")
 
 /obj/machinery/porta_turret/ai/assess_perp(mob/living/carbon/human/perp)
 	return 10 //AI turrets shoot at everything not in their faction
@@ -617,7 +627,7 @@
 	lethal_projectile = /obj/item/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
-	faction = "neutral" //Minebots, medibots, etc that should not be shot.
+	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
 	return 0 //Never shoot humanoids. You are on your own if Ashwalkers or the like attack!
@@ -646,7 +656,7 @@
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
-	faction = "turret"
+	faction = list("neutral","silicon","turret")
 	emp_vunerable = 0
 	mode = TURRET_LETHAL
 
@@ -663,7 +673,7 @@
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
 	stun_projectile = /obj/item/projectile/beam/weak
 	lethal_projectile = /obj/item/projectile/beam/weak
-	faction = "neutral"
+	faction = list("neutral","silicon","turret")
 
 ////////////////////////
 //Turret Control Panel//

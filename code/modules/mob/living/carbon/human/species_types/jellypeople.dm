@@ -4,11 +4,15 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,,HAIR,FACEHAIR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = MEAT
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -17,17 +21,21 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	C.remove_language(/datum/language/slime, TRUE)
+	if(slime_change)	//CIT CHANGE
+		slime_change.Remove(C)	//CIT CHANGE
+	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime, TRUE)
+	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+		slime_change = new	//CIT CHANGE
+		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
@@ -111,7 +119,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -121,23 +129,23 @@
 	var/datum/action/innate/swap_body/swap_body
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
-/*	if(slime_split)
+	if(slime_split)
 		slime_split.Remove(C)
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
-	bodies = null */
+	bodies = null
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-	/*	slime_split = new
+		slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
-		swap_body.Grant(C)*/
+		swap_body.Grant(C)
 
 		if(!bodies || !bodies.len)
 			bodies = list(C)
@@ -376,6 +384,7 @@
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
 
+
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
 //Luminescents are able to consume and use slime extracts, without them decaying.
@@ -534,7 +543,6 @@
 
 	if(species.current_extract)
 		species.extract_cooldown = world.time + 100
-
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 
@@ -547,8 +555,6 @@
 ///////////////////////////////////STARGAZERS//////////////////////////////////////////
 
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
-//Admin spawn only
-
 
 /datum/species/jelly/stargazer
 	name = "Stargazer"

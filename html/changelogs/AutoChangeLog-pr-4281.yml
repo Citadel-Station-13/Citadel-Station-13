@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "When it's night time in the server's timezone, all lights aboard the station will dim to simulate a graveyard shift. It's possible for lights to dim in the middle of a shift."

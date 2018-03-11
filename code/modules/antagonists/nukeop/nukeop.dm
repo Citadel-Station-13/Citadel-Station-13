@@ -3,6 +3,7 @@
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
+	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
@@ -112,7 +113,7 @@
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.assigned_role = "Syndicate"
+	new_owner.assigned_role = ROLE_SYNDICATE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has nuke op'ed [new_owner.current].")
@@ -136,7 +137,7 @@
 		to_chat(owner.current, "The nuclear authorization code is: <B>[code]</B>")
 	else
 		to_chat(admin, "<span class='danger'>No valid nuke found!</span>")
-		
+
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader

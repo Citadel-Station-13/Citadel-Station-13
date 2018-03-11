@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Some airlock animations should no longer be glitchy and restart in the middle"

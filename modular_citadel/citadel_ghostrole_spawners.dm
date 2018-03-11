@@ -17,7 +17,8 @@
 /obj/effect/mob_spawn/human/lavaknight/special(mob/living/new_spawn)
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
-		H.dna.features["ears"] = "Cat"	//cat people
+		H.dna.features["mam_ears"] = "Cat, Big"	//cat people
+		H.dna.features["mcolor"] = H.hair_color
 		H.update_body()
 
 /obj/effect/mob_spawn/human/lavaknight/Destroy()

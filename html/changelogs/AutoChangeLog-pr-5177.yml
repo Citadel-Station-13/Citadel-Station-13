@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - tweak: "The toggle animal digestion button has been moved to the object tab. This means observers running byond on low-end hardware will no longer get massive lagspikes when entering a tile adjacent to a simplemob."

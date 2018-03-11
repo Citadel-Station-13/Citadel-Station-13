@@ -29,6 +29,7 @@
 #define BIOGENERATOR 32 //Uses biomass
 #define LIMBGROWER 64 //Uses synthetic flesh
 #define SMELTER 128 //uses various minerals
+#define AUTOYLATHE	256	//Uses glass/metal/Plastic
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -84,6 +85,3 @@
 #define SUPERMATTER_DANGER 4		// Integrity < 50%
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
-
-//R&D Snowflakes
-#define RD_CONSOLE_LOCKED_SCREEN 0.2

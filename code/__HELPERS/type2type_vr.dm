@@ -105,3 +105,7 @@
 		.          += copytext(text, last_found, found)
 		last_found  = found + delim_len
 	while (found)
+
+// Returns true if val is from min to max, inclusive.
+/proc/IsInRange(val, min, max)
+	return (val >= min) && (val <= max)

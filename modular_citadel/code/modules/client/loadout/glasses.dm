@@ -42,9 +42,3 @@
 	name = "Prescription glasses"
 	category = slot_glasses
 	path = /obj/item/clothing/glasses/regular
-
-/datum/gear/sechud
-	name = "Security Hud"
-	category = slot_glasses
-	path = /obj/item/clothing/glasses/hud/security
-	restricted_roles = list("Security Officer", "Warden", "Head of Security")

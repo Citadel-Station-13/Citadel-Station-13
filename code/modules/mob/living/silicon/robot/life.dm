@@ -35,21 +35,6 @@
 
 	update_cell_hud_icon()
 
-	if(syndicate)
-		if(SSticker.mode.name == "traitor")
-			for(var/datum/mind/tra in SSticker.mode.traitors)
-				if(tra.current)
-					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor") //no traitor sprite in that dmi!
-					src.client.images += I
-		if(connected_ai)
-			connected_ai.connected_robots -= src
-			connected_ai = null
-		if(mind)
-			if(!mind.special_role)
-				mind.special_role = ROLE_TRAITOR
-				mind.add_antag_datum(/datum/antagonist/auto_custom) // ????
-
-
 /mob/living/silicon/robot/update_health_hud()
 	if(!client || !hud_used)
 		return
@@ -108,7 +93,7 @@
 		cut_overlay(fire_overlay)
 
 /mob/living/silicon/robot/update_canmove()
-	if(stat || buckled || lockcharge)
+	if(stat || buckled || lockcharge || resting) //CITADEL EDIT resting dogborg-os
 		canmove = 0
 	else
 		canmove = 1
