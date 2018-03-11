@@ -141,6 +141,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
 	S["widescreenpref"]				>> widescreenpref
+	S["autostand"]			>> autostand
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -171,6 +172,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
+	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 
 	return 1
 
@@ -219,6 +221,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
+	WRITE_FILE(S["autostand"], autostand)
 
 	return 1
 

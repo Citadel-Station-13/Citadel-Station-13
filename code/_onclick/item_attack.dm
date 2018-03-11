@@ -54,6 +54,10 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
+		return // CIT CHANGE - ditto
+
 	if(force && user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
@@ -72,12 +76,17 @@
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
+	user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes attacking things cause stamina loss
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
+	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
+		return // CIT CHANGE - ditto
+	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
@@ -94,7 +103,16 @@
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)
 	if(I.force)
-		apply_damage(I.force, I.damtype)
+	//CIT CHANGES START HERE - combatmode and resting checks
+		var/totitemdamage = I.force
+		if(iscarbon(user))
+			var/mob/living/carbon/tempcarb = user
+			if(!tempcarb.combatmode)
+				totitemdamage *= 0.5
+		if(user.resting)
+			totitemdamage *= 0.5
+	//CIT CHANGES END HERE
+		apply_damage(totitemdamage, I.damtype) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE)
 			if(prob(33))
 				I.add_mob_blood(src)
