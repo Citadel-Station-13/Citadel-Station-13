@@ -950,7 +950,10 @@
 /datum/sprite_accessory/mam_ears/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/snout/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 
 /datum/sprite_accessory/mam_tails/shark/datashark
 	name = "DataShark"
@@ -963,12 +966,18 @@
 	icon_state = "datashark"
 	color_src = 0
 
+/datum/sprite_accessory/mam_body_markings/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
+	color_src = MUTCOLORS2
+	ckeys_allowed = list("rubyflamewing")
 
-//Till I get my snowflake only ckey lock, these are locked-locked :D
 
+//Sabresune
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
+	has_inner = 1
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
 	ckeys_allowed = list("poojawa")
