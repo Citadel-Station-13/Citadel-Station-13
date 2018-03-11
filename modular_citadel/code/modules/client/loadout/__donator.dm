@@ -198,9 +198,27 @@
     category = slot_wear_suit
     path = /obj/item/clothing/under/gladiator
     ckeywhitelist = list("aroche")
-	
+
 /datum/gear/bloodredtie
     name = "Blood Red Tie"
     category = slot_neck
     path = /obj/item/clothing/neck/tie/bloodred
     ckeywhitelist = list("kyutness")
+
+/datum/gear/puffydress
+    name = "Puffy Dress"
+    category = slot_wear_suit
+    path = /obj/item/clothing/suit/puffydress
+    //ckeywhitelist = //Don't know their ckey yet
+
+/datum/gear/labredblack
+    name = "Black and Red Coat"
+    category = slot_wear_suit
+    path = /obj/item/clothing/suit/toggle/labcoat/mad/labredblack
+    ckeywhitelist = list("Blakeryan")
+
+
+
+
+
+
