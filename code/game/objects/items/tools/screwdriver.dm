@@ -117,6 +117,11 @@
 	toolspeed = 0.25
 	random_color = FALSE
 
+/obj/item/screwdriver/power/cheap
+	name = "Cheap hand drill"
+	desc = "An cheap model of an powered hand drill. its fitted with a screw bit."
+	toolspeed = 0.8
+
 /obj/item/screwdriver/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
