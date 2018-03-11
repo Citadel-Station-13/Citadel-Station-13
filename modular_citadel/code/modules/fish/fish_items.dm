@@ -117,24 +117,19 @@
 	throwforce = 5.0
 	materials = list()
 
-/obj/item/shard/shark_teeth/Initialize()
-	. = ..()
-	pixel_x = rand(-5,5)
-	pixel_y = rand(-5,5)
-
 /obj/item/fish/catfish
 	name = "catfish"
 	desc = "Apparently, catfish don't purr like you might have expected them to. Such a confusing name!"
 	icon_state = "catfish"
 
 /obj/item/fish/catfish/attackby(var/obj/item/O, var/mob/user as mob)
-	if(is_sharp(O))
+	if(O.is_sharp())
 		to_chat(user, "You carefully clean and gut \the [src.name].")
 		new /obj/item/reagent_containers/food/snacks/fish/catfishmeat(get_turf(src))
 		new /obj/item/reagent_containers/food/snacks/fish/catfishmeat(get_turf(src))
 		qdel(src)
 		return
- . = ..()
+	. = ..()
 
 /obj/item/fish/goldfish
 	name = "goldfish"
@@ -147,7 +142,7 @@
 	icon_state = "salmon"
 
 /obj/item/fish/salmon/attackby(var/obj/item/O, var/mob/user as mob)
-	if(is_sharp(O))
+	if(O.is_sharp())
 		to_chat(user, "You carefully clean and gut \the [src.name].")
 		new /obj/item/reagent_containers/food/snacks/fish/salmonmeat(get_turf(src))
 		new /obj/item/reagent_containers/food/snacks/fish/salmonmeat(get_turf(src))
@@ -163,7 +158,7 @@
 	force = 3
 
 /obj/item/fish/babycarp/attackby(var/obj/item/O, var/mob/user as mob)
-	if(is_sharp(O))
+	if(O.is_sharp())
 		to_chat(user, "You carefully clean and gut \the [src.name].")
 		new /obj/item/reagent_containers/food/snacks/carpmeat(get_turf(src)) //just one fillet; this is a baby, afterall.
 		qdel(src)
