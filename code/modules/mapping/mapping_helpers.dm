@@ -160,3 +160,4 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	. = ..()
 	var/turf/T = get_turf(src)
 	GLOB.z_is_planet["[T.z]"] = TRUE
+

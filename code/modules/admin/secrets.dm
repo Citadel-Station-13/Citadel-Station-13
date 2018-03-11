@@ -31,6 +31,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=night_shift_set'>Set Night Shift Mode</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
@@ -54,7 +55,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=ak47s'>AK-47s For Everyone!</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=ak47s'>AK-47s For Everyone!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
@@ -109,6 +110,7 @@
 
 		if("mentor_log")
 			CitadelMentorLogSecret()
+
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
 			for(var/line in SSjob.job_debug)
@@ -167,6 +169,23 @@
 			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+		if("night_shift_set")
+			if(!check_rights(R_ADMIN))
+				return
+			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "On", "Off", "Automatic")
+			switch(val)
+				if("Automatic")
+					if(CONFIG_GET(flag/enable_night_shifts))
+						SSnightshift.can_fire = TRUE
+						SSnightshift.fire()
+					else
+						SSnightshift.update_nightshift(FALSE, TRUE)
+				if("On")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(TRUE, TRUE)
+				if("Off")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(FALSE, TRUE)
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
@@ -466,7 +485,7 @@
 			message_admins("[key_name_admin(usr)] activated AK-47s for Everyone!")
 			usr.client.ak47s()
 			sound_to_playing_players('sound/misc/ak47s.ogg')
-			
+
 		if("guns")
 			if(!check_rights(R_FUN))
 				return
@@ -613,13 +632,13 @@
 			var/list/new_movement = list()
 			for(var/i in 1 to movement_keys.len)
 				var/key = movement_keys[i]
-				
+
 				var/msg = "Please input the new movement direction when the user presses [key]. Ex. northeast"
 				var/title = "New direction for [key]"
 				var/new_direction = text2dir(input(usr, msg, title) as text|null)
 				if(!new_direction)
 					new_direction = movement_keys[key]
-				
+
 				new_movement[key] = new_direction
 			SSinput.movement_keys = new_movement
 			message_admins("[key_name_admin(usr)] has configured all movement directions.")

@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
-
 	// Mentor PM
 	if(href_list["mentor_msg"])
 		if(CONFIG_GET(flag.mentors_mobname_only))
@@ -158,6 +157,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
+/client/can_vv_get(var_name)
+	return var_name != NAMEOF(src, holder) && ..()
+
+/client/vv_edit_var(var_name, var_value)
+	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
@@ -239,16 +243,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 	#if DM_VERSION >= 512
-	if (num2text(byond_build) in GLOB.blacklisted_builds)
-		log_access("Failed login: blacklisted byond version")
-		to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
-		to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]].</span>")
-		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
-		if(connecting_admin)
-			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-		else
+	if (byond_version >= 512)
+		if (!byond_build || byond_build < 1386)
+			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
+			add_system_note("Spoofed-Byond-Version", "Detected as using a spoofed byond version.")
+			log_access("Failed Login: [key] - Spoofed byond version")
 			qdel(src)
-			return
+
+		if (num2text(byond_build) in GLOB.blacklisted_builds)
+			log_access("Failed login: [key] - blacklisted byond version")
+			to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
+			to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]].</span>")
+			to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
+			if(connecting_admin)
+				to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
+			else
+				qdel(src)
+				return
 	#endif
 	if(SSinput.initialized)
 		set_macros()
@@ -409,21 +420,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				"Someone come hold me :(",\
 				"I need someone on me :(",\
 				"What happened? Where has everyone gone?",\
-				"Forever alone :(",\
-				"My nipples are so stiff, but Zelda ain't here. :(",\
-				"Leon senpai, play more Spessmans. :(",\
-				"If only Serdy were here...",\
-				"Panic bunker can't keep my love for you out.",\
-				"Cebu needs to Awoo herself back into my heart.",\
-				"I don't even have a Turry to snuggle viciously here.",\
-				"MOM, WHERE ARE YOU??? D:",\
-				"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
-				"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
-				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
-				"i shure hop dere are no PRED arund!!!!",\
-				"NO PRED CAN eVER CATCH MI",\
-				"help, the clown is honking his horn in front of dorms and its interrupting everyones erp"\
+				"Forever alone :("\
 			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
@@ -623,10 +620,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	to_chat(src, {"<a href="byond://[url]?token=[token]">You will be automatically taken to the game, if not, click here to be taken manually</a>"})
 
 /client/proc/note_randomizer_user()
-	var/const/adminckey = "CID-Error"
+	add_system_note("CID-Error", "Detected as using a cid randomizer.")
+
+/client/proc/add_system_note(system_ckey, message)
+	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
@@ -636,9 +636,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
-		if (query_get_notes.item[1] == adminckey)
+		if (query_get_notes.item[1] == system_ckey)
 			return
-	create_message("note", sql_ckey, adminckey, "Detected as using a cid randomizer.", null, null, 0, 0)
+	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
 
 /client/proc/check_ip_intel()
@@ -735,7 +735,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
 			new_size = "15x15"
 //END OF CIT CHANGES
-
 	view = new_size
 	apply_clickcatcher()
 	if (isliving(mob))

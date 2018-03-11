@@ -159,8 +159,6 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
-	verbs += /mob/living/proc/lay_down //CITADEL EDIT borgs have rest verb now for snowflake reasons
-
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
@@ -629,7 +627,6 @@
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
 		pixel_x = initial(pixel_x)
-
 	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()

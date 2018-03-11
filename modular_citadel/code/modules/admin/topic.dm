@@ -1,4 +1,8 @@
 /datum/admins/proc/citaTopic(href, href_list)
+	if(href_list["makementor"])
+		makeMentor(href_list["makementor"])
+	else if(href_list["removementor"])
+		removeMentor(href_list["removementor"])
 
 /datum/admins/proc/makeMentor(ckey)
 	if(!usr.client)
