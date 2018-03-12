@@ -55,6 +55,8 @@
 	if(!start_vial)
 		start_vial = new loaded_vial(src)
 		vial = start_vial
+		reagents.maximum_volume = vial.volume
+		vial.reagents.trans_to(src, vial.reagents.total_volume)
 	update_icon()
 
 /obj/item/reagent_containers/hypospray/mkii/update_icon()
@@ -94,13 +96,13 @@
 			to_chat(user, "<span class='notice'>\The [src] doesn't accept this vial.</span>")
 			return
 		vial = V
-		reagents.maximum_volume = V.volume
-		V.reagents.trans_to(src, V.reagents.total_volume)
-		if(!user.transferItemToLoc(V,src))
+		reagents.maximum_volume = vial.volume
+		vial.reagents.trans_to(src, vial.reagents.total_volume)
+		if(!user.transferItemToLoc(vial,src))
 			return
 		user.visible_message("<span class='notice'>[user] has loads vial into \the [src].</span>","<span class='notice'>You have loaded [vial] into \the [src].</span>")
 		update_icon()
-		playsound(loc, 'sound/weapons/autoguninsert.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
 		return TRUE
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in \the [src].</span>")
