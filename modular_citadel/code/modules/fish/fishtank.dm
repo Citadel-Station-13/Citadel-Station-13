@@ -51,7 +51,7 @@
 	max_fish = 1				// What a lonely fish
 
 	has_lid = FALSE
-	max_integrity = 15				// Not very sturdy
+	max_integrity = 30				// Not very sturdy
 	shard_count = 0				// No salvageable shards
 
 /obj/machinery/fishtank/tank
@@ -67,7 +67,7 @@
 	max_fish = 4				// Room for a few fish
 
 	has_lid = TRUE
-	max_integrity = 50				// Average strength, will take a couple hits from a toolbox.
+	max_integrity = 100				// Average strength, will take a few hits from a toolbox.
 	shard_count = 2
 
 
@@ -84,7 +84,7 @@
 	max_fish = 10				// Plenty of room for a lot of fish
 
 	has_lid = TRUE
-	max_integrity = 100			// This thing is a freaking wall, it can handle abuse.
+	max_integrity = 250			// This thing is a freaking wall, it can handle abuse.
 	shard_count = 3
 
 
@@ -502,7 +502,7 @@
 	return examine_message
 
 //////////////////////////////
-//		ATTACK PROCS			//
+//		ATTACK PROCS		//
 //////////////////////////////
 
 /obj/machinery/fishtank/attack_animal(mob/living/simple_animal/M as mob)
@@ -571,6 +571,7 @@
 					obj_integrity = max_integrity
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
+					check_health()
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
@@ -682,4 +683,6 @@
 		else
 			adjust_filth_level(-filth_level)
 			user.visible_message("[user] scrubs the inside of [src], cleaning the filth.", "You scrub the inside of [src], cleaning the filth.")
+	.=..()
+	check_health()
 
