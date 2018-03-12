@@ -5,6 +5,11 @@
 
 // Made by FalseIncarnate from Paradise
 // Imported by Ragolution for Citadel
+// Fixed by RDT because he's a nerd
+
+#define NOT_LEAKING 0
+#define MINOR_LEAK 1
+#define MAJOR_LEAK 2
 
 /obj/machinery/fishtank
 	name = "placeholder tank"
@@ -29,7 +34,7 @@
 	var/list/egg_list	// Tracks the current types of harvestable eggs in the tank
 
 	var/has_lid = FALSE			// 0 if the tank doesn't have a lid/light, 1 if it does
-	var/leaking = 0				// 0 if not leaking, 1 if minor leak, 2 if major leak (not leaking by default)
+	var/leaking = NOT_LEAKING
 	var/shard_count = 0			// Number of glass shards to salvage when broken (1 less than the number of sheets to build the tank)
 
 /obj/machinery/fishtank/bowl
@@ -222,9 +227,9 @@
 
 	//Handle water leakage from damage
 	if(water_level > 0)								//Can't leak water if there is no water in the tank
-		if(leaking == 2)							//At or below 25% health, the tank will lose 10 water_level per cycle (major leak)
+		if(leaking == MAJOR_LEAK)							//At or below 25% health, the tank will lose 10 water_level per cycle (major leak)
 			adjust_water_level(-10)
-		else if(leaking == 1)						//At or below 50% health, the tank will lose 1 water_level per cycle (minor leak)
+		else if(leaking == MINOR_LEAK)						//At or below 50% health, the tank will lose 1 water_level per cycle (minor leak)
 			adjust_water_level(-1)
 	update_icon()
 
@@ -251,14 +256,14 @@
 			set_light(0, 0)
 
 /obj/machinery/fishtank/proc/adjust_water_level(amount = 0)
-	water_level = min(water_capacity, max(0, water_level + amount))
+	water_level = CLAMP(water_level + amount, 0, water_capacity)
 	update_icon()
 
 /obj/machinery/fishtank/proc/adjust_filth_level(amount = 0)
-	filth_level = min(10, max(0, filth_level + amount))
+	filth_level = CLAMP(filth_level + amount, 0, 10)
 
 /obj/machinery/fishtank/proc/adjust_food_level(amount = 0)
-	food_level = min(10, max(0, food_level + amount))
+	food_level = CLAMP(food_level + amount, 0, 10)
 
 /obj/machinery/fishtank/proc/check_health()
 	//Max value check
@@ -266,11 +271,11 @@
 		obj_integrity = max_integrity
 	//Leaking status check
 	if(obj_integrity <= (max_integrity * 0.25))			//Major leak at or below 25% health (-10 water/cycle)
-		leaking = 2
+		leaking = MAJOR_LEAK
 	else if(obj_integrity <= (max_integrity * 0.5))		//Minor leak at or below 50% health (-1 water/cycle)
-		leaking = 1
+		leaking = MINOR_LEAK
 	else											//Not leaking above 50% health
-		leaking = 0
+		leaking = NOT_LEAKING
 	//Destruction check
 	if(obj_integrity <= 0)								//The tank is broken, destroy it
 		destroy()
@@ -485,11 +490,11 @@
 
 	//Report if the tank is leaking/cracked
 	if(water_level > 0)							//Tank has water, so it's actually leaking
-		if(leaking == 1) examine_message += "[src] is leaking."
-		if(leaking == 2) examine_message += "[src] is leaking profusely!"
+		if(leaking == MINOR_LEAK) examine_message += "[src] is leaking."
+		if(leaking == MAJOR_LEAK) examine_message += "[src] is leaking profusely!"
 	else										//No water, report the cracks instead
-		if(leaking == 1) examine_message += "[src] is cracked."
-		if(leaking == 2) examine_message += "[src] is nearly shattered!"
+		if(leaking == MINOR_LEAK) examine_message += "[src] is cracked."
+		if(leaking == MAJOR_LEAK) examine_message += "[src] is nearly shattered!"
 
 
 	//Finally, report the full examine_message constructed from the above reports
