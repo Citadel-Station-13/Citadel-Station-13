@@ -89,7 +89,7 @@
 			update_gut()
 			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up and expands as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
-			message_admins("[key_name(hound)] has eaten [key_name(patient)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
+			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)])
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
 /obj/item/device/dogborg/sleeper/container_resist(mob/living/user)
@@ -139,7 +139,6 @@
 	else //You clicked eject with nothing in you, let's just reset stuff to be sure.
 		items_preserved.Cut()
 		cleaning = FALSE
-		hound.visible_message("<span class='warning'>[hound.name] belches, torso flexing.</span>")
 		update_gut()
 
 /obj/item/device/dogborg/sleeper/attack_self(mob/user)
