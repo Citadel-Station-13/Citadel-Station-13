@@ -10973,6 +10973,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
@@ -11040,12 +11041,25 @@
 	},
 /area/storage/primary)
 "aCx" = (
-/obj/machinery/vending/tool,
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
 	},
+/obj/machinery/disposal/deliveryChute{
+	name = "Crate Disposal Chute"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/southright{
+	name = "Crate Disposal Chute"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/neutral/side{
-	dir = 5
+	dir = 1
 	},
 /area/storage/primary)
 "aCy" = (
@@ -11936,6 +11950,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	dir = 9;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -12679,10 +12697,8 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGj" = (
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 6
-	},
+/obj/structure/disposalpipe/junction/flip,
+/turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGk" = (
 /obj/machinery/vending/boozeomat{
@@ -12947,22 +12963,10 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aGZ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Primary Tool Storage"
-	},
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/storage/primary)
-"aHa" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/hallway/primary/central)
 "aHb" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
@@ -13263,6 +13267,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -13280,11 +13287,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
+	},
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -47090,10 +47097,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
-"cov" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/side,
-/area/storage/primary)
 "cow" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
@@ -49983,9 +49986,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"cBP" = (
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "cBQ" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
@@ -50173,8 +50173,56 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+<<<<<<< HEAD
 "gFV" = (
 /obj/machinery/computer/camera_advanced/xenobio{
+=======
+"fwr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"fBm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/research{
+	name = "Circuitry Lab";
+	req_access_txt = "47"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"fKj" = (
+/turf/closed/wall,
+/area/science/circuit)
+"fWv" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plasteel/dark,
+/area/library/lounge)
+"gkR" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 5
+	},
+/area/storage/primary)
+"gtb" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 5
+	},
+/area/science/circuit)
+"gxK" = (
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"gAj" = (
+/turf/open/floor/plasteel/purple/side{
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -50238,9 +50286,59 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/stairs,
 /area/crew_quarters/cryopod)
+=======
+/turf/open/floor/carpet,
+/area/library/lounge)
+"jLW" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
+"jOJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
+"jXh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/library/lounge)
+"jXA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/purple/corner{
+	dir = 8
+	},
+/area/science/circuit)
+"jYe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"khk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 "kjK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -50330,10 +50428,30 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Library APC";
 	pixel_x = 24
+=======
+/area/science/circuit)
+"onX" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Primary Tool Storage"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"oyF" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"oEG" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/plasteel/purple/side{
+	dir = 1
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -50381,6 +50499,75 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+<<<<<<< HEAD
+=======
+"qXH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/primary/central)
+"rtE" = (
+/turf/open/floor/plasteel/purple/corner{
+	dir = 1
+	},
+/area/science/circuit)
+"rxQ" = (
+/obj/structure/target_stake,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"rxV" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"rBh" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"sBA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/security/brig)
+"sCz" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/red,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"sQr" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 1
+	},
+/area/science/circuit)
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -50401,6 +50588,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
 "tez" = (
@@ -50410,6 +50598,31 @@
 "tjW" = (
 /obj/machinery/light{
 	dir = 8
+=======
+/obj/structure/table/reinforced,
+/obj/item/device/integrated_electronics/analyzer,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"ulu" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 6
+	},
+/area/storage/primary)
+"uoj" = (
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the other eggheads from the comfort of the circuitry lab.";
+	dir = 2;
+	name = "RnD Monitor";
+	network = list("rd");
+	pixel_y = 32
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 	},
 /obj/machinery/cryopod{
 	tag = "icon-cryopod-open (EAST)";
@@ -50463,7 +50676,18 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/library)
+<<<<<<< HEAD
 "vTA" = (
+=======
+"vTL" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1
+	},
+/area/storage/primary)
+"wxJ" = (
+/obj/effect/turf_decal/delivery,
+>>>>>>> a3fb905... [Ready]Pubbystation central tool storage tweaks (#36294)
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgespace";
 	name = "bridge external shutters"
@@ -76544,7 +76768,7 @@ aDA
 aDy
 aDA
 aGi
-aGX
+aBi
 aHL
 aIP
 aJK
@@ -76796,11 +77020,11 @@ axO
 ayT
 aAq
 aBj
-aCs
+vTL
 aDA
 aEv
 aFu
-cov
+aFu
 aGZ
 aHM
 aIQ
@@ -77054,12 +77278,12 @@ ayU
 aAr
 aBj
 aCx
-aDB
-aEw
-aFv
+oyF
+oyF
+oyF
 aGj
-aGX
-aHH
+onX
+qXH
 aIO
 aJI
 aKP
@@ -77310,13 +77534,13 @@ axQ
 ayV
 aAs
 aBj
-aBj
-aBj
-aBj
-aBj
-aBj
-aBi
-aHN
+gkR
+aDB
+aEw
+aFv
+ulu
+aGX
+jYe
 aIO
 aJI
 aKQ
@@ -77572,8 +77796,8 @@ awR
 awR
 awR
 awR
-aHa
-aHN
+aAN
+jYe
 aIO
 aJM
 aKQ
@@ -77830,7 +78054,7 @@ aEx
 aFw
 awR
 aHb
-aHN
+jYe
 aIQ
 aJL
 aKR
@@ -81723,7 +81947,7 @@ brl
 bsL
 bul
 bwU
-cBP
+bsK
 bsK
 bAg
 bpY
