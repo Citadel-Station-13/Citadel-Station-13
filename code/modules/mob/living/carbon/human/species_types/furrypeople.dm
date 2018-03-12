@@ -54,7 +54,7 @@
 	liked_food = MEAT
 	disliked_food = TOXIC
 	meat = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
-	
+
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
@@ -264,7 +264,7 @@
 	name = "Alter Form"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "alter_form" //placeholder
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	icon_icon = 'modular_citadel/icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/slime_change/Activate()

@@ -51,7 +51,7 @@
 
 /obj/machinery/fishtank/tank
 	name = "fish tank"
-	desc = "A large glass tank designed to house aquatic creatures. Contains an integrated water circulation system."
+	desc = "A large glass tank designed to house aquatic creatures. Contains an integrated water circulation system. Alt-click to toggle the lid."
 	icon_state = "tank1"
 	density = TRUE
 	anchored = TRUE
@@ -68,7 +68,7 @@
 
 /obj/machinery/fishtank/wall
 	name = "wall aquarium"
-	desc = "This aquarium is massive! It completely occupies the same space as a wall, and looks very sturdy too!"
+	desc = "This aquarium is massive! It completely occupies the same space as a wall, and looks very sturdy too! Alt-click to toggle the lid."
 	icon_state = "wall1"
 	density = TRUE
 	anchored = TRUE
@@ -87,14 +87,17 @@
 //		VERBS & PROCS		//
 //////////////////////////////
 
-/obj/machinery/fishtank/verb/toggle_lid_verb()
-	set name = "Toggle Tank Lid"
-	set category = "Object"
-	set src in view(1)
-	toggle_lid(usr)
+/obj/machinery/fishtank/AltClick(mob/user)
+	if(!has_lid)
+		return
+	toggle_lid(user)
 
 /obj/machinery/fishtank/proc/toggle_lid(var/mob/living/user)
 	lid_switch = !lid_switch
+	if(!lid_switch)
+		to_chat(user, "You open the fish tank lid.")
+	else
+		to_chat(user, "You close the fish tank lid.")
 	update_icon()
 
 /obj/machinery/fishtank/verb/toggle_light_verb()
@@ -107,7 +110,9 @@
 	light_switch = !light_switch
 	if(light_switch)
 		set_light(2,2,"#a0a080")
+		to_chat(user, "You turn the tank light on.")
 	else
+		to_chat(user, "You turn the tank light off.")
 		adjust_tank_light()
 
 //////////////////////////////
@@ -119,7 +124,6 @@
 	fish_list = new/list()
 	egg_list = new/list()
 	if(!has_lid)				//Tank doesn't have a lid/light, remove the verbs for then
-		verbs -= /obj/machinery/fishtank/verb/toggle_lid_verb
 		verbs -= /obj/machinery/fishtank/verb/toggle_light_verb
 
 /obj/machinery/fishtank/tank/Initialize()
@@ -201,7 +205,7 @@
 			adjust_food_level(fish_count * -0.1)
 		else										//Use up the last of the food
 			adjust_food_level(-food_level)
-		ate_food = 1
+		ate_food = TRUE
 
 	if(water_level > 0)								//Don't dirty the tank if it has no water
 		if(fish_count == 0)							//If the tank has no fish, algae growth can occur
@@ -537,7 +541,8 @@
 		if(M.melee_damage_upper > 0)						//If the simple_animal has a melee_damage_upper defined, use that for the damage
 			attack_generic(M, M.melee_damage_upper)
 		else if(M.a_intent == INTENT_HARM)						//Let any simple_animal try to break tanks when on harm intent
-			if(M.harm_intent_damage <= 0) return			//If it doesn't do damage, don't bother with the attack
+			if(M.harm_intent_damage <= 0)
+				return			//If it doesn't do damage, don't bother with the attack
 			attack_generic(M, M.harm_intent_damage)
 	check_health()
 
