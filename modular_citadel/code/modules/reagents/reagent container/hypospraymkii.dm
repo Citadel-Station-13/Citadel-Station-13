@@ -17,6 +17,21 @@
 	var/spawnwithvial = TRUE
 	var/start_vial = null
 
+/obj/item/reagent_containers/hypospray/mkii/brute
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine
+
+/obj/item/reagent_containers/hypospray/mkii/toxin
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin
+
+/obj/item/reagent_containers/hypospray/mkii/oxygen
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin
+
+/obj/item/reagent_containers/hypospray/mkii/burn
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane
+
+/obj/item/reagent_containers/hypospray/mkii/tricord
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord
+
 /obj/item/reagent_containers/hypospray/mkii/CMO
 	name = "hypospray mk.II deluxe"
 	allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/small, /obj/item/reagent_containers/glass/bottle/vial/large)
@@ -27,12 +42,17 @@
 	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	possible_transfer_amounts = list(5,10,15,30,60) //cmo hypo should be able to dump lots into it
 
+/obj/item/reagent_containers/hypospray/mkii/CMO/combat
+	name = "Combat Hypospray mk. II"
+	desc = "A hypospray designed for in-combat situations."
+	loaded_vial = /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat
+
 /obj/item/reagent_containers/hypospray/mkii/Initialize()
 	. = ..()
 	if(!spawnwithvial)
 		update_icon()
 		return
-	if (!start_vial)
+	if(!start_vial)
 		start_vial = new loaded_vial(src)
 		vial = start_vial
 	update_icon()
