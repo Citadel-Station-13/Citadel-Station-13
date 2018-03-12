@@ -89,7 +89,7 @@
 			update_gut()
 			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up and expands as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
-			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)])
+			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)]")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
 /obj/item/device/dogborg/sleeper/container_resist(mob/living/user)
