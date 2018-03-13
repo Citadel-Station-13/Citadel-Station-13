@@ -11,6 +11,7 @@
 	var/damagescreenshake = 2
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
+	var/autostand = TRUE
 
 /datum/preferences/New(client/C)
 	..()

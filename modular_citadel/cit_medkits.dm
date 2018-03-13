@@ -1,7 +1,6 @@
 //help I have no idea what I'm doing
 
 /obj/item/storage/firstaid
-	..()
 	icon = 'modular_citadel/icons/firstaid.dmi'
 
 /obj/item/storage/firstaid/Initialize(mapload)
@@ -9,7 +8,6 @@
 	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
 
 /obj/item/storage/firstaid/fire
-	..()
 	icon_state = "burn"
 
 /obj/item/storage/firstaid/fire/Initialize(mapload)
@@ -17,7 +15,6 @@
 	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
 
 /obj/item/storage/firstaid/toxin
-	..()
 	icon_state = "toxin"
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
@@ -25,11 +22,9 @@
 	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
 
 /obj/item/storage/firstaid/o2
-	..()
 	icon_state = "oxy"
 
 /obj/item/storage/firstaid/tactical
-	..()
 	icon_state = "tactical"
 
 /obj/item/storage/minifirstaid

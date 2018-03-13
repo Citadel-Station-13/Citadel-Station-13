@@ -22,8 +22,8 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	citaTopic(href, href_list) // Citadel
-	
+	citaTopic(href, href_list) //CITADEL EDIT, MENTORS
+
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -874,12 +874,6 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'>Abductor</a></td>"
 
-		//Borer
-		if(jobban_isbanned(M, "borer") || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'><font color=red>Borer</font></a></td>"
-		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=borer;jobban4=[REF(M)]'>Borer</a></td>"
-
 		//Alien
 		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'><font color=red>Alien</font></a></td>"
@@ -1667,7 +1661,7 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (CONSCIOUS)
+				if(CONSCIOUS)
 					status = "Alive"
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"
@@ -1704,6 +1698,25 @@
 			if(job.title == Add)
 				job.total_positions += 1
 				break
+
+		src.manage_free_slots()
+
+
+	else if(href_list["customjobslot"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/Add = href_list["customjobslot"]
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title == Add)
+				var/newtime = null
+				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
+				if(!newtime)
+					to_chat(src.owner, "Setting to amount of positions filled for the job")
+					job.total_positions = job.current_positions
+					break
+				job.total_positions = newtime
 
 		src.manage_free_slots()
 
@@ -1904,7 +1917,7 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
-	
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1913,7 +1926,7 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs")
 			return
 		M.mind_initialize()
-		
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -2412,6 +2425,15 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+
+	else if(href_list["modantagrep"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
+		var/client/C = M.client
+		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
+		show_player_panel(M)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

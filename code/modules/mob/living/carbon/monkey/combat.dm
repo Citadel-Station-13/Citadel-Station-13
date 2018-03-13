@@ -1,3 +1,4 @@
+#define MAX_RANGE_FIND 32
 
 /mob/living/carbon/monkey
 	var/aggressive=0 // set to 1 using VV for an angry monkey
@@ -140,7 +141,7 @@
 		// Really no idea what needs to be returned but everything else is TRUE
 		return TRUE
 
-	if(on_fire || buckled || restrained())
+	if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - adds (resting && canmove) to make monkey ai attempt to resist out of resting
 		if(!resisting && prob(MONKEY_RESIST_PROB))
 			resisting = TRUE
 			walk_to(src,0)
@@ -475,3 +476,5 @@
 	if(A)
 		dropItemToGround(A, TRUE)
 		update_icons()
+
+#undef MAX_RANGE_FIND

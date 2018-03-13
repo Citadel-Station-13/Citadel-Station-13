@@ -53,7 +53,8 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT
 	disliked_food = TOXIC
-
+	meat = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
+	
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
@@ -247,7 +248,8 @@
 	name = "Slimeperson"
 	id = "slimeperson"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
 	say_mod = "says"
@@ -350,3 +352,10 @@
 		H.update_body()
 	else
 		return
+
+//misc
+/mob/living/carbon/human/dummy
+	no_vore = TRUE
+
+/mob/living/carbon/human/vore
+	devourable = TRUE

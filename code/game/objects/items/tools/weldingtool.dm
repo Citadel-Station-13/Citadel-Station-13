@@ -357,5 +357,5 @@
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent("welding_fuel", 1)
-		
+
 #undef WELDER_FUEL_BURN_INTERVAL

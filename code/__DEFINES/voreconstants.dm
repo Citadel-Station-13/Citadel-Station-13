@@ -5,6 +5,9 @@
 #define DM_NOISY "Noisy"
 #define DM_DRAGON "Dragon"
 
+#define isbelly(A) istype(A, /obj/belly)
+
+#define QDEL_NULL_LIST(x) if(x) { for(var/y in x) { qdel(y) } ; x = null }
 #define VORE_STRUGGLE_EMOTE_CHANCE 40
 
 // Stance for hostile mobs to be in while devouring someone.
@@ -60,6 +63,10 @@ GLOBAL_LIST_INIT(pred_vore_sounds, list(
 		"Squish3" = 'sound/vore/pred/squish_03.ogg',
 		"Squish4" = 'sound/vore/pred/squish_04.ogg',
 		"Rustle (cloth)" = 'sound/effects/rustle5.ogg',
+		"rustle2(cloth)"	= 'sound/effects/rustle2.ogg',
+		"rustle3(cloth)"	= 'sound/effects/rustle3.ogg',
+		"rustle4(cloth)"	= 'sound/effects/rustle4.ogg',
+		"rustle5(cloth)"	= 'sound/effects/rustle5.ogg',
 		"None" = null))
 /*
 GLOBAL_LIST_INIT(pred_struggle_sounds, list(
@@ -121,3 +128,14 @@ GLOBAL_LIST_INIT(death_prey, list(
 		"death9"	= 'sound/vore/prey/death_09.ogg',
 		"death10"	= 'sound/vore/prey/death_10.ogg'))
  */
+
+GLOBAL_LIST_INIT(release_sound, list(
+		"rustle (cloth)"	= 'sound/effects/rustle1.ogg',
+		"rustle2 (cloth)"	= 'sound/effects/rustle2.ogg',
+		"rustle3 (cloth)"	= 'sound/effects/rustle3.ogg',
+		"rustle4 (cloth)"	= 'sound/effects/rustle4.ogg',
+		"rustle5 (cloth)"	= 'sound/effects/rustle5.ogg',
+		"Stomach Move"		= 'sound/vore/pred/stomachmove.ogg',
+		"Pred Escape"		= 'sound/vore/pred/escape.ogg',
+		"Splatter"			= 'sound/effects/splat.ogg',
+		"None"				= null))

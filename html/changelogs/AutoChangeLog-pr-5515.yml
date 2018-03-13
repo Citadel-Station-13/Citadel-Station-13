@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - balance: "returned Flightsuit armor to being less useful, also ensured they're not getting the best possible huds as well. Batteries to be done eventually."

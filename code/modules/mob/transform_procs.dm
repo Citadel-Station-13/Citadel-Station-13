@@ -62,9 +62,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 
@@ -76,6 +76,7 @@
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
 		O.setBrainLoss(getBrainLoss(), 0)
+		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -218,9 +219,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 		O.med_hud_set_status()
@@ -233,6 +234,7 @@
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
 		O.setBrainLoss(getBrainLoss(), 0)
+		O.adjustStaminaLoss(getStaminaLoss(), 0)//CIT CHANGE - makes monkey transformations inherit stamina
 		O.updatehealth()
 		O.radiation = radiation
 

@@ -77,7 +77,18 @@
 		affecting = bodyparts[1]
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting)
+	//CIT CHANGES START HERE - combatmode and resting checks
+		var/totitemdamage = I.force
+		if(iscarbon(user))
+			var/mob/living/carbon/tempcarb = user
+			if(!tempcarb.combatmode)
+				totitemdamage *= 0.5
+		if(user.resting)
+			totitemdamage *= 0.5
+		if(!combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -110,14 +121,14 @@
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(D)
 
-	for(var/thing in user.viruses)
+	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
@@ -131,14 +142,14 @@
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
 	if(can_inject(M, TRUE))
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
-			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
+			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
 				M.ContactContractDisease(D)
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)
@@ -146,7 +157,7 @@
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/thing in M.viruses)
+		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
 		return 1
@@ -266,6 +277,9 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+			if(mood)
+				mood.add_event("hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

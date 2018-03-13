@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Dogborgs should no longer have offset issues after attacking."
-  - bugfix: "Dogborg laser/disabler fluff now works again."
