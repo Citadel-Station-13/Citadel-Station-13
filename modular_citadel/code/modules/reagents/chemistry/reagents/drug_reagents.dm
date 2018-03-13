@@ -45,6 +45,7 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
+	overdose_threshold = 30
 	taste_description = "smoke"
 	trippy = FALSE
 

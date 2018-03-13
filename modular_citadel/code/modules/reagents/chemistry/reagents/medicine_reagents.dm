@@ -19,6 +19,7 @@
 	id = "leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	overdose_threshold = 30
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/M)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
@@ -79,6 +80,7 @@
 	id = "synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
@@ -116,6 +118,7 @@
 	id = "inacusiate"
 	description = "Instantly restores all hearing to the patient, but does not cure deafness."
 	color = "#6600FF" // rgb: 100, 165, 255
+	overdose_threshold = 10
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/M)
 	M.restoreEars()
@@ -127,6 +130,7 @@
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
 	color = "#0000C8"
 	taste_description = "sludge"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
@@ -148,6 +152,7 @@
 	color = "#0000C8"
 	taste_description = "muscle"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
@@ -163,6 +168,7 @@
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -215,6 +221,7 @@
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 /datum/reagent/medicine/silver_sulfadiazine
@@ -222,12 +229,13 @@
 	id = "silver_sulfadiazine"
 	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
+	overdose_threshold = 20
 	color = "#C8A5DC"
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume)
+			M.adjustToxLoss(1.5*reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getFireLoss())
@@ -242,14 +250,36 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/silver_sulfadiazine/overdose_process(mob/living/M)
+	M.adjustToxLoss(4.5*REM, 0) // too much of a good thing...
+	M.adjustBruteLoss(2*REM, 0)
+	. = 1
+	..()
+
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
-	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns."
+	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns. Apply Orally"
 	reagent_state = LIQUID
 	color = "#f7ffa5"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
+
+/datum/reagent/medicine/oxandrolone/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method == INJECT)
+			M.adjustToxLoss(0.5*reac_volume)
+
+		else if(method == VAPOR)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.emote("cough")
+				M.losebreath += 2
+				N.adjustToxLoss(0.5*reac_volume)
+
+		else if(method == PATCH)
+			return 
+	..()
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/M)
 	if(M.getFireLoss() > 50)
@@ -268,15 +298,16 @@
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals toxin damage."
 	reagent_state = LIQUID
+	overdose_threshold = 20
 	color = "#FF9696"
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume)
-			if(show_message)
+			M.adjustToxLoss(1*reac_volume)
+			if(show_message && !isjellyperson(M))
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
@@ -291,6 +322,12 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/styptic_powder/overdose_process(mob/living/M)
+	M.adjustToxLoss(4.5*REM, 0) // too much of a good thing...
+	M.adjustBruteLoss(2*REM, 0)
+	. = 1
+	..()
+
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
@@ -302,6 +339,22 @@
 	taste_description = "sweetness and salt"
 	var/last_added = 0
 	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
+
+/datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=INJECT)
+	if(iscarbon(M))
+		if(method == INGEST)
+			M.nutrition += 5
+
+		if(method == VAPOR && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+
+		if(method == PATCH)
+			return 
+	..()
+
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	if(last_added)
@@ -380,8 +433,12 @@
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
+		if(method == VAPOR && M.stat != DEAD)
+			M.losebreath +=(1 * reac_volume)
+			M.emote("gasp")
+			to_chat(M, "<span class='userdanger'>You feel your throat constrict!</span>") //it's in your lungs boy-o. this is bad.
 		if (M.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH))
@@ -398,7 +455,18 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 	taste_description = "ash"
+
+/datum/reagent/medicine/charcoal/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH))
+			return
+		if(method == VAPOR)
+			if (M.stat != DEAD)
+				M.losebreath += (0.25 * reac_volume)
+				M.emote("cough")
+	..()
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
@@ -441,6 +509,7 @@
 	color = "#19C832"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -458,6 +527,17 @@
 	reagent_state = LIQUID
 	color = "#14FF3C"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH))
+			return
+		if(method == VAPOR)
+			if (M.stat != DEAD)
+				M.losebreath +=(0.25 * reac_volume)
+				M.emote("cough")
+	..()
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
@@ -471,6 +551,7 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 20
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
@@ -512,6 +593,7 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
@@ -609,6 +691,7 @@
 	reagent_state = LIQUID
 	color = "#64FFE6"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/M)
 	if(prob(10))
@@ -698,6 +781,7 @@
 	color = "#FFFFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
@@ -827,6 +911,7 @@
 	id = "mannitol"
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-2*REM)
@@ -876,7 +961,7 @@
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 60
+	overdose_threshold = 30
 
 /datum/reagent/medicine/stimulants/on_mob_add(mob/M)
 	..()
@@ -918,6 +1003,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
 	if(M.AdjustSleeping(-20, FALSE))
@@ -1046,6 +1132,7 @@
 	reagent_state = LIQUID
 	color = "#91D865"
 	taste_description = "jelly"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
@@ -1104,6 +1191,7 @@
 	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
 	reagent_state = LIQUID
 	color = "#27870a"
+	overdose_threshold = 30
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
@@ -1192,6 +1280,7 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+	overdose_threshold = 10
 	self_consuming = TRUE
 
 /datum/reagent/medicine/muscle_stimulant
