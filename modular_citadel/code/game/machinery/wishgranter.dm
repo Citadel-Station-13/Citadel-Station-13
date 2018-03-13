@@ -29,6 +29,8 @@
 			var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","The Station To Disappear","To Kill","Nothing")
 			switch(wish)
 				if("Power")	//Gives infinite power in exchange for infinite power going off in your face!
+					if(charges <= 0)
+						return
 					to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, warping itself into a delaminating supermatter shard!")
 					var/obj/item/stock_parts/cell/infinite/powah = new /obj/item/stock_parts/cell/infinite(get_turf(user))
@@ -44,6 +46,8 @@
 					if(!charges)
 						qdel(src)
 				if("Wealth")	//Gives 1 million space bucks in exchange for being turned into gold!
+					if(charges <= 0)
+						return
 					to_chat(user, "<B>Your wish is granted, but at a cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, warping your body to match the greed in your heart.")
 					new /obj/structure/closet/crate/trashcart/moneywish(loc)
@@ -54,6 +58,8 @@
 					if(!charges)
 						qdel(src)
 				if("The Station To Disappear")	//teleports you to the station and makes you blind, making the station disappear for you!
+					if(charges <= 0)
+						return
 					to_chat(user, "<B>Your wish is 'granted', but at a terrible cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your eyes to match the darkness in your heart.")
 					user.dna.add_mutation(BLINDMUT)
@@ -72,6 +78,8 @@
 					if(!charges)
 						qdel(src)
 				if("To Kill")	//Makes you kill things in exchange for rewards!
+					if(charges <= 0)
+						return
 					to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 					to_chat(user, "The Wish Granter punishes you for your wickedness, warping itself into a dastardly creature for you to kill! ...but it almost seems to reward you for this.")
 					var/obj/item/melee/transforming/energy/sword/cx/killreward = new /obj/item/melee/transforming/energy/sword/cx(get_turf(user))
@@ -93,6 +101,8 @@
 					if(!charges)
 						qdel(src)
 				if("Nothing")	//Makes the wish granter disappear
+					if(charges <= 0)
+						return
 					to_chat(user, "<B>The Wish Granter vanishes from sight!</B>")
 					to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")
 					charges--
