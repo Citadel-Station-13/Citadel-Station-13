@@ -115,3 +115,8 @@
 #define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_SOFTCRIT_TRADITIONAL	0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
 #define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+
+// because /tg/ coder didn't want to make this global or something.
+#define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
+#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
+#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol atleast a little bit damaging.
