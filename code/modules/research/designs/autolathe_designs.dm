@@ -688,22 +688,6 @@
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
 
-/datum/design/riot_dart
-	name = "Foam Riot Dart"
-	id = "riot_dart"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 1000) //Discount for making individually - no box = less metal!
-	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
-	category = list("hacked", "Security")
-
-/datum/design/riot_darts
-	name = "Foam Riot Dart Box"
-	id = "riot_darts"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 50000) //Comes with 40 darts
-	build_path = /obj/item/ammo_box/foambox/riot
-	category = list("hacked", "Security")
-
 /datum/design/a357
 	name = "Speed Loader (.357)"
 	id = "a357"
