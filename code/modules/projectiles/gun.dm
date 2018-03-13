@@ -35,6 +35,7 @@
 	var/weapon_weight = WEAPON_LIGHT
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/harmful = TRUE					//some arent harmful and should have this set to false. used for pacifists with tasers, medibeams, etc
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -111,6 +112,9 @@
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
+	if(iscarbon(user)) //CIT CHANGE - makes gun recoil cause staminaloss
+		user.adjustStaminaLossBuffered(getstamcost(user)*(firing_burst && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
+
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
@@ -169,6 +173,9 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
+
+	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
+
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)

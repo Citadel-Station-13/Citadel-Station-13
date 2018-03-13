@@ -235,7 +235,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	SEND_SOUND(usr, sound(null))
 	var/client/C = usr.client
 	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-		C.chatOutput.sendMusic(" ")
+		C.chatOutput.sendMusic(STOP_SOUNDS_URL)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -249,20 +249,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_ooc)()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Seeing OOC", "[usr.client.prefs.chat_toggles & CHAT_OOC ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/listen_ooc/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_OOC
-
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglehoundsleeper)()
-	set name = "Allow/Deny Hound Sleeper"
-	set category = "Preferences"
-	set desc = "Allow MediHound Sleepers"
-	usr.client.prefs.toggles ^= MEDIHOUND_SLEEPER
-	usr.client.prefs.save_preferences()
-	if(usr.client.prefs.toggles & MEDIHOUND_SLEEPER)
-		to_chat(usr, "You will now allow MediHounds to place you in their sleeper.")
-	else
-		to_chat(usr, "You will no longer allow MediHounds to place you in their sleeper.")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle MediHound Sleeper", "[usr.client.prefs.toggles & MEDIHOUND_SLEEPER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/togglehoundsleeper/Get_checked(client/C)
-	return C.prefs.toggles & MEDIHOUND_SLEEPER
 
 
 GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
@@ -429,4 +415,3 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Visibility", "[prefs.chat_toggles & CHAT_PRAYER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-

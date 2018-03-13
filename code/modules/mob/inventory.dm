@@ -197,7 +197,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(lying && !(I.flags_1&ABSTRACT_1))
+	if(incapacitated() && !(I.flags_1&ABSTRACT_1)) //Cit change - Changes lying to incapacitated so that it's plausible to pick things up while on the ground
 		return FALSE
 	if(!istype(I))
 		return FALSE

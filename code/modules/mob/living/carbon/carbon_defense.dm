@@ -77,7 +77,18 @@
 		affecting = bodyparts[1]
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting)
+	//CIT CHANGES START HERE - combatmode and resting checks
+		var/totitemdamage = I.force
+		if(iscarbon(user))
+			var/mob/living/carbon/tempcarb = user
+			if(!tempcarb.combatmode)
+				totitemdamage *= 0.5
+		if(user.resting)
+			totitemdamage *= 0.5
+		if(!combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -266,6 +277,9 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+			if(mood)
+				mood.add_event("hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

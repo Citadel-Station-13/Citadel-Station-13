@@ -148,6 +148,12 @@
 	if(istype(target, /obj/screen))
 		return
 
+//CIT CHANGES - makes it impossible to throw while in stamina softcrit
+	if(staminaloss >= STAMINA_SOFTCRIT)
+		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
+		return
+//END OF CIT CHANGES
+
 	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
 
@@ -159,6 +165,7 @@
 				stop_pulling()
 				if(has_trait(TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+				adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
@@ -173,6 +180,8 @@
 		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
+
+		adjustStaminaLossBuffered(I.getweight()*2)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
@@ -399,11 +408,19 @@
 	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		return
 
-	dropItemToGround(I)
+	//dropItemToGround(I) CIT CHANGE - makes it so the item doesn't drop if the modifier rolls above 100
 
 	var/modifier = 0
 	if(has_trait(TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
+
+	//CIT CHANGES START HERE
+	else if(combatmode)
+		modifier += 50
+
+	if(modifier < 100)
+		dropItemToGround(I)
+	//END OF CIT CHANGES
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
@@ -738,12 +755,17 @@
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		if(mood)
+			mood.add_event("handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
+		if(mood)
+			mood.clear_event("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()

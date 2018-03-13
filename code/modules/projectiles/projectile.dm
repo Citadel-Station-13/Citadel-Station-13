@@ -419,6 +419,9 @@
 		transform = M
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
+	if(!istype(T))
+		qdel(src)
+		return
 	if(T.z != loc.z)
 		var/old = loc
 		before_z_change(loc, T)
@@ -458,6 +461,13 @@
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc))
+
+	//CIT CHANGES START HERE - makes it so laying down makes you unable to shoot through most objects
+	if(iscarbon(source))
+		var/mob/living/carbon/checklad = source
+		if(istype(checklad) && checklad.resting)
+			pass_flags = 0
+	//END OF CIT CHANGES
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
