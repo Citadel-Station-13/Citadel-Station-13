@@ -29,10 +29,11 @@
 // Jack the Ripper starring plush
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(!grenade)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.add_event("plushjack", /datum/mood_event/plushjack)
+	if(I.is_sharp())
+		if(!grenade)
+			GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+			if(mood)
+				mood.add_event("plushjack", /datum/mood_event/plushjack)
 
 // plush playing (plush-on-plush action)
 	if(istype(I, /obj/item/toy/plush))
