@@ -26,10 +26,12 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 
 /datum/controller/subsystem/processing/traits/proc/AssignTraits(mob/living/user, client/cli, spawn_effects)
 	GenerateTraits(cli)
-	for(var/V in cli.prefs.character_traits)
-		user.add_trait_datum(V, spawn_effects)
+	if(user && cli && cli.prefs.character_traits)
+		for(var/V in cli.prefs.character_traits)
+			user.add_trait_datum(V, spawn_effects)
 
 /datum/controller/subsystem/processing/traits/proc/GenerateTraits(client/user)
-	if(user.prefs.character_traits.len)
-		return
-	user.prefs.character_traits = user.prefs.all_traits
+	if(user && user.prefs && user.prefs.character_traits)
+		if(user.prefs.character_traits.len)
+			return
+		user.prefs.character_traits = user.prefs.all_traits
