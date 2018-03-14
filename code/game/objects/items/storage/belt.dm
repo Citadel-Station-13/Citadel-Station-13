@@ -79,8 +79,7 @@
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
+	new /obj/item/screwdriver/power/cheap(src)
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
@@ -89,8 +88,7 @@
 
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
+	new /obj/item/screwdriver/power/cheap(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
