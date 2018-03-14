@@ -139,7 +139,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod")
+	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod","xenobioconsole") //CIT CHANGE added xenobioconsole here)
 	research_cost = 15000
 	export_price = 5000
 
@@ -148,7 +148,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick", "xenobioconsole") //CIT CHANGE added xenobioconsole here
+	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
 	research_cost = 5000
 	export_price = 5000
 
