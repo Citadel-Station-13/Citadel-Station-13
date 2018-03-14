@@ -530,6 +530,7 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
+
 // CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y, final_pixel_y, final_pixel_x)
 	if(!no_effect && (visual_effect_icon || used_item))
@@ -693,10 +694,18 @@
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
-	. = FALSE
+	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/turf/T = get_turf(src)
-	if (T && (is_centcom_level(T.z) || is_station_level(T.z) || is_transit_level(T.z)))
-		. = TRUE
+	if (!T)
+		return FALSE
+	if (is_station_level(T.z) || is_centcom_level(T.z))
+		return TRUE
+	if (is_transit_level(T.z))
+		var/area/A = T.loc
+		if (is_type_in_typecache(A, allowed_shuttles))
+			return TRUE
+
+	return FALSE
 
 
 /* Language procs */

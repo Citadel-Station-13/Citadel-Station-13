@@ -2599,6 +2599,7 @@
 #include "modular_citadel\code\controllers\subsystem\research.dm"
 #include "modular_citadel\code\controllers\subsystem\shuttle.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
+#include "modular_citadel\code\datums\components\material_container.dm"
 #include "modular_citadel\code\datums\mutations\hulk.dm"
 #include "modular_citadel\code\datums\status_effects\debuffs.dm"
 #include "modular_citadel\code\datums\traits\neutral.dm"
