@@ -9,7 +9,7 @@
 	new /obj/item/storage/lockbox/medal/cargo(src)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-//	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/device/megaphone/cargo(src)
