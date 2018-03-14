@@ -50201,6 +50201,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/emitter{
+	anchored = 1;
+	state = 2
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cdE" = (
@@ -51269,6 +51273,7 @@
 	dir = 8;
 	network = list("singularity")
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cfC" = (
@@ -52243,7 +52248,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "chu" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -53007,10 +53011,10 @@
 "cjb" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -53026,25 +53030,8 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cje" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cjf" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engpa";
-	name = "Engineering Chamber Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -53611,13 +53598,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"ckx" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "cky" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -53633,6 +53613,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ckA" = (
@@ -53641,34 +53622,10 @@
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
 	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/engine/engineering)
-"ckB" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"ckC" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/neutral,
 /area/engine/engineering)
 "ckD" = (
 /obj/effect/decal/cleanable/dirt,
@@ -54240,20 +54197,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "clS" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /obj/machinery/field/generator{
-	anchored = 1
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
-"clT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/machinery/field/generator{
-	anchored = 1
+	anchored = 1;
+	state = 2
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -54266,19 +54212,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"clV" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engpa";
-	name = "Engineering Chamber Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "clW" = (
 /obj/structure/rack,
 /obj/item/crowbar,
@@ -54288,9 +54221,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "clX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -55155,9 +55085,6 @@
 	id = "engpa";
 	name = "Engineering Chamber Shutters"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -55842,9 +55769,6 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -56403,6 +56327,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqr" = (
+/obj/structure/particle_accelerator/particle_emitter/left{
+	icon_state = "emitter_left";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqs" = (
@@ -56411,6 +56339,7 @@
 /area/engine/engineering)
 "cqt" = (
 /obj/structure/cable,
+/obj/machinery/particle_accelerator/control_box,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqu" = (
@@ -56970,7 +56899,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "crJ" = (
-/obj/item/wrench,
+/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "crK" = (
@@ -57011,7 +56940,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crO" = (
-/obj/item/weldingtool/largetank,
+/obj/structure/particle_accelerator/fuel_chamber{
+	icon_state = "fuel_chamber";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crP" = (
@@ -57788,7 +57720,10 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ctp" = (
-/obj/item/wrench,
+/obj/structure/particle_accelerator/particle_emitter/right{
+	icon_state = "emitter_right";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ctq" = (
@@ -58450,6 +58385,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -58597,9 +58535,6 @@
 "cuT" = (
 /obj/structure/cable{
 	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -59705,7 +59640,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -59810,24 +59745,6 @@
 	dir = 4
 	},
 /area/crew_quarters/fitness/recreation)
-"cxA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
-"cxB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/field/generator{
-	anchored = 1
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "cxD" = (
 /obj/structure/rack,
 /obj/item/crowbar,
@@ -60499,7 +60416,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -60647,13 +60564,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"czp" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "czq" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -60667,33 +60577,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"czs" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "engpa";
-	name = "Engineering Chamber Shutters"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
-"czt" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel/neutral,
-/area/engine/engineering)
 "czu" = (
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -61293,10 +61179,10 @@
 "cAI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -61308,7 +61194,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "cAK" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -62896,6 +62781,7 @@
 	dir = 8;
 	network = list("singularity")
 	},
+/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cDW" = (
@@ -63779,6 +63665,12 @@
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/emitter{
+	anchored = 1;
+	dir = 1;
+	icon_state = "emitter";
+	state = 2
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cFI" = (
@@ -100784,6 +100676,12 @@
 	dir = 4
 	},
 /area/science/misc_lab)
+"fte" = (
+/turf/open/floor/plating/airless,
+/area/space)
+"fDq" = (
+/turf/open/space,
+/area/space/nearstation)
 "fGq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -100906,6 +100804,9 @@
 	dir = 9
 	},
 /area/science/circuit)
+"iPZ" = (
+/turf/open/space,
+/area/space)
 "iQh" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -100914,6 +100815,13 @@
 	dir = 8
 	},
 /area/medical/morgue)
+"iXR" = (
+/obj/structure/particle_accelerator/end_cap{
+	icon_state = "end_cap";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "jeu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -100998,6 +100906,13 @@
 	dir = 4
 	},
 /area/science/lab)
+"lyW" = (
+/obj/structure/particle_accelerator/particle_emitter/center{
+	icon_state = "emitter_center";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "lEl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -101053,6 +100968,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"mVf" = (
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "nSh" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
@@ -101095,6 +101013,9 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"pFw" = (
+/turf/open/space/basic,
+/area/space/nearstation)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -101102,6 +101023,10 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
+"pTr" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qhc" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
@@ -101116,6 +101041,12 @@
 	dir = 5
 	},
 /area/science/circuit)
+"qKr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -101141,6 +101072,10 @@
 "tCh" = (
 /turf/closed/wall,
 /area/science/misc_lab)
+"tIV" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "tMk" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -101170,6 +101105,13 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
+"utU" = (
+/obj/structure/particle_accelerator/power_box{
+	icon_state = "power_box";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "uYS" = (
 /obj/machinery/door/airlock/atmos/glass{
 	heat_proof = 1;
@@ -101181,6 +101123,12 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"vjq" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/locker)
 "vqd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -121718,14 +121666,14 @@ aaa
 cja
 ckw
 clS
-aad
-aad
-clR
-aaa
-abj
-aad
-aad
-cxA
+fDq
+fDq
+clS
+tIV
+pFw
+fDq
+fDq
+clS
 ctn
 cja
 aaa
@@ -121973,17 +121921,17 @@ cdC
 cfA
 aad
 cjb
-ckx
+cky
+fDq
+iPZ
+iPZ
+pTr
 aad
-aaa
-aaa
-abj
-aad
-abj
-aaa
-aaa
-aad
-czp
+pFw
+iPZ
+iPZ
+fDq
+czq
 cAI
 aad
 cDT
@@ -122231,15 +122179,15 @@ cfA
 aaa
 cja
 ckw
+fDq
+iPZ
+pFw
+pFw
 aad
-aaa
-abj
-abj
-abj
-abj
-abj
-aaa
-aad
+pFw
+pFw
+iPZ
+fDq
 ctn
 cja
 aaa
@@ -122486,19 +122434,19 @@ car
 cbP
 cfA
 abj
-cja
-ckw
-ckw
-abj
-abj
+cjb
+cky
+pFw
+pFw
+pFw
 cqo
 clR
 ctm
-abj
-abj
-abj
-ctn
-cja
+pFw
+pTr
+clS
+czq
+cAI
 abj
 cDT
 cFJ
@@ -122743,19 +122691,19 @@ car
 cbP
 cdC
 aad
-cjb
-cky
-aaa
+cja
+ckw
+tIV
 aad
-abj
+aad
 ckw
 crJ
-ctn
-abj
+qKr
 aad
-aaa
-czq
-cAI
+aad
+tIV
+ctn
+cja
 aad
 cdC
 cFJ
@@ -123000,19 +122948,19 @@ car
 cbP
 cfA
 abj
-cja
-ckw
-abj
-abj
-abj
+cjb
+cky
+clS
+pTr
+pFw
 cqp
 crK
 cto
-abj
-abj
-ctn
-ctn
-cja
+pFw
+pFw
+pFw
+czq
+cAI
 abj
 cDT
 cFJ
@@ -123259,15 +123207,15 @@ cfA
 aaa
 cja
 ckw
+fDq
+iPZ
+pFw
+pFw
 aad
-aaa
-abj
-abj
-abj
-abj
-abj
-aaa
-aad
+pFw
+pFw
+iPZ
+fDq
 ctn
 cja
 aaa
@@ -123515,17 +123463,17 @@ cdC
 cfA
 aad
 cjb
-ckx
+cky
+fDq
+iPZ
+aaa
+pFw
 aad
+pTr
 aaa
-aaa
-abj
-aad
-abj
-aaa
-aaa
-aad
-czp
+iPZ
+fDq
+czq
 cAI
 aad
 cDU
@@ -123773,15 +123721,15 @@ cfA
 aaa
 cja
 ckw
-clT
-aad
-aad
-abj
-aaa
-crK
-aad
-aad
-cxB
+clS
+fDq
+pFw
+pFw
+tIV
+clS
+fDq
+fDq
+clS
 ctn
 cja
 aaa
@@ -124284,8 +124232,8 @@ car
 cbT
 cdG
 cfB
-aaa
-aad
+fte
+mVf
 aaa
 aad
 cjd
@@ -124297,8 +124245,8 @@ cjd
 cjd
 aad
 aaa
-aad
-aaa
+mVf
+fte
 cDV
 cFL
 cHg
@@ -124805,7 +124753,7 @@ cje
 cjd
 cpa
 cqr
-cqr
+lyW
 ctp
 cuQ
 cjd
@@ -125056,19 +125004,19 @@ cbV
 cdJ
 car
 chv
-cjf
+chv
 ckA
-clV
+chv
 cnC
 cpa
 cqs
-cqr
+utU
 ctq
 cuR
 cnC
-cjf
-czs
-clV
+chv
+chv
+chv
 chv
 car
 cFO
@@ -125314,7 +125262,7 @@ cdK
 cfD
 chw
 cjg
-ckB
+chw
 clW
 cnD
 cpb
@@ -125324,7 +125272,7 @@ ctr
 cuS
 cnD
 cxD
-ckB
+chw
 chw
 chw
 cDW
@@ -125571,17 +125519,17 @@ cdL
 cfE
 chx
 cjh
-ckC
+cjn
 clX
 cnE
 cpc
 cqu
-cqr
+iXR
 cts
 cuT
 cnE
 clX
-czt
+cjn
 cAL
 cCs
 cDX
@@ -149733,7 +149681,7 @@ clt
 cnc
 coE
 cqd
-crr
+vjq
 csT
 cuy
 cvU

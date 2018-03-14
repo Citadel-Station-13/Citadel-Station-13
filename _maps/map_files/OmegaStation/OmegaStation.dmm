@@ -6337,10 +6337,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aml" = (
-/obj/structure/closet/emcloset,
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -6350,12 +6346,8 @@
 	},
 /area/hallway/primary/central)
 "amm" = (
-/obj/structure/cable/white{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "amn" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -6728,7 +6720,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "and" = (
-/obj/structure/closet/firecloset,
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
@@ -6740,10 +6731,6 @@
 	dir = 8
 	},
 /area/hallway/primary/central)
-"ane" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva)
 "anf" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/end{
@@ -31752,6 +31739,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"jFY" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "kKd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -31785,6 +31775,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"nbP" = (
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/cryopod";
+	dir = 2;
+	name = "Cryogenics APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "nKi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -31807,6 +31809,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"oGK" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -34288,6 +34294,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"uyG" = (
+/obj/machinery/computer/cryopod{
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
+"wgN" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
 "wUF" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Supermatter Chamber";
@@ -77054,8 +77070,8 @@ ajx
 akA
 alt
 amm
-amm
-abt
+nbP
+jFY
 aoT
 apZ
 ara
@@ -77310,9 +77326,9 @@ abq
 ajy
 akB
 alk
-aae
-aae
-anQ
+amm
+amm
+wgN
 aoU
 aqa
 arg
@@ -77567,9 +77583,9 @@ aiC
 ajz
 akC
 alk
-aae
-aae
-anQ
+oGK
+uyG
+wgN
 aoV
 aqb
 arh
@@ -77825,7 +77841,7 @@ ajA
 akq
 alu
 amn
-ane
+alu
 alu
 syT
 alu
