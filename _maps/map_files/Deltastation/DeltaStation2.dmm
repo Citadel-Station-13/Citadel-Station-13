@@ -67472,9 +67472,6 @@
 	dir = 5
 	},
 /area/science/xenobiology)
-"cNh" = (
-/turf/open/floor/plasteel/vault/killroom,
-/area/science/xenobiology)
 "cNi" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -67485,7 +67482,9 @@
 	name = "xenobiology camera";
 	network = list("ss13","xeno","rd")
 	},
-/turf/open/floor/plasteel/vault/killroom,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/science/xenobiology)
 "cNj" = (
 /obj/structure/closet/crate{
@@ -68199,26 +68198,6 @@
 /area/science/xenobiology)
 "cON" = (
 /turf/open/floor/circuit/green,
-/area/science/xenobiology)
-"cOO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 2;
-	external_pressure_bound = 140;
-	name = "killroom vent";
-	pressure_checks = 0
-	},
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
-"cOP" = (
-/turf/open/floor/circuit/killroom,
-/area/science/xenobiology)
-"cOQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 2;
-	external_pressure_bound = 120;
-	name = "server vent"
-	},
-/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cOR" = (
 /turf/closed/wall/r_wall,
@@ -68972,24 +68951,6 @@
 	dir = 1
 	},
 /area/science/xenobiology)
-"cQw" = (
-/obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault/killroom,
-/area/science/xenobiology)
-"cQx" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault/killroom,
-/area/science/xenobiology)
-"cQy" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/vault/killroom,
-/area/science/xenobiology)
 "cQz" = (
 /obj/structure/closet/wardrobe/science_white,
 /obj/machinery/light/small{
@@ -69693,7 +69654,6 @@
 	icon_state = "0-4"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cSg" = (
@@ -70494,13 +70454,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
-	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cTS" = (
@@ -72195,9 +72150,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cXm" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -72991,6 +72943,15 @@
 /obj/item/storage/box/monkeycubes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/item/extinguisher{
+	pixel_y = 4;
+	pixel_z = 4
+	},
+/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -132477,9 +132438,9 @@ cHA
 cjp
 cKl
 cLI
-cNh
-cNh
-cNh
+cNd
+cNd
+cNd
 cNc
 cTQ
 cVI
@@ -132734,9 +132695,9 @@ cHB
 cjp
 cKj
 cLI
-cNh
-cOO
-cQw
+cNd
+cNd
+cNd
 cSf
 cTR
 cVP
@@ -132992,8 +132953,8 @@ caE
 cKm
 cLI
 cNi
-cOP
-cQx
+cNd
+cNd
 cSg
 cTS
 cVQ
@@ -133248,9 +133209,9 @@ cHB
 cjp
 cKk
 cLI
-cNh
-cOQ
-cQy
+cNd
+cNd
+cNd
 cSh
 cTT
 cVR
@@ -133505,9 +133466,9 @@ cHA
 ceb
 cKk
 cLI
-cNh
-cNh
-cNh
+cNd
+cNd
+cNd
 cNc
 cTU
 cVS

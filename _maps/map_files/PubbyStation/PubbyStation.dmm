@@ -26536,12 +26536,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"bpp" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "bpq" = (
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
@@ -27725,22 +27719,21 @@
 /obj/structure/table/glass,
 /obj/item/folder,
 /obj/item/pen,
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/extinguisher{
+	pixel_x = 4;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "brO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"brP" = (
-/obj/structure/chair/office/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "brQ" = (
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Port";
 	dir = 8;
@@ -28529,11 +28522,11 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "btD" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "btE" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "btF" = (
 /obj/structure/chair{
@@ -29154,7 +29147,7 @@
 	dir = 8;
 	network = list("ss13","rd")
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bva" = (
 /turf/closed/wall,
@@ -31225,7 +31218,6 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bzj" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -31233,6 +31225,7 @@
 	pixel_x = 32;
 	receive_ore_updates = 1
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bzk" = (
@@ -93347,7 +93340,7 @@ bnd
 bog
 bpo
 bpn
-brP
+bpn
 btq
 buF
 bwb
@@ -93602,7 +93595,7 @@ bkE
 aht
 bnd
 boh
-bpp
+bpn
 bqx
 brQ
 btr
