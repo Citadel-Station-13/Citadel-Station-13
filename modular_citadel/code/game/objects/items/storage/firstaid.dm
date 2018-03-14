@@ -29,7 +29,7 @@
 
 //hijacking the minature first aids for hypospray boxes. <3
 /obj/item/storage/hypospraykit
-	name = "Hypospray kit"
+	name = "hypospray kit"
 	desc = "It's a kit containing a hypospray and specific treatment chemical-filled vials."
 	icon = 'modular_citadel/icons/firstaid.dmi'
 	icon_state = "firstaid-mini"
@@ -50,12 +50,12 @@
 /obj/item/storage/hypospraykit/regular/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/tricord(src)
+	new /obj/item/hypospray/mkii/tricord(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
 
 /obj/item/storage/hypospraykit/fire
-	name = "hypospray burn treatment kit"
+	name = "burn treatment hypospray kit"
 	desc = "A specialized hypospray kit for burn treatments. Apply with sass."
 	icon_state = "burn-mini"
 	item_state = "firstaid-ointment"
@@ -63,48 +63,48 @@
 /obj/item/storage/hypospraykit/fire/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/burn(src)
+	new /obj/item/hypospray/mkii/burn(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
 
 /obj/item/storage/hypospraykit/toxin
-	name = "hypospray toxin treatment kit"
+	name = "toxin treatment hypospray kit"
 	icon_state = "toxin-mini"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/hypospraykit/toxin/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/toxin(src)
+	new /obj/item/hypospray/mkii/toxin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
 
 /obj/item/storage/hypospraykit/o2
-	name = "hypospray oxygen deprivation treatment kit"
+	name = "oxygen deprivation hypospray kit"
 	icon_state = "oxy-mini"
 	item_state = "firstaid-o2"
 
 /obj/item/storage/hypospraykit/o2/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/oxygen(src)
+	new /obj/item/hypospray/mkii/oxygen(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 
 /obj/item/storage/hypospraykit/brute
-	name = "hypospray brute trauma treatment kit"
+	name = "brute trauma hypospray kit"
 	icon_state = "brute-mini"
 	item_state = "firstaid-brute"
 
 /obj/item/storage/hypospraykit/brute/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/brute(src)
+	new /obj/item/hypospray/mkii/brute(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
 
 /obj/item/storage/hypospraykit/tactical
-	name = "hypospray combat medkit"
+	name = "combat hypospray kit"
 	desc = "A hypospray kit best suited for combat situations."
 	icon_state = "tactical-mini"
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -113,24 +113,27 @@
 	if(empty)
 		return
 	new /obj/item/defibrillator/compact/combat/loaded(src)
-	new /obj/item/reagent_containers/hypospray/mkii/CMO/combat(src)
+	new /obj/item/hypospray/mkii/CMO/combat(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
 
 /obj/item/storage/hypospraykit/cmo
-	name = "CMO Hypospray medkit"
-	desc = "A kit containing the larger vials and upgraded CMO hypospray."
+	name = "deluxe hypospray kit"
+	desc = "A kit containing a Deluxe hypospray and Vials."
 	icon_state = "tactical-mini"
 	max_w_class = WEIGHT_CLASS_NORMAL
+	storage_slots = 6
+	max_combined_w_class = 6
 
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/reagent_containers/hypospray/mkii/CMO(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/bicaridine(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/antitoxin(src)
-	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/kelotane(src)
+	new /obj/item/hypospray/mkii/CMO(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/charcoal(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/salglu(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/synthflesh(src)
 
 /obj/item/storage/box/vials
 	name = "box of hypovials"

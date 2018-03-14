@@ -75,11 +75,13 @@
 	charges = list(37, 4, 4)// of 111 standard, 12 contraband, 10 premium(?)
 	init_charges = list(37, 4, 4)
 
+/*
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed"
 	icon_state = "refill_medical"
 	charges = list(26, 5, 3)// of 76 standard, 13 contraband, 8 premium
 	init_charges = list(26, 5, 3)
+*/ //I don't know how citadel change comments work, see the modular_citadel folder instead.
 
 /obj/item/vending_refill/donksoft
 	machine_name = "Donksoft Toy Vendor"

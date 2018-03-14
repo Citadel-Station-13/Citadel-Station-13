@@ -26,7 +26,7 @@
 					/obj/item/storage/hypospraykit/toxin = 2,
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
-					/obj/item/storage/box/vials = 1)
+					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
 
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
