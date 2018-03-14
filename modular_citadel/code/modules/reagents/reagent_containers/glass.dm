@@ -1,8 +1,8 @@
 /obj/item/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
-	volume = 50
+	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 60)
+	volume = 60
 	container_type = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. It can hold up to 50 units."
+	desc = "A beaker. It can hold up to 60 units."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
@@ -152,26 +152,26 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	desc = "A jar for honey. It can hold up to 60 units of sweet delight."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units."
+	desc = "A large beaker. Can hold up to 120 units."
 	icon_state = "beakerlarge"
 	materials = list(MAT_GLASS=2500)
-	volume = 100
+	volume = 120
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,120)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without \
-		reactions. Can hold up to 50 units."
+		reactions. Can hold up to 60 units."
 	icon_state = "beakernoreact"
 	materials = list(MAT_METAL=3000)
-	volume = 50
+	volume = 60
 	amount_per_transfer_from_this = 10
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
@@ -193,7 +193,7 @@
 	list_reagents = list("cryoxadone" = 30)
 
 /obj/item/reagent_containers/glass/beaker/sulphuric
-	list_reagents = list("sacid" = 50)
+	list_reagents = list("sacid" = 60)
 
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list("slimejelly" = 50)
