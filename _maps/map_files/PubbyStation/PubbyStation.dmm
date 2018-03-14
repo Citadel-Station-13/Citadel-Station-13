@@ -33466,8 +33466,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -34090,6 +34090,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFn" = (
@@ -34628,6 +34629,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGt" = (
@@ -35109,13 +35111,16 @@
 	pixel_x = -6;
 	pixel_y = -24
 	},
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "tox_airlock_exterior";
-	idInterior = "tox_airlock_interior";
-	idSelf = "tox_access_control";
+/obj/machinery/embedded_controller/radio/airlock_controller{
 	name = "Mixing Chamber Access Console";
+	airpump_tag = "tox_airlock_pump";
+	exterior_door_tag = "tox_airlock_exterior";
+	id_tag = "tox_airlock_control";
+	interior_door_tag = "tox_airlock_interior";
 	pixel_x = 6;
 	pixel_y = -26;
+	sanitize_external = 1;
+	sensor_tag = "tox_airlock_sensor";
 	req_access_txt = "0"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -35131,8 +35136,7 @@
 "bHB" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	name = "Incinerator Output Pump";
-	on = 0
+	name = "Incinerator Output Pump"
 	},
 /turf/open/floor/plasteel,
 /area/science/mineral_storeroom)
@@ -36069,41 +36073,39 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bJQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
-	on = 1;
-	target_pressure = 101.325
-	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "tox_airlock_exterior";
-	idSelf = "tox_access_control";
-	layer = 3.1;
-	name = "airlock control";
-	pixel_x = 8;
-	pixel_y = -24
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 2
 	},
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/airlock_sensor{
+	id_tag = "tox_airlock_sensor";
+	master_tag = "tox_airlock_control";
+	pixel_x = -24;
+	pixel_y = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bJR" = (
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 4;
+	frequency = 1449;
+	id = "tox_airlock_pump"
+	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bJS" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	on = 0;
-	target_pressure = 101.325
-	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "tox_airlock_interior";
-	idSelf = "tox_access_control";
-	name = "airlock control";
-	pixel_x = -8;
-	pixel_y = 24
+	dir = 1
 	},
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -41833,6 +41835,9 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 6
+	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bXI" = (
@@ -42071,11 +42076,6 @@
 "bYw" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"bYx" = (
-/obj/machinery/atmospherics/pipe/simple/purple/visible,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "bYz" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth"
@@ -42460,14 +42460,16 @@
 	name = "Incinerator APC";
 	pixel_x = -24
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/airalarm{
 	dir = 2;
 	pixel_y = 22
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	icon_state = "darkyellow";
 	dir = 8
@@ -42486,6 +42488,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "bZh" = (
@@ -42493,20 +42498,24 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4
 	},
 /area/maintenance/disposal/incinerator)
 "bZi" = (
-/obj/machinery/atmospherics/pipe/simple/purple/visible{
-	dir = 6
-	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/purple/visible,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "bZj" = (
-/obj/machinery/atmospherics/pipe/simple/purple/visible{
-	dir = 9
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
@@ -42704,10 +42713,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bZO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkyellow/side{
 	icon_state = "darkyellow";
 	dir = 8
@@ -42751,29 +42760,13 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "bZS" = (
-/obj/machinery/doorButtons/access_button{
-	idDoor = "incinerator_airlock_interior";
-	idSelf = "incinerator_access_control";
-	name = "Incinerator airlock control";
-	pixel_x = -24;
-	pixel_y = -8
-	},
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	on = 0;
-	target_pressure = 101.325
-	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "incinerator_airlock_exterior";
-	idSelf = "incinerator_access_control";
-	layer = 3.1;
-	name = "Incinerator airlock control";
-	pixel_x = 24;
-	pixel_y = -8
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZT" = (
@@ -43068,13 +43061,18 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "caK" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4
 	},
@@ -43098,6 +43096,11 @@
 "caM" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 2;
+	frequency = 1449;
+	id = "incinerator_airlock_pump"
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -43398,16 +43401,20 @@
 	name = "Incinerator to Output";
 	on = 0
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "incinerator_airlock_exterior";
-	idInterior = "incinerator_airlock_interior";
-	idSelf = "incinerator_access_control";
+/obj/machinery/embedded_controller/radio/airlock_controller{
 	name = "Incinerator Access Console";
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_access_control";
+	interior_door_tag = "incinerator_airlock_interior";
 	pixel_x = 26;
 	pixel_y = 6;
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor";
 	req_access_txt = "0"
 	},
 /obj/machinery/button/ignition{
@@ -43416,7 +43423,9 @@
 	pixel_y = -6
 	},
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4
 	},
@@ -43429,11 +43438,16 @@
 /area/maintenance/disposal/incinerator)
 "cbE" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	on = 0;
-	target_pressure = 101.325
+	dir = 8
 	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/obj/machinery/airlock_sensor{
+	id_tag = "incinerator_airlock_sensor";
+	master_tag = "incinerator_airlock_control";
+	pixel_x = -26;
+	pixel_y = 8
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cbF" = (
@@ -43664,13 +43678,13 @@
 /area/maintenance/disposal/incinerator)
 "ccq" = (
 /obj/structure/chair/office/dark,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "ccr" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	name = "Incinerator Output Pump";
-	on = 1
+	name = "Incinerator Output Pump"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4
@@ -43849,10 +43863,13 @@
 "cdh" = (
 /obj/structure/table/glass,
 /obj/item/storage/toolbox/emergency,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
 /turf/open/floor/plasteel/darkyellow/side,
 /area/maintenance/disposal/incinerator)
 "cdi" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel/darkyellow/side{
 	icon_state = "darkyellow";
 	dir = 6
@@ -43867,6 +43884,9 @@
 	req_access = null;
 	req_access_txt = "24"
 	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cdk" = (
@@ -43875,6 +43895,9 @@
 	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
@@ -50122,12 +50145,31 @@
 "ecV" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+<<<<<<< HEAD
 "eHp" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
 "eIE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+=======
+"dAF" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"dMB" = (
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
+"dMI" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/camera{
+	c_tag = "Circuitry Lab";
+	dir = 1;
+	network = list("ss13","rd");
+	pixel_x = 10
+>>>>>>> f7195a4... Fixes incinerator vents (#36237)
 	},
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
@@ -50238,9 +50280,50 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/stairs,
 /area/crew_quarters/cryopod)
+=======
+/turf/open/floor/carpet,
+/area/library/lounge)
+"jLW" = (
+/obj/machinery/atmospherics/pipe/simple/purple/visible,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
+"jOJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
+"jXh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/library/lounge)
+"jXA" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/purple/corner{
+	dir = 8
+	},
+/area/science/circuit)
+"khk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
+>>>>>>> f7195a4... Fixes incinerator vents (#36237)
 "kjK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -50391,12 +50474,47 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+<<<<<<< HEAD
 "tap" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/cryo";
 	dir = 1;
 	name = "Cryogenics APC";
 	pixel_y = 24
+=======
+"thA" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
+"tYg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/science/mixing)
+"tYI" = (
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"uek" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/device/integrated_electronics/analyzer,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"uoj" = (
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the other eggheads from the comfort of the circuitry lab.";
+	dir = 2;
+	name = "RnD Monitor";
+	network = list("rd");
+	pixel_y = 32
+>>>>>>> f7195a4... Fixes incinerator vents (#36237)
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -50465,8 +50583,63 @@
 /area/library)
 "vTA" = (
 /obj/machinery/door/poddoor/preopen{
+<<<<<<< HEAD
 	id = "bridgespace";
 	name = "bridge external shutters"
+=======
+	id = "prison release";
+	name = "prisoner processing blast door"
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
+"wBr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+"wDZ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"wJP" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
+	dir = 9
+	},
+/turf/open/space,
+/area/space/nearstation)
+"wTO" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/plasteel/purple/corner{
+	dir = 4
+	},
+/area/science/circuit)
+"xfc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"xhj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/carpet,
+/area/library/lounge)
+"xja" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Library APC";
+	pixel_x = 24
+>>>>>>> f7195a4... Fixes incinerator vents (#36237)
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -89460,7 +89633,7 @@ bVl
 bWc
 bWR
 bXG
-bYw
+jLW
 bZi
 bZR
 caL
@@ -89716,13 +89889,13 @@ bUA
 bVm
 bWd
 bWS
-bWd
-bYx
+wJP
+aht
 bZj
 bZS
 caM
 cbE
-bYw
+thA
 cdk
 ced
 bYw
@@ -92525,9 +92698,9 @@ bDa
 bEa
 bFm
 bGs
-bHy
-bHy
-bHy
+gMm
+gMm
+jOJ
 bHy
 bHy
 bHy
@@ -93555,7 +93728,7 @@ bFq
 bGw
 bAF
 bHy
-bHy
+tYg
 bHy
 bHy
 bHy
