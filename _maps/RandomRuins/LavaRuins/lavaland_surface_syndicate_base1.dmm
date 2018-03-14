@@ -54,6 +54,25 @@
 	dir = 8
 	},
 /area/ruin/unpowered/syndicate_lava_base/main)
+"ah" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/sign/barsign{
+	pixel_y = -32;
+	req_access = null;
+	req_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"ai" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
 "ap" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -547,7 +566,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -891,7 +910,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1268,8 +1287,7 @@
 	base_state = "left";
 	dir = 2;
 	icon_state = "left";
-	name = "Chemistry";
-	req_access_txt = "0"
+	name = "Chemistry"
 	},
 /obj/machinery/door/window/southleft{
 	base_state = "left";
@@ -2176,8 +2194,7 @@
 "hk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access_txt = "0"
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -2214,7 +2231,7 @@
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 9
@@ -2235,7 +2252,7 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hr" = (
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
@@ -2346,8 +2363,7 @@
 "hC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access_txt = "0"
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -2362,7 +2378,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -2382,7 +2398,7 @@
 "hG" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/carbon/monkey{
-	faction = list("neutral","syndicate")
+	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 6
@@ -2672,8 +2688,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "il" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 2";
-	req_access_txt = "0"
+	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2685,8 +2700,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "im" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -2695,8 +2709,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "in" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 4";
-	req_access_txt = "0"
+	name = "Cabin 4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3141,8 +3154,7 @@
 /area/lavaland/surface/outdoors)
 "jf" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 1";
-	req_access_txt = "0"
+	name = "Cabin 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3169,8 +3181,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jh" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 3";
-	req_access_txt = "0"
+	name = "Cabin 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4236,8 +4247,7 @@
 	base_state = "right";
 	dir = 1;
 	icon_state = "right";
-	name = "Bar";
-	req_access_txt = "0"
+	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -5040,21 +5050,6 @@
 /obj/structure/window/plastitanium,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"mV" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null;
-	req_access_txt = "0"
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"mW" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mX" = (
 /obj/structure/rack{
@@ -7054,7 +7049,7 @@ li
 lA
 lX
 mw
-mV
+ah
 jy
 nu
 oo
@@ -7101,7 +7096,7 @@ lj
 lB
 lY
 lA
-mW
+ai
 jP
 nT
 op
