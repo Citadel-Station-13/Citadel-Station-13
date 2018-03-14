@@ -2,14 +2,14 @@
 #define HYPO_INJECT 1
 
 #define WAIT_SPRAY 50
-#define WAIT_INJECT 40
-#define SELF_SPRAY 20
-#define SELF_INJECT 10
+#define WAIT_INJECT 50
+#define SELF_SPRAY 30
+#define SELF_INJECT 30
 
-#define DELUXE_WAIT_SPRAY 25
-#define DELUXE_WAIT_INJECT 20
-#define DELUXE_SELF_SPRAY 10
-#define DELUXE_SELF_INJECT 0
+#define DELUXE_WAIT_SPRAY 40
+#define DELUXE_WAIT_INJECT 40
+#define DELUXE_SELF_SPRAY 20
+#define DELUXE_SELF_INJECT 20
 
 #define COMBAT_WAIT_SPRAY 0
 #define COMBAT_WAIT_INJECT 0
@@ -136,6 +136,7 @@
 	if(vial)
 		vial.attack_self(user)
 
+// Gunna allow this for now, still really don't approve - Pooj
 /obj/item/hypospray/mkii/emag_act(mob/user)
 	inject_wait = COMBAT_WAIT_INJECT
 	spray_wait = COMBAT_WAIT_SPRAY
