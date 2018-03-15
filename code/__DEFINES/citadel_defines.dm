@@ -110,6 +110,11 @@
 
 #define CITADEL_MENTOR_OOC_COLOUR "#ad396e"
 
+//xenobio console upgrade stuff
+#define XENOBIO_UPGRADE_MONKEYS				1
+#define XENOBIO_UPGRADE_SLIMEBASIC		2
+#define XENOBIO_UPGRADE_SLIMEADV			4
+
 //stamina stuff
 #define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
 #define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit

@@ -49,22 +49,22 @@
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
 
-	if(slime_up_action)
+	if(slime_up_action && (upgradetier & XENOBIO_UPGRADE_SLIMEBASIC)) //CIT CHANGE - makes slime-related actions require XENOBIO_UPGRADE_SLIMEBASIC
 		slime_up_action.target = src
 		slime_up_action.Grant(user)
 		actions += slime_up_action
 
-	if(slime_place_action)
+	if(slime_place_action && (upgradetier & XENOBIO_UPGRADE_SLIMEBASIC)) //CIT CHANGE - makes slime-related actions require XENOBIO_UPGRADE_SLIMEBASIC
 		slime_place_action.target = src
 		slime_place_action.Grant(user)
 		actions += slime_place_action
 
-	if(feed_slime_action)
+	if(feed_slime_action && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		feed_slime_action.target = src
 		feed_slime_action.Grant(user)
 		actions += feed_slime_action
 
-	if(monkey_recycle_action)
+	if(monkey_recycle_action && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes remote monkey recycling require XENOBIO_UPGRADE_MONKEYS
 		monkey_recycle_action.target = src
 		monkey_recycle_action.Grant(user)
 		actions += monkey_recycle_action
@@ -74,18 +74,18 @@
 		scan_action.Grant(user)
 		actions += scan_action
 
-	if(potion_action)
+	if(potion_action && (upgradetier & XENOBIO_UPGRADE_SLIMEADV)) // CIT CHANGE - makes giving slimes potions via console require XENOBIO_UPGRADE_SLIMEADV
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
+	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube) && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
 		qdel(O)
 		return
-	else if(istype(O, /obj/item/storage/bag))
+	else if(istype(O, /obj/item/storage/bag) && (upgradetier & XENOBIO_UPGRADE_MONKEYS)) //CIT CHANGE - makes monkey-related actions require XENOBIO_UPGRADE_MONKEYS
 		var/obj/item/storage/P = O
 		var/loaded = 0
 		for(var/obj/G in P.contents)
@@ -96,7 +96,7 @@
 		if (loaded)
 			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
 		return
-	else if(istype(O, /obj/item/slimepotion/slime))
+	else if(istype(O, /obj/item/slimepotion/slime)  && (upgradetier & XENOBIO_UPGRADE_SLIMEADV)) // CIT CHANGE - makes giving slimes potions via console require XENOBIO_UPGRADE_SLIMEADV
 		var/replaced = FALSE
 		if(user && !user.transferItemToLoc(O, src))
 			return
