@@ -161,6 +161,8 @@
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
+		cube.visible_message("<span class='danger'>The monkey cube starts to fizzle and crackle, it's growing!</span>") //CITADEL CHANGE Adds delay to monkey cube growth
+		sleep(10) // no I don't feel like making a timer just for this. fuck off.
 		cube.Expand()
 
 	// Dehydrated carp
