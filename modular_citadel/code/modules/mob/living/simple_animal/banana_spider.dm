@@ -30,7 +30,7 @@
 	foodtype = GROSS | MEAT | RAW | FRUIT
 	grind_results = list("blood" = 20, "liquidgibs" = 5)
 	juice_results = list("banana" = 0)
-	var awakening = 0
+	var/awakening = 0
 
 
 /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)

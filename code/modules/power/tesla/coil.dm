@@ -132,9 +132,9 @@
 			icon_state = "rpcoil[anchored]"
 
 /obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
+	return ..()
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
