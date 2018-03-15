@@ -13,7 +13,7 @@
 				upgradetier |= I
 				successfulupgrade = TRUE
 			if(I == XENOBIO_UPGRADE_SLIMEADV)
-				max_slimes = 25
+				max_slimes = 10
 		if(successfulupgrade)
 			to_chat(user, "<span class='notice'>You have successfully upgraded [src] with [O].</span>")
 		else
