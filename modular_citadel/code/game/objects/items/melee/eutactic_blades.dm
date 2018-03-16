@@ -400,3 +400,21 @@
 	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
+
+//RAINBOW MEMES
+
+/obj/item/twohanded/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	flags_2 = NONE
+	var/list/rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/process()
+	. = ..()
+	var/set_color = pick(rainbow_colors)
+	light_color = set_color
+	update_light()
+	update_icon()
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/AltClick(mob/living/user)
+	return
