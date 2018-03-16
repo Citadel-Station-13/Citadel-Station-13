@@ -93,15 +93,15 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	to_chat(user, "\The [vial] has [vial.reagents.total_volume]u remaining.")
-	to_chat(user, "\The [src] is set to [mode ? "Inject" : "Spray"] contents on application.")
+	to_chat(user, "[vial] has [vial.reagents.total_volume]u remaining.")
+	to_chat(user, "[src] is set to [mode ? "Inject" : "Spray"] contents on application.")
 
 /obj/item/hypospray/mkii/proc/unload_hypo(obj/item/I, mob/user)
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		V.forceMove(user.loc)
 		user.put_in_hands(V)
-		to_chat(user, "<span class='notice'>You remove \the [vial] from \the [src].</span>")
+		to_chat(user, "<span class='notice'>You remove [vial] from [src].</span>")
 		vial = null
 		update_icon()
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1)
@@ -112,23 +112,23 @@
 /obj/item/hypospray/mkii/attackby(obj/item/I, mob/living/user)
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial) && vial != null))
 		if(!quickload)
-			to_chat(user, "<span class='warning'>\The [src] can not hold more than one vial!</span>")
+			to_chat(user, "<span class='warning'>[src] can not hold more than one vial!</span>")
 			return FALSE
 		unload_hypo(vial, user)
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		if(!is_type_in_list(V, allowed_containers))
-			to_chat(user, "<span class='notice'>\The [src] doesn't accept this [vial].</span>")
+			to_chat(user, "<span class='notice'>[src] doesn't accept this [vial].</span>")
 			return FALSE
 		if(!user.transferItemToLoc(V,src))
 			return FALSE
 		vial = V
-		user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded \the [vial] into \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] has loaded a vial into [src].</span>","<span class='notice'>You have loaded [vial] into [src].</span>")
 		update_icon()
 		playsound(loc, 'sound/weapons/autoguninsert.ogg', 35, 1)
 		return TRUE
 	else
-		to_chat(user, "<span class='notice'>This doesn't fit in \the [src].</span>")
+		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
 		return FALSE
 	return FALSE
 
@@ -143,7 +143,7 @@
 	spray_self = COMBAT_SELF_INJECT
 	inject_self = COMBAT_SELF_SPRAY
 	penetrates = TRUE
-	to_chat(user, "You overcharge \the [src]'s control circuit.")
+	to_chat(user, "You overcharge [src]'s control circuit.")
 
 /obj/item/hypospray/mkii/attack_hand(mob/user)
 	. = ..() //Don't bother changing this or removing it from containers will break.
@@ -192,8 +192,8 @@
 			if(HYPO_INJECT)
 				if(L) //living mob
 					if(L != user)
-						L.visible_message("<span class='danger'>[user] is trying to inject [L] with \the [src]!</span>", \
-										"<span class='userdanger'>[user] is trying to inject [L] with \the [src]!</span>")
+						L.visible_message("<span class='danger'>[user] is trying to inject [L] with [src]!</span>", \
+										"<span class='userdanger'>[user] is trying to inject [L] with [src]!</span>")
 						if(!do_mob(user, L, inject_wait))
 							return
 						if(!penetrates && !L.can_inject(user, 1))
@@ -228,8 +228,8 @@
 			if(HYPO_SPRAY)
 				if(L) //living mob
 					if(L != user)
-						L.visible_message("<span class='danger'>[user] is trying to spray [L] with \the [src]!</span>", \
-										"<span class='userdanger'>[user] is trying to spray [L] with \the [src]!</span>")
+						L.visible_message("<span class='danger'>[user] is trying to spray [L] with [src]!</span>", \
+										"<span class='userdanger'>[user] is trying to spray [L] with [src]!</span>")
 						if(!do_mob(user, L, spray_wait))
 							return
 						if(!penetrates && !L.can_inject(user, 1))
