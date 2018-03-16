@@ -98,6 +98,7 @@
 #define HIDEHAIR		256
 #define HIDEFACIALHAIR	512
 #define HIDENECK		1024
+#define HIDETAUR 2048 // Cit addition - Hides taur sprites
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		1

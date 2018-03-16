@@ -124,7 +124,7 @@
 
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = ((wear_mask.icon_override) ? wear_mask.icon_override : 'icons/mob/mask.dmi'))
+			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = ((islist(wear_mask.snowflake_sprites) && wear_mask.snowflake_type && dna && dna.features && wear_mask.snowflake_sprites["[dna.features[wear_mask.snowflake_type]]"]) ? wear_mask.snowflake_sprites["[dna.features[wear_mask.snowflake_type]]"] : 'icons/mob/mask.dmi'))
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -138,7 +138,7 @@
 
 	if(wear_neck)
 		if(!(head && (head.flags_inv & HIDENECK)))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = ((wear_neck.icon_override) ? wear_neck.icon_override : 'icons/mob/neck.dmi'))
+			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = ((islist(wear_neck.snowflake_sprites) && wear_neck.snowflake_type && dna && dna.features && wear_neck.snowflake_sprites["[dna.features[wear_neck.snowflake_type]]"]) ? wear_neck.snowflake_sprites["[dna.features[wear_neck.snowflake_type]]"] : 'icons/mob/neck.dmi'))
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -151,7 +151,7 @@
 		inv.update_icon()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'))
+		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = ((islist(back.snowflake_sprites) && back.snowflake_type && dna && dna.features && back.snowflake_sprites["[dna.features[back.snowflake_type]]"]) ? back.snowflake_sprites["[dna.features[back.snowflake_type]]"] : 'icons/mob/back.dmi'))
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
@@ -167,7 +167,7 @@
 		inv.update_icon()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = ((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'))
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = ((islist(head.snowflake_sprites) && head.snowflake_type && dna && dna.features && head.snowflake_sprites["[dna.features[head.snowflake_type]]"]) ? head.snowflake_sprites["[dna.features[head.snowflake_type]]"] : 'icons/mob/head.dmi'))
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)

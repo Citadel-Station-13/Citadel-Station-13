@@ -2689,6 +2689,7 @@
 #include "modular_citadel\code\modules\client\loadout\uniform.dm"
 #include "modular_citadel\code\modules\client\loadout\uniform_trek.dm"
 #include "modular_citadel\code\modules\client\verbs\who.dm"
+#include "modular_citadel\code\modules\clothing\spacesuits\hardsuits.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\flightsuit.dm"
 #include "modular_citadel\code\modules\clothing\suits\suits.dm"
 #include "modular_citadel\code\modules\clothing\under\polychromic_clothes.dm"

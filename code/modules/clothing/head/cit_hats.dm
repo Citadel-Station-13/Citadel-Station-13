@@ -4,4 +4,4 @@
 	icon = 'icons/obj/clothing/cit_hats.dmi'
 	icon_state = "hunter"
 	item_state = "hunter_worn"
-	icon_override = 'icons/mob/citadel/head.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/head.dmi'

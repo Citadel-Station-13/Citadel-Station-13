@@ -6,21 +6,21 @@
 	name = "purple sunglasses"
 	icon_state = "sun_purple"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/glasses.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/glasses.dmi'
 
 /obj/item/clothing/glasses/sunglasses/star
 	name = "star-shaped sunglasses"
 	desc = "Novelty sunglasses, both lenses are in the shape of a star."
 	icon_state = "sun_star"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/glasses.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/glasses.dmi'
 
 /obj/item/clothing/glasses/sunglasses/rockstar
 	name = "red star-shaped sunglasses"
 	desc = "Novelty sunglasses with a fancy silver frame and two red-tinted star-shaped lenses. You should probably stomp on them and get a pair of normal ones."
 	icon_state = "sun_star_silver"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/glasses.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/glasses.dmi'
 
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"
@@ -28,7 +28,7 @@
 	icon_state = "gglasses"
 	item_state = "gglasses"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/glasses.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/glasses.dmi'
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -36,7 +36,7 @@
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/glasses.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/glasses.dmi'
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = 2
 	tint = 1

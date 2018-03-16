@@ -10,7 +10,7 @@
 	desc = "A tactical security skirt for officers complete with Nanotrasen belt buckle."
 	icon = 'icons/obj/clothing/cit_clothes.dmi'
 	icon_state = "secskirt"
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 	item_state = "r_suit"
 	item_color = "secskirt"
 
@@ -19,6 +19,6 @@
 	desc = "A security skirt decorated for those few with the dedication to achieve the position of Head of Security."
 	icon = 'icons/obj/clothing/cit_clothes.dmi'
 	icon_state = "hosskirt"
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 	item_state = "gy_suit"
 	item_color = "hosskirt"
