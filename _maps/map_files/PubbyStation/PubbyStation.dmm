@@ -43957,26 +43957,16 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdZ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "ceb" = (
 /obj/machinery/computer/rdconsole/production{
@@ -49870,6 +49860,24 @@
 /obj/machinery/power/tesla_coil,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"cXz" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"dnD" = (
+/obj/structure/particle_accelerator/fuel_chamber,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "dse" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -49934,12 +49942,40 @@
 	dir = 1
 	},
 /area/science/circuit)
+"exW" = (
+/obj/machinery/button/door{
+	id = "Singularity";
+	name = "Shutters Control";
+	pixel_x = -25;
+	req_access_txt = "11"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
 "eEK" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tesla_coil,
 /turf/open/floor/plating/airless,
+/area/engine/engineering)
+"eNh" = (
+/obj/machinery/button/door{
+	id = "Singularity";
+	name = "Shutters Control";
+	pixel_x = -25;
+	req_access_txt = "11"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/engine/engineering)
 "faN" = (
 /obj/structure/cable{
@@ -49982,6 +50018,19 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"gdb" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "gkR" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
@@ -50016,6 +50065,10 @@
 	dir = 1
 	},
 /area/science/circuit)
+"hwZ" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "hFp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -50036,26 +50089,33 @@
 	dir = 1
 	},
 /area/science/circuit)
+"hTm" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"hXz" = (
+/obj/machinery/camera{
+	c_tag = "Engineering Starboard Aft";
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "ick" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"idQ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "ijF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -50276,6 +50336,11 @@
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+"maH" = (
+/obj/machinery/particle_accelerator/control_box,
+/obj/structure/cable/yellow,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "mdL" = (
 /obj/structure/table,
 /obj/item/stock_parts/matter_bin,
@@ -50322,6 +50387,18 @@
 /obj/item/screwdriver,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"mRa" = (
+/obj/machinery/button/door{
+	id = "Singularity";
+	name = "Shutters Control";
+	pixel_x = 25;
+	req_access_txt = "11"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "not" = (
 /obj/item/cigbutt,
 /turf/open/floor/plasteel/white,
@@ -50507,6 +50584,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"rSz" = (
+/obj/machinery/button/door{
+	id = "Singularity";
+	name = "Shutters Control";
+	pixel_x = 25;
+	req_access_txt = "11"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
 "sBA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -50541,21 +50631,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"sLD" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "sQr" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -50639,6 +50714,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"uSk" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Engineering External Access";
+	req_access_txt = "10;13"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "vpz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
@@ -50654,6 +50740,10 @@
 	dir = 1
 	},
 /area/science/circuit)
+"vrY" = (
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -50788,6 +50878,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"xCL" = (
+/obj/machinery/camera{
+	c_tag = "Engineering Port Aft";
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "xEG" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
@@ -50803,6 +50902,9 @@
 /obj/item/target/alien,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"xGZ" = (
+/turf/open/floor/plasteel/yellow/side,
+/area/engine/engineering)
 "yeS" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -79507,6 +79609,7 @@ cah
 cbd
 cam
 cam
+hwZ
 bXk
 bXk
 bXk
@@ -79524,7 +79627,6 @@ bXk
 bXk
 bXk
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -79764,6 +79866,7 @@ cai
 cbe
 cca
 cam
+cdN
 bXk
 ceW
 bXk
@@ -79781,7 +79884,6 @@ cjT
 ckq
 ckq
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -80022,8 +80124,9 @@ cbf
 ccb
 ccS
 cdO
+hTm
 ceX
-sLD
+cXz
 cfS
 cfV
 cgS
@@ -80038,7 +80141,6 @@ cgS
 cfV
 cfV
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -80278,6 +80380,7 @@ cak
 cbg
 cca
 cam
+xCL
 bXk
 bTE
 bXk
@@ -80295,7 +80398,6 @@ cgT
 cfV
 ckr
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -80535,6 +80637,7 @@ cal
 cbh
 cam
 cam
+xGZ
 cet
 cCI
 cfV
@@ -80552,7 +80655,6 @@ cfV
 cfV
 cfV
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -80792,6 +80894,7 @@ cam
 cam
 cam
 cam
+xGZ
 cet
 cCI
 cfV
@@ -80810,7 +80913,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -81049,6 +81151,7 @@ can
 cbi
 ccc
 ccV
+rSz
 cet
 cCI
 cfV
@@ -81066,7 +81169,6 @@ cgV
 cfV
 cfV
 bXk
-abI
 abI
 aaa
 aaa
@@ -81307,6 +81409,7 @@ cbj
 bXk
 ccW
 bXk
+bXk
 cfa
 cfa
 cfa
@@ -81324,7 +81427,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -81563,6 +81665,7 @@ cap
 bXk
 ccd
 ccX
+eNh
 ceu
 cfb
 cfu
@@ -81581,7 +81684,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -81820,6 +81922,7 @@ caq
 cbk
 cce
 ccY
+maH
 cev
 cfc
 cfv
@@ -81838,7 +81941,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -82077,6 +82179,7 @@ car
 bXk
 ccf
 ccZ
+dnD
 cew
 cfd
 cfw
@@ -82095,7 +82198,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -82334,6 +82436,7 @@ cdN
 ccW
 ceY
 cda
+vrY
 cex
 cfe
 cfx
@@ -82351,7 +82454,6 @@ aaa
 cfV
 cfV
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -82591,6 +82693,7 @@ cat
 bXk
 ccg
 cey
+mRa
 cey
 cey
 cfy
@@ -82608,7 +82711,6 @@ bBW
 cfV
 cfV
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -82849,6 +82951,7 @@ cbj
 bXk
 ccW
 bXk
+bXk
 cfa
 cfa
 cfa
@@ -82865,7 +82968,6 @@ bBW
 cfV
 cfV
 bXk
-aaa
 aaa
 aaa
 aaa
@@ -83105,6 +83207,7 @@ cav
 cbl
 cch
 cdc
+exW
 cet
 cCI
 cfV
@@ -83123,7 +83226,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -83362,6 +83464,7 @@ cam
 cam
 cam
 cam
+xGZ
 cet
 cCI
 cfV
@@ -83379,7 +83482,6 @@ cfV
 cfV
 cfV
 bXk
-abI
 abI
 abI
 abI
@@ -83619,6 +83721,7 @@ cal
 cbm
 cci
 cam
+xGZ
 cet
 cCI
 cfV
@@ -83637,7 +83740,6 @@ cfV
 cfV
 bXk
 abI
-aaa
 abI
 aaa
 aaa
@@ -83876,6 +83978,7 @@ caw
 cbn
 ccj
 cam
+hXz
 bXk
 bXk
 bXk
@@ -83894,7 +83997,6 @@ cfV
 cks
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -84134,8 +84236,9 @@ cbo
 cck
 cdf
 cdZ
+uSk
 cff
-idQ
+gdb
 cfY
 cfV
 cgZ
@@ -84150,7 +84253,6 @@ cgZ
 cfV
 cfV
 bXk
-abI
 abI
 abI
 aaa
@@ -84390,6 +84492,7 @@ cam
 cbp
 cci
 cam
+cdN
 bXk
 cfg
 bXk
@@ -84408,7 +84511,6 @@ ckq
 ckq
 bXk
 abI
-aaa
 aaa
 aaa
 aaa
@@ -84647,6 +84749,7 @@ cah
 cbq
 cam
 cam
+cav
 bXk
 bXk
 bXk
@@ -84665,7 +84768,6 @@ bXk
 bXk
 ckJ
 abI
-aaa
 aaa
 aaa
 aaa
