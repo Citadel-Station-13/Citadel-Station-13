@@ -1,8 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Vitality matrices now apply Ichorial Stain when reviving a dead servant, which prevents that servant from being revived again by vitality matrices for a full minute."
-  - balance: "Vitality matrices can't be placed adjacent to one another."
-  - balance: "Brass skewers now damage and stun cyborgs."
-  - balance: "Vitality matrices no longer drain people impaled on brass skewers."
-  - balance: "Pressure sensors have 5 health again (down from 25.)"

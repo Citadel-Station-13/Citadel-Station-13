@@ -5,9 +5,9 @@
 	item_state = "megabuster"
 	w_class = WEIGHT_CLASS_SMALL
 	ammo_type = list(/obj/item/ammo_casing/energy/megabuster)
-	clumsy_check = 0
-	needs_permit = 0
-	selfcharge = 1
+	clumsy_check = FALSE
+	item_flags = NEEDS_PERMIT
+	selfcharge = TRUE
 	cell_type = "/obj/item/stock_parts/cell/pulse"
 	icon = 'icons/obj/guns/VGguns.dmi'
 

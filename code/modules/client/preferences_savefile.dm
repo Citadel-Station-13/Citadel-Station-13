@@ -1,8 +1,12 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	15
+#define SAVEFILE_VERSION_MIN	18
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
+//	You do not need to raise this if you are adding new values that have sane defaults.
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
+//	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
+
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -30,83 +34,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
-
-/datum/preferences/proc/update_antagchoices(current_version, savefile/S)
-	if((!islist(be_special) || old_be_special ) && current_version < 12)
-		//Archived values of when antag pref defines were a bitfield+fitflags
-		var/B_traitor = 1
-		var/B_operative = 2
-		var/B_changeling = 4
-		var/B_wizard = 8
-		var/B_malf = 16
-		var/B_rev = 32
-		var/B_alien = 64
-		var/B_pai = 128
-		var/B_cultist = 256
-		var/B_blob = 512
-		var/B_ninja = 1024
-		var/B_monkey = 2048
-		var/B_gang = 4096
-		var/B_abductor = 16384
-		var/B_brother = 32768
-
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor,B_brother)
-
-		be_special = list()
-
-		for(var/flag in archived)
-			if(old_be_special & flag)
-				//this is shitty, but this proc should only be run once per player and then never again for the rest of eternity,
-				switch(flag)
-					if(1) //why aren't these the variables above? Good question, it's because byond complains the expression isn't constant, when it is.
-						be_special += ROLE_TRAITOR
-					if(2)
-						be_special += ROLE_OPERATIVE
-					if(4)
-						be_special += ROLE_CHANGELING
-					if(8)
-						be_special += ROLE_WIZARD
-					if(16)
-						be_special += ROLE_MALF
-					if(32)
-						be_special += ROLE_REV
-					if(64)
-						be_special += ROLE_ALIEN
-					if(128)
-						be_special += ROLE_PAI
-					if(256)
-						be_special += ROLE_CULTIST
-					if(512)
-						be_special += ROLE_BLOB
-					if(1024)
-						be_special += ROLE_NINJA
-					if(2048)
-						be_special += ROLE_MONKEY
-					if(16384)
-						be_special += ROLE_ABDUCTOR
-					if(32768)
-						be_special += ROLE_BROTHER
-
-
-/datum/preferences/proc/update_preferences(current_version, savefile/S)
-
-
-//should this proc get fairly long (say 3 versions long),
+//should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
-//from this proc.
-//It's only really meant to avoid annoying frequent players
+//from these procs.
+//This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
+
+/datum/preferences/proc/update_preferences(current_version, savefile/S)
+	return
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(current_version < 16)
-		var/berandom
-		S["userandomjob"] >> berandom
-		if (berandom)
-			joblessrole = BERANDOMJOB
-		else
-			joblessrole = BEASSISTANT
-	if(current_version < 17)
-		features["legs"] = "Normal Legs"
 	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
@@ -139,6 +77,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
+
 	if(current_version < 19)
 		pda_style = "mono"
 	if(current_version < 20)
@@ -172,6 +111,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
+	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
 	S["be_special"] 		>> be_special
 
@@ -200,11 +140,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
+	S["widescreenpref"]				>> widescreenpref
+	S["autostand"]			>> autostand
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
-		update_antagchoices(needs_update, S)
 
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
@@ -213,6 +154,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
 	windowflashing		= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
@@ -229,6 +171,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
+	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
+	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
 
 	return 1
 
@@ -249,6 +193,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
+	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
 	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
@@ -275,6 +220,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["screenshake"], screenshake)
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
+	WRITE_FILE(S["widescreenpref"], widescreenpref)
+	WRITE_FILE(S["autostand"], autostand)
 
 	return 1
 
@@ -335,6 +282,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
+	S["feature_moth_wings"]				>> features["moth_wings"]
 	if(!CONFIG_GET(flag/join_with_mutant_humans))
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -361,6 +309,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	>> job_engsec_high
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
+
+	//Traits
+	S["all_traits"]			>> all_traits
+	S["positive_traits"]	>> positive_traits
+	S["negative_traits"]	>> negative_traits
+	S["neutral_traits"]		>> neutral_traits
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
@@ -457,6 +411,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] 	= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
+	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -469,14 +424,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-	//Citadel
-	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
-	if(!features["mcolor2"] || features["mcolor"] == "#000")
-		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor3"] || features["mcolor"] == "#000")
-		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
-	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
+	all_traits = SANITIZE_LIST(all_traits)
+	positive_traits = SANITIZE_LIST(positive_traits)
+	negative_traits = SANITIZE_LIST(negative_traits)
+	neutral_traits = SANITIZE_LIST(neutral_traits)
+
+	cit_character_pref_load(S)
+
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -518,6 +472,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
 	WRITE_FILE(S["human_name"]			, custom_names["human"])
 	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
 	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
@@ -539,47 +494,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
-	//Citadel
-	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
-	WRITE_FILE(S["feature_exhibitionist"], features["exhibitionist"])
-	WRITE_FILE(S["feature_mcolor2"], features["mcolor2"])
-	WRITE_FILE(S["feature_mcolor3"], features["mcolor3"])
-	WRITE_FILE(S["feature_mam_body_markings"], features["mam_body_markings"])
-	WRITE_FILE(S["feature_mam_tail"], features["mam_tail"])
-	WRITE_FILE(S["feature_mam_ears"], features["mam_ears"])
-	WRITE_FILE(S["feature_mam_tail_animated"], features["mam_tail_animated"])
-	WRITE_FILE(S["feature_taur"], features["taur"])
-	//Xeno features
-	WRITE_FILE(S["feature_xeno_tail"], features["xenotail"])
-	WRITE_FILE(S["feature_xeno_dors"], features["xenodorsal"])
-	WRITE_FILE(S["feature_xeno_head"], features["xenohead"])
-	//cock features
-	WRITE_FILE(S["feature_has_cock"], features["has_cock"])
-	WRITE_FILE(S["feature_cock_shape"], features["cock_shape"])
-	WRITE_FILE(S["feature_cock_color"], features["cock_color"])
-	WRITE_FILE(S["feature_cock_length"], features["cock_length"])
-	WRITE_FILE(S["feature_cock_girth"], features["cock_girth"])
-	WRITE_FILE(S["feature_has_sheath"], features["sheath_color"])
-	//balls features
-	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
-	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
-	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
-	WRITE_FILE(S["feature_balls_sack_size"], features["balls_sack_size"])
-	WRITE_FILE(S["feature_balls_fluid"], features["balls_fluid"])
-	//breasts features
-	WRITE_FILE(S["feature_has_breasts"], features["has_breasts"])
-	WRITE_FILE(S["feature_breasts_size"], features["breasts_size"])
-	WRITE_FILE(S["feature_breasts_shape"], features["breasts_shape"])
-	WRITE_FILE(S["feature_breasts_color"], features["breasts_color"])
-	WRITE_FILE(S["feature_breasts_fluid"], features["breasts_fluid"])
-	//vagina features
-	WRITE_FILE(S["feature_has_vag"], features["has_vag"])
-	WRITE_FILE(S["feature_vag_shape"], features["vag_shape"])
-	WRITE_FILE(S["feature_vag_color"], features["vag_color"])
-	//womb features
-	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
-	//flavor text
-	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
+	//Traits
+	WRITE_FILE(S["all_traits"]		, all_traits)
+	WRITE_FILE(S["positive_traits"]		, positive_traits)
+	WRITE_FILE(S["negative_traits"]		, negative_traits)
+	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
+
+	cit_character_pref_save(S)
 
 	return 1
 

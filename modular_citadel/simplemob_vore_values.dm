@@ -54,6 +54,10 @@
 /mob/living/simple_animal/hostile/poison/giant_spider
 	devourable = TRUE
 
+/mob/living/simple_animal/hostile/retaliate/poison/snake
+	devourable = TRUE
+	no_vore = FALSE //oh yes my pretty.
+	
 /mob/living/simple_animal/hostile/gorilla
 	devourable = TRUE
 	no_vore = FALSE

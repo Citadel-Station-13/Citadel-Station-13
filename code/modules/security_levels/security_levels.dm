@@ -1,8 +1,8 @@
-GLOBAL_VAR_INIT(security_level, 0)
-//0 = code green
-//1 = code blue
-//2 = code red
-//3 = code delta
+GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
+//SEC_LEVEL_GREEN = code green
+//SEC_LEVEL_BLUE = code blue
+//SEC_LEVEL_RED = code red
+//SEC_LEVEL_DELTA = code delta
 
 //config.alert_desc_blue_downto
 
@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
-				sound_to_playing_players('sound/misc/voybluealert.ogg')
+				sound_to_playing_players('sound/misc/voybluealert.ogg') // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -56,7 +56,8 @@ GLOBAL_VAR_INIT(security_level, 0)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
-				sound_to_playing_players('sound/misc/voyalert.ogg')
+				sound_to_playing_players('sound/misc/voyalert.ogg') // Citadel change - Makes alerts play a sound
+
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -70,7 +71,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 					else if(GLOB.security_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
 				GLOB.security_level = SEC_LEVEL_DELTA
-				sound_to_playing_players('sound/misc/deltakalaxon.ogg')
+				sound_to_playing_players('sound/misc/deltakalaxon.ogg') // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))
 						FA.update_icon()
@@ -82,6 +83,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
 					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
+		SSnightshift.check_nightshift()
 	else
 		return
 

@@ -1,5 +1,0 @@
-author: "More Robust Than You"
-delete-after: True
-changes: 
-  - bugfix: "Monkey chat should no longer have .k prefixed"
-  - bugfix: "Monkey leaders should actually get jungle fever now"

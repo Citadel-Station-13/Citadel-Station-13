@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Vitality matrices will no longer go off multiple times for one corpse."

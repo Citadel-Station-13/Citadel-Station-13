@@ -125,7 +125,7 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs()
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Knockdown(20)
@@ -218,7 +218,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.null_rod_check() && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -244,6 +244,10 @@
 	id = "cult_ghost"
 	duration = -1
 	alert_type = null
+
+/datum/status_effect/cultghost/on_apply()
+	owner.see_invisible = SEE_INVISIBLE_OBSERVER
+	owner.see_in_dark = 2
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)

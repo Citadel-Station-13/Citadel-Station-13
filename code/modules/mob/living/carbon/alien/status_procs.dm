@@ -1,9 +1,9 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, DISABILITY_BLIND disability, and DISABILITY_NEARSIGHT disability.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 /////////////////////////////////// STUN ////////////////////////////////////
-
+/* CIT CHANGE - removes xeno stun immunity
 /mob/living/carbon/alien/Stun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(!.)
@@ -18,3 +18,4 @@
 	. = ..()
 	if(!.)
 		move_delay_add = CLAMP(move_delay_add + round(amount/2), 0, 10)
+*/

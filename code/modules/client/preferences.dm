@@ -1,4 +1,11 @@
-
+		/* CAUTION! CAUTION! CAUTION! CAUTION! CAUTION! *\
+		|		THIS FILE CONTAINS A SHITTON OF			 |
+		|		CHANGES SPECIFIC TO CITADEL. IF			 |
+		|		 YOU'RE FIXING A MERGE CONFLICT			 |
+		|		HERE, PLEASE ASK FOR REVIEW FROM		 |
+		|		ANOTHER MAINTAINER TO ENSURE YOU		 |
+		|		  DON'T INTRODUCE REGRESSIONS.			 |
+		\*												*/
 
 GLOBAL_LIST_EMPTY(preferences_datums)
 
@@ -79,6 +86,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"spines" = "None",
 							"body_markings" = "None",
 							"legs" = "Normal Legs",
+							"moth_wings" = "Plain",
 							"mcolor2" = "FFF",
 							"mcolor3" = "FFF",
 							"mam_body_markings" = "None",
@@ -141,6 +149,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//Mob preview
 	var/icon/preview_icon = null
 
+		//Trait list
+	var/list/positive_traits = list()
+	var/list/negative_traits = list()
+	var/list/neutral_traits = list()
+	var/list/all_traits = list()
+	var/list/character_traits = list()
+
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
@@ -173,14 +188,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
-	var/list/exp
+	var/list/exp = list()
 	var/list/menuoptions
 
 	var/action_buttons_screen_locs = list()
 
-	var/screenshake = 100
-	var/damagescreenshake = 2
-	var/arousable = TRUE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -220,6 +232,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 
 	if(!path)
@@ -246,6 +259,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
+			if(CONFIG_GET(flag/roundstart_traits))
+				dat += "<center><h2>Trait Setup</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Traits</a><br></center>"
+				dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -299,6 +316,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "All Speech" : "Nearest Creatures"]</a><br>"
@@ -306,6 +324,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
+			//VORE SOUNDS
+			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
 			if(CONFIG_GET(flag/allow_metadata))
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
@@ -377,6 +398,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "High"
 			dat += "</a><br>"
 
+			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+
+			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
+
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 
 			if (!user.client.prefs.screenshake==0)
@@ -386,7 +411,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<h2>Special Role Settings</h2>"
 
-			if(jobban_isbanned(user, "Syndicate"))
+			if(jobban_isbanned(user, ROLE_SYNDICATE))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 				src.be_special = list()
 
@@ -412,7 +437,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(2)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<div class='statusDisplay'><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
-			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 			if(lentext(features["flavor_text"]) <= 40)
 				if(!lentext(features["flavor_text"]))
 					dat += "\[...\]"
@@ -464,6 +489,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
 			if("legs" in pref_species.mutant_bodyparts)
 				dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
+			if("moth_wings" in pref_species.mutant_bodyparts)
+				dat += "<b>Moth wings</b><a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+
 			if("taur" in pref_species.mutant_bodyparts)
 				dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 			if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
@@ -536,6 +564,56 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				*/
 
 			dat += "</td></tr></table>"
+		if(3)
+			if(!gear_tab)
+				gear_tab = GLOB.loadout_items[1]
+			dat += "<table align='center' width='100%'>"
+			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
+			var/firstcat = TRUE
+			for(var/i in GLOB.loadout_items)
+				if(firstcat)
+					firstcat = FALSE
+				else
+					dat += " |"
+				if(i == gear_tab)
+					dat += " <span class='linkOn'>[i]</span> "
+				else
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+			dat += "</b></center></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			for(var/j in GLOB.loadout_items[gear_tab])
+				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
+				var/donoritem
+				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+					donoritem = TRUE
+					if(!(user.ckey in gear.ckeywhitelist))
+						continue
+				var/class_link = ""
+				if(gear.type in chosen_gear)
+					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
+				else if(gear_points <= 0)
+					class_link = "style='white-space:normal;' class='linkOff'"
+				else if(donoritem)
+					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				else
+					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
+				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+				if(islist(gear.restricted_roles))
+					if(gear.restricted_roles.len)
+						dat += "<font size=2>"
+						dat += gear.restricted_roles.Join(";")
+						dat += "</font>"
+				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+			dat += "</table>"
 	dat += "<hr><center>"
 
 	if(!IsGuestKey(user.key))
@@ -807,6 +885,65 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return job_engsec_low
 	return 0
 
+/datum/preferences/proc/SetTraits(mob/user)
+	if(!SStraits)
+		to_chat(user, "<span class='danger'>The trait subsystem is still initializing! Try again in a minute.</span>")
+		return
+
+	var/list/dat = list()
+	if(!SStraits.traits.len)
+		dat += "The trait subsystem hasn't finished initializing, please hold..."
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
+
+	else
+		dat += "<center><b>Choose trait setup</b></center><br>"
+		dat += "<div align='center'>Left-click to add or remove traits. You need one negative trait for every positive trait.<br>\
+		Traits are applied at roundstart and cannot normally be removed.</div>"
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
+		dat += "<hr>"
+		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
+		/*dat += "<center><font color='#AAFFAA'>[positive_traits.len] / [MAX_POSITIVE_TRAITS]</font> \
+		| <font color='#AAAAFF'>[neutral_traits.len] / [MAX_NEUTRAL_TRAITS]</font> \
+		| <font color='#FFAAAA'>[negative_traits.len] / [MAX_NEGATIVE_TRAITS]</font></center><br>"*/
+		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
+		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
+		for(var/V in SStraits.traits)
+			var/datum/trait/T = SStraits.traits[V]
+			var/trait_name = initial(T.name)
+			var/has_trait
+			var/trait_cost = initial(T.value) * -1
+			for(var/_V in all_traits)
+				if(_V == trait_name)
+					has_trait = TRUE
+			if(has_trait)
+				trait_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(trait_cost > 0)
+				trait_cost = "+[trait_cost]"
+			var/font_color = "#AAAAFF"
+			if(initial(T.value) != 0)
+				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+			if(has_trait)
+				dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+			else
+				dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
+
+	user << browse(null, "window=preferences")
+	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Trait Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
+	popup.set_window_options("can_close=0")
+	popup.set_content(dat.Join())
+	popup.open(0)
+	return
+
+/datum/preferences/proc/GetTraitBalance()
+	var/bal = 0
+	for(var/V in all_traits)
+		var/datum/trait/T = SStraits.traits[V]
+		bal -= initial(T.value)
+	return bal
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
@@ -853,6 +990,63 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				SetChoices(user)
 		return 1
+
+	else if(href_list["preference"] == "trait")
+		switch(href_list["task"])
+			if("close")
+				user << browse(null, "window=mob_occupation")
+				ShowChoices(user)
+			if("update")
+				var/trait = href_list["trait"]
+				if(!SStraits.traits[trait])
+					return
+				var/value = SStraits.trait_points[trait]
+				if(value == 0)
+					if(trait in neutral_traits)
+						neutral_traits -= trait
+						all_traits -= trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						neutral_traits += trait
+						all_traits += trait
+				else
+					var/balance = GetTraitBalance()
+					if(trait in positive_traits)
+						positive_traits -= trait
+						all_traits -= trait
+					else if(trait in negative_traits)
+						if(balance + value < 0)
+							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+							return
+						negative_traits -= trait
+						all_traits -= trait
+					else if(value > 0)
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						if(balance - value < 0)
+							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
+							return
+						positive_traits += trait
+						all_traits += trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						negative_traits += trait
+						all_traits += trait
+				SetTraits(user)
+			if("reset")
+				all_traits = list()
+				positive_traits = list()
+				negative_traits = list()
+				neutral_traits = list()
+				SetTraits(user)
+			else
+				SetTraits(user)
+		return TRUE
 
 	switch(href_list["task"])
 		if("random")
@@ -941,7 +1135,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
+					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
@@ -968,7 +1162,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
+					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
@@ -1018,7 +1212,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks = new_socks
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
@@ -1039,7 +1233,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor3"] = pref_species.default_color
 
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's primary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1134,6 +1328,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_wings)
 						features["wings"] = new_wings
 
+				if("moth_wings")
+					var/new_moth_wings
+					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
+					if(new_moth_wings)
+						features["moth_wings"] = new_moth_wings
+
 				if("frills")
 					var/new_frills
 					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in GLOB.frills_list
@@ -1189,7 +1389,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
@@ -1287,7 +1487,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
-					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference") as null|color
+					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference",pda_color) as color|null
 					if(pickedPDAColor)
 						pda_color = pickedPDAColor
 
@@ -1379,7 +1579,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
-				
+
 
 		else
 			switch(href_list["preference"])
@@ -1497,6 +1697,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["exhibitionist"] = TRUE
 						else
 							features["exhibitionist"] = FALSE
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
+				if("autostand")
+					autostand = !autostand
 				if ("screenshake")
 					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
 					if (!isnull(desiredshake))
@@ -1566,6 +1771,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						user.client.playtitlemusic()
 					else
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+				// VORE SOUND TOGGLES
+				if("toggleeatingnoise")
+					toggles ^= EATING_NOISES
+
+				if("toggledigestionnoise")
+					toggles ^= DIGESTION_NOISES
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS
@@ -1584,6 +1795,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("pull_requests")
 					chat_toggles ^= CHAT_PULLR
+
+				if("hound_sleeper")
+					toggles ^= MEDIHOUND_SLEEPER
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
@@ -1605,18 +1819,48 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("load")
 					load_preferences()
 					load_character()
-					attempt_vr(parent.prefs_vr,"load_vore","")
+					if(parent && parent.prefs_vr)
+						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
-					attempt_vr(parent.prefs_vr,"load_vore","")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
 						save_character()
+					if(parent && parent.prefs_vr)
+						attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("tab")
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
+
+	if(href_list["preference"] == "gear")
+		if(href_list["clear_loadout"])
+			LAZYCLEARLIST(chosen_gear)
+			gear_points = initial(gear_points)
+			save_preferences()
+		if(href_list["select_category"])
+			for(var/i in GLOB.loadout_items)
+				if(i == href_list["select_category"])
+					gear_tab = i
+		if(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			if(!G)
+				return
+			var/toggle = text2num(href_list["toggle_gear"])
+			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
+				LAZYREMOVE(chosen_gear, G.type)
+				gear_points += initial(G.cost)
+			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+				if(!is_loadout_slot_available(G.category))
+					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
+					return
+				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
+					return
+				if(gear_points >= initial(G.cost))
+					LAZYADD(chosen_gear, G.type)
+					gear_points -= initial(G.cost)
 
 	ShowChoices(user)
 	return 1
@@ -1672,7 +1916,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update=0)
 
 	//citadel code
-	character.give_genitals()
+	character.give_genitals(TRUE)
 	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
 

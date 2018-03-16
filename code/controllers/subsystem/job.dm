@@ -394,6 +394,8 @@ SUBSYSTEM_DEF(job)
 		H.mind.assigned_role = rank
 
 	if(job)
+		if(!job.dresscodecompliant)// CIT CHANGE - dress code compliance
+			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
@@ -401,6 +403,8 @@ SUBSYSTEM_DEF(job)
 				N.new_character = H
 			else
 				M = H
+
+	SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
@@ -411,8 +415,12 @@ SUBSYSTEM_DEF(job)
 		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
+		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
+			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
 		job.after_spawn(H, M)
-	handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role) //CIT CHANGE - makes donators spawn with their items
+		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
+
+	//handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role) //CIT CHANGE - makes donators spawn with their items. This can safely be commented out when all of the donator items are migrated to the loadout system
 
 	return H
 
@@ -444,7 +452,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/LoadJobs()
-	var/jobstext = file2text("config/jobs.txt")
+	var/jobstext = file2text("[global.config.directory]/jobs.txt")
 	for(var/datum/job/J in occupations)
 		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
 		jobs.Find(jobstext)

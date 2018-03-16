@@ -20,16 +20,26 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
+// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// The values here should add up to 1.
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
+#define THERMAL_PROTECTION_HEAD			0.3
+#define THERMAL_PROTECTION_CHEST		0.15
+#define THERMAL_PROTECTION_GROIN		0.15
+#define THERMAL_PROTECTION_LEG_LEFT		0.075
+#define THERMAL_PROTECTION_LEG_RIGHT	0.075
+#define THERMAL_PROTECTION_FOOT_LEFT	0.025
+#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
+#define THERMAL_PROTECTION_ARM_LEFT		0.075
+#define THERMAL_PROTECTION_ARM_RIGHT	0.075
+#define THERMAL_PROTECTION_HAND_LEFT	0.025
+#define THERMAL_PROTECTION_HAND_RIGHT	0.025
+
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
-
-	//citadel code
-	if(stat != DEAD)
-		handle_arousal()
 
 	if(..()) //not dead
 		handle_active_genes()
@@ -54,7 +64,7 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
-	if(ismob(loc))
+	if(istype(loc, /obj/belly))
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return ONE_ATMOSPHERE
@@ -62,18 +72,31 @@
 		return pressure
 
 
-/mob/living/carbon/human/handle_disabilities()
+/mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
-		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
+		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
 		else
 			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
+
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
+		if(mood)
+			mood.add_event("brain_damage", /datum/mood_event/brain_damage)
+		if(prob(3))
+			if(prob(25))
+				emote("drool")
+			else
+				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+	else
+		if(mood)
+			mood.clear_event("brain_damage")
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -91,7 +114,7 @@
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!(NOCRITDAMAGE in dna.species.species_traits))
+		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -127,12 +150,14 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-
+//CITADEL EDIT Vore code required overrides
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-
+	if(istype(loc, /obj/belly))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+//END EDIT
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -238,16 +263,17 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
+	if(has_trait(TRAIT_RESISTCOLD))
+		return TRUE
 
-	if(dna.check_mutation(COLDRES))
-		return TRUE //Fully protected from the cold.
-
+//CITADEL EDIT Mandatory for vore code.
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return 1 //freezing to death in sleepers ruins fun.
+	if(istype(loc, /obj/belly))
+		return 1
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
-	if(RESISTCOLD in dna.species.species_traits)
-		return TRUE
+//END EDIT
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -292,57 +318,34 @@
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(glasses)
 		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(head)
 		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
-	if(NOBREATH in dna.species.species_traits)
-		. = 1
-	return .
+			return TRUE
+	return ..()
 
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		for(var/obj/item/I in BP.embedded_objects)
-			if(prob(I.embedded_pain_chance))
-				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
+			if(prob(I.embedding.embedded_pain_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_pain_multiplier)
 				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
 
-			if(prob(I.embedded_fall_chance))
-				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
+			if(prob(I.embedding.embedded_fall_chance))
+				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-
-/mob/living/carbon/human/proc/can_heartattack()
-	CHECK_DNA_AND_SPECIES(src)
-	if(NOBLOOD in dna.species.species_traits)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
-	if(!can_heartattack())
-		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(istype(heart) && heart.beating)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/proc/set_heartattack(status)
-	if(!can_heartattack())
-		return FALSE
-
-	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!istype(heart))
-		return
-
-	heart.beating = !status
+					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+					if(mood)
+						mood.clear_event("embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
@@ -352,14 +355,14 @@
 	if(!can_heartattack())
 		return
 
-	var/we_breath = (!(NOBREATH in dna.species.species_traits))
+	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
 
 	if(!undergoing_cardiac_arrest())
 		return
 
-	// Cardiac arrest, unless corazone
-	if(reagents.get_reagent_amount("corazone"))
+	// Cardiac arrest, unless heart is stabilized
+	if(has_trait(TRAIT_STABLEHEART))
 		return
 
 	if(we_breath)
@@ -461,3 +464,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
 #undef HUMAN_MAX_OXYLOSS
+#undef THERMAL_PROTECTION_HEAD
+#undef THERMAL_PROTECTION_CHEST
+#undef THERMAL_PROTECTION_GROIN
+#undef THERMAL_PROTECTION_LEG_LEFT
+#undef THERMAL_PROTECTION_LEG_RIGHT
+#undef THERMAL_PROTECTION_FOOT_LEFT
+#undef THERMAL_PROTECTION_FOOT_RIGHT
+#undef THERMAL_PROTECTION_ARM_LEFT
+#undef THERMAL_PROTECTION_ARM_RIGHT
+#undef THERMAL_PROTECTION_HAND_LEFT
+#undef THERMAL_PROTECTION_HAND_RIGHT

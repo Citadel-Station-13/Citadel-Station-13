@@ -4,7 +4,8 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(SPECIES_INORGANIC,NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,NOHUNGER)
+	species_traits = list(SPECIES_INORGANIC,NOBLOOD,NOTRANSSTING)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/liver/plasmaman
@@ -17,8 +18,8 @@
 	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
-	disliked_food = NONE
-	liked_food = NONE
+	disliked_food = FRUIT
+	liked_food = VEGETABLES
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

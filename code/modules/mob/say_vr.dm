@@ -27,7 +27,7 @@
 		if(lentext(msg) <= 40)
 			return "<span class='notice'>[msg]</span>"
 		else
-			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='?src=[REF(src)];flavor_more=1\">More...</span></a>"
+			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
 
 /mob/proc/get_top_level_mob()
 	if(istype(src.loc,/mob)&&src.loc!=src)
@@ -75,7 +75,7 @@ proc/get_top_level_mob(var/mob/S)
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/subtle_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		var/subtle_emote = copytext(sanitize(input("Choose an emote to display.") as message|null), 1, MAX_MESSAGE_LEN)
 		if(subtle_emote && !check_invalid(user, subtle_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
@@ -98,7 +98,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
-	message = "<b>[user]</b> " + message
+	message = "<b>[user]</b> " + "<i>[message]</i>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))

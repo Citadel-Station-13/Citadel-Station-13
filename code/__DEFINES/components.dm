@@ -31,10 +31,10 @@
 	//Positions for overrides list
 	#define EXAMINE_POSITION_ARTICLE 1
 	#define EXAMINE_POSITION_BEFORE 2
-	#define EXAMINE_POSITION_NAME 3
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED 1
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (/atom/movable, /atom)
+#define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (/atom/movable)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"					//from base of atom/fire_act(): (exposed_temperature, exposed_volume)

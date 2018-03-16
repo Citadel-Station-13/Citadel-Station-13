@@ -15,8 +15,7 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	needs_permit = TRUE
-	unique_rename = FALSE
+	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -28,7 +27,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
-	var/sawn_state = SAWN_INTACT
+	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
@@ -36,6 +35,7 @@
 	var/weapon_weight = WEAPON_LIGHT
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/harmful = TRUE					//some arent harmful and should have this set to false. used for pacifists with tasers, medibeams, etc
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -112,6 +112,9 @@
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
+	if(iscarbon(user)) //CIT CHANGE - makes gun recoil cause staminaloss
+		user.adjustStaminaLossBuffered(getstamcost(user)*(firing_burst && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
+
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
@@ -153,13 +156,13 @@
 			return
 
 
-	//Exclude lasertag guns from the DISABILITY_CLUMSY check.
+	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
+			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
+				process_fire(user, user, FALSE, params, shot_leg)
 				user.dropItemToGround(src, TRUE)
 				return
 
@@ -170,6 +173,9 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
+
+	bonus_spread += getinaccuracy(user) //CIT CHANGE - adds bonus spread while not aiming
+
 	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
@@ -178,9 +184,9 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, 1, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target,user,1,params, null, bonus_spread)
+	process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -191,7 +197,7 @@
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user) || pin.emagged)
+		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE
 		else
 			pin.auth_fail(user)
@@ -247,6 +253,8 @@
 	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
+	if(user.has_trait(TRAIT_POOR_AIM)) //nice shootin' tex
+		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -437,7 +445,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, 1, params)
+	process_fire(target, user, TRUE, params)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)

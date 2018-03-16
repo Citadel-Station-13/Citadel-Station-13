@@ -1,0 +1,4 @@
+author: "SailorDave"
+delete-after: True
+changes: 
+  - tweak: "The names of Surgery Disks now match their type of surgery."

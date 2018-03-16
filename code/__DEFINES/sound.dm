@@ -11,12 +11,13 @@
 
 //CIT CHANNELS - TRY NOT TO REGRESS
 #define CHANNEL_PRED 1015
-#define CHANNEL_PREYLOOP 1014
+#define CHANNEL_DIGEST 1014
+#define CHANNEL_PREYLOOP 1013
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-#define CHANNEL_HIGHEST_AVAILABLE 1013 //CIT CHANGE - COMPENSATES FOR VORESOUND CHANNELS
+#define CHANNEL_HIGHEST_AVAILABLE 1012 //CIT CHANGE - COMPENSATES FOR VORESOUND CHANNELS
 
 
 #define SOUND_MINIMUM_PRESSURE 10
@@ -44,7 +45,7 @@
 									'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambitech3.ogg',\
 									'sound/ambience/ambimystery.ogg', 'sound/ambience/ambimaint1.ogg')
 
-#define ENGINEERING list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg', 'sound/ambience/ambieng1.ogg',\
+#define ENGINEERING list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg',\
 										'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
 
 #define MINING list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\

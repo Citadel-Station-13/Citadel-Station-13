@@ -37,14 +37,19 @@
 /obj/item/gun/ballistic/shotgun/attack_self(mob/living/user)
 	if(recentpump > world.time)
 		return
+	if(istype(user) && user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes pumping shotguns impossible in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return//CIT CHANGE - ditto
 	pump(user)
 	recentpump = world.time + 10
+	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
+		user.adjustStaminaLossBuffered(5) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
 	return
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
 	if(chambered && chambered.BB)
-		process_fire(user, user,0)
+		process_fire(user, user, FALSE)
 		. = 1
 
 /obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
@@ -240,7 +245,7 @@
 		to_chat(user, "You switch to tube A.")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	pump()
 

@@ -1,5 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - code_imp: "Forensics is now a datum component."
-  - balance: "NPC humans will now start leaving fingerprints on things they touch!"

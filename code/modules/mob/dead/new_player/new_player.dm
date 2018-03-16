@@ -362,6 +362,11 @@
 			if(CONFIG_GET(flag/allow_crew_objectives))
 				SSticker.generate_individual_objectives(humanc.mind)
 
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
+
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
 
@@ -373,6 +378,9 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 

@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Lavaboats no longer set you on fire."

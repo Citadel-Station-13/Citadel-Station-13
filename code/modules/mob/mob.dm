@@ -1,6 +1,3 @@
-/mob
-	use_tag = TRUE
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -14,7 +11,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -23,7 +19,6 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -38,7 +33,11 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 	hook_vr("mob_new",list(src))
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -125,8 +124,8 @@
 		if(M == src) //the src always see the main message or self message
 			if(self_message)
 				msg = self_message
-		else
-			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
+		else //CITADEL EDIT, required for vore code to remove (T != loc && T != src)) as a check
+			if(M.see_invisible<invisibility) //if src is invisible to us,
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
@@ -175,8 +174,7 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -286,17 +284,7 @@
 			else
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
-		return 1 
-
-/mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		if(client.eye && client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
-		update_pipe_vision()
+		return 1
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -334,60 +322,6 @@
 
 	return 1
 
-//this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
-	if(!AM || !src)
-		return FALSE
-	if(!(AM.can_be_pulled(src)))
-		return FALSE
-	if(throwing || incapacitated())
-		return FALSE
-
-	AM.add_fingerprint(src)
-
-	// If we're pulling something then drop what we're currently pulling and pull this instead.
-	if(pulling)
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-		if(AM == pulling)
-			return
-		stop_pulling()
-
-	changeNext_move(CLICK_CD_GRABBING)
-
-	if(AM.pulledby)
-		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
-		add_logs(AM, AM.pulledby, "pulled from", src)
-		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-
-	pulling = AM
-	AM.pulledby = src
-	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	update_pull_hud_icon()
-
-	if(ismob(AM))
-		var/mob/M = AM
-
-		//Share diseases that are spread by touch
-		for(var/thing in viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				M.ContactContractDisease(D)
-
-		for(var/thing in M.viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
-
-		add_logs(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
-
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
@@ -410,21 +344,6 @@
 		setDir(D)
 		spintime -= speed
 
-/mob/verb/stop_pulling()
-	set name = "Stop Pulling"
-	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
-		pulling = null
-		grab_state = 0
-		update_pull_hud_icon()
-    
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
-
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
 		if(hud_used.pull_icon)
@@ -445,6 +364,10 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+
+	if(!I)//CIT CHANGE - allows "using" empty hands
+		use_that_empty_hand() //CIT CHANGE - ditto
+		update_inv_hands() // CIT CHANGE - ditto.
 
 /mob/verb/memory()
 	set name = "Notes"
@@ -610,7 +533,8 @@
 			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Station Time: [worldtime2text()]")
+		stat(null, "Round Time: [worldtime2text()]")
+		stat(null, "Station Time: [station_time_timestamp()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()
@@ -623,6 +547,7 @@
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[num2text(world.contents.len, 10)]")
+			stat("World Time:", "[world.time]")
 			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
@@ -713,7 +638,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/westface()
 	set hidden = 1
 	if(!canface())
@@ -722,7 +646,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/northface()
 	set hidden = 1
 	if(!canface())
@@ -730,7 +653,6 @@
 	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/verb/southface()
 	set hidden = 1
@@ -935,39 +857,6 @@
 		if (L)
 			L.alpha = lighting_alpha
 
-/mob/living/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if("stat")
-			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
-			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
-	. = ..()
-	switch(var_name)
-		if("knockdown")
-			SetKnockdown(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
-		if("eye_blind")
-			set_blindness(var_value)
-		if("eye_damage")
-			set_eye_damage(var_value)
-		if("eye_blurry")
-			set_blurriness(var_value)
-		if("maxHealth")
-			updatehealth()
-		if("resize")
-			update_transform()
-		if("lighting_alpha")
-			sync_lighting_plane_alpha()
-
-
 /mob/proc/is_literate()
 	return 0
 
@@ -976,15 +865,6 @@
 
 /mob/proc/get_idcard()
 	return
-
-/mob/proc/get_static_viruses() //used when creating blood and other infective objects
-	if(!LAZYLEN(viruses))
-		return
-	var/list/datum/disease/diseases = list()
-	for(var/datum/disease/D in viruses)
-		var/static_virus = D.Copy()
-		diseases += static_virus
-	return diseases
 
 
 /mob/vv_get_dropdown()
@@ -997,7 +877,6 @@
 	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
 	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
 	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
 	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
 	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"

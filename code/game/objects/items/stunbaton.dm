@@ -10,7 +10,7 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stunforce = 140
 	var/status = 0
@@ -63,9 +63,9 @@
 /obj/item/melee/baton/examine(mob/user)
 	..()
 	if(cell)
-		to_chat(user, "<span class='notice'>The baton is [round(cell.percent())]% charged.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
 	else
-		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
+		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -108,12 +108,16 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
+
+	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
 
 	if(iscyborg(M))
 		..()
@@ -129,6 +133,7 @@
 		if(status)
 			if(baton_stun(M, user))
 				user.do_attack_animation(M)
+				user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes stunbatonning others cost stamina
 				return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
@@ -154,6 +159,7 @@
 			return 0
 
 	L.Knockdown(stunforce)
+	L.adjustStaminaLoss(stunforce*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name

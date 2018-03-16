@@ -89,7 +89,7 @@
 	//domestication
 	var/tame = 0
 
-	var/my_z // I don't want to confuse this with client registered_z 
+	var/my_z // I don't want to confuse this with client registered_z
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -103,7 +103,8 @@
 		stack_trace("Simple animal being instantiated in nullspace")
 	if(vore_active)
 		init_belly()
-	verbs |= /mob/living/proc/animal_nom
+	if(!IsAdvancedToolUser())
+		verbs |= /mob/living/simple_animal/proc/animal_nom
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -231,10 +232,10 @@
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		if( abs(areatemp - bodytemperature) > 40 )
+		if( abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			bodytemperature += diff
+			adjust_bodytemperature(diff)
 
 	if(!environment_is_safe(environment))
 		adjustHealth(unsuitable_atmos_damage)
@@ -247,9 +248,10 @@
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)
+		var/atom/Tsec = drop_location()
 		for(var/path in butcher_results)
-			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+			for(var/i in 1 to butcher_results[path])
+				new path(Tsec)
 	..()
 
 /mob/living/simple_animal/gib_animation()
@@ -314,16 +316,20 @@
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
-		return 0
+		return FALSE
+	if(ismob(the_target))
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
-			return 0
+			return FALSE
 	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/simple_animal/handle_fire()
 	return
@@ -372,23 +378,24 @@
 
 /mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
-		return 0
-	if(no_dextery || dextrous)
-		if(be_close && !in_range(M, src))
-			return 0
-	else
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+		return FALSE
+	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
+	if(!(no_dextery || dextrous))
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, TRUE))
+	if(!canUseTopic(who, BE_CLOSE))
 		return
 	else
 		..()
 
 /mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, TRUE))
+	if(!canUseTopic(who, BE_CLOSE))
 		return
 	else
 		..()
@@ -501,8 +508,8 @@
 		if(H)
 			H.update_icon()
 
-/mob/living/simple_animal/put_in_hands(obj/item/I)
-	..()
+/mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
+	. = ..(I, del_on_fail, merge_stacks)
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
@@ -571,5 +578,5 @@
 /mob/living/simple_animal/onTransitZ(old_z, new_z)
 	..()
 	if (AIStatus == AI_Z_OFF)
-		SSidlenpcpool[old_z] -= src
+		SSidlenpcpool.idle_mobs_by_zlevel[old_z] -= src
 		toggle_ai(initial(AIStatus))

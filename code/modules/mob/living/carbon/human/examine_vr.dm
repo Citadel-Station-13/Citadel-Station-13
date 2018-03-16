@@ -43,12 +43,3 @@
 		if(4075 to 10000) // Four or more people.
 			message = "<span class='warning'>[t_He] [t_is] so absolutely stuffed that you aren't sure how it's possible to move. [t_He] can't seem to swell any bigger. The surface of [t_his] belly looks sorely strained!</span>\n"
 	return message
-
-/mob/living/carbon/human/proc/examine_bellies()
-	var/message = ""
-
-	for (var/I in src.vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		message += B.get_examine_msg()
-
-	return message

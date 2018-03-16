@@ -106,7 +106,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden,/obj/item/device/electronic_assembly))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -170,6 +170,11 @@
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
 	if(search_objects < 2)
@@ -203,6 +208,11 @@
 			if(P.stat & BROKEN) //Or turrets that are already broken
 				return FALSE
 			return TRUE
+
+		if(istype(the_target, /obj/item/device/electronic_assembly))
+			var/obj/item/device/electronic_assembly/O = the_target
+			if(O.combat_circuits)
+				return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
@@ -319,14 +329,18 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
@@ -476,12 +490,15 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		toggle_ai(AI_Z_OFF)
 		return
 
-	if (isturf(T) && !is_station_level(T.z))
+	var/cheap_search = isturf(T) && !is_station_level(T.z)
+	if (cheap_search)
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()
 
 	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+		if(cheap_search) //Try again with full effort
+			FindTarget()
 		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see

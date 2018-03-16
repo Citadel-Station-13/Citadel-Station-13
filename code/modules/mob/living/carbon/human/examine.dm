@@ -6,8 +6,14 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/obscure_name
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_PROSOPAGNOSIA))
+			obscure_name = TRUE
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -85,6 +91,12 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
+//CIT CHANGES START HERE - adds genital details to examine text
+	if(LAZYLEN(internal_organs))
+		for(var/obj/item/organ/genital/dicc in internal_organs)
+			if(istype(dicc) && dicc.is_exposed())
+				msg += "[dicc.desc]\n"
+//END OF CIT CHANGES
 	//Status effects
 	msg += status_effect_examines()
 
@@ -98,7 +110,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		appears_dead = 1
 		if(suiciding)
 			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
@@ -240,31 +252,18 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	for (var/I in src.vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		msg += B.get_examine_msg()
-
-
 	msg += "</span>"
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(has_disability(DISABILITY_DUMB))
+			if(has_trait(TRAIT_DUMB))
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
-			if(istype(src, /mob/living/carbon/human/interactive))
-				var/mob/living/carbon/human/interactive/auto = src
-				if(auto.showexaminetext)
-					msg += "<span class='deadsay'>[t_He] appear[p_s()] to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
-				if(auto.debugexamine)
-					var/dodebug = auto.doing2string(auto.doing)
-					var/interestdebug = auto.interest2string(auto.interest)
-					msg += "<span class='deadsay'>[t_He] [t_is] appears to be [interestdebug] and [dodebug].</span>\n"
-			else if(!key)
+			if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
@@ -272,6 +271,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
+	var/traitstring = get_trait_string()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
@@ -299,6 +299,10 @@
 					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
+					if(traitstring)
+						msg += "<span class='info'>Detected physiological traits:<br></span>"
+						msg += "<span class='info'>[traitstring]</span><br>"
+
 
 
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
@@ -315,6 +319,10 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+
+	else if(isobserver(user) && traitstring)
+		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
+
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
 

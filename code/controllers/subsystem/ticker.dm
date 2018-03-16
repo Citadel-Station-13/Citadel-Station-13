@@ -42,8 +42,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/timeLeft						//pregame timer
 	var/start_at
-
-	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
+	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
+	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -61,10 +61,12 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
+	var/list/round_end_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
+	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
 
 	//Crew Objective/Miscreant stuff
 	var/list/crewobjlist = list()
@@ -89,7 +91,7 @@ SUBSYSTEM_DEF(ticker)
 		"aiff" = TRUE
 	)
 
-	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
@@ -125,8 +127,7 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "config/title_music/sounds/[pick(music)]"
-
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
@@ -143,6 +144,10 @@ SUBSYSTEM_DEF(ticker)
 
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	if(CONFIG_GET(flag/randomize_shift_time))
+		gametime_offset = rand(0, 23) HOURS
+	else if(CONFIG_GET(flag/shift_time_realtime))
+		gametime_offset = world.timeofday
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -160,6 +165,8 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(!tumpedbuckets)
+				SStimer.tump_buckets()
 			if(!modevoted)
 				send_gamemode_vote()
 			if(isnull(timeLeft))
@@ -334,11 +341,19 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
+//These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
+
+//These callbacks will fire before roundend report
+/datum/controller/subsystem/ticker/proc/OnRoundend(datum/callback/cb)
+	if(current_state >= GAME_STATE_FINISHED)
+		cb.InvokeAsync()
+	else
+		LAZYADD(round_end_events, cb)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
@@ -372,6 +387,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
+			if(CONFIG_GET(flag/roundstart_traits))
+				SStraits.AssignTraits(player, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -614,7 +631,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [DisplayTimeText(delay)]. [reason]</span>")
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
@@ -632,6 +649,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+	save_admin_data()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',

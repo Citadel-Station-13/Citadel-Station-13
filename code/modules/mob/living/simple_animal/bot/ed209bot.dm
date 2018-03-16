@@ -41,6 +41,8 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	var/projectile = /obj/item/projectile/energy/electrode //Holder for projectile type
 	var/shoot_sound = 'sound/weapons/taser.ogg'
+	var/cell_type = /obj/item/stock_parts/cell
+	var/vest_type = /obj/item/clothing/suit/armor/vest
 
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
@@ -161,7 +163,7 @@ Auto Patrol[]"},
 		final = final|JUDGE_RECORDCHECK
 	if(weaponscheck)
 		final = final|JUDGE_WEAPONCHECK
-	if(emagged)
+	if(emagged == 2)
 		final = final|JUDGE_EMAGGED
 	//ED209's ignore monkeys
 	final = final|JUDGE_IGNOREMONKEYS
@@ -272,7 +274,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) ||  target.AmountKnockdown() < 40)
+			if(!Adjacent(target) || !isturf(target.loc) || !target.recoveringstam || target.staminaloss <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 
@@ -299,7 +301,7 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.AmountKnockdown() < 40)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.staminaloss <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 			else
@@ -365,7 +367,7 @@ Auto Patrol[]"},
 			continue
 
 /mob/living/simple_animal/bot/ed209/proc/check_for_weapons(var/obj/item/slot_item)
-	if(slot_item && slot_item.needs_permit)
+	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
 		return 1
 	return 0
 
@@ -374,11 +376,12 @@ Auto Patrol[]"},
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 
-	var/obj/item/ed209_assembly/Sa = new (Tsec)
+	var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
+	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)
 		var/obj/item/gun/energy/e_gun/advtaser/G = new (Tsec)
@@ -402,7 +405,7 @@ Auto Patrol[]"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				drop_part(vest_type, Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")
@@ -520,7 +523,7 @@ Auto Patrol[]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(!C.IsStun() || arrest_type)
+		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)

@@ -20,31 +20,24 @@
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
 /obj/item/gun/energy
-	..()
 	recoil = 0.1
 
 /obj/item/gun/energy/kinetic_accelerator
-	..()
 	recoil = 0.5
 
 /obj/item/gun/ballistic
-	..()
 	recoil = 0.25
 
 /obj/item/gun/ballistic/shotgun
-	..()
 	recoil = 1
 
 /obj/item/gun/ballistic/revolver
-	..()
 	recoil = 0.5
 
 /obj/item/gun/ballistic/revolver/doublebarrel
-	..()
 	recoil = 1
 
 /obj/item/gun/syringe
-	..()
 	recoil = 0.1
 
 /obj/item/pneumatic_cannon/fire_items(turf/target, mob/user)
@@ -53,17 +46,17 @@
 
 /obj/item/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(force && force >=15)
+	if(force >= 15)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
 		if(M.client)
 			switch (M.client.prefs.damagescreenshake)
 				if (1)
 					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 				if (2)
-					if (M.IsKnockdown())
+					if (!M.canmove)
 						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()
-	if(force && force >= 20)
+	if(force >= 20)
 		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))

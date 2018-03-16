@@ -30,11 +30,24 @@ LOBBY_COUNTDOWN 120
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
 
-## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
 ADMIN_LEGACY_SYSTEM
+
+## Comment this out if you want to use the SQL based mentor system, the legacy system uses mentors.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
+MENTOR_LEGACY_SYSTEM
+
+#Mentors only see ckeys by default. Uncomment to have them only see mob name
+#MENTORS_MOBNAME_ONLY
 
 ## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
+
+## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
+ENABLE_LOCALHOST_RANK
 
 ## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
@@ -121,6 +134,9 @@ LOG_MANIFEST
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
+## Job slot open/close by identification consoles delay in seconds
+ID_CONSOLE_JOBSLOT_DELAY 30
+
 ## If metadata is supported
 ALLOW_METADATA
 
@@ -199,7 +215,7 @@ CHECK_RANDOMIZER
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+# GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
@@ -250,6 +266,12 @@ TICKLAG 0.5
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
+
+### Comment these two out to prevent notes fading out over time for admins.
+## Notes older then this will start fading out.
+NOTE_FRESH_DAYS 91.31055
+## Notes older then this will be completely faded out.
+NOTE_STALE_DAYS 365.2422
 
 ##Note: all population caps can be used with each other if desired.
 
@@ -399,4 +421,4 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 ##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
 ##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
-DEFAULT_VIEW 15x15
+DEFAULT_VIEW 21x15
