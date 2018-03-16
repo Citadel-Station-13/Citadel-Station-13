@@ -50,7 +50,7 @@
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
 					)
-	premium = list(/obj/item/device/electropack/shockcollar = 1)
+	premium = list(/obj/item/device/electropack/shockcollar = 3)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend
@@ -116,8 +116,8 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
-	charges 		= list(8, 5, 0)// of 20 standard, 12 contraband, 0 premium
-	init_charges 	= list(8, 5, 0)
+	charges 		= list(8, 5, 1)// of 20 standard, 12 contraband, 3 premium
+	init_charges 	= list(8, 5, 1)
 
 /obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"

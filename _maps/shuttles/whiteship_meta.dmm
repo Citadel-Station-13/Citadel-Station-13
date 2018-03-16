@@ -40,7 +40,6 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 28
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -1427,7 +1426,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/machinery/iv_drip,

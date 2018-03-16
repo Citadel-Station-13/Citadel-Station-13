@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "The title screen is now properly positioned to display widescreen titlescreens again."

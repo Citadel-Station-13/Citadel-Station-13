@@ -1,6 +1,16 @@
 /mob/living/carbon
 	var/combatmode = FALSE //literally lifeweb
 
+/mob/living/carbon/CanPass(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		var/mob/living/mobdude = mover
+		if(istype(mobdude))
+			if(!resting && mobdude.resting)
+				if(!(mobdude.pass_flags & PASSMOB))
+					return FALSE
+	return .
+
 /mob/living/carbon/proc/toggle_combat_mode()
 	if(recoveringstam)
 		return TRUE
