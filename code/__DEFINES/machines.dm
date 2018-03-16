@@ -29,7 +29,7 @@
 #define BIOGENERATOR 32 //Uses biomass
 #define LIMBGROWER 64 //Uses synthetic flesh
 #define SMELTER 128 //uses various minerals
-#define AUTOYLATHE	256	//Uses glass/metal/Plastic
+#define AUTOYLATHE	256	//CITADEL ADDITION Uses glass/metal/Plastic CID
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
