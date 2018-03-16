@@ -6,6 +6,7 @@
 	var/aimingdownsights = FALSE
 	var/attemptingstandup = FALSE
 	var/intentionalresting = FALSE
+	var/attemptingcrawl = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
