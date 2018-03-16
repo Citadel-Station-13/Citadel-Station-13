@@ -2614,6 +2614,7 @@
 #include "modular_citadel\code\game\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\machinery\toylathe.dm"
 #include "modular_citadel\code\game\machinery\vending.dm"
+#include "modular_citadel\code\game\machinery\wishgranter.dm"
 #include "modular_citadel\code\game\machinery\computer\card.dm"
 #include "modular_citadel\code\game\objects\ids.dm"
 #include "modular_citadel\code\game\objects\items.dm"
