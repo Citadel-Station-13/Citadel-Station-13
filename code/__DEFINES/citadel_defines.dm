@@ -108,7 +108,7 @@
 //Brainslugs
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
-#define CITADEL_MENTOR_OOC_COLOUR "#ad396e"
+#define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
 //stamina stuff
 #define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
