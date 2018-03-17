@@ -1,7 +1,7 @@
 /*		BALLS - GLORIOUS BALLS
 //
 //	Includes:-
-//		1) Tennis balls, lines 10 - 83
+//		1) Tennis balls, lines 10 - 92
 //
 //
 //
@@ -19,6 +19,15 @@
 	slot_flags = SLOT_HEAD | SLOT_NECK | SLOT_EARS	//Fluff item, put it wherever you want!
 	throw_range = 14
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/toy/tennis/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/toy/tennis/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] waggles [src] at [target].</span>", "<span class='notice'>You waggle [src] at [target].</span>")
+	return TRUE
 
 /obj/item/toy/tennis/rainbow
 	name = "pseudo-euclidean interdimensional tennis sphere"
