@@ -5,7 +5,7 @@
 	var/extra2 = FALSE
 	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
-//	var/list/ckeys_allowed = null
+	var/list/ckeys_allowed
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
@@ -96,6 +96,12 @@
 	icon_state = "eevee"
 	extra = TRUE
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+//datum/sprite_accessory/ears/elf
+//	name = "Elf"
+//	icon_state = "elf"
+//	icon = 'icons/mob/mam_bodyparts.dmi'
+//	ckeys_allowed = list("atiefling")
 
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
@@ -950,34 +956,44 @@
 /datum/sprite_accessory/mam_ears/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/snout/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 
 /datum/sprite_accessory/mam_tails/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
-//	ckeys_allowed = list("rubyflamewing")
+	ckeys_allowed = list("rubyflamewing")
 
 /datum/sprite_accessory/mam_tails_animated/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
 
-/*
-//Till I get my snowflake only ckey lock, these are locked-locked :D
+/datum/sprite_accessory/mam_body_markings/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
+	color_src = MUTCOLORS2
+	ckeys_allowed = list("rubyflamewing")
 
+
+//Sabresune
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
+	hasinner = 1
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
-	locked = TRUE
+	ckeys_allowed = list("poojawa")
 
 /datum/sprite_accessory/mam_tails/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
 	extra = TRUE
-	locked = TRUE
+	ckeys_allowed = list("poojawa")
+
 
 /datum/sprite_accessory/mam_tails_animated/sabresune
 	name = "sabresune"
@@ -990,5 +1006,5 @@
 	color_src = MUTCOLORS2
 	extra = FALSE
 	extra2 = FALSE
-	locked = TRUE
-*/
+	ckeys_allowed = list("poojawa")
+
