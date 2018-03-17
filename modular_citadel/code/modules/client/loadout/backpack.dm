@@ -18,6 +18,11 @@
 	category = slot_in_backpack
 	path = /obj/item/toy/plush/slimeplushie
 
+/datum/gear/tennis
+	name = "Classic Tennis Ball"
+	category = slot_in_backpack
+	path = /obj/item/toy/tennis
+
 /datum/gear/tennisred
 	name = "Red Tennis Ball"
 	category = slot_in_backpack

@@ -229,6 +229,8 @@
 	path = /obj/item/toy/tennis/rainbow
 	ckeywhitelist = list("annoymous35")
 
-
-
-
+/datum/gear/izzyball
+	name = "Katlin's Ball"
+	category = slot_in_backpack
+	path = /obj/item/toy/tennis/rainbow/izzy
+	ckeywhitelist = list("izzyinbox")

@@ -1,3 +1,12 @@
+/*		BALLS - GLORIOUS BALLS
+//
+//	Includes:-
+//		1) Tennis balls, lines 10 - 83
+//
+//
+//
+*/
+
 /obj/item/toy/tennis
 	name = "tennis ball"
 	desc = "A classical tennis ball. It appears to have faint bite marks scattered all over its surface."
@@ -7,7 +16,7 @@
 	righthand_file = 'modular_citadel/icons/mob/inhands/balls_right.dmi'
 	item_state = "tennis_classic"
 	alternate_worn_icon = 'modular_citadel/icons/mob/mouthball.dmi'
-	slot_flags = SLOT_HEAD
+	slot_flags = SLOT_HEAD | SLOT_NECK | SLOT_EARS	//Fluff item, put it wherever you want!
 	throw_range = 14
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -16,6 +25,17 @@
 	desc = "A tennis ball from another plane of existance. Really groovy."
 	icon_state = "tennis_rainbow"
 	item_state = "tennis_rainbow"
+	actions_types = list(/datum/action/item_action/squeeze)		//Giving the masses easy access to unilimted honks would be annoying
+
+/obj/item/toy/tennis/rainbow/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak)
+
+/obj/item/toy/tennis/rainbow/izzy	//izzyinbox's donator item
+	name = "Katlin's Ball"
+	desc = "A tennis ball that's seen a good bit of love, being covered in a few black and white hairs and slobber."
+	icon_state = "tennis_izzy"
+	item_state = "tennis_izzy"
 
 /obj/item/toy/tennis/red	//da red wuns go fasta
 	name = "red tennis ball"
@@ -58,3 +78,6 @@
 	icon_state = "tennis_purple"
 	item_state = "tennis_purple"
 	resistance_flags = ACID_PROOF
+
+/datum/action/item_action/squeeze
+	name = "Squeak!"
