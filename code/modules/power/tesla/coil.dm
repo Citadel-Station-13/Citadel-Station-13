@@ -135,6 +135,13 @@
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
 	return ..()
+<<<<<<< HEAD
+=======
+
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
+>>>>>>> 325ca19... Merge pull request #36399 from DaxDupont/fixes-mike-pence
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
