@@ -1621,9 +1621,8 @@
 	taste_description = "dryness"
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T) && T.wet)
-		T.wet_time = max(0, T.wet_time-reac_volume*5) // removes 5 seconds of wetness for every unit.
-		T.HandleWet()
+	if(istype(T))
+		T.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS)		//50 deciseconds per unit
 
 /datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
 	if(O.type == /obj/item/clothing/shoes/galoshes)
