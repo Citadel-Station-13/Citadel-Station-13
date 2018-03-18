@@ -123,3 +123,10 @@
 #define MIN_MELEE_STAMCOST						1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
+//Citadel toggles because bitflag memes
+#define MEDIHOUND_SLEEPER 1
+#define EATING_NOISES	2
+#define DIGESTION_NOISES 4
+
+#define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)

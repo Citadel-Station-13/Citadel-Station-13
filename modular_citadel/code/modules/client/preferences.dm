@@ -12,7 +12,11 @@
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
+	var/toggleeatingnoise = TRUE
+	var/toggledigestionnoise = TRUE
+	var/hound_sleeper = TRUE
 	max_save_slots = 10
+	var/cit_toggles = TOGGLES_CITADEL
 	features = list("mcolor" = "FFF",
 							"tail_lizard" = "Smooth",
 							"tail_human" = "None",
@@ -86,13 +90,10 @@
 	..()
 	LAZYINITLIST(chosen_gear)
 
-/datum/preferences/proc/add_citadel_choices(dat)
-	if(current_tab == 2)
-		update_preview_icon(nude=TRUE)
-	else
-		update_preview_icon(nude=FALSE)
+/datum/preferences/proc/add_citadel_choices(.)
+	
 
-	return dat
+	return .
 
 /datum/preferences/proc/process_citadel_link(mob/user, list/href_list)
 	if(href_list["task"] == "input")
@@ -357,10 +358,9 @@
 						features["vag_color"] = sanitize_hexcolor(new_vagcolor)
 					else
 						user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-
-	if("input")
+			
+	else
 		switch(href_list["preference"])
-
 			//genital code
 			if("genital_colour")
 				switch(features["genitals_use_skintone"])
@@ -473,8 +473,7 @@
 						features["exhibitionist"] = TRUE
 					else
 						features["exhibitionist"] = FALSE
-	else
-		switch(href_list["preference"])
+
 			if("widescreenpref")
 				widescreenpref = !widescreenpref
 				user.client.change_view(CONFIG_GET(string/default_view))
@@ -514,7 +513,7 @@
 				if(i == href_list["select_category"])
 					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][href_list["toggle_gear_path"]]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
@@ -525,9 +524,6 @@
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
-				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
-					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
-					return
 				if(gear_points >= initial(G.cost))
 					LAZYADD(chosen_gear, G.type)
 					gear_points -= initial(G.cost)
@@ -535,6 +531,7 @@
 
 /datum/preferences/proc/citadel_dat_replace(current_tab)
 	var/mob/user
+
 	
 	//This proc is for menus other than game pref and char pref
 	. = "<center>"
@@ -550,25 +547,26 @@
 	. += "</center>"
 
 	. += "<HR>"
-	if(current_tab == 0)
+	if(current_tab == 1)
+		. += "<table><tr><td width='340px' height='300px' valign='top'>"
+		. += "<h2>Citadel Preferences</h2>"
 		. += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 		. += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
-	// game prefs
-	if(current_tab == 1)
-		//VORE SOUNDS
-		. += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
-		. += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+		. += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+		. += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+		. += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
 		. += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 		. += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
 		. += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
 		if (user && user.client && !user.client.prefs.screenshake==0)
 			. += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+		. += "</td></tr></table>"
 
 			
 	//Character Appearance
 	if(current_tab == 2)
 		. += "<table><tr><td width='340px' height='300px' valign='top'>"
-		. += "<div class='statusDisplay'><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
+		. += "<div class='statusDisplay'><img src=previewicondatpng width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
 		. += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 		if(lentext(features["flavor_text"]) <= 40)
 			if(!lentext(features["flavor_text"]))
@@ -695,6 +693,7 @@
 			. += "</td>"
 			*/
 			. += "</td></tr></table>"
+
 	if(current_tab == 3)
 		if(!gear_tab)
 			gear_tab = GLOB.loadout_items[1]
@@ -767,7 +766,7 @@
 datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	..()
 	character.give_genitals(TRUE)
-	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
+	character.flavor_text = features["flavor_text"] //Let's up.e their flavor_text at least initially
 	character.canbearoused = arousable
 	if(icon_updates)
 		character.update_genitals()

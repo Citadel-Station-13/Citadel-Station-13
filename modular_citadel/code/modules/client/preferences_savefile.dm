@@ -1,6 +1,9 @@
 /datum/preferences/proc/cit_character_pref_load(savefile/S)
 	//ipcs
 	S["feature_ipc_screen"] >> features["ipc_screen"]
+
+	//Citadel toggles
+	S["cit_toggles"] >> cit_toggles
 	
 	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
 	//Citadel
@@ -11,6 +14,7 @@
 		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
+	cit_toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 
 	//gear loadout
 	var/text_to_load
@@ -68,6 +72,8 @@
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 	//flavor text
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
+
+	WRITE_FILE(S["cit_toggles"], cit_toggles)
 
 	//gear loadout
 	if(islist(chosen_gear))

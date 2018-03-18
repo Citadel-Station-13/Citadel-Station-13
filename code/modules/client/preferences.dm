@@ -156,11 +156,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	if(current_tab == 2) //CITADEL EDIT, for muh nudies
+		update_preview_icon(nude=TRUE)
+	else
+		update_preview_icon(nude=FALSE) //EDIT END
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
 
-	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
+	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 
 	if(!path)
@@ -236,7 +241,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
-			if(pref_species.use_skintones)
+// CITADEL EDIT - ALL OF THESE ARE HANDLED IN THE MODULAR VERSION, TAB 2
+		/*	if(pref_species.use_skintones)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -245,6 +251,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 
 				dat += "</td>"
+
+			dat = add_citadel_choices(dat)
 
 			if(HAIR in pref_species.species_traits)
 
@@ -359,7 +367,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
-			dat = add_citadel_choices(dat)
+			
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -388,7 +396,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
-					dat += "</td>"
+					dat += "</td>"*/
+			dat += citadel_dat_replace(current_tab)
 
 			dat += "</tr></table>"
 
@@ -508,7 +517,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
+			dat += citadel_dat_replace(current_tab)
+
 			dat += "</td></tr></table>"
+
 
 		else
 			dat = citadel_dat_replace(current_tab)
