@@ -81,6 +81,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
+	if(!GLOB.ipc_screens_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
 	/*	if(H.gender == MALE) Fuck if I know how to fix this.
@@ -114,13 +116,13 @@
 		"caps" = pick(GLOB.caps_list),
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
-		"mam_body_markings" = "None",
-		"mam_ears" 			= "None",
-		"mam_tail" 			= "None",
+		"mam_body_markings" = "wolf",
+		"mam_ears" 			= "wolf",
+		"mam_tail" 			= "wolf",
 		"mam_tail_animated" = "None",
-		"xenodorsal" 		= "None",
-		"xenohead" 			= "None",
-		"xenotail" 			= "None",
+		"xenodorsal" 		= "standard",
+		"xenohead" 			= "standard",
+		"xenotail" 			= "standard",
 		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
@@ -166,6 +168,7 @@
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
+		"ipc_screen" = "Sunburst",
 		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)

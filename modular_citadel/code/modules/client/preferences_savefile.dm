@@ -1,4 +1,8 @@
 /datum/preferences/proc/cit_character_pref_load(savefile/S)
+	//ipcs
+	S["feature_ipc_screen"] >> features["ipc_screen"]
+	
+	features["ipc_screen"] 	= sanitize_inlist(features["ipc_screen"], GLOB.ipc_screens_list)
 	//Citadel
 	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
 	if(!features["mcolor2"] || features["mcolor"] == "#000")
@@ -21,6 +25,8 @@
 			gear_points -= initial(path.cost)
 
 /datum/preferences/proc/cit_character_pref_save(savefile/S)
+	//ipcs
+	WRITE_FILE(S["feature_ipc_screen"], features["ipc_screen"])
 	//Citadel
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
 	WRITE_FILE(S["feature_exhibitionist"], features["exhibitionist"])

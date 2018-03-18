@@ -4,10 +4,11 @@
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "husky", "mam_tail" = "husky", "mam_ears" = "husky", "mam_body_markings" = "husky", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal
 	liked_food = MEAT | FRIED
 	disliked_food = TOXIC
 
@@ -18,6 +19,13 @@
 /datum/species/mammal/qualifies_for_rank(rank, list/features)
 	return TRUE
 
+/datum/species/mammal/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
@@ -39,6 +47,14 @@
 
 /datum/species/avian/qualifies_for_rank(rank, list/features)
 	return TRUE
+
+/datum/species/avian/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/avian/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
 
 //AQUATIC//
 /datum/species/aquatic
@@ -62,6 +78,14 @@
 /datum/species/aquatic/qualifies_for_rank(rank, list/features)
 	return TRUE
 
+/datum/species/aquatic/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/aquatic/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
+
 //INSECT//
 /datum/species/insect
 	name = "Insect"
@@ -83,6 +107,14 @@
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
 
+/datum/species/insect/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/insect/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
+
 //Alien//
 /datum/species/xeno
 	// A cloning mistake, crossing human and xenomorph DNA
@@ -101,6 +133,14 @@
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
+
+/datum/species/xeno/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/xeno/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 

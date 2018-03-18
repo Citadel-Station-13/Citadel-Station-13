@@ -55,3 +55,25 @@
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to push [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to push [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+
+////////////////////
+/////BODYPARTS/////
+////////////////////
+
+
+/obj/item/bodypart/var/should_draw_citadel = FALSE
+
+/mob/living/carbon/proc/draw_citadel_parts(undo = FALSE)
+	if(!undo)
+		for(var/O in bodyparts)
+			var/obj/item/bodypart/B = O
+			B.should_draw_citadel = TRUE
+	else
+		for(var/O in bodyparts)
+			var/obj/item/bodypart/B = O
+			B.should_draw_citadel = FALSE
+
+/datum/species/proc/citadel_mutant_bodyparts(bodypart, mob/living/carbon/human/H)
+	switch(bodypart)
+		if("ipc_screen")
+			return GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
