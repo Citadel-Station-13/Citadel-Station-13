@@ -36563,7 +36563,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	name = "distro out"
 	},
 /turf/open/floor/engine/vacuum,
@@ -37010,7 +37010,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -49942,6 +49942,7 @@
 	dir = 1
 	},
 /area/science/circuit)
+<<<<<<< HEAD
 "exW" = (
 /obj/machinery/button/door{
 	id = "Singularity";
@@ -49983,6 +49984,25 @@
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+=======
+"eQR" = (
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/turf/open/floor/engine,
+/area/science/xenobiology)
+"fon" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
+"fuR" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4;
+	filter_type = "n2";
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+>>>>>>> cff143d... Fixes Pubby mixtank and N2 filter (#36481)
 "fvG" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
@@ -86025,7 +86045,7 @@ bTJ
 bMf
 bUs
 bMf
-bWK
+fuR
 bXt
 bYp
 bZd
