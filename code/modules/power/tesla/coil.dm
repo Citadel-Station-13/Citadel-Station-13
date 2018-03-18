@@ -87,6 +87,7 @@
 		if(istype(linked_techweb))
 			linked_techweb.research_points += min(power_produced, 1)
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+		tesla_buckle_check(power)
 	else
 		..()
 
@@ -100,6 +101,7 @@
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 10, power/(coeff/2))
+	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher
 /obj/machinery/power/tesla_coil/research
@@ -120,6 +122,7 @@
 		if(istype(linked_techweb))
 			linked_techweb.research_points += min(power_produced, 3) // 4 coils makes ~720/m bonus for R&D, 
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+		tesla_buckle_check(power)
 	else
 		..()
 
@@ -132,9 +135,13 @@
 			icon_state = "rpcoil[anchored]"
 
 /obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
+	return ..()
+
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
@@ -179,5 +186,6 @@
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
+		tesla_buckle_check(power)
 	else
 		..()

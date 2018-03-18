@@ -216,12 +216,12 @@
 				return
 			if(!condi)
 				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
+				var/vol_each = min(reagents.total_volume, 5)
 				if(text2num(many))
-					amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 10)
+					amount = CLAMP(round(input(usr, "Max 30. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0, 30)
 					if(!amount)
 						return
-					vol_each = min(reagents.total_volume / amount, 50)
+					vol_each = min(reagents.total_volume / amount, 5)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 					return
@@ -252,12 +252,12 @@
 			if(reagents.total_volume == 0)
 				return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 40)
+			var/vol_each = min(reagents.total_volume, 5)
 			if(text2num(many))
-				amount = CLAMP(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 10)
+				amount = CLAMP(round(input(usr, "Max 20. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0, 20)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume / amount, 40)
+				vol_each = min(reagents.total_volume / amount, 5)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 				return

@@ -6,8 +6,8 @@ the new instance inside the host to be updated to the template's stats.
 */
 
 /mob/camera/disease
-	name = ""
-	real_name = ""
+	name = "Sentient Disease"
+	real_name = "Sentient Disease"
 	desc = ""
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
@@ -95,6 +95,17 @@ the new instance inside the host to be updated to the template's stats.
 			var/adapt_ready = next_adaptation_time - world.time
 			if(adapt_ready > 0)
 				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
+
+
+/mob/camera/disease/examine(mob/user)
+	..()
+	if(isobserver(user))
+		to_chat(user, "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>")
+		to_chat(user, "<span class='notice'>[src] has the following unlocked:</span>")
+		for(var/A in purchased_abilities)
+			var/datum/disease_ability/B = A
+			if(istype(B))
+				to_chat(user, "<span class='notice'>[B.name]</span>")
 
 /mob/camera/disease/say(message)
 	return
@@ -214,7 +225,6 @@ the new instance inside the host to be updated to the template's stats.
 		disease_instances -= V
 		hosts -= V.affected_mob
 	else
-		points -= 1
 		to_chat(src, "<span class='notice'>One of your hosts, <b>[V.affected_mob.real_name]</b>, has been purged of your infection.</span>")
 
 		var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]

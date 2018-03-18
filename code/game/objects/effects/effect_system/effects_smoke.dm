@@ -231,7 +231,7 @@
 				continue
 			reagents.reaction(AM, TOUCH, fraction)
 
-		reagents.reaction(T, TOUCH, fraction)
+		reagents.reaction(T, VAPOR, fraction) // CITADEL EDIT from TOUCH to VAPOR
 		return 1
 
 /obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
@@ -244,7 +244,7 @@
 		return 0
 	var/fraction = 1/initial(lifetime)
 	reagents.copy_to(C, fraction*reagents.total_volume)
-	reagents.reaction(M, INGEST, fraction)
+	reagents.reaction(M, INHALE, fraction) //CITADEL EDIT added INHALE modifier to smoke
 	return 1
 
 

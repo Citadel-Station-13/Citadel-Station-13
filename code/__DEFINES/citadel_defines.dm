@@ -108,7 +108,12 @@
 //Brainslugs
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
-#define CITADEL_MENTOR_OOC_COLOUR "#ad396e"
+#define CITADEL_MENTOR_OOC_COLOUR "#224724"
+
+//xenobio console upgrade stuff
+#define XENOBIO_UPGRADE_MONKEYS				1
+#define XENOBIO_UPGRADE_SLIMEBASIC		2
+#define XENOBIO_UPGRADE_SLIMEADV			4
 
 //stamina stuff
 #define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
@@ -120,3 +125,7 @@
 #define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
 #define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol atleast a little bit damaging.
+
+#define MIN_MELEE_STAMCOST						1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
