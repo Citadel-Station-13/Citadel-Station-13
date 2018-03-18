@@ -140,7 +140,7 @@ Curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	//CITADEL EDIT removes runtimes from this pocket protector
 	backpack_contents = list(
 		/obj/item/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
