@@ -226,7 +226,7 @@
 datum/gear/darksabresheath
 	name = "Dark Sabre Sheath"
 	category = slot_in_backpack
-	path = /obj/item/storage/belt/darksabre
+	path = /obj/item/storage/belt/sabre/darksabre
 	ckeywhitelist = list("inferno707")
 
 
