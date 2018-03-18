@@ -118,7 +118,7 @@
 	if((istype(I, /obj/item/reagent_containers/glass/bottle/vial)))
 		var/obj/item/reagent_containers/glass/bottle/vial/V = I
 		if(!is_type_in_list(V, allowed_containers))
-			to_chat(user, "<span class='notice'>[src] doesn't accept this [vial].</span>")
+			to_chat(user, "<span class='notice'>[src] doesn't accept this type of vial.</span>")
 			return FALSE
 		if(!user.transferItemToLoc(V,src))
 			return FALSE
