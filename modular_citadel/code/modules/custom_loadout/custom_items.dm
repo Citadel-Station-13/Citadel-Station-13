@@ -330,8 +330,8 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "darksabre"
 	item_state = "darksabre"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
+	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 
@@ -339,6 +339,8 @@
 /obj/item/storage/belt/darksabre
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "sheathdark"
 	item_state = "sheathdark"
 	storage_slots = 1
