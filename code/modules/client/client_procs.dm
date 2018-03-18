@@ -87,14 +87,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
-	// Mentor PM
-	if(href_list["mentor_msg"])
-		if(CONFIG_GET(flag.mentors_mobname_only))
-			var/mob/M = locate(href_list["mentor_msg"])
-			cmd_mentor_pm(M,null)
-		else
-			cmd_mentor_pm(href_list["mentor_msg"],null)
+
+	// CITADEL Start - Mentor PM
+	if (citadel_client_procs(href_list))
 		return
+	// CITADEL End
 
 	switch(href_list["_src_"])
 		if("holder")

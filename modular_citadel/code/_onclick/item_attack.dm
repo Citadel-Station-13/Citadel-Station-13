@@ -20,6 +20,6 @@
 
 /obj/item/proc/getweight()
 	if(total_mass)
-		return total_mass
+		return max(total_mass,MIN_MELEE_STAMCOST)
 	else
 		return w_class*1.25
