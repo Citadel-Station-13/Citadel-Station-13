@@ -139,6 +139,10 @@
 		return
 	return ..()
 
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
+
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
 	desc = "Keep an area from being fried from Edison's Bane."
