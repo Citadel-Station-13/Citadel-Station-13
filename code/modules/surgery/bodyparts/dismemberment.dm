@@ -102,11 +102,11 @@
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
 		I.forceMove(src)
-	if(!C.has_embedded_objects())
+	/*if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
 		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
 		if(mood)
-			mood.add_event("embedded")
+			mood.add_event("embedded") */ //temporary measure to stop the runtimes, will be reverted with #36344 on TG
 
 	if(!special)
 		if(C.dna)
