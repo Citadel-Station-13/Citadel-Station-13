@@ -238,6 +238,11 @@
 			M.adjustToxLoss(1.5*reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
 		else if(M.getFireLoss())
 			M.adjustFireLoss(-reac_volume)
 			if(show_message)
@@ -270,7 +275,7 @@
 		if(method == INJECT)
 			M.adjustToxLoss(0.5*reac_volume)
 
-		else if(method == VAPOR)
+		else if(method == INHALE)
 			if(iscarbon(M))
 				var/mob/living/carbon/N = M
 				N.emote("cough")
@@ -285,7 +290,7 @@
 	if(M.getFireLoss() > 50)
 		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
 	else
-		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
+		M.adjustFireLoss(-1*REM, 0) //But only a quarter as effective for more minor ones
 	..()
 	. = 1
 
@@ -305,10 +310,15 @@
 
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
+		if(method in list(INGEST, INHALE, INJECT))
 			M.adjustToxLoss(1*reac_volume)
 			if(show_message && !isjellyperson(M))
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 5
+				N.emote("cough")
 		else if(M.getBruteLoss())
 			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
@@ -345,7 +355,7 @@
 		if(method == INGEST)
 			M.nutrition += 5
 
-		if(method == VAPOR && M.stat != DEAD)
+		if(method == INHALE && M.stat != DEAD)
 			if(iscarbon(M))
 				var/mob/living/carbon/N = M
 				N.losebreath += 2
@@ -435,7 +445,7 @@
 
 /datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
-		if(method == VAPOR && M.stat != DEAD)
+		if(method == INHALE && M.stat != DEAD)
 			M.losebreath +=(1 * reac_volume)
 			M.emote("gasp")
 			to_chat(M, "<span class='userdanger'>You feel your throat constrict!</span>") //it's in your lungs boy-o. this is bad.
@@ -460,9 +470,14 @@
 
 /datum/reagent/medicine/charcoal/reaction_mob(mob/living/M, method=INGEST, reac_volume)
 	if(iscarbon(M))
-		if(method in list(PATCH, TOUCH))
+		if(method in list(PATCH, TOUCH) && isjellyperson(M))
+			M.adjustBruteLoss(1*reac_volume)
+			to_chat(M, "<span class='danger'>You feel your body bubbling and melting!</span>")
+			M.emote("scream")
+		else
 			return
-		if(method == VAPOR)
+
+		if(method == INHALE)
 			if (M.stat != DEAD)
 				M.losebreath += (0.25 * reac_volume)
 				M.emote("cough")
@@ -511,6 +526,17 @@
 	taste_description = "acid"
 	overdose_threshold = 30
 
+/datum/reagent/medicine/calomel/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -531,12 +557,15 @@
 
 /datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INGEST, reac_volume)
 	if(iscarbon(M))
-		if(method in list(PATCH, TOUCH))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			M.adjustFireLoss(0.25*REM, 0)
+			to_chat(M, "<span class='danger'You feel your skin burning!</span>")
 			return
-		if(method == VAPOR)
-			if (M.stat != DEAD)
-				M.losebreath +=(0.25 * reac_volume)
-				M.emote("cough")
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
 	..()
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/M)
@@ -552,6 +581,20 @@
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 20
+
+/datum/reagent/medicine/pen_acid/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			M.adjustFireLoss(0.25*REM, 0)
+			to_chat(M, "<span class='danger'You feel your skin burning!</span>")
+			M.emote("scream")
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
@@ -571,6 +614,19 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
+/datum/reagent/medicine/sal_acid/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			M.adjustFireLoss(0.25*REM, 0)
+			to_chat(M, "<span class='danger'You feel your skin burning!</span>")
+			M.emote("scream")
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() > 50)
@@ -595,6 +651,18 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
+/datum/reagent/medicine/salbutamol/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M)) //Injected it gunna be the most common application unless we make inhalers. lol
+		if(method in list(PATCH, TOUCH))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				if(M.losebreath >= 4)
+					N.losebreath -= 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-3*REM, 0)
 	if(M.losebreath >= 4)
@@ -609,6 +677,17 @@
 	reagent_state = LIQUID
 	color = "#FF6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/perfluordecalin/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-12*REM, 0)
@@ -628,6 +707,17 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 45
 	addiction_threshold = 30
+
+/datum/reagent/medicine/ephedrine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_add(mob/M)
 	..()
@@ -693,6 +783,17 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
+/datum/reagent/medicine/diphenhydramine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/M)
 	if(prob(10))
 		M.drowsyness += 1
@@ -709,6 +810,17 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
+
+/datum/reagent/medicine/morphine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/morphine/on_mob_add(mob/M)
 	..()
@@ -783,6 +895,17 @@
 	taste_description = "dull toxin"
 	overdose_threshold = 30
 
+/datum/reagent/medicine/oculine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
@@ -814,6 +937,17 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
+/datum/reagent/medicine/atrophine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
 	if(M.health < 0)
 		M.adjustToxLoss(-2*REM, 0)
@@ -842,6 +976,17 @@
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+
+/datum/reagent/medicine/epinephrine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/M)
 	if(M.health < 0)
@@ -913,6 +1058,17 @@
 	color = "#DCDCFF"
 	overdose_threshold = 30
 
+/datum/reagent/medicine/mannitol/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-2*REM)
 	if(iscarbon(M))
@@ -928,6 +1084,16 @@
 	color = "#5096C8"
 	taste_description = "acid"
 
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
 	if(M.has_dna())
@@ -941,6 +1107,17 @@
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
 	color = "#00B4C8"
 	taste_description = "raw egg"
+
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/M)
 	M.dizziness = 0
@@ -1005,6 +1182,17 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
+/datum/reagent/medicine/insulin/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
 	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
@@ -1018,7 +1206,16 @@
 	description = "Restores bruising. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	overdose_threshold = 30
+	overdose_threshold = 20
+
+/datum/reagent/medicine/bicardine/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM, 0)
@@ -1038,6 +1235,17 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
+/datum/reagent/medicine/dexalin/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-2*REM, 0)
 	..()
@@ -1055,6 +1263,15 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	overdose_threshold = 30
+
+/datum/reagent/medicine/kelotane/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM, 0)
@@ -1075,6 +1292,21 @@
 	overdose_threshold = 30
 	taste_description = "a roll of gauze"
 
+/datum/reagent/medicine/antitoxin/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH) && isjellyperson(M))
+			M.adjustBruteLoss(1*reac_volume)
+			to_chat(M, "<span class='danger'>You feel your body bubbling and melting!</span>")
+			M.emote("scream")
+		else
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
@@ -1094,6 +1326,17 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/M)
 	if(M.losebreath >= 5)
 		M.losebreath -= 5
@@ -1107,6 +1350,17 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "grossness"
+
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/tricordrazine/on_mob_life(mob/living/M)
 	if(prob(80))
@@ -1133,6 +1387,17 @@
 	color = "#91D865"
 	taste_description = "jelly"
 	overdose_threshold = 30
+
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
@@ -1166,6 +1431,17 @@
 	color = rgb(255, 175, 0)
 	overdose_threshold = 25
 
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INGEST, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
+
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-3 * REM, 0)
 	M.adjustFireLoss(-3 * REM, 0)
@@ -1193,6 +1469,17 @@
 	color = "#27870a"
 	overdose_threshold = 30
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/potass_iodide/reaction_mob(mob/living/M, method=INJECT, reac_volume)
+	if(iscarbon(M))
+		if(method in list(PATCH, TOUCH, VAPOR))
+			return
+		if(method == INHALE && M.stat != DEAD)
+			if(iscarbon(M))
+				var/mob/living/carbon/N = M
+				N.losebreath += 2
+				N.emote("cough")
+	..()
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/M)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
