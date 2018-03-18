@@ -336,13 +336,13 @@
 	attack_verb = list("attacked", "struck", "hit")
 
 
-/obj/item/storage/belt/darksabre
+/obj/item/storage/belt/sabre/darksabre
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
-	icon_state = "sheathdark"
-	item_state = "sheathdark"
+	icon_state = "darksheath"
+	item_state = "darksheath"
 	storage_slots = 1
 	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
