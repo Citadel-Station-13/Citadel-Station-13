@@ -168,7 +168,9 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/dice)
+	storage_slots = 100;
+	max_combined_w_class = 100 //CITADEL EDIT - makes Pill bottles actually carry more shit. replace when hypos are merged
+	can_hold = list(/obj/item/reagent_containers/pill)
 	allow_quick_gather = 1
 	use_to_pickup = 1
 

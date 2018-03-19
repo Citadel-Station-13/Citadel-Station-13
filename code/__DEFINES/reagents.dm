@@ -22,6 +22,7 @@
 #define VAPOR			3	// foam, spray, blob attack
 #define PATCH			4	// patches
 #define INJECT			5	// injection
+#define INHALE			6	// smoke //CITADEL ADDITION adds 'Inhale' for reagent reactions
 
 
 //defines passed through to the on_reagent_change proc
