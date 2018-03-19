@@ -3,18 +3,25 @@
 #define BACKPACK_SLOT_AMT	4
 
 /datum/preferences
+	//gear
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/chosen_gear
 	var/gear_tab
+
+	//pref vars
 	var/screenshake = 100
 	var/damagescreenshake = 2
 	var/arousable = TRUE
 	var/widescreenpref = TRUE
 	var/autostand = TRUE
+
+	//vore prefs
 	var/toggleeatingnoise = TRUE
 	var/toggledigestionnoise = TRUE
 	var/hound_sleeper = TRUE
+
+	// stuff that was in base
 	max_save_slots = 10
 	var/cit_toggles = TOGGLES_CITADEL
 	features = list("mcolor" = "FFF",
@@ -90,10 +97,370 @@
 	..()
 	LAZYINITLIST(chosen_gear)
 
-/datum/preferences/proc/add_citadel_choices(.)
-	
 
-	return .
+/datum/preferences/proc/citadel_pref_replace(current_tab)
+	var/mob/user
+
+	. += "<table><tr><td width='340px' height='300px' valign='top'>"
+	. += "<h2>Citadel Preferences</h2>"
+	. += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+	. += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
+	. += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+	. += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+	. += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+	. += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+	. += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
+	. += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
+	if (user && user.client && !user.client.prefs.screenshake==0)
+		. += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+	. += "</td></tr></table>"
+
+/datum/preferences/proc/citadel_dat_replace(current_tab)
+	var/mob/user
+	//This proc is for menus other than game pref and char pref
+	. = "<center>"
+	. += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
+	. += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
+	. += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
+	. += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+
+	if(!path)
+		. += "<div class='notice'>Please create an account to save your preferences</div>"
+
+	. += "</center>"
+
+	. += "<HR>"
+			
+	//Character Appearance
+	if(current_tab == 2)
+		update_preview_icon(nude=TRUE)
+		user << browse_rsc(preview_icon, "previewicon.png")
+		. += "<table><tr><td width='340px' height='300px' valign='top'>"
+		. += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
+		. += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+		if(lentext(features["flavor_text"]) <= 40)
+			if(!lentext(features["flavor_text"]))
+				. += "\[...\]"
+			else
+				. += "[features["flavor_text"]]"
+		else
+			. += "[TextPreview(features["flavor_text"])]...<BR>"
+		. += "<h2>Body</h2>"
+		. += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+		. += "<b>Species:</b><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+		. += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
+		. += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><BR>"
+		if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+			. += "<b>Primary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+			. += "<b>Secondary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+			. += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+		if(pref_species.use_skintones)
+			. += "<b>Skin Tone: </b><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+			. += "<b>Genitals Use Skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+
+		if(HAIR in pref_species.species_traits)
+			. += "<b>Hair Style: </b><a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+			. += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+			. += "<b>Facial Hair Style: </b><a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+			. += "<b>Facial Hair Color: </b><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+		if(EYECOLOR in pref_species.species_traits)
+			. += "<b>Eye Color: </b><span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+		if("tail_lizard" in pref_species.mutant_bodyparts)
+			. += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
+		else if("mam_tail" in pref_species.mutant_bodyparts)
+			. += "<b>Tail: </b><a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
+		else if("tail_human" in pref_species.mutant_bodyparts)
+			. += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+		if("snout" in pref_species.mutant_bodyparts)
+			. += "<b>Snout: </b><a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
+		if("horns" in pref_species.mutant_bodyparts)
+			. += "<b>Horns: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+		if("frills" in pref_species.mutant_bodyparts)
+			. += "<b>Frills: </b><a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
+		if("spines" in pref_species.mutant_bodyparts)
+			. += "<b>Spines: </b><a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
+		if("body_markings" in pref_species.mutant_bodyparts)
+			. += "<b>Body Markings: </b><a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
+		else if("mam_body_markings" in pref_species.mutant_bodyparts)
+			. += "<b>Body Markings: </b><a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
+		if("mam_ears" in pref_species.mutant_bodyparts)
+			. += "<b>Ears: </b><a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
+		else if("ears" in pref_species.mutant_bodyparts)
+			. += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+		if("legs" in pref_species.mutant_bodyparts)
+			. += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
+		if("moth_wings" in pref_species.mutant_bodyparts)
+			. += "<b>Moth wings</b><a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+		if("taur" in pref_species.mutant_bodyparts)
+			. += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
+		if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
+			. += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
+		if("xenohead" in pref_species.mutant_bodyparts)
+			. += "<b>Caste: </b><a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
+		if("xenotail" in pref_species.mutant_bodyparts)
+			. += "<b>Tail: </b><a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
+		if("xenodorsal" in pref_species.mutant_bodyparts)
+			. += "<b>Dorsal Tubes: </b><a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
+		if("ipc_screen" in pref_species.mutant_bodyparts)	
+			. += "<b>Screen:</b><a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
+
+		. += "</td><td width='300px' height='300px' valign='top'>"
+
+		. += "<h2>Clothing & Equipment</h2>"
+
+		. += "<b>Underwear:</b><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><br>"
+		. += "<b>Undershirt:</b><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><br>"
+		. += "<b>Socks:</b><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><br>"
+		. += "<b>Backpack:</b><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><br>"
+		. += "<b>Uplink Location:</b><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><br>"
+
+		. += "<h2>Genitals</h2>"
+		if(NOGENITALS in pref_species.species_traits)
+			. += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
+		else
+			. += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
+			if(features["has_cock"] == TRUE)
+				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+					. += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+				else
+					. += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+				. += "<b>Penis Shape:</b> <a href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a><BR>"
+				. += "<b>Penis Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a><BR>"
+				. += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_balls"] == TRUE)
+					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+						. += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						. += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
+			. += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
+			if(features["has_vag"])
+				. += "<b>Vagina Type:</b> <a href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a><BR>"
+				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+					. += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+				else
+					. += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+				. += "<b>Has Womb:</b><a href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a><BR>"
+			. += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
+			if(features["has_breasts"])
+				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+				else
+					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
+				. += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><br>"
+				. += "<b>Breast Shape:</b><a href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a><br>"
+			/*
+			. += "<h3>Ovipositor</h3>"
+			. += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a>"
+			if(features["has_ovi"])
+				. += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a>"
+				. += "<h3>Eggsack</h3>"
+				. += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_eggsack"] == TRUE)
+					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a>"
+					. += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a>"
+					. += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a>"
+			. += "</td>"
+			*/
+			. += "</td></tr></table>"
+
+	if(current_tab == 3)
+		if(!gear_tab)
+			gear_tab = GLOB.loadout_items[1]
+		. += "<table align='center' width='100%'>"
+		. += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E67300" : "#3366CC"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+		. += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
+		. += "<tr><td colspan=4><center><b>"
+		var/firstcat = TRUE
+		for(var/i in GLOB.loadout_items)
+			if(firstcat)
+				firstcat = FALSE
+			else
+				. += " |"
+			if(i == gear_tab)
+				. += " <span class='linkOn'>[i]</span> "
+			else
+				. += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+		. += "</b></center></td></tr>"
+		. += "<tr><td colspan=4><hr></td></tr>"
+		. += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
+		. += "<tr><td colspan=4><hr></td></tr>"
+		. += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+		. += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
+		. += "<td><font size=2><b>Restrictions</b></font></td>"
+		. += "<td><font size=2><b>Description</b></font></td></tr>"
+		for(var/j in GLOB.loadout_items[gear_tab])
+			var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
+			var/donoritem
+			if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+				donoritem = TRUE
+				if(user && user.client && user.client.ckey && !(gear.ckeywhitelist.Find(user.client.ckey)))
+					continue
+			var/class_link = ""
+			if(gear.type in chosen_gear)
+				class_link = "class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=0'"
+			else if(donoritem)
+				class_link = "class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
+			else if(gear_points <= 0)
+				class_link = "class='linkOff'"
+			else
+				class_link = "href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
+			. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [class_link]>[j]</a></td>"
+			. += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+			if(islist(gear.restricted_roles))
+				if(gear.restricted_roles.len)
+					. += "<font size=2>"
+					. += gear.restricted_roles.Join(";")
+					. += "</font>"
+			. += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+		. += "</table>"
+
+/datum/preferences/proc/process_citadel_prefs(mob/user, list/href_list)
+	if(href_list["task"] == "input")
+		switch(href_list["preference"])
+			//genital code
+			if("genital_colour")
+				switch(features["genitals_use_skintone"])
+					if(TRUE)
+						features["genitals_use_skintone"] = FALSE
+					if(FALSE)
+						features["genitals_use_skintone"] = TRUE
+					else
+						features["genitals_use_skintone"] = FALSE
+			if("arousable")
+				switch(arousable)
+					if(TRUE)
+						arousable = FALSE
+					if(FALSE)
+						arousable = TRUE
+					else//failsafe
+						arousable = FALSE
+			if("has_cock")
+				switch(features["has_cock"])
+					if(TRUE)
+						features["has_cock"] = FALSE
+					if(FALSE)
+						features["has_cock"] = TRUE
+						features["has_ovi"] = FALSE
+						features["has_eggsack"] = FALSE
+					else
+						features["has_cock"] = FALSE
+						features["has_ovi"] = FALSE
+			if("has_balls")
+				switch(features["has_balls"])
+					if(TRUE)
+						features["has_balls"] = FALSE
+					if(FALSE)
+						features["has_balls"] = TRUE
+						features["has_eggsack"] = FALSE
+					else
+						features["has_balls"] = FALSE
+						features["has_eggsack"] = FALSE
+			if("has_ovi")
+				switch(features["has_ovi"])
+					if(TRUE)
+						features["has_ovi"] = FALSE
+					if(FALSE)
+						features["has_ovi"] = TRUE
+						features["has_cock"] = FALSE
+						features["has_balls"] = FALSE
+					else
+						features["has_ovi"] = FALSE
+						features["has_cock"] = FALSE
+			if("has_eggsack")
+				switch(features["has_eggsack"])
+					if(TRUE)
+						features["has_eggsack"] = FALSE
+					if(FALSE)
+						features["has_eggsack"] = TRUE
+						features["has_balls"] = FALSE
+					else
+						features["has_eggsack"] = FALSE
+						features["has_balls"] = FALSE
+			if("balls_internal")
+				switch(features["balls_internal"])
+					if(TRUE)
+						features["balls_internal"] = FALSE
+					if(FALSE)
+						features["balls_internal"] = TRUE
+						features["eggsack_internal"] = FALSE
+					else
+						features["balls_internal"] = FALSE
+						features["eggsack_internal"] = FALSE
+			if("eggsack_internal")
+				switch(features["eggsack_internal"])
+					if(TRUE)
+						features["eggsack_internal"] = FALSE
+					if(FALSE)
+						features["eggsack_internal"] = TRUE
+						features["balls_internal"] = FALSE
+					else
+						features["eggsack_internal"] = FALSE
+						features["balls_internal"] = FALSE
+			if("has_breasts")
+				switch(features["has_breasts"])
+					if(TRUE)
+						features["has_breasts"] = FALSE
+					if(FALSE)
+						features["has_breasts"] = TRUE
+					else
+						features["has_breasts"] = FALSE
+			if("has_vag")
+				switch(features["has_vag"])
+					if(TRUE)
+						features["has_vag"] = FALSE
+					if(FALSE)
+						features["has_vag"] = TRUE
+					else
+						features["has_vag"] = FALSE
+			if("has_womb")
+				switch(features["has_womb"])
+					if(TRUE)
+						features["has_womb"] = FALSE
+					if(FALSE)
+						features["has_womb"] = TRUE
+					else
+						features["has_womb"] = FALSE
+			if("exhibitionist")
+				switch(features["exhibitionist"])
+					if(TRUE)
+						features["exhibitionist"] = FALSE
+					if(FALSE)
+						features["exhibitionist"] = TRUE
+					else
+						features["exhibitionist"] = FALSE
+	else
+		switch(href_list["preference"])
+			if("widescreenpref")
+				widescreenpref = !widescreenpref
+				user.client.change_view(CONFIG_GET(string/default_view))
+		
+			if("autostand")
+				autostand = !autostand
+	
+			if("screenshake")
+				var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
+				if (!isnull(desiredshake))
+					screenshake = desiredshake
+	
+			if("damagescreenshake")
+				switch(damagescreenshake)
+					if(0)
+						damagescreenshake = 1
+					if(1)
+						damagescreenshake = 2
+					if(2)
+						damagescreenshake = 0
+					else
+						damagescreenshake = 1
+
+			if("hound_sleeper")
+				toggles ^= MEDIHOUND_SLEEPER
+
+			if("toggleeatingnoise")
+				toggles ^= EATING_NOISES
+
+			if("toggledigestionnoise")
+				toggles ^= DIGESTION_NOISES
 
 /datum/preferences/proc/process_citadel_link(mob/user, list/href_list)
 	if(href_list["task"] == "input")
@@ -358,150 +725,6 @@
 						features["vag_color"] = sanitize_hexcolor(new_vagcolor)
 					else
 						user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-			
-	else
-		switch(href_list["preference"])
-			//genital code
-			if("genital_colour")
-				switch(features["genitals_use_skintone"])
-					if(TRUE)
-						features["genitals_use_skintone"] = FALSE
-					if(FALSE)
-						features["genitals_use_skintone"] = TRUE
-					else
-						features["genitals_use_skintone"] = FALSE
-			if("arousable")
-				switch(arousable)
-					if(TRUE)
-						arousable = FALSE
-					if(FALSE)
-						arousable = TRUE
-					else//failsafe
-						arousable = FALSE
-			if("has_cock")
-				switch(features["has_cock"])
-					if(TRUE)
-						features["has_cock"] = FALSE
-					if(FALSE)
-						features["has_cock"] = TRUE
-						features["has_ovi"] = FALSE
-						features["has_eggsack"] = FALSE
-					else
-						features["has_cock"] = FALSE
-						features["has_ovi"] = FALSE
-			if("has_balls")
-				switch(features["has_balls"])
-					if(TRUE)
-						features["has_balls"] = FALSE
-					if(FALSE)
-						features["has_balls"] = TRUE
-						features["has_eggsack"] = FALSE
-					else
-						features["has_balls"] = FALSE
-						features["has_eggsack"] = FALSE
-			if("has_ovi")
-				switch(features["has_ovi"])
-					if(TRUE)
-						features["has_ovi"] = FALSE
-					if(FALSE)
-						features["has_ovi"] = TRUE
-						features["has_cock"] = FALSE
-						features["has_balls"] = FALSE
-					else
-						features["has_ovi"] = FALSE
-						features["has_cock"] = FALSE
-			if("has_eggsack")
-				switch(features["has_eggsack"])
-					if(TRUE)
-						features["has_eggsack"] = FALSE
-					if(FALSE)
-						features["has_eggsack"] = TRUE
-						features["has_balls"] = FALSE
-					else
-						features["has_eggsack"] = FALSE
-						features["has_balls"] = FALSE
-			if("balls_internal")
-				switch(features["balls_internal"])
-					if(TRUE)
-						features["balls_internal"] = FALSE
-					if(FALSE)
-						features["balls_internal"] = TRUE
-						features["eggsack_internal"] = FALSE
-					else
-						features["balls_internal"] = FALSE
-						features["eggsack_internal"] = FALSE
-	
-			if("eggsack_internal")
-				switch(features["eggsack_internal"])
-					if(TRUE)
-						features["eggsack_internal"] = FALSE
-					if(FALSE)
-						features["eggsack_internal"] = TRUE
-						features["balls_internal"] = FALSE
-					else
-						features["eggsack_internal"] = FALSE
-						features["balls_internal"] = FALSE
-			if("has_breasts")
-				switch(features["has_breasts"])
-					if(TRUE)
-						features["has_breasts"] = FALSE
-					if(FALSE)
-						features["has_breasts"] = TRUE
-					else
-						features["has_breasts"] = FALSE
-			if("has_vag")
-				switch(features["has_vag"])
-					if(TRUE)
-						features["has_vag"] = FALSE
-					if(FALSE)
-						features["has_vag"] = TRUE
-					else
-						features["has_vag"] = FALSE
-			if("has_womb")
-				switch(features["has_womb"])
-					if(TRUE)
-						features["has_womb"] = FALSE
-					if(FALSE)
-						features["has_womb"] = TRUE
-					else
-						features["has_womb"] = FALSE
-			if("exhibitionist")
-				switch(features["exhibitionist"])
-					if(TRUE)
-						features["exhibitionist"] = FALSE
-					if(FALSE)
-						features["exhibitionist"] = TRUE
-					else
-						features["exhibitionist"] = FALSE
-
-			if("widescreenpref")
-				widescreenpref = !widescreenpref
-				user.client.change_view(CONFIG_GET(string/default_view))
-			if("autostand")
-				autostand = !autostand
-			if("screenshake")
-				var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
-				if (!isnull(desiredshake))
-					screenshake = desiredshake
-			if("damagescreenshake")
-				switch(damagescreenshake)
-					if(0)
-						damagescreenshake = 1
-					if(1)
-						damagescreenshake = 2
-					if(2)
-						damagescreenshake = 0
-					else
-						damagescreenshake = 1
-
-			if("hound_sleeper")
-				toggles ^= MEDIHOUND_SLEEPER
-			// VORE SOUND TOGGLES
-			if("toggleeatingnoise")
-				toggles ^= EATING_NOISES
-
-			if("toggledigestionnoise")
-				toggles ^= DIGESTION_NOISES
 
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
@@ -513,7 +736,7 @@
 				if(i == href_list["select_category"])
 					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][href_list["toggle_gear_path"]]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
@@ -521,231 +744,16 @@
 				LAZYREMOVE(chosen_gear, G.type)
 				gear_points += initial(G.cost)
 			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
-				if(!is_loadout_slot_available(G.category))
-					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
-					return
 				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
+					return
+				if(!is_loadout_slot_available(G.category))
+					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
 				if(gear_points >= initial(G.cost))
 					LAZYADD(chosen_gear, G.type)
 					gear_points -= initial(G.cost)
 
-/datum/preferences/proc/citadel_dat_replace(current_tab)
-	var/mob/user
-
-	
-	//This proc is for menus other than game pref and char pref
-	. = "<center>"
-
-	. += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
-	. += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
-	. += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
-	. += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
-
-	if(!path)
-		. += "<div class='notice'>Please create an account to save your preferences</div>"
-
-	. += "</center>"
-
-	. += "<HR>"
-	if(current_tab == 1)
-		. += "<table><tr><td width='340px' height='300px' valign='top'>"
-		. += "<h2>Citadel Preferences</h2>"
-		. += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-		. += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
-		. += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
-		. += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
-		. += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
-		. += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
-		. += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
-		. += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
-		if (user && user.client && !user.client.prefs.screenshake==0)
-			. += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
-		. += "</td></tr></table>"
-
-			
-	//Character Appearance
-	if(current_tab == 2)
-		. += "<table><tr><td width='340px' height='300px' valign='top'>"
-		. += "<div class='statusDisplay'><img src=previewicondatpng width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
-		. += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-		if(lentext(features["flavor_text"]) <= 40)
-			if(!lentext(features["flavor_text"]))
-				. += "\[...\]"
-			else
-				. += "[features["flavor_text"]]"
-		else
-			. += "[TextPreview(features["flavor_text"])]...<BR>"
-		. += "<h2>Body</h2>"
-		. += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
-		. += "<b>Species:</b><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
-		. += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
-		. += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><BR>"
-		if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-			. += "<b>Primary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-			. += "<b>Secondary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
-			. += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
-		if(pref_species.use_skintones)
-			. += "<b>Skin Tone: </b><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
-			. += "<b>Genitals Use Skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-
-		if(HAIR in pref_species.species_traits)
-			. += "<b>Hair Style: </b><a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-			. += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
-			. += "<b>Facial Hair Style: </b><a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-			. += "<b>Facial Hair Color: </b><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
-		if(EYECOLOR in pref_species.species_traits)
-			. += "<b>Eye Color: </b><span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-		if("tail_lizard" in pref_species.mutant_bodyparts)
-			. += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
-		else if("mam_tail" in pref_species.mutant_bodyparts)
-			. += "<b>Tail: </b><a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
-		else if("tail_human" in pref_species.mutant_bodyparts)
-			. += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
-		if("snout" in pref_species.mutant_bodyparts)
-			. += "<b>Snout: </b><a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
-		if("horns" in pref_species.mutant_bodyparts)
-			. += "<b>Horns: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
-		if("frills" in pref_species.mutant_bodyparts)
-			. += "<b>Frills: </b><a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
-		if("spines" in pref_species.mutant_bodyparts)
-			. += "<b>Spines: </b><a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
-		if("body_markings" in pref_species.mutant_bodyparts)
-			. += "<b>Body Markings: </b><a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
-		else if("mam_body_markings" in pref_species.mutant_bodyparts)
-			. += "<b>Body Markings: </b><a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
-		if("mam_ears" in pref_species.mutant_bodyparts)
-			. += "<b>Ears: </b><a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
-		else if("ears" in pref_species.mutant_bodyparts)
-			. += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-		if("legs" in pref_species.mutant_bodyparts)
-			. += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
-		if("moth_wings" in pref_species.mutant_bodyparts)
-			. += "<b>Moth wings</b><a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
-		if("taur" in pref_species.mutant_bodyparts)
-			. += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
-		if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
-			. += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
-		if("xenohead" in pref_species.mutant_bodyparts)
-			. += "<b>Caste: </b><a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
-		if("xenotail" in pref_species.mutant_bodyparts)
-			. += "<b>Tail: </b><a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
-		if("xenodorsal" in pref_species.mutant_bodyparts)
-			. += "<b>Dorsal Tubes: </b><a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
-		if("ipc_screen" in pref_species.mutant_bodyparts)	
-			. += "<b>Screen:</b><a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
-
-		. += "</td><td width='300px' height='300px' valign='top'>"
-
-		. += "<h2>Clothing & Equipment</h2>"
-
-		. += "<b>Underwear:</b><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><br>"
-		. += "<b>Undershirt:</b><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><br>"
-		. += "<b>Socks:</b><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><br>"
-		. += "<b>Backpack:</b><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><br>"
-		. += "<b>Uplink Location:</b><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><br>"
-
-		. += "<h2>Genitals</h2>"
-		if(NOGENITALS in pref_species.species_traits)
-			. += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
-		else
-			. += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
-			if(features["has_cock"] == TRUE)
-				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-					. += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-				else
-					. += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
-			//	. += "<br>"
-				. += "<b>Penis Shape:</b> <a href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a><BR>"
-				. += "<b>Penis Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a><BR>"
-				. += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_balls"] == TRUE)
-					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-						. += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-					else
-						. += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
-			. += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
-			if(features["has_vag"])
-				. += "<b>Vagina Type:</b> <a href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a><BR>"
-				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-					. += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-				else
-					. += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
-				. += "<b>Has Womb:</b><a href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a><BR>"
-			. += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
-			if(features["has_breasts"])
-				if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-				else
-					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
-				. += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><br>"
-				. += "<b>Breast Shape:</b><a href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a><br>"
-			/*
-			. += "<h3>Ovipositor</h3>"
-			. += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a>"
-			if(features["has_ovi"])
-				. += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a>"
-				. += "<h3>Eggsack</h3>"
-				. += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_eggsack"] == TRUE)
-					. += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a>"
-					. += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a>"
-					. += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a>"
-			. += "</td>"
-			*/
-			. += "</td></tr></table>"
-
-	if(current_tab == 3)
-		if(!gear_tab)
-			gear_tab = GLOB.loadout_items[1]
-		. += "<table align='center' width='100%'>"
-		. += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
-		. += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
-		. += "<tr><td colspan=4><center><b>"
-		var/firstcat = TRUE
-		for(var/i in GLOB.loadout_items)
-			if(firstcat)
-				firstcat = FALSE
-			else
-				. += " |"
-			if(i == gear_tab)
-				. += " <span class='linkOn'>[i]</span> "
-			else
-				. += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
-		. += "</b></center></td></tr>"
-		. += "<tr><td colspan=4><hr></td></tr>"
-		. += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
-		. += "<tr><td colspan=4><hr></td></tr>"
-		. += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-		. += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-		. += "<td><font size=2><b>Restrictions</b></font></td>"
-		. += "<td><font size=2><b>Description</b></font></td></tr>"
-		for(var/j in GLOB.loadout_items[gear_tab])
-			var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
-			var/donoritem
-			if(gear.ckeywhitelist && gear.ckeywhitelist.len)
-				donoritem = TRUE
-				if(user && user.client.ckey && !(gear.ckeywhitelist.Find(user.client.ckey)))
-					continue
-			var/class_link = ""
-			if(gear.type in chosen_gear)
-				class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
-			else if(gear_points <= 0)
-				class_link = "style='white-space:normal;' class='linkOff'"
-			else if(donoritem)
-				class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
-			else
-				class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
-			. += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
-			. += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
-			if(islist(gear.restricted_roles))
-				if(gear.restricted_roles.len)
-					. += "<font size=2>"
-					. += gear.restricted_roles.Join(";")
-					. += "</font>"
-			. += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
-		. += "</table>"
 
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L
@@ -768,7 +776,7 @@
 datum/preferences/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	..()
 	character.give_genitals(TRUE)
-	character.flavor_text = features["flavor_text"] //Let's up.e their flavor_text at least initially
+	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
 	if(icon_updates)
 		character.update_genitals()

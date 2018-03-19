@@ -27,7 +27,7 @@
 		if(path)
 			LAZYADD(chosen_gear, path)
 			gear_points -= initial(path.cost)
-
+			
 /datum/preferences/proc/cit_character_pref_save(savefile/S)
 	//ipcs
 	WRITE_FILE(S["feature_ipc_screen"], features["ipc_screen"])

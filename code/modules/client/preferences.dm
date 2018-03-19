@@ -227,7 +227,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</td></tr></table>"
 
-			dat += "<h2>Body</h2>"
+// CITADEL EDIT - ALL OF THESE ARE HANDLED IN THE MODULAR VERSION, TAB 2
+		/*	dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
 			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
 
@@ -241,8 +242,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
-// CITADEL EDIT - ALL OF THESE ARE HANDLED IN THE MODULAR VERSION, TAB 2
-		/*	if(pref_species.use_skintones)
+			if(pref_species.use_skintones)
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -251,8 +251,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
 
 				dat += "</td>"
-
-			dat = add_citadel_choices(dat)
 
 			if(HAIR in pref_species.species_traits)
 
@@ -396,10 +394,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
-					dat += "</td>"*/
-			dat += citadel_dat_replace(current_tab)
+					dat += "</td>"
 
-			dat += "</tr></table>"
+			dat += "</tr></table>"*/
 
 
 		if (1) // Game Preferences
@@ -516,9 +513,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
-
-			dat += citadel_dat_replace(current_tab)
-
+			dat += citadel_pref_replace(current_tab)
 			dat += "</td></tr></table>"
 
 
@@ -1428,6 +1423,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("tab")
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
+	process_citadel_prefs(user, href_list)
 	process_citadel_link(user, href_list)
 	ShowChoices(user)
 	return 1
