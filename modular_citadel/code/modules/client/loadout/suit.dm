@@ -67,3 +67,36 @@
 	name = "Ian Shirt"
 	category = slot_wear_suit
 	path = /obj/item/clothing/suit/ianshirt
+
+/datum/gear/trekds9_coat
+	name = "DS9 Overcoat (use uniform)"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/storage/trek/ds9
+	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster",
+							"Medical Doctor","Chemist","Virologist","Geneticist","Scientist", "Roboticist",
+							"Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer",
+							"Cargo Technician", "Shaft Miner") //everyone who actually deserves a job.
+//Federation jackets from movies
+/datum/gear/trekcmdcap
+	name = "fed (movie) uniform, Captain"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/storage/fluff/fedcoat/capt
+	restricted_roles = list("Captain","Head of Personnel")
+
+/datum/gear/trekcmdmov
+	name = "fed (movie) uniform, sec"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/storage/fluff/fedcoat
+	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster","Warden","Detective","Security Officer")
+
+/datum/gear/trekmedscimov
+	name = "fed (movie) uniform, med/sci"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/storage/fluff/fedcoat/medsci
+	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
+
+/datum/gear/trekengmov
+	name = "fed (movie) uniform, ops/eng"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/storage/fluff/fedcoat/eng
+	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
