@@ -209,7 +209,7 @@
     name = "Puffy Dress"
     category = slot_wear_suit
     path = /obj/item/clothing/suit/puffydress
-    //ckeywhitelist = //Don't know their ckey yet
+    ckeywhitelist = ("Stallingratt")
 
 /datum/gear/labredblack
     name = "Black and Red Coat"
