@@ -513,9 +513,71 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
-			dat += citadel_pref_replace(current_tab)
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe. 
+			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
+			dat += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
+			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
+			if (user && user.client && !user.client.prefs.screenshake==0)
+				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+
 			dat += "</td></tr></table>"
 
+		if(3)
+			if(!gear_tab)
+				gear_tab = GLOB.loadout_items[1]
+			dat += "<table align='center' width='100%'>"
+			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
+			var/firstcat = TRUE
+			for(var/i in GLOB.loadout_items)
+				if(firstcat)
+					firstcat = FALSE
+				else
+					dat += " |"
+				if(i == gear_tab)
+					dat += " <span class='linkOn'>[i]</span> "
+				else
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+			dat += "</b></center></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			for(var/j in GLOB.loadout_items[gear_tab])
+				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
+				var/donoritem
+				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+					donoritem = TRUE
+					if(!(user.ckey in gear.ckeywhitelist))
+						continue
+				var/class_link = ""
+				if(gear.type in chosen_gear)
+					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
+				else if(gear_points <= 0)
+					class_link = "style='white-space:normal;' class='linkOff'"
+				else if(donoritem)
+					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				else
+					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
+				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+				if(islist(gear.restricted_roles))
+					if(gear.restricted_roles.len)
+						dat += "<font size=2>"
+						dat += gear.restricted_roles.Join(";")
+						dat += "</font>"
+				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+			dat += "</table>"
 
 		else
 			dat = citadel_dat_replace(current_tab)
@@ -1034,7 +1096,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
-				if("hair")
+/*				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
@@ -1116,7 +1178,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
-/*				if("species")
+				if("species")
 
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 
@@ -1149,7 +1211,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_human
 					if(new_tail)
-						features["tail_human"] = new_tail */
+						features["tail_human"] = new_tail 
 
 				if("snout")
 					var/new_snout
@@ -1163,11 +1225,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_horns)
 						features["horns"] = new_horns
 
-/*				if("ears")
+				if("ears")
 					var/new_ears
 					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in GLOB.ears_list
 					if(new_ears)
-						features["ears"] = new_ears */
+						features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
@@ -1208,7 +1270,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
-						skin_tone = new_s_tone
+						skin_tone = new_s_tone*/
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
@@ -1315,6 +1377,52 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		else
 			switch(href_list["preference"])
+
+				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
+				if("genital_colour")
+					features["genitals_use_skintone"] = !features["genitals_use_skintone"]
+				if("arousable")
+					arousable = !arousable
+				if("has_cock")
+					features["has_cock"] = !features["has_cock"]
+				if("has_balls")
+					features["has_balls"] = !features["has_balls"]
+				if("has_ovi")
+					features["has_ovi"] = !features["has_ovi"]
+				if("has_eggsack")
+					features["has_eggsack"] = !features["has_eggsack"]
+				if("balls_internal")
+					features["balls_internal"] = !features["balls_internal"]
+				if("eggsack_internal")
+					features["eggsack_internal"] = !features["eggsack_internal"]				
+				if("has_breasts")
+					features["has_breasts"] = !features["has_breasts"]	
+				if("has_vag")
+					features["has_vag"] = !features["has_vag"]
+				if("has_womb")
+					features["has_womb"] = !features["has_womb"]
+				if("exhibitionist")
+					features["exhibitionist"] = !features["exhibitionist"]
+				if("widescreenpref")
+					widescreenpref = !widescreenpref
+					user.client.change_view(CONFIG_GET(string/default_view))
+				if("autostand")
+					autostand = !autostand
+				if ("screenshake")
+					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
+					if (!isnull(desiredshake))
+						screenshake = desiredshake
+				if("damagescreenshake")
+					switch(damagescreenshake)
+						if(0)
+							damagescreenshake = 1
+						if(1)
+							damagescreenshake = 2
+						if(2)
+							damagescreenshake = 0
+						else
+							damagescreenshake = 1
+				//END CITADEL EDIT
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
@@ -1401,6 +1509,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 					if (parent && parent.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
+				// Citadel edit - Prefs don't work outside of this. :c
+				if("hound_sleeper")
+					cit_toggles ^= MEDIHOUND_SLEEPER
+
+				if("toggleeatingnoise")
+					cit_toggles ^= EATING_NOISES
+
+				if("toggledigestionnoise")
+					cit_toggles ^= DIGESTION_NOISES
+				//END CITADEL EDIT
 
 				if("save")
 					save_preferences()
@@ -1423,7 +1541,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("tab")
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
-	process_citadel_prefs(user, href_list)
+
+	if(href_list["preference"] == "gear")
+		if(href_list["clear_loadout"])
+			LAZYCLEARLIST(chosen_gear)
+			gear_points = initial(gear_points)
+			save_preferences()
+		if(href_list["select_category"])
+			for(var/i in GLOB.loadout_items)
+				if(i == href_list["select_category"])
+					gear_tab = i
+		if(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			if(!G)
+				return
+			var/toggle = text2num(href_list["toggle_gear"])
+			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
+				LAZYREMOVE(chosen_gear, G.type)
+				gear_points += initial(G.cost)
+			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+				if(!is_loadout_slot_available(G.category))
+					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
+					return
+				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
+					return
+				if(gear_points >= initial(G.cost))
+					LAZYADD(chosen_gear, G.type)
+					gear_points -= initial(G.cost)
+
 	process_citadel_link(user, href_list)
 	ShowChoices(user)
 	return 1
