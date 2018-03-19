@@ -1,223 +1,224 @@
 //This is the file that handles donator loadout items.
 
-/datum/gear/donor
-	donor_only = TRUE
-	sort_category = "Donor"
-	subtype_path = /datum/gear/donor
-
-/datum/gear/donor/pingcoderfailsafe
+/datum/gear/pingcoderfailsafe
 	name = "IF YOU SEE THIS, PING A CODER RIGHT NOW!"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/bikehorn/golden
 	ckeywhitelist = list("This entry should never appear with this variable set.") //If it does, then that means somebody fucked up the whitelist system pretty hard
 
-/datum/gear/donor/donortestingbikehorn
+/datum/gear/donortestingbikehorn
 	name = "Donor item testing bikehorn"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/bikehorn
-	ckeywhitelist = list("jayehh","deathride58","poojawa")
+	ckeywhitelist = list("jayehh","deathride58")
 
-/datum/gear/donor/kevhorn
+/datum/gear/kevhorn
 	name = "Airhorn"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/bikehorn/airhorn
 	ckeywhitelist = list("kevinz000")
 
-/datum/gear/donor/cebusoap
+/datum/gear/cebusoap
 	name = "Cebutris' soap"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/custom/ceb_soap
 	ckeywhitelist = list("cebutris")
 
-/datum/gear/donor/kiaracloak
+/datum/gear/kiaracloak
 	name = "Kiara's cloak"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/cloak/inferno
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/donor/kiaracollar
+/datum/gear/kiaracollar
 	name = "Kiara's collar"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/petcollar/inferno
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/donor/kiaramedal
+/datum/gear/kiaramedal
 	name = "Insignia of Steele"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/clothing/accessory/medal/steele
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/donor/sexymimemask
+/datum/gear/sexymimemask
 	name = "The hollow heart"
-	slot = slot_wear_mask
+	category = slot_wear_mask
 	path = /obj/item/clothing/mask/sexymime
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/donor/engravedzippo
+/datum/gear/engravedzippo
 	name = "Engraved zippo"
-	slot = slot_hands
+	category = slot_hands
 	path = /obj/item/lighter/gold
 	ckeywhitelist = list("dirtyoldharry")
 
-/datum/gear/donor/geisha
+/datum/gear/geisha
 	name = "Geisha suit"
-	slot = slot_w_uniform
+	category = slot_w_uniform
 	path = /obj/item/clothing/under/geisha
 	ckeywhitelist = list("atiefling")
 
-/datum/gear/donor/specialscarf
+/datum/gear/specialscarf
 	name = "Special scarf"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/scarf/zomb
 	ckeywhitelist = list("zombierobin")
 
-/datum/gear/donor/redmadcoat
+/datum/gear/redmadcoat
 	name = "The Mad's labcoat"
-	slot = slot_wear_suit
+	category = slot_wear_suit
 	path = /obj/item/clothing/suit/toggle/labcoat/mad/red
 	ckeywhitelist = list("zombierobin")
 
-/datum/gear/donor/santahat
+/datum/gear/santahat
 	name = "Santa hat"
-	slot = slot_head
+	category = slot_head
 	path = /obj/item/clothing/head/santa/fluff
 	ckeywhitelist = list("illotafv")
 
-/datum/gear/donor/reindeerhat
+/datum/gear/reindeerhat
 	name = "Reindeer hat"
-	slot = slot_head
+	category = slot_head
 	path = /obj/item/clothing/head/hardhat/reindeer/fluff
 	ckeywhitelist = list("illotafv")
 
-/datum/gear/donor/treeplushie
+/datum/gear/treeplushie
 	name = "Christmas tree plushie"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/toy/plush/tree
 	ckeywhitelist = list("illotafv")
 
-/datum/gear/donor/santaoutfit
+/datum/gear/santaoutfit
 	name = "Santa costume"
-	slot = slot_wear_suit
+	category = slot_wear_suit
 	path = /obj/item/clothing/suit/space/santa/fluff
 	ckeywhitelist = list("illotafv")
 
-/datum/gear/donor/treecloak
+/datum/gear/treecloak
 	name = "Christmas tree cloak"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/cloak/festive
 	ckeywhitelist = list("illotafv")
 
-/datum/gear/donor/carrotplush
+/datum/gear/carrotplush
 	name = "Carrot plushie"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/toy/plush/carrot
 	ckeywhitelist = list("improvedname")
 
-/datum/gear/donor/carrotcloak
+/datum/gear/carrotcloak
 	name = "Carrot cloak"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/cloak/carrot
 	ckeywhitelist = list("improvedname")
 
-/datum/gear/donor/albortorosamask
+/datum/gear/albortorosamask
 	name = "Alborto Rosa mask"
-	slot = slot_wear_mask
+	category = slot_wear_mask
 	path = /obj/item/clothing/mask/luchador/zigfie
 	ckeywhitelist = list("zigfie")
 
-/datum/gear/donor/mankini
+/datum/gear/mankini
 	name = "Mankini"
-	slot = slot_w_uniform
+	category = slot_w_uniform
 	path = /obj/item/clothing/under/mankini
 	ckeywhitelist = list("zigfie")
 
-/datum/gear/donor/pinkshoes
+/datum/gear/pinkshoes
 	name = "Pink shoes"
-	slot = slot_shoes
+	category = slot_shoes
 	path = /obj/item/clothing/shoes/sneakers/pink
 	ckeywhitelist = list("zigfie")
 
-/datum/gear/donor/reecesgreatcoat
+/datum/gear/reecesgreatcoat
 	name = "Reece's Great Coat"
-	slot = slot_wear_suit
+	category = slot_wear_suit
 	path = /obj/item/clothing/suit/trenchcoat/green
 	ckeywhitelist = list("geemiesif")
 
-/datum/gear/donor/russianflask
+/datum/gear/russianflask
 	name = "Russian flask"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/reagent_containers/food/drinks/flask/russian
 	cost = 2
 	ckeywhitelist = list("slomka")
 
-/datum/gear/donor/stalkermask
+/datum/gear/stalkermask
 	name = "S.T.A.L.K.E.R. mask"
-	slot = slot_wear_mask
+	category = slot_wear_mask
 	path = /obj/item/clothing/mask/gas/stalker
 	ckeywhitelist = list("slomka")
 
-/datum/gear/donor/stripedcollar
+/datum/gear/stripedcollar
 	name = "Striped collar"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/petcollar/stripe
 	ckeywhitelist = list("jademanique")
 
-/datum/gear/donor/performersoutfit
+/datum/gear/performersoutfit
 	name = "Bluish performer's outfit"
-	slot = slot_w_uniform
+	category = slot_w_uniform
 	path = /obj/item/clothing/under/singery/custom
 	ckeywhitelist = list("killer402402")
 
-/datum/gear/donor/vermillion
+/datum/gear/vermillion
 	name = "Vermillion clothing"
-	slot = slot_w_uniform
+	category = slot_w_uniform
 	path = /obj/item/clothing/suit/vermillion
 	ckeywhitelist = list("fractious")
 
-/datum/gear/donor/AM4B
+/datum/gear/AM4B
 	name = "Foam Force AM4-B"
-	slot = slot_in_backpack
+	category = slot_in_backpack
 	path = /obj/item/gun/ballistic/automatic/AM4B
 	ckeywhitelist = list("zeronetalpha")
 
-/datum/gear/donor/carrotsatchel
+/datum/gear/carrotsatchel
 	name = "Carrot Satchel"
-	slot = slot_hands
+	category = slot_hands
 	path = /obj/item/storage/backpack/satchel/carrot
 	ckeywhitelist = list("improvedname")
 
-/datum/gear/donor/naomisweater
+/datum/gear/naomisweater
 	name = "worn black sweater"
-	slot = slot_w_uniform
+	category = slot_w_uniform
 	path = /obj/item/clothing/under/bb_sweater/black/naomi
 	ckeywhitelist = list("technicalmagi")
 
-/datum/gear/donor/naomicollar
+/datum/gear/naomicollar
 	name = "worn pet collar"
-	slot = slot_neck
+	category = slot_neck
 	path = /obj/item/clothing/neck/petcollar/naomi
 	ckeywhitelist = list("technicalmagi")
 
-/datum/gear/donor/gladiator
+/datum/gear/gladiator
     name = "Gladiator Armor"
-    slot = slot_wear_suit
+    category = slot_wear_suit
     path = /obj/item/clothing/under/gladiator
     ckeywhitelist = list("aroche")
 
-/datum/gear/donor/bloodredtie
+/datum/gear/bloodredtie
     name = "Blood Red Tie"
-    slot = slot_neck
+    category = slot_neck
     path = /obj/item/clothing/neck/tie/bloodred
     ckeywhitelist = list("kyutness")
 
-/datum/gear/donor/puffydress
+/datum/gear/puffydress
     name = "Puffy Dress"
-    slot = slot_wear_suit
+    category = slot_wear_suit
     path = /obj/item/clothing/suit/puffydress
     //ckeywhitelist = //Don't know their ckey yet
 
-/datum/gear/donor/labredblack
+/datum/gear/labredblack
     name = "Black and Red Coat"
-    slot = slot_wear_suit
+    category = slot_wear_suit
     path = /obj/item/clothing/suit/toggle/labcoat/labredblack
     ckeywhitelist = list("blakeryan")
+
+
+
+
+
+
