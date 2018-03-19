@@ -127,6 +127,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	//CITADEL GEAR SLOT DATA
+	//Gear stuff
+	var/list/gear = list()
+	var/gear_tab = "General"
+	var/max_gear_slots = 10
+	var/list/gear_categories
+	var/list/chosen_gear
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["human"] = random_unique_name()
@@ -515,7 +523,66 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 			dat += citadel_pref_replace(current_tab)
 			dat += "</td></tr></table>"
+		//CITDEL EDIT - GEAR THINGS, fuck trying to get this working modularlly ******************************
+		if(current_tab == 3)
+			var/total_cost = 0
+			var/list/type_blacklist = list()
+			if(gear && gear.len)
+				for(var/i = 1, i <= gear.len, i++)
+					var/datum/gear/G = GLOB.loadout_items[gear[i]]
+					if(G)
+						if(!G.subtype_cost_overlap)
+							if(G.subtype_path in type_blacklist)
+								continue
+							type_blacklist += G.subtype_path
+						total_cost += G.cost
 
+			var/fcolor =  "#3366CC"
+			if(total_cost < max_gear_slots)
+				fcolor = "#E67300"
+			dat += "<table align='center' width='100%'>"
+			dat += "<tr><td colspan=4><center><b><font color='[fcolor]'>[total_cost]/[max_gear_slots]</font> loadout points spent.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
+
+			var/firstcat = 1
+			for(var/category in GLOB.loadout_items)
+				var/datum/loadout_catagories/LC = GLOB.loadout_items[category]
+				var/datum/gear/gear = GLOB.loadout_items
+				if(LC.donor_only)
+					if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+						if(user && user.client && user.client.ckey && !(gear.ckeywhitelist.Find(user.client.ckey)))
+							continue
+				if(firstcat)
+					firstcat = 0
+				else
+					dat += " |"
+				if(category == gear_tab)
+					dat += " <span class='linkOff'>[category]</span> "
+				else
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[category]'>[category]</a> "
+			dat += "</b></center></td></tr>"
+
+			var/datum/loadout_catagories/LC = GLOB.loadout_catagories[gear_tab]
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><b><center>[LC.catagory]</center></b></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			for(var/gear_name in LC.gear)
+				var/datum/gear/G = LC.gear[gear_name]
+				var/ticked = (G.name in gear)
+				dat += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "class='linkOn' " : ""]href='?_src_=prefs;preference=gear;toggle_gear=[G.name]'>[G.name]</a></td>"
+				dat += "<td width = 5% style='vertical-align:top'>[G.cost]</td><td>"
+				if(G.restricted_roles)
+					dat += "<font size=2>Restrictions: "
+					for(var/role in G.restricted_roles)
+						dat += role + " "
+					dat += "</font>"
+				dat += "</td><td><font size=2><i>[G.description]</i></font></td></tr>"
+				if(ticked)
+					. += "<tr><td colspan=4>"
+					for(var/datum/gear_tweak/tweak in G.gear_tweaks)
+						. += " <a href='?_src_=prefs;preference=gear;gear=[G.name];tweak=\ref[tweak]'>[tweak.get_contents(get_tweak_metadata(G, tweak))]</a>"
+					. += "</td></tr>"
+			dat += "</table>"
 
 		else
 			dat = citadel_dat_replace(current_tab)
@@ -532,6 +599,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat)
 	popup.open(0)
+
+//CITADEL GEAR STUFF
+/datum/preferences/proc/get_gear_metadata(var/datum/gear/G)
+	. = gear[G.name]
+	if(!.)
+		. = list()
+		gear[G.name] = .
+
+/datum/preferences/proc/get_tweak_metadata(var/datum/gear/G, var/datum/gear_tweak/tweak)
+	var/list/metadata = get_gear_metadata(G)
+	. = metadata["[tweak]"]
+	if(!.)
+		. = tweak.get_default()
+		metadata["[tweak]"] = .
+
+/datum/preferences/proc/set_tweak_metadata(var/datum/gear/G, var/datum/gear_tweak/tweak, var/new_metadata)
+	var/list/metadata = get_gear_metadata(G)
+	metadata["[tweak]"] = new_metadata
+//END CITADEL GEAR STUFF
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
 	if(!SSjob)
@@ -1423,6 +1509,41 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("tab")
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
+
+		if(href_list["toggle_gear"])
+			var/datum/gear/TG = GLOB.loadout_items[href_list["toggle_gear"]]
+			if(TG.name in TG)
+				TG -= TG.name
+			else
+				if(TG.donor_only)
+					if(TG.ckeywhitelist && TG.ckeywhitelist.len)
+						if(user && user.client && user.client.ckey && !(TG.ckeywhitelist.Find(user.client.ckey)))
+							return
+				var/total_cost = 0
+				var/list/type_blacklist = list()
+				for(var/gear_name in TG)
+					var/datum/gear/G = GLOB.loadout_items[gear_name]
+					if(istype(G))
+						if(!G.subtype_cost_overlap)
+							if(G.subtype_path in type_blacklist)
+								continue
+							type_blacklist += G.subtype_path
+						total_cost += G.cost
+					if((total_cost + TG.cost) <= max_gear_slots)
+					gear += TG.name
+			else if(href_list["gear"] && href_list["tweak"])
+			var/datum/gear/gear = GLOB.loadout_items[href_list["gear"]]
+			var/datum/gear_tweak/tweak = locate(href_list["tweak"])
+			if(!tweak || !istype(gear) || !(tweak in gear.gear_tweaks))
+				return
+			var/metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
+			if(!metadata)
+				return
+			set_tweak_metadata(gear, tweak, metadata)
+		else if(href_list["select_category"])
+			gear_tab = href_list["select_category"]
+		else if(href_list["clear_loadout"])
+			gear.Cut()
 	process_citadel_prefs(user, href_list)
 	process_citadel_link(user, href_list)
 	ShowChoices(user)

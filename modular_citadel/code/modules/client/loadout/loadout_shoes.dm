@@ -1,39 +1,37 @@
-/datum/gear/laceup
+
+/datum/gear/shoes/shoes
+	subtype_path = /datum/gear/shoes/shoes
+	slot = slot_shoes
+	sort_category = "Shoes"
+
+/datum/gear/shoes/laceup
 	name = "Laceup shoes"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/laceup
 
-/datum/gear/workboots
+/datum/gear/shoes/workboots
 	name = "Work boots"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/workboots
 
-/datum/gear/jackboots
+/datum/gear/shoes/jackboots
 	name = "Jackboots"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/jackboots
 
-/datum/gear/winterboots
+/datum/gear/shoes/winterboots
 	name = "Winter boots"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/winterboots
 
-/datum/gear/sandals
+/datum/gear/shoes/sandals
 	name = "Sandals"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/sandal
 
-/datum/gear/blackshoes
+/datum/gear/shoes/blackshoes
 	name = "Black shoes"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/sneakers/black
 
-/datum/gear/brownshoes
+/datum/gear/shoes/brownshoes
 	name = "Brown shoes"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/sneakers/brown
 
-/datum/gear/whiteshoes
+/datum/gear/shoes/whiteshoes
 	name = "White shoes"
-	category = slot_shoes
 	path = /obj/item/clothing/shoes/sneakers/white
