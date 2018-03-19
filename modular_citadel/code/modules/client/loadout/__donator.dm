@@ -217,6 +217,18 @@
     path = /obj/item/clothing/suit/toggle/labcoat/labredblack
     ckeywhitelist = list("blakeryan")
 
+/datum/gear/darksabre
+	name = "Dark Sabre"
+	category = slot_in_backpack
+	path = /obj/item/toy/sword/darksabre
+	ckeywhitelist = list("inferno707")
+
+datum/gear/darksabresheath
+	name = "Dark Sabre Sheath"
+	category = slot_in_backpack
+	path = /obj/item/storage/belt/sabre/darksabre
+	ckeywhitelist = list("inferno707")
+
 
 
 
