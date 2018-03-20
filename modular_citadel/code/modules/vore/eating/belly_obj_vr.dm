@@ -13,9 +13,9 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'					// Sound when ingesting someone
+	var/vore_sound = "Gulp"					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
-	var/release_sound = 'sound/effects/splat.ogg'
+	var/release_sound = "Splatter"
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
 	var/emote_time = 60 SECONDS				// How long between stomach emotes at prey
@@ -400,6 +400,8 @@
 
 	// Delete the digested mob
 	qdel(M)
+	//Update owner
+	owner.updateVRPanel()
 
 // Handle a mob being absorbed
 /obj/belly/proc/absorb_living(var/mob/living/M)
@@ -463,6 +465,10 @@
 	else
 		qdel(src) //final option, I guess.
 		testing("[src] (\ref[src]) was QDEL'd for not having a drop_location!")
+
+//Yes, it's ""safe"" to drop items here
+/obj/belly/AllowDrop()
+	return TRUE
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()

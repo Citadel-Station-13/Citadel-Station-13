@@ -363,7 +363,7 @@
 					selected.release_all_contents()
 					for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
 						if(M.client && M.client.prefs.toggles & EATING_NOISES)
-							playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+							playsound(get_turf(user),"[selected.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
@@ -399,7 +399,7 @@
 				selected.release_specific_contents(tgt)
 				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
 					if(M.client && M.client.prefs.toggles & EATING_NOISES)
-						playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+						playsound(get_turf(user),"[selected.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
@@ -547,28 +547,28 @@
 		selected.vore_verb = new_verb
 
 	if(href_list["b_release"])
-		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.release_sound
+		var/choice = input(user,"Currently set to [selected.release_sound]","Select Sound") as null|anything in GLOB.release_sounds
 
 		if(!choice)
 			return
 
-		selected.release_sound = GLOB.release_sound[choice]
+		selected.release_sound = GLOB.release_sounds[choice]
 
 	if(href_list["b_releasesoundtest"])
-		var/soundfile = GLOB.release_sound[selected.release_sound]
+		var/soundfile = selected.release_sound
 		if(soundfile)
 			user << soundfile
 
 	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.pred_vore_sounds
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.vore_sounds
 
 		if(!choice)
 			return
 
-		selected.vore_sound = GLOB.pred_vore_sounds[choice]
+		selected.vore_sound = GLOB.vore_sounds[choice]
 
 	if(href_list["b_soundtest"])
-		var/soundfile = GLOB.pred_vore_sounds[selected.vore_sound]
+		var/soundfile = selected.vore_sound
 		if(soundfile)
 			user << soundfile
 

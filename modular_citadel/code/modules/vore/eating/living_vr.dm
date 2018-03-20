@@ -18,6 +18,7 @@
 	M.verbs += /mob/living/proc/preyloop_refresh
 	M.verbs += /mob/living/proc/lick
 	M.verbs += /mob/living/proc/escapeOOC
+
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return 1
 	M.verbs += /mob/living/proc/insidePanel
@@ -306,7 +307,7 @@
 //
 /mob/living/proc/escapeOOC()
 	set name = "OOC Escape"
-	set category = "OOC"
+	set category = "Vore"
 
 	//You're in a belly!
 	if(isbelly(loc))
@@ -316,6 +317,7 @@
 			return
 		//Actual escaping
 		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
+		src.stop_sound_channel(CHANNEL_PREYLOOP)
 		for(var/mob/living/simple_animal/SA in range(10))
 			SA.prey_excludes[src] = world.time
 
