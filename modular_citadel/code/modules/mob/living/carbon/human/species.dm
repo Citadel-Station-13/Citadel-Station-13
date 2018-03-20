@@ -77,3 +77,19 @@
 	switch(bodypart)
 		if("ipc_screen")
 			return GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
+		if("mam_tail")
+			return GLOB.mam_tails_list[H.dna.features["mam_tail"]]
+		if("mam_waggingtail")
+			return GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
+		if("mam_body_markings")
+			return GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
+		if("mam_ears")
+			return GLOB.mam_ears_list[H.dna.features["mam_ears"]]
+		if("taur")
+			return GLOB.taur_list[H.dna.features["taur"]]
+		if("xenodorsal")
+			return GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
+		if("xenohead")
+			return GLOB.xeno_head_list[H.dna.features["xenohead"]]
+		if("xenotail")
+			return GLOB.xeno_tail_list[H.dna.features["xenotail"]]
