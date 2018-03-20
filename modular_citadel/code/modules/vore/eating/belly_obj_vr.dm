@@ -504,9 +504,9 @@
 			to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
 			return
 	else //failsafe to make sure people are able to struggle out. friendly ERP should be on help intent.
-		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime] seconds.)</span>")
+		to_chat(R,"<span class='warning'>You attempt to climb out of [lowertext(name)]. (This will take around [escapetime] seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-		if(!do_mob(R,owner,[escapetime]))
+		if(!do_mob(R,owner,escapetime))
 			return
 		release_specific_contents(R)
 		return
