@@ -69,8 +69,8 @@ Head of Personnel
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-//	exp_type_department = EXP_TYPE_SUPPLY - CITADEL CHANGE
-	antag_rep = 16
+//exp_type_department = EXP_TYPE_SUPPLY - CITADEL CHANGE
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/hop
 
