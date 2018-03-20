@@ -11,16 +11,18 @@
 	lefthand_file = 'modular_citadel/icons/eutactic/mob/noneutactic_left.dmi'
 	righthand_file = 'modular_citadel/icons/eutactic/mob/noneutactic_right.dmi'
 	force = 3
+	force_on = 21
 	throwforce = 5
+	throwforce_on = 20
 	hitsound = "swing_hit" //it starts deactivated
 	hitsound_on = 'sound/weapons/nebhit.ogg'
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 40, "embedded_fall_chance" = 10)
-	armour_penetration = 0
-	block_chance = 60
+	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 20, "embedded_fall_chance" = 60)
+	armour_penetration = 10
+	block_chance = 35
 	light_color = "#37FFF7"
 	actions_types = list()
 
@@ -235,14 +237,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	force_unwielded = 3
-	force_wielded = 40
+	force_wielded = 30
 	wieldsound = 'sound/weapons/nebon.ogg'
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 40
+	armour_penetration = 10
 	light_color = "#37FFF7"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
-	block_chance = 75
+	block_chance = 25
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -418,8 +420,9 @@
 			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
 			It appears to have a wooden grip and a shaved down guard."
 	icon_state = "cxsword_hilt_traitor"
+	force_on = 30
 	armour_penetration = 35
-	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 70, "embedded_fall_chance" = 0)
+	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 75, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 10)
 	block_chance = 50
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	light_color = "#37F0FF"

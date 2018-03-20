@@ -322,3 +322,31 @@
 			H.arousalloss = H.max_arousal / 3
 		if(prob(5) && H.hallucination < 15)
 			H.hallucination += 10
+
+/obj/item/toy/sword/darksabre
+	name = "Kiara's Sabre"
+	desc = "This blade looks as dangerous as its owner."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "darksabre"
+	item_state = "darksabre"
+	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
+	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("attacked", "struck", "hit")
+
+
+/obj/item/storage/belt/sabre/darksabre
+	name = "Ornate Sheathe"
+	desc = "An ornate and rather sinister looking sabre sheathe."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "darksheath"
+	item_state = "darksheath"
+	storage_slots = 1
+	rustle_jimmies = FALSE
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_BULKY
+	can_hold = list(
+		/obj/item/toy/sword/darksabre
+		)

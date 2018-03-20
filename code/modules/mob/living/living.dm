@@ -139,6 +139,27 @@
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
 
+	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
+		if(resting && !L.resting)
+			if(attemptingcrawl)
+				return TRUE
+			if(staminaloss >= STAMINA_SOFTCRIT)
+				to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
+				return TRUE
+			attemptingcrawl = TRUE
+			var/origtargetloc = L.loc
+			visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
+			if(do_after(src, CRAWLUNDER_DELAY, target = src))
+				if(resting)
+					var/src_passmob = (pass_flags & PASSMOB)
+					pass_flags |= PASSMOB
+					Move(origtargetloc)
+					if(!src_passmob)
+						pass_flags &= ~PASSMOB
+			attemptingcrawl = FALSE
+			return TRUE
+	//END OF CIT CHANGES
+
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
 
@@ -425,8 +446,8 @@
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
 	var/t = shooter.zone_selected
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
+	if ((t in list( BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH )))
+		t = BODY_ZONE_HEAD
 	var/def_zone = ran_zone(t)
 	return def_zone
 

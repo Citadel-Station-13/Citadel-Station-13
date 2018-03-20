@@ -54,7 +54,7 @@
 	liked_food = MEAT
 	disliked_food = TOXIC
 	meat = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
-	
+
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
@@ -82,7 +82,6 @@
 
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
-//HERBIVOROUS//
 
 //Alien//
 /datum/species/xeno
@@ -159,88 +158,8 @@
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
 	toxpwr = 0
-	acidpwr = 12
+	acidpwr = 12 */
 
-
-/datum/species/yautja
-	name = "Yautja"
-	id = "pred"
-	say_mod = "clicks"
-	eyes = "predeyes"
-	mutant_organs = list(/obj/item/organ/tongue/yautja)
-	specflags = list(EYECOLOR)
-	lang_spoken = YAUTJA
-	lang_understood = HUMAN|YAUTJA|ALIEN
-	no_equip = list(slot_head)
-	punchdamagelow = 4
-	punchdamagehigh = 14
-	punchstunthreshold = 13
-	blacklisted = 1
-	whitelist = 1
-	whitelist = list("talkingcactus")
-
-/datum/outfit/yautja_basic
-	name = "Yautja, Basic"
-	uniform = /obj/item/clothing/under/mesh
-	suit = /obj/item/clothing/suit/armor/yautja_fake
-	shoes = /obj/item/clothing/shoes/yautja_fake
-	mask = /obj/item/clothing/mask/gas/yautja_fake
-
-/datum/species/yautja/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/datum/outfit/yautja_basic/O = new /datum/outfit/yautja_basic//Just basic gear. Doesn't include anything that gives any meaningful advantage.
-	H.equipOutfit(O, visualsOnly)
-	return 0
-
-/datum/species/octopus
-	blacklisted = 1
-/datum/species/carp
-	blacklisted = 1
-/datum/species/horse
-	blacklisted = 1*/
-
-///////////////////
-//DONATOR SPECIES//
-///////////////////
-
-//ChronoFlux: Slimecoon
-/*
-/datum/species/jelly/slime/slimecoon
-	name = "Slime Raccoon"
-	id = "slimecoon"
-	limbs_id = "slime"
-	whitelisted = 1
-	whitelist = list("chronoflux")
-	blacklisted = 1
-	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
-	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
-
-// Fat Shark <3
-/*
-/datum/species/shark/datashark
-	name = "DataShark"
-	id = "datashark"
-	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
-	mutant_bodyparts = list("mam_tail", "mam_body_markings")
-	default_features = list("mam_tail" = "datashark", "mam_body_markings" = "None")
-	attack_verb = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	whitelisted = 1
-	whitelist = list("rubyflamewing")
-	blacklisted = 0
-	*/
-
-/datum/species/guilmon
-	name = "Guilmon"
-	id = "guilmon"
-	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
-	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
 
 //##########SLIMEPEOPLE##########
 
