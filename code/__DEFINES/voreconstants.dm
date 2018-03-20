@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT(vore_sounds, list(
 		"Insertion1" = 'sound/vore/pred/insertion_01.ogg',
 		"Insertion2" = 'sound/vore/pred/insertion_02.ogg',
 		"Tauric Swallow" = 'sound/vore/pred/taurswallow.ogg',
+		"Stomach Move"		= 'sound/vore/pred/stomachmove.ogg',
 		"Schlorp" = 'sound/vore/pred/schlorp.ogg',
 		"Squish1" = 'sound/vore/pred/squish_01.ogg',
 		"Squish2" = 'sound/vore/pred/squish_02.ogg',
