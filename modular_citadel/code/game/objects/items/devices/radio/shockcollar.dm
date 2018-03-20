@@ -16,6 +16,7 @@
 	name = "Shockcollar"
 	id = "shockcollar"
 	build_type = AUTOLATHE
+	build_path = /obj/item/device/electropack/shockcollar
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	category = list("hacked", "Misc")
 	
