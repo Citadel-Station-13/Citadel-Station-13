@@ -411,7 +411,11 @@
 	for(var/law in ion)
 		if (length(law) > 0)
 			var/num = ionnum()
+<<<<<<< HEAD
 			data += "[show_numbers ? "[num]:" : ""] [law]"
+=======
+			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
+>>>>>>> 9de5d92... colour fix
 
 	var/number = 1
 	for(var/law in inherent)
