@@ -4,6 +4,8 @@
 #define DM_HEAL "Heal"
 #define DM_NOISY "Noisy"
 #define DM_DRAGON "Dragon"
+#define DM_ABSORB "Absorb"
+#define DM_UNABSORB "Un-absorb"
 
 #define isbelly(A) istype(A, /obj/belly)
 

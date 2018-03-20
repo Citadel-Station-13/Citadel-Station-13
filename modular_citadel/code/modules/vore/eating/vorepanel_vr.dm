@@ -113,6 +113,8 @@
 				spanstyle = "color:green;"
 			if(DM_NOISY)
 				spanstyle = "color:purple;"
+			if(DM_ABSORB)
+				spanstyle = "color:purple;"
 
 		dat += "<span style='[spanstyle]'> ([B.contents.len])</span></a></li>"
 
@@ -199,6 +201,10 @@
 			dat += "<br><a href='?src=\ref[src];b_escapetime=\ref[selected]'>Set Belly Escape Time</a>"
 			dat += " [selected.escapetime/10]s"
 
+			dat += "<br style='line-height:5px;'>"
+			dat += "<br><a href='?src=\ref[src];b_absorbchance=\ref[selected]'>Set Belly Absorb Chance</a>"
+			dat += " [selected.absorbchance]%"
+
 			//Special <br> here to add a gap
 			dat += "<br style='line-height:5px;'>"
 			dat += "<br><a href='?src=\ref[src];b_transferchance=\ref[selected]'>Set Belly Transfer Chance</a>"
@@ -228,6 +234,7 @@
 	//Under the last HR, save and stuff.
 	dat += "<a href='?src=\ref[src];saveprefs=1'>Save Prefs</a>"
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
+	dat += "<a href='?src=\ref[src];applyprefs=1'>Reload Slot Prefs</a>"
 
 	dat += "<HR>"
 	switch(user.digestable)
@@ -262,7 +269,7 @@
 				and you can change them to whatever you see fit. Setting them to 0% will disable the possibility of that interaction. \
 				These only function as long as interactions are turned on in general. Keep in mind, the 'belly mode' interactions (digest) \
 				will affect all prey in that belly, if one resists and triggers digestion. If multiple trigger at the same time, \
-				only the first in the order of 'Escape > Transfer > Digest' will occur.")
+				only the first in the order of 'Escape > Transfer > Absorb > Digest' will occur.")
 		return TRUE //Force update
 
 	if(href_list["outsidepick"])
@@ -282,7 +289,7 @@
 				if("Help Out") //Help the inside-mob out
 					if(user.stat || user.absorbed || M.absorbed)
 						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-						return 1
+						return
 
 					to_chat(user,"<font color='green'>You begin to push [M] to freedom!</font>")
 					to_chat(M,"[usr] begins to push you to freedom!")
@@ -302,11 +309,11 @@
 				if("Devour") //Eat the inside mob
 					if(user.absorbed || user.stat)
 						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-						return 1
+						return
 
 					if(!user.vore_selected)
 						to_chat(user,"<span class='warning'>Pick a belly on yourself first!</span>")
-						return 1
+						return
 
 					var/obj/belly/TB = user.vore_selected
 					to_chat(user,"<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
@@ -669,6 +676,15 @@
 		else
 			to_chat(user, "<span class='notice'>Belly Preferences were saved!</span>")
 			log_admin("Could not save vore prefs on USER: [user].")
+
+	if(href_list["applyprefs"])
+		var/alert = alert("Are you sure you want to reload character slot preferences? This will remove your current vore organs and eject their contents.","Confirmation","Reload","Cancel")
+		if(!alert == "Reload")
+			return 0
+		if(!user.apply_vore_prefs())
+			alert("ERROR: Vore preferences failed to apply!","Error")
+		else
+			to_chat(user,"<span class='notice'>Vore preferences applied from active slot!</span>")
 
 	if(href_list["setflavor"])
 		var/new_flavor = html_encode(input(usr,"What your character tastes like (40ch limit). This text will be printed to the pred after 'X tastes of...' so just put something like 'strawberries and cream':","Character Flavor",user.vore_taste) as text|null)

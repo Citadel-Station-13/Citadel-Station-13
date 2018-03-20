@@ -108,10 +108,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	digestable = json_from_file["digestable"]
 	devourable = json_from_file["devourable"]
-//	allowmobvore = json_from_file["allowmobvore"]
 	vore_taste = json_from_file["vore_taste"]
-//	can_be_drop_prey = json_from_file["can_be_drop_prey"]
-//	can_be_drop_prey = json_from_file["can_be_drop_pred"]
 	belly_prefs = json_from_file["belly_prefs"]
 
 	//Quick sanitize
@@ -119,16 +116,21 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		digestable = TRUE
 	if(isnull(devourable))
 		devourable = FALSE
-/*	if(isnull(allowmobvore))
+	if(isnull(belly_prefs))
+		belly_prefs = list()
+
+	return TRUE
+/*
+	allowmobvore = json_from_file["allowmobvore"]
+	can_be_drop_prey = json_from_file["can_be_drop_prey"]
+	can_be_drop_prey = json_from_file["can_be_drop_pred"]
+
+	if(isnull(allowmobvore))
 		allowmobvore = TRUE
 	if(isnull(can_be_drop_prey))
 		allowmobvore = FALSE
 	if(isnull(can_be_drop_pred))
 		allowmobvore = FALSE */
-	if(isnull(belly_prefs))
-		belly_prefs = list()
-
-	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
 	if(!path)				return FALSE
@@ -141,11 +143,6 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			"vore_taste"			= vore_taste,
 			"belly_prefs"			= belly_prefs,
 		)
-
-	/* commented out list things
-	"allowmobvore"			= allowmobvore,
-	"can_be_drop_prey"		= can_be_drop_prey,
-	"can_be_drop_pred"		= can_be_drop_pred, */
 
 	//List to JSON
 	var/json_to_file = json_encode(settings_list)
@@ -162,6 +159,11 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		return FALSE
 
 	return TRUE
+
+/* commented out list things
+	"allowmobvore"			= allowmobvore,
+	"can_be_drop_prey"		= can_be_drop_prey,
+	"can_be_drop_pred"		= can_be_drop_pred, */
 
 //Can do conversions here
 /datum/vore_preferences/proc/patch_version(var/list/json_from_file,var/version)

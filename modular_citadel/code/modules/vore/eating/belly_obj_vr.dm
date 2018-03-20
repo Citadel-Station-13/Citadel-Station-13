@@ -40,7 +40,7 @@
 	var/vore_capacity = 1					// simple animal nom capacity
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
-	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY)	// Possible digest modes
+	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY,DM_ABSORB,DM_UNABSORB)	// Possible digest modes
 
 	var/tmp/mob/living/owner					// The mob whose belly this is.
 	var/tmp/digest_mode = DM_HOLD				// Current mode the belly is set to from digest_modes (+transform_modes if human)
@@ -548,24 +548,24 @@
 		to_chat(owner,"<span class='warning'>Someone slid into your [transferlocation] due to their struggling inside your [lowertext(name)]!</span>")
 		transfer_contents(R, dest_belly)
 		return
+
+	else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
+		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
+		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
+		digest_mode = DM_ABSORB
+		return
 /*
-		else if(prob(absorbchance) && digest_mode != DM_ABSORB) //After that, let's have it run the absorb chance.
-			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to cling more tightly...</span>")
-			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
-			digest_mode = DM_ABSORB
-			return
+	else if(prob(digestchance) && digest_mode != DM_ITEMWEAK && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
+		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
+		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
+		digest_mode = DM_ITEMWEAK
+		return
 
-		else if(prob(digestchance) && digest_mode != DM_ITEMWEAK && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
-			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
-			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
-			digest_mode = DM_ITEMWEAK
-			return
-
-		else if(prob(digestchance) && digest_mode == DM_ITEMWEAK) //Oh god it gets even worse if you fail twice!
-			to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get even more active!</span>")
-			to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become even more active!</span>")
-			digest_mode = DM_DIGEST
-			return */
+	else if(prob(digestchance) && digest_mode == DM_ITEMWEAK) //Oh god it gets even worse if you fail twice!
+		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get even more active!</span>")
+		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become even more active!</span>")
+		digest_mode = DM_DIGEST
+		return */
 	else if(prob(digestchance)) //Finally, let's see if it should run the digest chance.)
 		to_chat(R, "<span class='warning'>In response to your struggling, \the [name] begins to get more active...</span>")
 		to_chat(owner, "<span class='warning'>You feel your [name] beginning to become active!</span>")
@@ -607,15 +607,19 @@
 	dupe.digest_brute = digest_brute
 	dupe.digest_burn = digest_burn
 	dupe.immutable = immutable
-	dupe.can_taste = can_taste
 	dupe.escapable = escapable
 	dupe.escapetime = escapetime
 	dupe.digestchance = digestchance
 	dupe.absorbchance = absorbchance
 	dupe.escapechance = escapechance
-	dupe.transferchance = transferchance
-	dupe.transferlocation = transferlocation
+	dupe.can_taste = can_taste
 	dupe.bulge_size = bulge_size
+	dupe.transferlocation = transferlocation
+	dupe.transferchance = transferchance
+	dupe.autotransferchance = autotransferchance
+	dupe.autotransferwait = autotransferwait
+	dupe.swallow_time = swallow_time
+	dupe.vore_capacity = vore_capacity
 //	dupe.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
