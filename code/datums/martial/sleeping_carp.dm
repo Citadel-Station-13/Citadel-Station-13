@@ -42,13 +42,8 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
-<<<<<<< HEAD
-		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
-		D.Knockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
-=======
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		D.Stun(60)
->>>>>>> fbe5f4a... Replaced body zone magic strings with defines
+		D.Knockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)
