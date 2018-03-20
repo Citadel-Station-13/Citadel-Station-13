@@ -26,11 +26,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-<<<<<<< HEAD
-	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower", "defibrillator")
-=======
 	design_ids = list("piercesyringe", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker")
->>>>>>> 287ee75... Adds two new intermediate beaker types to chemistry (#36484)
 	research_cost = 2500
 	export_price = 5000
 
