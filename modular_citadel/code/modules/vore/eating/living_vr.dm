@@ -324,19 +324,23 @@
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		return FALSE
 	if(!copy_to_prefs_vr())
 		return FALSE
-	if(!client.prefs_vr.save_vore())
+	if(client && !client.prefs_vr.save_vore())
 		return FALSE
 
 	return TRUE
 
 /mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!client)
 		return FALSE
-	if(!client.prefs_vr.load_vore())
+	if(client && !client.prefs_vr)
+		return FALSE
+	if(client && !client.prefs_vr.load_vore())
 		return FALSE
 	if(!copy_from_prefs_vr())
 		return FALSE
@@ -344,7 +348,9 @@
 	return TRUE
 
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
 		return FALSE
 
@@ -367,7 +373,9 @@
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
 		return FALSE
 
@@ -433,7 +441,7 @@
 	if(src == stat)
 		return
 
-	src.setClickCooldown(50)
+	src.setClickCooldown(100)
 
 	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 

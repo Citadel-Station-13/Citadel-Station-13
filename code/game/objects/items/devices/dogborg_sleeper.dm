@@ -63,13 +63,12 @@
 		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
 		return
 	if(target.buckled)
-		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
+		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src].</span>")
 		return
 	if(patient)
-		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
+		to_chat(user, "<span class='warning'>Your [src] is already occupied.</span>")
 		return
-	testing("using sleeper/afterattack")
-	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src.name].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
+	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
 	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 50, target = target))
 
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
@@ -109,8 +108,7 @@
 		go_out()
 
 /obj/item/device/dogborg/sleeper/proc/go_out(var/target)
-	hound = src.loc
-	testing("go_out activated")
+	hound = loc
 	hound.setClickCooldown(50)
 	if(length(contents) > 0)
 		hound.visible_message("<span class='warning'>[hound.name] empties out their contents via their release port.</span>", "<span class='notice'>You empty your contents via your release port.</span>")
@@ -214,20 +212,16 @@
 			inject_chem(chem)
 			. = TRUE
 		if("cleaning")
-			testing("cleaning attempted")
 			if(!contents)
-				testing("cleaning has no contents")
 				to_chat(src, "Your [src] is already cleaned.")
 				return
 			if(patient)
-				to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
-				testing("clean_cycle activated")
+				to_chat(patient, "<span class='danger'>[hound.name]'s [src] fills with caustic enzymes around you!</span>")
 			to_chat(src, "<span class='danger'>Cleaning process enabled.</span>")
 			clean_cycle()
 			. = TRUE
 
 /obj/item/device/dogborg/sleeper/proc/update_gut()
-	testing("update_gut proc fired")
 	//Well, we HAD one, what happened to them?
 	if(patient in contents)
 		if(patient_laststat != patient.stat)
@@ -275,66 +269,63 @@
 
 //Gurgleborg process
 /obj/item/device/dogborg/sleeper/proc/clean_cycle()
-	testing("clean_cycle activated")
 	//Sanity
 	for(var/I in items_preserved)
 		if(!(I in contents))
 			items_preserved -= I
 	var/list/touchable_items = contents - items_preserved
 	if(cleaning_cycles)
-		testing("clean_cycle being used")
 		cleaning_cycles--
 		cleaning = TRUE
 		for(var/mob/living/carbon/human/T in (touchable_items))
 			if((T.status_flags & GODMODE) || !T.digestable)
-				src.items_preserved += T
+				items_preserved += T
 			else
 				T.adjustBruteLoss(2)
 				T.adjustFireLoss(3)
 				update_gut()
-
-		var/atom/target = pick(touchable_items)
-		if(iscarbon(target)) //Handle the target being a mob
-			var/mob/living/carbon/T = target
-			if(T.stat == DEAD && T.digestable)	//Mob is now dead
-				message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
-				to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
-				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
-				src.hound.cell.give(30000) //Fueeeeellll
-				T.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-				T.stop_sound_channel(CHANNEL_PRED)
-				T.playsound_local("death_prey",60)
-				for(var/belly in T.vore_organs)
-					var/obj/belly/B = belly
-					for(var/atom/movable/thing in B)
-						thing.forceMove(src)
-						if(ismob(thing))
-							to_chat(thing, "As [T] melts away around you, you find yourself in [hound]'s [name]")
-				for(var/obj/item/W in T)
-					if(!T.dropItemToGround(W))
-						qdel(W)
-				qdel(T)
-				update_gut()
-	//Handle the target being anything but a mob
-		else if(isobj(target))
-			var/obj/T = target
-			if(T.type in important_items) //If the object is in the items_preserved global list
-				src.items_preserved += T
-			//If the object is not one to preserve
-			else
-				qdel(T)
-				src.update_gut()
-				src.hound.cell.give(10)
+		if(contents)
+			var/atom/target = pick(touchable_items)
+			if(iscarbon(target)) //Handle the target being a mob
+				var/mob/living/carbon/T = target
+				if(T.stat == DEAD && T.digestable)	//Mob is now dead
+					message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
+					to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
+					to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
+					hound.cell.give(30000) //Fueeeeellll
+					T.stop_sound_channel(CHANNEL_PRED)
+					playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
+					T.stop_sound_channel(CHANNEL_PRED)
+					T.playsound_local("death_prey",60)
+					for(var/belly in T.vore_organs)
+						var/obj/belly/B = belly
+						for(var/atom/movable/thing in B)
+							thing.forceMove(src)
+							if(ismob(thing))
+								to_chat(thing, "As [T] melts away around you, you find yourself in [hound]'s [name]")
+					for(var/obj/item/W in T)
+						if(!T.dropItemToGround(W))
+							qdel(W)
+					qdel(T)
+					update_gut()
+		//Handle the target being anything but a mob
+			else if(isobj(target))
+				var/obj/T = target
+				if(T.type in important_items) //If the object is in the items_preserved global list
+					items_preserved += T
+				//If the object is not one to preserve
+				else
+					qdel(T)
+					update_gut()
+					hound.cell.give(10)
 	else
-		testing("clean_cycle finished and reset")
 		cleaning_cycles = initial(cleaning_cycles)
 		cleaning = FALSE
-		to_chat(hound, "<span class='notice'>Your [src.name] chimes it ends its self-cleaning cycle.</span>")//Belly is entirely empty
+		to_chat(hound, "<span class='notice'>Your [src] chimes it ends its self-cleaning cycle.</span>")//Belly is entirely empty
 		update_gut()
 
 	if(!length(contents))
-		to_chat(hound, "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>")
+		to_chat(hound, "<span class='notice'>Your [src] is now clean. Ending self-cleaning cycle.</span>")
 		cleaning = FALSE
 		update_gut()
 		return
@@ -354,19 +345,14 @@
 	return is_type_in_typecache(I, important_items)
 
 /obj/item/device/dogborg/sleeper/proc/inject_chem(chem)
-	testing("inject chem triggered, checking power")
 	if(hound.cell.charge <= 800) //This is so borgs don't kill themselves with it. Remember, 750 charge used every injection.
 		to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
 		return
-	testing("Has power, checking for overdose")
 	if(patient.reagents.get_reagent_amount(chem) + 10 >= 20) //Preventing people from accidentally killing themselves by trying to inject too many chemicals!
 		to_chat(hound, "<span class='notice'>Your stomach is currently too full of fluids to secrete more fluids of this kind.</span>")
 		return
-	testing("isn't overdosing, attempting to add_reagent")
 	patient.reagents.add_reagent(chem, 10)
-	testing("add_reagent")
-	src.hound.cell.use(750) //-750 charge per injection
-	testing("draining power")
+	hound.cell.use(750) //-750 charge per injection
 	var/units = round(patient.reagents.get_reagent_amount(chem))
 	to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [chem] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
 
@@ -403,15 +389,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/brigman = target
 		if (!brigman.devourable)
-			to_chat(user, "The target registers an error code. Unable to insert into [src.name].")
+			to_chat(user, "The target registers an error code. Unable to insert into [src].")
 			return
 		if(patient)
-			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
+			to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
 			return
 		if(brigman.buckled)
-			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src.name].</span>")
+			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src].</span>")
 			return
-		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src.name].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
 		if(do_after(user, 30, target = brigman) && !patient && !brigman.buckled)
 			if(!in_range(src, brigman)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't eat them.
@@ -447,18 +433,15 @@
 	if(target.anchored)
 		return
 	if(length(contents) > (max_item_count - 1))
-		to_chat(user,"<span class='warning'>Your [src.name] is full. Eject or process contents to continue.</span>")
+		to_chat(user,"<span class='warning'>Your [src] is full. Eject or process contents to continue.</span>")
 		return
 	if(isobj(target))
-		testing("Checking target type")
 		if(CheckAccepted(target))
-			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
+			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src]</span>")
 			return
-		testing("Target not on the important list")
 		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
-			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
+			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src]</span>")
 			return
-		testing("Target not too large.")
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
 		if(do_after(user, 15, target = target) && length(contents) < max_item_count)
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
@@ -477,15 +460,15 @@
 	else if(iscarbon(target))
 		var/mob/living/carbon/trashman = target
 		if (!trashman.devourable)
-			to_chat(user, "<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
+			to_chat(user, "<span class='warning'>[target] registers an error code to your [src]</span>")
 			return
 		if(patient)
-			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
+			to_chat(user,"<span class='warning'>Your [src] is already occupied.</span>")
 			return
 		if(trashman.buckled)
-			to_chat(user,"<span class='warning'>[trashman] is buckled and can not be put into your [src.name].</span>")
+			to_chat(user,"<span class='warning'>[trashman] is buckled and can not be put into your [src].</span>")
 			return
-		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashman] into their [src.name].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashman] into their [src].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
 		if(do_after(user, 30, target = trashman) && !patient && !trashman.buckled && length(contents) < max_item_count)
 			if(!in_range(src, trashman)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't eat them.
