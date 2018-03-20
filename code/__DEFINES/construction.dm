@@ -80,7 +80,11 @@
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"
+<<<<<<< HEAD
 #define MAT_PLASTIC		"$plastic" // CITADEL ADDITION
+=======
+#define MAT_PLASTIC	"$plastic"
+>>>>>>> 287ee75... Adds two new intermediate beaker types to chemistry (#36484)
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
