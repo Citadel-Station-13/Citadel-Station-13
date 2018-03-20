@@ -7,17 +7,38 @@
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES)
 	mutant_bodyparts = list("ipc_screen")
-	default_features = list("ipc_screen" = "Sunburst")
+	default_features = list("ipc_screen" = "Blank")
 	species_traits = list(MUTCOLORS)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 
+	var/datum/action/innate/monitor_change/screen
+
 /datum/species/ipc/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
-	. = ..()
+	if(isipcperson(C) && !screen)
+		screen = new
+		screen.Grant(C)
+	..()
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
-	. = ..()
+	if(screen)
+		screen.Remove(C)
+	..()
 
 /datum/species/ipc/get_spans()
 	return SPAN_ROBOT
+
+/datum/action/innate/monitor_change
+	name = "Screen Change"
+	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "drone_vision"
+
+/datum/action/innate/monitor_change/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/new_ipc_screen = input(usr, "Choose your character's screen:", "Monitor Display") as null|anything in GLOB.ipc_screens_list
+	if(!new_ipc_screen)
+		return
+	H.dna.features["ipc_screen"] = new_ipc_screen
+	H.update_body()

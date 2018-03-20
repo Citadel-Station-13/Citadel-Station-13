@@ -2732,7 +2732,6 @@
 #include "modular_citadel\code\modules\mob\living\carbon\carbon.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\damage_procs.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\reindex_screams.dm"
-#include "modular_citadel\code\modules\mob\living\carbon\human\human.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_movement.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\life.dm"

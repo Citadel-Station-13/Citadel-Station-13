@@ -878,23 +878,17 @@
 /datum/sprite_accessory/xeno_dorsal
 	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
-/datum/sprite_accessory/xeno_dorsal/none
-	name = "None"
-
 /datum/sprite_accessory/xeno_dorsal/standard
 	name = "Standard"
 	icon_state = "standard"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/royal
 	name = "Royal"
 	icon_state = "royal"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/down
 	name = "Dorsal Down"
 	icon_state = "down"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Tail
 /datum/sprite_accessory/xeno_tail
@@ -906,7 +900,6 @@
 /datum/sprite_accessory/xeno_tail/standard
 	name = "Xenomorph Tail"
 	icon_state = "xeno"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Caste Heads
 /datum/sprite_accessory/xeno_head
@@ -915,27 +908,99 @@
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"
 	icon_state = "standard"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/royal
 	name = "royal"
 	icon_state = "royal"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/hollywood
 	name = "hollywood"
 	icon_state = "hollywood"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/warrior
 	name = "warrior"
 	icon_state = "warrior"
-	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 // IPCs
 /datum/sprite_accessory/screen
-	icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/ipc_screens.dmi'
 	color_src = null
+
+/datum/sprite_accessory/screen/blank
+	name = "Blank"
+	icon_state = "blank"
+
+/datum/sprite_accessory/screen/pink
+	name = "Pink"
+	icon_state = "pink"
+
+/datum/sprite_accessory/screen/green
+	name = "Green"
+	icon_state = "green"
+
+/datum/sprite_accessory/screen/red
+	name = "Red"
+	icon_state = "red"
+
+/datum/sprite_accessory/screen/blue
+	name = "Blue"
+	icon_state = "blue"
+
+/datum/sprite_accessory/screen/yellow
+	name = "Yellow"
+	icon_state = "yellow"
+
+/datum/sprite_accessory/screen/shower
+	name = "Shower"
+	icon_state = "shower"
+
+/datum/sprite_accessory/screen/nature
+	name = "Nature"
+	icon_state = "nature"
+
+/datum/sprite_accessory/screen/eight
+	name = "Eight"
+	icon_state = "eight"
+
+/datum/sprite_accessory/screen/goggles
+	name = "Goggles"
+	icon_state = "goggles"
+
+/datum/sprite_accessory/screen/heart
+	name = "Heart"
+	icon_state = "heart"
+
+/datum/sprite_accessory/screen/monoeye
+	name = "Mono eye"
+	icon_state = "monoeye"
+
+/datum/sprite_accessory/screen/breakout
+	name = "Breakout"
+	icon_state = "breakout"
+
+/datum/sprite_accessory/screen/purple
+	name = "Purple"
+	icon_state = "purple"
+
+/datum/sprite_accessory/screen/scroll
+	name = "Scroll"
+	icon_state = "scroll"
+
+/datum/sprite_accessory/screen/console
+	name = "Console"
+	icon_state = "console"
+
+/datum/sprite_accessory/screen/rgb
+	name = "RGB"
+	icon_state = "rgb"
+
+/datum/sprite_accessory/screen/golglider
+	name = "Gol Glider"
+	icon_state = "golglider"
+
+/datum/sprite_accessory/screen/rainbow
+	name = "Rainbow"
+	icon_state = "rainbow"
 
 /datum/sprite_accessory/screen/sunburst
 	name = "Sunburst"
@@ -944,7 +1009,41 @@
 /datum/sprite_accessory/screen/static
 	name = "Static"
 	icon_state = "static"
-	
+
+//Oracle Station sprites
+
+/datum/sprite_accessory/screen/bsod
+	name = "BSOD"
+	icon_state = "bsod"
+
+/datum/sprite_accessory/screen/redtext
+	name = "Red Text"
+	icon_state = "retext"
+
+/datum/sprite_accessory/screen/sinewave
+	name = "Sine wave"
+	icon_state = "sinewave"
+
+/datum/sprite_accessory/screen/squarewave
+	name = "Square wave"
+	icon_state = "squarwave"
+
+/datum/sprite_accessory/screen/ecgwave
+	name = "ECG wave"
+	icon_state = "ecgwave"
+
+/datum/sprite_accessory/screen/eyes
+	name = "Eyes"
+	icon_state = "eyes"
+
+/datum/sprite_accessory/screen/textdrop
+	name = "Text drop"
+	icon_state = "textdrop"
+
+/datum/sprite_accessory/screen/stars
+	name = "Stars"
+	icon_state = "stars"
+
 // *** Snooooow flaaaaake ***
 
 /datum/sprite_accessory/mam_body_markings/guilmon

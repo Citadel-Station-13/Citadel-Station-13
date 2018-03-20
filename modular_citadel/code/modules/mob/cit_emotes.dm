@@ -4,7 +4,7 @@
 //Disables the custom emote blacklist from TG that normally applies to slimes.
 /datum/emote/living/custom
 	mob_type_blacklist_typecache = list(/mob/living/brain)
-	
+
 /datum/emote/living/scream/run_emote(mob/living/user, params) //I can't not port this shit, come on.
 	if(user.nextsoundemote >= world.time || user.stat != CONSCIOUS)
 		return
@@ -35,7 +35,7 @@
 				sound = 'modular_citadel/sound/voice/scream_lizard.ogg'
 			if(is_species(user, /datum/species/skeleton))
 				sound = 'modular_citadel/sound/voice/scream_skeleton.ogg'
-			if (is_species(user, /datum/species/fly) || is_species(user, /datum/species/moth))
+			if (is_species(user, /datum/species/fly) || is_species(user, /datum/species/insect))
 				sound = 'modular_citadel/sound/voice/scream_moth.ogg'
 		if(isalien(user))
 			sound = 'sound/voice/hiss6.ogg'
@@ -49,7 +49,7 @@
 	else
 		message = "makes a very loud noise."
 	. = ..()
-	
+
 /datum/emote/sound/carbon/snap
 	key = "snap"
 	key_third_person = "snaps"
@@ -58,7 +58,7 @@
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/effects/snap01.ogg'
 	mob_type_allowed_typecache = list(/mob/living/carbon/)
-	
+
 
 /datum/emote/living/snap
 	key = "snap"

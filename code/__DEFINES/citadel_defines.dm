@@ -105,8 +105,9 @@
 #define NOAROUSAL		37 //Stops all arousal effects
 #define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
 
-//Brainslugs
+//Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+#define isipcperson(A) (is_species(A, /datum/species/ipc))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
