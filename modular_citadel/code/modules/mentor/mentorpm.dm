@@ -31,11 +31,15 @@
 		else		mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
 		return
 
+	if(is_mentor(whom))
+		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has started replying to [whom]'s mhelp.</font color>")
+
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
-
-		if(!msg)
+		
+		if(!msg && is_mentor(whom))
+			to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
 			return
 
 		if(!C)
@@ -50,7 +54,9 @@
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+	if(!msg && is_mentor(whom))	
+		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
+		return
 
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(C)]: [msg]")
 
