@@ -117,22 +117,22 @@
 		"digest_brute",
 		"digest_burn",
 		"immutable",
-		"can_taste",
 		"escapable",
 		"escapetime",
 		"digestchance",
 		"absorbchance",
 		"escapechance",
+		"can_taste",
+		"bulge_size",
+		"silent",
 		"transferchance",
 		"transferlocation",
-		"bulge_size",
 		"struggle_messages_outside",
 		"struggle_messages_inside",
 		"digest_messages_owner",
 		"digest_messages_prey",
 		"examine_messages",
-		"emote_lists",
-		"silent"
+		"emote_lists"
 		)
 
 		//ommitted list
@@ -172,9 +172,6 @@
 		var/mob/living/M = thing
 		if(desc)
 			to_chat(M, "<span class='notice'><B>[desc]</B></span>")
-		var/taste
-		if(can_taste && (taste = M.get_taste_message(FALSE)))
-			to_chat(owner, "<span class='notice'>[M] tastes of [taste].</span>")
 
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
@@ -477,22 +474,6 @@
 		return  // User is not in this belly
 
 	R.setClickCooldown(50)
-
-	if(owner.stat || !owner.client && R.a_intent != INTENT_HELP) //If owner is stat (dead, KO) we can actually escape
-		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around 5 seconds.)</span>")
-		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-
-		if(do_after(R, 50, owner))
-			if(owner.stat && (R in contents) && R.a_intent != INTENT_HELP) //Can still escape and want to?
-				release_specific_contents(R)
-				return
-			else if(!(R in contents)) //Aren't even in the belly. Quietly fail.
-				return
-			else //Belly became inescapable or mob revived
-				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
-				to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
-				return
-			return
 	var/struggle_outer_message = pick(struggle_messages_outside)
 	var/struggle_user_message = pick(struggle_messages_inside)
 
@@ -507,9 +488,32 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
+	if((owner.stat || !owner.client) && (R.a_intent != INTENT_HELP)) //If owner is stat (dead, KO) we can actually escape
+		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around 5 seconds.)</span>")
+		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
+
+		if(!do_mob(R,owner,50))
+			return
+		if(!(R in contents)) //Aren't even in the belly. Quietly fail.
+			return
+		if(R.a_intent != INTENT_HELP) //still want to?
+			release_specific_contents(R)
+			return
+		else //Belly became inescapable or mob revived
+			to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
+			to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
+			return
+	else //failsafe to make sure people are able to struggle out. friendly ERP should be on help intent.
+		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime] seconds.)</span>")
+		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
+		if(!do_mob(R,owner,[escapetime]))
+			return
+		release_specific_contents(R)
+		return
+
 	for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
-		M.show_message(struggle_outer_message, 2) // hearable
-		to_chat(R,struggle_user_message)
+		M.show_message(struggle_outer_message, 1) // visible
+	to_chat(R,struggle_user_message)
 
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
@@ -518,24 +522,6 @@
 		R.stop_sound_channel(CHANNEL_PRED)
 		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
 		R.playsound_local(get_turf(R),prey_struggle,45,0)
-
-	if(R.a_intent != INTENT_HELP) //If on non help intent
-		to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
-		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-		if(do_after(R, escapetime, owner))
-			if((owner.stat || !owner.client || escapable) && (R in contents))
-				release_specific_contents(R)
-				to_chat(R,"<span class='warning'>You climb out of \the [lowertext(name)].</span>")
-				to_chat(owner,"<span class='warning'>[R] climbs out of your [lowertext(name)]!</span>")
-				for(var/mob/M in hearers(4, owner))
-					M.show_message("<span class='warning'>[R] climbs out of [owner]'s [lowertext(name)]!</span>", 2)
-				return
-			else if(!istype(loc, /obj/belly)) //Aren't even in the belly. Quietly fail.
-				return
-			else //Belly became inescapable.
-				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
-				to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
-				return
 
 	else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
 		var/obj/belly/dest_belly
@@ -620,13 +606,13 @@
 	dupe.escapechance = escapechance
 	dupe.can_taste = can_taste
 	dupe.bulge_size = bulge_size
+	dupe.silent = silent
 	dupe.transferlocation = transferlocation
 	dupe.transferchance = transferchance
 	dupe.autotransferchance = autotransferchance
 	dupe.autotransferwait = autotransferwait
 	dupe.swallow_time = swallow_time
 	dupe.vore_capacity = vore_capacity
-//	dupe.shrink_grow_size = shrink_grow_size
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings
@@ -660,6 +646,4 @@
 		dupe.emote_lists[K] = list()
 		for(var/I in emote_lists[K])
 			dupe.emote_lists[K] += I
-	dupe.silent = silent
-
 	return dupe

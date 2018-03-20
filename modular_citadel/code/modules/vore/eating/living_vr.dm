@@ -312,7 +312,7 @@
 	//You're in a belly!
 	if(isbelly(loc))
 		var/obj/belly/B = loc
-		var/confirm = alert(src, "You're in a mob. if you're otherwise unable to escape from a pred AFK for a long time.", "Confirmation", "Okay", "Cancel")
+		var/confirm = alert(src, "You're in a mob. If you're otherwise unable to escape from a pred AFK for a long time, use this.", "Confirmation", "Okay", "Cancel")
 		if(!confirm == "Okay" || loc != B)
 			return
 		//Actual escaping
