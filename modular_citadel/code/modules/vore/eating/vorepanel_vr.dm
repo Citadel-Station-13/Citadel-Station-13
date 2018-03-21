@@ -355,7 +355,7 @@
 
 					selected.release_all_contents()
 					for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-						if(M.client && M.client.prefs.toggles & EATING_NOISES)
+						if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 							playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
@@ -371,7 +371,7 @@
 					for(var/atom/movable/tgt in selected)
 						selected.transfer_contents(tgt, choice, 1)
 						for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-							if(M.client && M.client.prefs.toggles & EATING_NOISES)
+							if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 								playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
 
@@ -391,7 +391,7 @@
 
 				selected.release_specific_contents(tgt)
 				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-					if(M.client && M.client.prefs.toggles & EATING_NOISES)
+					if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 						playsound(get_turf(user),'sound/vore/pred/escape.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
@@ -407,7 +407,7 @@
 				to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(choice.name)]!</span>")
 				selected.transfer_contents(tgt, choice)
 				for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-					if(M.client && M.client.prefs.toggles & EATING_NOISES)
+					if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 						playsound(get_turf(user),'sound/vore/pred/stomachmove.ogg',50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(href_list["newbelly"])

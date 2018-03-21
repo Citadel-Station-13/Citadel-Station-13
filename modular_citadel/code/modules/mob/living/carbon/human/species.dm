@@ -55,3 +55,41 @@
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to push [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to push [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+
+////////////////////
+/////BODYPARTS/////
+////////////////////
+
+
+/obj/item/bodypart/var/should_draw_citadel = FALSE
+
+/mob/living/carbon/proc/draw_citadel_parts(undo = FALSE)
+	if(!undo)
+		for(var/O in bodyparts)
+			var/obj/item/bodypart/B = O
+			B.should_draw_citadel = TRUE
+	else
+		for(var/O in bodyparts)
+			var/obj/item/bodypart/B = O
+			B.should_draw_citadel = FALSE
+
+/datum/species/proc/citadel_mutant_bodyparts(bodypart, mob/living/carbon/human/H)
+	switch(bodypart)
+		if("ipc_screen")
+			return GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
+		if("mam_tail")
+			return GLOB.mam_tails_list[H.dna.features["mam_tail"]]
+		if("mam_waggingtail")
+			return GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
+		if("mam_body_markings")
+			return GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
+		if("mam_ears")
+			return GLOB.mam_ears_list[H.dna.features["mam_ears"]]
+		if("taur")
+			return GLOB.taur_list[H.dna.features["taur"]]
+		if("xenodorsal")
+			return GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
+		if("xenohead")
+			return GLOB.xeno_head_list[H.dna.features["xenohead"]]
+		if("xenotail")
+			return GLOB.xeno_tail_list[H.dna.features["xenotail"]]

@@ -3,7 +3,7 @@
 /obj/item/gun/ballistic/automatic/pistol/antitank
 	name = "Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "atp"
 	item_state = "pistol"
 	recoil = 4
@@ -36,7 +36,7 @@
 /obj/item/gun/ballistic/automatic/pistol/stealth
 	name = "stealth pistol"
 	desc = "A unique bullpup pistol with a compact frame. Has an integrated surpressor."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "stealthpistol"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/m10mm
@@ -61,7 +61,7 @@
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth
 	name = "foam force stealth pistol"
 	desc = "A small, easily concealable toy bullpup handgun. Ages 8 and up."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "foamsp"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
@@ -108,7 +108,7 @@ obj/item/projectile/bullet/c10mm/soporific
 
 /obj/item/ammo_box/magazine/m10mm/soporific
 	name = "pistol magazine (10mm soporific)"
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "9x19pS"
 	desc = "A gun magazine. Loaded with rounds which inject the target with a variety of illegal substances to induce sleep in the target."
 	ammo_type = /obj/item/ammo_casing/c10mm/soporific
@@ -123,7 +123,7 @@ obj/item/projectile/bullet/c10mm/soporific
 /obj/item/gun/ballistic/automatic/pistol/modular
 	name = "modular pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "cde"
 	can_unsuppress = TRUE
 	obj_flags = UNIQUE_RENAME
@@ -154,7 +154,7 @@ obj/item/projectile/bullet/c10mm/soporific
 /////////RAYGUN MEMES/////////
 
 /obj/item/projectile/beam/lasertag/ray		//the projectile, compatible with regular laser tag armor
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "ray"
 	name = "ray bolt"
 	eyeblur = 0
@@ -166,7 +166,7 @@ obj/item/projectile/bullet/c10mm/soporific
 
 /obj/item/gun/energy/laser/practice/raygun
 	name = "toy ray gun"
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "raygun"
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
@@ -182,7 +182,7 @@ obj/item/projectile/bullet/c10mm/soporific
 			This model is coated with a special polychromic material. \
 			Has a small warning on the receiver that boldly states 'WARNING: WILL DETONATE UPON UNAUTHORIZED USE'. \
 			Uses 9mm bullets loaded into proprietary magazines."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "p37"
 	w_class = WEIGHT_CLASS_NORMAL
 	spawnwithmagazine = FALSE
@@ -203,15 +203,15 @@ obj/item/projectile/bullet/c10mm/soporific
 ///Defining all the colourable bits and displaying them///
 
 /obj/item/gun/ballistic/automatic/pistol/p37/update_icon()
-	var/mutable_appearance/frame_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_frame")
-	var/mutable_appearance/receiver_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_receiver")
-	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_body")
-	var/mutable_appearance/barrel_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_barrel")
-	var/mutable_appearance/tip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_tip")
-	var/mutable_appearance/grip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_grip")
-	var/mutable_appearance/energy_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_light")
-	var/mutable_appearance/arm_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm")
-	var/mutable_appearance/arm_overlay_e = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm-e")
+	var/mutable_appearance/frame_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_frame")
+	var/mutable_appearance/receiver_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_receiver")
+	var/mutable_appearance/body_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_body")
+	var/mutable_appearance/barrel_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_barrel")
+	var/mutable_appearance/tip_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_tip")
+	var/mutable_appearance/grip_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_grip")
+	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_light")
+	var/mutable_appearance/arm_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_arm")
+	var/mutable_appearance/arm_overlay_e = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "p37_arm-e")
 
 	if(frame_color)
 		frame_overlay.color = frame_color
@@ -346,7 +346,7 @@ obj/item/projectile/bullet/c10mm/soporific
 /obj/item/ammo_box/magazine/m9mm/p37
 	name = "\improper P37 magazine (9mm frangible)"
 	desc = "A gun magazine. Loaded with plastic composite rounds which fragment upon impact to minimize collateral damage."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "11mm"		//topkek
 	ammo_type = /obj/item/ammo_casing/c9mm/frangible
 	caliber = "9mm"

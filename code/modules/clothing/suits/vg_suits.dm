@@ -7,16 +7,16 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 30, bomb = 60, bio = 30, rad = 20)
 	siemens_coefficient = 0.5
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/xcomsquaddie/dredd
 	name = "Judge Armor"
 	desc = "A large suit of heavy armor, fit for a Judge."
 	icon_state = "dredd-suit"
 	item_state = "dredd-suit"
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 
 /obj/item/clothing/suit/armor/xcomarmor
@@ -28,16 +28,16 @@
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 30, bomb = 60, bio = 30, rad = 20)
 	slowdown = 1
 	siemens_coefficient = 0.5
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/vest/neorussian
 	name = "neo-Russian vest"
 	desc = "The narkotiki camo pattern will come useful for botany raids."
 	icon_state = "nr_vest"
 	item_state = "nr_vest"
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/doomguy
 	name = "Doomguy's armor"
@@ -47,8 +47,8 @@
 	body_parts_covered = CHEST|GROIN
 	slowdown = 0
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 
 /obj/item/clothing/suit/kaminacape
@@ -56,22 +56,22 @@
 	desc = "Don't believe in yourself, dumbass. Believe in me. Believe in the Kamina who believes in you."
 	icon_state = "kaminacape"
 	body_parts_covered = 0
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/officercoat
 	name = "Officer's Coat"
 	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."
 	icon_state = "officersuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
 	desc = "Und das heiﬂt: Erika."
 	icon_state = "soldiersuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/russofurcoat
 	name = "russian fur coat"
@@ -79,46 +79,46 @@
 	icon_state = "russofurcoat"
 	allowed = list(/obj/item/gun)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/doshjacket
 	name = "Plasterer's Jacket"
 	desc = "Perfect for doing up the house."
 	icon_state = "doshjacket"
 	body_parts_covered = CHEST|GROIN|ARMS
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/maidapron
 	name = "Apron"
 	desc = "Simple white apron."
 	icon_state = "maidapron"
 	body_parts_covered = CHEST|GROIN
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/clownpiece
 	name = "small fairy wings"
 	desc = "Some small and translucid insect-like wings."
 	icon_state = "clownpiece"
 	body_parts_covered = 0
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/clownpiece/flying
 	name = "small fairy wings"
 	desc = "Some small and translucid insect-like wings. Looks like these are the real deal!"
 	icon_state = "clownpiece-fly"
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/raincoat
 	name = "Raincoat"
 	desc = "Do you like Huey Lewis and the News?"
 	icon_state = "raincoat"
 	body_parts_covered =CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	icon_override = 'modular_citadel/icons/mob/citadel/suit.dmi'
 
 

@@ -7,8 +7,8 @@
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_x_offset = 2
 	shaded_charge = 1
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 
 
 /obj/item/gun/energy/plasma/rifle
@@ -16,7 +16,7 @@
 	desc = "A state of the art cannon utilizing plasma in a uranium-235 lined core to output hi-power, radiating bolts of energy."
 	icon_state = "alienrifle"
 	item_state = null
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/rifle)
 	ammo_x_offset = 4
@@ -28,7 +28,7 @@
 	desc = "A state of the art rifle utilizing plasma in a uranium-235 lined core to output radiating bolts of energy."
 	icon_state = "lightalienrifle"
 	item_state = null
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/light)
 	ammo_x_offset = 2
 
@@ -38,7 +38,7 @@
 	desc = "A plasma MP40k. Ich liebe den geruch von plasma am morgen."
 	icon_state = "PlasMP"
 	item_state = null
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/MP40k)
 	ammo_x_offset = 3
 
@@ -49,21 +49,21 @@
 	desc = "A laser rifle issued to high ranking members of a certain shadow corporation."
 	icon_state = "xcomlasergun"
 	item_state = null
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 4
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 
 /obj/item/gun/energy/laser/LaserAK
 	name = "Laser AK470"
 	desc = "A laser AK. Death solves all problems -- No man, no problem."
 	icon_state = "LaserAK"
 	item_state = null
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	ammo_x_offset = 4
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'

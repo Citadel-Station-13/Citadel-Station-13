@@ -1,16 +1,16 @@
 /datum/sprite_accessory
 	var/extra = FALSE
-	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra_icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	var/extra_color_src = MUTCOLORS2						//The color source for the extra overlay.
 	var/extra2 = FALSE
-	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra2_icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
 	var/list/ckeys_allowed
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
 	name = "Anthro Digitigrade Legs"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 */
 
 /datum/sprite_accessory/moth_wings/none
@@ -37,128 +37,128 @@
 	name = "Red Panda"
 	icon_state = "ailurus"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	gender_specific = 1
 
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/cow
 	name = "Cow"
 	icon_state = "cow"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
 	extra = TRUE
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
 	extra = TRUE
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 //datum/sprite_accessory/ears/elf
 //	name = "Elf"
 //	icon_state = "elf"
-//	icon = 'icons/mob/mam_bodyparts.dmi'
+//	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 //	ckeys_allowed = list("atiefling")
 
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	hasinner = 1
 
 /datum/sprite_accessory/tails/human/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/fennec
 	name = "Fennec"
 	icon_state = "fennec"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
 	icon_state = "fox"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/tails_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/tails/human/horse
 	name = "Horse"
 	icon_state = "horse"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/horse
 	name = "Horse"
 	icon_state = "horse"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = HAIR
 
 /datum/sprite_accessory/tails/human/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/tails_animated/human/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/tails/human/kitsune
@@ -166,92 +166,92 @@
 	icon_state = "kitsune"
 	extra = TRUE
 	extra_color_src = MUTCOLORS2
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
 	extra = TRUE
 	extra_color_src = MUTCOLORS2
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/lab
 	name = "Dog, Floppy"
 	icon_state = "lab"
 	hasinner = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/murid
 	name = "Murid"
 	icon_state = "murid"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/murid
 	name = "Murid"
 	icon_state = "murid"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/murid
 	name = "Murid"
 	icon_state = "murid"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/otie
 	name = "Otusian"
 	icon_state = "otie"
 	hasinner= 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/otie
 	name = "Otusian"
 	icon_state = "otie"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/otie
 	name = "Otusian"
 	icon_state = "otie"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
     name = "Rabbit"
     icon_state = "rabbit"
     hasinner= 1
-    icon = 'icons/mob/mam_bodyparts.dmi'
+    icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
 	hasinner= 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/skunk
 	name = "skunk"
@@ -267,62 +267,62 @@
 	name = "Shark"
 	icon_state = "shark"
 	color_src = MUTCOLORS
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/shark/datashark
 	name = "datashark"
 	icon_state = "datashark"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
 	hasinner= 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	hasinner = 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 *************** Body Parts ****************
 *******************************************/
 
 /datum/sprite_accessory/mam_ears
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 /datum/sprite_accessory/mam_ears/none
 	name = "None"
 
 /datum/sprite_accessory/mam_tails
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 
 /datum/sprite_accessory/mam_tails_animated
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
@@ -334,48 +334,48 @@
 /datum/sprite_accessory/snouts/none
 	name = "None"
 	icon_state = "none"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/snouts/bird
 	name = "Beak"
 	icon_state = "bird"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/snouts/scanid
 	name = "Fox, Short"
 	icon_state = "scanid"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/snouts/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/snouts/otie
 	name = "Otie"
 	icon_state = "otie"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/snouts/sergal
 	name = "Sergal"
 	icon_state = "sergal"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS2
 
 /******************************************
@@ -497,7 +497,7 @@
 /datum/sprite_accessory/mam_ears/husky
 	name = "Husky"
 	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
 /datum/sprite_accessory/mam_tails/husky
@@ -564,19 +564,19 @@
 	icon_state = "cat"
 	hasinner = 1
 	color_src = HAIR
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails/neko
 	name = "Neko"
 	icon_state = "cat"
 	color_src = HAIR
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails_animated/neko
 	name = "Neko"
 	icon_state = "cat"
 	color_src = HAIR
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_ears/otie
 	name = "Otusian"
@@ -688,7 +688,7 @@
 /datum/sprite_accessory/mam_body_markings
 	extra = TRUE
 	extra2 = TRUE
-	icon = 'icons/mob/mam_body_markings.dmi'
+	icon = 'modular_citadel/icons/mob/mam_body_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -802,10 +802,10 @@
 ************ Taur Bodies ******************
 *******************************************/
 /datum/sprite_accessory/taur
-	icon = 'icons/mob/mam_taur.dmi'
-	extra_icon = 'icons/mob/mam_taur.dmi'
+	icon = 'modular_citadel/icons/mob/mam_taur.dmi'
+	extra_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra = TRUE
-	extra2_icon = 'icons/mob/mam_taur.dmi'
+	extra2_icon = 'modular_citadel/icons/mob/mam_taur.dmi'
 	extra2 = TRUE
 	center = TRUE
 	dimension_x = 64
@@ -876,29 +876,23 @@
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
-
-/datum/sprite_accessory/xeno_dorsal/none
-	name = "None"
+	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/standard
 	name = "Standard"
 	icon_state = "standard"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/royal
 	name = "Royal"
 	icon_state = "royal"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/down
 	name = "Dorsal Down"
 	icon_state = "down"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Tail
 /datum/sprite_accessory/xeno_tail
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_tail/none
 	name = "None"
@@ -906,35 +900,149 @@
 /datum/sprite_accessory/xeno_tail/standard
 	name = "Xenomorph Tail"
 	icon_state = "xeno"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Caste Heads
 /datum/sprite_accessory/xeno_head
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
-
-/datum/sprite_accessory/xeno_head/none
-	name = "None"
+	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"
 	icon_state = "standard"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
-
 
 /datum/sprite_accessory/xeno_head/royal
 	name = "royal"
 	icon_state = "royal"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/hollywood
 	name = "hollywood"
 	icon_state = "hollywood"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/warrior
 	name = "warrior"
 	icon_state = "warrior"
-	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+
+// IPCs
+/datum/sprite_accessory/screen
+	icon = 'modular_citadel/icons/mob/ipc_screens.dmi'
+	color_src = null
+
+/datum/sprite_accessory/screen/blank
+	name = "Blank"
+	icon_state = "blank"
+
+/datum/sprite_accessory/screen/pink
+	name = "Pink"
+	icon_state = "pink"
+
+/datum/sprite_accessory/screen/green
+	name = "Green"
+	icon_state = "green"
+
+/datum/sprite_accessory/screen/red
+	name = "Red"
+	icon_state = "red"
+
+/datum/sprite_accessory/screen/blue
+	name = "Blue"
+	icon_state = "blue"
+
+/datum/sprite_accessory/screen/yellow
+	name = "Yellow"
+	icon_state = "yellow"
+
+/datum/sprite_accessory/screen/shower
+	name = "Shower"
+	icon_state = "shower"
+
+/datum/sprite_accessory/screen/nature
+	name = "Nature"
+	icon_state = "nature"
+
+/datum/sprite_accessory/screen/eight
+	name = "Eight"
+	icon_state = "eight"
+
+/datum/sprite_accessory/screen/goggles
+	name = "Goggles"
+	icon_state = "goggles"
+
+/datum/sprite_accessory/screen/heart
+	name = "Heart"
+	icon_state = "heart"
+
+/datum/sprite_accessory/screen/monoeye
+	name = "Mono eye"
+	icon_state = "monoeye"
+
+/datum/sprite_accessory/screen/breakout
+	name = "Breakout"
+	icon_state = "breakout"
+
+/datum/sprite_accessory/screen/purple
+	name = "Purple"
+	icon_state = "purple"
+
+/datum/sprite_accessory/screen/scroll
+	name = "Scroll"
+	icon_state = "scroll"
+
+/datum/sprite_accessory/screen/console
+	name = "Console"
+	icon_state = "console"
+
+/datum/sprite_accessory/screen/rgb
+	name = "RGB"
+	icon_state = "rgb"
+
+/datum/sprite_accessory/screen/golglider
+	name = "Gol Glider"
+	icon_state = "golglider"
+
+/datum/sprite_accessory/screen/rainbow
+	name = "Rainbow"
+	icon_state = "rainbow"
+
+/datum/sprite_accessory/screen/sunburst
+	name = "Sunburst"
+	icon_state = "sunburst"
+
+/datum/sprite_accessory/screen/static
+	name = "Static"
+	icon_state = "static"
+
+//Oracle Station sprites
+
+/datum/sprite_accessory/screen/bsod
+	name = "BSOD"
+	icon_state = "bsod"
+
+/datum/sprite_accessory/screen/redtext
+	name = "Red Text"
+	icon_state = "retext"
+
+/datum/sprite_accessory/screen/sinewave
+	name = "Sine wave"
+	icon_state = "sinewave"
+
+/datum/sprite_accessory/screen/squarewave
+	name = "Square wave"
+	icon_state = "squarwave"
+
+/datum/sprite_accessory/screen/ecgwave
+	name = "ECG wave"
+	icon_state = "ecgwave"
+
+/datum/sprite_accessory/screen/eyes
+	name = "Eyes"
+	icon_state = "eyes"
+
+/datum/sprite_accessory/screen/textdrop
+	name = "Text drop"
+	icon_state = "textdrop"
+
+/datum/sprite_accessory/screen/stars
+	name = "Stars"
+	icon_state = "stars"
 
 // *** Snooooow flaaaaake ***
 
