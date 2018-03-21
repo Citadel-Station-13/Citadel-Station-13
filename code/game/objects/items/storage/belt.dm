@@ -163,7 +163,7 @@
 		/obj/item/implanter,
 		/obj/item/hypospray
 		)
-
+		// CIT CHANGE added hypospray mk IIs to belt /obj/item/hypospray
 
 /obj/item/storage/belt/security
 	name = "security belt"
