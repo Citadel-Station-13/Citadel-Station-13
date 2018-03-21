@@ -43,25 +43,21 @@
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
-	if(mood)
-		mood.add_event("dumb", /datum/mood_event/oblivious)
+	owner.SendSignal(COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
 	owner.derpspeech = min(owner.derpspeech + 5, 25)
 	if(prob(3))
 		owner.emote("drool")
-	else if(owner.stat == CONSCIOUS && prob(3))
+	else if(owner && owner.stat == CONSCIOUS && prob(3))
 		owner.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
 	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
-	if(mood)
-		mood.clear_event("dumb")
+	owner.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
 
 /datum/brain_trauma/mild/speech_impediment
@@ -142,13 +138,13 @@
 
 /datum/brain_trauma/mild/muscle_weakness/on_life()
 	var/fall_chance = 1
-	if(owner.m_intent == MOVE_INTENT_RUN)
+	if(owner && owner.m_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
 	if(prob(fall_chance) && !owner.lying && !owner.buckled)
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
 		owner.Knockdown(35)
 
-	else if(owner.get_active_held_item())
+	else if(owner && owner.get_active_held_item())
 		var/drop_chance = 1
 		var/obj/item/I = owner.get_active_held_item()
 		drop_chance += I.w_class
@@ -171,11 +167,11 @@
 	if(prob(7))
 		switch(rand(1,5))
 			if(1)
-				if(owner.canmove && !isspaceturf(owner.loc))
+				if(owner && owner.canmove && !isspaceturf(owner.loc))
 					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)
-				if(owner.incapacitated())
+				if(owner && owner.incapacitated())
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				if(I)
@@ -207,7 +203,7 @@
 				owner.ClickOn(owner)
 				owner.a_intent = prev_intent
 			if(5)
-				if(owner.incapacitated())
+				if(owner && owner.incapacitated())
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				var/list/turf/targets = list()

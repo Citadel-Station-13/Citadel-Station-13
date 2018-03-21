@@ -11,7 +11,7 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 4
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/clown
 
@@ -73,7 +73,7 @@ Mime
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 4
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/mime
 
@@ -124,7 +124,7 @@ Curator
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	antag_rep = 4
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/curator
 
@@ -140,7 +140,7 @@ Curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	//CITADEL EDIT removes runtimes from this pocket protector
 	backpack_contents = list(
 		/obj/item/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
@@ -170,7 +170,7 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/lawyers = 0 //Counts lawyer amount
-	antag_rep = 8
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/lawyer
 
