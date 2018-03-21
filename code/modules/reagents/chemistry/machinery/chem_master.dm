@@ -339,7 +339,7 @@ obj/machinery/chem_master/proc/work_animation()
 				work_animation()
 			. = TRUE
 
-		if("createvial")
+		if("createvial") // CITADEL CHANGE - Enables Hypovials to be made here
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
 				return
@@ -365,8 +365,9 @@ obj/machinery/chem_master/proc/work_animation()
 				V.name = trim("[name] hypovial")
 				adjust_item_drop_location(V)
 				reagents.trans_to(V, vol_part)
+				work_animation()
 			. = TRUE
-
+			// END CITADEL CHANGE
 		if("analyze")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
