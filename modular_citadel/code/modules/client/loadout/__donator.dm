@@ -248,7 +248,7 @@ datum/gear/darksabresheath
 	ckeywhitelist = list("izzyinbox")
 
 /datum/gear/cloak
-name = "Green Cloak"
-category = slot_neck
-path = /obj/item/clothing/neck/cloak/green
-ckeywhitelist = list("killer402402")
+	name = "Green Cloak"
+	category = slot_neck
+	path = /obj/item/clothing/neck/cloak/green
+	ckeywhitelist = list("killer402402")
