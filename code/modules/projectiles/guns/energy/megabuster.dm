@@ -9,7 +9,7 @@
 	item_flags = NEEDS_PERMIT
 	selfcharge = TRUE
 	cell_type = "/obj/item/stock_parts/cell/pulse"
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 
 /obj/item/gun/energy/megabuster/proto
 	name = "Proto-buster"
@@ -19,7 +19,7 @@
 /obj/item/gun/energy/mmlbuster
 	name = "Buster Cannon"
 	desc = "An antique arm-mounted buster cannon."
-	icon = 'icons/obj/guns/VGguns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/VGguns.dmi'
 	icon_state = "mmlbuster"
 	item_state = "mmlbuster"
 	w_class = WEIGHT_CLASS_SMALL

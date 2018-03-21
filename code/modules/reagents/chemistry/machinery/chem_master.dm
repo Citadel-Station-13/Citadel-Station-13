@@ -339,6 +339,34 @@ obj/machinery/chem_master/proc/work_animation()
 				work_animation()
 			. = TRUE
 
+		if("createvial")
+			var/many = params["many"]
+			if(reagents.total_volume == 0)
+				return
+
+			var/amount_full = 0
+			var/vol_part = min(reagents.total_volume, 30)
+			if(text2num(many))
+				amount_full = round(reagents.total_volume / 30)
+				vol_part = reagents.total_volume % 30
+			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				return
+
+			var/obj/item/reagent_containers/glass/bottle/vial/small/V
+			for(var/i = 0; i < amount_full; i++)
+				V = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
+				V.name = trim("[name] hypovial")
+				adjust_item_drop_location(V)
+				reagents.trans_to(V, 30)
+
+			if(vol_part)
+				V = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
+				V.name = trim("[name] hypovial")
+				adjust_item_drop_location(V)
+				reagents.trans_to(V, vol_part)
+			. = TRUE
+
 		if("analyze")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)

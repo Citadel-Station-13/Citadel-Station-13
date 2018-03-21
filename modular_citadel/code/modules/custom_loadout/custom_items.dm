@@ -350,3 +350,13 @@
 	can_hold = list(
 		/obj/item/toy/sword/darksabre
 		)
+
+/obj/item/clothing/neck/cloak/green
+	name = "Generic Green Cloak"
+	desc = "This cloak doesn't seem too special."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "wintergreencloak"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "wintergreencloak"
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS

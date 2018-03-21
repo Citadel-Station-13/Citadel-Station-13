@@ -2,4 +2,6 @@
     ..()
     new /obj/item/device/radio/headset/heads/qm(src)
 
-
+/obj/structure/closet/secure_closet/CMO/PopulateContents()
+	..()
+	new /obj/item/storage/hypospraykit/cmo(src)

@@ -160,9 +160,10 @@
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/implantcase,
 		/obj/item/implant,
-		/obj/item/implanter
+		/obj/item/implanter,
+		/obj/item/hypospray
 		)
-
+		// CIT CHANGE added hypospray mk IIs to belt /obj/item/hypospray
 
 /obj/item/storage/belt/security
 	name = "security belt"

@@ -163,7 +163,7 @@
 	//Sound w/ antispam flag setting
 	if(!silent && !recent_sound)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
-			if(M.client && M.client.prefs.toggles & EATING_NOISES)
+			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				recent_sound = TRUE
 
@@ -194,7 +194,7 @@
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
 	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
-		if(M.client && M.client.prefs.toggles & EATING_NOISES)
+		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	items_preserved.Cut()
 	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
@@ -215,7 +215,7 @@
 		P.stop_sound_channel(CHANNEL_PREYLOOP)
 	if(release_sound)
 		for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-			if(H.client && H.client.prefs.toggles & EATING_NOISES)
+			if(H.client && H.client.prefs.cit_toggles & EATING_NOISES)
 				playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
@@ -507,7 +507,7 @@
 
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
-			if(M.client && M.client.prefs.toggles & EATING_NOISES)
+			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 				playsound(get_turf(owner),"struggle_sound",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
 		R.stop_sound_channel(CHANNEL_PRED)
 		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
@@ -584,7 +584,7 @@
 	target.nom_mob(content, target.owner)
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
-			if(M.client && M.client.prefs.toggles & EATING_NOISES)
+			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
