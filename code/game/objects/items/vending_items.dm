@@ -1,3 +1,6 @@
+/*
+	Vending machine refills can be found at /code/modules/vending/ within each vending machine's respective file
+*/
 /obj/item/vending_refill
 	name = "resupply canister"
 	var/machine_name = "Generic"
@@ -30,6 +33,7 @@
 	if(charges[1] > 0)
 		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
 	else
+<<<<<<< HEAD
 		to_chat(user, "It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
@@ -94,3 +98,6 @@
 	icon_state = "refill_games"
 	charges = list(7, 3, 0) //of 21 standard, 9 contraband
 	init_charges = list(7, 3, 0)
+=======
+		to_chat(user, "It's empty!")
+>>>>>>> 3e1db72... Modularises vending machines (#36508)
