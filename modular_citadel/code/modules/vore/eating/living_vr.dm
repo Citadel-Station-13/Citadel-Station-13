@@ -204,7 +204,7 @@
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-		if(M.client && M.client.prefs.toggles & EATING_NOISES)
+		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 			playsound(get_turf(user),"[belly.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	// Actually shove prey into the belly.

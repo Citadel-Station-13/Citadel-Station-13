@@ -685,26 +685,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
-
-				//Mammal Bodyparts
-				if("mam_tail")
-					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
-				if("mam_waggingtail")
-					S.= GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
-				if("mam_body_markings")
-					S = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
-				if("mam_ears")
-					S = GLOB.mam_ears_list[H.dna.features["mam_ears"]]
-				if("taur")
-					S = GLOB.taur_list[H.dna.features["taur"]]
-
-				//Xeno Bodyparts
-				if("xenodorsal")
-					S = GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
-				if("xenohead")
-					S = GLOB.xeno_head_list[H.dna.features["xenohead"]]
-				if("xenotail")
-					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
+				else
+					S = citadel_mutant_bodyparts(bodypart, H)
 
 			if(!S || S.icon_state == "none")
 				continue

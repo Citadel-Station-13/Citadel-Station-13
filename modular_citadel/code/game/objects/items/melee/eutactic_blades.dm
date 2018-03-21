@@ -26,6 +26,15 @@
 	light_color = "#37FFF7"
 	actions_types = list()
 
+/obj/item/melee/transforming/energy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/melee/transforming/energy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
 	active = !active				//I'd use a ..() here but it'd inherit from the regular esword's proc instead, so SPAGHETTI CODE
 	if(active)						//also I'd need to rip out the iconstate changing bits
@@ -119,6 +128,15 @@
 	light_color = "#37FFF7"
 	var/light_brightness = 3
 	actions_types = list()
+
+/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/toy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
 
 /obj/item/toy/sword/cx/attack_self(mob/user)
 	active = !( active )
@@ -232,6 +250,16 @@
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	flags_2 = SLOWS_WHILE_IN_HAND_2
+
+/obj/item/twohanded/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/hypereutactic/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
 
 /obj/item/twohanded/hypereutactic/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
@@ -403,3 +431,21 @@
 	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
+
+//RAINBOW MEMES
+
+/obj/item/twohanded/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	flags_2 = NONE
+	var/list/rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/process()
+	. = ..()
+	var/set_color = pick(rainbow_colors)
+	light_color = set_color
+	update_light()
+	update_icon()
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/AltClick(mob/living/user)
+	return
