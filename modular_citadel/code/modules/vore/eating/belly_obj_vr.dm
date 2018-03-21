@@ -186,8 +186,8 @@
 			if(L.absorbed && !include_absorbed)
 				continue
 			L.absorbed = FALSE
-		for(var/mob/living/W in AM)
-			W.stop_sound_channel(CHANNEL_PREYLOOP)
+			L.stop_sound_channel(CHANNEL_PREYLOOP)
+			L.cure_blind("belly_[REF(src)]")
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
 	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
@@ -207,9 +207,7 @@
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
-	items_preserved -= M
-	for(var/mob/living/P in M)
-		P.stop_sound_channel(CHANNEL_PREYLOOP)
+	items_preserved -= M		
 	if(release_sound)
 		for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
 			if(H.client && H.client.prefs.toggles & EATING_NOISES)
@@ -218,6 +216,8 @@
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
 		var/mob/living/OW = owner
+		ML.stop_sound_channel(CHANNEL_PREYLOOP)
+		ML.cure_blind("belly_[REF(src)]")
 		if(ML.absorbed)
 			ML.absorbed = FALSE
 			if(ishuman(M) && ishuman(OW))
@@ -249,6 +249,8 @@
 
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
+		M.become_blind("belly_[REF(src)]")
+
 
 	// Setup the autotransfer checks if needed
 	if(transferlocation && autotransferchance > 0)

@@ -317,6 +317,8 @@
 			return
 		//Actual escaping
 		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
+		if(is_blind(src) && !has_trait(TRAIT_BLIND))
+			src.adjust_blindness(-1)
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
 		for(var/mob/living/simple_animal/SA in range(10))
 			SA.prey_excludes[src] = world.time
