@@ -1,7 +1,8 @@
 /obj/item/device/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
-	icon = 'icons/obj/clothing/neck.dmi'
+	icon = 'modular_citadel/icons/mob/citadel/neck.dmi'
+	icon_override = 'modular_citadel/icons/obj/clothing/neck.dmi'
 	icon_state = "shockcollar"
 	item_state = "shockcollar"
 	body_parts_covered = NECK
@@ -19,7 +20,7 @@
 	build_path = /obj/item/device/electropack/shockcollar
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	category = list("hacked", "Misc")
-	
+
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_NECK)
