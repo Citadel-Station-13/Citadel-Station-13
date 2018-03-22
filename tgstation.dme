@@ -2688,6 +2688,7 @@
 #include "modular_citadel\code\modules\admin\topic.dm"
 #include "modular_citadel\code\modules\antagonists\cit_crewobjectives.dm"
 #include "modular_citadel\code\modules\antagonists\cit_miscreants.dm"
+#include "modular_citadel/code/modules/antagonists/cult/blood_magic.dm"
 #include "modular_citadel\code\modules\antagonists\crew_objectives\cit_crewobjectives_cargo.dm"
 #include "modular_citadel\code\modules\antagonists\crew_objectives\cit_crewobjectives_civilian.dm"
 #include "modular_citadel\code\modules\antagonists\crew_objectives\cit_crewobjectives_command.dm"
