@@ -139,9 +139,8 @@
 	name = "Stun"
 	desc = "A potent spell that will stun and mute victims upon contact."
 	button_icon_state = "hand"
-	charges = 4
 	magic_path = "/obj/item/melee/blood_magic/stun"
-	health_cost = 3
+	health_cost = 10
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
