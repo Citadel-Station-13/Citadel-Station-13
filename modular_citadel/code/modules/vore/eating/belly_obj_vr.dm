@@ -103,7 +103,7 @@
 	//List has indexes that are the digestion mode strings, and keys that are lists of strings.
 	var/tmp/list/emote_lists = list()
 
-//For serialization, keep this updated, required for bellies to save correctly.
+//For serialization, keep this updated AND IN ORDER OF VARS LISTED ABOVE AND IN DUPE AT THE BOTTOM!!, required for bellies to save correctly.
 /obj/belly/vars_to_save()
 	return ..() + list(
 		"name",
@@ -207,7 +207,7 @@
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
-	items_preserved -= M		
+	items_preserved -= M
 	if(release_sound)
 		for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
 			if(H.client && H.client.prefs.cit_toggles & EATING_NOISES)
@@ -250,6 +250,7 @@
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
 		M.become_blind("belly_[REF(src)]")
+
 
 
 	// Setup the autotransfer checks if needed
@@ -575,6 +576,8 @@
 /obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
 	if(!(content in src) || !istype(target))
 		return
+	for(var/mob/living/M in contents)
+		M.cure_blind("belly_[REF(src)]")
 	target.nom_mob(content, target.owner)
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
@@ -585,7 +588,7 @@
 		M.updateVRPanel()
 
 // Belly copies and then returns the copy
-// Needs to be updated for any var changes
+// Needs to be updated for any var changes AND KEPT IN ORDER OF THE VARS ABOVE AS WELL!
 /obj/belly/proc/copy(mob/new_owner)
 	var/obj/belly/dupe = new /obj/belly(new_owner)
 
