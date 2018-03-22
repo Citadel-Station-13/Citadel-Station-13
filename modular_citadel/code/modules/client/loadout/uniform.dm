@@ -140,6 +140,7 @@
 	name = "Tactitool Turtleneck"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/syndicate/cosmetic
+
 /datum/gear/strppink
 	name = "Pink stripper outfit"
 	category = slot_w_uniform
