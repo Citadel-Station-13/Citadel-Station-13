@@ -18,9 +18,6 @@
 /obj/item/soap/cebu/fast //speedyquick cleaning version. Still not as fast as Syndiesoap. Adminspawn only.
 	cleanspeed = 15
 
-
-/*Inferno707*/
-
 /obj/item/clothing/neck/cloak/inferno
 	name = "Kiara's Cloak"
 	desc = "The design on this seems a little too familiar."
@@ -49,8 +46,6 @@
 	item_color = "steele"
 	medaltype = "medal-silver"
 
-/*DirtyOldHarry*/
-
 /obj/item/lighter/gold
 	name = "\improper Engraved Zippo"
 	desc = "A shiny and relatively expensive zippo lighter. There's a small etched in verse on the bottom that reads, 'No Gods, No Masters, Only Man.'"
@@ -64,10 +59,7 @@
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 
-
-/*Zombierobin*/
-
-/obj/item/clothing/neck/scarf/zomb //Default white color, same functionality as beanies.
+/obj/item/clothing/neck/scarf/zomb
 	name = "A special scarf"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "zombscarf"
@@ -84,7 +76,6 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "labred"
 
-
 /obj/item/clothing/suit/toggle/labcoat/labredblack
 	name = "Black and Red Coat"
 	desc = "An oddly special looking coat."
@@ -92,9 +83,6 @@
 	icon_state = "labredblack"
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "labredblack"
-
-
-/*Improvedname*/
 
 /obj/item/toy/plush/carrot
 	name = "carrot plushie"
@@ -129,8 +117,6 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/toysqueak1.ogg'=1), 50)
 
-/*PLACEHOLDER*/
-
 /obj/item/toy/plush/tree
 	name = "christmass tree plushie"
 	desc = "A festive plush that squeeks when you squeeze it!"
@@ -152,18 +138,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
-
-/*Zigfie*/
-
 /obj/item/clothing/mask/luchador/zigfie
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "lucharzigfie"
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "lucharzigfie"
-
-
-/*PLACEHOLDER*/
 
 /obj/item/clothing/head/hardhat/reindeer/fluff
 	name = "novelty reindeer hat"
@@ -200,9 +180,6 @@
 	item_state = "sexymime"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
-
-/*Brian*/
-
 /obj/item/clothing/suit/trenchcoat/green
 	name = "Reece's Great Coat"
 	desc = "You would swear this was in your nightmares after eating too many veggies."
@@ -212,8 +189,6 @@
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
-
-/*Slomek*/
 /obj/item/reagent_containers/food/drinks/flask/russian
 	name = "russian flask"
 	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
@@ -229,8 +204,13 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "stalker"
 
+/obj/item/reagent_containers/food/drinks/flask/steel
+	name = "The End"
+	desc = "A plain steel flask, sealed by lock and key. The front is inscribed with The End."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "steelflask"
+	volume = 60
 
-/*Sylas*/
 /obj/item/clothing/neck/petcollar/stripe //don't really wear this though please c'mon seriously guys
 	name = "collar"
 	desc = "It's a collar..."
@@ -240,8 +220,6 @@
 	item_state = "petcollar-stripe"
 	tagname = null
 
-
-/*PLACEHOLDER*/
 /obj/item/clothing/under/singery/custom
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
@@ -253,7 +231,6 @@
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
-
 
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
@@ -277,9 +254,6 @@
 	item_state = "puffydress"
 	body_parts_covered = CHEST|GROIN|LEGS
 
-
-/*Fractious*/
-
 /obj/item/clothing/suit/vermillion
 	name = "vermillion clothing"
 	desc = "Some clothing."
@@ -289,7 +263,6 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
 
-/*TechnicalMagi*/
 /obj/item/clothing/under/bb_sweater/black/naomi
 	name = "worn black sweater"
 	desc = "A well-loved sweater, showing signs of several cleanings and re-stitchings. And a few stains. Is that cat fur?"
