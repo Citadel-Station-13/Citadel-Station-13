@@ -152,7 +152,29 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/stripper_green
 	cost = 8
+/datum/gear/sundress
+	name = "Sundress"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/sundress
 
+/datum/gear/polyjumpsuit
+	name = "Polychromic jumpsuit"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/jumpsuit
+	cost = 3
+
+/datum/gear/polyskirt
+	name = "Polychromic SKIRT"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/skirt
+	cost = 3
+
+/datum/gear/polyshirt
+	name = "Polychromic SHIRT" //so people don't misread
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/shirt
+	cost = 3
+	
 // Trekie things
 //TOS
 /datum/gear/trekcmdtos
