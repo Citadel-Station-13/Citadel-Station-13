@@ -71,19 +71,6 @@
 	desc = "A protective & concealing hood."
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
-	
-/obj/item/clothing/suit/hooded/cloak/david
-	name = "red cloak"
-	icon_state = "goliath_cloak"
-	desc = "Ever wanted to look like a badass without ANY effort? Try this nanotrasen brand red cloak, perfect for kids"
-	hoodtype = /obj/item/clothing/head/hooded/cloakhood/david
-	body_parts_covered = CHEST|GROIN|ARMS
-
-/obj/item/clothing/head/hooded/cloakhood/david
-	name = "red cloak hood"
-	icon_state = "golhood"
-	desc = "conceal your face in shame with this nanotrasen brand hood"
-	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
