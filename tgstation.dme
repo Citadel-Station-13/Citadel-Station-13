@@ -2715,6 +2715,8 @@
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
 #include "modular_citadel\code\modules\jobs\job_types\cargo_service.dm"
 #include "modular_citadel\code\modules\jobs\job_types\engineering.dm"
+#include "modular_citadel\code\modules\jobs\job_types\medical.dm"
+#include "modular_citadel\code\modules\jobs\job_types\science.dm"
 #include "modular_citadel\code\modules\jobs\job_types\security.dm"
 #include "modular_citadel\code\modules\keybindings\bindings_carbon.dm"
 #include "modular_citadel\code\modules\keybindings\bindings_human.dm"

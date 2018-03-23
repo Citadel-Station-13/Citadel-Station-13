@@ -12,9 +12,9 @@ Captain
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	req_admin_notify = 1
-	minimal_player_age = 60 // CITADEL CHANGE to 60
+	minimal_player_age = 14
 	exp_requirements = 180
-	exp_type = EXP_TYPE_COMMAND //CITADEL CHANGE command experience needed
+	exp_type = EXP_TYPE_CREW
 	antag_rep = 20
 
 	outfit = /datum/outfit/job/captain
@@ -66,7 +66,7 @@ Head of Personnel
 	supervisors = "the captain"
 	selection_color = "#ddddff"
 	req_admin_notify = 1
-	minimal_player_age = 60 // CITADEL CHANGE to 60
+	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 //	exp_type_department = EXP_TYPE_SUPPLY - CITADEL CHANGE
