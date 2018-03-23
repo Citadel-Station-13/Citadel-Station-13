@@ -209,13 +209,19 @@
     name = "Puffy Dress"
     category = slot_wear_suit
     path = /obj/item/clothing/suit/puffydress
-    ckeywhitelist = ("Stallingratt")
+    ckeywhitelist = list("stallingratt")
 
 /datum/gear/labredblack
     name = "Black and Red Coat"
     category = slot_wear_suit
     path = /obj/item/clothing/suit/toggle/labcoat/labredblack
-    ckeywhitelist = list("blakeryan")
+    ckeywhitelist = list("blakeryan, durandalphor")
+
+/datum/gear/torisword
+	name = "Rainbow Zweihander"
+	category = slot_in_backpack
+	path = /obj/item/twohanded/hypereutactic/toy/rainbow
+	ckeywhitelist = list("annoymous35")
 
 /datum/gear/darksabre
 	name = "Dark Sabre"
@@ -229,8 +235,27 @@ datum/gear/darksabresheath
 	path = /obj/item/storage/belt/sabre/darksabre
 	ckeywhitelist = list("inferno707")
 
+/datum/gear/toriball
+	name = "Rainbow Tennis Ball"
+	category = slot_in_backpack
+	path = /obj/item/toy/tennis/rainbow
+	ckeywhitelist = list("annoymous35")
 
+/datum/gear/izzyball
+	name = "Katlin's Ball"
+	category = slot_in_backpack
+	path = /obj/item/toy/tennis/rainbow/izzy
+	ckeywhitelist = list("izzyinbox")
 
+/datum/gear/cloak
+	name = "Green Cloak"
+	category = slot_neck
+	path = /obj/item/clothing/neck/cloak/green
+	ckeywhitelist = list("killer402402")
 
-
-
+/datum/gear/steelflask
+	name = "Steel Flask"
+	category = slot_in_backpack
+	path = /obj/item/reagent_containers/food/drinks/flask/steel
+	cost = 2
+	ckeywhitelist = list("johnnyvitrano")

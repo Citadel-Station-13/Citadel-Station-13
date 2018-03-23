@@ -103,7 +103,7 @@
 		/obj/item/device/radio, /obj/item/tank/internals/emergency_oxygen,
 		/obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer,/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/bottle/vial,/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/pill,/obj/item/storage/pill_bottle, /obj/item/restraints/handcuffs
+		/obj/item/reagent_containers/pill,/obj/item/storage/pill_bottle, /obj/item/restraints/handcuffs,/obj/item/hypospray
 		)
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
 
@@ -153,6 +153,7 @@
 				/obj/item/melee/baton,
 				/obj/item/restraints/handcuffs,
 				/obj/item/reagent_containers/hypospray,
+				/obj/item/hypospray,
 				/obj/item/device/healthanalyzer,
 				/obj/item/reagent_containers/syringe,
 				/obj/item/reagent_containers/glass/bottle/vial,

@@ -21,7 +21,7 @@
 /obj/item/gun/energy/laser/carbine
 	name = "VGS blaster carbine"
 	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal blaster carbine."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "lasernew"
 	item_state = "laser"
 	force = 10

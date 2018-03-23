@@ -48,7 +48,7 @@
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "ksleeper"
-	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
 	dogborg = TRUE
 	cyborg_pixel_offset = -16
@@ -79,7 +79,7 @@
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "msleeper"
-	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
 	dogborg = TRUE
 	cyborg_pixel_offset = -16
@@ -101,7 +101,7 @@
 	hat_offset = INFINITY
 	clean_on_move = TRUE
 	sleeper_overlay = "jsleeper"
-	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
 	cyborg_pixel_offset = -16
 	dogborg = TRUE
@@ -161,7 +161,7 @@
 	cyborg_base_icon = "orepup"
 	moduleselect_icon = "orepup"
 	sleeper_overlay = "osleeper"
-	cyborg_icon_override = 'icons/mob/widerobot.dmi'
+	cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 	has_snowflake_deadsprite = TRUE
 	cyborg_pixel_offset = -16
 

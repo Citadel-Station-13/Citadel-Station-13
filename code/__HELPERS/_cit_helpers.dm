@@ -50,6 +50,8 @@ GLOBAL_LIST_EMPTY(xeno_head_list)
 GLOBAL_LIST_EMPTY(xeno_tail_list)
 GLOBAL_LIST_EMPTY(xeno_dorsal_list)
 
+	//IPC species
+GLOBAL_LIST_EMPTY(ipc_screens_list)
 
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm

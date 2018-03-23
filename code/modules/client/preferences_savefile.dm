@@ -383,17 +383,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
-		//underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
-		//undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
+		underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
+		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
-		//underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
-		//undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
-	//socks			= sanitize_inlist(socks, GLOB.socks_list)
-	underwear		= "Nude"
-	undershirt		= "Nude"
-	socks			= "Nude"
+		underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
+		undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
+	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)

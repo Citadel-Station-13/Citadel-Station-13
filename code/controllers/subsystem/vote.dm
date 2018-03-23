@@ -327,7 +327,7 @@ SUBSYSTEM_DEF(vote)
 	return 1
 
 /datum/action/vote/proc/remove_from_client()
-	if(owner.client)
+	if(owner && owner.client)
 		owner.client.player_details.player_actions -= src
 	else if(owner.ckey)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]

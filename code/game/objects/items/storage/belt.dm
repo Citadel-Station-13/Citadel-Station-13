@@ -156,13 +156,14 @@
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/pinpointer/crew, 
+		/obj/item/pinpointer/crew,
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/implantcase,
 		/obj/item/implant,
-		/obj/item/implanter
+		/obj/item/implanter,
+		/obj/item/hypospray
 		)
-
+		// CIT CHANGE added hypospray mk IIs to belt /obj/item/hypospray
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -277,6 +278,10 @@
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/device/soulstone(src)
+
+/obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/device/soulstone/anybody/chaplain(src)
 
 /obj/item/storage/belt/champion
 	name = "championship belt"
