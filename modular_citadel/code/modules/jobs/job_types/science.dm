@@ -1,2 +1,2 @@
-/datum/outfit/job/warden
-	suit_store = /obj/item/gun/energy/pumpaction/defender
+/datum/job/rd
+	minimal_player_age = 30
