@@ -91,6 +91,7 @@
 		"womb_efficiency" = CUM_EFFICIENCY,
 		"womb_fluid" = "femcum",
 		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
 		"flavor_text" = ""
 		)
 
@@ -113,7 +114,7 @@
 	. += "</center>"
 
 	. += "<HR>"
-			
+
 	//Character Appearance
 	if(current_tab == 2)
 		update_preview_icon(nude=TRUE)
@@ -184,8 +185,10 @@
 			. += "<b>Tail: </b><a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
 		if("xenodorsal" in pref_species.mutant_bodyparts)
 			. += "<b>Dorsal Tubes: </b><a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
-		if("ipc_screen" in pref_species.mutant_bodyparts)	
+		if("ipc_screen" in pref_species.mutant_bodyparts)
 			. += "<b>Screen:</b><a href='?_src_=prefs;preference=ipc_screen;task=input'>[features["ipc_screen"]]</a><BR>"
+		if("ipc_antenna" in pref_species.mutant_bodyparts)
+			. += "<b>Antenna:</b><a href='?_src_=prefs;preference=ipc_antenna;task=input'>[features["ipc_antenna"]]</a><BR>"
 
 		. += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -333,7 +336,7 @@
 				var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 				if(new_eyes)
 					eye_color = sanitize_hexcolor(new_eyes)
-			
+
 			if("species")
 				var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_races
 				if(result)
@@ -358,7 +361,7 @@
 						features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 					else
 						to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
-			
+
 			if("mutant_color2")
 				var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
 				if(new_mutantcolor)
@@ -386,6 +389,12 @@
 				new_ipc_screen = input(user, "Choose your character's screen:", "Character Preference") as null|anything in GLOB.ipc_screens_list
 				if(new_ipc_screen)
 					features["ipc_screen"] = new_ipc_screen
+
+			if("ipc_antenna")
+				var/new_ipc_antenna
+				new_ipc_antenna = input(user, "Choose your character's antenna:", "Character Preference") as null|anything in GLOB.ipc_antennas_list
+				if(new_ipc_antenna)
+					features["ipc_antenna"] = new_ipc_antenna
 
 			if("tail_lizard")
 				var/new_tail
@@ -499,7 +508,7 @@
 					if(new_taur != "None")
 						features["mam_tail"] = "None"
 						features["xenotail"] = "None"
-		
+
 			if("ears")
 				var/list/snowflake_ears_list = list("Normal" = null)
 				for(var/path in GLOB.ears_list)

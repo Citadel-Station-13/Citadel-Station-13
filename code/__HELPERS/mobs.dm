@@ -83,6 +83,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	if(!GLOB.ipc_screens_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
+	if(!GLOB.ipc_antennas_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list)
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
 	/*	if(H.gender == MALE) Fuck if I know how to fix this.
@@ -169,6 +171,7 @@
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
 		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
 		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)
