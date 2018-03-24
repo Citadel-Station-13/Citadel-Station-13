@@ -115,9 +115,15 @@
 			if(combatmode)
 				toggle_combat_mode()
 			recoveringstam = TRUE
+			#if DM_VERSION >= 512
+			filters += CIT_FILTER_STAMINACRIT
+			#endif
 			update_canmove()
 	if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		recoveringstam = FALSE
+		#if DM_VERSION >= 512
+		filters -= CIT_FILTER_STAMINACRIT
+		#endif
 		update_canmove()
 	update_health_hud()

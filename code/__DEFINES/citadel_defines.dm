@@ -13,6 +13,8 @@
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
 
+//Filters
+#define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
 
 //organ defines
 #define COCK_SIZE_MIN		1
@@ -131,3 +133,6 @@
 #define DIGESTION_NOISES 4
 
 #define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)
+
+//component stuff
+#define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
