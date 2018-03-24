@@ -49,7 +49,10 @@
 						amt_nude++
 				if(amt_nude)
 					var/watchers = 0
-					for(var/mob/living/M in view(world.view, src))
+					for(var/mob/_M in view(world.view, src))
+						var/mob/living/M = _M
+						if(!istype(M))
+							continue
 						if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
 							watchers++
 					if(watchers)
