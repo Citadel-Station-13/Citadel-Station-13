@@ -33,12 +33,12 @@
 
 
 /mob/living/carbon/handle_arousal()
-	if(canbearoused && dna && client)
+	if(canbearoused && dna)
 		var/datum/species/S
 		S = dna.species
-		if(S && SSmobs.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
+		if(S && !(SSmobs.times_fired % 36) && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
 			adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
-			if(dna.features["exhibitionist"])
+			if(dna.features["exhibitionist"] && client)
 				var/amt_nude = 0
 				if(is_chest_exposed() && (gender == FEMALE || getorganslot("breasts")))
 					amt_nude++
