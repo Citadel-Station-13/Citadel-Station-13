@@ -48,9 +48,8 @@
 					if(getorganslot("vagina"))
 						amt_nude++
 				if(amt_nude)
-					var/mob/living/M
 					var/watchers = 0
-					for(M in view(world.view, src))
+					for(var/mob/living/M in view(world.view, src))
 						if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
 							watchers++
 					if(watchers)
