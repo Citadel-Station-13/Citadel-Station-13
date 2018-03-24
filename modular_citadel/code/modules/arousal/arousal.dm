@@ -33,7 +33,7 @@
 
 
 /mob/living/carbon/handle_arousal()
-	if(canbearoused && dna)
+	if(canbearoused && dna && client)
 		var/datum/species/S
 		S = dna.species
 		if(S && SSmobs.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
@@ -47,13 +47,14 @@
 						amt_nude++
 					if(getorganslot("vagina"))
 						amt_nude++
-				var/mob/living/M
-				var/watchers = 0
-				for(M in view(world.view, src))
-					if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
-						watchers++
-				if(watchers && amt_nude)
-					adjustArousalLoss((amt_nude * watchers) + S.arousal_gain_rate)
+				if(amt_nude)
+					var/mob/living/M
+					var/watchers = 0
+					for(M in view(world.view, src))
+						if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
+							watchers++
+					if(watchers)
+						adjustArousalLoss((amt_nude * watchers) + S.arousal_gain_rate)
 
 
 /mob/living/proc/getArousalLoss()
