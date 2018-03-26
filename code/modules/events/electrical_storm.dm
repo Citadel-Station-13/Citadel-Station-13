@@ -12,8 +12,16 @@
 	announceWhen	= 1
 
 /datum/round_event/electrical_storm/announce(fake)
-	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
-
+	if(prob(50))
+		priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
+	else
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		for(var/obj/machinery/computer/communications/C in GLOB.machines)
+			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+				var/obj/item/paper/P = new(C.loc)
+				P.name = "Electrical Storm"
+				P.info = "An electrical storm has been detected in your area, please repair potential electronic overloads."
+				P.update_icon()
 
 /datum/round_event/electrical_storm/start()
 	var/list/epicentreList = list()
