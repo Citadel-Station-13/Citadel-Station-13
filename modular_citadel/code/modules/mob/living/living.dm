@@ -106,7 +106,7 @@
 				playsound(src, "bodyfall", 20, 1)
 			return FALSE
 
-/mob/living/carbon/proc/update_stamina()
+/mob/living/carbon/update_stamina()
 	var/total_health = (min(health*2,100) - staminaloss)
 	if(staminaloss)
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)

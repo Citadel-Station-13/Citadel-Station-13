@@ -887,10 +887,10 @@
 		return FALSE
 	return TRUE
 
-/*CIT CHANGE - comments out update_stamina to be modified in modular_citadel
+
 /mob/living/proc/update_stamina()
 	return
-
+/*
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam)
@@ -899,8 +899,7 @@
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
 			setStaminaLoss(health - 2, FALSE, FALSE)
-			update_health_hud() 
-*/ //END CITADEL EDIT
+			update_health_hud() */ //CITADEL OVERRIDE
 
 /mob/living/carbon/alien/update_stamina()
 	return
