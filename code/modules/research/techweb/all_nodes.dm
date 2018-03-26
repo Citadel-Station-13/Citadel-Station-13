@@ -128,8 +128,8 @@
 	id = "bluespace_basic"
 	display_name = "Basic Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
-	prereq_ids = list("base","telesci_gps")
-	design_ids = list("beacon") //CIT CHANGE removed xenobioconsole from here.
+	prereq_ids = list("base")
+	design_ids = list("beacon","telesci_gps") //CIT CHANGE removed xenobioconsole from here.
 	research_cost = 2500
 	export_price = 5000
 
