@@ -407,9 +407,15 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
+<<<<<<< HEAD
 			M.lay_down(TRUE)
 		 time--*/
 	M.SpinAnimation(1,30)
+=======
+			for(var/mob/living/carbon/NS in rangers)
+				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
+		 time--
+>>>>>>> 3f5438f... Cheapshit hack to fix pAI dance chatspam (#36689)
 
 /obj/machinery/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
