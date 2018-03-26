@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
+	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -71,21 +71,23 @@
 
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/power/tesla_coil/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return
-	..()
+		return ..()
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
+		//don't lose arc power when it's not connected to anything
+		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 1)
+			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		tesla_buckle_check(power)
 	else
@@ -120,7 +122,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 3) // 4 coils makes ~720/m bonus for R&D, 
+			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		tesla_buckle_check(power)
 	else
@@ -178,10 +180,11 @@
 
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/power/grounding_rod/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
 		return
-	..()
+	. = ..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)

@@ -18,6 +18,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
 
+	var/switching = FALSE
+
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
 
@@ -50,17 +52,24 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(usr)
 	update_icon_nopipes(1)
+	if(switching)
+		return
+	switching = TRUE
 	sleep(10)
 	if(open)
 		close()
-		return
-	open()
+	else
+		open()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
 	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
 	message_admins("Valve, [src.name], was manipulated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)], [A]")
+	switching = FALSE
 
 /obj/machinery/atmospherics/components/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"
@@ -70,7 +79,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "dvalve"
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational())

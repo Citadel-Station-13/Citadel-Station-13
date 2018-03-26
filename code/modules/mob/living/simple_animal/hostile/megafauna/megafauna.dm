@@ -19,7 +19,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	aggro_vision_range = 18
-	idle_vision_range = 5
+	vision_range = 5
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
