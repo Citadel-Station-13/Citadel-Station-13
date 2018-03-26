@@ -133,6 +133,9 @@
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
+//Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
+#define SLIME_EXTRACT_CROSSING_REQUIRED 10
+
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
@@ -208,7 +211,7 @@
 #define OFFSET_NECK "neck"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN				18	//youngest a character can be
+#define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
