@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src)
+	//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
