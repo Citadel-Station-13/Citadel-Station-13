@@ -34,14 +34,8 @@
 	else
 		return ..()
 
-<<<<<<< HEAD
-/obj/machinery/computer/med_data/attack_hand(mob/user)
-	if(..())
-		return
-=======
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
->>>>>>> a27f102... Merge pull request #36695 from kevinz000/fix_9
 	var/dat
 	if(temp)
 		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
