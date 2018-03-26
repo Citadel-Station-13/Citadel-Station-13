@@ -96,6 +96,8 @@
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
 				msg += "[dicc.desc]\n"
+				
+	msg += attempt_vr(src,"examine_bellies",args) //vore Code
 //END OF CIT CHANGES
 	//Status effects
 	msg += status_effect_examines()
