@@ -31844,6 +31844,7 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
+<<<<<<< HEAD
 /area/bridge)
 "swz" = (
 /turf/closed/wall/r_wall/rust,
@@ -31856,6 +31857,50 @@
 /area/crew_quarters/heads/captain/private)
 "swD" = (
 /obj/structure/cable/white{
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Xenobiology North";
+	dir = 4;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
+"eOs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/glasses/meson/engine/tray,
+/obj/item/clothing/glasses/meson/engine/tray,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"eUz" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
+"eYe" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/public/glass{
+	autoclose = 0;
+	frequency = 1449;
+	heat_proof = 1;
+	id_tag = "incinerator_airlock_exterior";
+	name = "Incinerator Exterior Airlock";
+	req_access_txt = "12"
+	},
+/obj/structure/cable{
+>>>>>>> 6cfb869... Fixes broken omega incinerator doors
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault/side{
@@ -34227,12 +34272,26 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
+<<<<<<< HEAD
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sPo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
 	icon_state = "1-2"
+=======
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/nearstation)
+"xZO" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/public/glass{
+	autoclose = 0;
+	frequency = 1449;
+	heat_proof = 1;
+	id_tag = "incinerator_airlock_interior";
+	name = "Incinerator Interior Airlock";
+	req_access_txt = "12"
+>>>>>>> 6cfb869... Fixes broken omega incinerator doors
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
