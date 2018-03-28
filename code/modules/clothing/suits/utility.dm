@@ -96,12 +96,13 @@
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
-	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
-
+	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/transfer_valve, /obj/item/gun/ballistic/shotgun)
+	armor = list("melee" = 40, "bullet" = 35, "laser" = 35,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
 /obj/item/clothing/head/bomb_hood/white
 	icon_state = "bombsuit_white"
