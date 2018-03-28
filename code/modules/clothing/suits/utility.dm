@@ -58,7 +58,7 @@
 	icon_state = "bombsuit"
 	flags_1 = THICKMATERIAL_1
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 20,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
-	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv =HIDEEARS|HIDEHAIR
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
@@ -94,11 +94,15 @@
 
 
 /obj/item/clothing/head/bomb_hood/security
+	name = "security bomb hood"
+	desc = "Use in case of bomb. This one has improved armor and a snazzy red finish."
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
 	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
 /obj/item/clothing/suit/bomb_suit/security
+	name = "security bomb suit"
+	desc = "A suit designed for safety when handling explosives. This one has improved armor and a snazzy red finish."
 	icon_state = "bombsuit_sec"
 	item_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/device/transfer_valve, /obj/item/gun/ballistic/shotgun)
