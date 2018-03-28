@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+/obj/item/device/modular_computer/attack_self(mob/user)
+	. = ..()
+	ui_interact(user)
+
+>>>>>>> ba5a78b... Merge pull request #36743 from ShizCalev/modular-comp-ui_interact-runtime
 // Operates TGUI
 /obj/item/device/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(!enabled)
