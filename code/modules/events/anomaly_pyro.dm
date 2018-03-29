@@ -9,7 +9,7 @@
 	announceWhen = 10
 
 /datum/round_event/anomaly/anomaly_pyro/announce(fake)
-	if(prob(50))
+	if(prob(90))
 		priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak

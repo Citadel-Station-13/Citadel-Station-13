@@ -10,7 +10,7 @@
 
 
 /datum/round_event/anomaly/anomaly_bluespace/announce(fake)
-	if(prob(50))
+	if(prob(90))
 		priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
