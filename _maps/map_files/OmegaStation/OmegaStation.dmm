@@ -15611,6 +15611,12 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
+<<<<<<< HEAD
+=======
+/obj/item/areaeditor/blueprints,
+/obj/item/tank/jetpack/suit,
+/obj/item/clothing/shoes/magboots/advance,
+>>>>>>> 3d364f3... adds adv magboots to secure storage
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
