@@ -5,6 +5,31 @@
 //																																//
 */////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//	COPYPASTE THE FOLLOWING PROC TO WHATEVER CATERGORY OF CLOTHING YOU WANT TO POLYCHROME
+
+// THIS IS REQUIRED DUE TO EACH CLOTHING CATEGORY HAVING A SNOWFLAKE WORN_OVERLAYS() THING
+
+// Don't forget to append the appropriate typepath! Also, refer to polychromic_clothes.dm for example implementations
+
+/*
+/obj/item/clothing/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
+	. = ..()
+	if(hasprimary | hassecondary | hastertiary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
+				primary_worn.color = primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
+				secondary_worn.color = secondary_color
+				. += secondary_worn
+			if(hastertiary)
+				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
+				tertiary_worn.color = tertiary_color
+				. += tertiary_worn
+*/
+
 /obj/item/clothing/
 	var/hasprimary = FALSE	//These vars allow you to choose which overlays a clothing has
 	var/hassecondary = FALSE
@@ -51,23 +76,6 @@
 					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
 				update_icon()
 				user.update_inv_w_uniform()
-
-/obj/item/clothing/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
-	. = ..()
-	if(hasprimary | hassecondary | hastertiary)
-		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
-			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
-				primary_worn.color = primary_color	//colors the overlay
-				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
-			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
-				secondary_worn.color = secondary_color
-				. += secondary_worn
-			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
-				tertiary_worn.color = tertiary_color
-				. += tertiary_worn
 
 /obj/item/clothing/examine(mob/user)
 	..()

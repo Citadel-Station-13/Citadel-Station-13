@@ -26,7 +26,24 @@
 	primary_color = "#FFFFFF" //RGB in hexcode
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
-	can_adjust = FALSE	//Don't touch this var unless you know what you're doing
+	can_adjust = FALSE
+
+/obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
+	. = ..()
+	if(hasprimary | hassecondary | hastertiary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
+				primary_worn.color = primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite.
+			if(hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
+				secondary_worn.color = secondary_color
+				. += secondary_worn
+			if(hastertiary)
+				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
+				tertiary_worn.color = tertiary_color
+				. += tertiary_worn
 
 /obj/item/clothing/under/polychromic/shirt	//COPY PASTE THIS TO MAKE A NEW THING
 	name = "polychromic button-up shirt"
