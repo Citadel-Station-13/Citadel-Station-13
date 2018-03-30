@@ -477,4 +477,16 @@
 		dropItemToGround(A, TRUE)
 		update_icons()
 
+<<<<<<< HEAD
+=======
+/mob/living/carbon/monkey/grabbedby(mob/living/carbon/user)
+	. = ..()
+	if(!IsDeadOrIncap() && pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB))) // nuh uh you don't pull me!
+		if(Adjacent(pulledby))
+			a_intent = INTENT_DISARM
+			monkey_attack(pulledby)
+			retaliate(pulledby)
+			return TRUE
+
+>>>>>>> c67b0c1... bad zombie monkey
 #undef MAX_RANGE_FIND
