@@ -2,9 +2,14 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
+<<<<<<< HEAD
 	species_traits = list(MUTCOLORS_PARTSONLY,SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "none")
+=======
+	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+>>>>>>> 485efbd... Fixes mutant bodypart assignments (#36816)
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
@@ -29,7 +34,7 @@
 	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
 		return TRUE
 
-datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	if(H.dna.features["ears"] == "Cat")
 		mutantears = /obj/item/organ/ears/cat
 	if(H.dna.features["tail_human"] == "Cat")
