@@ -8963,8 +8963,13 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "arr" = (
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
+=======
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o{
+	dir = 8
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -11060,11 +11065,17 @@
 	dir = 5
 	},
 /area/engine/atmos)
+<<<<<<< HEAD
 "avz" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "N2 to Pure"
+=======
+"avy" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2{
+	dir = 4
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
@@ -12799,11 +12810,17 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
+<<<<<<< HEAD
 "azj" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "O2 to Pure"
+=======
+"azl" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2{
+	dir = 4
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
@@ -13794,10 +13811,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aBB" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "External Waste Ports to Filter";
-	on = 1
+	name = "External Waste Ports to Filter"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -14351,10 +14367,9 @@
 	},
 /area/engine/atmos)
 "aCF" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Air to External Air Ports";
-	on = 1
+	name = "Air to External Air Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -17051,10 +17066,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aIl" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -21336,12 +21350,7 @@
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
 "aRE" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 2;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
@@ -21368,10 +21377,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -21453,10 +21461,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aRQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -21912,9 +21919,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -21935,11 +21941,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aSW" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -24239,12 +24242,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXV" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 2;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -24442,11 +24440,8 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
 "aYq" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -29985,11 +29980,8 @@
 	},
 /area/science/xenobiology)
 "bjH" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -32022,11 +32014,22 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "sCQ" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
+=======
+/area/engine/atmos)
+"gVX" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -32169,10 +32172,18 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
 	},
+<<<<<<< HEAD
 /area/maintenance/starboard)
 "sFo" = (
 /turf/open/floor/plasteel/vault/side{
 	dir = 9
+=======
+/turf/open/floor/engine/vacuum,
+/area/maintenance/disposal/incinerator)
+"iIj" = (
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /area/maintenance/starboard)
 "sFp" = (
@@ -32522,6 +32533,7 @@
 /turf/open/floor/plasteel/escape/corner{
 	dir = 8
 	},
+<<<<<<< HEAD
 /area/hallway/secondary/exit)
 "sIA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32537,6 +32549,12 @@
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
 	pixel_y = -30
+=======
+/area/hallway/primary/port/fore)
+"mJP" = (
+/obj/machinery/igniter{
+	id = "Incinerator"
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side{
@@ -33044,11 +33062,21 @@
 /obj/machinery/light{
 	dir = 8
 	},
+<<<<<<< HEAD
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "sLK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+=======
+/turf/open/floor/plating,
+/area/ai_monitored/turret_protected/aisat_interior)
+"sNf" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Waste Out"
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /turf/open/floor/plasteel/vault/corner,
 /area/ai_monitored/turret_protected/ai)
@@ -34225,7 +34253,17 @@
 	dir = 5
 	},
 /obj/structure/cable/white{
+<<<<<<< HEAD
 	icon_state = "1-4"
+=======
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/port)
+"xEQ" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma{
+	dir = 8
+>>>>>>> 77b1072... [Ready] Atmos cleanup + subtypes (#36690)
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
