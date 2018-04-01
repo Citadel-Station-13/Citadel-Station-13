@@ -333,3 +333,9 @@
 	item_state = "wintergreencloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/head/paperhat
+	name = "paperhat"
+	desc = "A piece of paper folded into neat little hat."
+	icon_state = "paperhat"
+	item_state = "paperhat"
