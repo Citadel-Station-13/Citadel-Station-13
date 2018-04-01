@@ -1036,10 +1036,11 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	for(var/datum/atom_hud/antag/H in GLOB.huds) // add antag huds
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
-	if (adding_hud)
-		mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-	else
-		mob.lighting_alpha = initial(mob.lighting_alpha)
+	if(prefs.toggles & COMBOHUD_LIGHTING)
+		if(adding_hud)
+			mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			mob.lighting_alpha = initial(mob.lighting_alpha)
 
 	mob.update_sight()
 
@@ -1231,9 +1232,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			NT.Insert(H, drop_if_replaced = FALSE)
 		else
 			tail.Remove(H)
-
-	H.dna.features["ears"] = "None"
-	H.dna.features["tail_human"] = "None"
 
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")

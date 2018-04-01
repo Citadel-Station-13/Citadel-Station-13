@@ -87,7 +87,8 @@
 	..()
 
 
-/obj/machinery/disco/interact(mob/user)
+/obj/machinery/disco/ui_interact(mob/user)
+	. = ..()
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return
@@ -97,7 +98,6 @@
 		return
 	if(!Adjacent(user) && !isAI(user))
 		return
-	user.set_machine(src)
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
 	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
@@ -402,13 +402,13 @@
 /obj/machinery/disco/proc/dance4(var/mob/living/M)
 	//var/speed = rand(1,3) // CIT CHANGE
 	set waitfor = 0
-	/*var/time = 30 CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
+	/*var/time = 30
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
 			M.lay_down(TRUE)
-		 time--*/
+		 time--*/ //CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
 	M.SpinAnimation(1,30)
 
 /obj/machinery/disco/proc/dance5(var/mob/living/M)

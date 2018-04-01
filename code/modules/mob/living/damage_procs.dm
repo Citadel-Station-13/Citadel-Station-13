@@ -73,7 +73,7 @@
 			return getArousalLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, arousal = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0, arousal = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -248,34 +248,41 @@
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
 
-
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(-brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(-burn, 0)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(-burn, FALSE)
+	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(burn, 0)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(burn, FALSE)
+	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
-	adjustBruteLoss(-brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(-burn, 0)
+/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(-burn, FALSE)
+	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(burn, 0)
+/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(burn, FALSE)
+	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 //heal up to amount damage, in a given order
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)
