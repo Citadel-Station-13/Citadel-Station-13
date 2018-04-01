@@ -1058,7 +1058,10 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "N2 Out";
+<<<<<<< HEAD
 	on = 1;
+=======
+>>>>>>> 4551731... Merge pull request #36900 from vuonojenmustaturska/fixmaster
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1224,7 +1227,10 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	name = "O2 Out";
+<<<<<<< HEAD
 	on = 1;
+=======
+>>>>>>> 4551731... Merge pull request #36900 from vuonojenmustaturska/fixmaster
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1598,7 +1604,10 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
+<<<<<<< HEAD
 	on = 1;
+=======
+>>>>>>> 4551731... Merge pull request #36900 from vuonojenmustaturska/fixmaster
 	target_pressure = 4500
 	},
 /obj/machinery/button/door{
