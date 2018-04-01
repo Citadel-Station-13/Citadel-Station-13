@@ -850,6 +850,10 @@
 	name = "Naga"
 	icon_state = "naga"
 
+/datum/sprite_accessory/taur/octopus
+	name = "Octopus"
+	icon_state = "octopus"
+
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"

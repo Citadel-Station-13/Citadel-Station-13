@@ -609,14 +609,6 @@
 	build_path = /obj/item/gun/energy/laser/practice/raygun
 	category = list("initial", "Pistols")
 
-/datum/design/foam_p37
-	name = "Foam Force Mk.37F"
-	id = "foam_p37"
-	build_type = AUTOYLATHE
-	materials = list(MAT_PLASTIC = 2000, MAT_METAL = 1000, MAT_GLASS = 250)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
-	category = list("initial", "Pistols")
-
 /datum/design/am4c
 	name = "Foam Force AM4-C Rifle"
 	id = "foam_am4c"
