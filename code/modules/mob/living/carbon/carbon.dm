@@ -149,7 +149,7 @@
 		return
 
 	//CIT CHANGES - makes it impossible to throw while in stamina softcrit
-	if(staminaloss >= STAMINA_SOFTCRIT)
+	if(GetStaminaLoss())
 		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
 		return
 	//END OF CIT CHANGES

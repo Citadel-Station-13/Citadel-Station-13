@@ -75,9 +75,10 @@
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
+	I.SendSignal(COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-	//CIT CHANGES START HERE - combatmode and resting checks
+		//CIT CHANGES START HERE - combatmode and resting checks
 		var/totitemdamage = I.force
 		if(iscarbon(user))
 			var/mob/living/carbon/tempcarb = user
@@ -270,6 +271,7 @@
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
@@ -279,6 +281,8 @@
 				emote("wag")
 			else if(dna && dna.species && ("mam_tail" in dna.species.mutant_bodyparts) && (dna.features["mam_tail"])!= "None")
 				emote("wag")
+			SendSignal(COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")

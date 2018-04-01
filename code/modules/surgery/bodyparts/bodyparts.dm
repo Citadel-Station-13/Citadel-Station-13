@@ -157,8 +157,8 @@
 
 	if(owner && updating_health)
 		owner.updatehealth()
-		if(stamina)
-			owner.update_stamina()
+	if(stamina)
+		owner.update_stamina()
 	return update_bodypart_damage_state()
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.

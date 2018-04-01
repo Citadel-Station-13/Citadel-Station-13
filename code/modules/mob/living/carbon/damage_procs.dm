@@ -42,6 +42,9 @@
 				adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
 			adjustBrainLoss(damage * hit_percent)
+		//citadel code
+		if(AROUSAL)
+			adjustArousalLoss(damage * hit_percent)
 	return TRUE
 
 
@@ -173,9 +176,9 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
-		update_stamina()
 	if(update)
 		update_damage_overlays()
+	update_stamina() //CIT CHANGE - makes sure update_stamina() always gets called after a health update
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
