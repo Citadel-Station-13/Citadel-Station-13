@@ -2,14 +2,9 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-<<<<<<< HEAD
 	species_traits = list(MUTCOLORS_PARTSONLY,SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "none")
-=======
-	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
->>>>>>> 485efbd... Fixes mutant bodypart assignments (#36816)
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
