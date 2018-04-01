@@ -615,9 +615,6 @@
 			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
-
-<<<<<<< HEAD
-=======
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
 	id = "stabilizednutriment"
@@ -630,8 +627,7 @@
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.nutrition -= 3*nutriment_factor
 	..()
-
->>>>>>> 8637339... Nutriment can get you fat again.
+	
 ////Lavaland Flora Reagents////
 
 
