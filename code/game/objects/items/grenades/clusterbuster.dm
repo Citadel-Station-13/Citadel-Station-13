@@ -89,12 +89,6 @@
 	volatile = TRUE
 
 /obj/item/slime_extract/proc/activate_slime()
-<<<<<<< HEAD
-	var/list/slime_chems = list("plasma","water","blood")
-	for(var/i in 1 to slime_chems.len)
-		if(!QDELETED(src))
-			reagents.add_reagent(pick_n_take(slime_chems),5) //Add them in random order so we get all effects
-=======
 	var/list/slime_chems = src.activate_reagents
 	if(!QDELETED(src))
 		var/chem = pick(slime_chems)
@@ -106,7 +100,6 @@
 			chem = "uranium"
 			reagents.add_reagent("holywater")
 		reagents.add_reagent(chem,amount)
->>>>>>> 9fb62af... Merge pull request #36731 from fludd12/this-took-too-long-to-fix
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
