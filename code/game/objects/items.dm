@@ -100,6 +100,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
 	var/tip_timer
+
 	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
@@ -449,7 +450,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
-	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -580,8 +580,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		return
 
-/obj/item/throw_impact(atom/A)
+/obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
+		SendSignal(COMSIG_MOVABLE_IMPACT, A, throwingdatum)
 		if(is_hot() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()
