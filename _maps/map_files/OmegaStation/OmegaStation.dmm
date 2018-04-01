@@ -34144,10 +34144,19 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/maintenance/starboard)
 "sOL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+=======
+/area/engine/atmos)
+"xtL" = (
+/obj/machinery/button/ignition{
+	id = "Incinerator";
+	pixel_x = 8;
+	pixel_y = -36
+>>>>>>> 1540c93... Merge pull request #36729 from ShizCalev/incinerator-fix
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -34242,7 +34251,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/structure/cable/white{
+=======
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_airlock_control";
+	interior_door_tag = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = -8;
+	pixel_y = 35;
+	req_access_txt = "12";
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor"
+	},
+/turf/open/floor/engine,
+/area/maintenance/disposal/incinerator)
+"yba" = (
+/obj/structure/cable{
+>>>>>>> 1540c93... Merge pull request #36729 from ShizCalev/incinerator-fix
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
