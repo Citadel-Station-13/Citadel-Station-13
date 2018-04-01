@@ -84,7 +84,6 @@
 	occupier.adjustToxLoss(-1, 0)
 	occupier.adjustBruteLoss(-1, 0)
 	occupier.updatehealth()
-	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive()
 	return occupier.health < 100
@@ -92,9 +91,11 @@
 /obj/machinery/computer/aifixer/process()
 	if(..())
 		if(active)
+			var/oldstat = occupier.stat
 			active = Fix()
+			if(oldstat != occupier.stat)
+				update_icon()
 		updateDialog()
-		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
