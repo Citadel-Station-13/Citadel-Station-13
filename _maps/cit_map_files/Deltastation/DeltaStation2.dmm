@@ -139,7 +139,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cryopod,
 /obj/machinery/computer/cryopod{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -47649,6 +47648,7 @@
 /obj/item/gun/energy/ionrifle,
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/gun/energy/temperature/security,
+/obj/item/gun/energy/pumpaction/blaster,
 /obj/item/gun/energy/pumpaction/blaster,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -99038,7 +99038,7 @@
 /area/maintenance/port/aft)
 "edm" = (
 /obj/structure/table/wood/fancy,
-/obj/item/spellbook/oneuse/smoke/lesser,
+/obj/item/book/granter/spell/smoke/lesser,
 /obj/item/nullrod,
 /obj/item/organ/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
