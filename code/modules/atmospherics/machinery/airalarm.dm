@@ -53,7 +53,6 @@
 #define AALARM_MODE_SIPHON 7 //Scrubbers suck air
 #define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
 #define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
-#define AALARM_MODE_DEFAULT 10 //just like OFF but will trigger scrubbing if the alarm is tripped
 
 #define AALARM_REPORT_TIMEOUT 100
 
@@ -74,7 +73,7 @@
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
-	var/mode = AALARM_MODE_DEFAULT
+	var/mode = AALARM_MODE_SCRUBBING
 
 	var/locked = TRUE
 	var/aidisabled = 0
@@ -291,7 +290,7 @@
 		data["modes"] += list(list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT, 	"danger" = 1))
 		data["modes"] += list(list("name" = "Siphon - Siphons air out of the room", 			"mode" = AALARM_MODE_SIPHON,		"selected" = mode == AALARM_MODE_SIPHON, 		"danger" = 1))
 		data["modes"] += list(list("name" = "Panic Siphon - Siphons air out of the room quickly","mode" = AALARM_MODE_PANIC,		"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1))
-		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = (mode == AALARM_MODE_OFF || mode == AALARM_MODE_DEFAULT) , "danger" = 0))
+		data["modes"] += list(list("name" = "Off - Shuts off vents and scrubbers", 				"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0))
 		if(obj_flags & EMAGGED)
 			data["modes"] += list(list("name" = "Flood - Shuts off scrubbers and opens vents",	"mode" = AALARM_MODE_FLOOD,			"selected" = mode == AALARM_MODE_FLOOD, 		"danger" = 1))
 
@@ -536,8 +535,7 @@
 					"power" = 0
 				))
 
-		if(AALARM_MODE_OFF,
-			AALARM_MODE_DEFAULT)
+		if(AALARM_MODE_OFF)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 0
@@ -617,9 +615,6 @@
 
 	if(old_danger_level != danger_level)
 		apply_danger_level()
-		if(mode == AALARM_MODE_DEFAULT)
-			mode = AALARM_MODE_SCRUBBING
-			apply_mode()
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
