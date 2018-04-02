@@ -267,7 +267,7 @@
 	H.dna.add_mutation(DWARFISM)
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
+	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist", "Lavaknight")) = 4)) //CIT CHANGE: Lavaknights
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -366,6 +366,15 @@
 			l_pocket = /obj/item/melee/cultblade/dagger
 			glasses =  /obj/item/clothing/glasses/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/device/cult_shift = 1, /obj/item/device/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
+		if("Lavaknight") //START OF CIT CHANGE
+			uniform = /obj/item/clothing/under/assistantformal
+			mask = /obj/item/clothing/mask/breath
+			shoes = /obj/item/clothing/shoes/sneakers/black
+			r_pocket = /obj/item/melee/transforming/energy/sword/cx/broken
+			suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
+			suit_store = /obj/item/tank/internals/oxygen
+			id = /obj/item/card/id/knight //END OF CIT CHANGE
+			id_job = "Knight"
 	. = ..()
 
 

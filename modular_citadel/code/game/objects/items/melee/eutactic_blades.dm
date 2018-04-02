@@ -111,6 +111,11 @@
 			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
 			blade_inhand.color = light_color
 			. += blade_inhand
+//Broken version. Not a toy, but not as strong.
+/obj/item/melee/transforming/energy/sword/cx/broken
+	name = "misaligned non-eutactic blade"
+	desc = "The Non-Eutactic Blade utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. This one seems to have a damaged handle and misaligned components, causing the blade to be unstable at best"
+	force_on = 15 //As strong a survival knife/bone dagger
 
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
