@@ -104,7 +104,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 //config stuff
 
-/obj/machinery/announcement_system/interact(mob/user)
+/obj/machinery/announcement_system/ui_interact(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(stat & BROKEN)
@@ -121,6 +122,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
+	if(..())
+		return
 	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
 	if(stat & BROKEN)

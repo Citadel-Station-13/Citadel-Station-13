@@ -90,8 +90,6 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
-	var/remote_range = 7 //How far can you interact with machines.
-
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
@@ -192,6 +190,9 @@
 	cell = null
 	return ..()
 
+/mob/living/silicon/robot/can_interact_with(atom/A)
+	. = ..()
+	return . || in_view_range(src, A)
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)
@@ -354,6 +355,9 @@
 	if (cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 	return !cleared
+
+/mob/living/silicon/robot/can_interact_with(atom/A)
+	return !low_power_mode && ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
@@ -600,7 +604,6 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-
 	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 	if(laser)
