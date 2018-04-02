@@ -259,3 +259,9 @@ datum/gear/darksabresheath
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
 	ckeywhitelist = list("johnnyvitrano")
+
+/datum/gear/paperhat
+	name = "Paper Hat"
+	category = slot_head
+	path = /obj/item/clothing/head/paperhat
+	ckeywhitelist = list("kered2")
