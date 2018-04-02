@@ -20,7 +20,6 @@
 "aad" = (
 /obj/machinery/computer/cryopod{
 	pixel_x = 28;
-	pixel_y = 0
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -68479,7 +68478,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/spellbook/oneuse/smoke/lesser{
+/obj/item/book/granter/spell/smoke/lesser{
 	name = "mysterious old book of "
 	},
 /obj/item/reagent_containers/food/drinks/bottle/holywater{
