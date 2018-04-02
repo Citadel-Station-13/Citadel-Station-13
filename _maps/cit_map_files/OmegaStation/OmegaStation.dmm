@@ -32264,9 +32264,8 @@
 	},
 /area/hallway/primary/port/fore)
 "mJP" = (
-/obj/machinery/igniter/off{
-	id = "Incinerator";
-	luminosity = 2
+/obj/machinery/igniter{
+	id = "Incinerator"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
