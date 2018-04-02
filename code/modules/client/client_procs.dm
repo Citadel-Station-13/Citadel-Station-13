@@ -641,7 +641,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
-	/client/Click(atom/object, atom/location, control, params)
+/client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
