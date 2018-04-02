@@ -6964,6 +6964,8 @@
 	},
 /obj/item/gun/energy/e_gun/dragnet,
 /obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/pumpaction/blaster,
+/obj/item/gun/energy/pumpaction/blaster,
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
 	},

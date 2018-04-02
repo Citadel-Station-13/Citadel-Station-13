@@ -157,6 +157,8 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
+	verbs += /mob/living/proc/lay_down //CITADEL EDIT gimmie rest verb kthx
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.

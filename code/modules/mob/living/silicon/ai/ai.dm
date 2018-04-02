@@ -237,7 +237,7 @@
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
 	else if(icontype == "TechDemon") //CIT CHANGE - adds 'TechDemon
-		icon_state = "tech_demon"
+		icon_state = "ai-techdemon"
 /mob/living/silicon/ai/Stat()
 	..()
 	if(statpanel("Status"))
