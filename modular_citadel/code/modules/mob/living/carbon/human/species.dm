@@ -77,6 +77,8 @@
 	switch(bodypart)
 		if("ipc_screen")
 			return GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
+		if("ipc_antenna")
+			return GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
 		if("mam_tail")
 			return GLOB.mam_tails_list[H.dna.features["mam_tail"]]
 		if("mam_waggingtail")

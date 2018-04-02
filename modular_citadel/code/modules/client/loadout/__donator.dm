@@ -10,7 +10,7 @@
 	name = "Donor item testing bikehorn"
 	category = slot_in_backpack
 	path = /obj/item/bikehorn
-	ckeywhitelist = list("jayehh","deathride58")
+	geargroupID = "DONORTEST"
 
 /datum/gear/kevhorn
 	name = "Airhorn"
@@ -215,7 +215,7 @@
     name = "Black and Red Coat"
     category = slot_wear_suit
     path = /obj/item/clothing/suit/toggle/labcoat/labredblack
-    ckeywhitelist = list("blakeryan, durandalphor")
+    ckeywhitelist = list("blakeryan", "durandalphor")
 
 /datum/gear/torisword
 	name = "Rainbow Zweihander"
@@ -259,3 +259,9 @@ datum/gear/darksabresheath
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
 	ckeywhitelist = list("johnnyvitrano")
+
+/datum/gear/paperhat
+	name = "Paper Hat"
+	category = slot_head
+	path = /obj/item/clothing/head/paperhat
+	ckeywhitelist = list("kered2")

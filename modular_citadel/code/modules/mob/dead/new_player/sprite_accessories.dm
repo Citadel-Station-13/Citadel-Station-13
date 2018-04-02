@@ -850,6 +850,10 @@
 	name = "Naga"
 	icon_state = "naga"
 
+/datum/sprite_accessory/taur/octopus
+	name = "Octopus"
+	icon_state = "octopus"
+
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"
@@ -1044,6 +1048,36 @@
 	name = "Stars"
 	icon_state = "stars"
 
+// IPC Antennas
+
+/datum/sprite_accessory/antenna
+	icon = 'modular_citadel/icons/mob/ipc_antennas.dmi'
+	color_src = MUTCOLORS2
+
+/datum/sprite_accessory/antenna/none
+	name = "None"
+	icon_state = "None"
+
+/datum/sprite_accessory/antenna/antennae
+	name = "Angled Antennae"
+	icon_state = "antennae"
+
+/datum/sprite_accessory/antenna/tvantennae
+	name = "TV Antennae"
+	icon_state = "tvantennae"
+
+/datum/sprite_accessory/antenna/cyberhead
+	name = "Cyberhead"
+	icon_state = "cyberhead"
+
+/datum/sprite_accessory/antenna/antlers
+	name = "Antlers"
+	icon_state = "antlers"
+
+/datum/sprite_accessory/antenna/crowned
+	name = "Crowned"
+	icon_state = "crowned"
+
 // *** Snooooow flaaaaake ***
 
 /datum/sprite_accessory/mam_body_markings/guilmon
@@ -1115,4 +1149,3 @@
 	extra = FALSE
 	extra2 = FALSE
 	ckeys_allowed = list("poojawa")
-

@@ -83,6 +83,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	if(!GLOB.ipc_screens_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
+	if(!GLOB.ipc_antennas_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list)
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
 	/*	if(H.gender == MALE) Fuck if I know how to fix this.
@@ -169,6 +171,7 @@
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
 		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
 		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)
@@ -285,7 +288,7 @@ Proc for attack log creation, because really why not
 
 	var/hp =" "
 	if(living_target)
-		hp = "(NEWHP: [living_target.health])"
+		hp = " (NEWHP: [living_target.health]) "
 
 	var/starget = "NON-EXISTENT SUBJECT"
 	if(target)
@@ -304,20 +307,22 @@ Proc for attack log creation, because really why not
 	var/sobject = ""
 	if(object)
 		sobject = "[object]"
+		if(addition)
+			addition = " [addition]"
 
 	var/sattackloc = ""
 	if(attack_location)
 		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
 
 	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
-	log_attack("[ssource] [what_done] [starget] with [sobject][addition] [hp] [sattackloc]")
+	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)

@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - code_imp: "It's now possible to assign an ID to a gear entry to manipulate it via config options. Right now, you can only use this to modify the whitelist."
