@@ -20,7 +20,6 @@
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -54,6 +53,9 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon()
+	cut_overlays()
+	if (stat & BROKEN)
+		add_overlay("waitlight")
 	if(beaker)
 		icon_state = "mixer1"
 	else
@@ -300,7 +302,7 @@
 					adjust_item_drop_location(P)
 					reagents.trans_to(P, vol_part)
 			. = TRUE
-
+		//CITADEL ADD Hypospray Vials
 		if("createvial")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
@@ -328,7 +330,7 @@
 				adjust_item_drop_location(V)
 				reagents.trans_to(V, vol_part)
 			. = TRUE
-
+		//END CITADEL ADDITIONS
 		if("analyze")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
