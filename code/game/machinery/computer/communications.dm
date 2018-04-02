@@ -45,11 +45,7 @@
 
 /obj/machinery/computer/communications/process()
 	if(..())
-<<<<<<< HEAD
-		if(state != STATE_STATUSDISPLAY)
-=======
 		if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE)
->>>>>>> 37ff2ef... Merge pull request #36873 from kevinz000/fix_comms_consoles
 			updateDialog()
 
 /obj/machinery/computer/communications/Topic(href, href_list)
