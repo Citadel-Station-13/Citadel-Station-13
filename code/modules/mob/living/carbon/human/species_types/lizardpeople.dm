@@ -4,8 +4,14 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
+<<<<<<< HEAD
 	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,LIPS, HAIR, FACEHAIR)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur")
+=======
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
+	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
+>>>>>>> 8548bd8... Adds mob biotypes, categories that can be used to only affect certain mob types (#36570)
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5

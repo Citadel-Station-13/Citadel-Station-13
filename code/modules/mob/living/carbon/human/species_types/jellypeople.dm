@@ -4,7 +4,11 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
+<<<<<<< HEAD
 	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,,HAIR,FACEHAIR,NOBLOOD)
+=======
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+>>>>>>> 8548bd8... Adds mob biotypes, categories that can be used to only affect certain mob types (#36570)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
@@ -119,7 +123,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
