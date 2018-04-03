@@ -719,7 +719,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define APPLY_SELF_COLOR(THING) if(A.alpha)##THING.Blend(rgb(255,255,255,A.alpha),BLEND_MULTIPLY);if(A.color)##THING.Blend(A.color,BLEND_MULTIPLY);
+	#define APPLY_SELF_COLOR(THING) if(A.alpha<255)##THING.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)##THING.Blend(A.color,ICON_MULTIPLY);
 	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);APPLY_SELF_COLOR(SELF_ICON);##SETVAR=SELF_ICON;
 
 	#define INDEX_X_LOW 1
@@ -880,10 +880,8 @@ The _flatIcons list is a cache for generated icon files.
 		else
 			. = icon(flat, "", SOUTH)
 	else	//There's no overlays.
-		//SET_SELF(.)
 		if(!noIcon)
 			SET_SELF(.)
-				
 
 	//Clear defines
 	#undef flatX1
@@ -901,6 +899,8 @@ The _flatIcons list is a cache for generated icon files.
 	#undef INDEX_Y_HIGH
 
 	#undef BLANK
+	#undef SET_SELF
+	#undef APPLY_SELF_COLOR
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
