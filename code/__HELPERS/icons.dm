@@ -720,7 +720,7 @@ The _flatIcons list is a cache for generated icon files.
 
 	#define BLANK icon(flat_template)
 	#define APPLY_SELF_COLOR(THING) if(A.alpha)##THING.Blend(rgb(255,255,255,A.alpha),BLEND_MULTIPLY);if(A.color)##THING.Blend(A.color,BLEND_MULTIPLY);
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null:);APPLY_SELF_COLOR(SELF_ICON);##SETVAR=SELF_ICON;
+	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);APPLY_SELF_COLOR(SELF_ICON);##SETVAR=SELF_ICON;
 
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
