@@ -19,7 +19,7 @@
 	if(!(prefs.toggles & CHAT_OOC))
 		to_chat(src, "<span class='danger'> You have OOC muted.</span>")
 		return
-	if(jobban_isbanned(src.mob, "OOC"))
+	if(jobban_isbanned(mob, "OOC"))
 		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
 
