@@ -2,6 +2,7 @@
 	name = "decal"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	plane = OPENTURF_PLANE
 	var/turf_loc_check = TRUE
 
 /obj/effect/decal/Initialize()

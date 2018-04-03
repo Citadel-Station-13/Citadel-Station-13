@@ -135,6 +135,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
+	S["ambientocclusion"] >> ambientocclusion
 
 	//citadel code
 	S["arousable"]			>> arousable
@@ -168,6 +169,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
+	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
@@ -215,6 +217,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
+	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
