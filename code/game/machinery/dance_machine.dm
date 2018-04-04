@@ -368,13 +368,9 @@
 	M.lying_fix()
 
 
-<<<<<<< HEAD
-/obj/machinery/disco/proc/dance4(var/mob/living/M)
-	//var/speed = rand(1,3) // CIT CHANGE
-=======
+
 /obj/machinery/jukebox/disco/proc/dance4(var/mob/living/M)
-	var/speed = rand(1,3)
->>>>>>> 4471461... Refactors Dance Machine + deletes a bunch of sound files (#36815)
+	//var/speed = rand(1,3) CIT CHANGE -- comments this out to prevent compiling errors
 	set waitfor = 0
 	/*var/time = 30 CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
 	while(time)
