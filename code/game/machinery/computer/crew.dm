@@ -181,13 +181,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					pos_y = null
 
 				results[++results.len] = list("name" = name, "assignment" = assignment, "ijob" = ijob, "life_status" = life_status, "oxydam" = oxydam, "toxdam" = toxdam, "burndam" = burndam, "brutedam" = brutedam, "area" = area, "pos_x" = pos_x, "pos_y" = pos_y, "can_track" = H.can_track(null))
-<<<<<<< HEAD
-	
-	data_by_z["[z]"] = results
-=======
 
 	data_by_z["[z]"] = sortTim(results,/proc/sensor_compare)
->>>>>>> 9f741fb... Merge pull request #36943 from AnturK/dunnoaboutthis
 	last_update["[z]"] = world.time
 	
 	return results
