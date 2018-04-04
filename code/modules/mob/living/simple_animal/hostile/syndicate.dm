@@ -161,13 +161,9 @@
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
-<<<<<<< HEAD
-	pass_flags = PASSTABLE
-=======
 	pass_flags = PASSTABLE | PASSMOB
 	a_intent = INTENT_HARM
 	mob_biotypes = list(MOB_ROBOTIC)
->>>>>>> 8548bd8... Adds mob biotypes, categories that can be used to only affect certain mob types (#36570)
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15
