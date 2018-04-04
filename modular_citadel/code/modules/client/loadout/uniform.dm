@@ -140,7 +140,7 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/polychromic/shortpants
 	cost = 2
-	
+
 // Trekie things
 //TOS
 /datum/gear/trekcmdtos
