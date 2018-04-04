@@ -1,21 +1,3 @@
-/datum/gear/scrubsblue
-	name = "Blue scrubs"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/medical/blue
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
-
-/datum/gear/scrubsgreen
-	name = "Green scrubs"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/medical/green
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
-
-/datum/gear/scrubspurple
-	name = "Purple scrubs"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/rank/medical/purple
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
-	
 /datum/gear/suitblack
 	name = "Black suit"
 	category = slot_w_uniform
