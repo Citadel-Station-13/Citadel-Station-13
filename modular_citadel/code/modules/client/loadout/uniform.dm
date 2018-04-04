@@ -141,7 +141,6 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/syndicate/cosmetic
 
-<<<<<<< LOADOUT
 /datum/gear/strppink
 	name = "Pink stripper outfit"
 	category = slot_w_uniform
@@ -176,7 +175,6 @@
 	path = /obj/item/clothing/under/polychromic/shirt
 	cost = 3
 	
-=======
 /datum/gear/polykilt
 	name = "Polychromic Kilt"
 	category = slot_w_uniform
@@ -195,7 +193,6 @@
 	path = /obj/item/clothing/under/polychromic/shortpants
 	cost = 2
 
->>>>>>> master
 // Trekie things
 //TOS
 /datum/gear/trekcmdtos
