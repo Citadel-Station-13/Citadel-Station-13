@@ -15,7 +15,8 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/rank/medical/purple
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
-	/datum/gear/suitblack
+
+/datum/gear/suitblack
 	name = "Black suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket
