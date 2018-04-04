@@ -4,11 +4,7 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-<<<<<<< HEAD
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,,HAIR,FACEHAIR,NOBLOOD)
-=======
-	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
->>>>>>> 8548bd8... Adds mob biotypes, categories that can be used to only affect certain mob types (#36570)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
