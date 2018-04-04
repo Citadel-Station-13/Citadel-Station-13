@@ -141,7 +141,24 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/syndicate/cosmetic
 
-/datum/gear/strppink
+/datum/gear/polykilt
+	name = "Polychromic Kilt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/kilt
+	cost = 3
+
+/datum/gear/polyshorts
+	name = "Polychromic Shorts"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/shorts
+	cost = 3
+
+/datum/gear/polyshortpants
+	name = "Polychromic Athletic Shorts"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/shortpants
+	cost = 2
+	/datum/gear/strppink
 	name = "Pink stripper outfit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/stripper_pink
@@ -174,24 +191,6 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/polychromic/shirt
 	cost = 3
-	
-/datum/gear/polykilt
-	name = "Polychromic Kilt"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/polychromic/kilt
-	cost = 3
-
-/datum/gear/polyshorts
-	name = "Polychromic Shorts"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/polychromic/shorts
-	cost = 3
-
-/datum/gear/polyshortpants
-	name = "Polychromic Athletic Shorts"
-	category = slot_w_uniform
-	path = /obj/item/clothing/under/polychromic/shortpants
-	cost = 2
 
 // Trekie things
 //TOS
