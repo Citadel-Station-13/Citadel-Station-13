@@ -1,4 +1,21 @@
-/datum/gear/suitblack
+/datum/gear/scrubsblue
+	name = "Blue scrubs"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/rank/medical/blue
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+
+/datum/gear/scrubsgreen
+	name = "Green scrubs"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/rank/medical/green
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+
+/datum/gear/scrubspurple
+	name = "Purple scrubs"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/rank/medical/purple
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+	/datum/gear/suitblack
 	name = "Black suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket
@@ -139,7 +156,39 @@
 	name = "Polychromic Athletic Shorts"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/polychromic/shortpants
-	cost = 2
+	cost = 2/datum/gear/strppink
+	name = "Pink stripper outfit"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/stripper_pink
+	cost = 8 //thots pay the thot toll
+
+/datum/gear/strpgreen
+	name = "Green stripper outfit"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/stripper_green
+	cost = 8
+/datum/gear/sundress
+	name = "Sundress"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/sundress
+
+/datum/gear/polyjumpsuit
+	name = "Polychromic jumpsuit"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/jumpsuit
+	cost = 3
+
+/datum/gear/polyskirt
+	name = "Polychromic SKIRT"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/skirt
+	cost = 3
+
+/datum/gear/polyshirt
+	name = "Polychromic SHIRT" //so people don't misread
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/polychromic/shirt
+	cost = 3
 
 // Trekie things
 //TOS
