@@ -158,7 +158,8 @@
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/polychromic/shortpants
 	cost = 2
-	/datum/gear/strppink
+	
+/datum/gear/strppink
 	name = "Pink stripper outfit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/stripper_pink
