@@ -222,11 +222,11 @@ GLOBAL_PROTECT(security_mode)
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
+	/*if(GLOB.master_mode) CIT CHANGE - hides the gamemode from the hub entry, removes some useless info from the hub entry
 		features += GLOB.master_mode
 
 	if (!GLOB.enter_allowed)
-		features += "closed"
+		features += "closed"*/
 
 	var/s = ""
 	var/hostedby
@@ -234,24 +234,28 @@ GLOBAL_PROTECT(security_mode)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		/*features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn" CIT CHANGE - removes some useless info from the hub entry
 		if(CONFIG_GET(flag/allow_vote_mode))
 			features += "vote"
 		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+			features += "AI allowed"*/
 		hostedby = CONFIG_GET(string/hostedby)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"https://citadel-station.net/home/\">" //Change this to wherever you want the hub to link to. CIT CHANGE - links to cit's website on the hub
+	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version. CIT CHANGE - modifies the hub entry link
 	s += "</a>"
-	s += ")"
+	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
+	s += "<br><small><i>That furry /TG/code server your mother warned you about.</i></small><br>" //CIT CHANGE - adds a tagline!
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
 		if (M.client)
 			n++
+
+	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
+		features += "code [get_security_level()]"
 
 	if (n > 1)
 		features += "~[n] players"
@@ -262,7 +266,7 @@ GLOBAL_PROTECT(security_mode)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
-		s += ": [jointext(features, ", ")]"
+		s += "\[[jointext(features, ", ")]" //CIT CHANGE - replaces the colon here with a left bracket
 
 	status = s
 

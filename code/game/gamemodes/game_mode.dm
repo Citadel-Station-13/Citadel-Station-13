@@ -48,6 +48,8 @@
 
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
 
+	var/flipseclevel = FALSE //CIT CHANGE - adds a 10% chance for the alert level to be the opposite of what the gamemode is supposed to have
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
@@ -81,6 +83,9 @@
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+
+	if(prob(100)) //CIT CHANGE - adds a 10% chance for the security level to be the opposite of what it normally is
+		flipseclevel = TRUE
 
 	if(SSdbcore.Connect())
 		var/sql
@@ -250,6 +255,9 @@
 	return 0
 
 /datum/game_mode/proc/send_intercept()
+	if(flipseclevel && !(config_tag == "extended"))//CIT CHANGE - lets the security level be flipped roundstart
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/ai/commandreport.ogg')
+		return
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
@@ -508,6 +516,12 @@
 		rev.remove_revolutionary(TRUE)
 
 /datum/game_mode/proc/generate_station_goals()
+	if(flipseclevel && !(config_tag == "extended")) //CIT CHANGE - allows the sec level to be flipped roundstart
+		for(var/T in subtypesof(/datum/station_goal))
+			var/datum/station_goal/G = new T
+			station_goals += G
+			G.on_report()
+		return
 	var/list/possible = list()
 	for(var/T in subtypesof(/datum/station_goal))
 		var/datum/station_goal/G = T

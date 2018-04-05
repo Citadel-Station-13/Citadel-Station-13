@@ -28,7 +28,7 @@
 		return
 	last_irc_check = rtod
 	var/server = CONFIG_GET(string/server)
-	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]" 
+	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]" //CIT CHANGE - obfuscates the current gamemode from players
 
 /datum/server_tools_command/ahelp
 	name = "ahelp"
@@ -100,7 +100,7 @@ GLOBAL_LIST(round_end_notifiees)
 	var/list/text_res = results.Copy(1, 3)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
-	
+
 /datum/server_tools_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."

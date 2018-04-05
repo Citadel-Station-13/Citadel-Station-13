@@ -272,14 +272,14 @@ SUBSYSTEM_DEF(ticker)
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
-	if(hide_mode)
+	/*if(hide_mode) CIT CHANGE - comments this section out to obfuscate gamemodes. Quit self-antagging during extended just because "hurrrrr no antaggs!!!!!! i giv sec thing 2 do!!!!!!!!!" it's bullshit and everyone hates it
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
-		mode.announce()
+		mode.announce()*/
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
@@ -474,12 +474,12 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
 
-/proc/send_gamemode_vote()
+/proc/send_gamemode_vote() //CIT CHANGE - adds roundstart gamemode votes
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server")
+		SSvote.initiate_vote("roundtype","server",TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
