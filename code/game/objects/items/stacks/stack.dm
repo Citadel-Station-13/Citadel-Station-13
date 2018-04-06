@@ -334,8 +334,15 @@
 		//get amount from user
 		var/min = 0
 		var/max = get_amount()
+<<<<<<< HEAD
 		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
 		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= get_amount() || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+=======
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
+		max = get_amount()
+		stackmaterial = min(max, stackmaterial)
+		if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+>>>>>>> e5d407a... Added cancel button (#36953)
 			return
 		else
 			change_stack(user,stackmaterial)
