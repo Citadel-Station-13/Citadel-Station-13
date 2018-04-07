@@ -70,7 +70,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/client/proc/cmd_admin_man_up //CIT CHANGE - adds man up verb
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -231,7 +232,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
 	/client/proc/toggle_combo_hud,
-	/client/proc/debug_huds
+	/client/proc/debug_huds,
+	/client/proc/cmd_admin_man_up //CIT CHANGE - adds man up verb
 	))
 
 /client/proc/add_admin_verbs()
