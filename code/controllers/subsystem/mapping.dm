@@ -329,8 +329,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
-<<<<<<< HEAD
-=======
 
 
 //Manual loading of away missions.
@@ -386,4 +384,3 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		//Link station gate with away gate and remove wait time.
 		GLOB.the_gateway.awaygate = new_gate
 		GLOB.the_gateway.wait = world.time
->>>>>>> 414fdc9... Logs the load away mission verb. (#36989)
