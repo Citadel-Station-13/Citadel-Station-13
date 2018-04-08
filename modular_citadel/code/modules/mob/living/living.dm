@@ -72,11 +72,11 @@
 		return TRUE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
-		if(staminaloss >= STAMINA_SOFTCRIT)
+		if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
 		attemptingstandup = TRUE
-		var/health_deficiency = max((maxHealth - (health - staminaloss))*0.5, 0)
+		var/health_deficiency = max((maxHealth - (health - getStaminaLoss()))*0.5, 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
 		totaldelay += health_deficiency
@@ -107,8 +107,8 @@
 			return FALSE
 
 /mob/living/carbon/update_stamina()
-	var/total_health = (min(health*2,100) - staminaloss)
-	if(staminaloss)
+	var/total_health = (min(health*2,100) - getStaminaLoss())
+	if(getStaminaLoss())
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE

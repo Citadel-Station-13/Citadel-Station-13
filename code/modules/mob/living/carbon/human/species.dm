@@ -1260,7 +1260,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
 		var/stambufferinfluence = (H.bufferedstam*(100/H.stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
-		var/health_deficiency = ((100 + stambufferinfluence) - H.health + (H.staminaloss*0.75))//CIT CHANGE - reduces the impact of staminaloss on movement speed and makes stamina buffer influence movedelay
+		var/health_deficiency = ((100 + stambufferinfluence) - H.health + (H.getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss on movement speed and makes stamina buffer influence movedelay
 		if(health_deficiency >= 40)
 			if(flight)
 				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
@@ -1326,7 +1326,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
-	if(user.staminaloss >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
 		return FALSE //CITADEL CHANGE - ditto
 	if(target.check_block())
@@ -1404,7 +1404,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		"You hear a slap.")
 		target.endTailWag()
 		return FALSE
-	else if(user.staminaloss >= STAMINA_SOFTCRIT)
+	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
 	else if(target.check_block()) //END EDIT

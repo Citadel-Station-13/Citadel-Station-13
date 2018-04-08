@@ -142,7 +142,7 @@
 		if(resting && !L.resting)
 			if(attemptingcrawl)
 				return TRUE
-			if(staminaloss >= STAMINA_SOFTCRIT)
+			if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 				to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
 				return TRUE
 			attemptingcrawl = TRUE

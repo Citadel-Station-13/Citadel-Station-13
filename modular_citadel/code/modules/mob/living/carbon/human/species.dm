@@ -19,7 +19,7 @@
 	return FALSE
 
 /datum/species/proc/altdisarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.staminaloss >= STAMINA_SOFTCRIT)
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
 	else if(target.check_block())

@@ -56,7 +56,7 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
-	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
@@ -86,7 +86,7 @@
 		return
 	if(flags_1 & NOBLUDGEON_1)
 		return
-	if(user.staminaloss >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 	user.adjustStaminaLossBuffered(getweight()*1.2)//CIT CHANGE - makes attacking things cause stamina loss

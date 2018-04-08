@@ -519,7 +519,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
