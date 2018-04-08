@@ -32108,9 +32108,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
+=======
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
+"fWz" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	req_access_txt = "63"
+>>>>>>> a83e9b3... Fix errant space area on OmegaStation (#37026)
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -67305,10 +67314,17 @@ agF
 swZ
 agF
 agF
+<<<<<<< HEAD
 aqH
 arC
 sBu
 arC
+=======
+agF
+agF
+swZ
+agF
+>>>>>>> a83e9b3... Fix errant space area on OmegaStation (#37026)
 auE
 avJ
 awN
