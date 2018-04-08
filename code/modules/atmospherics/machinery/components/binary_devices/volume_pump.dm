@@ -35,6 +35,10 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = TRUE
+<<<<<<< HEAD
+=======
+	icon_state = "volpump_on_map"
+>>>>>>> e7ef735... Merge pull request #37013 from AutomaticFrenzy/patch/atmos-map-icons
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(!is_operational())
