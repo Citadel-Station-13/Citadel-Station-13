@@ -355,3 +355,26 @@
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
+<<<<<<< HEAD
+=======
+
+/datum/map_template/shuttle/arrival/omega
+	suffix = "omega"
+	name = "arrival shuttle (Omega)"
+	
+/datum/map_template/shuttle/aux_base/default
+	suffix = "default"
+	name = "auxilliary base (Default)"
+
+/datum/map_template/shuttle/escape_pod/default
+	suffix = "default"
+	name = "escape pod (Default)"
+
+/datum/map_template/shuttle/escape_pod/large
+	suffix = "large"
+	name = "escape pod (Large)"
+
+/datum/map_template/shuttle/assault_pod/default
+	suffix = "default"
+	name = "assault pod (Default)"
+>>>>>>> 76aeaec... Gives Omega its own arrivals shuttle (#37043)
