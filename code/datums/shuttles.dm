@@ -62,6 +62,10 @@
 
 
 
+/datum/map_template/shuttle/pirate
+	port_id = "pirate"
+	can_be_bought = FALSE
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/airless
@@ -355,3 +359,28 @@
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
+
+/datum/map_template/shuttle/arrival/omega
+	suffix = "omega"
+	name = "arrival shuttle (Omega)"
+	
+/datum/map_template/shuttle/aux_base/default
+	suffix = "default"
+	name = "auxilliary base (Default)"
+
+/datum/map_template/shuttle/escape_pod/default
+	suffix = "default"
+	name = "escape pod (Default)"
+
+/datum/map_template/shuttle/escape_pod/large
+	suffix = "large"
+	name = "escape pod (Large)"
+
+/datum/map_template/shuttle/assault_pod/default
+	suffix = "default"
+	name = "assault pod (Default)"
+
+/datum/map_template/shuttle/pirate/default
+	suffix = "default"
+	name = "pirate ship (Default)"
+>>>>>>> 11ba45f... Makes the pirate ship use a proper shuttle template (#37006)
