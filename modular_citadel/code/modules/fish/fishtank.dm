@@ -36,6 +36,7 @@
 	var/has_lid = FALSE			// 0 if the tank doesn't have a lid/light, 1 if it does
 	var/leaking = NOT_LEAKING
 	var/shard_count = 0			// Number of glass shards to salvage when broken (1 less than the number of sheets to build the tank)
+	var/rshard_count = 0		// Same as above, but with reinforced glass sheets instead.
 
 /obj/machinery/fishtank/bowl
 	name = "fish bowl"
@@ -85,7 +86,8 @@
 
 	has_lid = TRUE
 	max_integrity = 250			// This thing is a freaking wall, it can handle abuse.
-	shard_count = 3
+	shard_count = 9				// If broken, give regular glass instead of reinforced.
+	rshard_count = 9
 
 
 //////////////////////////////
@@ -344,9 +346,13 @@
 			if(istype(T))
 				T.MakeSlippery(TURF_WET_WATER)
 
-	else															//We are deconstructing, make glass sheets instead of shards
-		var/sheets = shard_count + 1								//Deconstructing it salvages all the glass used to build the tank
-		new /obj/item/stack/sheet/glass(get_turf(src), sheets)		//Produce the appropriate number of glass sheets, in a single stack
+	else
+		if(rshard_count == 0)													//We are deconstructing, make glass sheets instead of shards depending on the material.
+			var/sheets = shard_count + 1								//Deconstructing it salvages all the glass used to build the tank
+			new /obj/item/stack/sheet/glass(get_turf(src), sheets)		//Produce the appropriate number of glass sheets, in a single stack
+		else
+			var/rsheets = rshard_count + 1
+			new /obj/item/stack/sheet/rglass(get_turf(src), rsheets)
 	qdel(src)														//qdel the tank and it's contents
 	T.air_update_turf(1)											//Update the air for the turf, to avoid permanent atmos sealing with wall tanks
 
