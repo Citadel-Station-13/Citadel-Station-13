@@ -18,7 +18,7 @@
 			if(5)
 				return "stamina0"
 			else
-				switch(100 - staminaloss)
+				switch(100 - getStaminaLoss())
 					if(100 to INFINITY)
 						return "stamina0"
 					if(80 to 100)

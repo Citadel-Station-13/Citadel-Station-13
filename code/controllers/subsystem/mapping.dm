@@ -61,7 +61,8 @@ SUBSYSTEM_DEF(mapping)
 	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
-	createRandomZlevel()
+	if(CONFIG_GET(flag/roundstart_away))
+		createRandomZlevel()
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -366,14 +367,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				away_level = template.load_new_z()
 			else
 				return
-	
+
 	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
 	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return
-	
-	
+
+
 	if(GLOB.the_gateway)
 		//Link any found away gate with station gate
 		var/obj/machinery/gateway/centeraway/new_gate

@@ -439,7 +439,6 @@
 			var/num = ionnum()
 			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
 
-
 	var/number = 1
 	for(var/law in inherent)
 		if (length(law) > 0)

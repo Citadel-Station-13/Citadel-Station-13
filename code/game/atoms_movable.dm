@@ -292,6 +292,8 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
 
+/atom/movable/Uncrossed(atom/movable/AM)
+	SendSignal(COMSIG_MOVABLE_UNCROSSED, AM)
 
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
@@ -533,9 +535,8 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
-
-// CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y, final_pixel_y, final_pixel_x)
+// CITADEL CHANGE - adds final_pixel_y and final_pixel_x to do_attack_animation args // maybe not needed anymore we'll try it 
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
@@ -543,11 +544,6 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	if(!final_pixel_y)// CITADEL CHANGE DOGBORG OFFSET
-		final_pixel_y = initial(pixel_y)
-
-	if(!final_pixel_x)
-		final_pixel_x = initial(pixel_x) //lol copypasta
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -561,8 +557,7 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2) //CITADEL CHANGE, DOGBORG OFFSET
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2)
+	animate(src, pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
