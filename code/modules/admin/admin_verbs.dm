@@ -60,7 +60,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
-<<<<<<< HEAD
 	/client/proc/respawn_character,
 	/client/proc/secrets,
 	/client/proc/toggle_hear_radio,		/*allows admins to hide all radio output*/
@@ -72,13 +71,11 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/stop_sounds,
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs		/*hides all our hideable adminverbs*/
-=======
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
 	/datum/admins/proc/open_borgopanel
->>>>>>> ece7de4... Admin borg panel (#36990)
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
