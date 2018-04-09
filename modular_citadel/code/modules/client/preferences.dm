@@ -254,7 +254,7 @@
 		switch(href_list["preference"])
 			if("flavor_text")
 				var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as null|message
-				if(msg != null)
+				if(!isnull(msg))
 					msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
 					features["flavor_text"] = msg
 
