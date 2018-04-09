@@ -218,8 +218,8 @@
 
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(moth_name())
-
+		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+	
 		if(!findname(.))
 			break
 
@@ -398,17 +398,11 @@ Proc for attack log creation, because really why not
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
+	delay *= user.do_after_coefficent()
+
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, delay, target)
-
-	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-	if(mood)
-		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(SANITY_INSANE to SANITY_DISTURBED)
-				delay *= 1.25
-			if(SANITY_NEUTRAL to SANITY_GREAT)
-				delay *= 0.90
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -443,6 +437,10 @@ Proc for attack log creation, because really why not
 				break
 	if (progress)
 		qdel(progbar)
+
+/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
+	. = 1
+	return
 
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
@@ -603,6 +601,7 @@ Proc for attack log creation, because really why not
 			log_adminsay(logmessage)
 		if(LOGOOC)
 			log_ooc(logmessage)
+			log_looc(logmessage) //CITADEL EDIT, logging LOOC because why not
 		else
 			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)
