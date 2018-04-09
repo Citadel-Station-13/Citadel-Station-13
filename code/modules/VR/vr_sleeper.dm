@@ -146,8 +146,6 @@
 /obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
 	return safepick(available_vr_spawnpoints[vr_category])
 
-<<<<<<< HEAD
-=======
 /obj/machinery/vr_sleeper/proc/build_spawnpoints(rebuild = FALSE) 
 	if (rebuild)
 		available_vr_spawnpoints = null
@@ -158,7 +156,6 @@
 			var/turf/T = get_turf(V)
 			if(T)
 				available_vr_spawnpoints[V.vr_category] |= T
->>>>>>> 469a216... Minor VR sleeper related changes (#36974)
 
 /obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, transfer = TRUE)
 	if(H)
