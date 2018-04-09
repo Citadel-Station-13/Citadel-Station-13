@@ -31,3 +31,7 @@
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
+
+/obj/structure/closet/wardrobe/curator/PopulateContents()
+	..()
+	new /obj/item/clothing/accessory/pocketprotector/full(src)

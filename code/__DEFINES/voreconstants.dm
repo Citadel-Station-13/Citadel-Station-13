@@ -4,6 +4,8 @@
 #define DM_HEAL "Heal"
 #define DM_NOISY "Noisy"
 #define DM_DRAGON "Dragon"
+#define DM_ABSORB "Absorb"
+#define DM_UNABSORB "Un-absorb"
 
 #define isbelly(A) istype(A, /obj/belly)
 
@@ -51,12 +53,13 @@ GLOBAL_LIST_INIT(death_pred, list(
 		'sound/vore/pred/death_10.ogg'))
 */
 
-GLOBAL_LIST_INIT(pred_vore_sounds, list(
+GLOBAL_LIST_INIT(vore_sounds, list(
 		"Gulp" = 'sound/vore/pred/swallow_01.ogg',
 		"Swallow" = 'sound/vore/pred/swallow_02.ogg',
 		"Insertion1" = 'sound/vore/pred/insertion_01.ogg',
 		"Insertion2" = 'sound/vore/pred/insertion_02.ogg',
 		"Tauric Swallow" = 'sound/vore/pred/taurswallow.ogg',
+		"Stomach Move"		= 'sound/vore/pred/stomachmove.ogg',
 		"Schlorp" = 'sound/vore/pred/schlorp.ogg',
 		"Squish1" = 'sound/vore/pred/squish_01.ogg',
 		"Squish2" = 'sound/vore/pred/squish_02.ogg',
@@ -75,7 +78,7 @@ GLOBAL_LIST_INIT(pred_struggle_sounds, list(
 		"Struggle3" = 'sound/vore/pred/struggle_03.ogg',
 		"Struggle4" = 'sound/vore/pred/struggle_04.ogg',
 		"Struggle5" = 'sound/vore/pred/struggle_05.ogg'))
-*/
+
 GLOBAL_LIST_INIT(prey_vore_sounds, list(
 		"Gulp" = 'sound/vore/prey/swallow_01.ogg',
 		"Swallow" = 'sound/vore/prey/swallow_02.ogg',
@@ -88,7 +91,7 @@ GLOBAL_LIST_INIT(prey_vore_sounds, list(
 		"Squish3" = 'sound/vore/prey/squish_03.ogg',
 		"Squish4" = 'sound/vore/prey/squish_04.ogg'))
 
-/*
+
 GLOBAL_LIST_INIT(prey_struggle_sounds, list(
 		"Struggle1" = 'sound/vore/prey/struggle_01.ogg',
 		"Struggle2" = 'sound/vore/prey/struggle_02.ogg',
@@ -129,7 +132,7 @@ GLOBAL_LIST_INIT(death_prey, list(
 		"death10"	= 'sound/vore/prey/death_10.ogg'))
  */
 
-GLOBAL_LIST_INIT(release_sound, list(
+GLOBAL_LIST_INIT(release_sounds, list(
 		"rustle (cloth)"	= 'sound/effects/rustle1.ogg',
 		"rustle2 (cloth)"	= 'sound/effects/rustle2.ogg',
 		"rustle3 (cloth)"	= 'sound/effects/rustle3.ogg',

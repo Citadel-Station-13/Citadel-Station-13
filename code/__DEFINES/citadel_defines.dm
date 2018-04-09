@@ -2,8 +2,16 @@
 //Be sure to update the min/max of these if you do change them.
 //Measurements are in imperial units. Inches, feet, yards, miles. Tsp, tbsp, cups, quarts, gallons, etc
 
-//arousal HUD location
+//HUD stuff
 #define  ui_arousal "EAST-1:28,CENTER-4:8"//Below the health doll
+#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
+#define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
+#define ui_combat_toggle "EAST-4:22,SOUTH:5"
+
+//1:1 HUD layout stuff
+#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
+#define ui_boxarea "EAST-4:6,SOUTH+1:6"
+#define ui_boxlang "EAST-5:22,SOUTH+1:6"
 
 
 //organ defines
@@ -97,7 +105,29 @@
 #define NOAROUSAL		37 //Stops all arousal effects
 #define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
 
-//Brainslugs
+//Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+#define isipcperson(A) (is_species(A, /datum/species/ipc))
 
-#define CITADEL_MENTOR_OOC_COLOUR "#ad396e"
+#define CITADEL_MENTOR_OOC_COLOUR "#224724"
+
+//xenobio console upgrade stuff
+#define XENOBIO_UPGRADE_MONKEYS				1
+#define XENOBIO_UPGRADE_SLIMEBASIC		2
+#define XENOBIO_UPGRADE_SLIMEADV			4
+
+//stamina stuff
+#define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL	0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+#define MIN_MELEE_STAMCOST						1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
+//Citadel toggles because bitflag memes
+#define MEDIHOUND_SLEEPER 1
+#define EATING_NOISES	2
+#define DIGESTION_NOISES 4
+
+#define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)

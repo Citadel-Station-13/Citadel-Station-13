@@ -75,9 +75,21 @@
 		affecting = get_bodypart(ran_zone(user.zone_selected))
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
+	I.SendSignal(COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting)
+	//CIT CHANGES START HERE - combatmode and resting checks
+		var/totitemdamage = I.force
+		if(iscarbon(user))
+			var/mob/living/carbon/tempcarb = user
+			if(!tempcarb.combatmode)
+				totitemdamage *= 0.5
+		if(user.resting)
+			totitemdamage *= 0.5
+		if(!combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -86,7 +98,7 @@
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 
-				if(affecting.body_zone == "head")
+				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
@@ -184,7 +196,7 @@
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
 		for(var/B in things_to_ruin)
 			var/obj/item/bodypart/bodypart = B
-			if(bodypart.body_zone == "head" || bodypart.body_zone == "chest")
+			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 				continue
 			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
 				affecting = bodypart
@@ -261,14 +273,12 @@
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None") || ("mam_tail" in dna.species.mutant_bodyparts)))
+			if(dna && dna.species && ((("tail_lizard" || "tail_human" || "mam_tail") in dna.species.mutant_bodyparts && (dna.features["tail_lizard"] || dna.features["tail_human"] || dna.features["mam_tail"])!= "None")))
 				emote("wag") //lewd
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-			if(mood)
-				mood.add_event("hug", /datum/mood_event/hug)
+			SendSignal(COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)
@@ -360,7 +370,7 @@
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
 	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
-	if(!def_zone || def_zone == "head")
+	if(!def_zone || def_zone == BODY_ZONE_HEAD)
 		var/obj/item/clothing/hit_clothes
 		if(wear_mask)
 			hit_clothes = wear_mask

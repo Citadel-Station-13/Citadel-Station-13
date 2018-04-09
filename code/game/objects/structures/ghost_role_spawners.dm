@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+	new_spawn.real_name = "Wish Granter's Victim ([rand(1,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -533,9 +533,6 @@
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
-
-
-#define PIRATE_NAMES_FILE "pirates.json"
 
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"

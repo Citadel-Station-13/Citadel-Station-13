@@ -69,7 +69,7 @@
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/device/healthanalyzer/advanced(src)
 	new /obj/item/device/assembly/flash/handheld(src)
-	new /obj/item/reagent_containers/hypospray/CMO(src)
+//	new /obj/item/reagent_containers/hypospray/CMO(src) // CITADEL EDIT comments out the hypospray mk I. the MK II kit is modularized
 	new /obj/item/device/autosurgeon/cmo(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)

@@ -29,7 +29,7 @@
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
-				var/obj/item/bodypart/BP = get_bodypart("chest")
+				var/obj/item/bodypart/BP = get_bodypart(BODY_ZONE_CHEST)
 				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
@@ -148,6 +148,12 @@
 	if(istype(target, /obj/screen))
 		return
 
+//CIT CHANGES - makes it impossible to throw while in stamina softcrit
+	if(staminaloss >= STAMINA_SOFTCRIT)
+		to_chat(src, "<span class='warning'>You're too exhausted.</span>")
+		return
+//END OF CIT CHANGES
+
 	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_held_item()
 
@@ -159,12 +165,13 @@
 				stop_pulling()
 				if(has_trait(TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+				adjustStaminaLossBuffered(25)//CIT CHANGE - throwing an entire person shall be very tiring
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
-					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
-					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
+					var/start_T_descriptor = "tile in [get_area_name(start_T, TRUE)] ([start_T.x],[start_T.y],[start_T.z])"
+					var/end_T_descriptor = "tile at [get_area_name(end_T, TRUE)] ([end_T.x],[end_T.y],[end_T.z])"
+					add_logs(src, throwable_mob, "thrown", addition="grab from [start_T_descriptor] towards [end_T_descriptor]")
 
 	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
@@ -174,9 +181,11 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
+		adjustStaminaLossBuffered(I.getweight()*2)//CIT CHANGE - throwing items shall be more tiring than swinging em. Doubly so.
+
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
-		add_logs(src, thrown_thing, "has thrown")
+		add_logs(src, thrown_thing, "thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
@@ -399,11 +408,19 @@
 	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		return
 
-	dropItemToGround(I)
+	//dropItemToGround(I) CIT CHANGE - makes it so the item doesn't drop if the modifier rolls above 100
 
 	var/modifier = 0
 	if(has_trait(TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
+
+	//CIT CHANGES START HERE
+	else if(combatmode)
+		modifier += 50
+
+	if(modifier < 100)
+		dropItemToGround(I)
+	//END OF CIT CHANGES
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
@@ -738,17 +755,14 @@
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		if(mood)
-			mood.add_event("handcuffed", /datum/mood_event/handcuffed)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
-		if(mood)
-			mood.clear_event("handcuffed")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
@@ -772,7 +786,7 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
-	cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
+	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.

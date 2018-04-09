@@ -91,6 +91,7 @@ PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
+PROBABILITY CLOWNOPS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -511,6 +512,7 @@ ROUNDSTART_RACES insect
 ROUNDSTART_RACES xeno
 ROUNDSTART_RACES datashark
 ROUNDSTART_RACES guilmon
+ROUNDSTART_RACES ipc
 
 ## CREW OBJECTIVES ##
 ## Comment to disable objectives for innocent crew members.
@@ -528,6 +530,9 @@ ALLOW_MISCREANTS
 
 ## Uncomment to allow roundstart trait selection in the character setup menu.
 ROUNDSTART_TRAITS
+
+## Uncomment to disable human moods.
+#DISABLE_HUMAN_MOOD
 
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS

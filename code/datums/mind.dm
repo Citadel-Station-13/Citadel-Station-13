@@ -111,7 +111,7 @@
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself		
+	new_character.mind = src							//and associate our new body with ourself
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -311,7 +311,7 @@
 	else
 		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		var/unlock_note
-		
+
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -331,7 +331,7 @@
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			unlock_note = "<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name])."
-		
+
 		if(uplink_owner)
 			uplink_owner.antag_memory += unlock_note + "<br>"
 		else
@@ -781,6 +781,13 @@
 	if(G)
 		G.reenter_corpse()
 
+
+/datum/mind/proc/has_objective(objective_type)
+	for(var/datum/antagonist/A in antag_datums)
+		for(var/O in A.objectives)
+			if(istype(O,objective_type))
+				return TRUE
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -812,11 +819,6 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "Unassigned" //default
-
-//XENO
-/mob/living/carbon/alien/mind_initialize()
-	..()
-	mind.special_role = ROLE_ALIEN
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

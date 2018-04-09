@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/dangerous_existence //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
-	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
+	var/list/mutant_bodyparts = list() 	// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by handle_mutant_bodyparts() below.
 	var/list/mutant_organs = list()		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
@@ -221,7 +221,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		tail = new mutanttail()
 		tail.Insert(C)
 
-	if(C.get_bodypart("head"))
+	if(C.get_bodypart(BODY_ZONE_HEAD))
 		if(eyes && (replace_current || !should_have_eyes))
 			eyes.Remove(C,1)
 			QDEL_NULL(eyes)
@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
 
@@ -458,7 +458,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if(HD && !(H.has_trait(TRAIT_HUSK)))
 		// lipstick
@@ -526,7 +526,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!mutant_bodyparts)
 		return
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if("tail_lizard" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || (!H.dna.features["taur"] == "None"))
@@ -685,26 +685,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
-
-				//Mammal Bodyparts
-				if("mam_tail")
-					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
-				if("mam_waggingtail")
-					S.= GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
-				if("mam_body_markings")
-					S = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
-				if("mam_ears")
-					S = GLOB.mam_ears_list[H.dna.features["mam_ears"]]
-				if("taur")
-					S = GLOB.taur_list[H.dna.features["taur"]]
-
-				//Xeno Bodyparts
-				if("xenodorsal")
-					S = GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
-				if("xenohead")
-					S = GLOB.xeno_head_list[H.dna.features["xenohead"]]
-				if("xenotail")
-					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
+				else
+					S = citadel_mutant_bodyparts(bodypart, H)
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -897,7 +879,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
@@ -942,7 +924,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.belt)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -956,7 +938,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_EYES) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_head)
@@ -964,7 +946,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_HEAD) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_ears)
@@ -972,7 +954,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_EARS) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
@@ -985,7 +967,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.wear_id)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
@@ -999,7 +981,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.l_store)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("l_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -1015,7 +997,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.r_store)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("r_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -1124,14 +1106,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			switch(mood.mood) //Alerts do_after delay based on how happy you are
-				if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-					hunger_rate *= 0.9
-				if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-					hunger_rate *= 0.8
-				if(MOOD_LEVEL_HAPPY4 to INFINITY)
-					hunger_rate *= 0.7
+		if(mood && mood.sanity > SANITY_DISTURBED)
+			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
 		if(H.satiety > 0)
 			H.satiety--
@@ -1166,31 +1142,24 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/fat)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/wellfed)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
 			H.clear_alert("nutrition")
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/fed)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			if(mood)
-				mood.clear_event("nutrition")
+			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nutrition")
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/hungry)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/starving)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1290,21 +1259,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/obj/item/I in H.held_items)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
-		var/health_deficiency = (100 - H.health + H.staminaloss)
+		var/stambufferinfluence = (H.bufferedstam*(100/H.stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
+		var/health_deficiency = ((100 + stambufferinfluence) - H.health + (H.staminaloss*0.75))//CIT CHANGE - reduces the impact of staminaloss on movement speed and makes stamina buffer influence movedelay
 		if(health_deficiency >= 40)
 			if(flight)
-				. += (health_deficiency / 75)
+				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
 			else
-				. += (health_deficiency / 25)
+				. += ((health_deficiency-39) / 25) // CIT CHANGE - ditto
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
-			switch(mood.mood)
-				if(-INFINITY to MOOD_LEVEL_SAD4)
+			switch(mood.sanity)
+				if(SANITY_INSANE to SANITY_CRAZY)
 					. += 1.5
-				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				if(SANITY_CRAZY to SANITY_UNSTABLE)
 					. += 1
-				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				if(SANITY_UNSTABLE to SANITY_DISTURBED)
 					. += 0.5
 
 		if(H.has_trait(TRAIT_FAT))
@@ -1356,6 +1326,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
+	if(user.staminaloss >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
+		return FALSE //CITADEL CHANGE - ditto
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
 		return FALSE
@@ -1377,7 +1350,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
+		user.adjustStaminaLossBuffered(5) //CITADEL CHANGE - makes punching cause staminaloss
+
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+
+		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
+		if(!target.combatmode && damage < user.dna.species.punchstunthreshold)
+			damage = user.dna.species.punchstunthreshold - 1
+		if(user.resting)
+			damage *= 0.5
+		if(!user.combatmode)
+			damage *= 0.25
+		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
@@ -1420,6 +1404,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		"You hear a slap.")
 		target.endTailWag()
 		return FALSE
+	else if(user.staminaloss >= STAMINA_SOFTCRIT)
+		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
+		return FALSE
 	else if(target.check_block()) //END EDIT
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
@@ -1428,22 +1415,31 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
+		user.adjustStaminaLossBuffered(3) //CITADEL CHANGE - makes disarmspam cause staminaloss
+
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
-		var/randomized_zone = ran_zone(user.zone_selected)
+		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
 		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
-		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
+		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone) CIT CHANGE - comments this out to prevent compile errors due to the below commented out bit
 		var/randn = rand(1, 100)
-		if(randn <= 25)
+		/*if(randn <= 25) CITADEL CHANGE - moves disarm push attempts to right click
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
-			return
+			return*/
 
-		if(randn <= 60)
+		if(!target.combatmode) // CITADEL CHANGE
+			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
+		if(user.resting) //CITADEL CHANGE
+			randn += 60 //CITADEL CHANGE - No kosher disarming if you're resting
+		if(!user.combatmode) //CITADEL CHANGE
+			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
+
+		if(randn <= 35)//CIT CHANGE - changes this back to a 35% chance to accomodate for the above being commented out in favor of right-click pushing
 			var/obj/item/I = null
 			if(target.pulling)
 				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
@@ -1516,8 +1512,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
+	//CIT CHANGES START HERE - combatmode and resting checks
+	var/totitemdamage = I.force
+	if(iscarbon(user))
+		var/mob/living/carbon/tempcarb = user
+		if(!tempcarb.combatmode)
+			totitemdamage *= 0.5
+	if(user.resting)
+		totitemdamage *= 0.5
+	if(istype(H))
+		if(!H.combatmode)
+			totitemdamage *= 1.5
+	//CIT CHANGES END HERE
+
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	apply_damage(totitemdamage * weakness, I.damtype, def_zone, armor_block, H) //CIT CHANGE - replaces I.force with totitemdamage
 
 	H.send_item_attack_message(I, user, hit_area)
 
@@ -1544,7 +1553,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user.add_mob_blood(H)
 
 		switch(hit_area)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
@@ -1574,7 +1583,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
-			if("chest")
+			if(BODY_ZONE_CHEST)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
@@ -1688,13 +1697,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 		var/burn_damage
-		if(mood)
-			mood.clear_event("cold")
-			mood.add_event("hot", /datum/mood_event/hot)
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
+		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -1714,9 +1721,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.apply_damage(burn_damage, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
-		if(mood)
-			mood.clear_event("hot")
-			mood.add_event("cold", /datum/mood_event/cold)
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
+		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1730,9 +1736,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		if(mood)
-			mood.clear_event("cold")
-			mood.clear_event("hot")
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
@@ -1826,7 +1831,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjust_bodytemperature(11)
 		else
 			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
-
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOFIRE))

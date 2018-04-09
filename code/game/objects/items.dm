@@ -440,7 +440,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
-	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -482,7 +481,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
-	var/obj/item/bodypart/affecting = M.get_bodypart("head")
+	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
 		if(!affecting) //no head!
 			return
@@ -510,11 +509,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+
 	src.add_fingerprint(user)
 
 	playsound(loc, src.hitsound, 30, 1, -1)
 
 	user.do_attack_animation(M)
+
+	user.adjustStaminaLossBuffered(10)//CIT CHANGE - makes eyestabbing cost stamina
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
@@ -531,9 +536,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
-		mood.add_event("eye_stab", /datum/mood_event/eye_stab)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -567,8 +570,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		return
 
-/obj/item/throw_impact(atom/A)
+/obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
+		SendSignal(COMSIG_MOVABLE_IMPACT, A, throwingdatum)
 		if(is_hot() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()

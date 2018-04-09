@@ -144,7 +144,6 @@
 
 
 	//OXYGEN
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
 			emote("gasp")
@@ -157,8 +156,7 @@
 			adjustOxyLoss(3)
 			failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		if(mood)
-			mood.add_event("suffocation", /datum/mood_event/suffocation)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -166,8 +164,7 @@
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
-		if(mood)
-			mood.clear_event("suffocation")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -331,8 +328,17 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(staminaloss)
-		adjustStaminaLoss(-3)
+	if(staminaloss && !combatmode && !aimingdownsights)//CIT CHANGE - prevents stamina regen while combat mode is active
+		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
+		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
+
+	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
+	if(bufferedstam && world.time > stambufferregentime)
+		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
+		bufferedstam = max(bufferedstam - drainrate, 0)
+		adjustStaminaLoss(drainrate*0.5)
+	//END OF CIT CHANGES
 
 	var/restingpwr = 1 + 4 * resting
 

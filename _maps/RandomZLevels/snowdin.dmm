@@ -472,7 +472,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/item/tome,
@@ -487,7 +486,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -511,7 +509,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -523,7 +520,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -537,7 +533,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -1624,7 +1619,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -2744,7 +2738,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3098,7 +3091,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "45"
 	},
@@ -8932,7 +8924,7 @@
 	desc = "A turret built with substandard parts and run down further with age.";
 	icon_state = "syndie_off";
 	dir = 9;
-	faction = "pirate"
+	faction = list("pirate")
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/cave)
@@ -10641,7 +10633,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plating/snowed/smoothed,
@@ -12503,7 +12494,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Gn" = (
-/obj/structure/plasticflaps/mining,
+/obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 2;
 	id = "snowdin_belt_mine"
@@ -13074,8 +13065,7 @@
 "Ic" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab";
-	req_access_txt = "29";
-	req_one_access_txt = "0"
+	req_access_txt = "29"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -13425,7 +13415,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "Jf" = (
-/obj/structure/plasticflaps/mining,
+/obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "snowdin_belt_mine"
@@ -13837,7 +13827,6 @@
 	height = 5;
 	id = "snowdin_mining";
 	name = "mining elevator";
-	timid = 0;
 	width = 5
 	},
 /obj/docking_port/stationary{

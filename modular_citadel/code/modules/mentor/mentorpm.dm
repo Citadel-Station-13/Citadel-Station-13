@@ -31,18 +31,32 @@
 		else		mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
 		return
 
+	if(is_mentor(whom))
+		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has started replying to [whom]'s mhelp.</font color>")
+
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
+		
+		if(!msg && is_mentor(whom))
+			to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
+			return
 
-		if(!msg)	return
 		if(!C)
-			if(is_mentor())	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
-			else		mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
+			if(is_mentor())
+				to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+			else
+				mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
+				return
+
+		// Neither party is a mentor, they shouldn't be PMing!
+		if (!C.is_mentor() && !is_mentor())
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+	if(!msg && is_mentor(whom))	
+		to_chat(GLOB.admins | GLOB.mentors, "<font color='purple'>[src] has stopped their reply to [whom]'s mhelp.</font color>")
+		return
 
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(C)]: [msg]")
 

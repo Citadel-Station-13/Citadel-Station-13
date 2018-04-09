@@ -16,10 +16,10 @@
 obj/item/gun/energy/e_gun/cx
 	name = "\improper CX Model D Energy Gun"
 	desc = "An overpriced hybrid energy gun with two settings: disable, and kill. Manufactured by CX Armories. Has a polychromic coating."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "cxe"
-	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	lefthand_file = 'modular_citadel/icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'modular_citadel/icons/mob/citadel/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	flight_x_offset = 15
 	flight_y_offset = 10
@@ -27,7 +27,7 @@ obj/item/gun/energy/e_gun/cx
 
 obj/item/gun/energy/e_gun/cx/update_icon()
 	..()
-	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "cxegun_body")
+	var/mutable_appearance/body_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "cxegun_body")
 	if(body_color)
 		body_overlay.color = body_color
 	add_overlay(body_overlay)

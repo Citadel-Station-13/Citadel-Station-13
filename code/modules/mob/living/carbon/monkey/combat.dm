@@ -141,7 +141,7 @@
 		// Really no idea what needs to be returned but everything else is TRUE
 		return TRUE
 
-	if(on_fire || buckled || restrained())
+	if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - adds (resting && canmove) to make monkey ai attempt to resist out of resting
 		if(!resisting && prob(MONKEY_RESIST_PROB))
 			resisting = TRUE
 			walk_to(src,0)
@@ -477,4 +477,13 @@
 		dropItemToGround(A, TRUE)
 		update_icons()
 
+/mob/living/carbon/monkey/grabbedby(mob/living/carbon/user)
+	. = ..()
+	if(!IsDeadOrIncap() && pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB))) // nuh uh you don't pull me!
+		if(Adjacent(pulledby))
+			a_intent = INTENT_DISARM
+			monkey_attack(pulledby)
+			retaliate(pulledby)
+			return TRUE
+			
 #undef MAX_RANGE_FIND

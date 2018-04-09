@@ -1,5 +1,9 @@
-/datum/job/hop
+/datum/job/captain
+	minimal_player_age = 60
+	exp_type = EXP_TYPE_COMMAND
 
+/datum/job/hop
+	minimal_player_age = 60
 	head_announce = list("Service")
 	exp_type_department = EXP_TYPE_SERVICE
 

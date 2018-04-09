@@ -62,6 +62,7 @@
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implantd
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -74,6 +75,11 @@
 	var/obj/machinery/turretid/cp = null
 
 	var/wall_turret_direction //The turret will try to shoot from a turf in that direction when in a wall
+
+	var/manual_control = FALSE //
+	var/datum/action/turret_quit/quit_action
+	var/datum/action/turret_toggle/toggle_action
+	var/mob/remote_controller
 
 /obj/machinery/porta_turret/Initialize()
 	. = ..()
@@ -153,6 +159,7 @@
 		cp = null
 	QDEL_NULL(stored_gun)
 	QDEL_NULL(spark_system)
+	remove_control()
 	return ..()
 
 
@@ -177,6 +184,15 @@
 		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+	if(issilicon(user))
+		if(!manual_control)
+			var/mob/living/silicon/S = user
+			if(S.hack_software)
+				dat += "Assume direct control : <a href='?src=[REF(src)];operation=manual'>Manual Control</a><br>"
+		else
+			dat += "Warning! Remote control protocol enabled.<br>"
+
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -208,6 +224,11 @@
 				stun_all = !stun_all
 			if("checkxenos")
 				check_anomalies = !check_anomalies
+			if("checkloyal")
+				shoot_unloyal = !shoot_unloyal
+			if("manual")
+				if(issilicon(usr) && !manual_control)
+					give_control(usr)
 		interact(usr)
 
 /obj/machinery/porta_turret/power_change()
@@ -343,25 +364,12 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN))
-		if(!always_up)
-			//if the turret has no power or is broken, make the turret pop down if it hasn't already
-			popDown()
-		return
-
-	if(!on)
-		if(!always_up)
-			//if the turret is off, make it pop down
-			popDown()
+	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
 		return
 
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
-
-	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
-		var/atom/AA = A
-
-		if(AA.invisibility > SEE_INVISIBLE_LIVING)
+	for(var/mob/A in view(scan_range, base))
+		if(A.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
@@ -377,7 +385,7 @@
 
 				if(iscyborg(sillycone))
 					var/mob/living/silicon/robot/sillyconerobot = A
-					if(faction == "syndicate" && sillyconerobot.emagged == 1)
+					if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 						continue
 
 				targets += sillycone
@@ -385,7 +393,7 @@
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.recoveringstam))//CIT CHANGE - replaces check for lying with check for recoveringstam
 				continue
 
 			//If emagged, target all but dead carbons
@@ -400,17 +408,17 @@
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
+	for(var/A in GLOB.mechas_list)
+		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
+			var/obj/mecha/Mech = A
+			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
+				if(assess_perp(Mech.occupant) >= 4)
+					targets += Mech
 
-		if(ismecha(A))
-			var/obj/mecha/M = A
-			//If there is a user and they're not in our faction
-			if(M.occupant && !in_faction(M.occupant))
-				if(assess_perp(M.occupant) >= 4)
-					targets += M
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
+	if(targets.len)
+		tryToShootAt(targets)
+	else if(!always_up)
+		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -484,6 +492,10 @@
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
+	if(shoot_unloyal)
+		if (!perp.isloyal())
+			threatcount += 4
+
 	return threatcount
 
 
@@ -555,8 +567,70 @@
 	if(controllock)
 		return
 	src.on = on
+	if(!on)
+		popDown()
 	src.mode = mode
 	power_change()
+
+
+/datum/action/turret_toggle
+	name = "Toggle Mode"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_cycle_equip_off"
+
+/datum/action/turret_toggle/Trigger()
+	var/obj/machinery/porta_turret/P = target
+	if(!istype(P))
+		return
+	P.setState(P.on,!P.mode)
+
+/datum/action/turret_quit
+	name = "Release Control"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_eject"
+
+/datum/action/turret_quit/Trigger()
+	var/obj/machinery/porta_turret/P = target
+	if(!istype(P))
+		return
+	P.remove_control(owner)
+
+/obj/machinery/porta_turret/proc/give_control(mob/A)
+	if(manual_control)
+		return FALSE
+	remote_controller = A
+	if(!quit_action)
+		quit_action = new(src)
+	quit_action.Grant(remote_controller)
+	if(!toggle_action)
+		toggle_action = new(src)
+	toggle_action.Grant(remote_controller)
+	remote_controller.reset_perspective(src)
+	remote_controller.click_intercept = src
+	manual_control = TRUE
+	always_up = TRUE
+	popUp()
+	return TRUE
+
+/obj/machinery/porta_turret/proc/remove_control()
+	if(!manual_control)
+		return FALSE
+	if(remote_controller)
+		quit_action.Remove(remote_controller)
+		toggle_action.Remove(remote_controller)
+		remote_controller.click_intercept = null
+		remote_controller.reset_perspective()
+	always_up = initial(always_up)
+	manual_control = FALSE
+	remote_controller = null
+	return TRUE
+
+/obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+	if(!manual_control)
+		return FALSE
+	add_logs(caller,A,"fired with manual turret control at")
+	target(A)
+	return TRUE
 
 /obj/machinery/porta_turret/syndicate
 	installation = null

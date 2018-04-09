@@ -1,7 +1,33 @@
 /obj/machinery/vending/security
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/device/ssword_kit = 1)
 	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/device/ssword_kit = 1)
-	
+
+/obj/machinery/vending/medical
+	products = list(/obj/item/reagent_containers/syringe = 12,
+					/obj/item/reagent_containers/dropper = 3,
+					/obj/item/device/healthanalyzer = 4,
+					/obj/item/device/sensor_device = 2,
+					/obj/item/pinpointer/crew = 2,
+					/obj/item/reagent_containers/medspray/sterilizine = 1,
+					/obj/item/stack/medical/gauze = 8,
+					/obj/item/reagent_containers/pill/patch/styptic = 5,
+					/obj/item/reagent_containers/medspray/styptic = 2,
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
+					/obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/insulin = 10,
+					/obj/item/reagent_containers/pill/salbutamol = 2,
+					/obj/item/reagent_containers/glass/bottle/charcoal = 4,
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 4,
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/glass/bottle/morphine = 4,
+					/obj/item/reagent_containers/glass/bottle/toxin = 3,
+					/obj/item/reagent_containers/syringe/antiviral = 6,
+					/obj/item/storage/hypospraykit/fire = 2,
+					/obj/item/storage/hypospraykit/toxin = 2,
+					/obj/item/storage/hypospraykit/o2 = 2,
+					/obj/item/storage/hypospraykit/brute = 2,
+					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
+
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
 #define COIN_CHARGE 3
@@ -24,7 +50,7 @@
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
 					)
-	premium = list(/obj/item/device/electropack/shockcollar = 1)
+	premium = list(/obj/item/device/electropack/shockcollar = 3)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend
@@ -90,8 +116,8 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
-	charges 		= list(8, 5, 0)// of 20 standard, 12 contraband, 0 premium
-	init_charges 	= list(8, 5, 0)
+	charges 		= list(8, 5, 1)// of 20 standard, 12 contraband, 3 premium
+	init_charges 	= list(8, 5, 1)
 
 /obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"

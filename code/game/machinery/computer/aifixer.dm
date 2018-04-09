@@ -35,6 +35,12 @@
 		if (src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
 
+		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
+			var/law = src.occupier.laws.hacked[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
+
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
 			if (length(law) > 0)
@@ -78,7 +84,6 @@
 	occupier.adjustToxLoss(-1, 0)
 	occupier.adjustBruteLoss(-1, 0)
 	occupier.updatehealth()
-	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive()
 	return occupier.health < 100
@@ -86,9 +91,11 @@
 /obj/machinery/computer/aifixer/process()
 	if(..())
 		if(active)
+			var/oldstat = occupier.stat
 			active = Fix()
+			if(oldstat != occupier.stat)
+				update_icon()
 		updateDialog()
-		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())

@@ -81,6 +81,10 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
+	if(!GLOB.ipc_screens_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
+	if(!GLOB.ipc_antennas_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list)
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
 	/*	if(H.gender == MALE) Fuck if I know how to fix this.
@@ -114,13 +118,13 @@
 		"caps" = pick(GLOB.caps_list),
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
-		"mam_body_markings" = "None",
-		"mam_ears" 			= "None",
-		"mam_tail" 			= "None",
+		"mam_body_markings" = "wolf",
+		"mam_ears" 			= "wolf",
+		"mam_tail" 			= "wolf",
 		"mam_tail_animated" = "None",
-		"xenodorsal" 		= "None",
-		"xenohead" 			= "None",
-		"xenotail" 			= "None",
+		"xenodorsal" 		= "standard",
+		"xenohead" 			= "standard",
+		"xenotail" 			= "standard",
 		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
@@ -166,6 +170,8 @@
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum",
+		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
 		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)
@@ -212,8 +218,8 @@
 
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(moth_name())
-
+		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+	
 		if(!findname(.))
 			break
 
@@ -282,7 +288,7 @@ Proc for attack log creation, because really why not
 
 	var/hp =" "
 	if(living_target)
-		hp = "(NEWHP: [living_target.health])"
+		hp = " (NEWHP: [living_target.health]) "
 
 	var/starget = "NON-EXISTENT SUBJECT"
 	if(target)
@@ -301,20 +307,22 @@ Proc for attack log creation, because really why not
 	var/sobject = ""
 	if(object)
 		sobject = "[object]"
+		if(addition)
+			addition = " [addition]"
 
 	var/sattackloc = ""
 	if(attack_location)
 		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
 
 	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
-	log_attack("[ssource] [what_done] [starget] with [sobject][addition] [hp] [sattackloc]")
+	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
@@ -396,13 +404,11 @@ Proc for attack log creation, because really why not
 
 	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
 	if(mood)
-		switch(mood.mood) //Alerts do_after delay based on how happy you are
-			if(-INFINITY to MOOD_LEVEL_SAD2)
+		switch(mood.sanity) //Alters do_after delay based on how sane you are
+			if(SANITY_INSANE to SANITY_DISTURBED)
 				delay *= 1.25
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				delay *= 0.95
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				delay *= 0.9
+			if(SANITY_NEUTRAL to SANITY_GREAT)
+				delay *= 0.90
 
 	var/endtime = world.time + delay
 	var/starttime = world.time

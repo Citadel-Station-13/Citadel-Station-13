@@ -19,8 +19,7 @@
 	if(!check_rights())
 		return
 
-	if(!isobserver(usr))
-		log_game("[key_name(usr)] checked the player panel while in game.")
+	log_admin("[key_name(usr)] checked the individual player panel for [key_name(M)][isobserver(usr)?"":" while in game"].")
 
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
@@ -52,11 +51,6 @@
 		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=subtract;mob=[REF(M)]'>\[decrease\]</a> "
 		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=set;mob=[REF(M)]'>\[set\]</a> "
 		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=zero;mob=[REF(M)]'>\[zero\]</a>"
-
-		body += "<br><br>"
-		body += "<A href='?_src_=holder;[HrefToken()];makementor=[M.ckey]'>Make mentor</A> | "
-		body += "<A href='?_src_=holder;[HrefToken()];removementor=[M.ckey]'>Remove mentor</A>"
-		body += "<br>"
 
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
@@ -183,6 +177,8 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+
+	body += usr.client.citaPPoptions(M) // CITADEL
 
 	body += "<br>"
 	body += "</body></html>"
@@ -773,11 +769,7 @@
 		var/J_totPos = html_encode(job.total_positions)
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
-		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " </td><td>(Cannot Late Join)</td>"
-			continue
-		else
-			dat += "</td>"
+		dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "

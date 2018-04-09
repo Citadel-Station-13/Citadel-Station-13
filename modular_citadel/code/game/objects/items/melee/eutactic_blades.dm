@@ -11,18 +11,29 @@
 	lefthand_file = 'modular_citadel/icons/eutactic/mob/noneutactic_left.dmi'
 	righthand_file = 'modular_citadel/icons/eutactic/mob/noneutactic_right.dmi'
 	force = 3
+	force_on = 21
 	throwforce = 5
+	throwforce_on = 20
 	hitsound = "swing_hit" //it starts deactivated
 	hitsound_on = 'sound/weapons/nebhit.ogg'
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 40, "embedded_fall_chance" = 10)
-	armour_penetration = 0
-	block_chance = 60
+	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 20, "embedded_fall_chance" = 60)
+	armour_penetration = 10
+	block_chance = 35
 	light_color = "#37FFF7"
 	actions_types = list()
+
+/obj/item/melee/transforming/energy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/melee/transforming/energy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
 	active = !active				//I'd use a ..() here but it'd inherit from the regular esword's proc instead, so SPAGHETTI CODE
@@ -100,6 +111,11 @@
 			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
 			blade_inhand.color = light_color
 			. += blade_inhand
+//Broken version. Not a toy, but not as strong.
+/obj/item/melee/transforming/energy/sword/cx/broken
+	name = "misaligned non-eutactic blade"
+	desc = "The Non-Eutactic Blade utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. This one seems to have a damaged handle and misaligned components, causing the blade to be unstable at best"
+	force_on = 15 //As strong a survival knife/bone dagger
 
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
@@ -117,6 +133,15 @@
 	light_color = "#37FFF7"
 	var/light_brightness = 3
 	actions_types = list()
+
+/obj/item/toy/sword/cx/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/toy/sword/cx/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
 
 /obj/item/toy/sword/cx/attack_self(mob/user)
 	active = !( active )
@@ -217,19 +242,29 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	force_unwielded = 3
-	force_wielded = 40
+	force_wielded = 30
 	wieldsound = 'sound/weapons/nebon.ogg'
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 40
+	armour_penetration = 10
 	light_color = "#37FFF7"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
-	block_chance = 75
+	block_chance = 25
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	flags_2 = SLOWS_WHILE_IN_HAND_2
+
+/obj/item/twohanded/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
+	altafterattack(A, user, TRUE, params)
+	return TRUE
+
+/obj/item/twohanded/hypereutactic/altafterattack(atom/target, mob/living/carbon/user, proximity_flag, click_parameters)	//does right click memes
+	if(istype(user))
+		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
+	return TRUE
+
 
 /obj/item/twohanded/hypereutactic/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
@@ -390,8 +425,9 @@
 			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
 			It appears to have a wooden grip and a shaved down guard."
 	icon_state = "cxsword_hilt_traitor"
+	force_on = 30
 	armour_penetration = 35
-	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 70, "embedded_fall_chance" = 0)
+	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 75, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 10)
 	block_chance = 50
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	light_color = "#37F0FF"
@@ -400,3 +436,21 @@
 	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
+
+//RAINBOW MEMES
+
+/obj/item/twohanded/hypereutactic/toy/rainbow
+	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
+	desc = "A custom-built toy with fancy rainbow lights built-in."
+	flags_2 = NONE
+	var/list/rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/process()
+	. = ..()
+	var/set_color = pick(rainbow_colors)
+	light_color = set_color
+	update_light()
+	update_icon()
+
+/obj/item/twohanded/hypereutactic/toy/rainbow/AltClick(mob/living/user)
+	return

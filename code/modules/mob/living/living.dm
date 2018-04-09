@@ -139,6 +139,27 @@
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
 
+	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
+		if(resting && !L.resting)
+			if(attemptingcrawl)
+				return TRUE
+			if(staminaloss >= STAMINA_SOFTCRIT)
+				to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
+				return TRUE
+			attemptingcrawl = TRUE
+			var/origtargetloc = L.loc
+			visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
+			if(do_after(src, CRAWLUNDER_DELAY, target = src))
+				if(resting)
+					var/src_passmob = (pass_flags & PASSMOB)
+					pass_flags |= PASSMOB
+					Move(origtargetloc)
+					if(!src_passmob)
+						pass_flags &= ~PASSMOB
+			attemptingcrawl = FALSE
+			return TRUE
+	//END OF CIT CHANGES
+
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
 
@@ -260,7 +281,7 @@
 
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -320,7 +341,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
 		return 1
 
 /mob/living/proc/InCritical()
@@ -377,6 +398,7 @@
 
 /mob/proc/get_contents()
 
+/*CIT CHANGE - comments out lay_down proc to be modified in modular_citadel
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
@@ -384,6 +406,7 @@
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
+*/
 
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(obj/item/storage/Storage = null)
@@ -423,8 +446,8 @@
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
 	var/t = shooter.zone_selected
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
+	if ((t in list( BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH )))
+		t = BODY_ZONE_HEAD
 	var/def_zone = ran_zone(t)
 	return def_zone
 
@@ -595,23 +618,25 @@
 		return pick("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	if (client && client.move_delay >= world.time + world.tick_lag*2)
+	if(buckled)
+		return
+	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
 
-	if (has_limbs)
+	if(has_limbs)
 		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
 		if (T)
 			turfs_to_check += T
 
 		T = get_step(src, angle2dir(dir2angle(direction)-90))
-		if (T)
+		if(T)
 			turfs_to_check += T
 
-		for (var/t in turfs_to_check)
+		for(var/t in turfs_to_check)
 			T = t
-			if (T.density)
+			if(T.density)
 				pressure_resistance_prob_delta -= 20
 				continue
 			for (var/atom/movable/AM in T)
@@ -643,9 +668,9 @@
 	if(buckled && last_special <= world.time)
 		resist_buckle()
 
-	// climbing out of a gut
+	// CIT CHANGE - climbing out of a gut
 	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
-	
+
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
 		var/obj/C = loc
@@ -662,6 +687,8 @@
 	else if(canmove)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
+		else if(resting) //cit change - allows resisting out of resting
+			resist_a_rest() // ditto
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
@@ -735,10 +762,10 @@
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
 					if(who.dropItemToGround(what))
-						add_logs(src, who, "stripped", addition="of [what]")
+						add_logs(src, who, "stripped [what] off")
 			if(what == who.get_item_by_slot(where))
 				if(who.dropItemToGround(what))
-					add_logs(src, who, "stripped", addition="of [what]")
+					add_logs(src, who, "stripped [what] off")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -851,15 +878,21 @@
 		return FALSE
 	return TRUE
 
-/mob/living/proc/can_use_guns(obj/item/G)
+/mob/living/proc/can_use_guns(obj/item/G)//actually used for more than guns!
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
+	var/obj/item/gun/shooty
+	if(istype(G, /obj/item/gun))
+		shooty = G
 	if(has_trait(TRAIT_PACIFISM))
+		if(shooty && !shooty.harmful)
+			return TRUE
 		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE
 
+/*CIT CHANGE - comments out update_stamina to be modified in modular_citadel
 /mob/living/carbon/proc/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
@@ -868,6 +901,7 @@
 			Knockdown(100)
 			setStaminaLoss(health - 2)
 	update_health_hud()
+*/
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -895,10 +929,9 @@
 	return 1
 
 /mob/living/proc/check_acedia()
-	if(src.mind && src.mind.objectives)
-		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
-			return 1
-	return 0
+	if(mind && mind.has_objective(/datum/objective/sintouched/acedia))
+		return TRUE
+	return FALSE
 
 /mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()
@@ -952,9 +985,6 @@
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood)
-			mood.add_event("on_fire", /datum/mood_event/on_fire)
 		update_fire()
 		return TRUE
 	return FALSE
@@ -966,9 +996,7 @@
 		for(var/obj/effect/dummy/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood)
-			mood.clear_event("on_fire")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
@@ -1022,25 +1050,32 @@
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || move_and_fall || IsStun() || chokehold)
+	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
+	else if(resting) //CIT CHANGE - makes resting make you stop pulling and interacting with machines
+		unset_machine() //CIT CHANGE - Ditto!
+		if(pulling) //CIT CHANGE - Ditto.
+			stop_pulling() //CIT CHANGE - Ditto...
 	else if(has_legs || ignore_legs)
 		lying = 0
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)
 		if(resting)
-			fall()
+			lying = pick(90, 270) // Cit change - makes resting not force you to drop your held items
+			if(has_gravity()) // Cit change - Ditto
+				playsound(src, "bodyfall", 50, 1) // Cit change - Ditto!
 		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || recoveringstam || pinned || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms)) //Cit change - makes it plausible to move while resting, adds pinning and stamina crit
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -1053,6 +1088,8 @@
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
+	if(canmove && !intentionalresting && iscarbon(src) && client && client.prefs && client.prefs.autostand)//CIT CHANGE - adds autostanding as a preference
+		resist_a_rest(TRUE)//CIT CHANGE - ditto
 	return canmove
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)

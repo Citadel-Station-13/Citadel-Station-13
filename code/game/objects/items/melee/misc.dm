@@ -106,13 +106,17 @@
 	if(!on)
 		return ..()
 
+	if(user.staminaloss >= STAMINA_SOFTCRIT)//CIT CHANGE - makes batons unusuable in stamina softcrit
+		to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		return //CIT CHANGE - ditto
+
 	add_fingerprint(user)
 	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, "head")
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 		else
 			user.take_bodypart_damage(2*force)
 		return
@@ -145,6 +149,7 @@
 			else
 				target.LAssailant = user
 			cooldown = world.time + 40
+			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
