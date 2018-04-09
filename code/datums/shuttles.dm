@@ -359,8 +359,6 @@
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
-<<<<<<< HEAD
-=======
 
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
