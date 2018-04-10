@@ -39,6 +39,16 @@
 	color_src = 0
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
@@ -161,6 +171,12 @@
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
+/datum/sprite_accessory/ears/human/jellyfish
+	name = "Jellyfish"
+	icon_state = "jellyfish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = HAIR
+
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
@@ -237,6 +253,12 @@
 	icon_state = "sergal"
 	hasinner= 1
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/orca
+	name = "Orca"
+	icon_state = "orca"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
 
 /datum/sprite_accessory/tails/human/sergal
 	name = "Sergal"
@@ -392,6 +414,14 @@
 	icon_state = "ailurus"
 	extra = TRUE
 
+/datum/sprite_accessory/mam_tails/axoltol
+	name = "Axolotl"
+	icon_state = "axolotl"
+
+/datum/sprite_accessory/mam_ears/axoltol
+	name = "Axolotl"
+	icon_state = "axolotl"
+
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"
@@ -494,6 +524,11 @@
 	icon_state = "Horse"
 	color_src = HAIR
 
+/datum/sprite_accessory/mam_ears/jellyfish
+	name = "Jellyfish"
+	icon_state = "jellyfish"
+	color_src = HAIR
+
 /datum/sprite_accessory/mam_ears/husky
 	name = "Husky"
 	icon_state = "wolf"
@@ -590,6 +625,11 @@
 /datum/sprite_accessory/mam_tails_animated/otie
 	name = "Otusian"
 	icon_state = "otie"
+
+/datum/sprite_accessory/mam_tails/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/rabbit
     name = "Rabbit"
@@ -767,6 +807,12 @@
 	icon_state = "otie"
 	gender_specific = 1
 
+/datum/sprite_accessory/mam_body_markings/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
+	gender_specific = 1
+
 /datum/sprite_accessory/mam_body_markings/shark
 	name = "Shark"
 	icon_state = "shark"
@@ -849,6 +895,10 @@
 /datum/sprite_accessory/taur/naga
 	name = "Naga"
 	icon_state = "naga"
+
+/datum/sprite_accessory/taur/octopus
+	name = "Octopus"
+	icon_state = "octopus"
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
@@ -1145,3 +1195,36 @@
 	extra = FALSE
 	extra2 = FALSE
 	ckeys_allowed = list("poojawa")
+
+//Turian face paint
+/datum/sprite_accessory/turian_face_paints
+	icon = 'modular_citadel/icons/mob/turian_face_paints.dmi'
+	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/turian_face_paints/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/turian_face_paints/chatti
+	name = "Chatti"
+	icon_state = "chatti"
+
+/datum/sprite_accessory/turian_face_paints/mecadyn
+	name = "Mecadyn"
+	icon_state = "mecadyn"
+
+/datum/sprite_accessory/turian_face_paints/rocam
+	name = "Rocam"
+	icon_state = "rocam"
+
+/datum/sprite_accessory/turian_face_paints/baetika
+	name = "Baetika"
+	icon_state = "baetika"
+
+/datum/sprite_accessory/turian_face_paints/bostra
+	name = "Bostra"
+	icon_state = "bostra"
+
+/datum/sprite_accessory/turian_face_paints/epyrus
+	name = "Epyrus"
+	icon_state = "epyrus"

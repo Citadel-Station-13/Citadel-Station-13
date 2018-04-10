@@ -513,6 +513,7 @@ ROUNDSTART_RACES xeno
 ROUNDSTART_RACES datashark
 ROUNDSTART_RACES guilmon
 ROUNDSTART_RACES ipc
+ROUNDSTART_RACES turian
 
 ## CREW OBJECTIVES ##
 ## Comment to disable objectives for innocent crew members.
