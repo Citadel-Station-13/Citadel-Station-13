@@ -61,6 +61,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "polycrystal"
 	item_state = "sheet-polycrystal"
+	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
@@ -71,6 +72,7 @@
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())

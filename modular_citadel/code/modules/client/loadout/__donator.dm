@@ -10,7 +10,7 @@
 	name = "Donor item testing bikehorn"
 	category = slot_in_backpack
 	path = /obj/item/bikehorn
-	ckeywhitelist = list("jayehh","deathride58")
+	geargroupID = "DONORTEST"
 
 /datum/gear/kevhorn
 	name = "Airhorn"

@@ -137,6 +137,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/datum/looping_sound/supermatter/soundloop
 
+	var/moveable = TRUE
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -512,6 +514,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	return
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
@@ -549,6 +554,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 		radiation_pulse(src, 150, 4)
 
+/obj/machinery/power/supermatter_shard/wrench_act(mob/user, obj/item/tool)
+	if (moveable)
+		default_unfasten_wrench(user, tool, time = 20)
+	return TRUE
 
 /obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
 	if(isliving(AM))
@@ -610,6 +619,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	anchored = TRUE
 	gasefficency = 0.15
 	explosion_power = 35
+	moveable = FALSE
 
 /obj/machinery/power/supermatter_shard/crystal/engine
 	is_main_engine = TRUE
@@ -621,7 +631,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, KNOCKDOWN, 0)
+				H.apply_effect(40, EFFECT_KNOCKDOWN, 0)
 			if(pulled_object && !pulled_object.anchored && !ishuman(P))
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)

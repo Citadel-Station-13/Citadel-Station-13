@@ -173,7 +173,7 @@
 		if("night_shift_set")
 			if(!check_rights(R_ADMIN))
 				return
-			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "On", "Off", "Automatic")
+			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
 			switch(val)
 				if("Automatic")
 					if(CONFIG_GET(flag/enable_night_shifts))
@@ -415,8 +415,10 @@
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						H.dna.features["tail_human"] = "Cat"
-						H.dna.features["ears"] = "Cat"
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
+						ears.Insert(H, drop_if_replaced=FALSE)
+						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
@@ -486,7 +488,7 @@
 			message_admins("[key_name_admin(usr)] activated AK-47s for Everyone!")
 			usr.client.ak47s()
 			sound_to_playing_players('sound/misc/ak47s.ogg')
-
+			
 		if("guns")
 			if(!check_rights(R_FUN))
 				return
