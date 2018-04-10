@@ -21,8 +21,6 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-<<<<<<< HEAD
-=======
 /datum/map_template/shuttle/load(turf/T, centered)
 	. = ..()
 	if(!.)
@@ -37,7 +35,6 @@
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
 
->>>>>>> 166e001... Various minor arena shuttle fixes (#37012)
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/on_bought()
 	return
