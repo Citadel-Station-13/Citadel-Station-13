@@ -185,14 +185,11 @@
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 
-<<<<<<< HEAD
-=======
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"
 
 /obj/effect/landmark/vr_spawn/team_2
 	vr_category = "team_2"	
->>>>>>> 469a216... Minor VR sleeper related changes (#36974)
 
 /datum/outfit/vr_basic
 	name = "basic vr"
