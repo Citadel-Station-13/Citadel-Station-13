@@ -426,10 +426,6 @@
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
-<<<<<<< HEAD
-	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
-=======
 	var/static/i = 1
 	if(id == initial(id))
 		id = "[initial(id)][i]"
@@ -447,7 +443,6 @@
 	i++
 
 
->>>>>>> c85c195... Fixes escape pods not getting to their default destination (#37065)
 
 /obj/docking_port/mobile/pod/cancel()
 	return
