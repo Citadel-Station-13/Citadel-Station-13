@@ -72,14 +72,7 @@
 	addtimer(VARSET_CALLBACK(src, pixel_x, initial(pixel_x)))
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"))
 
-<<<<<<< HEAD
-
-/obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
-		return
-=======
 /obj/machinery/monkey_recycler/interact(mob/user)
->>>>>>> d804e3a... GC fixes 1 (#36705)
 	if(grinded >= required_grind)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
