@@ -1,6 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Tesla Engines are now standard on all but Omega."
-  - bugfix: "fixed a pipe in Meta station that wasn't connected properly."
-  - bugfix: "fixed an exploit related to Tesla wires."

@@ -138,12 +138,11 @@
 					if(!(world.time % 5))
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
 					return 1
-
 	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
 		if(resting && !L.resting)
 			if(attemptingcrawl)
 				return TRUE
-			if(staminaloss >= STAMINA_SOFTCRIT)
+			if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 				to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
 				return TRUE
 			attemptingcrawl = TRUE
@@ -159,7 +158,6 @@
 			attemptingcrawl = FALSE
 			return TRUE
 	//END OF CIT CHANGES
-
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
 
@@ -397,7 +395,6 @@
 	update_canmove()
 
 /mob/proc/get_contents()
-
 /*CIT CHANGE - comments out lay_down proc to be modified in modular_citadel
 /mob/living/proc/lay_down()
 	set name = "Rest"
@@ -407,7 +404,6 @@
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
 */
-
 //Recursive function to find everything a mob is holding.
 /mob/living/get_contents(obj/item/storage/Storage = null)
 	var/list/L = list()
@@ -456,6 +452,7 @@
 	if(status_flags & GODMODE)
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	staminaloss = getStaminaLoss()
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
@@ -504,7 +501,7 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
 	update_canmove()
@@ -729,7 +726,7 @@
 		clear_alert("weightless")
 	else
 		throw_alert("weightless", /obj/screen/alert/weightless)
-	if(!override)
+	if(!override && !is_flying())
 		float(!has_gravity)
 
 /mob/living/float(on)
@@ -892,16 +889,19 @@
 		return FALSE
 	return TRUE
 
-/*CIT CHANGE - comments out update_stamina to be modified in modular_citadel
-/mob/living/carbon/proc/update_stamina()
-	if(staminaloss)
-		var/total_health = (health - staminaloss)
+
+/mob/living/proc/update_stamina()
+	return
+/*
+/mob/living/carbon/update_stamina()
+	var/stam = getStaminaLoss()
+	if(stam)
+		var/total_health = (health - stam)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
-			setStaminaLoss(health - 2)
-	update_health_hud()
-*/
+			setStaminaLoss(health - 2, FALSE, FALSE)
+			update_health_hud() */ //CITADEL OVERRIDE
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -967,7 +967,7 @@
 	if(amount > RAD_BURN_THRESHOLD)
 		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
 
-	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
+	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
 /mob/living/proc/fakefireextinguish()
 	return
@@ -1050,11 +1050,11 @@
 	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH))
 	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
+	var/pinned = resting && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE // Cit change - adds pinning for aggressive-grabbing people on the ground
 	if(ko || move_and_fall || IsStun() || chokehold) // Cit change - makes resting not force you to drop everything
 		drop_all_held_items()
 		unset_machine()

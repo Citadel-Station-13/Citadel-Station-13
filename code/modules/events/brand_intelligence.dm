@@ -28,8 +28,16 @@
 		source = initial(example.name)
 	else if(originMachine)
 		source = originMachine.name
-	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
-
+	if(prob(50))
+		priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source].", "Machine Learning Alert")
+	else
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		for(var/obj/machinery/computer/communications/C in GLOB.machines)
+			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+				var/obj/item/paper/P = new(C.loc)
+				P.name = "Rampant brand intelligence"
+				P.info = "Rampant brand intelligence has been detected aboard [station_name()]. Please stand by. The origin is believed to be \a [source]."
+				P.update_icon()
 /datum/round_event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in GLOB.machines)
 		if(!is_station_level(V.z))

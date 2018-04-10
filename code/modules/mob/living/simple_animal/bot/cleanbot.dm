@@ -180,7 +180,7 @@
 		/obj/effect/decal/cleanable/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
-		///obj/effect/decal/cleanable/dirt, Cit change - removes dirt from the cleanbot target list to compensate for the mass amount of dirt decals present with footdirt
+		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/deadcockroach,
 		/obj/effect/decal/remains
 		)
