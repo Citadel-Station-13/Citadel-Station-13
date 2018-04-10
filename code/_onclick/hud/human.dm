@@ -92,7 +92,6 @@
 	var/widescreenlayout = FALSE //CIT CHANGE - adds support for different hud layouts depending on widescreen pref
 	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref) //CIT CHANGE - ditto
 		widescreenlayout = TRUE // CIT CHANGE - ditto
-
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
@@ -321,7 +320,7 @@
 	staminabuffer = new /obj/screen/staminabuffer()
 	infodisplay += staminabuffer
 	//END OF CIT CHANGES
-
+	
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
 

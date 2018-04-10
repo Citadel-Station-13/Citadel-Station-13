@@ -19,22 +19,11 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	aggro_vision_range = 18
-	idle_vision_range = 5
+	vision_range = 5
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
-	environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade,
-	/obj/machinery/field,
-	/obj/machinery/power/emitter)
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE

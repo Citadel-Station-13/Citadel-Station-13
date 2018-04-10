@@ -78,7 +78,7 @@
 	I.SendSignal(COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-	//CIT CHANGES START HERE - combatmode and resting checks
+		//CIT CHANGES START HERE - combatmode and resting checks
 		var/totitemdamage = I.force
 		if(iscarbon(user))
 			var/mob/living/carbon/tempcarb = user
@@ -120,6 +120,7 @@
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
 	for(var/thing in diseases)
@@ -270,11 +271,18 @@
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-			if(dna && dna.species && ((("tail_lizard" || "tail_human" || "mam_tail") in dna.species.mutant_bodyparts && (dna.features["tail_lizard"] || dna.features["tail_human"] || dna.features["mam_tail"])!= "None")))
+			if(dna && dna.species && ("tail_lizard" in dna.species.mutant_bodyparts) && (dna.features["tail_lizard"])!= "None")
 				emote("wag") //lewd
+			else if(dna && dna.species && ("tail_human" in dna.species.mutant_bodyparts) && (dna.features["tail_human"])!= "None")
+				emote("wag")
+			else if(dna && dna.species && ("mam_tail" in dna.species.mutant_bodyparts) && (dna.features["mam_tail"])!= "None")
+				emote("wag")
+			SendSignal(COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
