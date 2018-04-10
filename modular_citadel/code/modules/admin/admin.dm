@@ -35,5 +35,5 @@
 		M.playsound_local(M, 'modular_citadel/sound/misc/manup.ogg', 50, FALSE, pressure_affected = FALSE)
 
 	log_admin("Man up global: [key_name(usr)] told everybody to man up")
-	message_admins(<span class='adminnotice'>[key_name_admin(usr)] told everybody to man up.</span>)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] told everybody to man up.</span>")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Man Up Global")
