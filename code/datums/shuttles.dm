@@ -383,4 +383,3 @@
 /datum/map_template/shuttle/pirate/default
 	suffix = "default"
 	name = "pirate ship (Default)"
->>>>>>> 11ba45f... Makes the pirate ship use a proper shuttle template (#37006)
