@@ -2749,6 +2749,7 @@
 #include "modular_citadel\code\modules\client\verbs\who.dm"
 #include "modular_citadel\code\modules\clothing\clothing.dm"
 #include "modular_citadel\code\modules\clothing\spacesuits\flightsuit.dm"
+#include "modular_citadel\code\modules\clothing\suits\polychromic_cloaks.dm"
 #include "modular_citadel\code\modules\clothing\suits\suits.dm"
 #include "modular_citadel\code\modules\clothing\under\polychromic_clothes.dm"
 #include "modular_citadel\code\modules\clothing\under\trek_under.dm"
