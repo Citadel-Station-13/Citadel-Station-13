@@ -84,15 +84,8 @@
 		else
 			return ..()
 
-<<<<<<< HEAD
-/obj/machinery/processor/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(src.processing)
-=======
 /obj/machinery/processor/interact(mob/user)
 	if(processing)
->>>>>>> d804e3a... GC fixes 1 (#36705)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
 		return TRUE
 	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling))
