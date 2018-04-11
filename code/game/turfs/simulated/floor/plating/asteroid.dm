@@ -49,6 +49,7 @@
 				O.attackby(W,user)
 				return
 
+<<<<<<< HEAD
 	if(istype(W, /obj/item/stack/tile))
 		var/obj/item/stack/tile/Z = W
 		if(!Z.use(1))
@@ -62,6 +63,8 @@
 		return
 
 
+=======
+>>>>>>> bc6eeed... Removes some duplicated code
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
 		return ..()
