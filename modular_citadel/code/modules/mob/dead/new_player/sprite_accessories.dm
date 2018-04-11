@@ -1195,36 +1195,3 @@
 	extra = FALSE
 	extra2 = FALSE
 	ckeys_allowed = list("poojawa")
-
-//Turian face paint
-/datum/sprite_accessory/turian_face_paints
-	icon = 'modular_citadel/icons/mob/turian_face_paints.dmi'
-	color_src = MUTCOLORS3
-
-/datum/sprite_accessory/turian_face_paints/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/turian_face_paints/chatti
-	name = "Chatti"
-	icon_state = "chatti"
-
-/datum/sprite_accessory/turian_face_paints/mecadyn
-	name = "Mecadyn"
-	icon_state = "mecadyn"
-
-/datum/sprite_accessory/turian_face_paints/rocam
-	name = "Rocam"
-	icon_state = "rocam"
-
-/datum/sprite_accessory/turian_face_paints/baetika
-	name = "Baetika"
-	icon_state = "baetika"
-
-/datum/sprite_accessory/turian_face_paints/bostra
-	name = "Bostra"
-	icon_state = "bostra"
-
-/datum/sprite_accessory/turian_face_paints/epyrus
-	name = "Epyrus"
-	icon_state = "epyrus"
