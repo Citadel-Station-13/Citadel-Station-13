@@ -610,6 +610,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 /obj/machinery/power/supermatter_shard/hugbox
 	takes_damage = FALSE
 	produces_gas = FALSE
+	moveable = FALSE
 
 /obj/machinery/power/supermatter_shard/crystal
 	name = "supermatter crystal"
