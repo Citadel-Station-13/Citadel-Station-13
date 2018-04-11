@@ -828,6 +828,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //END OF CIT CHANGES
 	view = new_size
 	apply_clickcatcher()
+	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
