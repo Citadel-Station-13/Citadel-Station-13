@@ -2670,6 +2670,8 @@
 #include "modular_citadel\code\game\machinery\vending.dm"
 #include "modular_citadel\code\game\machinery\wishgranter.dm"
 #include "modular_citadel\code\game\machinery\computer\card.dm"
+#include "modular_citadel\code\game\machinery\doors\airlock.dm"
+#include "modular_citadel\code\game\machinery\doors\airlock_types.dm"
 #include "modular_citadel\code\game\objects\ids.dm"
 #include "modular_citadel\code\game\objects\items.dm"
 #include "modular_citadel\code\game\objects\tools.dm"
