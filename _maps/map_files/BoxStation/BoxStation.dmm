@@ -50434,7 +50434,19 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
 /obj/structure/cable/yellow{
+=======
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cAm" = (
+/obj/machinery/power/supermatter_crystal/engine,
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"cAo" = (
+/obj/structure/cable{
+>>>>>>> 910eb89... The supermatter crystal is now the parent object of the supermatter shard, rather than the other way around (#37025)
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating/airless,
