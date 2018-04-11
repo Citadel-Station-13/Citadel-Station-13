@@ -6,7 +6,6 @@
 	blacklisted = 0
 	sexes = 1
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,SPECIES_ORGANIC)
-	mutant_bodyparts = list("turian_face_paint")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal
 	liked_food = MEAT | FRIED
