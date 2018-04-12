@@ -13,11 +13,6 @@
 	var/mob/living/holder
 
 /datum/dna/New(mob/living/new_holder)
-<<<<<<< HEAD
-	if(new_holder)
-		holder = new_holder
-
-=======
 	if(istype(new_holder))
 		holder = new_holder
 
@@ -34,8 +29,7 @@
 	previous.Cut()					//^
 
 	return ..()
-
->>>>>>> a6e8247... Fixes brain dna (#37132)
+	
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return
