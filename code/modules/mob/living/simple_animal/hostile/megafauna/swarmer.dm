@@ -47,12 +47,8 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_console"
 	health = 750
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
-<<<<<<< HEAD
-	medal_type = MEDAL_PREFIX
-=======
 	mob_biotypes = list(MOB_ROBOTIC)
 	medal_type = BOSS_MEDAL_SWARMERS
->>>>>>> 8057093... Fix various macro consistency problems (#37092)
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
 	weather_immunities = list("lava","ash")
