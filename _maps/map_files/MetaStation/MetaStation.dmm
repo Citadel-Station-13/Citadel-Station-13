@@ -72122,7 +72122,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -73792,8 +73791,21 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ddG" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line,
 /obj/docking_port/stationary/public_mining_dock,
+=======
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dir = 1;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+>>>>>>> 7dcd690... Removes some unnecesary vars on shuttles (#37041)
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "ddQ" = (
@@ -77039,7 +77051,6 @@
 	height = 17;
 	id = "syndicate_nw";
 	name = "northwest of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space/basic,

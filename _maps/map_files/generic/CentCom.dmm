@@ -3525,7 +3525,6 @@
 	height = 50;
 	id = "emergency_syndicate";
 	name = "Syndicate Auxillary Shuttle Dock";
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -8532,6 +8531,7 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "xN" = (
+<<<<<<< HEAD
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
 	name = "Assault Pod";
@@ -8543,6 +8543,16 @@
 	name = "steel rain";
 	port_direction = 4;
 	preferred_direction = 4
+=======
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership/control;
+	dir = 1;
+	dwidth = 3;
+	height = 7;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
+	width = 7
+>>>>>>> 7dcd690... Removes some unnecesary vars on shuttles (#37041)
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -13452,7 +13462,6 @@
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
-	baseturf_type = /turf/open/floor/plating/asteroid/snow;
 	dheight = 1;
 	dir = 8;
 	dwidth = 12;
@@ -13460,7 +13469,6 @@
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
 	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
