@@ -403,33 +403,7 @@
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
-<<<<<<< HEAD
 */
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(obj/item/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-		return L
-	else
-		L += src.contents
-		for(var/obj/item/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
-			L += U.contents
-		for(var/obj/item/folder/F in src.contents)	//Check for folders
-			L += F.contents
-		return L
-
-/mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return 1
-	return 0
-=======
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -443,7 +417,6 @@
 		. |= U.contents
 	for(var/obj/item/folder/F in .)
 		. |= F.contents
->>>>>>> ab993a1... Component Storage, Experimental attack_hand and [ui_]interact() refactors (#36696)
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject()
