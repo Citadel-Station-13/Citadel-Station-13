@@ -164,14 +164,9 @@
 		/obj/item/implantcase,
 		/obj/item/implant,
 		/obj/item/implanter,
-<<<<<<< HEAD
 		/obj/item/hypospray
-		)
-		// CIT CHANGE added hypospray mk IIs to belt /obj/item/hypospray
-=======
-		/obj/item/pinpointer/crew
 		))
->>>>>>> ab993a1... Component Storage, Experimental attack_hand and [ui_]interact() refactors (#36696)
+		// CIT CHANGE added hypospray mk IIs to belt /obj/item/hypospray
 
 /obj/item/storage/belt/security
 	name = "security belt"
