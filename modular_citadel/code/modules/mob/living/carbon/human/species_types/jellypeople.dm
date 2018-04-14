@@ -19,11 +19,19 @@
 	heatmod = 1
 	burnmod = 1
 
+/datum/species/jelly/roundstartslime/on_species_gain(mob/living/carbon/human/C)
+	C.draw_citadel_parts()
+	. = ..()
+
+/datum/species/jelly/roundstartslime/on_species_loss(mob/living/carbon/human/C)
+	C.draw_citadel_parts(TRUE)
+	. = ..()
+
 /datum/action/innate/slime_change
 	name = "Alter Form"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "alter_form" //placeholder
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	icon_icon = 'modular_citadel/icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/slime_change/Activate()
