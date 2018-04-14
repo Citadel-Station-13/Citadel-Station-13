@@ -16,9 +16,7 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-<<<<<<< HEAD
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
+		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	//CITADEL EDIT reee proc, Dogborg modules
 	if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = FALSE
@@ -33,9 +31,6 @@
 		var/obj/item/device/dogborg/sleeper/S = O
 		S.go_out() //this should stop edgecase deletions
 	//END CITADEL EDIT
-=======
-		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
->>>>>>> ab993a1... Component Storage, Experimental attack_hand and [ui_]interact() refactors (#36696)
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
