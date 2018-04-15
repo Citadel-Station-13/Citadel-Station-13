@@ -13,7 +13,10 @@
 	if(confirm == "Yes")
 		suiciding = TRUE
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
+<<<<<<< HEAD
 		message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
+=======
+>>>>>>> 0c02b50... Revert "Deactivate prescans on suicide" (#37121)
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
