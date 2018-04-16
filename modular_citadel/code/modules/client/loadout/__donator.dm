@@ -270,5 +270,5 @@ datum/gear/darksabresheath
 	name = "Polychromic CE Cloak"
 	category = slot_in_backpack
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
-	ckeywhitelist = list("worksbythesea")
+	ckeywhitelist = list("worksbythesea", "blakeryan")
 
