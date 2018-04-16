@@ -51155,8 +51155,42 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+<<<<<<< HEAD
 "cCs" = (
 /obj/structure/mining_shuttle_beacon{
+=======
+"cCB" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"cCC" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"cCD" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Mix to Engine"
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"cCE" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"cCF" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -54626,6 +54660,7 @@
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
+<<<<<<< HEAD
 "wom" = (
 /obj/machinery/cryopod{
 	tag = "icon-cryopod-open (EAST)";
@@ -54634,6 +54669,22 @@
 	},
 /turf/open/floor/noslip,
 /area/crew_quarters/cryopod)
+=======
+"wph" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 8;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 "wrp" = (
 /obj/machinery/light{
 	dir = 8
@@ -64899,6 +64950,7 @@ aaa
 aaa
 aaa
 apJ
+<<<<<<< HEAD
 aqI
 arD
 arD
@@ -64908,6 +64960,17 @@ awX
 arD
 arD
 auN
+=======
+apN
+apN
+apN
+apN
+wph
+apN
+apN
+apN
+apN
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 apJ
 awZ
 cqr
@@ -65927,6 +65990,7 @@ aaa
 aaa
 aaa
 apJ
+<<<<<<< HEAD
 aqN
 asD
 asD
@@ -65936,6 +66000,17 @@ asD
 asD
 asD
 aFD
+=======
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 apJ
 awZ
 crz
