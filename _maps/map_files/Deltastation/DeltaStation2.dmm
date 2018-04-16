@@ -1878,6 +1878,7 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+<<<<<<< HEAD
 "agq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1917,6 +1918,8 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+=======
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 "agB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -100840,6 +100843,20 @@
 	dir = 6
 	},
 /area/science/circuit)
+"lTo" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 4;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "lXM" = (
 /obj/structure/target_stake,
 /turf/open/floor/plasteel/white/side{
@@ -144052,6 +144069,7 @@ ace
 aad
 abi
 aeF
+<<<<<<< HEAD
 afg
 afg
 afg
@@ -144060,6 +144078,16 @@ afg
 afg
 afg
 ahG
+=======
+aeF
+aeF
+aeF
+aeF
+aeF
+aeF
+aeF
+aeF
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 abi
 ail
 aiG
@@ -145079,6 +145107,7 @@ acf
 aad
 aad
 abi
+<<<<<<< HEAD
 aeG
 afj
 afj
@@ -145088,6 +145117,17 @@ afj
 afj
 afj
 ahH
+=======
+aeF
+aeF
+aeF
+aeF
+lTo
+aeF
+aeF
+aeF
+aeF
+>>>>>>> 2ade25c... Merge pull request #37205 from ninjanomnom/proper-aux-base
 abi
 aip
 aiH
