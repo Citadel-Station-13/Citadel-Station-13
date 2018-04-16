@@ -18982,7 +18982,14 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
+<<<<<<< HEAD
 /obj/machinery/power/supermatter_shard/crystal/engine,
+=======
+/obj/machinery/power/supermatter_crystal/shard/engine{
+	anchored = 1;
+	moveable = 0
+	},
+>>>>>>> 91ed3de... replaces SM crystal with non-moveable shard (#37124)
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
