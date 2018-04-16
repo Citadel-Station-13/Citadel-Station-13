@@ -339,13 +339,8 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-<<<<<<< HEAD
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || recoveringstam || (!ignore_restraints && restrained(ignore_grab))) // CIT CHANGE - adds recoveringstam check here
-		return 1
-=======
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
->>>>>>> fbdbd51... Adds an period to point messages (#37113)
 
 /mob/living/proc/InCritical()
 	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
