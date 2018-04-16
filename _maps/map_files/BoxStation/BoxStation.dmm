@@ -36016,9 +36016,14 @@
 	master_tag = "tox_airlock_control";
 	pixel_y = 24
 	},
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	on = 1
+=======
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
+>>>>>>> e71af8b... Fixes Gr3y.T1d3 delaming the SM (#36925)
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
@@ -47637,9 +47642,21 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqE" = (
+<<<<<<< HEAD
 /obj/structure/particle_accelerator/end_cap,
 /turf/open/floor/plating,
 /area/engine/engineering)
+=======
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/engine,
+/area/engine/supermatter)
+>>>>>>> e71af8b... Fixes Gr3y.T1d3 delaming the SM (#36925)
 "cqF" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -47841,9 +47858,22 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crs" = (
+<<<<<<< HEAD
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
+=======
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"crt" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+>>>>>>> e71af8b... Fixes Gr3y.T1d3 delaming the SM (#36925)
 	},
 /obj/item/stack/cable_coil{
 	pixel_x = 3;

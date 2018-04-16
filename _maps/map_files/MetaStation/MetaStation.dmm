@@ -18733,9 +18733,17 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+<<<<<<< HEAD
 "aMl" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
+=======
+"aMj" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+>>>>>>> e71af8b... Fixes Gr3y.T1d3 delaming the SM (#36925)
 	},
 /obj/structure/grille,
 /obj/effect/turf_decal/stripes/line{
@@ -76860,6 +76868,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+<<<<<<< HEAD
+=======
+"tDM" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+>>>>>>> e71af8b... Fixes Gr3y.T1d3 delaming the SM (#36925)
 "tFJ" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
