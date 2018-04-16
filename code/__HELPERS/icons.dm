@@ -713,14 +713,12 @@ as a single icon. Useful for when you want to manipulate an icon via the above a
 The _flatIcons list is a cache for generated icon files.
 */
 
-// Creates a single icon from a given /atom or /image.  Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	//Define... defines.
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define APPLY_SELF_COLOR(THING) if(A.alpha<255)##THING.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)##THING.Blend(A.color,ICON_MULTIPLY);
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);APPLY_SELF_COLOR(SELF_ICON);##SETVAR=SELF_ICON;
+	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
 
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
@@ -770,26 +768,13 @@ The _flatIcons list is a cache for generated icon files.
 	else
 		curdir = A.dir
 
-	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
-	if(curdir != SOUTH)
-		var/icon/test_icon
-		var/directionals_exist = FALSE
-		var/list/dirs_to_check = GLOB.cardinals - SOUTH
-		for(var/possible_dir in dirs_to_check)
-			test_icon = icon(curicon,curstate,possible_dir,frame=1)
-			test_icon.Scale(1,1)
-			if(!isnull(test_icon.GetPixel(1,1)))
-				directionals_exist = TRUE
-				break
-		if(!directionals_exist)
-			base_icon_dir = SOUTH
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
 	ASSERT(!BLEND_DEFAULT)		//I might just be stupid but lets make sure this define is 0.
 
 	var/curblend = A.blend_mode || defblend
-	
+
 	if(A.overlays.len || A.underlays.len)
 		var/icon/flat = BLANK
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
@@ -802,7 +787,7 @@ The _flatIcons list is a cache for generated icon files.
 			copy.alpha = A.alpha
 			copy.blend_mode = curblend
 			layers[copy] = A.layer
-	
+
 		// Loop through the underlays, then overlays, sorting them into the layers list
 		for(var/process_set in 0 to 1)
 			var/list/process = process_set? A.overlays : A.underlays
@@ -817,28 +802,28 @@ The _flatIcons list is a cache for generated icon files.
 					if(current_layer <= -1000)
 						return flat
 					current_layer = process_set + A.layer + current_layer / 1000
-	
+
 				for(var/p in 1 to layers.len)
 					var/image/cmp = layers[p]
 					if(current_layer < layers[cmp])
 						layers.Insert(p, current)
 						break
 				layers[current] = current_layer
-	
+
 		//sortTim(layers, /proc/cmp_image_layer_asc)
-	
+
 		var/icon/add // Icon of overlay being added
-	
+
 		// Current dimensions of flattened icon
 		var/list/flat_size = list(1, flat.Width(), 1, flat.Height())
 		// Dimensions of overlay being added
 		var/list/add_size[4]
-	
+
 		for(var/V in layers)
 			var/image/I = V
 			if(I.alpha == 0)
 				continue
-	
+
 			if(I == copy) // 'I' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(I.icon, I.icon_state, base_icon_dir)
@@ -853,7 +838,7 @@ The _flatIcons list is a cache for generated icon files.
 				min(flatY1, I.pixel_y+1),
 				max(flatY2, I.pixel_y+add.Height())
 			)
-	
+
 			if(flat_size ~! add_size)
 				// Resize the flattened icon so the new icon fits
 				flat.Crop(
@@ -863,15 +848,15 @@ The _flatIcons list is a cache for generated icon files.
 				addY2 - flatY1 + 1
 				)
 				flat_size = add_size.Copy()
-	
+
 			// Blend the overlay into the flattened icon
 			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
-	
+
 		if(A.color)
 			flat.Blend(A.color, ICON_MULTIPLY)
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
-	
+
 		if(no_anim)
 			//Clean up repeated frames
 			var/icon/cleaned = new /icon()
