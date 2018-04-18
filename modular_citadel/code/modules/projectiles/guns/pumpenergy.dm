@@ -151,7 +151,7 @@
 /obj/item/ammo_casing/energy/disabler/slug
 	projectile_type = /obj/item/projectile/beam/disabler/slug
 	select_name  = "overdrive"
-	e_cost = 250
+	e_cost = 210
 	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
