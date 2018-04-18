@@ -19,12 +19,6 @@
 	C.draw_citadel_parts()
 	. = ..()
 
-/datum/species/ipc/on_species_loss(mob/living/carbon/human/C)
+/datum/species/turian/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
 	. = ..()
-
-/mob/living/carbon/human/dummy
-	no_vore = TRUE
-
-/mob/living/carbon/human/vore
-	devourable = TRUE
