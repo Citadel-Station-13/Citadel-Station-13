@@ -39,6 +39,18 @@
 	color_src = 0
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+
+/datum/sprite_accessory/tails/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+
+/datum/sprite_accessory/tails_animated/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+
 /datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
@@ -95,6 +107,11 @@
 	name = "Eevee"
 	icon_state = "eevee"
 	extra = TRUE
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/elephant
+	name = "Elephant"
+	icon_state = "elephant"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
 //datum/sprite_accessory/ears/elf
@@ -161,6 +178,11 @@
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
 
+/datum/sprite_accessory/ears/human/jellyfish
+	name = "Jellyfish"
+	icon_state = "jellyfish"
+	color_src = HAIR
+
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
@@ -213,6 +235,16 @@
 	name = "Otusian"
 	icon_state = "otie"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
+
+/datum/sprite_accessory/tails_animated/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
 
 /datum/sprite_accessory/ears/human/rabbit
     name = "Rabbit"
@@ -342,6 +374,12 @@
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS3
 
+/datum/sprite_accessory/snouts/elephant
+	name = "Tusk"
+	icon_state = "elephant"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
+
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
@@ -359,6 +397,13 @@
 	icon_state = "wolf"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	extra = TRUE
+
+/datum/sprite_accessory/snouts/rhino
+	name = "Horn"
+	icon_state = "rhino"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra = MUTCOLORS3
 
 /datum/sprite_accessory/snouts/husky
 	name = "Husky"
@@ -391,6 +436,18 @@
 	name = "Ailurus"
 	icon_state = "ailurus"
 	extra = TRUE
+
+/datum/sprite_accessory/mam_ears/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+
+/datum/sprite_accessory/mam_tails/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
+
+/datum/sprite_accessory/mam_tails_animated/axolotl
+	name = "Axolotl"
+	icon_state = "axolotl"
 
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
@@ -447,6 +504,10 @@
 	name = "Eevee"
 	icon_state = "eevee"
 	extra = TRUE
+
+/datum/sprite_accessory/mam_ears/elephant
+	name = "Elephant"
+	icon_state = "elephant"
 
 /datum/sprite_accessory/mam_ears/fennec
 	name = "Fennec"
@@ -523,6 +584,11 @@
 	name = "kangaroo"
 	icon_state = "kangaroo"
 
+/datum/sprite_accessory/mam_ears/kangaroo
+	name = "Jellyfish"
+	icon_state = "jellyfish"
+	color_src = HAIR
+
 /datum/sprite_accessory/mam_tails/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
@@ -590,6 +656,16 @@
 /datum/sprite_accessory/mam_tails_animated/otie
 	name = "Otusian"
 	icon_state = "otie"
+
+/datum/sprite_accessory/mam_tails/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
+
+/datum/sprite_accessory/mam_tails_animated/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/rabbit
     name = "Rabbit"
@@ -766,6 +842,11 @@
 	name = "Otie"
 	icon_state = "otie"
 	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/orca
+	name = "Orca"
+	icon_state = "orca"
+	extra = TRUE
 
 /datum/sprite_accessory/mam_body_markings/shark
 	name = "Shark"
