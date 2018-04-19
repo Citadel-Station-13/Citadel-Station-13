@@ -294,8 +294,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("tail_lizard" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			//Mutant stuff
+			var/mutant_category = 0
+
+			if("tail_lizard" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Tail</h3>"
 
@@ -303,8 +312,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("snout" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			if("snout" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Snout</h3>"
 
@@ -312,8 +327,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("horns" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			if("horns" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Horns</h3>"
 
@@ -321,8 +342,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("frills" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			if("frills" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Frills</h3>"
 
@@ -330,8 +357,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("spines" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			if("spines" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Spines</h3>"
 
@@ -339,25 +372,53 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
+<<<<<<< HEAD
 			if("body_markings" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+			if("body_markings" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Body Markings</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
+<<<<<<< HEAD
 				dat += "</td>"
 			if("legs" in pref_species.mutant_bodyparts)
 				dat += "<td valign='top' width='7%'>"
+=======
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
+			if("legs" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Legs</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
+<<<<<<< HEAD
 				dat += "</td>"
 			if("moth_wings" in pref_species.mutant_bodyparts)
 
 				dat += "<td valign='top' width='7%'>"
+=======
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
+			if("moth_wings" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 				dat += "<h3>Moth wings</h3>"
 
@@ -369,8 +430,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
+<<<<<<< HEAD
 				if("tail_human" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
+=======
+				if("tail_human" in pref_species.default_features)
+					if(!mutant_category)
+						dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 					dat += "<h3>Tail</h3>"
 
@@ -378,8 +445,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					dat += "</td>"
 
+<<<<<<< HEAD
 				if("ears" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
+=======
+				if("ears" in pref_species.default_features)
+					if(!mutant_category)
+						dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 					dat += "<h3>Ears</h3>"
 
@@ -387,8 +460,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					dat += "</td>"
 
+<<<<<<< HEAD
 				if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
 					dat += "<td valign='top' width='7%'>"
+=======
+				if("wings" in pref_species.default_features && GLOB.r_wings_list.len >1)
+					if(!mutant_category)
+						dat += APPEARANCE_CATEGORY_COLUMN
+>>>>>>> d923358... Fixes cat parts not showing up in perfs. (#37202)
 
 					dat += "<h3>Wings</h3>"
 
