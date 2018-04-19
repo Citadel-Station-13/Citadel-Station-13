@@ -484,6 +484,37 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	SetLightsAndPower()
 	return TRUE
 
+<<<<<<< HEAD
+=======
+//Try to transfer hologram to another pad that can project on T
+/obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T,mob/holo_owner)
+	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
+	if(!h || h.HC) //Holocalls can't change source.
+		return FALSE
+	for(var/pad in holopads)
+		var/obj/machinery/holopad/another = pad
+		if(another == src)
+			continue
+		if(another.validate_location(T))
+			unset_holo(holo_owner)
+			another.set_holo(holo_owner, h)
+			return TRUE
+	return FALSE
+
+/obj/machinery/holopad/proc/validate_user(mob/living/user)
+	if(QDELETED(user) || user.incapacitated() || !user.client)
+		return FALSE
+	return TRUE
+		
+//Can we display holos there
+//Area check instead of line of sight check because this is a called a lot if AI wants to move around.
+/obj/machinery/holopad/proc/validate_location(turf/T,check_los = FALSE)
+	if(T.z == z && get_dist(T, src) <= holo_range && T.loc == get_area(src))
+		return TRUE
+	else
+		return FALSE
+
+>>>>>>> de3083d... Fixes holocall transfers. (#37278)
 /obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
 	if(LAZYLEN(masters) && masters[user])
 		var/area/holo_area = get_area(src)
