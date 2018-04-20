@@ -3929,7 +3929,7 @@
 /area/maintenance/disposal)
 "aih" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor"
 	},
@@ -4319,9 +4319,8 @@
 /area/engine/gravity_generator)
 "ajc" = (
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage";
-	layer = 2.7
+	dir = 1;
+	id = "garbage"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Disposal Exit";
@@ -4764,7 +4763,7 @@
 /area/maintenance/solars/starboard/fore)
 "akf" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -5471,7 +5470,7 @@
 /area/maintenance/solars/starboard/fore)
 "alx" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /obj/structure/sign/warning/vacuum{
@@ -5506,7 +5505,7 @@
 /area/maintenance/disposal)
 "alz" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /obj/machinery/door/window/eastright{
@@ -6173,29 +6172,28 @@
 	},
 /obj/machinery/conveyor{
 	dir = 9;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "amP" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "amQ" = (
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "garbage"
-	},
 /obj/machinery/door/window/eastright{
 	base_state = "left";
 	dir = 4;
 	icon_state = "left";
 	name = "Danger: Conveyor Access";
 	req_access_txt = "12"
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -6639,10 +6637,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -6653,7 +6647,7 @@
 /area/maintenance/disposal)
 "anV" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -6663,7 +6657,7 @@
 /area/maintenance/disposal)
 "anW" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -6671,7 +6665,7 @@
 /area/maintenance/disposal)
 "anX" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/recycler,
@@ -6683,7 +6677,7 @@
 	name = "Danger: Conveyor Access";
 	req_access_txt = "12"
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 10;
 	id = "garbage"
 	},
@@ -7392,16 +7386,16 @@
 /obj/structure/plasticflaps{
 	opacity = 0
 	},
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
-	},
 /obj/machinery/door/window/northright{
 	dir = 2;
 	name = "delivery door";
 	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "garbage"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aps" = (
@@ -16779,9 +16773,8 @@
 	supply_display = 1
 	},
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2";
-	movedir = 2
+	dir = 5;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -17561,14 +17554,12 @@
 	},
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "QMLoad2";
-	movedir = 2
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aJD" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
 	id = "QMLoad2";
 	pixel_x = 6
 	},
@@ -18093,8 +18084,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2";
-	movedir = 8
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -18102,16 +18092,14 @@
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "QMLoad2";
-	movedir = 8
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aKP" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2";
-	movedir = 2
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "QMLoad2"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -20536,8 +20524,8 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aQi" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/inverted{
+	dir = 6;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -21188,8 +21176,7 @@
 "aRH" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "QMLoad";
-	movedir = 2
+	id = "QMLoad"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -21670,7 +21657,7 @@
 /area/maintenance/port/fore)
 "aSQ" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
+	dir = 8;
 	id = "QMLoad";
 	pixel_x = 6
 	},
@@ -22194,8 +22181,7 @@
 	},
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "QMLoad";
-	movedir = 2
+	id = "QMLoad"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -29107,7 +29093,7 @@
 /area/quartermaster/sorting)
 "biE" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "packageExternal";
 	pixel_y = 18
 	},
@@ -76358,6 +76344,13 @@
 	},
 /turf/open/floor/plasteel/whitepurple,
 /area/science/lab)
+"jeV" = (
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "QMLoad"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -94145,7 +94138,7 @@ aRH
 aRH
 aUf
 aRH
-aRH
+jeV
 aYK
 bam
 dmH

@@ -21729,7 +21729,7 @@
 /area/maintenance/disposal)
 "beP" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -21748,7 +21748,7 @@
 /area/maintenance/disposal)
 "beR" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/recycler,
@@ -21760,7 +21760,7 @@
 /area/maintenance/disposal)
 "beS" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/light/small{
@@ -21775,8 +21775,7 @@
 "beU" = (
 /obj/machinery/conveyor{
 	dir = 6;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -22230,23 +22229,15 @@
 /area/hallway/secondary/entry)
 "bgj" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bgk" = (
 /obj/machinery/conveyor{
-	dir = 5;
-	id = "garbage"
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"bgl" = (
-/obj/machinery/conveyor{
 	dir = 10;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -22835,7 +22826,6 @@
 /area/maintenance/starboard)
 "bhI" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -23376,7 +23366,6 @@
 /area/maintenance/disposal)
 "bjb" = (
 /obj/machinery/conveyor{
-	dir = 1;
 	id = "garbage"
 	},
 /obj/structure/sign/warning/vacuum{
@@ -23963,9 +23952,7 @@
 /area/maintenance/starboard)
 "bkz" = (
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage";
-	layer = 2.5
+	id = "garbage"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "Disposal Exit";
@@ -28298,8 +28285,8 @@
 /area/maintenance/starboard)
 "buB" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
-	id = "QMLoad"
+	id = "QMLoad";
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -28866,7 +28853,7 @@
 /area/maintenance/starboard)
 "bvS" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
@@ -28878,14 +28865,14 @@
 "bvT" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "bvU" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /obj/machinery/light,
@@ -28900,7 +28887,7 @@
 /area/quartermaster/storage)
 "bvV" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -50531,7 +50518,7 @@
 /area/maintenance/port/aft)
 "cAI" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor"
 	},
@@ -53854,6 +53841,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"pLn" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "pNx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -68020,7 +68014,7 @@ czK
 bhN
 bcl
 beQ
-bgk
+pLn
 bhI
 bjb
 bkz
@@ -69048,7 +69042,7 @@ czK
 bbe
 beO
 beU
-bgl
+bgk
 bhL
 bjc
 cAF
