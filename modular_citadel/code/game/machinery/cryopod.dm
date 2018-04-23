@@ -415,6 +415,9 @@
 			target.client.cryo_warned = world.time
 			return
 
+	if(!Adjacent(user))
+		return
+		
 	if(target == user)
 		visible_message("[user] starts climbing into the cryo pod.")
 	else
@@ -423,6 +426,7 @@
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
+		
 	close_machine(target)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
