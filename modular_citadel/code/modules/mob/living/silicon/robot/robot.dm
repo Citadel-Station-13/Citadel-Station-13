@@ -17,3 +17,7 @@ mob/living/silicon
 		else
 			icon_state = "[module.cyborg_base_icon]"
 	update_icons()
+
+/mob/living/silicon/robot/adjustStaminaLossBuffered(amount, updating_stamina = 1)
+	if(istype(cell))
+		cell.charge -= amount*5
