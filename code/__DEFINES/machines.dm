@@ -29,6 +29,7 @@
 #define BIOGENERATOR	(1<<5) 	//Uses biomass
 #define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
 #define SMELTER			(1<<7) 	//uses various minerals
+#define AUTOYLATHE		(1<<8)  // CITADEL ADD
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
