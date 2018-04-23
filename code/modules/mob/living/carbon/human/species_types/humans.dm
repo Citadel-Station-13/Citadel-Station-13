@@ -2,9 +2,9 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	species_traits = list(MUTCOLORS_PARTSONLY,SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur")
-	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "none")
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur") // CITADEL EDIT gives humans snowflake parts
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
@@ -12,7 +12,7 @@
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
-	return TRUE
+	return TRUE	//Pure humans are always allowed in all roles.
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
