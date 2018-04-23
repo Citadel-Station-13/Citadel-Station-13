@@ -32,7 +32,16 @@
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+<<<<<<< HEAD
 	can_hold = list(
+=======
+	content_overlays = TRUE
+
+/obj/item/storage/belt/utility/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	var/static/list/can_hold = typecacheof(list(
+>>>>>>> 4fca080... Merge pull request #37381 from DaxDupont/toolbelts
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -48,9 +57,15 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
+<<<<<<< HEAD
 		/obj/item/device/assembly/signaler
 		)
 	content_overlays = TRUE
+=======
+		/obj/item/assembly/signaler
+		))
+	STR.can_hold = can_hold
+>>>>>>> 4fca080... Merge pull request #37381 from DaxDupont/toolbelts
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
