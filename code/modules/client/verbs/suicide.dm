@@ -12,11 +12,6 @@
 		return
 	if(confirm == "Yes")
 		suiciding = TRUE
-<<<<<<< HEAD
-		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
-		message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
-=======
->>>>>>> 309e469... Deactivate prescans on suicide (#36741)
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -83,6 +78,8 @@
 		mind.suicide_log(src)
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
+		message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		death(0)
 
 /mob/living/brain/verb/suicide()
@@ -219,7 +216,4 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
-//	if(has_brain_worms())
-//		to_chat(src, "You can't bring yourself to commit suicide!")
-//		return
 	return TRUE
