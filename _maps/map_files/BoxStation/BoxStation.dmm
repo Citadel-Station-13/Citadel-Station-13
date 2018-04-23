@@ -14315,8 +14315,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aKK" = (
-/obj/structure/closet/wardrobe/botanist,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKL" = (
@@ -15037,6 +15037,7 @@
 /area/library)
 "aMI" = (
 /obj/machinery/light/small,
+/obj/structure/closet/wardrobe/botanist,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aMJ" = (
@@ -52608,6 +52609,7 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+<<<<<<< HEAD
 "fAq" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red/side{
@@ -52621,6 +52623,12 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+=======
+"fGf" = (
+/obj/machinery/smartfridge/disks,
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
+>>>>>>> 423a5fe... Adds disk fridges to meta/box/pubby (#37336)
 "fKl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
@@ -95759,7 +95767,7 @@ aFp
 aGW
 anf
 aIp
-aKI
+fGf
 aMA
 aIp
 aOX
