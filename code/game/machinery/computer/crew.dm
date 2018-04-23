@@ -15,16 +15,7 @@
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/crew/attack_ai(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	GLOB.crewmonitor.show(user,src)
-
-/obj/machinery/computer/crew/attack_hand(mob/user)
-	if(..())
-		return
-	if(stat & (BROKEN|NOPOWER))
-		return
+/obj/machinery/computer/crew/interact(mob/user)
 	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
@@ -184,7 +175,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	data_by_z["[z]"] = sortTim(results,/proc/sensor_compare)
 	last_update["[z]"] = world.time
-	
+
 	return results
 
 /proc/sensor_compare(list/a,list/b)

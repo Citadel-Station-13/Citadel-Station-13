@@ -1,6 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added Polychromic Shorts and kilts to loadout"
-  - code_imp: "changed the way polychromic clothes works"
-  - refactor: "refactored polychromic things such that the vars and (some) procs are globalized"

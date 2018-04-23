@@ -106,3 +106,13 @@
 	secondary_color = "#F08080"
 	gender = PLURAL	//Because shortS
 	body_parts_covered = GROIN	//Because there's no shirt included
+
+/obj/item/clothing/under/polychromic/pleat
+	name = "polychromic pleated skirt"
+	desc = "A magnificent pleated skirt complements the woolen polychromatic sweater."
+	icon_state = "polypleat"
+	item_color = "polypleat"
+	item_state = "rainbow"
+	primary_color = "#8CC6FF" //RGB in hexcode
+	secondary_color = "#808080"
+	tertiary_color = "#FF3535"

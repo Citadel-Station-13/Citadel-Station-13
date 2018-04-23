@@ -33,7 +33,7 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery()
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/plating/asteroid/MakeDry()
@@ -48,20 +48,7 @@
 			for(var/obj/item/stack/ore/O in contents)
 				O.attackby(W,user)
 				return
-
-	if(istype(W, /obj/item/stack/tile))
-		var/obj/item/stack/tile/Z = W
-		if(!Z.use(1))
-			return
-		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
-		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-			var/obj/item/stack/tile/light/L = Z
-			var/turf/open/floor/light/F = T
-			F.state = L.state
-		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
-		return
-
-
+				
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
 		return ..()
@@ -159,10 +146,9 @@
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
 
+	. = ..()
 	if(!has_data)
 		produce_tunnel_from_data()
-	else
-		..()	//do not continue after changeturfing or we will do a double initialize
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
