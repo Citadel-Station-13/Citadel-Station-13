@@ -146,9 +146,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	QDEL_NULL(rpg_loot)
 	return ..()
 
+<<<<<<< HEAD
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+=======
+>>>>>>> 0e38d31... Fixes missing icons (#37394)
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
 		return 0
