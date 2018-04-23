@@ -267,7 +267,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
 			L.Knockdown(80)
-			L.apply_effect(STUTTER, 4)
+			L.apply_effect(EFFECT_STUTTER, 4)
 			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[R] has shocked you with its tongue! You can feel the betrayal.</span>")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)

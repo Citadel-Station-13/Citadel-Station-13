@@ -2,14 +2,7 @@
 
 #define islist(L) (istype(L, /list))
 
-#if DM_VERSION >= 512
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
-#if DM_VERSION > 512
-#warn Remove this check.
-#endif
-#else
-#define in_range(source, user) (get_dist(source, user) <= 1)
-#endif
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
@@ -89,6 +82,8 @@
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
+
+#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || IsAdminGhost(A))
 
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 

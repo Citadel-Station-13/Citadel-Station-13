@@ -265,3 +265,10 @@ datum/gear/darksabresheath
 	category = slot_head
 	path = /obj/item/clothing/head/paperhat
 	ckeywhitelist = list("kered2")
+
+/datum/gear/cloakce
+	name = "Polychromic CE Cloak"
+	category = slot_in_backpack
+	path = /obj/item/clothing/neck/cloak/polychromic/polyce
+	ckeywhitelist = list("worksbythesea", "blakeryan")
+
