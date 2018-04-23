@@ -1899,6 +1899,12 @@
 	dir = 2;
 	dwidth = 4;
 	height = 9;
+<<<<<<< HEAD
+=======
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+>>>>>>> 7dcd690... Removes some unnecesary vars on shuttles (#37041)
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
@@ -1973,7 +1979,6 @@
 	height = 17;
 	id = "syndicate_ne";
 	name = "northeast of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -2278,7 +2283,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -97588,7 +97592,6 @@
 	height = 18;
 	id = "emergency_home";
 	name = "DeltaStation emergency evac bay";
-	turf_type = /turf/open/space;
 	width = 30
 	},
 /turf/open/space/basic,

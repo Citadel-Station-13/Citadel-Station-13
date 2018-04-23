@@ -3322,7 +3322,6 @@
 	height = 17;
 	id = "syndicate_ne";
 	name = "northeast of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -28780,7 +28779,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -43000,6 +42998,19 @@
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cac" = (
+<<<<<<< HEAD
+=======
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+>>>>>>> 7dcd690... Removes some unnecesary vars on shuttles (#37041)
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cad" = (
@@ -45824,7 +45835,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "monastery";
-	turf_type = /turf/open/space;
 	width = 35
 	},
 /turf/open/space/basic,
