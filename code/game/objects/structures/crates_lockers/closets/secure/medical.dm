@@ -40,7 +40,7 @@
 
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
 	..()
-	new /obj/item/device/radio/headset/headset_med(src)
+	new /obj/item/radio/headset/headset_med(src)
 	new /obj/item/defibrillator/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
@@ -62,15 +62,22 @@
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/sneakers/brown	(src)
 	new /obj/item/cartridge/cmo(src)
-	new /obj/item/device/radio/headset/heads/cmo(src)
-	new /obj/item/device/megaphone/command(src)
+	new /obj/item/radio/headset/heads/cmo(src)
+	new /obj/item/megaphone/command(src)
 	new /obj/item/defibrillator/compact/loaded(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
+<<<<<<< HEAD
 	new /obj/item/device/healthanalyzer/advanced(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 //	new /obj/item/reagent_containers/hypospray/CMO(src) // CITADEL EDIT comments out the hypospray mk I. the MK II kit is modularized
 	new /obj/item/device/autosurgeon/cmo(src)
+=======
+	new /obj/item/healthanalyzer/advanced(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/reagent_containers/hypospray/CMO(src)
+	new /obj/item/autosurgeon/cmo(src)
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
@@ -83,9 +90,9 @@
 
 /obj/structure/closet/secure_closet/animal/PopulateContents()
 	..()
-	new /obj/item/device/assembly/signaler(src)
+	new /obj/item/assembly/signaler(src)
 	for(var/i in 1 to 3)
-		new /obj/item/device/electropack(src)
+		new /obj/item/electropack(src)
 
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"

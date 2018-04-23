@@ -39,8 +39,13 @@
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
+<<<<<<< HEAD
 			M.ChangeTurf(M.turf_type, null, CHANGETURF_IGNORE_AIR)
 	gps = new /obj/item/device/gps/internal(src)
+=======
+			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+	gps = new /obj/item/gps/internal(src)
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	QDEL_NULL(emitted_light)
