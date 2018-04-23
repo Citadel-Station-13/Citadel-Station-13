@@ -92,6 +92,11 @@
 	icon_state = "cow"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/curled
+	name = "Curled Horn"
+	icon_state = "curled"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/tails/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -135,6 +140,26 @@
 	name = "Fennec"
 	icon_state = "fennec"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/tails/human/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/tails_animated/human/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
 
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
@@ -374,11 +399,18 @@
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS3
 
-/datum/sprite_accessory/snouts/elephant
-	name = "Tusk"
-	icon_state = "elephant"
+/datum/sprite_accessory/snouts/bigbeak
+	name = "Big Beak"
+	icon_state = "bigbeak"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/elephant
+	name = "Elephant"
+	icon_state = "elephant"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
 
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
@@ -422,6 +454,18 @@
 	icon_state = "sergal"
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
 	color_src = MUTCOLORS2
+
+/datum/sprite_accessory/snouts/toucan
+	name = "Toucan"
+	icon_state = "toucan"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/tusk
+	name = "Tusk"
+	icon_state = "tusk"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
 
 /******************************************
 ************ Actual Species ***************
@@ -487,6 +531,10 @@
 	name = "Cow"
 	icon_state = "cow"
 
+/datum/sprite_accessory/mam_ears/curled
+	name = "Curled Horn"
+	icon_state = "curled"
+
 /datum/sprite_accessory/mam_ears/deer
 	name = "Deer"
 	icon_state = "deer"
@@ -521,6 +569,26 @@
 /datum/sprite_accessory/mam_tails_animated/fennec
 	name = "Fennec"
 	icon_state = "fennec"
+
+//datum/sprite_accessory/ears/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/tails/human/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/tails_animated/human/fish
+	name = "Fish"
+	icon_state = "fish"
+	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
 
 /datum/sprite_accessory/mam_ears/fox
 	name = "Fox"
