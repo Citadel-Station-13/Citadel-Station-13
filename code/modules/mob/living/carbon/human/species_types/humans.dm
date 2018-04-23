@@ -2,7 +2,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	species_traits = list(MUTCOLORS_PARTSONLY,SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "none")
 	use_skintones = 1
