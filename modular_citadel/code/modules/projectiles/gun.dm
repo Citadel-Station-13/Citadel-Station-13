@@ -15,7 +15,7 @@
 		return 0
 	else
 		var/mob/living/carbon/holdingdude = user
-		if(istype(holdingdude))
+		if(istype(holdingdude) && holdingdude.combatmode)
 			return max((holdingdude.lastdirchange + weapon_weight * 25) - world.time,0)
 		else
 			return weapon_weight * 25
