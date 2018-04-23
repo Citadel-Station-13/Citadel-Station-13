@@ -38,19 +38,24 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/device/multitool,
-		/obj/item/device/flashlight,
+		/obj/item/multitool,
+		/obj/item/flashlight,
 		/obj/item/stack/cable_coil,
-		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer,
-		/obj/item/device/geiger_counter,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
 		/obj/item/extinguisher/mini,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
+<<<<<<< HEAD
 		/obj/item/device/assembly/signaler
 		)
 	content_overlays = TRUE
+=======
+		/obj/item/assembly/signaler
+		))
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -62,10 +67,10 @@
 	new /obj/item/screwdriver/power(src)
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/analyzer(src)
 	//much roomier now that we've managed to remove two tools
 
 
@@ -75,7 +80,7 @@
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
@@ -84,7 +89,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
@@ -94,7 +99,7 @@
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/t_scanner(src)
+	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
 /obj/item/storage/belt/utility/servant/PopulateContents()
@@ -103,7 +108,7 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
 
 
@@ -114,9 +119,19 @@
 	desc = "Can hold various medical equipment."
 	icon_state = "medicalbelt"
 	item_state = "medical"
+<<<<<<< HEAD
 	max_w_class = WEIGHT_CLASS_BULKY
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
+=======
+
+/obj/item/storage/belt/medical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
+		/obj/item/healthanalyzer,
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
@@ -128,11 +143,11 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/device/sensor_device,
-		/obj/item/device/radio,
+		/obj/item/sensor_device,
+		/obj/item/radio,
 		/obj/item/clothing/gloves/,
 		/obj/item/lazarus_injector,
 		/obj/item/bikehorn/rubberducky,
@@ -146,7 +161,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
-		/obj/item/device/geiger_counter,
+		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
@@ -178,15 +193,15 @@
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
-		/obj/item/device/assembly/flash/handheld,
+		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/reagent_containers/food/snacks/donut,
 		/obj/item/kitchen/knife/combat,
-		/obj/item/device/flashlight/seclite,
+		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/holosign_creator/security
@@ -197,7 +212,7 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
-	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/melee/baton/loaded(src)
 	update_icon()
 
@@ -217,15 +232,15 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/device/multitool,
-		/obj/item/device/flashlight,
+		/obj/item/multitool,
+		/obj/item/flashlight,
 		/obj/item/stack/cable_coil,
-		/obj/item/device/analyzer,
+		/obj/item/analyzer,
 		/obj/item/extinguisher/mini,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/resonator,
-		/obj/item/device/mining_scanner,
+		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/sinew,
@@ -236,16 +251,16 @@
 		/obj/item/stack/medical,
 		/obj/item/kitchen/knife,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/device/gps,
+		/obj/item/gps,
 		/obj/item/storage/bag/ore,
 		/obj/item/survivalcapsule,
-		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
-		/obj/item/device/wormhole_jaunter,
+		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon
 		)
@@ -270,18 +285,29 @@
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
+<<<<<<< HEAD
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/device/soulstone
 		)
+=======
+
+/obj/item/storage/belt/soulstone/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(
+		/obj/item/soulstone
+		))
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone(src)
+		new /obj/item/soulstone(src)
 
 /obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone/anybody/chaplain(src)
+		new /obj/item/soulstone/anybody/chaplain(src)
 
 /obj/item/storage/belt/champion
 	name = "championship belt"
@@ -314,7 +340,7 @@
 	new /obj/item/weldingtool/abductor(src)
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
-	new /obj/item/device/multitool/abductor(src)
+	new /obj/item/multitool/abductor(src)
 	new /obj/item/stack/cable_coil(src,30,"white")
 
 
@@ -344,7 +370,7 @@
 		/obj/item/grenade,
 		/obj/item/screwdriver,
 		/obj/item/lighter,
-		/obj/item/device/multitool,
+		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
 		)
@@ -376,7 +402,7 @@
 	new /obj/item/grenade/syndieminibomb(src)
 	new /obj/item/grenade/syndieminibomb(src)
 	new /obj/item/screwdriver(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 
 /obj/item/storage/belt/wands
 	name = "wand belt"
@@ -409,16 +435,21 @@
 	max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
 	can_hold = list(
 		/obj/item/grenade/chem_grenade,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/flashlight,
+		/obj/item/lightreplacer,
+		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
+<<<<<<< HEAD
 		/obj/item/device/assembly/mousetrap
 		)
+=======
+		/obj/item/assembly/mousetrap
+		))
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"

@@ -40,8 +40,13 @@
 			return
 		if (istype(W, /obj/item/wirecutters))
 			to_chat(user, "<span class='danger'>[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>.</span>")
+<<<<<<< HEAD
 		if ((istype(W, /obj/item/device/multitool)) && (!l_hacking))
 			if(src.open == 1)
+=======
+		if ((istype(W, /obj/item/multitool)) && (!l_hacking))
+			if(open == 1)
+>>>>>>> 057aa31... Kills off /obj/item/device (#37297)
 				to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
 				src.l_hacking = 1
 				if (W.use_tool(src, user, 400))
