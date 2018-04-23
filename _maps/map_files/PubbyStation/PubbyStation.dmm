@@ -1379,10 +1379,8 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "afn" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/structure/table,
-/obj/machinery/newscaster{
-	pixel_x = -32
+/obj/machinery/computer/cryopod{
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -1472,9 +1470,6 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "afC" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -44840,7 +44835,7 @@
 	state = 2
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cgY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -44989,9 +44984,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chz" = (
@@ -44999,9 +44991,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/tesla_coil,
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "chA" = (
@@ -45109,16 +45098,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"chQ" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 4
-	},
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "chR" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -45213,19 +45192,19 @@
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cij" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cik" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cio" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/holidaypriest,
@@ -45269,18 +45248,17 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "cit" = (
-/obj/machinery/the_singularitygen,
+/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "ciu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "civ" = (
 /obj/machinery/light{
 	dir = 4
@@ -45340,19 +45318,19 @@
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "ciH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "ciI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/space)
 "ciJ" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/cobweb,
@@ -49787,26 +49765,6 @@
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cBR" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/item/tank/internals/plasma,
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cBS" = (
-/obj/structure/window/plasma/reinforced{
-	dir = 8
-	},
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
 "cBT" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
@@ -49990,6 +49948,25 @@
 	dir = 1
 	},
 /area/science/circuit)
+"eAP" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"eDm" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/stairs,
+/area/crew_quarters/cryopod)
 "eIh" = (
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/hydrofloor,
@@ -50028,6 +50005,17 @@
 	dir = 6
 	},
 /area/science/circuit)
+"fwj" = (
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "fwl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50063,10 +50051,20 @@
 "fKj" = (
 /turf/closed/wall,
 /area/science/circuit)
+"fKW" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "fWv" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"fYp" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "gkR" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
@@ -50138,6 +50136,10 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
+"inD" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -50157,6 +50159,10 @@
 /obj/effect/turf_decal/box/red,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"iEY" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "iIy" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -50334,6 +50340,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/circuit)
+"lKs" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "lQn" = (
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -50347,6 +50356,13 @@
 	dir = 8
 	},
 /area/bridge)
+"lZH" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "mau" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -50415,6 +50431,11 @@
 /obj/item/screwdriver,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"niB" = (
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "not" = (
 /obj/item/cigbutt,
 /turf/open/floor/plasteel/white,
@@ -50431,6 +50452,9 @@
 	dir = 5
 	},
 /area/science/circuit)
+"oif" = (
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "onw" = (
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
@@ -50490,6 +50514,18 @@
 /obj/item/device/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"pRP" = (
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/cryopod";
+	dir = 1;
+	name = "Crew Cryogenics APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "pWF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -50592,6 +50628,12 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"rAU" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
 "rBh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -50640,6 +50682,22 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"sTR" = (
+/obj/machinery/cryopod,
+/obj/machinery/light/small/built{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/crew_quarters/cryopod)
+"sUS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "thA" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
@@ -50725,6 +50783,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"uYl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "vpz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
@@ -70483,7 +70553,7 @@ aem
 aem
 aeT
 afn
-aem
+fwj
 afZ
 agn
 agy
@@ -70738,7 +70808,7 @@ abI
 aem
 aeo
 aeC
-aeU
+niB
 aeU
 afC
 aeU
@@ -80623,11 +80693,11 @@ cfU
 cgu
 cgU
 chw
-cBR
+cgU
 chw
+cgU
 chw
-chw
-chw
+cgU
 cjs
 cfV
 cfV
@@ -80880,11 +80950,11 @@ cfV
 cgv
 cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
-chQ
+cfV
 chx
 cfV
 cfV
@@ -81138,8 +81208,8 @@ cgv
 cgV
 bBW
 bBW
-aaa
 cgV
+iEY
 aaa
 bBW
 bBW
@@ -81395,8 +81465,8 @@ cgv
 bBW
 bBW
 bBW
-aaa
-abI
+iEY
+fKW
 aaa
 bBW
 bBW
@@ -81653,7 +81723,7 @@ bBW
 bBW
 aaa
 aaa
-abI
+fKW
 aaa
 aaa
 bBW
@@ -81913,8 +81983,8 @@ cii
 cis
 ciG
 aaa
-aaa
-aaa
+iEY
+cgV
 cfV
 bTE
 abI
@@ -82163,15 +82233,15 @@ cfd
 cfw
 cfW
 cgw
-cgV
-abI
-abI
+iEY
+fKW
+fKW
 cij
 cit
 ciH
-abI
-abI
-cgV
+fKW
+fKW
+iEY
 cfV
 bTE
 abI
@@ -82420,8 +82490,8 @@ cfe
 cfx
 cfa
 cgv
-aaa
-aaa
+cgV
+iEY
 aaa
 cik
 ciu
@@ -82681,7 +82751,7 @@ bBW
 bBW
 aaa
 aaa
-abI
+fKW
 aaa
 aaa
 bBW
@@ -82938,8 +83008,8 @@ bBW
 bBW
 aaa
 aaa
-abI
-aaa
+fKW
+iEY
 aaa
 bBW
 bBW
@@ -83195,8 +83265,8 @@ cgV
 bBW
 aaa
 aaa
+iEY
 cgV
-aaa
 bBW
 bBW
 cgV
@@ -83450,11 +83520,11 @@ cfV
 cgv
 cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
-cBS
+cfV
 chz
 cfV
 cfV
@@ -83707,11 +83777,11 @@ cfU
 cgx
 cgU
 chA
+cgU
 chA
+cgU
 chA
-chA
-chA
-chA
+cgU
 cjt
 cfV
 cfV
@@ -87478,12 +87548,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-awd
-aHN
-aIU
+lKs
+pRP
+fYp
+eDm
+uYl
+eAP
 aJI
 aLe
 aMe
@@ -87735,11 +87805,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-awd
-aHN
+lKs
+rAU
+oif
+lZH
+sUS
 aIU
 aJH
 aLe
@@ -87992,10 +88062,10 @@ apX
 aBL
 aBL
 apX
-aaa
-aaa
-aaa
-aAN
+lKs
+sTR
+inD
+lKs
 aHN
 aIU
 aJI

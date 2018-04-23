@@ -5925,7 +5925,7 @@
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/fore)
+/area/hallway/primary/central)
 "alt" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
@@ -5944,7 +5944,7 @@
 	pixel_y = -8
 	},
 /turf/closed/wall,
-/area/hallway/primary/fore)
+/area/hallway/primary/central)
 "alu" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
@@ -6375,10 +6375,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aml" = (
-/obj/structure/closet/emcloset,
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -6386,14 +6382,15 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 9
 	},
-/area/hallway/primary/fore)
+/area/hallway/primary/central)
 "amm" = (
-/obj/structure/cable/white{
-	icon_state = "0-8"
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/hallway/primary/fore)
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "amn" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -6784,7 +6781,6 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/fore)
 "and" = (
-/obj/structure/closet/firecloset,
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
@@ -6795,11 +6791,7 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
-/area/hallway/primary/fore)
-"ane" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva)
+/area/hallway/primary/central)
 "anf" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/end{
@@ -30959,6 +30951,10 @@
 	dir = 1
 	},
 /area/engine/atmos)
+"bVI" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "bYE" = (
 /obj/structure/sign/warning/fire,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -31200,6 +31196,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"dsZ" = (
+/obj/structure/cable/white,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
 "dEa" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
@@ -31237,6 +31238,18 @@
 	dir = 1
 	},
 /area/hallway/primary/fore)
+"dYZ" = (
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/cryopod";
+	dir = 2;
+	name = "Cryogenics APC";
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "eaf" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/structure/cable{
@@ -31706,6 +31719,10 @@
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
+"hQq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
 "hUG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -32057,6 +32074,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"lnn" = (
+/turf/closed/wall,
+/area/hallway/primary/central)
 "lqz" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -32278,6 +32298,12 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
+"mKg" = (
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "mQi" = (
 /turf/closed/wall/rust,
 /area/maintenance/starboard/central)
@@ -32407,6 +32433,9 @@
 	dir = 5
 	},
 /area/engine/atmos)
+"ouS" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "oxn" = (
 /obj/machinery/power/compressor{
 	dir = 4;
@@ -35545,6 +35574,9 @@
 	dir = 1
 	},
 /area/engine/gravity_generator)
+"uGl" = (
+/turf/open/floor/plasteel/purple,
+/area/crew_quarters/cryopod)
 "uGq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
@@ -78553,7 +78585,7 @@ akz
 als
 aml
 and
-tKM
+lnn
 aoS
 apY
 ara
@@ -78809,8 +78841,8 @@ ajx
 akA
 alt
 amm
-amm
-tKM
+dYZ
+ouS
 aoT
 apZ
 ara
@@ -79064,10 +79096,10 @@ agl
 abq
 ajy
 akB
-alk
-aae
-aae
-anQ
+dsZ
+uGl
+uGl
+hQq
 aoU
 aqa
 arg
@@ -79321,10 +79353,10 @@ ahX
 aiC
 ajz
 akC
-alk
-aae
-aae
-anQ
+dsZ
+bVI
+mKg
+hQq
 aoV
 aqb
 arh
@@ -79580,7 +79612,7 @@ ajA
 vWg
 alu
 amn
-ane
+alu
 alu
 syT
 alu
