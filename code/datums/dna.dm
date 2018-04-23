@@ -13,9 +13,23 @@
 	var/mob/living/holder
 
 /datum/dna/New(mob/living/new_holder)
-	if(new_holder)
+	if(istype(new_holder))
 		holder = new_holder
 
+/datum/dna/Destroy()
+	if(iscarbon(holder))
+		var/mob/living/carbon/cholder = holder
+		if(cholder.dna == src)
+			cholder.dna = null
+	holder = null
+	QDEL_NULL(species)
+
+	mutations.Cut()					//This only references mutations, just dereference.
+	temporary_mutations.Cut()		//^
+	previous.Cut()					//^
+
+	return ..()
+	
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return

@@ -191,16 +191,21 @@
 		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 
+	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
+		return FALSE
+		
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-
-
+		
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
+	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
+		return FALSE
+		
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))

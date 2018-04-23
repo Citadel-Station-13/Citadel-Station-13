@@ -27,7 +27,7 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce()
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
+	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
 
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
@@ -82,7 +82,8 @@
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') //CITADEL EDIT also metabreak here too
+
 
 //Shuttle equipment
 

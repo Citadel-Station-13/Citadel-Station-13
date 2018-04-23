@@ -14,7 +14,7 @@
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/lava/MakeSlippery()
+/turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/lava/acid_act(acidpwr, acid_volume)
@@ -125,6 +125,13 @@
 				var/mob/living/live = buckle_check
 				if("lava" in live.weather_immunities)
 					continue
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				var/obj/item/clothing/S = C.get_item_by_slot(slot_wear_suit)
+				var/obj/item/clothing/H = C.get_item_by_slot(slot_head)
+
+				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
+					return
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
