@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (citadel_client_procs(href_list))
 		return
 	// CITADEL End
-
+	
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -391,9 +391,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
-
+	
 	hook_vr("client_new",list(src)) // CIT CHANGE - hook for client/New() changes
-
+	
 	Master.UpdateTickRate()
 
 //////////////
@@ -638,50 +638,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
-/client/Click(atom/object, atom/location, control, params)
-	var/ab = FALSE
-	var/list/L = params2list(params)
-	if (object && object == middragatom && L["left"])
-		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
-	var/mcl = CONFIG_GET(number/minute_click_limit)
-	if (!holder && mcl)
-		var/minute = round(world.time, 600)
-		if (!clicklimiter)
-			clicklimiter = new(LIMITER_SIZE)
-		if (minute != clicklimiter[CURRENT_MINUTE])
-			clicklimiter[CURRENT_MINUTE] = minute
-			clicklimiter[MINUTE_COUNT] = 0
-		clicklimiter[MINUTE_COUNT] += 1+(ab)
-		if (clicklimiter[MINUTE_COUNT] > mcl)
-			var/msg = "Your previous click was ignored because you've done too many in a minute."
-			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
-				clicklimiter[ADMINSWARNED_AT] = minute
-
-				msg += " Administrators have been informed."
-				if (ab)
-					log_game("[key_name(src)] is using the middle click aimbot exploit")
-					message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
-					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-
-				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
-				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
-			to_chat(src, "<span class='danger'>[msg]</span>")
-			return
-
-	var/scl = CONFIG_GET(number/second_click_limit)
-	if (!holder && scl)
-		var/second = round(world.time, 10)
-		if (!clicklimiter)
-			clicklimiter = new(LIMITER_SIZE)
-		if (second != clicklimiter[CURRENT_SECOND])
-			clicklimiter[CURRENT_SECOND] = second
-			clicklimiter[SECOND_COUNT] = 0
-		clicklimiter[SECOND_COUNT] += 1+(!!ab)
-		if (clicklimiter[SECOND_COUNT] > scl)
-			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
-			return
-	..()
-	
 
 /client/proc/check_ip_intel()
 	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
@@ -742,9 +698,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/self_playtime
 
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
-#undef MIN_CLIENT_VERSION
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -752,17 +706,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(inactivity > duration)
 		return inactivity
 	return FALSE
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
-	. = ..()
-	if (holder)
-		stoplag(1)
-	else
-		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -820,7 +763,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
 //CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
 	if(prefs && CONFIG_GET(string/default_view))
 		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))

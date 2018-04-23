@@ -28,7 +28,7 @@
 
 /datum/round_event/pirates/announce()
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
-
+	
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
 	threat = new
@@ -63,7 +63,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/pirate_event_ship/ship = new
+	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -83,7 +83,6 @@
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') //CITADEL EDIT also metabreak here too
-
 
 //Shuttle equipment
 
@@ -174,10 +173,6 @@
 	toggle_off()
 	QDEL_NULL(gps)
 	return ..()
-
-/datum/map_template/pirate_event_ship
-	name = "Pirate Ship"
-	mappath = "_maps/templates/pirate_ship.dmm"
 
 /obj/item/device/gps/internal/pirate
 	gpstag = "Nautical Signal"
