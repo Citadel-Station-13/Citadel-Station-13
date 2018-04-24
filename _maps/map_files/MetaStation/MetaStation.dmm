@@ -902,6 +902,11 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (WEST)";
+	icon_state = "cryopod-open";
+	dir = 8
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "acy" = (
@@ -1056,6 +1061,9 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "acN" = (
@@ -20998,18 +21006,6 @@
 	dir = 2
 	},
 /area/crew_quarters/locker)
-"aTz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/light,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 2
-	},
-/area/crew_quarters/locker)
 "aTA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -21632,15 +21628,25 @@
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aUN" = (
-/obj/structure/closet/wardrobe/black,
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
 "aUO" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/machinery/computer/cryopod{
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
 "aUP" = (
-/obj/structure/closet/wardrobe/white,
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (WEST)";
+	icon_state = "cryopod-open";
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
 "aUQ" = (
@@ -76487,6 +76493,14 @@
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
+"sZD" = (
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/obj/machinery/light,
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
 "tjH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -111864,8 +111878,8 @@ aOD
 aPK
 aQV
 aOv
-aTz
-aUM
+aTt
+sZD
 aUM
 aYe
 dnh

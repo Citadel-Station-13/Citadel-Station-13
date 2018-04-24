@@ -280,11 +280,6 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
-"aaT" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space/nearstation)
 "aaU" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/floorgrime,
@@ -47739,13 +47734,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"crJ" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
 "crK" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -47774,13 +47762,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"crT" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space,
-/area/space/nearstation)
 "crV" = (
 /obj/structure/grille,
 /obj/structure/cable{
@@ -47806,26 +47787,12 @@
 /obj/structure/transit_tube,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"crZ" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "csa" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"csb" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/turf/open/space,
-/area/space/nearstation)
 "csc" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -47904,23 +47871,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
-"css" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
-/area/space/nearstation)
-"csv" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
-"csx" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space,
-/area/space/nearstation)
 "csy" = (
 /obj/structure/table,
 /obj/item/weldingtool,
@@ -50992,13 +50942,6 @@
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
-"cEl" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "cEs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -51029,13 +50972,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cEE" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/turf/open/space,
-/area/space/nearstation)
 "cEK" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -51058,25 +50994,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-"cFm" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
-"cFn" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/space,
-/area/space/nearstation)
-"cFo" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "cFI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -77870,8 +77787,8 @@ aaa
 aaa
 aaa
 aaa
-aaT
-aaT
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -78115,21 +78032,21 @@ cjJ
 aaa
 aaa
 crn
-aaf
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
 aaa
-aaf
-ctv
-aaT
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -78372,21 +78289,21 @@ cjJ
 aaa
 aaa
 crn
-aaf
-aaT
-ctv
-ctv
-ctv
-ctv
-ctv
-ctv
-ctv
-aaT
 aaa
-aaf
-ctv
-ctv
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -78629,20 +78546,20 @@ cjJ
 aaf
 aaf
 cig
-aaf
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
-aaf
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -78887,17 +78804,17 @@ ccw
 ccw
 ccw
 aaa
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
 aaa
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79144,19 +79061,19 @@ cqw
 cqO
 crp
 aaa
-aaf
-aaa
-aaa
-aaf
-aaa
-aaa
-aaf
 aaa
 aaa
 aaa
-aaT
-aaT
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79400,20 +79317,20 @@ cgR
 cgR
 cqN
 cro
-cEl
-cEE
-cEl
-cFm
-csx
-cFm
-cFm
-csx
-csv
 aaa
 aaa
-aaT
-ctv
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79657,20 +79574,20 @@ ciN
 cji
 cDZ
 crr
-crJ
-crT
-crJ
-cFn
-css
-csx
-csx
-css
-csb
-aaf
-aaf
-aaT
-ctv
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79914,20 +79831,20 @@ cgR
 cDB
 cqP
 crq
-crZ
-crT
-crZ
-cFo
-css
-cFm
-cFm
-css
-csv
 aaa
 aaa
-aaT
-ctv
-aaT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
