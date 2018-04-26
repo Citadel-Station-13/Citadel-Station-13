@@ -104,23 +104,23 @@
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
 					snowflake_ears_list[S.name] = path
 		var/new_ears
-		new_ears = input(H, "Choose your character's ears:", "Ears Alteration") as null|anything in snowflake_ears_list
+		new_ears = input(owner, "Choose your character's ears:", "Ear Alteration") as null|anything in snowflake_ears_list
 		if(new_ears)
 			H.dna.features["mam_ears"] = new_ears
 		H.update_body()
 		
 	else if (select_alteration == "Tail")
-		var/list/snowflake_ears_list = list("Normal" = null)
-		for(var/path in GLOB.mam_ears_list)
-			var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
+		var/list/snowflake_tails_list = list("Normal" = null)
+		for(var/path in GLOB.mam_tails_list)
+			var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_ears_list[S.name] = path
-		var/new_ears
-		new_ears = input(H, "Choose your character's ears:", "Tail Alteration") as null|anything in snowflake_ears_list
-		if(new_ears)
-			H.dna.features["mam_ears"] = new_ears
+					snowflake_tails_list[S.name] = path
+		var/new_tail
+		new_ears = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
+		if(new_tail)
+			H.dna.features["mam_tails"] = new_tail
 		H.update_body()
 		
 	else if (select_alteration == "Taur body")
@@ -132,7 +132,7 @@
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
 					snowflake_taur_list[S.name] = path
 		var/new_taur
-		new_taur = input(H, "Choose your character's tauric body:", "Tauric Alteration") as null|anything in snowflake_taur_list
+		new_taur = input(owner, "Choose your character's tauric body:", "Tauric Alteration") as null|anything in snowflake_taur_list
 		if(new_taur)
 			H.dna.features["taur"] = new_taur
 			if(new_taur != "None")
