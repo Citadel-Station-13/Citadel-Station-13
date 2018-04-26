@@ -121,6 +121,8 @@
 		new_tail = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
 		if(new_tail)
 			H.dna.features["mam_tails"] = new_tail
+			if(new_tail != "None")
+				H.dna.features["taur"] = "None"
 		H.update_body()
 		
 	else if (select_alteration == "Taur body")
