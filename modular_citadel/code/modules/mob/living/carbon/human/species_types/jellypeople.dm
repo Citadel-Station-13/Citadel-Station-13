@@ -118,7 +118,7 @@
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
 					snowflake_tails_list[S.name] = path
 		var/new_tail
-		new_ears = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
+		new_tail = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
 		if(new_tail)
 			H.dna.features["mam_tails"] = new_tail
 		H.update_body()
