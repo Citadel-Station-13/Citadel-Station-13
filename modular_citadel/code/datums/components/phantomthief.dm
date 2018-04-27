@@ -23,25 +23,17 @@
 	RegisterSignal(COMSIG_ITEM_DROPPED, .proc/OnDropped)
 
 /datum/component/phantomthief/proc/handlefilterstuff(mob/user, combatmodestate)
-	#if DM_VERSION >= 512
 	if(istype(user))
 		var/thefilter = filter(type = "drop_shadow", x = filter_x, y = filter_y, size = filter_size, border = filter_border, color = filter_color)
 		if(!combatmodestate)
 			user.filters -= thefilter
 		else
 			user.filters += thefilter
-	#else
-	return
-	#endif
 
 /datum/component/phantomthief/proc/stripdesiredfilter(mob/user)
-	#if DM_VERSION >= 512
 	if(istype(user))
 		var/thefilter = filter(type = "drop_shadow", x = filter_x, y = filter_y, size = filter_size, border = filter_border, color = filter_color)
 		user.filters -= thefilter
-	#else
-	return
-	#endif
 
 /datum/component/phantomthief/proc/OnEquipped(mob/user, slot)
 	if(!istype(user))
