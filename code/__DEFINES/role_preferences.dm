@@ -24,7 +24,6 @@
 #define ROLE_REVENANT			"revenant"
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
-#define ROLE_BORER				"borer"
 #define ROLE_BROTHER			"blood brother"
 #define ROLE_BRAINWASHED		"brainwashed victim"
 #define ROLE_MISCREANT			"miscreant"
@@ -49,7 +48,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
-	ROLE_BORER,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 	ROLE_MISCREANT
 ))

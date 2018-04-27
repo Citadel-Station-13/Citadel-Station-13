@@ -1,6 +1,4 @@
 
-
-
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
@@ -43,12 +41,9 @@
 	if(..())
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
-		var/obj/item/storage/bag/ore/S = W
-		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
-				O.attackby(W,user)
-				return
-				
+		for(var/obj/item/stack/ore/O in src)
+			W.SendSignal(COMSIG_PARENT_ATTACKBY, O)
+
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
 		return ..()
@@ -198,6 +193,9 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
+				if(istype(tunnel.loc, /area/mine/explored) || (istype(tunnel.loc, /area/lavaland/surface/outdoors) && !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored)))
+					sanity = 0
+					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
@@ -216,7 +214,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || (istype(NT.loc, /area/lavaland/surface/outdoors) && !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored)))
 			sanity = 0
 			break
 	if(!sanity)
