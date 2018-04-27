@@ -372,7 +372,10 @@
 	injection_chems = null //So they don't have all the same chems as the medihound!
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
-	K9.afterattack(src, user ,1)
+	if(istype(K9))
+		K9.afterattack(src, user ,1)
+	else
+		. = ..()
 
 /obj/item/device/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
 	hound = loc
@@ -421,7 +424,10 @@
 	var/max_item_count = 30
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
-	compactor.afterattack(src, user ,1)
+	if(istype(compactor))
+		compactor.afterattack(src, user ,1)
+	else
+		. = ..()
 
 /obj/item/device/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
 	hound = loc

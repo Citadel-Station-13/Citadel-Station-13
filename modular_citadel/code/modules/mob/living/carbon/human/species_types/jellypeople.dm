@@ -7,7 +7,7 @@
 	name = "Slimeperson"
 	id = "slimeperson"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")

@@ -128,14 +128,14 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-
+/*
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
 	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
 		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
 		var/list/availableto = splittext(initial(obj.jobs),",")
 		for(var/job in availableto)
-			crewobjjobs["[job]"] += list(obj)
+			crewobjjobs["[job]"] += list(obj) */
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -324,12 +324,12 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
-	//assign crew objectives and generate miscreants
+/*	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
 	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
 		GLOB.miscreants_allowed = TRUE
-	generate_crew_objectives()
+	generate_crew_objectives() */
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
