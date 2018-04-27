@@ -158,16 +158,15 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	desc = "Fetch the thing!"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "dbag"
-	//Can hold one big item at a time. Drops contents on unequip.(see inventory.dm)
-	w_class = 5
-	max_w_class = 2
-	max_combined_w_class = 2
-	storage_slots = 1
-	collection_mode = 0
-	can_hold = list() // any
-	cant_hold = list(/obj/item/disk/nuclear)
+	w_class = WEIGHT_CLASS_BULKY
 
-
+/obj/item/storage/bag/borgdelivery/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 5
+	STR.max_items = 1
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
 //Tongue stuff
 
 /obj/item/soap/tongue
