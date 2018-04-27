@@ -116,3 +116,44 @@
 	primary_color = "#8CC6FF" //RGB in hexcode
 	secondary_color = "#808080"
 	tertiary_color = "#FF3535"
+
+/obj/item/clothing/under/polychromic/femtank
+	name = "polychromic feminine tank top"
+	desc = "Great for showing off your chest in style. Not recommended for males."
+	icon_state = "polyfemtankpantsu"
+	item_color = "polyfemtankpantsu"
+	item_state = "rainbow"
+	hastertiary = FALSE
+	primary_color = "#808080" //RGB in hexcode
+	secondary_color = "#FF3535"
+
+/obj/item/clothing/under/polychromic/shortpants/pantsu
+	name = "polychromic panties"
+	desc = "Topless striped panties. Now with 120% more polychrome!"
+	icon_state = "polypantsu"
+	item_color = "polypantsu"
+	item_state = "rainbow"
+	hastertiary = FALSE
+	primary_color = "#FFFFFF" //RGB in hexcode
+	secondary_color = "#8CC6FF"
+
+/obj/item/clothing/under/polychromic/bottomless
+	name = "polychromic bottomless shirt"
+	desc = "Great for showing off your junk in dubious style."
+	icon_state = "polybottomless"
+	item_color = "polybottomless"
+	item_state = "rainbow"
+	hastertiary = FALSE
+	primary_color = "#808080" //RGB in hexcode
+	secondary_color = "#FF3535"
+	body_parts_covered = CHEST	//Because there's no bottom included
+
+/obj/item/clothing/under/polychromic/shimatank
+	name = "polychromic tank top"
+	desc = "For those lazy summer days."
+	icon_state = "polyshimatank"
+	item_color = "polyshimatank"
+	item_state = "rainbow"
+	primary_color = "#808080" //RGB in hexcode
+	secondary_color = "#FFFFFF"
+	tertiary_color = "#8CC6FF"
