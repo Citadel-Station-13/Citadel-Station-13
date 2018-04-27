@@ -173,8 +173,8 @@
 	find_control_computer()
 	return ..()
 
-/obj/machinery/cryopod/proc/find_control_computer(urgent = 0)
-	for(var/obj/machinery/computer/cryopod/C in area_contents(get_area(src)))
+/obj/machinery/cryopod/proc/find_control_computer(urgent = 0,area/A)
+	for(var/obj/machinery/computer/cryopod/C in A)
 		control_computer = C
 		break
 
@@ -417,7 +417,7 @@
 
 	if(!Adjacent(user))
 		return
-		
+
 	if(target == user)
 		visible_message("[user] starts climbing into the cryo pod.")
 	else
@@ -426,7 +426,7 @@
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
-		
+
 	close_machine(target)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")

@@ -54,7 +54,7 @@
 			var/obj/item/loaded = loaded_atom
 			var/obj/item/storage/S = H.get_item_by_slot(slot_back)
 			if(istype(S))
-				S.handle_item_insertion(loaded, TRUE, H)	//Force it into their backpack
+				S.SendSignal(COMSIG_TRY_STORAGE_INSERT,loaded, TRUE, H)	//Force it into their backpack
 				continue
 			if(!H.put_in_hands(loaded))						//They don't have one/somehow that failed, put it in their hands
 				loaded.forceMove(T)				//Guess we're just dumping it on the floor!

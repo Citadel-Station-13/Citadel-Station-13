@@ -2,24 +2,6 @@
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
-
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
 // Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
 // The values here should add up to 1.
@@ -102,8 +84,7 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
+
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
@@ -133,9 +114,6 @@
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
-
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
 
@@ -147,12 +125,12 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-//CITADEL EDIT Vore code required overrides
+	//CITADEL EDIT Vore code required overrides
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	if(istype(loc, /obj/belly))
+	if(isbelly(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 //END EDIT
 	if(wear_suit)
@@ -262,16 +240,14 @@
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
-
 //CITADEL EDIT Mandatory for vore code.
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
-		return 1 //freezing to death in sleepers ruins fun.
-	if(istype(loc, /obj/belly))
-		return 1
+		return TRUE //freezing to death in sleepers ruins fun.
+	if(isbelly(loc))
+		return TRUE
 	if(ismob(loc))
-		return 1 //because lazy and being inside somemone insulates you from space
+		return TRUE //because lazy and being inside somemone insulates you from space
 //END EDIT
-
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
@@ -458,7 +434,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
-#undef HUMAN_MAX_OXYLOSS
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST
 #undef THERMAL_PROTECTION_GROIN

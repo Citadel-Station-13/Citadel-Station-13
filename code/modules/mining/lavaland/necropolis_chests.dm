@@ -79,7 +79,7 @@
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
 	name = "KA Mod Disk"
-	desc = "A design disc containing the design for a unique kinetic accelerator modkit."
+	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
 	var/modkit_design = /datum/design/unique_modkit
 
@@ -433,25 +433,13 @@
 
 //Shared Bag
 
-//Internal
-
-/obj/item/storage/backpack/shared
-	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
-	max_combined_w_class = 60
-	max_w_class = WEIGHT_CLASS_NORMAL
-
-
-//External
-
 /obj/item/device/shared_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
 	slot_flags = SLOT_BACK
-	var/obj/item/storage/backpack/shared/bag
-
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/device/shared_storage/red
 	name = "paradox bag"
@@ -459,53 +447,20 @@
 
 /obj/item/device/shared_storage/red/Initialize()
 	. = ..()
-	if(!bag)
-		var/obj/item/storage/backpack/shared/S = new(src)
-		var/obj/item/device/shared_storage/blue = new(src.loc)
+	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
+	STR.max_items = 21
+	new /obj/item/device/shared_storage/blue(drop_location(), STR)
 
-		src.bag = S
-		blue.bag = S
-
-
-/obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
-	if(bag)
-		bag.forceMove(user)
-		bag.attackby(W, user, params)
-
-
-/obj/item/device/shared_storage/attack_hand(mob/living/carbon/user)
-	if(!iscarbon(user))
-		return
-	if(loc == user && user.back && user.back == src)
-		if(bag)
-			bag.forceMove(user)
-			bag.attack_hand(user)
-	else
-		..()
-
-
-/obj/item/device/shared_storage/MouseDrop(atom/over_object)
-	if(iscarbon(usr) || isdrone(usr))
-		var/mob/M = usr
-
-		if(!over_object)
-			return
-
-		if(ismecha(usr.loc))
-			return
-
-		if(!M.incapacitated())
-			playsound(loc, "rustle", 50, 1, -5)
-
-
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-			add_fingerprint(usr)
-
-
-
+/obj/item/device/shared_storage/blue/Initialize(mapload, datum/component/storage/concrete/master)
+	. = ..()
+	if(!istype(master))
+		return INITIALIZE_HINT_QDEL
+	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
+	STR.max_items = 21
 
 //Book of Babel
 
@@ -991,7 +946,7 @@
 
 	var/mob/living/L = choice
 
-	message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(L)][ADMIN_FLW(L)] has been marked for death by [key_name_admin(user)]!</span>")
 
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind

@@ -316,13 +316,17 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	storage_slots = 1
-	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_BULKY
-	can_hold = list(
+
+/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/toy/sword/darksabre
-		)
+		))
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
