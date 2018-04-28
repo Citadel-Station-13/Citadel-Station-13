@@ -100,6 +100,7 @@
 #define HIDENECK		(1<<10)
 
 //bitflags for clothing coverage - also used for limbs
+<<<<<<< HEAD
 #define HEAD		(1<<0)
 #define CHEST		(1<<1)
 #define GROIN		(1<<2)
@@ -117,6 +118,25 @@
 #define HANDS		(HAND_LEFT | HAND_RIGHT)
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
+=======
+#define HEAD		1
+#define CHEST		2
+#define GROIN		4
+#define LEG_LEFT	8
+#define LEG_RIGHT	16
+#define LEGS		24
+#define FOOT_LEFT	32
+#define FOOT_RIGHT	64
+#define FEET		96
+#define ARM_LEFT	128
+#define ARM_RIGHT	256
+#define ARMS		384
+#define HAND_LEFT	512
+#define HAND_RIGHT	1024
+#define HANDS		1536
+#define NECK		2048
+#define FULL_BODY	4095
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0

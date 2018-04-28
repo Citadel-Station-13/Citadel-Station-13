@@ -42,9 +42,12 @@
 				adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
 			adjustBrainLoss(damage * hit_percent)
+<<<<<<< HEAD
 		//citadel code
 		if(AROUSAL)
 			adjustArousalLoss(damage * hit_percent)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return TRUE
 
 
@@ -176,6 +179,7 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 	if(update)
 		update_damage_overlays()
 	update_stamina() //CIT CHANGE - makes sure update_stamina() always gets called after a health update

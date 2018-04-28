@@ -509,8 +509,6 @@
 		return 0.4
 	if(istype(target, /obj/structure/window))
 		return 0.5
-	if(istype(target, /obj/structure/blob))		//CIT CHANGE - Blobs are getting ggnore'd too hard and people need to GIT GUD
-		return 0.2
 	return 1
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)

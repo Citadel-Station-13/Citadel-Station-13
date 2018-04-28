@@ -18,7 +18,11 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
+<<<<<<< HEAD
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser")
+=======
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic", "defibmount", "operating")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	research_cost = 2500
 	export_price = 5000
 
@@ -93,7 +97,11 @@
 	description = "A refresher course on modern engineering technology."
 	prereq_ids = list("base")
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
+<<<<<<< HEAD
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod", "apc_control", "cell_charger")
+=======
+	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "tesla_coil", "grounding_rod", "apc_control", "cell_charger")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	research_cost = 7500
 	export_price = 5000
 
@@ -130,7 +138,11 @@
 	display_name = "Basic Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
 	prereq_ids = list("base")
+<<<<<<< HEAD
 	design_ids = list("beacon","telesci_gps") //CIT CHANGE removed xenobioconsole from here.
+=======
+	design_ids = list("beacon", "xenobioconsole", "telesci_gps")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	research_cost = 2500
 	export_price = 5000
 
@@ -149,7 +161,11 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
+<<<<<<< HEAD
 	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick", "xenobioconsole") //CIT CHANGE added xenobioconsole here
+=======
+	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	research_cost = 5000
 	export_price = 5000
 

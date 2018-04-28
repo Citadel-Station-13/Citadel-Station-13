@@ -26,6 +26,7 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 
 /datum/controller/subsystem/processing/traits/proc/AssignTraits(mob/living/user, client/cli, spawn_effects)
 	GenerateTraits(cli)
+<<<<<<< HEAD
 	if(user && cli && cli.prefs.character_traits)
 		for(var/V in cli.prefs.character_traits)
 			user.add_trait_datum(V, spawn_effects)
@@ -35,3 +36,12 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 		if(user.prefs.character_traits.len)
 			return
 		user.prefs.character_traits = user.prefs.all_traits
+=======
+	for(var/V in cli.prefs.character_traits)
+		user.add_trait_datum(V, spawn_effects)
+
+/datum/controller/subsystem/processing/traits/proc/GenerateTraits(client/user)
+	if(user.prefs.character_traits.len)
+		return
+	user.prefs.character_traits = user.prefs.all_traits
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

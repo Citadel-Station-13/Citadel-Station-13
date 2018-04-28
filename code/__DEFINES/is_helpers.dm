@@ -2,7 +2,18 @@
 
 #define islist(L) (istype(L, /list))
 
+<<<<<<< HEAD
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
+=======
+#if DM_VERSION >= 512
+#define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
+#if DM_VERSION > 512
+#warn Remove this check.
+#endif
+#else
+#define in_range(source, user) (get_dist(source, user) <= 1)
+#endif
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 

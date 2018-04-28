@@ -9,7 +9,11 @@
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
+<<<<<<< HEAD
 #define META_GAS_FUSION_POWER   7
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -39,8 +43,13 @@
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5		//Minimum temperature difference before the gas temperatures are just set to be equal
+<<<<<<< HEAD
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+10)
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
+=======
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
+#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
@@ -51,11 +60,19 @@
 #define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 
 //FIRE
+<<<<<<< HEAD
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	(150+T0C)
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	(100+T0C)
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
+=======
+#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
+#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
+#define FIRE_SPREAD_RADIOSITY_SCALE			0.85
+#define FIRE_GROWTH_RATE					40000	//For small fires
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
@@ -84,7 +101,11 @@
 #define BODYTEMP_COOLING_MAX				-100		//The maximum number of degrees that your body can cool in 1 tick, due to the environment, when in a cold area.
 #define BODYTEMP_HEATING_MAX				30		//The maximum number of degrees that your body can heat up in 1 tick, due to the environment, when in a hot area.
 
+<<<<<<< HEAD
 #define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 20) // The limit the human body can take before it starts taking damage from heat. //CITADEL EDIT to 20
+=======
+#define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 50) // The limit the human body can take before it starts taking damage from heat.
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 50) // The limit the human body can take before it starts taking damage from coldness.
 
 
@@ -112,8 +133,13 @@
 #define SHOES_MAX_TEMP_PROTECT				1500	//For gloves
 
 #define PRESSURE_DAMAGE_COEFFICIENT			4		//The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+<<<<<<< HEAD
 #define MAX_HIGH_PRESSURE_DAMAGE			16		// CITADEL CHANGES Max to 16, low to 8.
 #define LOW_PRESSURE_DAMAGE					8		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+=======
+#define MAX_HIGH_PRESSURE_DAMAGE			4
+#define LOW_PRESSURE_DAMAGE					4		//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 #define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
 
@@ -201,10 +227,17 @@
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
 
+<<<<<<< HEAD
 #define PIPING_ALL_LAYER				(1<<0)	//intended to connect with all layers, check for all instead of just one.
 #define PIPING_ONE_PER_TURF				(1<<1) 	//can only be built if nothing else with this flag is on the tile already.
 #define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
 #define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
+=======
+#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())

@@ -110,6 +110,10 @@
 	GLOB.simple_animals[AIStatus] -= src
 	return ..()
 
+/mob/living/simple_animal/Destroy()
+	GLOB.simple_animals[AIStatus] -= src
+	return ..()
+
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = CLAMP(health, 0, maxHealth)

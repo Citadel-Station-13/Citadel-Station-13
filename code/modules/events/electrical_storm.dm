@@ -12,6 +12,7 @@
 	announceWhen	= 1
 
 /datum/round_event/electrical_storm/announce(fake)
+<<<<<<< HEAD
 	if(prob(50))
 		priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
 	else
@@ -22,6 +23,10 @@
 				P.name = "Electrical Storm"
 				P.info = "An electrical storm has been detected in your area, please repair potential electronic overloads."
 				P.update_icon()
+=======
+	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert")
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/round_event/electrical_storm/start()
 	var/list/epicentreList = list()

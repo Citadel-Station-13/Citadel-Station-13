@@ -135,7 +135,15 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+<<<<<<< HEAD
 			I.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
+=======
+			var/list/obj/item/oldContents = T.contents.Copy()
+			T.quick_empty()
+			for(var/obj/item/C in oldContents)
+				C.forceMove(drop_location())
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)

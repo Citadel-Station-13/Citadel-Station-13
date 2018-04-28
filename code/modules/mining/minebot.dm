@@ -36,12 +36,23 @@
 	del_on_death = TRUE
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
+<<<<<<< HEAD
+=======
+
+	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
+	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
+	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
 	stored_gun = new(src)
+<<<<<<< HEAD
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
+=======
+	toggle_light_action = new()
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	toggle_light_action.Grant(src)
 	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action = new()
 	toggle_meson_vision_action.Grant(src)

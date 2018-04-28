@@ -21,7 +21,10 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	generate_selectable_species()
+<<<<<<< HEAD
 	set_overflow_role(CONFIG_GET(string/overflow_job))
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	..()
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
@@ -412,8 +415,11 @@ SUBSYSTEM_DEF(job)
 		H.mind.assigned_role = rank
 
 	if(job)
+<<<<<<< HEAD
 		if(!job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		var/new_mob = job.equip(H, null, null, joined_late)
 		if(ismob(new_mob))
 			H = new_mob
@@ -434,12 +440,16 @@ SUBSYSTEM_DEF(job)
 			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
+<<<<<<< HEAD
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
 		job.after_spawn(H, M, joined_late)
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
 	//handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role) //CIT CHANGE - makes donators spawn with their items. This can safely be commented out when all of the donator items are migrated to the loadout system
+=======
+		job.after_spawn(H, M, joined_late)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	return H
 

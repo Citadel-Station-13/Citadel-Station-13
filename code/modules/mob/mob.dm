@@ -32,7 +32,10 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+<<<<<<< HEAD
 	hook_vr("mob_new",list(src))
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
 
@@ -365,11 +368,14 @@
 		I.attack_self(src)
 		update_inv_hands()
 
+<<<<<<< HEAD
 	if(!I)//CIT CHANGE - allows "using" empty hands
 		use_that_empty_hand() //CIT CHANGE - ditto
 		update_inv_hands() // CIT CHANGE - ditto.
 
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"

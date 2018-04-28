@@ -14,9 +14,13 @@
 /datum/netdata/proc/pre_send(datum/component/ntnet_interface/interface)
 	// Decrypt the passkey.
 	if(encrypted_passkey && !passkey)
+<<<<<<< HEAD
 		var/result = XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey)
 		if(length(result) > 1)
 			passkey = json_decode(XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey))
+=======
+		passkey = json_decode(XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	// Encrypt the passkey.
 	if(!encrypted_passkey && passkey)

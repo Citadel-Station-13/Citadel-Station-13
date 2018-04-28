@@ -31,7 +31,11 @@
 	if (isturf(user.loc) || istype(user.loc, /obj/structure) || active_dummy)
 		toggle(user)
 	else
+<<<<<<< HEAD
 		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
+=======
+		to_chat(user, "<span class='userwarning'>You can't use [src] while inside something.</span>")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity)

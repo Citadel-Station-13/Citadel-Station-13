@@ -111,7 +111,11 @@
 			var/area/landingzone
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			if(!(obj_flags & EMAGGED))
+<<<<<<< HEAD
 				if(SO.pack.cost <= SSshuttle.points)
+=======
+				if(SO.pack.cost * 2 <= SSshuttle.points)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))

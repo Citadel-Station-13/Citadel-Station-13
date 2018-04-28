@@ -54,7 +54,12 @@
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
 		/obj/item/device/assembly/signaler
+<<<<<<< HEAD
 		))
+=======
+		)
+	content_overlays = TRUE
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -160,12 +165,22 @@
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
+<<<<<<< HEAD
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/implantcase,
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew
 		))
+=======
+		/obj/item/pinpointer/crew,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/implantcase,
+		/obj/item/implant,
+		/obj/item/implanter
+		)
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -195,8 +210,15 @@
 		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves,
+<<<<<<< HEAD
 		/obj/item/restraints/legcuffs/bola
 		))
+=======
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/holosign_creator/security
+		)
+	content_overlays = TRUE
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -458,7 +480,11 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/device/assembly/mousetrap
+<<<<<<< HEAD
 		))
+=======
+		)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"

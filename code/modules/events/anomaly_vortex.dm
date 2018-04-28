@@ -11,6 +11,7 @@
 	announceWhen = 3
 
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
+<<<<<<< HEAD
 	if(prob(90))
 		priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
 	else
@@ -21,6 +22,9 @@
 				P.name = "Vortex anomaly"
 				P.info = "Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]."
 				P.update_icon()
+=======
+	priority_announce("Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [impact_area.name]", "Anomaly Alert")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/round_event/anomaly/anomaly_vortex/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))

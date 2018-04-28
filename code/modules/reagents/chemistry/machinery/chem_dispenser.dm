@@ -413,7 +413,10 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
+<<<<<<< HEAD
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	working_state = null
 	nopower_state = null
 	dispensable_reagents = list(

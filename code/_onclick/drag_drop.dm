@@ -107,8 +107,11 @@
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
 		for(var/datum/D in mob.mousemove_intercept_objects)
 			D.onMouseMove(object, location, control, params)
+<<<<<<< HEAD
 	if(mob)	//CIT CHANGE - passes onmousemove() to mobs
 		mob.onMouseMove(object, location, control, params)	//CIT CHANGE - ditto
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/proc/onMouseMove(object, location, control, params)
 	return
@@ -140,4 +143,8 @@
 	if (middragatom == src_object)
 		middragtime = 0
 		middragatom = null
+<<<<<<< HEAD
 	..()
+=======
+	..()
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

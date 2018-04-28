@@ -46,8 +46,12 @@ God bless America.
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
+<<<<<<< HEAD
 		/obj/item/storage/part_replacer,
 		/obj/item/his_grace))
+=======
+		/obj/item/storage/part_replacer))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()

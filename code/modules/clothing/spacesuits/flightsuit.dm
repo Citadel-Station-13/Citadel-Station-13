@@ -757,7 +757,11 @@
 	item_state = "flightsuit"
 	strip_delay = 30
 	w_class = WEIGHT_CLASS_BULKY
+<<<<<<< HEAD
 	resistance_flags = FIRE_PROOF
+=======
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
@@ -828,8 +832,13 @@
 		var/mob/living/carbon/human/H = user
 		if(src == H.wear_suit && locked)
 			usermessage("You can not take a locked hardsuit off! Unlock it first!", "boldwarning")
+<<<<<<< HEAD
 			return FALSE
 	return ..()
+=======
+			return
+	..()
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
 	if(deployedpack)
@@ -1083,7 +1092,11 @@
 	light_color = "#30ffff"
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+<<<<<<< HEAD
 	var/list/datahuds = list(DATA_HUD_SECURITY_BASIC, DATA_HUD_MEDICAL_BASIC, DATA_HUD_DIAGNOSTIC_BASIC) //CITADEL NERF
+=======
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_BASIC)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/zoom_range = 12
 	var/zoom = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)

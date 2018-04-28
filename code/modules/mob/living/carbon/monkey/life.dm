@@ -19,7 +19,11 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)	
+<<<<<<< HEAD
 				if(on_fire || buckled || restrained() || (resting && canmove))
+=======
+				if(on_fire || buckled || restrained())
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -176,6 +180,7 @@
 
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+<<<<<<< HEAD
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2
@@ -184,3 +189,5 @@
 #undef COLD_DAMAGE_LEVEL_1
 #undef COLD_DAMAGE_LEVEL_2
 #undef COLD_DAMAGE_LEVEL_3
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

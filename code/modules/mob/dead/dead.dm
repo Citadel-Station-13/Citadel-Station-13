@@ -36,7 +36,11 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!statpanel("Status"))
 		return
+<<<<<<< HEAD
 	//stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]") CIT CHANGE - obfuscates gamemode from player view
+=======
+	stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	if(SSticker.HasRoundStarted())
 		return
@@ -72,7 +76,11 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!pick)
 		return
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/addr = csa[pick]
 
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")

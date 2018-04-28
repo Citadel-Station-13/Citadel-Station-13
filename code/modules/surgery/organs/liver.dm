@@ -24,6 +24,22 @@
 		if(!failing)//can't process reagents with a failing liver
 			//slowly heal liver damage
 			damage = max(0, damage - 0.1)
+<<<<<<< HEAD
+=======
+
+			if(filterToxins)
+				//handle liver toxin filtration
+				var/toxamount
+				var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
+				for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
+					toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
+
+				if(toxamount <= toxTolerance && toxamount > 0)
+					for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
+						C.reagents.remove_reagent(initial(toxin.id), 1)
+				else if(toxamount > toxTolerance)
+					damage += toxamount*toxLethality
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration

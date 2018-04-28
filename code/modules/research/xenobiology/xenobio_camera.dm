@@ -96,7 +96,11 @@
 		scan_action.Grant(user)
 		actions += scan_action
 
+<<<<<<< HEAD
 	if(potion_action && (upgradetier & XENOBIO_UPGRADE_SLIMEADV)) // CIT CHANGE - makes giving slimes potions via console require XENOBIO_UPGRADE_SLIMEADV
+=======
+	if(potion_action)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
@@ -124,7 +128,11 @@
 		if(loaded)
 			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
 		return
+<<<<<<< HEAD
 	else if(istype(O, /obj/item/slimepotion/slime)  && (upgradetier & XENOBIO_UPGRADE_SLIMEADV)) // CIT CHANGE - makes giving slimes potions via console require XENOBIO_UPGRADE_SLIMEADV
+=======
+	else if(istype(O, /obj/item/slimepotion/slime))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		var/replaced = FALSE
 		if(user && !user.transferItemToLoc(O, src))
 			return

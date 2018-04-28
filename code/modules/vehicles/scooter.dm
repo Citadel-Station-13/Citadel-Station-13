@@ -147,9 +147,12 @@
 		qdel(src)
 	return TRUE
 
+<<<<<<< HEAD
 /obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
 	return
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 //Wheelys
 /obj/vehicle/ridden/scooter/wheelys
 	name = "Wheely-Heels"
@@ -190,4 +193,8 @@
 			H.adjustBrainLoss(1)
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+<<<<<<< HEAD
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+=======
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

@@ -10,6 +10,7 @@
 
 
 /datum/round_event/anomaly/anomaly_bluespace/announce(fake)
+<<<<<<< HEAD
 	if(prob(90))
 		priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
@@ -20,6 +21,10 @@
 				P.name = "Unstable bluespace anomaly"
 				P.info = "Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name]."
 				P.update_icon()
+=======
+	priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/round_event/anomaly/anomaly_bluespace/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))

@@ -56,10 +56,13 @@
 	if(flags_1 & NOBLUDGEON_1)
 		return
 
+<<<<<<< HEAD
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(force && user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return

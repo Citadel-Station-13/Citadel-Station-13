@@ -300,6 +300,91 @@
 					/obj/item/grenade/barrier)
 	cost = 2000
 	crate_name = "security barriers crate"
+<<<<<<< HEAD
+
+/datum/supply_pack/security/securityclothes
+	name = "Security Clothing Crate"
+	desc = "Contains appropriate outfits for the station's private security force. Contains outfits for the Warden, Head of Security, and two Security Officers. Each outfit comes with a rank-appropriate jumpsuit, suit, and beret. Requires Security access to open."
+	cost = 3000
+	contains = list(/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/under/rank/security/navyblue,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/suit/security/officer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/head/beret/sec/navyofficer,
+					/obj/item/clothing/under/rank/warden/navyblue,
+					/obj/item/clothing/suit/security/warden,
+					/obj/item/clothing/head/beret/sec/navywarden,
+					/obj/item/clothing/under/rank/head_of_security/navyblue,
+					/obj/item/clothing/suit/security/hos,
+					/obj/item/clothing/head/beret/sec/navyhos)
+	crate_name = "security clothing crate"
+
+/datum/supply_pack/security/supplies
+	name = "Security Supplies Crate"
+	desc = "Contains seven flashbangs, seven teargas grenades, six flashes, and seven handcuffs. Requires Security access to open."
+	cost = 1000
+	contains = list(/obj/item/storage/box/flashbangs,
+					/obj/item/storage/box/teargas,
+					/obj/item/storage/box/flashes,
+					/obj/item/storage/box/handcuffs)
+	crate_name = "security supply crate"
+
+/datum/supply_pack/security/firingpins
+	name = "Standard Firing Pins Crate"
+	desc = "Upgrade your arsenal with 10 standard firing pins. Requires Security access to open."
+	cost = 2000
+	contains = list(/obj/item/storage/box/firingpins,
+					/obj/item/storage/box/firingpins)
+	crate_name = "firing pins crate"
+
+/datum/supply_pack/security/justiceinbound
+	name = "Standard Justice Enforcer Crate"
+	desc = "This is it. The Bee's Knees. The Creme of the Crop. The Pick of the Litter. The best of the best of the best. The Crown Jewel of Nanotrasen. The Alpha and the Omega of security headwear. Guaranteed to strike fear into the hearts of each and every criminal aboard the station. Also comes with a security gasmask. Requires Security access to open."
+	cost = 6000 //justice comes at a price. An expensive, noisy price.
+	contraband = TRUE
+	contains = list(/obj/item/clothing/head/helmet/justice,
+					/obj/item/clothing/mask/gas/sechailer)
+	crate_name = "security clothing crate"
+
+/datum/supply_pack/security/baton
+	name = "Stun Batons Crate"
+	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Security access to open."
+	cost = 1000
+	contains = list(/obj/item/melee/baton/loaded,
+					/obj/item/melee/baton/loaded,
+					/obj/item/melee/baton/loaded)
+	crate_name = "stun baton crate"
+
+/datum/supply_pack/security/taser
+	name = "Taser Crate"
+	desc = "From the depths of stunbased combat, this order rises above, supreme. Contains three hybrid tasers, capable of firing both electrodes and disabling shots. Requires Security access to open."
+	cost = 3000
+	contains = list(/obj/item/gun/energy/e_gun/advtaser,
+					/obj/item/gun/energy/e_gun/advtaser,
+					/obj/item/gun/energy/e_gun/advtaser)
+	crate_name = "taser crate"
+
+/datum/supply_pack/security/wall_flash
+	name = "Wall-Mounted Flash Crate"
+	desc = "Contains four wall-mounted flashes. Requires Security access to open."
+	cost = 1000
+	contains = list(/obj/item/storage/box/wall_flash,
+					/obj/item/storage/box/wall_flash,
+					/obj/item/storage/box/wall_flash,
+					/obj/item/storage/box/wall_flash)
+	crate_name = "wall-mounted flash crate"
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Armory //////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/security/armory
+	group = "Armory"
+	access = ACCESS_ARMORY
+	crate_type = /obj/structure/closet/crate/secure/weapon
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/supply_pack/security/securityclothes
 	name = "Security Clothing Crate"
@@ -582,11 +667,19 @@
 					/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow)
 	crate_name = "insulated gloves crate"
+<<<<<<< HEAD
 
 /obj/item/stock_parts/cell/inducer_supply//what is this doing here
 	maxcharge = 5000
 	charge = 5000
 
+=======
+
+/obj/item/stock_parts/cell/inducer_supply//what is this doing here
+	maxcharge = 5000
+	charge = 5000
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."
@@ -756,11 +849,16 @@
 	crate_name = "solar panel crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+<<<<<<< HEAD
 /datum/supply_pack/engineering/engine/supermatter_crystal
+=======
+/datum/supply_pack/engineering/engine/supermatter_shard
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	name = "Supermatter Shard Crate"
 	desc = "The power of the heavens condensed into a single crystal. Requires CE access to open."
 	cost = 10000
 	access = ACCESS_CE
+<<<<<<< HEAD
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
@@ -776,6 +874,12 @@
 					/obj/machinery/power/tesla_coil)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+=======
+	contains = list(/obj/machinery/power/supermatter_shard)
+	crate_name = "supermatter shard crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/supply_pack/engineering/engine/tesla_gen
 	name = "Tesla Generator Crate"

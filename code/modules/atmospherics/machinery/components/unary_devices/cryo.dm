@@ -12,7 +12,10 @@
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+<<<<<<< HEAD
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	var/on = FALSE
 	var/autoeject = FALSE

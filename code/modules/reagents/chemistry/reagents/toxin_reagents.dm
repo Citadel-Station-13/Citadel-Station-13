@@ -172,7 +172,15 @@
 	if(isliving(M))
 		var/mob/living/L = M
 		L.cure_fakedeath(id)
+<<<<<<< HEAD
 	..()
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
+	M.adjustOxyLoss(0.5*REM, 0)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
+	..()
+	. = 1
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.adjustOxyLoss(0.5*REM, 0)
@@ -843,6 +851,42 @@
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
 	M.adjustFireLoss(current_cycle/10, 0)
 	. = 1
+<<<<<<< HEAD
+=======
+	..()
+
+/datum/reagent/toxin/peaceborg/confuse
+	name = "Dizzying Solution"
+	id = "dizzysolution"
+	description = "Makes the target off balance and dizzy"
+	toxpwr = 0
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "dizziness"
+
+/datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
+	if(M.confused < 6)
+		M.confused = CLAMP(M.confused + 3, 0, 5)
+	if(M.dizziness < 6)
+		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
+	if(prob(20))
+		to_chat(M, "You feel confused and disorientated.")
+	..()
+
+/datum/reagent/toxin/peaceborg/tire
+	name = "Tiring Solution"
+	id = "tiresolution"
+	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
+	toxpwr = 0
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "tiredness"
+
+/datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
+	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+		M.adjustStaminaLoss(10)
+	if(prob(30))
+		to_chat(M, "You should sit down and take a rest...")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	..()
 
 /datum/reagent/toxin/delayed

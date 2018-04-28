@@ -3067,6 +3067,14 @@
 	density = 1;
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
+<<<<<<< HEAD
+=======
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2";
+	movedir = 8
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -3093,6 +3101,14 @@
 	density = 1;
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
+<<<<<<< HEAD
+=======
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2";
+	movedir = 8
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -5306,10 +5322,17 @@
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 8
+<<<<<<< HEAD
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
+=======
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /area/tdome/tdomeobserve)
 "oT" = (
 /obj/structure/table/wood,
@@ -8455,11 +8478,19 @@
 "xN" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership/control;
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/space;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dir = 1;
 	dwidth = 3;
 	height = 7;
 	name = "escape pod loader";
 	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/plating/airless;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 7
 	},
 /turf/open/floor/plating/airless,
@@ -13370,6 +13401,10 @@
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/floor/plating/asteroid/snow;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dheight = 1;
 	dir = 8;
 	dwidth = 12;
@@ -13377,6 +13412,10 @@
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
 	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/plating/asteroid/snow;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 23
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -13480,10 +13519,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+<<<<<<< HEAD
 "VX" = (
 /obj/effect/landmark/shuttle_import,
 /turf/open/space/basic,
 /area/space)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -25345,6 +25387,7 @@ hh
 hh
 hh
 hh
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -25377,6 +25420,8 @@ aa
 aa
 aa
 aa
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aa
 aa
 aa
@@ -25641,6 +25686,137 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
+=======
+hh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
+MD
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
+hh
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aa
 aa
 aa
@@ -27140,8 +27316,13 @@ hl
 hl
 hl
 hl
+<<<<<<< HEAD
 kt
 kt
+=======
+kt
+kt
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 hl
 hh
 aa
@@ -29963,6 +30144,18 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+nz
+uJ
+nz
+kt
+hl
+hl
+hl
+hl
+hl
 hl
 hl
 hl
@@ -30218,14 +30411,23 @@ kt
 kt
 kt
 kt
+<<<<<<< HEAD
+=======
+kt
+kt
+kt
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 kt
 kt
 kt
 kt
 kt
+<<<<<<< HEAD
 kt
 kt
 kt
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 hl
 hh
 aa

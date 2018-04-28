@@ -137,6 +137,7 @@
 	default_unfasten_wrench(user, I, 0)
 	return TRUE
 
+<<<<<<< HEAD
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
@@ -144,6 +145,8 @@
 		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
 	return TRUE
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		if(locked)
@@ -151,8 +154,11 @@
 			return TRUE
 		eject()
 		return TRUE
+<<<<<<< HEAD
 	if(default_deconstruction_crowbar(I))
 		return TRUE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 	return TRUE
 

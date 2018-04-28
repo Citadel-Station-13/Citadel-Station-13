@@ -13,8 +13,16 @@
 	var/network_name = ""			//text
 	var/list/networks_connected_by_id = list()		//id = datum/ntnet
 
+<<<<<<< HEAD
 /datum/component/ntnet_interface/Initialize(force_name = "NTNet Device", autoconnect_station_network = TRUE)			//Don't force ID unless you know what you're doing!
 	hardware_id = "[SSnetworks.get_next_HID()]"
+=======
+/datum/component/ntnet_interface/Initialize(force_ID, force_name = "NTNet Device", autoconnect_station_network = TRUE)			//Don't force ID unless you know what you're doing!
+	if(!force_ID)
+		hardware_id = "[SSnetworks.assignment_hardware_id++]"
+	else
+		hardware_id = force_ID
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	network_name = force_name
 	SSnetworks.register_interface(src)
 	if(autoconnect_station_network)

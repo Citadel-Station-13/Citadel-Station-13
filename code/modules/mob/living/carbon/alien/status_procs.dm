@@ -18,4 +18,7 @@
 	. = ..()
 	if(!.)
 		move_delay_add = CLAMP(move_delay_add + round(amount/2), 0, 10)
+<<<<<<< HEAD
 */
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

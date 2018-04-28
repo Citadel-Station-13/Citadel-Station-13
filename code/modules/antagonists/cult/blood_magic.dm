@@ -9,7 +9,10 @@
 	..()
 	button.screen_loc = "6:-29,4:-2"
 	button.moved = "6:-29,4:-2"
+<<<<<<< HEAD
 	button.ordered = FALSE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -104,7 +107,10 @@
 	all_magic = BM
 	..()
 	button.locked = TRUE
+<<<<<<< HEAD
 	button.ordered = FALSE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)

@@ -48,6 +48,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define FESTIVE_SEASON			"Festive Season"
 
 //Human Overlays Indexes/////////
+<<<<<<< HEAD
 //LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
 #define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
@@ -67,6 +68,22 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define SUIT_LAYER				16
 #define BODY_TAUR_LAYER			15
 #define GENITALS_FRONT_LAYER	14		//Draws some genitalia above clothes and the TAUR body if need be.
+=======
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			19
+#define ID_LAYER				18
+#define HANDS_PART_LAYER		18
+#define GLOVES_LAYER			17
+#define SHOES_LAYER				16
+#define EARS_LAYER				15
+#define SUIT_LAYER				14
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
@@ -85,11 +102,19 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
+<<<<<<< HEAD
 #define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
+=======
+#define UNDER_SUIT_LAYER			SUIT_LAYER+1
+
+//AND -1 MEANS "ABOVE", OK?, OK!?!
+#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
+#define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 
 //Security levels
@@ -430,6 +455,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

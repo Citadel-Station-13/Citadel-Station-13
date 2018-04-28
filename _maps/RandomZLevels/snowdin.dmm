@@ -9441,11 +9441,19 @@
 	width = 6
 	},
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_top";
 	name = "snowdin excavation top";
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -9476,11 +9484,19 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xP" = (
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/floor/plating/snowed;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_down";
 	name = "snowdin excavation down";
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/plating/snowed;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -13817,11 +13833,19 @@
 	width = 5
 	},
 /obj/docking_port/stationary{
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_top";
 	name = "snowdin mining top";
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 5
 	},
 /turf/open/floor/plating,
@@ -13868,11 +13892,19 @@
 "Kt" = (
 /obj/docking_port/stationary{
 	area_type = /area/awaymission/snowdin/post/mining_dock;
+<<<<<<< HEAD
+=======
+	baseturf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_down";
 	name = "snowdin mining bottom";
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/floor/engine;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 5
 	},
 /turf/open/floor/plating,

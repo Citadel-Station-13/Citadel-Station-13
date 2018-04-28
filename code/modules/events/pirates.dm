@@ -27,8 +27,13 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce()
+<<<<<<< HEAD
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
 	
+=======
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
 	threat = new
@@ -63,7 +68,11 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
+<<<<<<< HEAD
 	var/datum/map_template/shuttle/pirate/default/ship = new
+=======
+	var/datum/map_template/pirate_event_ship/ship = new
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -82,7 +91,11 @@
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
+<<<<<<< HEAD
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') //CITADEL EDIT also metabreak here too
+=======
+	priority_announce("Unidentified armed ship detected near the station.")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //Shuttle equipment
 
@@ -174,6 +187,13 @@
 	QDEL_NULL(gps)
 	return ..()
 
+<<<<<<< HEAD
+=======
+/datum/map_template/pirate_event_ship
+	name = "Pirate Ship"
+	mappath = "_maps/templates/pirate_ship.dmm"
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/item/device/gps/internal/pirate
 	gpstag = "Nautical Signal"
 	desc = "You can hear shanties over the static."

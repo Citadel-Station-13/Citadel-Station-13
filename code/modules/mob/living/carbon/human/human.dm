@@ -38,7 +38,10 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
+<<<<<<< HEAD
 	QDEL_NULL_LIST(vore_organs) // CITADEL EDIT belly stuff
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return ..()
 
 
@@ -709,6 +712,10 @@
 		if(bloody_hands)
 			bloody_hands = 0
 			update_inv_gloves()
+<<<<<<< HEAD
+=======
+	update_icons()	//apply the now updated overlays to the mob
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
@@ -774,7 +781,11 @@
 		return
 	else
 		if(hud_used.healths)
+<<<<<<< HEAD
 			var/health_amount = health - CLAMP(getStaminaLoss()-50, 0, 80)//CIT CHANGE - makes staminaloss have less of an impact on the health hud
+=======
+			var/health_amount = health - getStaminaLoss()
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)

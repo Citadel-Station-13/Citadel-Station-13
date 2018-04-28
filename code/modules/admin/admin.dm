@@ -179,9 +179,13 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+<<<<<<< HEAD
 	
 	body += usr.client.citaPPoptions(M) // CITADEL
 	
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	body += "<br>"
 	body += "</body></html>"
 

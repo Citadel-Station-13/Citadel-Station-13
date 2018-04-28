@@ -4,10 +4,15 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
+<<<<<<< HEAD
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
+=======
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
@@ -21,8 +26,11 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+<<<<<<< HEAD
 	if(slime_change)	//CIT CHANGE
 		slime_change.Remove(C)	//CIT CHANGE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
@@ -34,8 +42,11 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+<<<<<<< HEAD
 		slime_change = new	//CIT CHANGE
 		slime_change.Grant(C)	//CIT CHANGE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)

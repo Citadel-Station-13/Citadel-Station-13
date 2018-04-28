@@ -28,6 +28,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+<<<<<<< HEAD
 	
 /obj/machinery/atmospherics/components/binary/pump/layer1
 	piping_layer = PIPING_LAYER_MIN
@@ -38,11 +39,14 @@ Thus, the two variables affect pump operation are set in New():
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 	icon_state = "pump_on_map"
 	
+<<<<<<< HEAD
 /obj/machinery/atmospherics/components/binary/pump/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -53,6 +57,8 @@ Thus, the two variables affect pump operation are set in New():
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
 	
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)
@@ -193,7 +199,10 @@ Thus, the two variables affect pump operation are set in New():
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+<<<<<<< HEAD
 	else
 		investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [A]")
 		return TRUE
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

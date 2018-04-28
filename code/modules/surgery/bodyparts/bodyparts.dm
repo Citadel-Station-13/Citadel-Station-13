@@ -157,8 +157,13 @@
 
 	if(owner && updating_health)
 		owner.updatehealth()
+<<<<<<< HEAD
 	if(stamina)
 		owner.update_stamina()
+=======
+		if(stamina)
+			owner.update_stamina()
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return update_bodypart_damage_state()
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -235,7 +240,11 @@
 		C = owner
 		no_update = FALSE
 
+<<<<<<< HEAD
 	if(C.has_trait(TRAIT_HUSK) && is_organic_limb())
+=======
+	if(C.has_trait(TRAIT_HUSK))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -350,6 +359,7 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+<<<<<<< HEAD
 		// Citadel Start
 		if(should_draw_citadel)
 			limb.icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
@@ -358,6 +368,8 @@
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
 		// Citadel End
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 			. += aux

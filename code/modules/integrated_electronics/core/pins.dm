@@ -185,7 +185,11 @@ D [1]/  ||
 	var/new_data = null
 	switch(type_to_use)
 		if("string")
+<<<<<<< HEAD
 			new_data = stripped_multiline_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null, no_trim = TRUE)
+=======
+			new_data = stripped_input(user, "Now type in a string.","[src] string writing", istext(default) ? default : null, no_trim = TRUE)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			if(istext(new_data) && holder.check_interactivity(user) )
 				to_chat(user, "<span class='notice'>You input "+new_data+" into the pin.</span>")
 				return new_data

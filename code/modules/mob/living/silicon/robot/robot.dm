@@ -373,12 +373,17 @@
 			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 			if(!W.use_tool(src, user, 50))
 				return
+<<<<<<< HEAD
 			adjustBruteLoss(-10)
 		else
 			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 			if(!do_after(user, 30, target = src))
 				return
 			adjustBruteLoss(-30)
+=======
+
+		adjustBruteLoss(-30)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")

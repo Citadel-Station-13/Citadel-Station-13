@@ -510,6 +510,7 @@ MICE_ROUNDSTART 10
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
+<<<<<<< HEAD
 ## CITADEL Races
 ROUNDSTART_RACES mammal
 ROUNDSTART_RACES avian
@@ -534,6 +535,8 @@ ALLOW_MISCREANTS
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 ## Uncomment to allow roundstart trait selection in the character setup menu.
 ROUNDSTART_TRAITS
 

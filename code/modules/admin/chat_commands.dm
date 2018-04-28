@@ -100,7 +100,11 @@ GLOBAL_LIST(round_end_notifiees)
 	var/list/text_res = results.Copy(1, 3)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/server_tools_command/reload_admins
 	name = "reload_admins"
 	help_text = "Forces the server to reload admins."

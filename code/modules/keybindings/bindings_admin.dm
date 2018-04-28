@@ -18,7 +18,10 @@
 			else
 				user.invisimin()
 			return
+<<<<<<< HEAD
 		if("F10")
 			user.get_dead_say()
 			return
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	..()

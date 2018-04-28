@@ -6,7 +6,6 @@
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
 	var/modified = 0
-	harmful = FALSE
 
 /obj/item/ammo_casing/caseless/foam_dart/update_icon()
 	..()
@@ -33,7 +32,6 @@
 	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)
-				harmful = TRUE
 				if(!user.transferItemToLoc(A, FD))
 					return
 				FD.pen = A

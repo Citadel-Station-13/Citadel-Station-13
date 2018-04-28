@@ -1,7 +1,11 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	damage = 60
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/item/projectile/bullet/shotgun_slug/tengauge
 	name = "10g shotgun slug"
 	damage = 72.5
@@ -42,7 +46,11 @@
 	if(ismovableatom(target))
 		var/atom/movable/M = target
 		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
+<<<<<<< HEAD
 		M.safe_throw_at(throw_target, 3, 2)
+=======
+		M.throw_at(throw_target, 3, 2)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/projectile/bullet/shotgun_meteorslug/Initialize()
 	. = ..()
