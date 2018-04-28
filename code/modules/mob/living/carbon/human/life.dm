@@ -44,6 +44,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
+<<<<<<< HEAD
 	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/belly))
@@ -52,6 +53,14 @@
 		return ONE_ATMOSPHERE
 	else
 		return pressure
+=======
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			return ONE_ATMOSPHERE
+	return pressure
+>>>>>>> 98f8ca7... Moves several clothing-specific flags from /atom to their proper type (#37486)
 
 
 /mob/living/carbon/human/handle_traits()
@@ -290,13 +299,14 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	if(glasses)
-		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head)
-		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+	if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CH = head
+		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 
