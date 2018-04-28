@@ -36,7 +36,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg, newlymade) // CITADEL EDIT sound change to 'sound/misc/server-ready.ogg'
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
+<<<<<<< HEAD
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/misc/server-ready.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+=======
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
@@ -68,6 +72,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		visible_message(fail_message)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/device/mmi/posibrain/attack_ghost(mob/user)
 	activate(user)
 

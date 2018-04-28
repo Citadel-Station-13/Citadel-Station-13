@@ -9,6 +9,7 @@
 	announceWhen = 10
 
 /datum/round_event/anomaly/anomaly_pyro/announce(fake)
+<<<<<<< HEAD
 	if(prob(90))
 		priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 	else
@@ -19,6 +20,9 @@
 				P.name = "Pyroclastic anomaly"
 				P.info = "Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name]."
 				P.update_icon()
+=======
+	priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/round_event/anomaly/anomaly_pyro/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))

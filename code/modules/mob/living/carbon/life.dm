@@ -328,6 +328,7 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
+<<<<<<< HEAD
 	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
@@ -337,6 +338,10 @@
 		bufferedstam = max(bufferedstam - drainrate, 0)
 		adjustStaminaLoss(drainrate*0.5)
 	//END OF CIT CHANGES
+=======
+	if(getStaminaLoss())
+		adjustStaminaLoss(-3)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	var/restingpwr = 1 + 4 * resting
 

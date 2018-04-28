@@ -43,7 +43,11 @@
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
 		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+<<<<<<< HEAD
 		D.Knockdown(60)//CIT CHANGE - makes sleepingcarp use knockdown() for its stuns instead of stun()
+=======
+		D.Stun(60)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)

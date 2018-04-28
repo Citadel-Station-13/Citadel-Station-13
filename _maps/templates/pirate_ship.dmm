@@ -961,7 +961,12 @@
 	},
 /obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 12;
+<<<<<<< HEAD
 	pixel_y = 7
+=======
+	pixel_y = 7;
+	pixel_z = 0
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,

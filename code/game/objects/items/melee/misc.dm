@@ -339,7 +339,11 @@
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
+<<<<<<< HEAD
 		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire, /obj/structure/destructible/clockwork/massive/ratvar))
+=======
+		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_shard/crystal, /obj/structure/bonfire, /obj/structure/destructible/clockwork/massive/ratvar))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/melee/roastingstick/attack_self(mob/user)
 	on = !on

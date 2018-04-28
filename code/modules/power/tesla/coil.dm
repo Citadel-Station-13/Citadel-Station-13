@@ -25,7 +25,11 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
+=======
+	wires = new /datum/wires/tesla_coil(src)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()

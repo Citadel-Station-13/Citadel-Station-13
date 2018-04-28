@@ -655,7 +655,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	log_talk(user, "[key_name(user)] (PDA: [initial(name)]) sent \"[message]\" to [target_text]", LOGPDA)
+<<<<<<< HEAD
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	// Reset the photo
 	photo = null
 

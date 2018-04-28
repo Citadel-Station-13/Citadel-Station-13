@@ -3,7 +3,11 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
+<<<<<<< HEAD
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
+=======
+//	Only raise this value when changing the meaning/format/name/layout of an existing value 
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 //	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
 
@@ -34,7 +38,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
+<<<<<<< HEAD
 //should these procs get fairly long
+=======
+//should these procs get fairly long 
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
 //from these procs.
@@ -45,6 +53,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
+<<<<<<< HEAD
 	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
@@ -78,6 +87,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(current_version < 19)
 		pda_style = "mono"
 	if(current_version < 20)
@@ -135,6 +146,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
+<<<<<<< HEAD
 
 	//citadel code
 	S["arousable"]			>> arousable
@@ -142,6 +154,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["damagescreenshake"]		>> damagescreenshake
 	S["widescreenpref"]				>> widescreenpref
 	S["autostand"]			>> autostand
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -168,11 +182,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
+<<<<<<< HEAD
 
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	return 1
 
@@ -215,6 +232,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
+<<<<<<< HEAD
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
@@ -222,6 +240,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	return 1
 
@@ -316,6 +336,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["negative_traits"]	>> negative_traits
 	S["neutral_traits"]		>> neutral_traits
 
+<<<<<<< HEAD
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
@@ -366,6 +387,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
@@ -426,8 +449,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	negative_traits = SANITIZE_LIST(negative_traits)
 	neutral_traits = SANITIZE_LIST(neutral_traits)
 
+<<<<<<< HEAD
 	cit_character_pref_load(S)
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -497,8 +523,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["negative_traits"]		, negative_traits)
 	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
 
+<<<<<<< HEAD
 	cit_character_pref_save(S)
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return 1
 
 

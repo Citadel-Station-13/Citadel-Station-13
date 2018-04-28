@@ -10,7 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = 0
+	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
@@ -381,6 +381,11 @@
 		else
 			if(CONFIG_GET(flag/allow_crew_objectives))
 				SSticker.generate_individual_objectives(humanc.mind) */
+
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
 
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)

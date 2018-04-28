@@ -387,8 +387,13 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
+<<<<<<< HEAD
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+=======
+	pockets = /obj/item/storage/internal/pocket/shoes
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -579,11 +584,18 @@
 /obj/item/storage/belt/chameleon
 	name = "toolbelt"
 	desc = "Holds tools."
+<<<<<<< HEAD
+=======
+	silent = TRUE
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/chameleon/Initialize()
 	. = ..()
+<<<<<<< HEAD
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"

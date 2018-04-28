@@ -638,7 +638,11 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bT" = (
+<<<<<<< HEAD
 /obj/machinery/chem_dispenser,
+=======
+/obj/machinery/chem_dispenser/scp_294,
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bU" = (

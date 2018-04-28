@@ -364,7 +364,10 @@
 		//13
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
+<<<<<<< HEAD
 			"action" = ITEM_MOVE_INSIDE,
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Advanced scanner module is secured."
 		),

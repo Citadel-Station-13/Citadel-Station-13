@@ -1817,6 +1817,15 @@
 		L.remove_trait(TRAIT_PACIFISM, id)
 	..()
 
+<<<<<<< HEAD
+=======
+/datum/reagent/pax/borg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"
@@ -1839,6 +1848,7 @@
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
 	return ..()
+<<<<<<< HEAD
 
 /datum/reagent/pax/peaceborg
 	name = "synth-pax"
@@ -1876,3 +1886,5 @@
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

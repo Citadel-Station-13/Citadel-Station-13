@@ -83,13 +83,21 @@
 		H.endTailWag()
 
 /mob/living/carbon/human/proc/is_wagging_tail()
+<<<<<<< HEAD
 	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)|| ("mam_waggingtail" in dna.species.mutant_bodyparts)))
+=======
+	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
+<<<<<<< HEAD
 	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)|| ("mam_tail" in H.dna.species.mutant_bodyparts) || ("mam_waggingtail" in H.dna.species.mutant_bodyparts)))
+=======
+	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		return TRUE
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
@@ -110,9 +118,12 @@
 	if("tail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "tail_human"
 		dna.species.mutant_bodyparts |= "waggingtail_human"
+<<<<<<< HEAD
 	if("mam_tail" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "mam_tail"
 		dna.species.mutant_bodyparts |= "mam_waggingtail"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	update_body()
 
 /mob/living/carbon/human/proc/endTailWag()
@@ -126,9 +137,12 @@
 	if("waggingtail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail_human"
 		dna.species.mutant_bodyparts |= "tail_human"
+<<<<<<< HEAD
 	if("mam_waggingtail" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "mam_waggingtail"
 		dna.species.mutant_bodyparts |= "mam_tail"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	update_body()
 
 /datum/emote/living/carbon/human/wing

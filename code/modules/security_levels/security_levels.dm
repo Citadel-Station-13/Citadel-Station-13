@@ -56,7 +56,10 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
+<<<<<<< HEAD
 				sound_to_playing_players('sound/misc/voyalert.ogg') // Citadel change - Makes alerts play a sound
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(is_station_level(FA.z))

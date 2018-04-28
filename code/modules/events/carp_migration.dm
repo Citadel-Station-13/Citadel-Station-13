@@ -14,6 +14,7 @@
 	startWhen = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
+<<<<<<< HEAD
 	if(prob(50))
 		priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 	else
@@ -24,6 +25,9 @@
 				P.name = "Biological entities"
 				P.info = "Unknown biological entities have been detected near [station_name()], you may wish to break out arms."
 				P.update_icon()
+=======
+	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 
 /datum/round_event/carp_migration/start()

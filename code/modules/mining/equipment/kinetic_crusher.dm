@@ -114,9 +114,12 @@
 				if(!QDELETED(C))
 					C.total_damage += detonation_damage
 				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
+<<<<<<< HEAD
 
 			if(user && lavaland_equipment_pressure_check(get_turf(user))) //CIT CHANGE - makes sure below only happens in low pressure environments
 				user.adjustStaminaLoss(-13)//CIT CHANGE - makes crushers heal stamina
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)

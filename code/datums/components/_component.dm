@@ -105,6 +105,17 @@
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
+<<<<<<< HEAD
+=======
+	#if DM_VERSION >= 513
+	#warning 512 is definitely stable now, remove the old code
+	#endif
+
+	#if DM_VERSION < 512
+	//remove this when we use 512 full time
+	set invisibility = 101
+	#endif
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)
@@ -231,10 +242,17 @@
 	var/datum/helicopter = C.parent
 	if(helicopter == src)
 		//if we're taking to the same thing no need for anything
+<<<<<<< HEAD
 		return
 	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
 		qdel(C)
 		return
+=======
+		return
+	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
+		qdel(C)
+		return
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
 	C.parent = src

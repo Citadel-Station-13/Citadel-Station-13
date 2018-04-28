@@ -243,7 +243,11 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/sink/kitchen{
+<<<<<<< HEAD
 	pixel_y = 30
+=======
+	pixel_z = 30
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";

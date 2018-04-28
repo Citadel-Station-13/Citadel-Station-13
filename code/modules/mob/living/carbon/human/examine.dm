@@ -91,6 +91,7 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
+<<<<<<< HEAD
 //CIT CHANGES START HERE - adds genital details to examine text
 	if(LAZYLEN(internal_organs))
 		for(var/obj/item/organ/genital/dicc in internal_organs)
@@ -99,6 +100,8 @@
 				
 	msg += attempt_vr(src,"examine_bellies",args) //vore Code
 //END OF CIT CHANGES
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	//Status effects
 	msg += status_effect_examines()
 
@@ -321,6 +324,7 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+<<<<<<< HEAD
 
 	else if(isobserver(user) && traitstring)
 		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
@@ -332,6 +336,13 @@
 
 	to_chat(user, msg)
 	return msg
+=======
+	else if(isobserver(user) && traitstring)
+		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
+	msg += "*---------*</span>"
+
+	to_chat(user, msg)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

@@ -38,6 +38,7 @@
 						P.info = "Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
 						P.update_icon()
 		if(RUSKY_PARTY)
+<<<<<<< HEAD
 			if(prob(50))
 				priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 			else
@@ -59,6 +60,11 @@
 						P.name = "Cargo Report"
 						P.info = "Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?"
 						P.update_icon()
+=======
+			priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
+		if(SPIDER_GIFT)
+			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(DEPARTMENT_RESUPPLY)
 			if(prob(50))
 				priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")

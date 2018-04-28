@@ -487,6 +487,7 @@
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc) + spread)
 
+<<<<<<< HEAD
 	//CIT CHANGES START HERE - makes it so laying down makes you unable to shoot through most objects
 	if(iscarbon(source))
 		var/mob/living/carbon/checklad = source
@@ -494,6 +495,8 @@
 			pass_flags = 0
 	//END OF CIT CHANGES
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]

@@ -366,6 +366,7 @@
 			l_pocket = /obj/item/melee/cultblade/dagger
 			glasses =  /obj/item/clothing/glasses/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/device/cult_shift = 1, /obj/item/device/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
+<<<<<<< HEAD
 		if("Lavaknight") //START OF CIT CHANGE
 			uniform = /obj/item/clothing/under/assistantformal
 			mask = /obj/item/clothing/mask/breath
@@ -375,6 +376,8 @@
 			suit_store = /obj/item/tank/internals/oxygen
 			id = /obj/item/card/id/knight //END OF CIT CHANGE
 			id_job = "Knight"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	. = ..()
 
 

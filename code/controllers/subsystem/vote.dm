@@ -243,7 +243,11 @@ SUBSYSTEM_DEF(vote)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
+<<<<<<< HEAD
 			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)</li>" // CIT CHANGE - adds obfuscated votes
+=======
+			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
@@ -337,9 +341,17 @@ SUBSYSTEM_DEF(vote)
 	return 1
 
 /datum/action/vote/proc/remove_from_client()
+<<<<<<< HEAD
 	if(owner && owner.client)
+=======
+	if(owner.client)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		owner.client.player_details.player_actions -= src
 	else if(owner.ckey)
 		var/datum/player_details/P = GLOB.player_details[owner.ckey]
 		if(P)
+<<<<<<< HEAD
 			P.player_actions -= src
+=======
+			P.player_actions -= src
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

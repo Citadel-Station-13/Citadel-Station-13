@@ -4,7 +4,11 @@
 	weight = 10
 	max_occurrences = 1
 
+<<<<<<< HEAD
 	min_players = 40
+=======
+	min_players = 20
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
@@ -12,6 +16,7 @@
 	announceWhen	= -1
 	role_name = "blob overmind"
 	fakeable = TRUE
+<<<<<<< HEAD
 
 /datum/round_event/ghost_role/blob/announce(fake)
 	if(prob(75))
@@ -25,6 +30,12 @@
 				P.info = "Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak."
 				P.update_icon()
 
+=======
+
+/datum/round_event/ghost_role/blob/announce(fake)
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
 		return MAP_ERROR

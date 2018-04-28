@@ -8,7 +8,10 @@
 	var/gain_text
 	var/lose_text
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
+<<<<<<< HEAD
 	var/mood_trait = FALSE //if true, this trait affects mood and is unavailable if moodlets are disabled
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/mob_trait //if applicable, apply and remove this mob trait
 	var/mob/living/trait_holder
 
@@ -57,7 +60,10 @@
 
 /datum/trait/process()
 	if(QDELETED(trait_holder))
+<<<<<<< HEAD
 		trait_holder = null
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		qdel(src)
 		return
 	if(trait_holder.stat == DEAD)

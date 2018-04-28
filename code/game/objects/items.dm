@@ -100,8 +100,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
 	var/tip_timer
+<<<<<<< HEAD
 	
 	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
@@ -295,9 +298,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
+<<<<<<< HEAD
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/item/attack_paw(mob/user)
 	if(!user)
 		return
@@ -340,6 +346,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
 
+/obj/item/proc/GetDeconstructableContents()
+	return GetAllContents() - src
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -365,6 +374,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/pickup(mob/user)
 	SendSignal(COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
+<<<<<<< HEAD
+=======
+
+/obj/item/proc/allow_attack_hand_drop(mob/user)
+	return TRUE
+
+// called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/obj/item/proc/on_exit_storage(obj/item/storage/S)
+	return
+
+// called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/obj/item/proc/on_enter_storage(obj/item/storage/S)
+	return
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)

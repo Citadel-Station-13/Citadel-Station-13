@@ -2,6 +2,17 @@
 
 GLOBAL_LIST_EMPTY(roundstart_races)
 
+<<<<<<< HEAD
+=======
+#define HEAT_DAMAGE_LEVEL_1 2
+#define HEAT_DAMAGE_LEVEL_2 3
+#define HEAT_DAMAGE_LEVEL_3 8
+
+#define COLD_DAMAGE_LEVEL_1 0.5
+#define COLD_DAMAGE_LEVEL_2 1.5
+#define COLD_DAMAGE_LEVEL_3 3
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/species
 	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
 	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
@@ -71,12 +82,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
 	var/override_float = FALSE
+<<<<<<< HEAD
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 ///////////
 // PROCS //
@@ -263,6 +277,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(FALSE)
 
 	C.mob_biotypes = inherent_biotypes
+<<<<<<< HEAD
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
@@ -290,6 +308,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
+<<<<<<< HEAD
 //CITADEL EDIT
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
@@ -297,6 +316,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(C.client)
 			C.canbearoused = C.client.prefs.arousable
 // EDIT ENDS
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -679,9 +700,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
+<<<<<<< HEAD
 				else
 					S = citadel_mutant_bodyparts(bodypart, H)
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			if(!S || S.icon_state == "none")
 				continue
 
@@ -870,11 +894,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return FALSE
 		if(slot_wear_mask)
 			if(H.wear_mask)
+<<<<<<< HEAD
 				return FALSE
 			if(!(I.slot_flags & SLOT_MASK))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
+=======
+				return 0
+			if( !(I.slot_flags & SLOT_MASK) )
+				return 0
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
+				return 0
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
 			if(H.wear_neck)
@@ -929,6 +961,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_glasses)
 			if(H.glasses)
+<<<<<<< HEAD
 				return FALSE
 			if(!(I.slot_flags & SLOT_EYES))
 				return FALSE
@@ -950,6 +983,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
+=======
+				return 0
+			if( !(I.slot_flags & SLOT_EYES) )
+				return 0
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
+				return 0
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+		if(slot_head)
+			if(H.head)
+				return 0
+			if( !(I.slot_flags & SLOT_HEAD) )
+				return 0
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
+				return 0
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
+		if(slot_ears)
+			if(H.ears)
+				return 0
+			if( !(I.slot_flags & SLOT_EARS) )
+				return 0
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
+				return 0
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
 			if(H.w_uniform)
@@ -1253,13 +1309,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/obj/item/I in H.held_items)
 			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
+<<<<<<< HEAD
 		var/stambufferinfluence = (H.bufferedstam*(100/H.stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
 		var/health_deficiency = ((100 + stambufferinfluence) - H.health + (H.getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss on movement speed and makes stamina buffer influence movedelay
+=======
+		var/health_deficiency = (100 - H.health + H.staminaloss)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(health_deficiency >= 40)
 			if(flight)
 				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
 			else
+<<<<<<< HEAD
 				. += ((health_deficiency-39) / 25) // CIT CHANGE - ditto
+=======
+				. += (health_deficiency / 25)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
@@ -1320,9 +1384,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
+<<<<<<< HEAD
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") //CITADEL CHANGE - ditto
 		return FALSE //CITADEL CHANGE - ditto
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
 		return FALSE
@@ -1413,9 +1480,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
+<<<<<<< HEAD
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
 		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone) CIT CHANGE - comments this out to prevent compile errors due to the below commented out bit
+=======
+		var/randomized_zone = ran_zone(user.zone_selected)
+		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		var/randn = rand(1, 100)
 		/*if(randn <= 25) CITADEL CHANGE - moves disarm push attempts to right click
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -1641,8 +1714,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
 		if(BRAIN)
 			H.adjustBrainLoss(damage * hit_percent * H.physiology.brain_mod)
+<<<<<<< HEAD
 		if(AROUSAL)											//Citadel edit - arousal
 			H.adjustArousalLoss(damage * hit_percent)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)

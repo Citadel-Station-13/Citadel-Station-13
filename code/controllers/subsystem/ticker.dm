@@ -42,6 +42,10 @@ SUBSYSTEM_DEF(ticker)
 
 	var/timeLeft						//pregame timer
 	var/start_at
+<<<<<<< HEAD
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
@@ -128,6 +132,7 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
+<<<<<<< HEAD
 /*
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
@@ -136,6 +141,9 @@ SUBSYSTEM_DEF(ticker)
 		var/list/availableto = splittext(initial(obj.jobs),",")
 		for(var/job in availableto)
 			crewobjjobs["[job]"] += list(obj) */
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -323,6 +331,7 @@ SUBSYSTEM_DEF(ticker)
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
+<<<<<<< HEAD
 
 /*	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
@@ -330,11 +339,14 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
 		GLOB.miscreants_allowed = TRUE
 	generate_crew_objectives() */
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
+<<<<<<< HEAD
 
 	for(var/i in GLOB.start_landmarks_list)
 		var/obj/effect/landmark/start/S = i
@@ -343,6 +355,16 @@ SUBSYSTEM_DEF(ticker)
 		else
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
+=======
+
+	for(var/i in GLOB.start_landmarks_list)
+		var/obj/effect/landmark/start/S = i
+		if(istype(S))							//we can not runtime here. not in this important of a proc.
+			S.after_round_start()
+		else
+			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

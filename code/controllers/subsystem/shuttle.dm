@@ -56,8 +56,11 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+<<<<<<< HEAD
 	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 
@@ -699,4 +702,8 @@ SUBSYSTEM_DEF(shuttle)
 		var/obj/machinery/computer/camera_advanced/shuttle_docker/C = V
 		C.update_hidden_docking_ports(remove_images, add_images)
 
+<<<<<<< HEAD
 	QDEL_LIST(remove_images)
+=======
+	QDEL_LIST(remove_images)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

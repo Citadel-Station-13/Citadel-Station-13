@@ -2798,9 +2798,14 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "afH" = (
+<<<<<<< HEAD
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargounload";
 	dir = 8
+=======
+/obj/machinery/conveyor_switch{
+	id = "cargounload"
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -3635,6 +3640,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ahn" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "cargoload"
+	},
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -4396,6 +4408,12 @@
 	},
 /area/quartermaster/storage)
 "aiL" = (
+<<<<<<< HEAD
+=======
+/obj/machinery/conveyor_switch{
+	id = "cargoload"
+	},
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/machinery/light{
 	dir = 1
 	},
@@ -5925,7 +5943,11 @@
 	icon_state = "L14"
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/hallway/primary/central)
+=======
+/area/hallway/primary/fore)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "alt" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
@@ -5944,7 +5966,7 @@
 	pixel_y = -8
 	},
 /turf/closed/wall,
-/area/hallway/primary/central)
+/area/hallway/primary/fore)
 "alu" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
@@ -6375,6 +6397,13 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aml" = (
+<<<<<<< HEAD
+=======
+/obj/structure/closet/emcloset,
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -6382,6 +6411,7 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 9
 	},
+<<<<<<< HEAD
 /area/hallway/primary/central)
 "amm" = (
 /obj/machinery/cryopod{
@@ -6391,6 +6421,16 @@
 	},
 /turf/open/floor/plasteel/purple,
 /area/crew_quarters/cryopod)
+=======
+/area/hallway/primary/fore)
+"amm" = (
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/hallway/primary/fore)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "amn" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -6791,7 +6831,15 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
+<<<<<<< HEAD
 /area/hallway/primary/central)
+=======
+/area/hallway/primary/fore)
+"ane" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/storage/eva)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "anf" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/end{
@@ -18121,7 +18169,11 @@
 /turf/closed/wall/r_wall/rust,
 /area/engine/supermatter)
 "aLR" = (
+<<<<<<< HEAD
 /obj/machinery/door/airlock/atmos/glass/critical{
+=======
+/obj/machinery/door/airlock/atmos/glass{
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
@@ -18980,9 +19032,14 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
+<<<<<<< HEAD
 /obj/machinery/power/supermatter_crystal/shard/engine{
 	anchored = 1;
 	moveable = 0
+=======
+/obj/machinery/power/supermatter_shard/crystal/engine{
+	anchored = 1
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -20662,6 +20719,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+<<<<<<< HEAD
+=======
+/obj/structure/fans/tiny,
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
 "aRE" = (
@@ -30330,6 +30391,21 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+<<<<<<< HEAD
+=======
+"btj" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	id = "arrivals_stationary";
+	name = "omega arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/delta;
+	width = 9
+	},
+/turf/open/space/basic,
+/area/space)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "btk" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -30951,10 +31027,13 @@
 	dir = 1
 	},
 /area/engine/atmos)
+<<<<<<< HEAD
 "bVI" = (
 /obj/machinery/cryopod,
 /turf/open/floor/plasteel/purple,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "bYE" = (
 /obj/structure/sign/warning/fire,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -31196,11 +31275,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+<<<<<<< HEAD
 "dsZ" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "dEa" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
@@ -31238,6 +31320,7 @@
 	dir = 1
 	},
 /area/hallway/primary/fore)
+<<<<<<< HEAD
 "dYZ" = (
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -31250,6 +31333,8 @@
 	},
 /turf/open/floor/plasteel/purple,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "eaf" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/structure/cable{
@@ -31447,6 +31532,7 @@
 /obj/item/wrench,
 /turf/open/space,
 /area/space/nearstation)
+<<<<<<< HEAD
 "fsl" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -31459,6 +31545,8 @@
 	},
 /turf/open/space/basic,
 /area/space)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "fsJ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -31719,10 +31807,13 @@
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
+<<<<<<< HEAD
 "hQq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "hUG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -32074,9 +32165,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+<<<<<<< HEAD
 "lnn" = (
 /turf/closed/wall,
 /area/hallway/primary/central)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "lqz" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -32298,12 +32392,15 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
+<<<<<<< HEAD
 "mKg" = (
 /obj/machinery/computer/cryopod{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/purple,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "mQi" = (
 /turf/closed/wall/rust,
 /area/maintenance/starboard/central)
@@ -32433,9 +32530,12 @@
 	dir = 5
 	},
 /area/engine/atmos)
+<<<<<<< HEAD
 "ouS" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "oxn" = (
 /obj/machinery/power/compressor{
 	dir = 4;
@@ -32906,6 +33006,10 @@
 	height = 17;
 	id = "syndicate_sw";
 	name = "southwest of station";
+<<<<<<< HEAD
+=======
+	turf_type = /turf/open/space;
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	width = 23
 	},
 /turf/open/space,
@@ -35574,9 +35678,12 @@
 	dir = 1
 	},
 /area/engine/gravity_generator)
+<<<<<<< HEAD
 "uGl" = (
 /turf/open/floor/plasteel/purple,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 "uGq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
@@ -35830,7 +35937,11 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "wUF" = (
+<<<<<<< HEAD
 /obj/machinery/door/airlock/atmos/glass/critical{
+=======
+/obj/machinery/door/airlock/atmos/glass{
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
@@ -66496,6 +66607,10 @@ aad
 aad
 aad
 aac
+<<<<<<< HEAD
+aad
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aad
 aad
 aad
@@ -69626,10 +69741,17 @@ aUb
 aVM
 aVM
 aTb
+<<<<<<< HEAD
 aTb
 aTb
 aVM
 aTb
+=======
+aTb
+aTb
+aVM
+aTb
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 bao
 bbf
 aZA
@@ -72985,7 +73107,10 @@ bhr
 bif
 biL
 sLf
+<<<<<<< HEAD
+=======
 bfu
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 bfu
 bfu
 aaa
@@ -74472,9 +74597,15 @@ ajl
 akk
 alg
 syC
+<<<<<<< HEAD
 alg
 alg
 alg
+=======
+alg
+alg
+alg
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 apJ
 sAz
 apI
@@ -74790,12 +74921,19 @@ aaa
 aaa
 bgU
 bkj
+<<<<<<< HEAD
+bgU
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 bgU
 bgU
 bgU
 bgU
 bgU
+<<<<<<< HEAD
+=======
 bgU
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 bkj
 bgU
 aaa
@@ -77356,7 +77494,11 @@ bgU
 aaa
 aaa
 aaa
+<<<<<<< HEAD
 fsl
+=======
+aaa
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aaa
 aaa
 aaa
@@ -77869,7 +78011,11 @@ blv
 bgU
 aaa
 aaa
+<<<<<<< HEAD
 aaa
+=======
+btj
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aaa
 aaa
 aaa
@@ -78498,6 +78644,10 @@ aaa
 aaa
 aaa
 aaa
+<<<<<<< HEAD
+aaa
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aaa
 aaa
 aaa
@@ -78549,6 +78699,11 @@ aaa
 aaa
 aaa
 aaa
+aac
+aad
+aad
+aad
+aac
 aaa
 aac
 aad
@@ -78585,7 +78740,11 @@ akz
 als
 aml
 and
+<<<<<<< HEAD
 lnn
+=======
+tKM
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aoS
 apY
 ara
@@ -78749,10 +78908,13 @@ aaa
 aaa
 "}
 (167,1,1) = {"
+<<<<<<< HEAD
 aaa
 aaa
 aaa
 aaa
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aaa
 aaa
 aaa
@@ -78819,6 +78981,20 @@ sdX
 aaa
 aaa
 aaa
+aac
+aac
+aad
+aad
+aad
+aad
+aad
+aac
+aac
+aaa
+sdX
+aaa
+aaa
+aaa
 aaf
 aaa
 aan
@@ -78841,8 +79017,13 @@ ajx
 akA
 alt
 amm
+<<<<<<< HEAD
 dYZ
 ouS
+=======
+amm
+tKM
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 aoT
 apZ
 ara
@@ -79613,10 +79794,14 @@ vWg
 alu
 amn
 alu
+syT
 alu
 syT
 alu
+<<<<<<< HEAD
 alu
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 asp
 atm
 aui

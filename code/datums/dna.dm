@@ -4,23 +4,32 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
-	var/mob/living/holder
+	var/mob/living/carbon/holder
 
+<<<<<<< HEAD
 /datum/dna/New(mob/living/new_holder)
+=======
+/datum/dna/New(mob/living/carbon/new_holder)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(istype(new_holder))
 		holder = new_holder
 
 /datum/dna/Destroy()
+<<<<<<< HEAD
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
 		if(cholder.dna == src)
 			cholder.dna = null
+=======
+	if(holder.dna == src)
+		holder.dna = null
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	holder = null
 	QDEL_NULL(species)
 
@@ -29,7 +38,11 @@
 	previous.Cut()					//^
 
 	return ..()
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return

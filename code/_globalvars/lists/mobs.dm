@@ -30,7 +30,10 @@ GLOBAL_LIST_EMPTY(living_cameras)
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
 
+<<<<<<< HEAD
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)

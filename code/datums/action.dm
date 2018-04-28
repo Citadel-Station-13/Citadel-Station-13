@@ -692,6 +692,7 @@
 	else
 		owner.remove_alt_appearance("smallsprite")
 		small = FALSE
+<<<<<<< HEAD
 
 /datum/action/item_action/storage_gather_mode
 	name = "Switch gathering mode"
@@ -714,3 +715,5 @@
 /datum/action/item_action/storage_gather_mode/Trigger()
 	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
 	STR.gather_mode_switch(owner)
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

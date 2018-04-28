@@ -346,7 +346,11 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining
 	name = "mining ID"
+<<<<<<< HEAD
 	access = list(ACCESS_MINERAL_STOREROOM) // CITADEL CHANGE removes golem's ability to get on the station willy nilly.
+=======
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"

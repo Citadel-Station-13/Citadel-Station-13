@@ -99,7 +99,11 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
+<<<<<<< HEAD
 	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
+=======
+	wires = new /datum/wires/airlock(src)
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(frequency)
 		set_frequency(frequency)
 

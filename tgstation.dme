@@ -25,7 +25,10 @@
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\callbacks.dm"
 #include "code\__DEFINES\cinematics.dm"
+<<<<<<< HEAD
 #include "code\__DEFINES\citadel_defines.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\__DEFINES\cleaning.dm"
 #include "code\__DEFINES\clockcult.dm"
 #include "code\__DEFINES\colors.dm"
@@ -214,6 +217,10 @@
 #include "code\controllers\subsystem\garbage.dm"
 #include "code\controllers\subsystem\icon_smooth.dm"
 #include "code\controllers\subsystem\idlenpcpool.dm"
+<<<<<<< HEAD
+=======
+#include "code\controllers\subsystem\inbounds.dm"
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\controllers\subsystem\input.dm"
 #include "code\controllers\subsystem\ipintel.dm"
 #include "code\controllers\subsystem\job.dm"
@@ -250,7 +257,10 @@
 #include "code\controllers\subsystem\timer.dm"
 #include "code\controllers\subsystem\title.dm"
 #include "code\controllers\subsystem\traumas.dm"
+<<<<<<< HEAD
 #include "code\controllers\subsystem\vore.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\controllers\subsystem\vote.dm"
 #include "code\controllers\subsystem\weather.dm"
 #include "code\controllers\subsystem\processing\circuit.dm"
@@ -329,7 +339,10 @@
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\lockon_aiming.dm"
 #include "code\datums\components\material_container.dm"
+<<<<<<< HEAD
 #include "code\datums\components\mirage_border.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\ntnet_interface.dm"
 #include "code\datums\components\paintable.dm"
@@ -341,11 +354,15 @@
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
+<<<<<<< HEAD
 #include "code\datums\components\stationloving.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\wet_floor.dm"
 #include "code\datums\components\decals\blood.dm"
+<<<<<<< HEAD
 #include "code\datums\components\storage\storage.dm"
 #include "code\datums\components\storage\concrete\_concrete.dm"
 #include "code\datums\components\storage\concrete\bag_of_holding.dm"
@@ -355,6 +372,8 @@
 #include "code\datums\components\storage\concrete\rped.dm"
 #include "code\datums\components\storage\concrete\special.dm"
 #include "code\datums\components\storage\concrete\stack.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
@@ -1384,12 +1403,18 @@
 #include "code\modules\clothing\glasses\_glasses.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
 #include "code\modules\clothing\glasses\hud.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\glasses\vg_glasses.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\gloves\_gloves.dm"
 #include "code\modules\clothing\gloves\boxing.dm"
 #include "code\modules\clothing\gloves\color.dm"
 #include "code\modules\clothing\gloves\miscellaneous.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\gloves\vg_gloves.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\head\_head.dm"
 #include "code\modules\clothing\head\beanie.dm"
 #include "code\modules\clothing\head\cit_hats.dm"
@@ -1400,14 +1425,20 @@
 #include "code\modules\clothing\head\misc.dm"
 #include "code\modules\clothing\head\misc_special.dm"
 #include "code\modules\clothing\head\soft_caps.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\head\vg_hats.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\masks\_masks.dm"
 #include "code\modules\clothing\masks\boxing.dm"
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\gasmask.dm"
 #include "code\modules\clothing\masks\hailer.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\masks\vg_masks.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\neck\_neck.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
@@ -1417,7 +1448,10 @@
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\shoes\vg_shoes.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\spacesuits\_spacesuits.dm"
 #include "code\modules\clothing\spacesuits\chronosuit.dm"
 #include "code\modules\clothing\spacesuits\flightsuit.dm"
@@ -1425,7 +1459,10 @@
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\plasmamen.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
+<<<<<<< HEAD
 #include "code\modules\clothing\spacesuits\vg_spess.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\clothing\suits\_suits.dm"
 #include "code\modules\clothing\suits\armor.dm"
 #include "code\modules\clothing\suits\bio.dm"
@@ -2046,7 +2083,10 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
+<<<<<<< HEAD
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\dragon_vore.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\drake.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\hierophant.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\legion.dm"
@@ -2229,7 +2269,10 @@
 #include "code\modules\projectiles\ammunition\energy\laser.dm"
 #include "code\modules\projectiles\ammunition\energy\lmg.dm"
 #include "code\modules\projectiles\ammunition\energy\plasma.dm"
+<<<<<<< HEAD
 #include "code\modules\projectiles\ammunition\energy\plasma_cit.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\projectiles\ammunition\energy\portal.dm"
 #include "code\modules\projectiles\ammunition\energy\special.dm"
 #include "code\modules\projectiles\ammunition\energy\stun.dm"
@@ -2267,9 +2310,13 @@
 #include "code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
+<<<<<<< HEAD
 #include "code\modules\projectiles\guns\energy\megabuster.dm"
 #include "code\modules\projectiles\guns\energy\mounted.dm"
 #include "code\modules\projectiles\guns\energy\plasma_cit.dm"
+=======
+#include "code\modules\projectiles\guns\energy\mounted.dm"
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\projectiles\guns\energy\pulse.dm"
 #include "code\modules\projectiles\guns\energy\special.dm"
 #include "code\modules\projectiles\guns\energy\stun.dm"
@@ -2284,8 +2331,11 @@
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\magic.dm"
+<<<<<<< HEAD
 #include "code\modules\projectiles\projectile\megabuster.dm"
 #include "code\modules\projectiles\projectile\plasma.dm"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 #include "code\modules\projectiles\projectile\bullets\_incendiary.dm"
 #include "code\modules\projectiles\projectile\bullets\dart_syringe.dm"
 #include "code\modules\projectiles\projectile\bullets\dnainjector.dm"
@@ -2333,6 +2383,7 @@
 #include "code\modules\reagents\chemistry\machinery\chem_master.dm"
 #include "code\modules\reagents\chemistry\machinery\pandemic.dm"
 #include "code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
+#include "code\modules\reagents\chemistry\machinery\scp_294.dm"
 #include "code\modules\reagents\chemistry\machinery\smoke_machine.dm"
 #include "code\modules\reagents\chemistry\reagents\alcohol_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\blob_reagents.dm"

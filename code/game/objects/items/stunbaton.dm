@@ -159,7 +159,10 @@
 			return 0
 
 	L.Knockdown(stunforce)
+<<<<<<< HEAD
 	L.adjustStaminaLoss(stunforce*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name

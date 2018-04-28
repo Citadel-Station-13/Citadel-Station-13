@@ -22,6 +22,7 @@
 		priority_announce("Due to [cause], [plural] [name] have [movement] \
 		into the [location].", "Migration Alert",
 		'sound/effects/mousesqueek.ogg')
+<<<<<<< HEAD
 	else
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
 		for(var/obj/machinery/computer/communications/C in GLOB.machines)
@@ -30,6 +31,8 @@
 				P.name = "Rodent Migration"
 				P.info = "Due to [cause], [plural] [name] have [movement] into the [location]."
 				P.update_icon()
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /datum/round_event/mice_migration/start()
 	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))

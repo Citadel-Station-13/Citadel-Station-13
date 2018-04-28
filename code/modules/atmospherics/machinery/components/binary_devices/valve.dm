@@ -19,6 +19,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "mvalve"
 
 	var/switching = FALSE
+<<<<<<< HEAD
 	
 /obj/machinery/atmospherics/components/binary/valve/layer1
 	piping_layer = PIPING_LAYER_MIN
@@ -29,6 +30,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
@@ -85,10 +88,13 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		close()
 	else
 		open()
+<<<<<<< HEAD
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
 	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
 	message_admins("Valve, [src.name], was manipulated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)], [A]")
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	switching = FALSE
 
 /obj/machinery/atmospherics/components/binary/valve/digital		// can be controlled by AI
@@ -97,6 +103,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
+<<<<<<< HEAD
 	
 /obj/machinery/atmospherics/components/binary/valve/digital/layer1
 	piping_layer = PIPING_LAYER_MIN
@@ -107,6 +114,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
 	return attack_hand(user)

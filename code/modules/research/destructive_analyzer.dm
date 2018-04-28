@@ -36,10 +36,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
+<<<<<<< HEAD
 		if(istype (O, /obj/item/bodybag/bluespace)) // CITADEL ADD. STOP PUTTING FUCKING BORGS INTO THE ANALYZER
 			if(O.contents.len != 0)
 				to_chat(user, "<span class='warning'>\The [O] has dangerous levels of activity, you cannot put it in the [src.name]!</span>")
 				return
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(!user.transferItemToLoc(O, src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
 			return

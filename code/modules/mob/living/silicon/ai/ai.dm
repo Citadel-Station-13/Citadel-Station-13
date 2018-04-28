@@ -171,7 +171,11 @@
 	if(incapacitated())
 		return
 
+<<<<<<< HEAD
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel", "TechDemon") //CIT CHANGE - adds 'TechDemon
+=======
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -236,8 +240,12 @@
 		icon_state = "ai-gentoo"
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
+<<<<<<< HEAD
 	else if(icontype == "TechDemon") //CIT CHANGE - adds 'TechDemon
 		icon_state = "ai-techdemon"
+=======
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /mob/living/silicon/ai/Stat()
 	..()
 	if(statpanel("Status"))

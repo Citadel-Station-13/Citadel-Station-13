@@ -98,6 +98,11 @@
 	var/list/new_overlay_types = tile_graphic()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
+	#if DM_VERSION >= 513
+	#warning 512 is stable now for sure, remove the old code
+	#endif
+
+	#if DM_VERSION >= 512
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			vars["vis_contents"] -= overlay
@@ -107,6 +112,21 @@
 			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
 		else
 			vars["vis_contents"] += new_overlay_types
+	#else
+	if (atmos_overlay_types)
+		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
+			vars["vis_contents"] -= overlay
+
+	if (new_overlay_types.len)
+		if (atmos_overlay_types)
+			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
+		else
+<<<<<<< HEAD
+			vars["vis_contents"] += new_overlay_types
+=======
+			add_overlay(new_overlay_types)
+	#endif
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
@@ -238,9 +258,12 @@
 		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
 			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
+<<<<<<< HEAD
 /turf/closed/proc/high_pressure_movements()
 	return
 	
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
 

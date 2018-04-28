@@ -14,7 +14,10 @@
 
 /obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))
+<<<<<<< HEAD
 		slipvictims |= M //CIT CHANGE - makes clown PDAs track unique people slipped
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++

@@ -9,7 +9,10 @@
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
+<<<<<<< HEAD
 			<A href='?src=[REF(src)];[HrefToken()];secrets=mentor_log'>Mentor Log</A><BR>
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			<A href='?src=[REF(src)];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
@@ -56,7 +59,10 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
+<<<<<<< HEAD
 			<A href='?src=[REF(src)];[HrefToken()];secrets=ak47s'>AK-47s For Everyone!</A><BR>
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 			<A href='?src=[REF(src)];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>

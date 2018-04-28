@@ -47,7 +47,11 @@
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustBrainLoss(5)
 			A.Stun(rand(10,45))
+<<<<<<< HEAD
 			D.Knockdown(rand(5,30))//CIT CHANGE - makes stuns from martial arts always use Knockdown instead of Stun for the sake of consistency
+=======
+			D.Stun(rand(5,30))
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 		if(5,6)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("punches", "kicks", "hits", "slams into")
@@ -63,4 +67,8 @@
 
 	if(atk_verb)
 		add_logs(A, D, "[atk_verb] (Psychotic Brawling)")
+<<<<<<< HEAD
 	return 1
+=======
+	return 1
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets

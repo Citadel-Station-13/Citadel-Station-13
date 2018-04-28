@@ -26,7 +26,10 @@
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BROTHER			"blood brother"
 #define ROLE_BRAINWASHED		"brainwashed victim"
+<<<<<<< HEAD
 #define ROLE_MISCREANT			"miscreant"
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

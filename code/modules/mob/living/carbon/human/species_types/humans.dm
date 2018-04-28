@@ -2,9 +2,14 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
+<<<<<<< HEAD
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "wings", "taur") // CITADEL EDIT gives humans snowflake parts
 	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "None")
+=======
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW

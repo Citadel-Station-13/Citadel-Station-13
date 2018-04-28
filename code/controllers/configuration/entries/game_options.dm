@@ -85,6 +85,7 @@
 	min_val = 0
 
 /datum/config_entry/flag/reactionary_explosions	//If we use reactionary explosions, explosions that react to walls and doors
+<<<<<<< HEAD
 
 /datum/config_entry/flag/protect_roles_from_antagonist	//If security and such can be traitor/cult/other
 
@@ -96,6 +97,19 @@
 
 /datum/config_entry/flag/use_antag_rep // see game_options.txt for details
 
+=======
+
+/datum/config_entry/flag/protect_roles_from_antagonist	//If security and such can be traitor/cult/other
+
+/datum/config_entry/flag/protect_assistant_from_antagonist	//If assistants can be traitor/cult/other
+
+/datum/config_entry/flag/enforce_human_authority	//If non-human species are barred from joining as a head of staff
+
+/datum/config_entry/flag/allow_latejoin_antagonists	// If late-joining players can be traitor/changeling
+
+/datum/config_entry/flag/use_antag_rep // see game_options.txt for details
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/config_entry/number/antag_rep_maximum
 	config_entry_value = 200
 	min_val = 0
@@ -171,6 +185,7 @@
 	min_val = -1
 
 /datum/config_entry/flag/rename_cyborg
+<<<<<<< HEAD
 
 /datum/config_entry/flag/ooc_during_round
 
@@ -192,6 +207,29 @@
 	if(.)
 		value_cache = config_entry_value
 
+=======
+
+/datum/config_entry/flag/ooc_during_round
+
+/datum/config_entry/flag/emojis
+
+/datum/config_entry/number/run_delay	//Used for modifying movement speed for mobs.
+	var/static/value_cache = 0
+
+/datum/config_entry/number/run_delay/ValidateAndSet()
+	. = ..()
+	if(.)
+		value_cache = config_entry_value
+
+/datum/config_entry/number/walk_delay
+	var/static/value_cache = 0
+
+/datum/config_entry/number/walk_delay/ValidateAndSet()
+	. = ..()
+	if(.)
+		value_cache = config_entry_value
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/config_entry/number/human_delay	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 /datum/config_entry/number/robot_delay
 /datum/config_entry/number/monkey_delay
@@ -226,6 +264,7 @@
 /datum/config_entry/keyed_number_list/law_weight
 	splitter = ","
 
+<<<<<<< HEAD
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
@@ -236,6 +275,15 @@
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
 
+=======
+/datum/config_entry/number/assistant_cap
+	config_entry_value = -1
+	min_val = -1
+
+/datum/config_entry/flag/starlight
+/datum/config_entry/flag/grey_assistants
+
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
 /datum/config_entry/number/lavaland_budget
 	config_entry_value = 60
 	min_val = 0
@@ -287,6 +335,7 @@
 /datum/config_entry/flag/randomize_shift_time
 
 /datum/config_entry/flag/shift_time_realtime
+<<<<<<< HEAD
 
 
 //Cit changes - Adds config options for crew objectives and miscreants
@@ -305,3 +354,5 @@
 /datum/config_entry/number/nightshift_finish
 	config_entry_value = 6
 //End of Cit changes
+=======
+>>>>>>> d30da79... Merge remote-tracking branch 'upstream/master' into pets
