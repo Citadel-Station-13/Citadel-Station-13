@@ -2,7 +2,7 @@
 	name = "chameleon-projector"
 	icon_state = "shield0"
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

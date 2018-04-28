@@ -7,8 +7,13 @@
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 
+<<<<<<< HEAD
 	slot_flags = SLOT_EARS
 	var/obj/item/device/encryptionkey/keyslot2 = null
+=======
+	slot_flags = ITEM_SLOT_EARS
+	var/obj/item/encryptionkey/keyslot2 = null
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 	dog_fashion = null
 
 /obj/item/device/radio/headset/suicide_act(mob/living/carbon/user)

@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user.name] activates the [src.name]!</span>")
@@ -53,7 +53,7 @@
 /obj/item/device/wormhole_jaunter/emp_act(power)
 	var/triggered = FALSE
 
-	if(usr.get_item_by_slot(slot_belt) == src)
+	if(usr.get_item_by_slot(SLOT_BELT) == src)
 		if(power == 1)
 			triggered = TRUE
 		else if(power == 2 && prob(50))
@@ -64,8 +64,13 @@
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(usr)
 
+<<<<<<< HEAD
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
+=======
+/obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
+	if(user.get_item_by_slot(SLOT_BELT) == src)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
 		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
 		activate(user, FALSE)

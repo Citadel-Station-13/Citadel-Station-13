@@ -2,7 +2,7 @@
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
 	icon_state = "signmaker_engi"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = NOBLUDGEON_1
 	item_state = "electronic"

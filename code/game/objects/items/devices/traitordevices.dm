@@ -176,7 +176,7 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
 	var/mob/living/carbon/human/user = null
@@ -186,16 +186,26 @@ effective or pretty fucking useless.
 	var/old_alpha = 0
 	actions_types = list(/datum/action/item_action/toggle)
 
+<<<<<<< HEAD
 /obj/item/device/shadowcloak/ui_action_click(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
+=======
+/obj/item/shadowcloak/ui_action_click(mob/user)
+	if(user.get_item_by_slot(SLOT_BELT) == src)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 		if(!on)
 			Activate(usr)
 		else
 			Deactivate()
 	return
 
+<<<<<<< HEAD
 /obj/item/device/shadowcloak/item_action_slot_check(slot, mob/user)
 	if(slot == slot_belt)
+=======
+/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
+	if(slot == SLOT_BELT)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 		return 1
 
 /obj/item/device/shadowcloak/proc/Activate(mob/living/carbon/human/user)
@@ -217,11 +227,16 @@ effective or pretty fucking useless.
 
 /obj/item/device/shadowcloak/dropped(mob/user)
 	..()
-	if(user && user.get_item_by_slot(slot_belt) != src)
+	if(user && user.get_item_by_slot(SLOT_BELT) != src)
 		Deactivate()
 
+<<<<<<< HEAD
 /obj/item/device/shadowcloak/process()
 	if(user.get_item_by_slot(slot_belt) != src)
+=======
+/obj/item/shadowcloak/process()
+	if(user.get_item_by_slot(SLOT_BELT) != src)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 		Deactivate()
 		return
 	var/turf/T = get_turf(src)

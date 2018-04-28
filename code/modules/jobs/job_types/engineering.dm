@@ -48,7 +48,7 @@ Chief Engineer
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
-	pda_slot = slot_l_store
+	pda_slot = SLOT_L_STORE
 
 /datum/outfit/job/ce/rig
 	name = "Chief Engineer (Hardsuit)"
@@ -59,7 +59,7 @@ Chief Engineer
 	suit_store = /obj/item/tank/internals/oxygen
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
 
 
 /*
@@ -102,8 +102,13 @@ Station Engineer
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
+<<<<<<< HEAD
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+=======
+	pda_slot = SLOT_L_STORE
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"
@@ -116,7 +121,7 @@ Station Engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
 
 
 /*
@@ -156,8 +161,13 @@ Atmospheric Technician
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
+<<<<<<< HEAD
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+=======
+	pda_slot = SLOT_L_STORE
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+>>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 
 /datum/outfit/job/atmos/rig
 	name = "Atmospheric Technician (Hardsuit)"
@@ -165,4 +175,4 @@ Atmospheric Technician
 	mask = /obj/item/clothing/mask/gas
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
