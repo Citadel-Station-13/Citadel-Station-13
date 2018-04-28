@@ -50136,10 +50136,17 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
+<<<<<<< HEAD
 "inD" = (
 /obj/machinery/cryopod,
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+=======
+"iyV" = (
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
+>>>>>>> 9d58e09... Merge pull request #37009 from MMMiracles/jookbox
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -82683,7 +82690,7 @@ aSS
 aUg
 aVf
 aWi
-bah
+iyV
 aYe
 aZb
 bag
