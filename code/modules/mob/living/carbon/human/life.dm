@@ -44,6 +44,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
+<<<<<<< HEAD
 	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/belly))
@@ -52,6 +53,14 @@
 		return ONE_ATMOSPHERE
 	else
 		return pressure
+=======
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			return ONE_ATMOSPHERE
+	return pressure
+>>>>>>> ac55920... I'll get you next time, gremloids
 
 
 /mob/living/carbon/human/handle_traits()
