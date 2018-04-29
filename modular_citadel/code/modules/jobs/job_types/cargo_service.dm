@@ -15,8 +15,8 @@
 
 /datum/outfit/job/quartermaster
 	id = /obj/item/card/id/silver
-	ears = /obj/item/device/radio/headset/heads/qm
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
+	ears = /obj/item/radio/headset/heads/qm
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
 
 /datum/job/cargo_tech
 	department_head = list("Quartermaster")

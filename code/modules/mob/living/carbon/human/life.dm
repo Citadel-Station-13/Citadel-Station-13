@@ -48,7 +48,7 @@
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/belly))
 		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -126,7 +126,7 @@
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	//CITADEL EDIT Vore code required overrides
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -241,7 +241,7 @@
 	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 //CITADEL EDIT Mandatory for vore code.
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return TRUE //freezing to death in sleepers ruins fun.
 	if(isbelly(loc))
 		return TRUE
