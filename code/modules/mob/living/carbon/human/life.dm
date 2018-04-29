@@ -44,23 +44,16 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-<<<<<<< HEAD
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
-		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/belly))
+	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
-		return ONE_ATMOSPHERE
-	else
-		return pressure
-=======
-	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+		return ONE_ATMOSPHERE //END OF CIT CHANGES
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 			return ONE_ATMOSPHERE
 	return pressure
->>>>>>> 98f8ca7... Moves several clothing-specific flags from /atom to their proper type (#37486)
 
 
 /mob/living/carbon/human/handle_traits()
