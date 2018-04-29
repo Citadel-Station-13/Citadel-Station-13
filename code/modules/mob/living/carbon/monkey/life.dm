@@ -18,13 +18,8 @@
 	if(..())
 
 		if(!client)
-<<<<<<< HEAD
 			if(stat == CONSCIOUS)	
-				if(on_fire || buckled || restrained() || (resting && canmove))
-=======
-			if(stat == CONSCIOUS)
-				if(on_fire || buckled || restrained())
->>>>>>> 98f8ca7... Moves several clothing-specific flags from /atom to their proper type (#37486)
+				if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
