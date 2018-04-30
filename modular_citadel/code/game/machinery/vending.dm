@@ -1,12 +1,12 @@
 /obj/machinery/vending/security
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/device/ssword_kit = 1)
-	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/device/ssword_kit = 1)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/ssword_kit = 1)
+	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/ssword_kit = 1)
 
 /obj/machinery/vending/medical
 	products = list(/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
-					/obj/item/device/healthanalyzer = 4,
-					/obj/item/device/sensor_device = 2,
+					/obj/item/healthanalyzer = 4,
+					/obj/item/sensor_device = 2,
 					/obj/item/pinpointer/crew = 2,
 					/obj/item/reagent_containers/medspray/sterilizine = 1,
 					/obj/item/stack/medical/gauze = 8,
@@ -50,7 +50,7 @@
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
 					)
-	premium = list(/obj/item/device/electropack/shockcollar = 3)
+	premium = list(/obj/item/electropack/shockcollar = 3)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend

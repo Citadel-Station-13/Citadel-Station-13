@@ -31,9 +31,9 @@
 	return FALSE
 /obj/item/disk/nuclear/digest_act(...)
 	return FALSE
-/obj/item/device/perfect_tele_beacon/digest_act(...)
+/obj/item/perfect_tele_beacon/digest_act(...)
 	return FALSE //Sorta important to not digest your own beacons.
-/obj/item/device/pda/digest_act(...)
+/obj/item/pda/digest_act(...)
 	return FALSE
 /obj/item/gun/digest_act(...)
 	return FALSE
@@ -73,7 +73,7 @@
 /////////////
 /*
 //PDAs need to lose their ID to not take it with them, so we can get a digested ID
-/obj/item/device/pda/digest_act(var/atom/movable/item_storage = null)
+/obj/item/pda/digest_act(var/atom/movable/item_storage = null)
 	if(id)
 		id = null
 
@@ -114,6 +114,6 @@
 /////////////
 // Some more complicated stuff
 /////////////
-/obj/item/device/mmi/digital/posibrain/digest_act(var/atom/movable/item_storage = null)
+/obj/item/mmi/digital/posibrain/digest_act(var/atom/movable/item_storage = null)
 	//Replace this with a VORE setting so all types of posibrains can/can't be digested on a whim
 	return FALSE

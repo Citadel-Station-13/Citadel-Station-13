@@ -127,7 +127,7 @@
 /datum/objective/crew/slipster/check_completion()
 	var/list/uniqueslips = list()
 	if(owner && owner.current)
-		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents())
+		for(var/obj/item/pda/clown/PDA in owner.current.get_contents())
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
 				uniqueslips |= H
 	if(uniqueslips.len >= target_amount)
