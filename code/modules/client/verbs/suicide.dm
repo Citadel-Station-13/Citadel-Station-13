@@ -12,8 +12,6 @@
 		return
 	if(confirm == "Yes")
 		suiciding = TRUE
-		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
-		message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -204,11 +202,13 @@
 	var/turf/T = get_turf(src)
 
 	log_game("[key_name(src)] committed suicide at [get_area(src)][COORD(T)] as [src.type].")
+	message_admins("[key_name(src)] committed suicide at [get_area(src)] as [src.type].")
 
 /mob/living/carbon/human/suicide_log()
 	var/turf/T = get_turf(src)
 
 	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [get_area(src)][COORD(T)].")
+	message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
