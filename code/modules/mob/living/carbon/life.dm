@@ -48,7 +48,7 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return
 	if(ismob(loc))
 		return
@@ -328,10 +328,8 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !combatmode && !aimingdownsights)//CIT CHANGE - prevents stamina regen while combat mode is active
+	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
-	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
-		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
 
 	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
 	if(bufferedstam && world.time > stambufferregentime)
@@ -351,22 +349,22 @@
 		var/saved_dizz = dizziness
 		if(C)
 			var/oldsrc = src
-			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
 			src = null
 			spawn(0)
 				if(C)
-					temp = amplitude * sin(0.008 * saved_dizz * world.time)
+					temp = amplitude * sin(saved_dizz * world.time)
 					pixel_x_diff += temp
 					C.pixel_x += temp
-					temp = amplitude * cos(0.008 * saved_dizz * world.time)
+					temp = amplitude * cos(saved_dizz * world.time)
 					pixel_y_diff += temp
 					C.pixel_y += temp
 					sleep(3)
 					if(C)
-						temp = amplitude * sin(0.008 * saved_dizz * world.time)
+						temp = amplitude * sin(saved_dizz * world.time)
 						pixel_x_diff += temp
 						C.pixel_x += temp
-						temp = amplitude * cos(0.008 * saved_dizz * world.time)
+						temp = amplitude * cos(saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
 					sleep(3)

@@ -270,6 +270,9 @@ ALLOW_AI
 
 ## AWAY MISSIONS ###
 
+## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+#ROUNDSTART_AWAY
+
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
@@ -344,6 +347,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
+#RANDOM_LAWS hulkamania
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -376,6 +380,7 @@ LAW_WEIGHT drone,3
 LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
+LAW_WEIGHT hulkamania,4
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0

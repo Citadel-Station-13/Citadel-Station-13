@@ -55,8 +55,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
-	
-	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2Â½ hours plus 15 for the shuttle. So total is 3.
+
+	var/auto_call = 72000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
@@ -554,7 +554,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
-	new_transit_dock.turf_type = transit_path
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 

@@ -7,7 +7,7 @@
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 
-/obj/item/device/ssword_kit
+/obj/item/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"
 	icon = 'icons/obj/vending_restock.dmi'

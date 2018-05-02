@@ -128,14 +128,14 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-
+/*
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
 	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
 		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
 		var/list/availableto = splittext(initial(obj.jobs),",")
 		for(var/job in availableto)
-			crewobjjobs["[job]"] += list(obj)
+			crewobjjobs["[job]"] += list(obj) */
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -272,14 +272,14 @@ SUBSYSTEM_DEF(ticker)
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
-	if(hide_mode)
+	/*if(hide_mode) CIT CHANGE - comments this section out to obfuscate gamemodes. Quit self-antagging during extended just because "hurrrrr no antaggs!!!!!! i giv sec thing 2 do!!!!!!!!!" it's bullshit and everyone hates it
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
-		mode.announce()
+		mode.announce()*/
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
@@ -324,12 +324,12 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
-	//assign crew objectives and generate miscreants
+/*	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
 	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
 		GLOB.miscreants_allowed = TRUE
-	generate_crew_objectives()
+	generate_crew_objectives() */
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
@@ -477,12 +477,12 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
 
-/proc/send_gamemode_vote()
+/proc/send_gamemode_vote() //CIT CHANGE - adds roundstart gamemode votes
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server")
+		SSvote.initiate_vote("roundtype","server",TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

@@ -10,6 +10,7 @@
 	light_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -48,7 +49,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 

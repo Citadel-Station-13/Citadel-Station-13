@@ -4,7 +4,8 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,LIPS, HAIR, FACEHAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur")
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
@@ -17,8 +18,8 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = NONE
-	liked_food = NONE
+	disliked_food = GRAIN | DAIRY
+	liked_food = GROSS | MEAT
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/draconic)
@@ -36,7 +37,7 @@
 
 /datum/species/lizard/qualifies_for_rank(rank, list/features)
 	return TRUE
-
+	
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
