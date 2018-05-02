@@ -154,13 +154,8 @@
 		R.command = TRUE
 
 	if(tc)
-<<<<<<< HEAD
-		var/obj/item/device/radio/uplink/U = new uplink_type(H, H.key, tc)
-		H.equip_to_slot_or_del(U, slot_in_backpack)
-=======
 		var/obj/item/radio/uplink/U = new uplink_type(H, H.key, tc)
 		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
->>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
