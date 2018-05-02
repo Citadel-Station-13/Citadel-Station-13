@@ -50137,10 +50137,13 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
+<<<<<<< HEAD
 "inD" = (
 /obj/machinery/cryopod,
 /turf/open/floor/plasteel/darkpurple,
 /area/crew_quarters/cryopod)
+=======
+>>>>>>> 98eaecb... Merge pull request #37586 from tgstation/revert-37009-jookbox
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
