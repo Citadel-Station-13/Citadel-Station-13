@@ -15,5 +15,8 @@
 
 /mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	. = ..()
-	if(istype(speaker, /mob/living) && !(speaker in get_hear(5, src)))
-		. = "<citspan class='small'>[.]</citspan>" //Don't ask how the fuck this works. It just does.
+	if(istype(speaker, /mob/living))
+		var/turf/speakturf = get_turf(speaker)
+		var/turf/sourceturf = get_turf(src)
+		if(istype(speakturf) && istype(sourceturf) && !(speakturf in get_hear(5, sourceturf)))
+			. = "<citspan class='small'>[.]</citspan>" //Don't ask how the fuck this works. It just does.
