@@ -53,7 +53,11 @@
 	var/list/tc = allowed_typecache
 	if(user.a_intent != INTENT_HELP)
 		return
+<<<<<<< HEAD
 	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
+=======
+	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
+>>>>>>> fd4c753... replaces BANG_PROTECT_2 with a component, also kills OMNITONGUE_2 and flags_2  (#37597)
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return
 	. = COMPONENT_NO_AFTERATTACK
