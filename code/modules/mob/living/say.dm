@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
-			if(yellareas.len)	//CIT CHANGE - see above. makes yelling penetrate walls
+			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
 				var/area/A = get_area(M)	//CIT CHANGE - ditto
 				if(istype(A) && A in yellareas)	//CIT CHANGE - ditto
 					listening |= M	//CIT CHANGE - ditto
