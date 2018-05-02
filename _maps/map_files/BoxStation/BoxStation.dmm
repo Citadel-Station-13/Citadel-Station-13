@@ -25155,7 +25155,6 @@
 /obj/item/clipboard,
 /obj/item/pen/red,
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bnH" = (
@@ -28161,7 +28160,6 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buF" = (
@@ -29664,7 +29662,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},

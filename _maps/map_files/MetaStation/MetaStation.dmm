@@ -18434,7 +18434,6 @@
 /area/quartermaster/qm)
 "aNR" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -24357,7 +24356,6 @@
 /area/quartermaster/office)
 "bax" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -28938,7 +28936,6 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/arrival{
 	dir = 2
 	},
@@ -29047,7 +29044,6 @@
 /area/quartermaster/sorting)
 "bkn" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26
