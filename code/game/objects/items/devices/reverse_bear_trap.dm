@@ -80,13 +80,8 @@
 			return
 	..()
 
-<<<<<<< HEAD
-/obj/item/device/reverse_bear_trap/attack(mob/living/target, mob/living/user)
-	if(target.get_item_by_slot(slot_head))
-=======
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
 	if(target.get_item_by_slot(SLOT_HEAD))
->>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 		to_chat(user, "<span class='warning'>Remove their headgear first!</span>")
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
