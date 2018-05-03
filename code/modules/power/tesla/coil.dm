@@ -13,7 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
-	var/power_loss = 2
+	var/power_loss = 10 //citadel change, nerfing power production slightly from resistance of 2 to 10
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
 	var/last_zap = 0
@@ -108,7 +108,7 @@
 	desc = "A modified Tesla Coil used to study the effects of Edison's Bane for research."
 	icon_state = "rpcoil0"
 	circuit = /obj/item/circuitboard/machine/tesla_coil/research
-	power_loss = 20 // something something, high voltage + resistance
+	power_loss = 2000 // something something, high voltage + resistance //citadel change, from 20 to 2000. Wasn't limiting power enough.
 
 /obj/machinery/power/tesla_coil/research/tesla_act(var/power)
 	if(anchored && !panel_open)
