@@ -139,7 +139,7 @@
 	required_reagents = list("tequila" = 2, "kahlua" = 1)
 
 /datum/chemical_reaction/tequila_sunrise
-	name = "tequila Sunrise"
+	name = "Tequila Sunrise"
 	id = "tequilasunrise"
 	results = list("tequilasunrise" = 3)
 	required_reagents = list("tequila" = 2, "orangejuice" = 1)
