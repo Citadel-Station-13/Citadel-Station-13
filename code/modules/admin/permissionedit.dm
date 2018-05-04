@@ -9,6 +9,7 @@
 /datum/admins/proc/edit_admin_permissions()
 	if(!check_rights(R_PERMISSIONS))
 		return
+<<<<<<< HEAD
 
 	var/list/output = list({"<!DOCTYPE html>
 <html>
@@ -56,6 +57,108 @@
 </html>"}
 
 	usr << browse(jointext(output, ""),"window=editrights;size=1000x650")
+=======
+	var/list/output = list("<link rel='stylesheet' type='text/css' href='panels.css'><a href='?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
+	if(action)
+		output += " | <a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
+	else
+		output += "<br><a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a><br><a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a>"
+	if(action == 1)
+		var/list/searchlist = list(" WHERE ")
+		if(target)
+			searchlist += "ckey = '[sanitizeSQL(target)]'"
+		if(operation)
+			if(target)
+				searchlist += " AND "
+			searchlist += "operation = '[sanitizeSQL(operation)]'"
+		var/search
+		if(searchlist.len > 1)
+			search = searchlist.Join("")
+		var/logcount = 0
+		var/logssperpage = 20
+		var/pagecount = 0
+		page = text2num(page)
+		var/datum/DBQuery/query_count_admin_logs = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("admin_log")][search]")
+		if(!query_count_admin_logs.warn_execute())
+			return
+		if(query_count_admin_logs.NextRow())
+			logcount = text2num(query_count_admin_logs.item[1])
+		if(logcount > logssperpage)
+			output += "<br><b>Page: </b>"
+			while(logcount > 0)
+				output += "|<a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightstarget=[target];editrightsoperation=[operation];editrightspage=[pagecount]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				logcount -= logssperpage
+				pagecount++
+			output += "|"
+		var/limit = " LIMIT [logssperpage * page], [logssperpage]"
+		var/datum/DBQuery/query_search_admin_logs = SSdbcore.NewQuery("SELECT datetime, round_id, adminckey, operation, target, log FROM [format_table_name("admin_log")][search] ORDER BY datetime DESC[limit]")
+		if(!query_search_admin_logs.warn_execute())
+			return
+		while(query_search_admin_logs.NextRow())
+			var/datetime = query_search_admin_logs.item[1]
+			var/round_id = query_search_admin_logs.item[2]
+			var/admin_ckey  = query_search_admin_logs.item[3]
+			operation = query_search_admin_logs.item[4]
+			target = query_search_admin_logs.item[5]
+			var/log = query_search_admin_logs.item[6]
+			output += "<p style='margin:0px'><b>[datetime] | Round ID [round_id] | Admin [admin_ckey] | Operation [operation] on [target]</b><br>[log]</p><hr style='background:#000000; border:0; height:3px'>"
+	if(action == 2)
+		output += "<h3>Admin ckeys with invalid ranks</h3>"
+		var/datum/DBQuery/query_check_admin_errors = SSdbcore.NewQuery("SELECT ckey, [format_table_name("admin")].rank FROM [format_table_name("admin")] LEFT JOIN [format_table_name("admin_ranks")] ON [format_table_name("admin_ranks")].rank = [format_table_name("admin")].rank WHERE [format_table_name("admin_ranks")].rank IS NULL")
+		if(!query_check_admin_errors.warn_execute())
+			return
+		while(query_check_admin_errors.NextRow())
+			var/admin_ckey = query_check_admin_errors.item[1]
+			var/admin_rank = query_check_admin_errors.item[2]
+			output += "[admin_ckey] has non-existant rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_ckey]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_ckey]'>\[Remove\]</a>"
+			output += "<hr style='background:#000000; border:0; height:1px'>"
+		output += "<h3>Unused ranks</h3>"
+		var/datum/DBQuery/query_check_unused_rank = SSdbcore.NewQuery("SELECT [format_table_name("admin_ranks")].rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] LEFT JOIN [format_table_name("admin")] ON [format_table_name("admin")].rank = [format_table_name("admin_ranks")].rank WHERE [format_table_name("admin")].rank IS NULL")
+		if(!query_check_unused_rank.warn_execute())
+			return
+		while(query_check_unused_rank.NextRow())
+			var/admin_rank = query_check_unused_rank.item[1]
+			output += {"Rank [admin_rank] is not held by any admin | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
+			<br>Permissions: [rights2text(text2num(query_check_unused_rank.item[2])," ")]
+			<br>Denied: [rights2text(text2num(query_check_unused_rank.item[3])," ", "-")]
+			<br>Allowed to edit: [rights2text(text2num(query_check_unused_rank.item[4])," ", "*")]
+			<hr style='background:#000000; border:0; height:1px'>"}
+	else if(!action)
+		output += {"<head>
+		<title>Permissions Panel</title>
+		<script type='text/javascript' src='search.js'></script>
+		</head>
+		<body onload='selectTextField();updateSearch();'>
+		<div id='main'><table id='searchable' cellspacing='0'>
+		<tr class='title'>
+		<th style='width:150px;'>CKEY <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
+		<th style='width:125px;'>RANK</th>
+		<th style='width:40%;'>PERMISSIONS</th>
+		<th style='width:20%;'>DENIED</th>
+		<th style='width:40%;'>ALLOWED TO EDIT</th>
+		</tr>
+		"}
+		for(var/adm_ckey in GLOB.admin_datums+GLOB.deadmins)
+			var/datum/admins/D = GLOB.admin_datums[adm_ckey]
+			if(!D)
+				D = GLOB.deadmins[adm_ckey]
+				if (!D)
+					continue
+			var/deadminlink = ""
+			if (D.deadmined)
+				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;ckey=[adm_ckey]'>\[RA\]</a>"
+			else
+				deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;ckey=[adm_ckey]'>\[DA\]</a>"
+			output += "<tr>"
+			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;ckey=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
+			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
+			output += "</tr>"
+		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
+	usr << browse("<!DOCTYPE html><html>[jointext(output, "")]</html>","window=editrights;size=1000x650")
+>>>>>>> e44298a... some dbadmin fixes (#37623)
 
 /datum/admins/proc/edit_rights_topic(list/href_list)
 	if(!check_rights(R_PERMISSIONS))
@@ -142,6 +245,16 @@
 		return FALSE
 	if(use_db)
 		. = sanitizeSQL(.)
+<<<<<<< HEAD
+=======
+		//if an admin exists without a datum they won't be caught by the above
+		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin")] WHERE ckey = '[.]'")
+		if(!query_admin_in_db.warn_execute())
+			return FALSE
+		if(query_admin_in_db.NextRow())
+			to_chat(usr, "<span class='danger'>[.] already listed in admin database. Check the Management tab if they don't appear in the list of admins.</span>")
+			return FALSE
+>>>>>>> e44298a... some dbadmin fixes (#37623)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
 			return FALSE
