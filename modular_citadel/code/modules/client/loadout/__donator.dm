@@ -271,4 +271,10 @@ datum/gear/darksabresheath
 	category = slot_in_backpack
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
 	ckeywhitelist = list("worksbythesea", "blakeryan")
+	
+/datum/gear/cloakce
+	name = "Stun Sword Kit"
+	category = slot_in_backpack
+	path = 	/obj/item/ssword_kit
+	ckeywhitelist = list("phillip458")
 
