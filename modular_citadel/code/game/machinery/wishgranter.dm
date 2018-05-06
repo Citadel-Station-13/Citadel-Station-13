@@ -38,7 +38,7 @@
 						to_chat(user, "[powah] materializes into your hands!")
 					else
 						to_chat(user, "[powah] materializes onto the floor.")
-					var/obj/machinery/power/supermatter_shard/powerwish = new /obj/machinery/power/supermatter_shard(loc)
+					var/obj/machinery/power/supermatter_crystal/powerwish = new /obj/machinery/power/supermatter_crystal(loc)
 					powerwish.damage = 700	//right at the emergency threshold
 					powerwish.produces_gas = FALSE
 					charges--
@@ -65,7 +65,7 @@
 					user.dna.add_mutation(BLINDMUT)
 					user.adjust_eye_damage(100)
 					var/list/destinations = list()
-					for(var/obj/item/device/beacon/B in GLOB.teleportbeacons)
+					for(var/obj/item/beacon/B in GLOB.teleportbeacons)
 						var/turf/T = get_turf(B)
 						if(is_station_level(T.z))
 							destinations += B

@@ -438,7 +438,7 @@
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
+		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 
@@ -615,6 +615,7 @@
 			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
+
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
 	id = "stabilizednutriment"
@@ -627,7 +628,7 @@
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.nutrition -= 3*nutriment_factor
 	..()
-	
+
 ////Lavaland Flora Reagents////
 
 

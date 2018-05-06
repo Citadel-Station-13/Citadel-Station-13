@@ -1,5 +1,18 @@
 //predominantly negative traits
 
+/datum/trait/blooddeficiency
+	name = "Acute Blood Deficiency"
+	desc = "Your body can't produce enough blood to sustain itself."
+	value = -2
+	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
+	lose_text = "<span class='notice'>You feel vigorous again.</span>"
+	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
+
+/datum/trait/blooddeficiency/on_process()
+	trait_holder.blood_volume -= 0.275
+
+
+
 /datum/trait/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
@@ -53,9 +66,7 @@
 	if(!where)
 		where = "at your feet"
 		if(where == "in your backpack")
-			var/obj/item/storage/B = H.back
-			B.orient2hud(trait_holder)
-			B.show_to(trait_holder)
+			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
 	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
 
 /datum/trait/family_heirloom/post_add()
@@ -85,7 +96,7 @@
 /datum/trait/brainproblems
 	name = "Brain Tumor"
 	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	value = -2
+	value = -3
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."

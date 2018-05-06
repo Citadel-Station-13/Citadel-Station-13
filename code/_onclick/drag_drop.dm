@@ -107,6 +107,8 @@
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
 		for(var/datum/D in mob.mousemove_intercept_objects)
 			D.onMouseMove(object, location, control, params)
+	if(mob)	//CIT CHANGE - passes onmousemove() to mobs
+		mob.onMouseMove(object, location, control, params)	//CIT CHANGE - ditto
 
 /datum/proc/onMouseMove(object, location, control, params)
 	return

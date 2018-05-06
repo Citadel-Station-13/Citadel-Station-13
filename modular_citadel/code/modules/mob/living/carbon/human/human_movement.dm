@@ -4,7 +4,7 @@
 /mob/living/carbon/human/Move(NewLoc, direct)
 	var/oldpseudoheight = pseudo_z_axis
 	. = ..()
-	if(. && sprinting && !resting && m_intent == MOVE_INTENT_RUN)
+	if(. && sprinting && !(movement_type & FLYING) && canmove && !resting && m_intent == MOVE_INTENT_RUN)
 		adjustStaminaLossBuffered(0.3)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
@@ -15,6 +15,8 @@
 /mob/living/carbon/human/movement_delay()
 	. = 0
 	if(!resting && m_intent == MOVE_INTENT_RUN && !sprinting)
+		. += 1
+	if(wrongdirmovedelay)
 		. += 1
 	. += ..()
 
