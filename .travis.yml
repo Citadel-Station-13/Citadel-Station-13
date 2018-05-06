@@ -21,8 +21,6 @@ cache:
   directories:
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
     - tgui/node_modules
-    - $HOME/.rustup
-    - $HOME/.cargo
 
 
 addons:

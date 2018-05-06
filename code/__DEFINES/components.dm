@@ -72,6 +72,9 @@
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited" 							//from base of area/Exited(): (atom/movable/M)
 
+// /turf signals
+#define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
+
 // /atom/movable signals
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (/atom/movable)
@@ -101,10 +104,6 @@
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
-
-// /obj/machinery signals
-#define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
-#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): ()
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)

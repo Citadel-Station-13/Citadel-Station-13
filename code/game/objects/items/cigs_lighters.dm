@@ -314,6 +314,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
+/obj/item/clothing/mask/cigarette/rollie/nicotine
+	list_reagents = list("nicotine" = 15)	
+
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
 	starts_lit = TRUE
@@ -706,7 +709,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
 			cut_overlays()
 
-	if(istype(O, /obj/item/device/multitool))
+	if(istype(O, /obj/item/multitool))
 		if(screw && !(obj_flags & EMAGGED))//also kinky
 			if(!super)
 				cut_overlays()

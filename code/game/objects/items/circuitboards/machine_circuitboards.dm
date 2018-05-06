@@ -204,6 +204,7 @@
 
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
+	desc = "You could turn the \"brand selection\" dial using a screwdriver."
 	build_path = /obj/machinery/vending/boozeomat
 	req_components = list(
 							/obj/item/vending_refill/boozeomat = 3)
@@ -449,7 +450,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/device/assembly/igniter = 1)
+		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
