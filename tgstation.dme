@@ -323,11 +323,8 @@
 #include "code\datums\components\cleaning.dm"
 #include "code\datums\components\construction.dm"
 #include "code\datums\components\decal.dm"
-<<<<<<< HEAD
-=======
 #include "code\datums\components\earhealing.dm"
 #include "code\datums\components\earprotection.dm"
->>>>>>> fd4c753... replaces BANG_PROTECT_2 with a component, also kills OMNITONGUE_2 and flags_2  (#37597)
 #include "code\datums\components\forensics.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
