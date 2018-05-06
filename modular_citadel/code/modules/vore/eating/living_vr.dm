@@ -193,19 +193,19 @@
 
 	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
 		return FALSE
-		
+
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-		
+
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
 		return FALSE
-		
+
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
@@ -303,7 +303,7 @@
 	set category = "Vore"
 	if(isbelly(loc))
 		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
-		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+		var/sound/preyloop = sound('sound/vore/stomach_loop.ogg', repeat = TRUE)
 		src.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
 	else
 		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")

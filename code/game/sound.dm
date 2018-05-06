@@ -151,35 +151,29 @@
 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 	//START OF CIT CHANGES - adds random vore sounds
 			if ("struggle_sound")
-				soundin = pick( 'sound/vore/pred/struggle_01.ogg','sound/vore/pred/struggle_02.ogg','sound/vore/pred/struggle_03.ogg',
-								'sound/vore/pred/struggle_04.ogg','sound/vore/pred/struggle_05.ogg')
+				soundin = pick( 'sound/vore/squish1.ogg','sound/vore/squish2.ogg','sound/vore/squish3.ogg','sound/vore/squish4.ogg')
 			if ("prey_struggle")
-				soundin = pick( 'sound/vore/prey/struggle_01.ogg','sound/vore/prey/struggle_02.ogg','sound/vore/prey/struggle_03.ogg',
-								'sound/vore/prey/struggle_04.ogg','sound/vore/prey/struggle_05.ogg')
+				soundin = pick( 'sound/vore/squish1.ogg','sound/vore/squish2.ogg','sound/vore/squish3.ogg','sound/vore/squish4.ogg')
 			if ("digest_pred")
-				soundin = pick( 'sound/vore/pred/digest_01.ogg','sound/vore/pred/digest_02.ogg','sound/vore/pred/digest_03.ogg',
-								'sound/vore/pred/digest_04.ogg','sound/vore/pred/digest_05.ogg','sound/vore/pred/digest_06.ogg',
-								'sound/vore/pred/digest_07.ogg','sound/vore/pred/digest_08.ogg','sound/vore/pred/digest_09.ogg',
-								'sound/vore/pred/digest_10.ogg','sound/vore/pred/digest_11.ogg','sound/vore/pred/digest_12.ogg',
-								'sound/vore/pred/digest_13.ogg','sound/vore/pred/digest_14.ogg','sound/vore/pred/digest_15.ogg',
-								'sound/vore/pred/digest_16.ogg','sound/vore/pred/digest_17.ogg','sound/vore/pred/digest_18.ogg')
+				soundin = pick( 'sound/vore/digest1.ogg','sound/vore/digest2.ogg','sound/vore/digest3.ogg',
+								'sound/vore/digest4.ogg','sound/vore/digest5.ogg','sound/vore/digest6.ogg',
+								'sound/vore/digest7.ogg','sound/vore/digest8.ogg','sound/vore/digest9.ogg',
+								'sound/vore/digest10.ogg', 'sound/vore/digest11.ogg', 'sound/vore/digest12.ogg')
 			if ("death_pred")
-				soundin = pick( 'sound/vore/pred/death_01.ogg','sound/vore/pred/death_02.ogg','sound/vore/pred/death_03.ogg',
-								'sound/vore/pred/death_04.ogg','sound/vore/pred/death_05.ogg','sound/vore/pred/death_06.ogg',
-								'sound/vore/pred/death_07.ogg','sound/vore/pred/death_08.ogg','sound/vore/pred/death_09.ogg',
-								'sound/vore/pred/death_10.ogg')
+				soundin = pick( 'sound/vore/death1.ogg','sound/vore/death2.ogg','sound/vore/death3.ogg',
+								'sound/vore/death4.ogg','sound/vore/death5.ogg','sound/vore/death6.ogg',
+								'sound/vore/death7.ogg','sound/vore/death8.ogg','sound/vore/death9.ogg',
+								'sound/vore/death10.ogg')
 			if ("digest_prey")
-				soundin = pick( 'sound/vore/prey/digest_01.ogg','sound/vore/prey/digest_02.ogg','sound/vore/prey/digest_03.ogg',
-								'sound/vore/prey/digest_04.ogg','sound/vore/prey/digest_05.ogg','sound/vore/prey/digest_06.ogg',
-								'sound/vore/prey/digest_07.ogg','sound/vore/prey/digest_08.ogg','sound/vore/prey/digest_09.ogg',
-								'sound/vore/prey/digest_10.ogg','sound/vore/prey/digest_11.ogg','sound/vore/prey/digest_12.ogg',
-								'sound/vore/prey/digest_13.ogg','sound/vore/prey/digest_14.ogg','sound/vore/prey/digest_15.ogg',
-								'sound/vore/prey/digest_16.ogg','sound/vore/prey/digest_17.ogg','sound/vore/prey/digest_18.ogg')
+				soundin = pick( 'sound/vore/digest1.ogg','sound/vore/digest2.ogg','sound/vore/digest3.ogg',
+								'sound/vore/digest4.ogg','sound/vore/digest5.ogg','sound/vore/digest6.ogg',
+								'sound/vore/digest7.ogg','sound/vore/digest8.ogg','sound/vore/digest9.ogg',
+								'sound/vore/digest10.ogg', 'sound/vore/digest11.ogg', 'sound/vore/digest12.ogg')
 			if ("death_prey")
-				soundin = pick( 'sound/vore/prey/death_01.ogg','sound/vore/prey/death_02.ogg','sound/vore/prey/death_03.ogg',
-								'sound/vore/prey/death_04.ogg','sound/vore/prey/death_05.ogg','sound/vore/prey/death_06.ogg',
-								'sound/vore/prey/death_07.ogg','sound/vore/prey/death_08.ogg','sound/vore/prey/death_09.ogg',
-								'sound/vore/prey/death_10.ogg')
+				soundin = pick( 'sound/vore/death1.ogg','sound/vore/death2.ogg','sound/vore/death3.ogg',
+								'sound/vore/death4.ogg','sound/vore/death5.ogg','sound/vore/death6.ogg',
+								'sound/vore/death7.ogg','sound/vore/death8.ogg','sound/vore/death9.ogg',
+								'sound/vore/death10.ogg')
 	//END OF CIT CHANGES
 			if("bullet_miss")
 				soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
