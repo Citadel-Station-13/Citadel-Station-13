@@ -1,6 +1,6 @@
 // Dogborg Sleeper units
 
-/obj/item/device/dogborg/sleeper
+/obj/item/dogborg/sleeper
 	name = "hound sleeper"
 	desc = "nothing should see this."
 	icon = 'icons/mob/dogborg.dmi'
@@ -22,7 +22,7 @@
 	var/static/list/important_items = typecacheof(list(
 		/obj/item/hand_tele,
 		/obj/item/card/id,
-		/obj/item/device/aicard,
+		/obj/item/aicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
@@ -45,15 +45,15 @@
 
 // Bags are prohibited from this due to the potential explotation of objects, same with brought
 
-/obj/item/device/dogborg/sleeper/New()
+/obj/item/dogborg/sleeper/New()
 	..()
 	update_icon()
 	flags_1 |= NOBLUDGEON_1 //No more attack messages
 
-/obj/item/device/dogborg/sleeper/Exit(atom/movable/O)
+/obj/item/dogborg/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/device/dogborg/sleeper/afterattack(mob/living/carbon/target, mob/living/silicon/user, proximity)
+/obj/item/dogborg/sleeper/afterattack(mob/living/carbon/target, mob/living/silicon/user, proximity)
 	hound = loc
 	if(!proximity)
 		return
@@ -91,7 +91,7 @@
 			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)]")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
-/obj/item/device/dogborg/sleeper/container_resist(mob/living/user)
+/obj/item/dogborg/sleeper/container_resist(mob/living/user)
 	hound = loc
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -107,7 +107,7 @@
 			"<span class='notice'>You successfully break out of [hound.name]!</span>")
 		go_out()
 
-/obj/item/device/dogborg/sleeper/proc/go_out(var/target)
+/obj/item/dogborg/sleeper/proc/go_out(var/target)
 	hound = loc
 	hound.setClickCooldown(50)
 	if(length(contents) > 0)
@@ -139,12 +139,12 @@
 		cleaning = FALSE
 		update_gut()
 
-/obj/item/device/dogborg/sleeper/attack_self(mob/user)
+/obj/item/dogborg/sleeper/attack_self(mob/user)
 	if(..())
 		return
 	ui_interact(user)
 
-/obj/item/device/dogborg/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/item/dogborg/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -152,7 +152,7 @@
 		ui = new(user, src, ui_key, "dogborg_sleeper", name, 375, 550, master_ui, state)
 		ui.open()
 
-/obj/item/device/dogborg/sleeper/ui_data()
+/obj/item/dogborg/sleeper/ui_data()
 	var/list/data = list()
 	data["occupied"] = patient ? 1 : 0
 
@@ -197,7 +197,7 @@
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 
-/obj/item/device/dogborg/sleeper/ui_act(action, params)
+/obj/item/dogborg/sleeper/ui_act(action, params)
 	if(..())
 		return
 
@@ -221,7 +221,7 @@
 			clean_cycle()
 			. = TRUE
 
-/obj/item/device/dogborg/sleeper/proc/update_gut()
+/obj/item/dogborg/sleeper/proc/update_gut()
 	//Well, we HAD one, what happened to them?
 	if(patient in contents)
 		if(patient_laststat != patient.stat)
@@ -268,7 +268,7 @@
 	return
 
 //Gurgleborg process
-/obj/item/device/dogborg/sleeper/proc/clean_cycle()
+/obj/item/dogborg/sleeper/proc/clean_cycle()
 	//Sanity
 	for(var/I in items_preserved)
 		if(!(I in contents))
@@ -341,10 +341,10 @@
 	if(cleaning)
 		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
 
-/obj/item/device/dogborg/sleeper/proc/CheckAccepted(obj/item/I)
+/obj/item/dogborg/sleeper/proc/CheckAccepted(obj/item/I)
 	return is_type_in_typecache(I, important_items)
 
-/obj/item/device/dogborg/sleeper/proc/inject_chem(chem)
+/obj/item/dogborg/sleeper/proc/inject_chem(chem)
 	if(hound.cell.charge <= 800) //This is so borgs don't kill themselves with it. Remember, 750 charge used every injection.
 		to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
 		return
@@ -356,13 +356,13 @@
 	var/units = round(patient.reagents.get_reagent_amount(chem))
 	to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [chem] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
 
-/obj/item/device/dogborg/sleeper/medihound //Medihound sleeper
+/obj/item/dogborg/sleeper/medihound //Medihound sleeper
 	name = "Mobile Sleeper"
 	desc = "Equipment for medical hound. A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "sleeper"
 
-/obj/item/device/dogborg/sleeper/K9 //The K9 portabrig
+/obj/item/dogborg/sleeper/K9 //The K9 portabrig
 	name = "Mobile Brig"
 	desc = "Equipment for a K9 unit. A mounted portable-brig that holds criminals."
 	icon = 'icons/mob/dogborg.dmi'
@@ -371,13 +371,13 @@
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
 
-/obj/item/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
+/obj/item/storage/attackby(obj/item/dogborg/sleeper/K9, mob/user, proximity)
 	if(istype(K9))
 		K9.afterattack(src, user ,1)
 	else
 		. = ..()
 
-/obj/item/device/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
+/obj/item/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
 	hound = loc
 
 	if(!istype(target))
@@ -413,7 +413,7 @@
 		return
 	return
 
-/obj/item/device/dogborg/sleeper/compactor //Janihound gut.
+/obj/item/dogborg/sleeper/compactor //Janihound gut.
 	name = "garbage processor"
 	desc = "A mounted garbage compactor unit with fuel processor."
 	icon = 'icons/mob/dogborg.dmi'
@@ -423,13 +423,13 @@
 	injection_chems = null //So they don't have all the same chems as the medihound!
 	var/max_item_count = 30
 
-/obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
+/obj/item/storage/attackby(obj/item/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
 	if(istype(compactor))
 		compactor.afterattack(src, user ,1)
 	else
 		. = ..()
 
-/obj/item/device/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
+/obj/item/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
 	hound = loc
 	var/obj/item/target_obj = target
 	if(!istype(target))

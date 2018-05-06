@@ -13,6 +13,12 @@
 	category = slot_wear_suit
 	path = /obj/item/clothing/suit/poncho/red
 
+/datum/gear/redhood
+	name = "Red cloak"
+	category = slot_wear_suit
+	path = /obj/item/clothing/suit/hooded/cloak/david
+	cost = 3
+
 /datum/gear/jacketbomber
 	name = "Bomber jacket"
 	category = slot_wear_suit

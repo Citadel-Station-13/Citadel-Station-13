@@ -195,13 +195,8 @@
 	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
-<<<<<<< HEAD
-	slot_flags = SLOT_BACK
-	var/obj/item/device/assembly/igniter/sparkler = 0
-=======
 	slot_flags = ITEM_SLOT_BACK
 	var/obj/item/assembly/igniter/sparkler = 0
->>>>>>> ecd0d8b... Merge pull request #37476 from AnturK/thisalwaysbuggedme
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()

@@ -254,8 +254,8 @@
 				log_attack("[attacker] attempted to feed [H.contents] to [src] ([src.type]) but it failed.")
 
  // I just can't imagine this not being complained about
-	//Handle case: /obj/item/device/radio/beacon
-		if(/obj/item/device/radio/beacon)
+	//Handle case: /obj/item/radio/beacon
+		if(/obj/item/radio/beacon)
 			var/confirm = alert(user, "[src == user ? "Eat the beacon?" : "Feed the beacon to [src]?"]", "Confirmation", "Yes!", "Cancel")
 			if(confirm == "Yes!")
 				var/bellychoice = input("Which belly?","Select A Belly") in src.vore_organs
@@ -333,8 +333,8 @@
 			SA.update_icons()
 
 	//You're in a dogborg!
-	else if(istype(loc, /obj/item/device/dogborg/sleeper))
-		var/obj/item/device/dogborg/sleeper/belly = loc //The belly!
+	else if(istype(loc, /obj/item/dogborg/sleeper))
+		var/obj/item/dogborg/sleeper/belly = loc //The belly!
 
 		var/confirm = alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", "Okay", "Cancel")
 		if(!confirm == "Okay" || loc != belly)
