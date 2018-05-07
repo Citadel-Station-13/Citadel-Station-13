@@ -62,9 +62,9 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(is_wire_tool(W) && panel_open)
+	/*if(is_wire_tool(W) && panel_open)			CITADEL EDIT - They removed the wires because they don't like my cheating
 		wires.interact(user)
-		return
+		return*/
 
 	return ..()
 
