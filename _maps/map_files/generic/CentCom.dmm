@@ -5328,6 +5328,7 @@
 /area/tdome/tdomeobserve)
 "oU" = (
 /obj/structure/closet/secure_closet/bar{
+	locked = 0;
 	req_access_txt = "25"
 	},
 /obj/machinery/light{
