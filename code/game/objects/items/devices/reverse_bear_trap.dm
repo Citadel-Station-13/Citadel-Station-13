@@ -82,13 +82,8 @@
 	..()
 
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
-<<<<<<< HEAD
 	if(target.get_item_by_slot(slot_head))
-		to_chat(user, "<span class='warning'>Remove their headgear first!</span>")
-=======
-	if(target.get_item_by_slot(SLOT_HEAD))
 		to_chat(user, "<span class='warning'>Remove [target.p_their()] headgear first!</span>")
->>>>>>> ba1030f... Makes more messages pronoun sensitive (#37582)
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
 	"<span class='userdanger'>[target] starts forcing [src] onto your head!</span>", "<i>You hear clanking.</i>")
