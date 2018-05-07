@@ -120,6 +120,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/parallax
 
+	var/ambientocclusion = TRUE
+
 	var/uplink_spawn_loc = UPLINK_PDA
 
 	var/list/exp = list()
@@ -456,6 +458,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
+<<<<<<< HEAD
+=======
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
+			switch (parallax)
+				if (PARALLAX_LOW)
+					dat += "Low"
+				if (PARALLAX_MED)
+					dat += "Medium"
+				if (PARALLAX_INSANE)
+					dat += "Insane"
+				if (PARALLAX_DISABLE)
+					dat += "Disabled"
+				else
+					dat += "High"
+			dat += "</a><br>"
+
+			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
+
+>>>>>>> cdf36c2... adds ambient occlusion as a client preference (#37406)
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
 				if (!p_map)
@@ -1534,6 +1557,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("toggledigestionnoise")
 					cit_toggles ^= DIGESTION_NOISES
 				//END CITADEL EDIT
+
+				if("ambientocclusion")
+					ambientocclusion = !ambientocclusion
+					if(parent && parent.screen && parent.screen.len)
+						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+						PM.filters -= AMBIENT_OCCLUSION
+						if(ambientocclusion)
+							PM.filters += AMBIENT_OCCLUSION
 
 				if("save")
 					save_preferences()
