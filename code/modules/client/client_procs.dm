@@ -165,6 +165,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
+	world.SetConfig("APP/admin", ckey, "role=admin")			//CITADEL EDIT - Allows admins to reboot in OOM situations
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
@@ -179,10 +180,15 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	holder = GLOB.admin_datums[ckey]
+	var/debug_tools_allowed = FALSE			//CITADEL EDIT
 	if(holder)
 		GLOB.admins |= src
 		holder.owner = src
 		connecting_admin = TRUE
+		//CITADEL EDIT
+		if(check_rights_for(src, R_DEBUG))
+			debug_tools_allowed = TRUE
+		//END CITADEL EDIT
 	else if(GLOB.deadmins[ckey])
 		verbs += /client/proc/readmin
 		connecting_admin = TRUE
@@ -197,6 +203,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autorank, ckey)
+	//CITADEL EDIT
+	if(check_rights_for(src, R_DEBUG))	//check if autoadmin gave us it
+		debug_tools_allowed = TRUE
+	if(!debug_tools_allowed)
+		world.SetConfig("APP/admin", ckey, null)
+	//END CITADEL EDIT
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(isnull(address) || (address in localhost_addresses))
