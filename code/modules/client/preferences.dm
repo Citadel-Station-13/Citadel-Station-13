@@ -871,6 +871,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		Traits are applied at roundstart and cannot normally be removed.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
+<<<<<<< HEAD
 		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
 		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
 		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
@@ -879,6 +880,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/trait_name = initial(T.name)
 			var/has_trait
 			var/trait_cost = initial(T.value) * -1
+=======
+		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
+		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
+		for(var/V in SSquirks.quirks)
+			var/datum/quirk/T = SSquirks.quirks[V]
+			var/quirk_name = initial(T.name)
+			var/has_quirk
+			var/quirk_cost = initial(T.value) * -1
+>>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 			var/lock_reason = "This trait is unavailable."
 			var/trait_conflict = FALSE
 			for(var/_V in all_traits)
@@ -986,11 +997,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						neutral_traits -= trait
 						all_traits -= trait
 					else
+<<<<<<< HEAD
 						if(all_traits.len >= MAX_TRAITS)
 							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
 							return
 						neutral_traits += trait
 						all_traits += trait
+=======
+						neutral_quirks += quirk
+						all_quirks += quirk
+>>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 				else
 					var/balance = GetTraitBalance()
 					if(trait in positive_traits)
@@ -1003,8 +1019,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						negative_traits -= trait
 						all_traits -= trait
 					else if(value > 0)
+<<<<<<< HEAD
 						if(all_traits.len >= MAX_TRAITS)
 							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+=======
+						if(positive_quirks.len >= MAX_QUIRKS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
+>>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 							return
 						if(balance - value < 0)
 							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
@@ -1012,12 +1033,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						positive_traits += trait
 						all_traits += trait
 					else
+<<<<<<< HEAD
 						if(all_traits.len >= MAX_TRAITS)
 							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
 							return
 						negative_traits += trait
 						all_traits += trait
 				SetTraits(user)
+=======
+						negative_quirks += quirk
+						all_quirks += quirk
+				SetQuirks(user)
+>>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 			if("reset")
 				all_traits = list()
 				positive_traits = list()
