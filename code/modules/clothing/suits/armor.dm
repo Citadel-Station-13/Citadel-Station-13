@@ -165,6 +165,7 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
+<<<<<<< HEAD
 //Reactive armor
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive armor"
@@ -345,6 +346,8 @@
 /obj/item/clothing/suit/armor/reactive/table/emp_act()
 	return
 
+=======
+>>>>>>> fb42bf3... Anomaly Armour Research (#37558)
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom
