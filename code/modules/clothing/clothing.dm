@@ -81,12 +81,21 @@
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
-
+	if (!istype(user))
+		return
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+<<<<<<< HEAD
 		for(var/variable in user_vars_to_edit)
 			if(variable in user.vars)
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
+=======
+		if (LAZYLEN(user_vars_to_edit))
+			for(var/variable in user_vars_to_edit)
+				if(variable in user.vars)
+					LAZYSET(user_vars_remembered, variable, user.vars[variable])
+					user.vv_edit_var(variable, user_vars_to_edit[variable])
+>>>>>>> 1f887a4... Merge pull request #37782 from vuonojenmustaturska/ohno
 
 /obj/item/clothing/examine(mob/user)
 	..()
