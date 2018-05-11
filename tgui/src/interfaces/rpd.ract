@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<link rel='ractive' href='./rpd/dirsel.ract'>
-<link rel='ractive' href='./rpd/colorsel.ract'>
-
-{{#if data.mode >= 0}}
-	<dirsel/>
-{{/if}}
-{{#if data.mode == -2 || data.mode == 0}}
-	<colorsel/>
-=======
 <link rel='stylesheet' href='spritesheet_pipes.css'>
 
 <ui-display title='Direction'>
@@ -27,7 +17,6 @@
 				action='color' params='{"paint_color": {{@key}}}'>{{@key}}</ui-button>
 		{{/each}}
 	</ui-display>
->>>>>>> cf6f064... Use spritesheets to reduce time spent sending PNG assets by 90+% (#37399)
 {{/if}}
 <ui-display title='Utilities'>
 	<ui-section>
