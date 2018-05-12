@@ -55,6 +55,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
+	var/ambientocclusion = TRUE
 
 	var/uses_glasses_colour = 0
 
@@ -365,7 +366,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
-			
+
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -402,6 +403,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
+			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
@@ -514,7 +516,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe. 
+			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
@@ -1223,7 +1225,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_human
 					if(new_tail)
-						features["tail_human"] = new_tail 
+						features["tail_human"] = new_tail
 
 				if("snout")
 					var/new_snout
@@ -1374,7 +1376,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps
-					else 
+					else
 						clientfps = 0
 						parent.fps = 0
 				if("ui")
@@ -1409,9 +1411,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("balls_internal")
 					features["balls_internal"] = !features["balls_internal"]
 				if("eggsack_internal")
-					features["eggsack_internal"] = !features["eggsack_internal"]				
+					features["eggsack_internal"] = !features["eggsack_internal"]
 				if("has_breasts")
-					features["has_breasts"] = !features["has_breasts"]	
+					features["has_breasts"] = !features["has_breasts"]
 				if("has_vag")
 					features["has_vag"] = !features["has_vag"]
 				if("has_womb")
@@ -1524,6 +1526,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 					if (parent && parent.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
+
+				if("ambientocclusion")
+					ambientocclusion = !ambientocclusion
+					if(parent && parent.screen && parent.screen.len)
+						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+						PM.filters = null //byond doesn't support finding specific filters within the filters var, as the filters var is a fake list
+						if(ambientocclusion)
+							PM.filters += AMBIENT_OCCLUSION
 				// Citadel edit - Prefs don't work outside of this. :c
 				if("hound_sleeper")
 					cit_toggles ^= MEDIHOUND_SLEEPER

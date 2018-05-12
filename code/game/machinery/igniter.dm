@@ -2,6 +2,7 @@
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
+	plane = OPENTURF_PLANE
 	icon_state = "igniter0"
 	var/id = null
 	var/on = FALSE
