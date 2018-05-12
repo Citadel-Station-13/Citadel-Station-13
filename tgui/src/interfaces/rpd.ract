@@ -1,11 +1,22 @@
-<link rel='ractive' href='./rpd/dirsel.ract'>
-<link rel='ractive' href='./rpd/colorsel.ract'>
+<link rel='stylesheet' href='spritesheet_pipes.css'>
 
-{{#if data.mode >= 0}}
-	<dirsel/>
-{{/if}}
-{{#if data.mode == -2 || data.mode == 0}}
-	<colorsel/>
+<ui-display title='Direction'>
+	{{#each data.preview_rows}}
+		<ui-section>
+			{{#each previews}}
+				<ui-button state='{{selected ? "selected" : null}}' action='setdir'
+					params='{"dir": {{dir}}, "flipped": {{flipped}}}'><span class="pipes32x32 {{dir}}-{{icon_state}}" title="{{dir_name}}"></span></ui-button>
+			{{/each}}
+		</ui-section>
+	{{/each}}
+</ui-display>
+{{#if data.category == 0}}
+	<ui-display title='Color'>
+		{{#each data.paint_colors}}
+			<ui-button state='{{@key == data.selected_color ? "selected" : null}}'
+				action='color' params='{"paint_color": {{@key}}}'>{{@key}}</ui-button>
+		{{/each}}
+	</ui-display>
 {{/if}}
 <ui-display title='Utilities'>
 	<ui-section>
