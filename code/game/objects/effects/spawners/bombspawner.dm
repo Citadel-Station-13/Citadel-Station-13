@@ -15,13 +15,8 @@
 
 /obj/effect/spawner/newbomb/Initialize()
 	. = ..()
-<<<<<<< HEAD
-	var/obj/item/device/transfer_valve/V = new(src.loc)
-	var/obj/item/tank/internals/plasma/full/PT = new(V)
-=======
 	var/obj/item/transfer_valve/V = new(src.loc)
 	var/obj/item/tank/internals/plasma/PT = new(V)
->>>>>>> c0b7f77... Modified bomb and syndicate bomb spawner so Cuban Pete bombs maxcap and work again (#37293)
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
 	PT.air_contents.assert_gas(/datum/gas/plasma)
