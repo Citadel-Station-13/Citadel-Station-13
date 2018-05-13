@@ -721,8 +721,7 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
-<<<<<<< HEAD
-=======
+	
 /datum/reagent/consumable/menthol
 	name = "Menthol"
 	id = "menthol"
@@ -741,4 +740,3 @@
 	taste_description = "sweet pomegranates"
 	glass_name = "glass of grenadine"
 	glass_desc = "Delicious flavored syrup."
->>>>>>> b0b7f2d... Adds grenadine. (#37598)
