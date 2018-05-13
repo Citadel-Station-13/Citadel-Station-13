@@ -343,3 +343,11 @@
 	desc = "A piece of paper folded into neat little hat."
 	icon_state = "paperhat"
 	item_state = "paperhat"
+
+/obj/item/clothing/suit/toggle/labcoat/mad/rdcoat
+	name = "RD Labcoat"
+	desc = "An oddly special looking coat."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "rdcoat"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "rdcoat"
