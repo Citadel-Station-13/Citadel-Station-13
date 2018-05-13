@@ -1546,9 +1546,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
-<<<<<<< HEAD
-	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
-=======
 	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
 
 /datum/reagent/consumable/ethanol/sake
@@ -1616,4 +1613,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
->>>>>>> 5a78cf1... Adds 5 new drinks (#37589)
