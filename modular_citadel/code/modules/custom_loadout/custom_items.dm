@@ -344,7 +344,7 @@
 	icon_state = "paperhat"
 	item_state = "paperhat"
 
-/obj/item/clothing/suit/toggle/labcoat/mad/rdcoat
+/obj/item/clothing/suit/toggle/labcoat/mad/techcoat
 	name = "Techomancers Labcoat"
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
