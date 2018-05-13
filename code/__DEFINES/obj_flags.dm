@@ -19,8 +19,6 @@
 #define IN_INVENTORY			(1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
-<<<<<<< HEAD
-=======
 #define SLOWS_WHILE_IN_HAND		(1<<4)
 #define NO_MAT_REDEMPTION			(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 
@@ -32,4 +30,3 @@
 #define MASKINTERNALS				    (1<<3)		// mask allows internals
 #define NOSLIP                  (1<<4)   //prevents from slipping on wet floors, in space etc
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
->>>>>>> ccf8fc5... Kills off three more flags from flags_2 (#37529)
