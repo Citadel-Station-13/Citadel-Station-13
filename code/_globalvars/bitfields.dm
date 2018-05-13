@@ -127,12 +127,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"BANG_PROTECT_2" = BANG_PROTECT_2,
 		"HEALS_EARS_2" = HEALS_EARS_2,
 		"OMNITONGUE_2" = OMNITONGUE_2,
-<<<<<<< HEAD
-		"TESLA_IGNORE_2" = TESLA_IGNORE_2,
-		"NO_MAT_REDEMPTION_2" = NO_MAT_REDEMPTION_2,
-		"LAVA_PROTECT_2" = LAVA_PROTECT_2
-		)
-=======
 		"TESLA_IGNORE_2" = TESLA_IGNORE_2
 		),
 	"clothing_flags" = list(
@@ -143,5 +137,4 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"NOSLIP" = NOSLIP,
 		"THICKMATERIAL" = THICKMATERIAL,
 	)
->>>>>>> ccf8fc5... Kills off three more flags from flags_2 (#37529)
 	))
