@@ -623,9 +623,6 @@
 	id = "crevice_spike"
 	results = list("crevice_spike" = 6)
 	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
-<<<<<<< HEAD
-	mix_message = "The mixture stings your eyes as it settles."
-=======
 	mix_message = "The mixture stings your eyes as it settles."
 
 /datum/chemical_reaction/sake
@@ -665,4 +662,3 @@
 	id = "mojito"
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
->>>>>>> 5a78cf1... Adds 5 new drinks (#37589)
