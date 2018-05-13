@@ -19,11 +19,8 @@
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/limejuice = 4,
-<<<<<<< HEAD
-=======
 					/obj/item/reagent_containers/food/drinks/bottle/grenadine = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/menthol = 4,
->>>>>>> b0b7f2d... Adds grenadine. (#37598)
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4,
 					/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8,
