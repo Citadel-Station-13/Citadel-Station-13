@@ -92,5 +92,5 @@
 	if(!uses)
 		user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
 		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-	else if(uses =< 3)
+	else if(uses <= 3)
 		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead
