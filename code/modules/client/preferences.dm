@@ -986,16 +986,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						neutral_traits -= trait
 						all_traits -= trait
 					else
-<<<<<<< HEAD
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
-							return
-						neutral_traits += trait
-						all_traits += trait
-=======
 						neutral_quirks += quirk
 						all_quirks += quirk
->>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 				else
 					var/balance = GetTraitBalance()
 					if(trait in positive_traits)
@@ -1008,13 +1000,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						negative_traits -= trait
 						all_traits -= trait
 					else if(value > 0)
-<<<<<<< HEAD
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
-=======
 						if(positive_quirks.len >= MAX_QUIRKS)
 							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
->>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 							return
 						if(balance - value < 0)
 							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
@@ -1022,18 +1009,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						positive_traits += trait
 						all_traits += trait
 					else
-<<<<<<< HEAD
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
-							return
-						negative_traits += trait
-						all_traits += trait
-				SetTraits(user)
-=======
 						negative_quirks += quirk
 						all_quirks += quirk
 				SetQuirks(user)
->>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 			if("reset")
 				all_traits = list()
 				positive_traits = list()
