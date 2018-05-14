@@ -120,6 +120,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/parallax
 
+	var/ambientocclusion = TRUE
+
 	var/uplink_spawn_loc = UPLINK_PDA
 
 	var/list/exp = list()
@@ -489,6 +491,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "High"
 			dat += "</a><br>"
+
+			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1534,6 +1538,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("toggledigestionnoise")
 					cit_toggles ^= DIGESTION_NOISES
 				//END CITADEL EDIT
+
+				if("ambientocclusion")
+					ambientocclusion = !ambientocclusion
+					if(parent && parent.screen && parent.screen.len)
+						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+						PM.filters -= AMBIENT_OCCLUSION
+						if(ambientocclusion)
+							PM.filters += AMBIENT_OCCLUSION
 
 				if("save")
 					save_preferences()
