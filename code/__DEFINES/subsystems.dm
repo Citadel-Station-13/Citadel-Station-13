@@ -1,11 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 4
-<<<<<<< HEAD
-#define DB_MINOR_VERSION 1
-=======
 #define DB_MINOR_VERSION 3
->>>>>>> 69cdd4f... Adds role time log table and triggers (#37763)
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
