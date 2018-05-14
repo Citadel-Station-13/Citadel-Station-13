@@ -871,16 +871,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		Traits are applied at roundstart and cannot normally be removed.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
-<<<<<<< HEAD
-		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
-		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
-		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
-		for(var/V in SStraits.traits)
-			var/datum/trait/T = SStraits.traits[V]
-			var/trait_name = initial(T.name)
-			var/has_trait
-			var/trait_cost = initial(T.value) * -1
-=======
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
 		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
@@ -889,7 +879,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/quirk_name = initial(T.name)
 			var/has_quirk
 			var/quirk_cost = initial(T.value) * -1
->>>>>>> e74f33d... Quirk limit now only applies to positive quirks
 			var/lock_reason = "This trait is unavailable."
 			var/trait_conflict = FALSE
 			for(var/_V in all_traits)
