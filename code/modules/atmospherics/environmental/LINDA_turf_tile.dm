@@ -253,7 +253,7 @@
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
-	if(pressure_difference >= throw_pressure_limit && move_prob > PROBABILITY_OFFSET && prob(move_prob))
+	if(pressure_difference >= throw_pressure_limit && move_prob > PROBABILITY_OFFSET && prob(move_prob/throw_pressure_limit))
 		to_chat(src, "<span class='warning'>You feel a sudden push from the air around you.</span>")
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
