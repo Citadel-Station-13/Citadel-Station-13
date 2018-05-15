@@ -484,7 +484,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "You must first join the Discord to verify your account before joining this server. Please ping an admin once you've joined and read the rules. https://discord.gg/E6SQuhz")
+			to_chat(src, "You must first join the Discord to verify your account before joining this server. Please ping an admin once you've joined and read the rules. https://discord.gg/E6SQuhz") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
