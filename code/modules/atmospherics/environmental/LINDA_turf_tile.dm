@@ -257,9 +257,9 @@
 		to_chat(src, "<span class='warning'>You feel a sudden push from the air around you.</span>")
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			C.Knockdown(20)
+			C.Knockdown(5)
 		throw_at(get_edge_target_turf(src, direction), pressure_difference / 10, pressure_difference / 200, null, FALSE)
-	else if (move_prob > 10 && prob(move_prob))
+	else if (move_prob > 20 && prob(move_prob))
 		step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 
