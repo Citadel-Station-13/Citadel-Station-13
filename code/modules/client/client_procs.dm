@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (citadel_client_procs(href_list))
 		return
 	// CITADEL End
-	
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -403,9 +403,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
-	
+
 	hook_vr("client_new",list(src)) // CIT CHANGE - hook for client/New() changes
-	
+
 	Master.UpdateTickRate()
 
 //////////////
@@ -484,7 +484,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
+			to_chat(src, "You must first join the Discord to verify your account before joining this server. Please ping an admin once you've joined and read the rules. https://discord.gg/E6SQuhz") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
