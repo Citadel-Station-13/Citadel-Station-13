@@ -31225,9 +31225,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"dWc" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -79414,7 +79411,7 @@ bfP
 bjc
 bfP
 bfP
-dWc
+aad
 aaa
 aaa
 aaa
