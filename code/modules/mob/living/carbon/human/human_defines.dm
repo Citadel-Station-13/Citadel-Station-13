@@ -1,7 +1,7 @@
 /mob/living/carbon/human
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-	pressure_resistance = 8
+	pressure_resistance = 15
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
