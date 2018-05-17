@@ -387,10 +387,14 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
-	
+
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"
+
+/datum/map_template/shuttle/aux_base/small
+	suffix = "small"
+	name = "auxilliary base (Small)"
 
 /datum/map_template/shuttle/escape_pod/default
 	suffix = "default"
@@ -407,3 +411,22 @@
 /datum/map_template/shuttle/pirate/default
 	suffix = "default"
 	name = "pirate ship (Default)"
+<<<<<<< HEAD
+=======
+
+/datum/map_template/shuttle/ruin/caravan_victim
+	suffix = "caravan_victim"
+	name = "Small Freighter"
+
+/datum/map_template/shuttle/ruin/pirate_cutter
+	suffix = "pirate_cutter"
+	name = "Pirate Cutter"
+
+/datum/map_template/shuttle/ruin/syndicate_dropship
+	suffix = "syndicate_dropship"
+	name = "Syndicate Dropship"
+
+/datum/map_template/shuttle/ruin/syndicate_fighter
+	suffix = "syndicate_fighter"
+	name = "Syndicate Fighter"
+>>>>>>> 77ed114... Merge pull request #37736 from pubby/newpub
