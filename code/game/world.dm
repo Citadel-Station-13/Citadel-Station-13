@@ -20,7 +20,7 @@ GLOBAL_PROTECT(security_mode)
 	TgsNew()
 
 	GLOB.revdata = new
-	
+
 	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
@@ -262,8 +262,10 @@ GLOBAL_PROTECT(security_mode)
 		if (M.client)
 			n++
 
+	features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+
 	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
-		features += "code [get_security_level()]"
+		features += "[get_security_level()] alert"
 
 	if (n > 1)
 		features += "~[n] players"
