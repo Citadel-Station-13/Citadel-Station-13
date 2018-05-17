@@ -15,6 +15,11 @@
 					/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
+<<<<<<< HEAD
+=======
+					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
+>>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
 					/obj/item/reagent_containers/food/drinks/ale = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,
@@ -38,5 +43,10 @@
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
+<<<<<<< HEAD
 	charges = list(59, 4, 0)//of 178 standard, 12 contraband
 	init_charges = list(59, 4, 0)
+=======
+	charges = list(61, 4, 0)//of 182 standard, 12 contraband
+	init_charges = list(61, 4, 0)
+>>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
