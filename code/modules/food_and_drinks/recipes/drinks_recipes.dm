@@ -662,8 +662,6 @@
 	id = "mojito"
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
-<<<<<<< HEAD
-=======
 
 /datum/chemical_reaction/fernet_cola
 	name = "Fernet Cola"
@@ -683,4 +681,3 @@
 	id = "branca_menta"
 	results = list("branca_menta" = 3)
 	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)
->>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
