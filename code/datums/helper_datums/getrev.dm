@@ -21,16 +21,10 @@
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-<<<<<<< HEAD
-				var/tmcommit = testmerge[line]["commit"]
-				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
-=======
 				var/datum/tgs_revision_information/test_merge/tm = line
 				var/tmcommit = tm.commit
 				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
 				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
->>>>>>> 4cb7ed1... Fixes incorrect test merge feedback (#37899)
 		if(originmastercommit)
 			log_world("Based off origin/master commit [originmastercommit]")
 	else if(originmastercommit)
