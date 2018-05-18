@@ -179,12 +179,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
-
-<<<<<<< HEAD
-	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
-=======
 	reagent_ids = list("beer", "orangejuice", "grenadine" ,"limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "fernet")
->>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
