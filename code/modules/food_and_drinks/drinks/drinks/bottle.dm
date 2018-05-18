@@ -298,8 +298,6 @@
 	icon_state = "grappabottle"
 	list_reagents = list("grappa" = 100)
 
-<<<<<<< HEAD
-=======
 /obj/item/reagent_containers/food/drinks/bottle/sake
 	name = "Ryo's traditional sake"
 	desc = "Sweet as can be, and burns like fire going down."
@@ -322,8 +320,7 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list("fernet" = 100)
-
->>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
+	
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
