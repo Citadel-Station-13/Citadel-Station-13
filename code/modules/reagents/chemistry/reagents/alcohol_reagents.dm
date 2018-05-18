@@ -1613,8 +1613,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
-<<<<<<< HEAD
-=======
 	
 /datum/reagent/consumable/ethanol/fernet
 	name = "Fernet"
@@ -1703,4 +1701,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustStaminaLoss(35)
 		. = TRUE
 	..()
->>>>>>> 703ab07... Adds Fernet, a digestif that reduces your satiety. (#37869)
