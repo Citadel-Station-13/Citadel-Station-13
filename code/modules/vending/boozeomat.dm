@@ -39,10 +39,5 @@
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-<<<<<<< HEAD
-	charges = list(58, 4, 0)//of 174 standard, 12 contraband
-	init_charges = list(58, 4, 0)
-=======
 	charges = list(61, 4, 0)//of 182 standard, 12 contraband
 	init_charges = list(61, 4, 0)
->>>>>>> b0b7f2d... Adds grenadine. (#37598)
