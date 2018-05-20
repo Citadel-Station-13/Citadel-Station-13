@@ -7206,6 +7206,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -8562,6 +8563,7 @@
 /area/crew_quarters/fitness)
 "awB" = (
 /obj/effect/landmark/start/assistant,
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -9578,13 +9580,10 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
 "azh" = (
-/obj/machinery/camera{
-	c_tag = "Fitness Room South";
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -9995,6 +9994,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
 	},
@@ -10032,7 +10032,6 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness)
 "aAo" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6
@@ -45781,6 +45780,12 @@
 	dir = 1
 	},
 /area/engine/engineering)
+"clO" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/crew_quarters/fitness)
 "clQ" = (
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1
@@ -52183,6 +52188,7 @@
 "gjl" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+<<<<<<< HEAD
 "gqU" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
@@ -52194,6 +52200,18 @@
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
+=======
+"gsz" = (
+/obj/machinery/camera{
+	c_tag = "Fitness Room South";
+	dir = 1
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/crew_quarters/fitness)
+>>>>>>> 121c62f... Murderdome, a VR experience project w/ general VR improvements (#37730)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -90144,14 +90162,14 @@ aaa
 aaa
 aaf
 arj
-arj
+clO
 asZ
 aua
-aua
+clO
 awB
 axY
 azh
-arj
+gsz
 arj
 aaf
 aaa

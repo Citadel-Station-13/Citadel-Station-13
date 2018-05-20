@@ -49880,8 +49880,34 @@
 	icon_state = "cryopod-open";
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/machinery/light{
 	dir = 8
+=======
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"daY" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"dbi" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"dci" = (
+/obj/structure/rack,
+/obj/item/gun/energy/laser/practice,
+/obj/item/clothing/ears/earmuffs,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"dcL" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"dgg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+>>>>>>> 121c62f... Murderdome, a VR experience project w/ general VR improvements (#37730)
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -50406,6 +50432,234 @@
 /obj/item/stock_parts/cell/super,
 /obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/whitepurple/side{
+<<<<<<< HEAD
+=======
+	dir = 10
+	},
+/area/science/explab)
+"fkH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "Experimentation Lab Testing Zone";
+	dir = 1;
+	network = list("ss13","rd")
+	},
+/turf/open/floor/plasteel,
+/area/science/explab)
+"fmh" = (
+/turf/open/floor/wood,
+/area/maintenance/department/engine)
+"fmU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/escape{
+	dir = 1
+	},
+/area/hallway/secondary/exit/departure_lounge)
+"fon" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
+"fow" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/security/checkpoint/customs)
+"fpT" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
+"ftp" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/department/engine)
+"ftW" = (
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/secondary/exit/departure_lounge)
+"fuP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/wood,
+/area/lawoffice)
+"fuR" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"fvb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
+"fwe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/secondary/exit/departure_lounge)
+"fwl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/sorting)
+"fwr" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/science/mixing)
+"fwI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"fwR" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plasteel/dark,
+/area/engine/engineering)
+"fyF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"fyO" = (
+/turf/open/space/basic,
+/area/engine/engineering)
+"fzu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/clothing/gloves/color/black,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/department/engine)
+"fAx" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"fBt" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Departure Lounge"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/escape,
+/area/hallway/secondary/exit/departure_lounge)
+"fBz" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/science/mixing)
+"fFv" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/engine/engineering)
+"fIu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"fIN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"fIT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/chapel/main/monastery)
+"fKj" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	name = "Mineral Room"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
+"fLG" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
+"fNv" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"fQf" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"fRs" = (
+/turf/closed/wall,
+/area/crew_quarters/heads/hor)
+"fTY" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Cargo Escape Airlock"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
+"fUA" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/escape{
+>>>>>>> 121c62f... Murderdome, a VR experience project w/ general VR improvements (#37730)
 	dir = 1
 	},
 /area/science/circuit)
@@ -91007,12 +91261,12 @@ apX
 apX
 apX
 avl
-awv
-avk
+fIu
+dbi
 aIh
 azA
-avk
-avk
+dbi
+dbi
 aDk
 aEd
 aFb
