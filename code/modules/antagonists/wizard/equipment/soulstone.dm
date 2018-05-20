@@ -222,11 +222,7 @@
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
-<<<<<<< HEAD
-		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
-=======
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
->>>>>>> 8faa41a... Fixes soulstone runtime (#37883)
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
 	newstruct.clear_alert("bloodsense")
