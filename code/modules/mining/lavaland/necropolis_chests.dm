@@ -192,8 +192,6 @@
 	icon_state = "asclepius_active"
 	activated = TRUE
 
-<<<<<<< HEAD
-=======
 //Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori
 	name = "Memento Mori"
@@ -251,8 +249,7 @@
 		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
 		if(do_after(owner, 40, target = owner))
 			MM.mori()
-
->>>>>>> bf3a7ef... fix
+			
 //Wisp Lantern
 /obj/item/wisp_lantern
 	name = "spooky lantern"
