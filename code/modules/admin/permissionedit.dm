@@ -195,8 +195,6 @@
 		return FALSE
 	if(use_db)
 		. = sanitizeSQL(.)
-<<<<<<< HEAD
-=======
 		//if an admin exists without a datum they won't be caught by the above
 		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin")] WHERE ckey = '[.]'")
 		if(!query_admin_in_db.warn_execute())
@@ -204,7 +202,6 @@
 		if(query_admin_in_db.NextRow())
 			to_chat(usr, "<span class='danger'>[.] already listed in admin database. Check the Management tab if they don't appear in the list of admins.</span>")
 			return FALSE
->>>>>>> e44298a... some dbadmin fixes (#37623)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
 			return FALSE
