@@ -9,55 +9,6 @@
 /datum/admins/proc/edit_admin_permissions()
 	if(!check_rights(R_PERMISSIONS))
 		return
-<<<<<<< HEAD
-
-	var/list/output = list({"<!DOCTYPE html>
-<html>
-<head>
-<title>Permissions Panel</title>
-<script type='text/javascript' src='search.js'></script>
-<link rel='stylesheet' type='text/css' href='panels.css'>
-</head>
-<body onload='selectTextField();updateSearch();'>
-<div id='main'><table id='searchable' cellspacing='0'>
-<tr class='title'>
-<th style='width:150px;text-align:right;'>CKEY <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=add'>\[+\]</a></th>
-<th style='width:125px;'>RANK</th>
-<th style='width:40%;'>PERMISSIONS</th>
-<th style='width:20%;'>DENIED</th>
-<th style='width:40%;'>ALLOWED TO EDIT</th>
-</tr>
-"})
-
-	for(var/adm_ckey in GLOB.admin_datums+GLOB.deadmins)
-		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
-		if(!D)
-			D = GLOB.deadmins[adm_ckey]
-			if (!D)
-				continue
-
-		var/deadminlink = ""
-		if (D.deadmined)
-			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;ckey=[adm_ckey]'>\[RA\]</a>"
-		else
-			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;ckey=[adm_ckey]'>\[DA\]</a>"
-
-		output += "<tr>"
-		output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;ckey=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
-		output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
-		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
-		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
-		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
-		output += "</tr>"
-
-	output += {"
-</table></div>
-<div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div>
-</body>
-</html>"}
-
-	usr << browse(jointext(output, ""),"window=editrights;size=1000x650")
-=======
 	var/list/output = list("<link rel='stylesheet' type='text/css' href='panels.css'><a href='?_src_=holder;[HrefToken()];editrightsbrowser=1'>\[Permissions\]</a>")
 	if(action)
 		output += " | <a href='?_src_=holder;[HrefToken()];editrightsbrowserlog=1;editrightspage=0'>\[Log\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1'>\[Management\]</a><hr style='background:#000000; border:0; height:3px'>"
@@ -158,7 +109,6 @@
 			output += "</tr>"
 		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
 	usr << browse("<!DOCTYPE html><html>[jointext(output, "")]</html>","window=editrights;size=1000x650")
->>>>>>> e44298a... some dbadmin fixes (#37623)
 
 /datum/admins/proc/edit_rights_topic(list/href_list)
 	if(!check_rights(R_PERMISSIONS))
