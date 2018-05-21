@@ -278,3 +278,9 @@ datum/gear/darksabresheath
 	path = 	/obj/item/ssword_kit
 	ckeywhitelist = list("phillip458")
 
+/datum/gear/techcoat
+	name = "Techomancers Labcoat"
+	category = slot_in_backpack
+	path = /obj/item/clothing/suit/toggle/labcoat/mad/techcoat
+	ckeywhitelist = list("wilchen")
+
