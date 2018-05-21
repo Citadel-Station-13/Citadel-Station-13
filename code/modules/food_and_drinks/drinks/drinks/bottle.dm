@@ -298,6 +298,29 @@
 	icon_state = "grappabottle"
 	list_reagents = list("grappa" = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/sake
+	name = "Ryo's traditional sake"
+	desc = "Sweet as can be, and burns like fire going down."
+	icon_state = "sakebottle"
+	list_reagents = list("sake" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+	. = ..()
+	if(prob(10))
+		name = "Fluffy Tail Sake"
+		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
+		icon_state = "sakebottle_k"
+	else if(prob(10))
+		name = "Inubashiri's Home Brew"
+		desc += " Awoo."
+		icon_state = "sakebottle_i"
+
+/obj/item/reagent_containers/food/drinks/bottle/fernet
+	name = "Fernet Bronca"
+	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
+	icon_state = "fernetbottle"
+	list_reagents = list("fernet" = 100)
+	
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
