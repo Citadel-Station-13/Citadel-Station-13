@@ -11754,22 +11754,8 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEN" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/mineral/gold{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/storage/belt/champion,
 /obj/effect/turf_decal/bot_white/right,
+/obj/structure/closet/crate/goldcrate,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -11781,30 +11767,8 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aEP" = (
-/obj/item/coin/silver{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/coin/silver{
-	pixel_x = 12;
-	pixel_y = 7
-	},
-/obj/item/coin/silver{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/coin/silver{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/coin/silver{
-	pixel_x = 5;
-	pixel_y = -8
-	},
-/obj/structure/closet/crate{
-	name = "Silver Crate"
-	},
 /obj/effect/turf_decal/bot_white/left,
+/obj/structure/closet/crate/silvercrate,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -33128,14 +33092,7 @@
 /area/storage/tech)
 "bGt" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/borgupload{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/aiupload{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bGu" = (
@@ -33152,45 +33109,20 @@
 /area/storage/tech)
 "bGw" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/pandemic{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/rdconsole,
-/obj/item/circuitboard/machine/rdserver{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/machine/destructive_analyzer,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/item/circuitboard/computer/aifixer,
-/obj/item/circuitboard/computer/teleporter,
-/obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/circuitboard/machine/mechfab,
+/obj/effect/spawner/lootdrop/techstorage/rnd,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGx" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/processor,
-/obj/item/circuitboard/machine/telecomms/receiver,
-/obj/item/circuitboard/machine/telecomms/server,
-/obj/item/circuitboard/machine/telecomms/bus,
-/obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/computer/message_monitor{
-	pixel_y = -5
-	},
+/obj/effect/spawner/lootdrop/techstorage/tcomms,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGy" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/mining,
-/obj/item/circuitboard/machine/autolathe{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/computer/arcade/battle,
+/obj/effect/spawner/lootdrop/techstorage/service,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bGz" = (
@@ -33668,21 +33600,10 @@
 /area/crew_quarters/theatre)
 "bHG" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/crew{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/card{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bHH" = (
@@ -34387,14 +34308,7 @@
 /area/storage/tech)
 "bJh" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/robotics{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/mecha_control{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bJi" = (
@@ -34410,43 +34324,17 @@
 /area/storage/tech)
 "bJk" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/cloning,
-/obj/item/circuitboard/computer/med_data{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/machine/clonescanner,
-/obj/item/circuitboard/machine/clonepod,
-/obj/item/circuitboard/computer/scan_consolenew,
-/obj/item/circuitboard/machine/smoke_machine,
+/obj/effect/spawner/lootdrop/techstorage/medical,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJl" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/powermonitor{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/stationalert{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/circuitboard/computer/atmos_alert{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/effect/spawner/lootdrop/techstorage/engineering,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJm" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/secure_data{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/security{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/effect/spawner/lootdrop/techstorage/security,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bJn" = (
@@ -45458,28 +45346,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckG" = (
-/obj/structure/closet/crate{
-	name = "solar pack crate"
-	},
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/circuitboard/computer/solar_control,
-/obj/item/electronics/tracker,
-/obj/item/paper/guides/jobs/engi/solars,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckH" = (

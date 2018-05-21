@@ -1238,7 +1238,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Like having your brain smashed out by a slice of lemon wrapped around a large gold brick."
 
 /datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/M)
-	M.dizziness +=6
+	M.dizziness +=1.5
 	switch(current_cycle)
 		if(15 to 45)
 			if(!M.slurring)
@@ -1267,7 +1267,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.Knockdown(60, 1, 0)
-	M.dizziness +=6
+	M.dizziness +=2
 	switch(current_cycle)
 		if(15 to 45)
 			if(!M.slurring)
@@ -1547,3 +1547,157 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
 	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+
+/datum/reagent/consumable/ethanol/sake
+	name = "Sake"
+	id = "sake"
+	description = "A sweet rice wine of questionable legality and extreme potency."
+	color = "#DDDDDD"
+	boozepwr = 70
+	taste_description = "sweet rice wine"
+	glass_icon_state = "sakecup"
+	glass_name = "cup of sake"
+	glass_desc = "A traditional cup of sake."
+
+/datum/reagent/consumable/ethanol/alexander
+	name = "Alexander"
+	id = "alexander"
+	description = "A creamy, indulgent delight that is stronger than it seems."
+	color = "#F5E9D3"
+	boozepwr = 80
+	taste_description = "bitter, creamy cacao"
+	glass_icon_state = "alexander"
+	glass_name = "Alexander"
+	glass_desc = "A creamy, indulgent delight that is stronger than it seems."
+
+/datum/reagent/consumable/ethanol/sidecar
+	name = "Sidecar"
+	id = "sidecar"
+	description = "The one ride you’ll gladly give up the wheel for."
+	color = "#FFC55B"
+	boozepwr = 80
+	taste_description = "delicious freedom"
+	glass_icon_state = "sidecar"
+	glass_name = "Sidecar"
+	glass_desc = "The one ride you’ll gladly give up the wheel for."
+
+/datum/reagent/consumable/ethanol/between_the_sheets
+	name = "Between the Sheets"
+	id = "between_the_sheets"
+	description = "A provocatively named classic."
+	color = "#F4C35A"
+	boozepwr = 80
+	taste_description = "seduction"
+	glass_icon_state = "between_the_sheets"
+	glass_name = "Between the Sheets"
+	glass_desc = "A provocatively named classic."
+
+/datum/reagent/consumable/ethanol/kamikaze
+	name = "Kamikaze"
+	id = "kamikaze"
+	description = "Divinely windy."
+	color = "#EEF191"
+	boozepwr = 60
+	taste_description = "divine windiness"
+	glass_icon_state = "kamikaze"
+	glass_name = "Kamikaze"
+	glass_desc = "Divinely windy."
+
+/datum/reagent/consumable/ethanol/mojito
+	name = "Mojito"
+	id = "mojito"
+	description = "A drink that looks as refreshing as it tastes."
+	color = "#DFFAD9"
+	boozepwr = 30
+	taste_description = "refreshing mint"
+	glass_icon_state = "mojito"
+	glass_name = "Mojito"
+	glass_desc = "A drink that looks as refreshing as it tastes."
+	
+/datum/reagent/consumable/ethanol/fernet
+	name = "Fernet"
+	id = "fernet"
+	description = "An incredibly bitter herbal liqueur used as a digestif."
+	color = "#1B2E24" // rgb: 27, 46, 36
+	boozepwr = 80
+	taste_description = "utter bitterness"
+	glass_name = "glass of fernet"
+	glass_desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
+
+/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/M)
+
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fernet_cola
+	name = "Fernet Cola"
+	id = "fernet_cola"
+	description = "A very popular and bittersweet digestif, ideal after a heavy meal. Best served on a sawed-off cola bottle as per tradition."
+	color = "#390600" // rgb: 57, 6, 0
+	boozepwr = 25
+	taste_description = "sweet relief"
+	glass_icon_state = "godlyblend"
+	glass_name = "glass of fernet cola"
+	glass_desc = "A sawed-off cola bottle filled with Fernet Cola. Nothing better after eating like a lardass."
+
+/datum/reagent/consumable/ethanol/fernetcola/on_mob_life(mob/living/M)
+
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(0.5*REM, 0)
+	M.nutrition = max(M.nutrition - 3, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fanciulli
+
+	name = "Fanciulli"
+	id = "fanciulli"
+	description = "What if the Manhattan coctail ACTUALLY used a bitter herb liquour? Helps you sobers up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
+	color = "#CA933F" // rgb: 202, 147, 63
+	boozepwr = -10
+	taste_description = "a sweet sobering mix"
+	glass_icon_state = "fanciulli"
+	glass_name = "glass of fanciulli"
+	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
+	
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/M)
+	
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
+	if(M.health > 0)
+		M.adjustStaminaLoss(20)
+		. = TRUE
+	..()
+
+
+/datum/reagent/consumable/ethanol/branca_menta
+	name = "Branca Menta"
+	id = "branca_menta"
+	description = "A refreshing mixture of bitter Fernet with mint creme liquour."
+	color = "#4B5746" // rgb: 75, 87, 70
+	boozepwr = 35
+	taste_description = "a bitter freshness"
+	glass_icon_state= "minted_fernet"
+	glass_name = "glass of branca menta"
+	glass_desc = "A glass of Branca Menta, perfect for those lazy and hot sunday summer afternoons." //Get lazy literally by drinking this
+
+
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/M)
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, T0C)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
+	if(M.health > 0)
+		M.adjustStaminaLoss(35)
+		. = TRUE
+	..()

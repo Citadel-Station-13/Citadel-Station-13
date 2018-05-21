@@ -50,6 +50,7 @@ doesn't have toxins access.
 	var/research_control = TRUE
 
 /obj/machinery/computer/rdconsole/production
+	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
@@ -192,9 +193,10 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console.":""].</span>")
 		playsound(src, "sparks", 75, 1)
 		obj_flags |= EMAGGED
+		locked = FALSE
 	return ..()
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
@@ -217,6 +219,8 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	l += "[sheet.css_tag()][RDSCREEN_NOBREAK]"
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
 	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
 	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
@@ -815,6 +819,9 @@ doesn't have toxins access.
 	if(ls["ui_mode"])
 		ui_mode = text2num(ls["ui_mode"])
 	if(ls["lock_console"])
+		if(obj_flags & EMAGGED)
+			to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to lock.</span>")
+			return
 		if(allowed(usr))
 			lock_console(usr)
 		else
