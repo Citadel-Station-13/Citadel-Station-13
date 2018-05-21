@@ -120,7 +120,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, slot_glasses)
+	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically
@@ -130,3 +130,5 @@ Use this as a guideline
 //If you don't need any special effects like spawning glasses, then you don't need an add()
 
 */
+
+

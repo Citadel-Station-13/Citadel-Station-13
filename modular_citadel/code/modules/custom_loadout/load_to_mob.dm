@@ -52,7 +52,7 @@
 				loaded_atom.forceMove(T)
 				continue
 			var/obj/item/loaded = loaded_atom
-			var/obj/item/storage/S = H.get_item_by_slot(slot_back)
+			var/obj/item/storage/S = H.get_item_by_slot(SLOT_BACK)
 			if(istype(S))
 				S.SendSignal(COMSIG_TRY_STORAGE_INSERT,loaded, TRUE, H)	//Force it into their backpack
 				continue
