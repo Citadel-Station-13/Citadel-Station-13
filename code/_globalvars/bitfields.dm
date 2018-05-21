@@ -116,7 +116,12 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"ABSTRACT_1" = ABSTRACT_1,
 		"NODECONSTRUCT_1" = NODECONSTRUCT_1,
 		"OVERLAY_QUEUED_1" = OVERLAY_QUEUED_1,
+<<<<<<< HEAD
 		"NOSLIP_1" = NOSLIP_1
+=======
+		"HOLOGRAM_1" = HOLOGRAM_1,
+		"TESLA_IGNORE_1" = TESLA_IGNORE_1
+>>>>>>> 1eccbcc... Adds an EMP protection component, allowing ANYTHING to be protected from EMP (#37671)
 		),
 	"flags_2" = list(
 		"SLOWS_WHILE_IN_HAND_2" = SLOWS_WHILE_IN_HAND_2,
