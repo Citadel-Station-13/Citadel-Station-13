@@ -6,7 +6,10 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
+<<<<<<< HEAD
 	flags_2 = NO_EMP_WIRES_2
+=======
+>>>>>>> 1eccbcc... Adds an EMP protection component, allowing ANYTHING to be protected from EMP (#37671)
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -20,9 +23,13 @@
 	var/can_attach_mob = FALSE
 	var/full_damage_on_mobs = FALSE
 
-/obj/item/grenade/plastic/New()
+/obj/item/grenade/plastic/Initialize()
+	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
-	..()
+
+/obj/item/grenade/plastic/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)

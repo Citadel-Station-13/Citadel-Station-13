@@ -24,6 +24,13 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NODECONSTRUCT_1				(1<<7)		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define OVERLAY_QUEUED_1			(1<<8)		// atom queued to SSoverlay
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
+<<<<<<< HEAD
+=======
+#define DROPDEL_1					(1<<10)	// When dropped, it calls qdel on itself
+#define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
+#define HOLOGRAM_1					(1<<12)
+#define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
+>>>>>>> 1eccbcc... Adds an EMP protection component, allowing ANYTHING to be protected from EMP (#37671)
 
 #define NOSLIP_1					(1<<10) 		//prevents from slipping on wet floors, in space etc
 
@@ -99,3 +106,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF		(1<<5) //acid stuck on it doesn't melt it.
 #define INDESTRUCTIBLE	(1<<6) //doesn't take damage
 #define FREEZE_PROOF	(1<<7) //can't be frozen
+
+#define EMP_PROTECT_SELF (1<<0)
+#define EMP_PROTECT_CONTENTS (1<<1)
+#define EMP_PROTECT_WIRES (1<<2)

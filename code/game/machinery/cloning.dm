@@ -406,6 +406,7 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
+<<<<<<< HEAD
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
@@ -413,6 +414,15 @@
 		go_out()
 		mob_occupant.apply_vore_prefs()
 	..()
+=======
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant && prob(100/(severity*efficiency)))
+			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
+			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
+			go_out()
+>>>>>>> 1eccbcc... Adds an EMP protection component, allowing ANYTHING to be protected from EMP (#37671)
 
 /obj/machinery/clonepod/ex_act(severity, target)
 	..()
