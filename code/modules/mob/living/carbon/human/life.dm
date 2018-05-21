@@ -46,7 +46,7 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return ONE_ATMOSPHERE //END OF CIT CHANGES
 	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
 		var/obj/item/clothing/CS = wear_suit
