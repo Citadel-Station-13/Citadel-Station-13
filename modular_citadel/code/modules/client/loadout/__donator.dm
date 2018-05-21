@@ -280,7 +280,7 @@ datum/gear/darksabresheath
 
 /datum/gear/techcoat
 	name = "Techomancers Labcoat"
-	category = slot_in_backpack
+	category = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/suit/toggle/labcoat/mad/techcoat
 	ckeywhitelist = list("wilchen")
 
