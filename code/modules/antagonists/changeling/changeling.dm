@@ -19,6 +19,7 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -352,7 +353,10 @@
 	if(GLOB.changeling_team_objective_type)
 		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
 		team_objective.owner = owner
-		objectives += team_objective
+		if(team_objective.prepare())//Setting up succeeded
+			objectives += team_objective
+		else
+			qdel(team_objective)
 	return
 
 /datum/antagonist/changeling/proc/forge_objectives()

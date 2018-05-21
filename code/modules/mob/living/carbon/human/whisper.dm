@@ -76,14 +76,14 @@
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 
 	for(var/atom/movable/AM in listening)
-		if(istype(AM,/obj/item/device/radio))
+		if(istype(AM,/obj/item/radio))
 			continue
 		AM.Hear(rendered, src, language, message, , spans)
 
 	message = stars(message)
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 	for(var/atom/movable/AM in eavesdropping)
-		if(istype(AM,/obj/item/device/radio))
+		if(istype(AM,/obj/item/radio))
 			continue
 		AM.Hear(rendered, src, language, message, , spans)
 

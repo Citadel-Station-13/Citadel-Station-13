@@ -59,3 +59,9 @@
 	category = slot_hands
 	path = /obj/item/lighter
 	cost = 2
+
+/datum/gear/cigar
+	name = "Cigar"
+	category = slot_hands
+	path = /obj/item/clothing/mask/cigarette/cigar
+	cost = 4 //smoking is bad mkay

@@ -273,6 +273,21 @@
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
 
+	else if(href_list["editrightsbrowser"])
+		edit_admin_permissions(0)
+
+	else if(href_list["editrightsbrowserlog"])
+		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
+
+	if(href_list["editrightsbrowsermanage"])
+		if(href_list["editrightschange"])
+			change_admin_rank(href_list["editrightschange"], TRUE)
+		else if(href_list["editrightsremove"])
+			remove_admin(href_list["editrightsremove"], TRUE)
+		else if(href_list["editrightsremoverank"])
+			remove_rank(href_list["editrightsremoverank"])
+		edit_admin_permissions(2)
+
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
@@ -1804,7 +1819,7 @@
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
 			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
+		if(!istype(H.ears, /obj/item/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
 			return
 
@@ -1823,7 +1838,7 @@
 		if(!istype(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
-		if(!istype(H.ears, /obj/item/device/radio/headset))
+		if(!istype(H.ears, /obj/item/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset.")
 			return
 
@@ -2447,6 +2462,19 @@
 		var/client/C = M.client
 		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
 		show_player_panel(M)
+
+	else if(href_list["slowquery"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/answer = href_list["slowquery"]
+		if(answer == "yes")
+			log_query_debug("[usr.key] | Reported a server hang")
+			if(alert(usr, "Had you just press any admin buttons?", "Query server hang report", "Yes", "No") == "Yes")
+				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				if(response)
+					log_query_debug("[usr.key] | [response]")
+		else if(answer == "no")
+			log_query_debug("[usr.key] | Reported no server hang")
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

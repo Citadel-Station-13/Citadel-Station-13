@@ -20,7 +20,7 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/device/flashlight/F = null
+	var/obj/item/flashlight/F = null
 	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
@@ -81,12 +81,14 @@
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
-
+	if (!istype(user))
+		return
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
-		for(var/variable in user_vars_to_edit)
-			if(variable in user.vars)
-				user_vars_remembered[variable] = user.vars[variable]
-				user.vars[variable] = user_vars_to_edit[variable]
+		if (LAZYLEN(user_vars_to_edit))
+			for(var/variable in user_vars_to_edit)
+				if(variable in user.vars)
+					LAZYSET(user_vars_remembered, variable, user.vars[variable])
+					user.vv_edit_var(variable, user_vars_to_edit[variable])
 
 /obj/item/clothing/examine(mob/user)
 	..()

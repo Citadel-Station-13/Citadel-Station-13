@@ -104,7 +104,7 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer) && loaded_tank)
+	if(istype(W, /obj/item/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
@@ -113,7 +113,7 @@
 		if(loaded_tank)
 			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
 			return TRUE
-		if(panel_open) 
+		if(panel_open)
 			to_chat(user, "<span class='warning'>Close the maintenance panel first!</span>")
 			return TRUE
 		if(!user.transferItemToLoc(W, src))
@@ -134,7 +134,7 @@
 		return ..()
 
 /obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 0)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)

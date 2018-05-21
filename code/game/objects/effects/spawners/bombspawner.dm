@@ -33,7 +33,7 @@
 	OT.master = V
 
 	if(assembly_type)
-		var/obj/item/device/assembly/A = new assembly_type(V)
+		var/obj/item/assembly/A = new assembly_type(V)
 		V.attached_device = A
 		A.holder = V
 
@@ -46,7 +46,7 @@
 	. = ..()
 
 /obj/effect/spawner/newbomb/timer
-	assembly_type = /obj/item/device/assembly/timer
+	assembly_type = /obj/item/assembly/timer
 
 /obj/effect/spawner/newbomb/timer/syndicate
 	pressure_o = TANK_LEAK_PRESSURE - 1
@@ -55,15 +55,10 @@
 	pressure_p = TANK_LEAK_PRESSURE - 1
 
 /obj/effect/spawner/newbomb/proximity
-	assembly_type = /obj/item/device/assembly/prox_sensor
+	assembly_type = /obj/item/assembly/prox_sensor
 
 /obj/effect/spawner/newbomb/radio
-<<<<<<< HEAD
-	assembly_type = /obj/item/device/assembly/signaler
-	
-=======
 	assembly_type = /obj/item/assembly/signaler
->>>>>>> c0b7f77... Modified bomb and syndicate bomb spawner so Cuban Pete bombs maxcap and work again (#37293)
 
 
 #undef CELSIUS_TO_KELVIN

@@ -82,7 +82,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 //Boop
 
-/obj/item/device/analyzer/nose
+/obj/item/analyzer/nose
 	name = "boop module"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "nose"
@@ -93,7 +93,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	attack_verb = list("nuzzled", "nosed", "booped")
 	w_class = 1
 
-/obj/item/device/analyzer/nose/attack_self(mob/user)
+/obj/item/analyzer/nose/attack_self(mob/user)
 	user.visible_message("[user] sniffs around the air.", "<span class='warning'>You sniff the air for gas traces.</span>")
 
 	var/turf/location = user.loc
@@ -148,7 +148,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/device/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 
 //Delivery

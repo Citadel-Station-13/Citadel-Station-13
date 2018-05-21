@@ -28,7 +28,7 @@
 /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
 	name = "Syndicate Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	pin = /obj/item/firing_pin/implant/pindicate
 
 ///foam stealth pistol///
 

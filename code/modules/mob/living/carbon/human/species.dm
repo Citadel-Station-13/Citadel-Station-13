@@ -1019,7 +1019,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return FALSE
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(slot_handcuffed)
@@ -1205,7 +1205,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flightpack = 0
 	var/ignoreslow = 0
 	var/gravity = 0
-	var/obj/item/device/flightpack/F = H.get_flightpack()
+	var/obj/item/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
 	if(H.movement_type & FLYING)
@@ -1559,9 +1559,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
 						if(!I.is_sharp())
-							H.adjustBrainLoss(I.force / 5)
+							H.adjustBrainLoss(I.force * 0.2)
 
-					if(prob(I.force + ((100 - H.health)/2)) && H != user)
+					if(!I.is_sharp() && prob(I.force + ((100 - H.health) * 0.5)) && H != user) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)

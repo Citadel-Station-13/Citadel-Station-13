@@ -144,9 +144,9 @@
 	var/list/preserve_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
-		/obj/item/device/aicard,
-		/obj/item/device/mmi,
-		/obj/item/device/paicard,
+		/obj/item/aicard,
+		/obj/item/mmi,
+		/obj/item/paicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
@@ -165,7 +165,7 @@
 	)
 	// These items will NOT be preserved
 	var/list/do_not_preserve_items = list (
-		/obj/item/device/mmi/posibrain
+		/obj/item/mmi/posibrain
 	)
 
 /obj/machinery/cryopod/Initialize()
