@@ -240,8 +240,9 @@
 
 /turf/closed/proc/high_pressure_movements()
 	return
-	
-/atom/movable/var/pressure_resistance = 10
+
+/atom/movable/var/pressure_resistance = 5
+/atom/movable/var/throw_pressure_limit = 15
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
@@ -252,7 +253,13 @@
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
-	if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+	if(!is_mining_level(z) && pressure_difference >= throw_pressure_limit && move_prob > PROBABILITY_OFFSET && prob(move_prob/throw_pressure_limit))
+		to_chat(src, "<span class='warning'>You feel a sudden push from the air around you.</span>")
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			C.Knockdown(5)
+		throw_at(get_edge_target_turf(src, direction), pressure_difference / 10, pressure_difference / 200, null, FALSE)
+	else if (move_prob > 20 && prob(move_prob))
 		step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 
