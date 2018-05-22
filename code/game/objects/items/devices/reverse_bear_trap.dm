@@ -82,7 +82,7 @@
 	..()
 
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
-	if(target.get_item_by_slot(slot_head))
+	if(target.get_item_by_slot(SLOT_HEAD))
 		to_chat(user, "<span class='warning'>Remove [target.p_their()] headgear first!</span>")
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
