@@ -19,7 +19,7 @@
 
 		if(!client)
 			if(stat == CONSCIOUS)	
-				if(on_fire || buckled || restrained() || (resting && canmove))
+				if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting
 					if(!resisting && prob(MONKEY_RESIST_PROB))
 						resisting = TRUE
 						walk_to(src,0)
@@ -146,7 +146,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()

@@ -345,7 +345,7 @@
 		updateUsrDialog()
 		return 0
 	else if(ishuman(ass))
-		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
+		if(!ass.get_item_by_slot(SLOT_W_UNIFORM) && !ass.get_item_by_slot(SLOT_WEAR_SUIT))
 			return 1
 		else
 			return 0
