@@ -11,8 +11,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_VAR_EDITED	(1<<1)
 
 //FLAGS BITMASK
-#define STOPSPRESSUREDMAGE_1		(1<<0)	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
 #define NODROP_1					(1<<1)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define NOBLUDGEON_1				(1<<2)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
@@ -25,16 +23,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
 #define DROPDEL_1					(1<<10)	// When dropped, it calls qdel on itself
 #define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define NO_EMP_WIRES_1				(1<<12)
-#define HOLOGRAM_1					(1<<13)
-#define TESLA_IGNORE_1				(1<<14) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
+#define HOLOGRAM_1					(1<<12)
+#define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 
-
-// Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define NO_MAT_REDEMPTION_2			(1<<10)
-
-// LAVA_PROTECT used on the flags_2 variable for both SUIT and HEAD items, and stops lava damage. Must be present in both to stop lava damage.
-#define LAVA_PROTECT_2				(1<<11)
 
 //turf-only flags
 #define NOJAUNT_1				(1<<0)
@@ -74,3 +65,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF		(1<<5) //acid stuck on it doesn't melt it.
 #define INDESTRUCTIBLE	(1<<6) //doesn't take damage
 #define FREEZE_PROOF	(1<<7) //can't be frozen
+
+#define EMP_PROTECT_SELF (1<<0)
+#define EMP_PROTECT_CONTENTS (1<<1)
+#define EMP_PROTECT_WIRES (1<<2)
