@@ -254,7 +254,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
