@@ -58,15 +58,9 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-<<<<<<< HEAD
-		"in your backpack" = slot_in_backpack,
-		"in your left pocket" = slot_l_store,
-		"in your right pocket" = slot_r_store
-=======
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
->>>>>>> 837a945... Merge pull request #37939 from AutomaticFrenzy/patch/heirlooms
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
