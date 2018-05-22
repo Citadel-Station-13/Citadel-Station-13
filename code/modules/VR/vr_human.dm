@@ -26,24 +26,6 @@
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
-<<<<<<< HEAD
-	var/mob/living/carbon/human/H = real_me
-	revert_to_reality(FALSE, FALSE)
-	if(H)
-		H.ghost()
-
-
-/mob/living/carbon/human/virtual_reality/proc/revert_to_reality(refcleanup = TRUE, deathchecks = TRUE)
-	if(real_me && mind)
-		mind.transfer_to(real_me)
-		if(deathchecks && vr_sleeper && vr_sleeper.you_die_in_the_game_you_die_for_real)
-			real_me.death(0)
-	if(refcleanup)
-		vr_sleeper.vr_human = null
-		vr_sleeper = null
-		real_me = null
-
-=======
 	var/mob/living/real_me = real_mind.current
 	revert_to_reality(FALSE)
 	if(real_me)
@@ -60,7 +42,6 @@
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
 	real_mind = null
->>>>>>> cc30d65... Merge pull request #37948 from DaxDupont/vr
 
 /datum/action/quit_vr
 	name = "Quit Virtual Reality"
