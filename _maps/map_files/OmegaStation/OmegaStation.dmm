@@ -4949,7 +4949,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "ajM" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console{
 	department = "Cargo Office";
@@ -6482,7 +6481,6 @@
 	},
 /area/hallway/primary/starboard/fore)
 "amv" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/brown{
 	dir = 10
@@ -31227,9 +31225,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"dWc" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -33241,28 +33236,10 @@
 	},
 /area/maintenance/starboard)
 "sFp" = (
-/obj/structure/closet/crate{
-	name = "solar pack crate"
-	},
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/circuitboard/computer/solar_control,
-/obj/item/electronics/tracker,
-/obj/item/paper/guides/jobs/engi/solars,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plasteel/vault/side{
 	dir = 5
 	},
@@ -79416,7 +79393,7 @@ bfP
 bjc
 bfP
 bfP
-dWc
+aad
 aaa
 aaa
 aaa

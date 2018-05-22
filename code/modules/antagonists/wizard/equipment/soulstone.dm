@@ -8,7 +8,7 @@
 	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/usability = 0
 
 	var/old_shard = FALSE
@@ -33,7 +33,6 @@
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
-		user.Dizzy(120)
 
 /obj/item/soulstone/examine(mob/user)
 	..()
@@ -223,7 +222,7 @@
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
-		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
+		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
 	newstruct.clear_alert("bloodsense")
