@@ -24,11 +24,11 @@
 	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
 		disabler = FALSE
 		update_icons() //PUT THE GUN AWAY
-	else if(istype(O,/obj/item/device/dogborg/sleeper))
+	else if(istype(O,/obj/item/dogborg/sleeper))
 		sleeper_g = FALSE
 		sleeper_r = FALSE
 		update_icons()
-		var/obj/item/device/dogborg/sleeper/S = O
+		var/obj/item/dogborg/sleeper/S = O
 		S.go_out() //this should stop edgecase deletions
 	//END CITADEL EDIT
 	if(client)
@@ -85,7 +85,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, slot_hands)
+		O.equipped(src, SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE

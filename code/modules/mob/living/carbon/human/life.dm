@@ -44,14 +44,16 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
+	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/belly))
-		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
-		return ONE_ATMOSPHERE
-	else
-		return pressure
+	if(istype(loc, /obj/item/dogborg/sleeper))
+		return ONE_ATMOSPHERE //END OF CIT CHANGES
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			return ONE_ATMOSPHERE
+	return pressure
 
 
 /mob/living/carbon/human/handle_traits()
@@ -62,10 +64,6 @@
 			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
-
-	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
-		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
-		a_intent_change(INTENT_HELP)
 
 	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
 		SendSignal(COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
@@ -126,7 +124,7 @@
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	//CITADEL EDIT Vore code required overrides
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
 		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -241,7 +239,7 @@
 	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 //CITADEL EDIT Mandatory for vore code.
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return TRUE //freezing to death in sleepers ruins fun.
 	if(isbelly(loc))
 		return TRUE
@@ -290,13 +288,14 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	if(glasses)
-		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head)
-		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+	if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CH = head
+		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 

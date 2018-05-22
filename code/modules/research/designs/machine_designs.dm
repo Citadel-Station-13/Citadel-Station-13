@@ -323,12 +323,12 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/board/processor
-	name = "Machine Design (Food Processor Board)"
-	desc = "The circuit board for a food processor."
+	name = "Machine Design (Food/Slime Processor Board)"
+	desc = "The circuit board for a processing unit. Screwdrive the circuit to switch between food (default) or slime processing."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/board/soda_dispenser
 	name = "Machine Design (Portable Soda Dispenser Board)"
@@ -345,14 +345,6 @@
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 	category = list ("Misc. Machinery")
-
-/datum/design/board/slimeprocessor
-	name = "Machine Design (Slime Processor Board)"
-	desc = "The circuit board for a slime processor."
-	id = "slimeprocessor"
-	build_path = /obj/item/circuitboard/machine/processor/slime
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/recycler
 	name = "Machine Design (Recycler Board)"
@@ -490,3 +482,19 @@
 	build_path = /obj/item/circuitboard/machine/dish_drive
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/stacking_unit_console
+	name = "Machine Design (Stacking Machine Console)"
+	desc = "The circuit board for a Stacking Machine Console."
+	id = "stack_console"
+	build_path = /obj/item/circuitboard/machine/stacking_unit_console
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/stacking_machine
+	name = "Machine Design (Stacking Machine)"
+	desc = "The circuit board for a Stacking Machine."
+	id = "stack_machine"
+	build_path = /obj/item/circuitboard/machine/stacking_machine
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
