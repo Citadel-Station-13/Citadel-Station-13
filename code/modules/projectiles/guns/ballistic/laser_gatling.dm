@@ -9,7 +9,7 @@
 	item_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/ballistic/minigun/gun
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
@@ -33,14 +33,13 @@
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(slot_back) == src)
+			if(user.get_item_by_slot(SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
-				gun.forceMove(user)
 				user.update_inv_back()
 		else
 			to_chat(user, "<span class='warning'>You are already holding the gun!</span>")

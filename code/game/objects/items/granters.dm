@@ -208,12 +208,13 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
-	swapper.cast(user, stored_swap, TRUE)
+	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
+		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
+		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
+	else
+		user.visible_message("<span class='warning'>[src] fizzles slightly as it stops glowing!</span>") //if the mind_transfer failed to transfer mobs, likely due to the target being catatonic.
 
-	to_chat(stored_swap,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
-	to_chat(user,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	stored_swap = null
 
 /obj/item/book/granter/spell/forcewall
@@ -257,7 +258,7 @@
 		magichead.voicechange = TRUE	//NEEEEIIGHH
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
-		user.equip_to_slot_if_possible(magichead, slot_wear_mask, TRUE, TRUE)
+		user.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, TRUE, TRUE)
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here

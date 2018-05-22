@@ -1,4 +1,4 @@
-/obj/item/device/electropack/shockcollar
+/obj/item/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
 	icon = 'modular_citadel/icons/obj/clothing/cit_neck.dmi'
@@ -17,19 +17,19 @@
 	name = "Shockcollar"
 	id = "shockcollar"
 	build_type = AUTOLATHE
-	build_path = /obj/item/device/electropack/shockcollar
+	build_path = /obj/item/electropack/shockcollar
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	category = list("hacked", "Misc")
 
-/obj/item/device/electropack/shockcollar/attack_hand(mob/user)
+/obj/item/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_NECK)
-			if(user.get_item_by_slot(slot_neck))
+			if(user.get_item_by_slot(SLOT_NECK))
 				to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
 				return
 	..()
 
-/obj/item/device/electropack/shockcollar/receive_signal(datum/signal/signal)
+/obj/item/electropack/shockcollar/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
 
@@ -53,7 +53,7 @@
 		master.receive_signal()
 	return
 
-/obj/item/device/electropack/shockcollar/attack_self(mob/user) //Turns out can't fully source this from the parent item, spritepath gets confused if power toggled. Will come back to this when I know how to code better and readd powertoggle..
+/obj/item/electropack/shockcollar/attack_self(mob/user) //Turns out can't fully source this from the parent item, spritepath gets confused if power toggled. Will come back to this when I know how to code better and readd powertoggle..
 	var/option = "Change Name"
 	option = input(user, "What do you want to do?", "[src]", option) as null|anything in list("Change Name", "Change Frequency")
 	switch(option)

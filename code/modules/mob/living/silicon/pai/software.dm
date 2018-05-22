@@ -170,7 +170,8 @@
 
 			if(href_list["send"])
 				signaler.send_activation()
-				audible_message("[icon2html(src, world)] *beep* *beep*")
+				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 			if(href_list["freq"])
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
@@ -612,7 +613,7 @@
 	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
+		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
 			if (P == pda)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"
