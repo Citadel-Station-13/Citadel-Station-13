@@ -104,8 +104,6 @@
 /datum/techweb/proc/get_researched_nodes()
 	return researched_nodes - hidden_nodes
 
-<<<<<<< HEAD
-=======
 /datum/techweb/proc/add_point_type(type, amount)
 	if(!SSresearch.point_types[type] || (amount <= 0))
 		return FALSE
@@ -124,7 +122,6 @@
 	research_points[type] = max(0, research_points[type] - amount)
 	return TRUE
 
->>>>>>> bdee2ed... Fuckup of the year
 /datum/techweb/proc/add_design_by_id(id)
 	return add_design(get_techweb_design_by_id(id))
 
