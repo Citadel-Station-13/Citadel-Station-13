@@ -371,7 +371,7 @@ Charged extracts:
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
 	C.resistance_flags |= LAVA_PROOF
-	C.flags_2 |= LAVA_PROTECT_2
+	C.obj_flags |= LAVA_PROTECT
 	uses--
 	if(!uses)
 		qdel(src)
