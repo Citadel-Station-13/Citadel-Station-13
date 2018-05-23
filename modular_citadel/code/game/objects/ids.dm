@@ -55,7 +55,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 	color = rgb(35, 20, 11)
 
 /obj/item/card/emag
