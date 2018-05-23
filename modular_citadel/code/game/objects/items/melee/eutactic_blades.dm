@@ -254,7 +254,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
@@ -442,7 +442,6 @@
 /obj/item/twohanded/hypereutactic/toy/rainbow
 	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
 	desc = "A custom-built toy with fancy rainbow lights built-in."
-	flags_2 = NONE
 	var/list/rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
 
 /obj/item/twohanded/hypereutactic/toy/rainbow/process()

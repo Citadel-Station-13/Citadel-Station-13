@@ -51,7 +51,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/equipped(mob/user, slot)
 	..()
-	if(slot == slot_head)
+	if(slot == SLOT_HEAD)
 		emissivelights()
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/dropped(mob/user)
@@ -113,7 +113,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/equipped(mob/user, slot)
 	..()
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		emissivelights()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/dropped(mob/user)

@@ -198,7 +198,7 @@ Credit where due:
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
-	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
+	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK, "On your belt" = SLOT_BELT)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		slot = H.equip_in_one_of_slots(S, slots)
@@ -211,7 +211,7 @@ Credit where due:
 		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! It'll tell you if anything's changed, as well as what to expect.</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
 		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/Clockwork_Cult")
+		to_chat(L, "<span class='alloy italics'>If you want more information, you can read <a href=\"https://tgstation13.org/wiki/Clockwork_Cult\">the wiki page</a> to learn more.</span>")
 		return TRUE
 	return FALSE
 

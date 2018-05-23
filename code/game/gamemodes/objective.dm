@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = slot_in_backpack)
+			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -712,6 +712,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 
+/datum/objective/changeling_team_objective/proc/prepare()
+	return FALSE
 
 //Impersonate department
 //Picks as many people as it can from a department (Security,Engineer,Medical,Science)
@@ -722,6 +724,19 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/list/department_minds = list()
 	var/list/department_real_names = list()
 	var/department_string = ""
+
+
+/datum/objective/changeling_team_objective/impersonate_department/prepare()
+	var/result = FALSE
+	if(command_staff_only)
+		result = get_heads()
+	else
+		result = get_department_staff()
+	if(result)
+		update_explanation_text()
+		return TRUE
+	else
+		return FALSE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_department_staff()
@@ -756,9 +771,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department staff, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_heads()
@@ -785,19 +799,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department heads, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
-
-
-/datum/objective/changeling_team_objective/impersonate_department/New(var/text)
-	..()
-	if(command_staff_only)
-		get_heads()
-	else
-		get_department_staff()
-
-	update_explanation_text()
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/update_explanation_text()
@@ -861,9 +864,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(success >= department_minds.len)
 		return TRUE
 	return FALSE
-
-
-
 
 //A subtype of impersonate_department
 //This subtype always picks as many command staff as it can (HoS,HoP,Cap,CE,CMO,RD)
