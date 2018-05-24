@@ -253,8 +253,8 @@
 	if("input")
 		switch(href_list["preference"])
 			if("flavor_text")
-				var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as message
-				if(msg != null)
+				var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as null|message
+				if(!isnull(msg))
 					msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
 					features["flavor_text"] = msg
 
@@ -664,11 +664,11 @@
 		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
 		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
 	switch(slot)
-		if(slot_in_backpack)
-			if(L[slot_to_string(slot_in_backpack)] < BACKPACK_SLOT_AMT)
+		if(SLOT_IN_BACKPACK)
+			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
 				return TRUE
-		if(slot_hands)
-			if(L[slot_to_string(slot_hands)] < HANDS_SLOT_AMT)
+		if(SLOT_HANDS)
+			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
 				return TRUE
 		else
 			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)

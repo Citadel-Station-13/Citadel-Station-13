@@ -24,10 +24,6 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && (ears.flags_2 & BANG_PROTECT_2))
-		number += 1
-	if(head && (head.flags_2 & BANG_PROTECT_2))
-		number += 1
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		number = INFINITY
@@ -78,7 +74,7 @@
 	I.SendSignal(COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name)
 	if(I.force)
-	//CIT CHANGES START HERE - combatmode and resting checks
+		//CIT CHANGES START HERE - combatmode and resting checks
 		var/totitemdamage = I.force
 		if(iscarbon(user))
 			var/mob/living/carbon/tempcarb = user
@@ -120,6 +116,7 @@
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
 	for(var/thing in diseases)
@@ -223,7 +220,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
@@ -259,7 +256,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
+		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
 	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
@@ -270,11 +267,18 @@
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-			if(dna && dna.species && ((("tail_lizard" || "tail_human" || "mam_tail") in dna.species.mutant_bodyparts && (dna.features["tail_lizard"] || dna.features["tail_human"] || dna.features["mam_tail"])!= "None")))
+			if(dna && dna.species && ("tail_lizard" in dna.species.mutant_bodyparts) && (dna.features["tail_lizard"])!= "None")
 				emote("wag") //lewd
+			else if(dna && dna.species && ("tail_human" in dna.species.mutant_bodyparts) && (dna.features["tail_human"])!= "None")
+				emote("wag")
+			else if(dna && dna.species && ("mam_tail" in dna.species.mutant_bodyparts) && (dna.features["mam_tail"])!= "None")
+				emote("wag")
+			SendSignal(COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
@@ -342,6 +346,9 @@
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
+	var/list/reflist = list(intensity) // Need to wrap this in a list so we can pass a reference
+	SendSignal(COMSIG_CARBON_SOUNDBANG, reflist)
+	intensity = reflist[1]
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety

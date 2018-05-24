@@ -4,18 +4,22 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
-//This happens after the Master subsystem news (it's a global datum)
+//This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	log_world("World loaded at [time_stamp()]")
+	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	TgsNew()
+
+	GLOB.revdata = new
 
 	config.Load()
 
@@ -24,8 +28,6 @@ GLOBAL_PROTECT(security_mode)
 	SSdbcore.CheckSchemaVersion()
 	SSdbcore.SetRoundID()
 	SetupLogs()
-
-	SERVER_TOOLS_ON_NEW
 
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
@@ -55,11 +57,13 @@ GLOBAL_PROTECT(security_mode)
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
+	var/datum/callback/cb
 #ifdef UNIT_TESTS
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
+	cb = CALLBACK(GLOBAL_PROC, /proc/RunUnitTests)
 #else
-	SSticker.force_ending = TRUE
+	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -82,24 +86,30 @@ GLOBAL_PROTECT(security_mode)
 			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	else
 		GLOB.log_directory = "data/logs/[override_dir]"
-	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
-	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
-	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
-	GLOB.world_qdel_log = file("[GLOB.log_directory]/qdel.log")
-	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
-	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
-	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
-	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
+
+	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
+	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
+	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
+	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
+	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
+	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
+
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
-	WRITE_FILE(GLOB.test_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	start_log(GLOB.test_log)
 #endif
-	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.manifest_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	start_log(GLOB.world_game_log)
+	start_log(GLOB.world_attack_log)
+	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_manifest_log)
+	start_log(GLOB.world_href_log)
+	start_log(GLOB.world_qdel_log)
+	start_log(GLOB.world_runtime_log)
+
+	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
@@ -122,8 +132,7 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
-
-	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
+	TGS_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
 
@@ -135,7 +144,7 @@ GLOBAL_PROTECT(security_mode)
 			break
 
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
-		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
 
 	if(!handler)
 		return
@@ -179,7 +188,7 @@ GLOBAL_PROTECT(security_mode)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	SERVER_TOOLS_ON_REBOOT
+	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -193,7 +202,7 @@ GLOBAL_PROTECT(security_mode)
 		FinishTestRun()
 		return
 
-	if(SERVER_TOOLS_PRESENT)
+	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
 		var/ruhr = CONFIG_GET(number/rounds_until_hard_restart)
@@ -211,20 +220,22 @@ GLOBAL_PROTECT(security_mode)
 
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
-			SERVER_TOOLS_REBOOT_BYOND
+			shutdown_logging() // See comment below.
+			TgsEndProcess()
 
 	log_world("World rebooted at [time_stamp()]")
+	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
 /world/proc/update_status()
 
 	var/list/features = list()
 
-	if(GLOB.master_mode)
+	/*if(GLOB.master_mode) CIT CHANGE - hides the gamemode from the hub entry, removes some useless info from the hub entry
 		features += GLOB.master_mode
 
 	if (!GLOB.enter_allowed)
-		features += "closed"
+		features += "closed"*/
 
 	var/s = ""
 	var/hostedby
@@ -232,24 +243,30 @@ GLOBAL_PROTECT(security_mode)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		/*features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn" CIT CHANGE - removes some useless info from the hub entry
 		if(CONFIG_GET(flag/allow_vote_mode))
 			features += "vote"
 		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"
+			features += "AI allowed"*/
 		hostedby = CONFIG_GET(string/hostedby)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"https://citadel-station.net/home/\">" //Change this to wherever you want the hub to link to. CIT CHANGE - links to cit's website on the hub
+	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version. CIT CHANGE - modifies the hub entry link
 	s += "</a>"
-	s += ")"
+	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
+	s += "<br><small><i>That furry /TG/code server your mother warned you about.</i></small><br>" //CIT CHANGE - adds a tagline!
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
 		if (M.client)
 			n++
+
+	features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
+
+	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
+		features += "[get_security_level()] alert"
 
 	if (n > 1)
 		features += "~[n] players"
@@ -260,7 +277,7 @@ GLOBAL_PROTECT(security_mode)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
-		s += ": [jointext(features, ", ")]"
+		s += "\[[jointext(features, ", ")]" //CIT CHANGE - replaces the colon here with a left bracket
 
 	status = s
 

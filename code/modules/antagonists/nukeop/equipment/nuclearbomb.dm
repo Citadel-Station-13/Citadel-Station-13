@@ -232,9 +232,6 @@
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
 
-/obj/machinery/nuclearbomb/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -504,18 +501,36 @@ This is here to make the tiles around the station mininuke change when it's arme
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
+	var/turf/lastlocation
+	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
-	var/tell_the_admins
-	// Only tell the admins if a REAL nuke disk is relocated
-	if(fake)
-		tell_the_admins = FALSE
-	else
+	if(!fake)
 		GLOB.poi_list |= src
-		tell_the_admins = TRUE
+		last_disk_move = world.time
+		START_PROCESSING(SSobj, src)
 
-	set_stationloving(TRUE, inform_admins=tell_the_admins)
+/obj/item/disk/nuclear/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, !fake)
+
+/obj/item/disk/nuclear/process()
+	if(fake)
+		STOP_PROCESSING(SSobj, src)
+		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
+	var/turf/newturf = get_turf(src)
+	if(newturf && lastlocation == newturf)
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.00001))
+			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(istype(loneop))
+				loneop.weight += 1
+	else
+		lastlocation = newturf
+		last_disk_move = world.time
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()

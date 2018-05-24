@@ -234,6 +234,7 @@
 			if(POLLTYPE_IRV)
 				if (!href_list["IRVdata"])
 					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+					return
 				var/list/votelist = splittext(href_list["IRVdata"], ",")
 				if (!vote_on_irv_poll(pollid, votelist))
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
@@ -293,8 +294,8 @@
 		if(JOB_UNAVAILABLE_SLOTFULL)
 			return "[jobtitle] is already filled to capacity."
 	return "Error: Unknown job availability."
-	
-/mob/dead/new_player/proc/IsJobUnavailable(rank)
+
+/mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
@@ -313,6 +314,8 @@
 		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
 		return JOB_UNAVAILABLE_PLAYTIME
+	if(latejoin && !job.special_check_latejoin(client))
+		return JOB_UNAVAILABLE_GENERIC
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -343,18 +346,20 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, 1)
+	var/equip = SSjob.EquipRank(character, rank, TRUE)
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	SSjob.SendToLateJoin(character)
+	var/datum/job/job = SSjob.GetJob(rank)
 
-	if(!arrivals_docked)
-		var/obj/screen/splash/Spl = new(character.client, TRUE)
-		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+	if(job && !job.override_latejoin_spawn(character))
+		SSjob.SendToLateJoin(character)
+		if(!arrivals_docked)
+			var/obj/screen/splash/Spl = new(character.client, TRUE)
+			Spl.Fade(TRUE)
+			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-	character.update_parallax_teleport()
+		character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
 
@@ -372,11 +377,11 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
+/*		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
 			if(CONFIG_GET(flag/allow_crew_objectives))
-				SSticker.generate_individual_objectives(humanc.mind)
+				SSticker.generate_individual_objectives(humanc.mind) */
 
 		if(GLOB.summon_guns_triggered)
 			give_guns(humanc)
@@ -395,8 +400,8 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
-	if(CONFIG_GET(flag/roundstart_traits))
-		SStraits.AssignTraits(humanc, humanc.client, TRUE)
+	if(humanc && CONFIG_GET(flag/roundstart_traits))
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -421,9 +426,8 @@
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++;
-
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -444,7 +448,7 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			job_count++;
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"

@@ -12,7 +12,7 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	radio_key = /obj/item/device/encryptionkey/headset_sec
+	radio_key = /obj/item/encryptionkey/headset_sec
 	radio_channel = "Security"
 	bot_type = SEC_BOT
 	model = "ED-209"
@@ -274,7 +274,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) || !target.recoveringstam || target.staminaloss <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || !target.recoveringstam || target.getStaminaLoss() <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 
@@ -301,7 +301,7 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.staminaloss <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 			else
@@ -380,7 +380,7 @@ Auto Patrol[]"},
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(cell_type, Tsec)
 
 	if(!lasercolor)

@@ -9,7 +9,7 @@
 	density = TRUE
 	var/win_prob = 5
 
-/obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
+/obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	if(obj_flags & IN_USE)
@@ -58,6 +58,9 @@
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.visible_message("<span class='warning'>[user] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
 		"<span class='boldwarning'>You open the bag...!</span>\n\
@@ -139,4 +142,4 @@
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
 			user.visible_message("<span class='warning'>[user]'s appearance shifts into [H]'s!</span>", \
-			"<span class='boldannounce'>They think they're <i>sooo</i> much better than you. Not anymore, they won't.</span>")
+			"<span class='boldannounce'>[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't.</span>")

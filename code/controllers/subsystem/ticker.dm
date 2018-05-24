@@ -128,14 +128,14 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-
+/*
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
 	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
 		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
 		var/list/availableto = splittext(initial(obj.jobs),",")
 		for(var/job in availableto)
-			crewobjjobs["[job]"] += list(obj)
+			crewobjjobs["[job]"] += list(obj) */
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			if(CONFIG_GET(flag/irc_announce_new_game))
-				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
+				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -272,14 +272,14 @@ SUBSYSTEM_DEF(ticker)
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	CHECK_TICK
-	if(hide_mode)
+	/*if(hide_mode) CIT CHANGE - comments this section out to obfuscate gamemodes. Quit self-antagging during extended just because "hurrrrr no antaggs!!!!!! i giv sec thing 2 do!!!!!!!!!" it's bullshit and everyone hates it
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
 		to_chat(world, "<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
 	else
-		mode.announce()
+		mode.announce()*/
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
@@ -301,6 +301,7 @@ SUBSYSTEM_DEF(ticker)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
+	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
@@ -323,23 +324,26 @@ SUBSYSTEM_DEF(ticker)
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
-	//Cleanup some stuff
-	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
-		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if(S.delete_after_roundstart)
-			qdel(S)
 
-	//assign crew objectives and generate miscreants
+/*	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
 	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
 		GLOB.miscreants_allowed = TRUE
-	generate_crew_objectives()
+	generate_crew_objectives() */
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
+
+	for(var/i in GLOB.start_landmarks_list)
+		var/obj/effect/landmark/start/S = i
+		if(istype(S))							//we can not runtime here. not in this important of a proc.
+			S.after_round_start()
+		else
+			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -388,7 +392,7 @@ SUBSYSTEM_DEF(ticker)
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 			if(CONFIG_GET(flag/roundstart_traits))
-				SStraits.AssignTraits(player, N.client, TRUE)
+				SSquirks.AssignQuirks(player, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -474,12 +478,12 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
 
-/proc/send_gamemode_vote()
+/proc/send_gamemode_vote() //CIT CHANGE - adds roundstart gamemode votes
 	if(SSticker.current_state == GAME_STATE_PREGAME)
 		if(SSticker.timeLeft < 900)
 			SSticker.timeLeft = 900
 		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server")
+		SSvote.initiate_vote("roundtype","server",TRUE)
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

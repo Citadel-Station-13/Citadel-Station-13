@@ -20,7 +20,6 @@
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -54,6 +53,9 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon()
+	cut_overlays()
+	if (stat & BROKEN)
+		add_overlay("waitlight")
 	if(beaker)
 		icon_state = "mixer1"
 	else
@@ -77,8 +79,6 @@
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
 
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 
@@ -142,9 +142,9 @@
 
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
+		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 		data["pillBotContent"] = bottle.contents.len
-		data["pillBotMaxContent"] = bottle.storage_slots
-
+		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
@@ -157,7 +157,6 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
 
 	return data
 
@@ -220,12 +219,18 @@
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
+				var/target_loc = drop_location()
+				var/drop_threshold = INFINITY
+				if(bottle)
+					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					if(STRB)
+						drop_threshold = STRB.max_items - bottle.contents.len
 
 				for(var/i = 0; i < amount; i++)
-					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/reagent_containers/pill(bottle)
+					if(i < drop_threshold)
+						P = new(target_loc)
 					else
-						P = new/obj/item/reagent_containers/pill(drop_location())
+						P = new(drop_location())
 					P.name = trim("[name] pill")
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
@@ -300,8 +305,8 @@
 					adjust_item_drop_location(P)
 					reagents.trans_to(P, vol_part)
 			. = TRUE
-
-		if("createvial")
+		//CITADEL ADD Hypospray Vials
+		if("createVial")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
 				return
@@ -312,23 +317,23 @@
 				amount_full = round(reagents.total_volume / 30)
 				vol_part = reagents.total_volume % 30
 			var/name = stripped_input(usr, "Name:","Name your hypovial!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 
-			var/obj/item/reagent_containers/glass/bottle/vial/small/V
+			var/obj/item/reagent_containers/glass/bottle/vial/small/P
 			for(var/i = 0; i < amount_full; i++)
-				V = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
-				V.name = trim("[name] hypovial")
-				adjust_item_drop_location(V)
-				reagents.trans_to(V, 30)
+				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
+				P.name = trim("[name] hypovial")
+				adjust_item_drop_location(P)
+				reagents.trans_to(P, 30)
 
 			if(vol_part)
-				V = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
-				V.name = trim("[name] hypovial")
-				adjust_item_drop_location(V)
-				reagents.trans_to(V, vol_part)
+				P = new/obj/item/reagent_containers/glass/bottle/vial/small(drop_location())
+				P.name = trim("[name] hypovial")
+				adjust_item_drop_location(P)
+				reagents.trans_to(P, vol_part)
 			. = TRUE
-
+		//END CITADEL ADDITIONS
 		if("analyze")
 			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
 			if(R)
@@ -380,15 +385,7 @@
 	else
 		var/md5 = md5(AM.name)
 		for (var/i in 1 to 32)
-			#if DM_VERSION >= 513
-			#warning 512 is definitely stable now, remove the old code
-			#endif
-
-			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
-			#else
-			. += hex2num(copytext(md5,i,i+1))
-			#endif
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)

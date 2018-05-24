@@ -73,7 +73,7 @@
 
 /turf/closed/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
@@ -102,7 +102,7 @@
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new girder_type(src)
-	src.ChangeTurf(/turf/open/floor/plasteel)
+	ScrapeAway()
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
@@ -167,6 +167,8 @@
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 	girder_type = null
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"

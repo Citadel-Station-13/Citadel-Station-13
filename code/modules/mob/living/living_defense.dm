@@ -302,7 +302,7 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(has_trait(TRAIT_SHOCKIMMUNE))
 		return FALSE
@@ -317,8 +317,7 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
-	for(var/obj/O in L)
+	for(var/obj/O in contents)
 		O.emp_act(severity)
 	..()
 
@@ -388,9 +387,7 @@
 	return
 
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(A != src)
-		end_pixel_y = get_standard_pixel_y_offset(lying)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

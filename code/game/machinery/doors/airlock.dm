@@ -49,13 +49,14 @@
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
 	integrity_failure = 70
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
-	interact_open = TRUE
 	autoclose = TRUE
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
+
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -71,7 +72,7 @@
 	var/justzap = FALSE
 	var/obj/item/electronics/airlock/electronics
 	var/shockCooldown = FALSE //Prevents multiple shocks from happening
-	var/obj/item/device/doorCharge/charge //If applied, causes an explosion upon opening the door
+	var/obj/item/doorCharge/charge //If applied, causes an explosion upon opening the door
 	var/obj/item/note //Any papers pinned to the airlock
 	var/detonated = FALSE
 	var/abandoned = FALSE
@@ -98,7 +99,7 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	wires = new /datum/wires/airlock(src)
+	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
 	if(frequency)
 		set_frequency(frequency)
 
@@ -201,8 +202,8 @@
 		return
 
 	// Handle recieved packet.
-	var/command = lowertext(data.plaintext_data)
-	var/command_value = lowertext(data.plaintext_data_secondary)
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
 	switch(command)
 		if("open")
 			if(command_value == "on" && !density)
@@ -322,12 +323,12 @@
 					return
 			else
 				return
-		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.siemens_coefficient)//not insulated
-					hallucinate_shock(H)
+					new /datum/hallucination/shock(H)
 					return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
@@ -336,34 +337,6 @@
 			else
 				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
-
-/obj/machinery/door/airlock/proc/hallucinate_shock(mob/living/user)
-	var/image/shock_image = image(user, user, dir = user.dir)
-	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
-	shock_image.color = rgb(0,0,0)
-	shock_image.override = TRUE
-	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
-
-	to_chat(user, "<span class='userdanger'>You feel a powerful shock course through your body!</span>")
-	if(user.client)
-		user.client.images |= shock_image
-		user.client.images |= electrocution_skeleton_anim
-	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
-	user.playsound_local(get_turf(src), "sparks", 100, 1)
-	user.staminaloss += 50
-	user.Stun(40)
-	user.jitteriness += 1000
-	user.do_jitter_animation(user.jitteriness)
-	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)
-
-/obj/machinery/door/airlock/proc/reset_hallucinate_shock_animation(mob/living/user, shock_image, electrocution_skeleton_anim)
-	if(user.client)
-		user.client.images.Remove(shock_image)
-		user.client.images.Remove(electrocution_skeleton_anim)
-
-/obj/machinery/door/airlock/proc/hallucinate_shock_drop(mob/living/user)
-	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
-	user.Knockdown(60)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != NOT_ELECTRIFIED)
@@ -730,9 +703,12 @@
 		shock(user, 100)
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/door/airlock/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!(issilicon(user) || IsAdminGhost(user)))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
@@ -749,16 +725,12 @@
 				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
-			return
 
-	if(panel_open)
-		if(security_level)
-			to_chat(user, "<span class='warning'>Wires are protected!</span>")
-			return
-		wires.interact(user)
-	else
-		..()
-	return
+/obj/machinery/door/airlock/attempt_wire_interaction(mob/user)
+	if(security_level)
+		to_chat(user, "<span class='warning'>Wires are protected!</span>")
+		return WIRE_INTERACTION_FAIL
+	return ..()
 
 /obj/machinery/door/airlock/proc/electrified_loop()
 	while (secondsElectrified > 0)
@@ -931,14 +903,15 @@
 		note.forceMove(get_turf(user))
 		note = null
 		update_icon()
-	else if(is_wire_tool(C))
-		return attack_hand(user)
+	else if(is_wire_tool(C) && panel_open)
+		attempt_wire_interaction(user)
+		return
 	else if(istype(C, /obj/item/pai_cable))
 		var/obj/item/pai_cable/cable = C
 		cable.plugin(src, user)
 	else if(istype(C, /obj/item/airlock_painter))
 		change_paintjob(C, user)
-	else if(istype(C, /obj/item/device/doorCharge))
+	else if(istype(C, /obj/item/doorCharge))
 		if(!panel_open || security_level)
 			to_chat(user, "<span class='warning'>The maintenance panel must be open to apply [C]!</span>")
 			return
@@ -1091,16 +1064,14 @@
 		if(obj_flags & EMAGGED)
 			return FALSE
 		use_power(50)
-		playsound(src, doorOpen, 30)
+		playsound(src, doorOpen, 30, 1)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose && normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 150)
-	else if(autoclose && !normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 15)
+	if(autoclose)
+		autoclose_in(normalspeed ? 150 : 15)
 
 	if(!density)
 		return TRUE
@@ -1133,7 +1104,7 @@
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				addtimer(CALLBACK(src, .proc/autoclose), 60)
+				autoclose_in(60)
 				return
 
 	if(forced < 2)
@@ -1411,6 +1382,7 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "ai_airlock", name, 550, 456, master_ui, state)
 		ui.open()
+	return TRUE
 
 /obj/machinery/door/airlock/ui_data()
 	var/list/data = list()

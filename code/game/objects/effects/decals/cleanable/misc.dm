@@ -109,6 +109,9 @@
 	beauty = -200
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))
@@ -221,3 +224,11 @@
 	icon_state = "flour"
 	color = "#C8A5DC"
 	beauty = -200
+
+/obj/effect/decal/cleanable/insectguts
+	name = "insect guts"
+	desc = "One bug squashed. Four more will rise in its place."
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "xfloor1"
+	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	beauty = -300

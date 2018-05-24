@@ -290,7 +290,7 @@
 		H = loc
 	if(!H)
 		return
-	else if(H.get_item_by_slot(slot_neck) == src)
+	else if(H.get_item_by_slot(SLOT_NECK) == src)
 		if(H.arousalloss < H.max_arousal / 3)
 			H.arousalloss = H.max_arousal / 3
 		if(prob(5) && H.hallucination < 15)
@@ -316,13 +316,17 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	storage_slots = 1
-	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_BULKY
-	can_hold = list(
+
+/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/toy/sword/darksabre
-		)
+		))
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
@@ -339,3 +343,11 @@
 	desc = "A piece of paper folded into neat little hat."
 	icon_state = "paperhat"
 	item_state = "paperhat"
+
+/obj/item/clothing/suit/toggle/labcoat/mad/techcoat
+	name = "Techomancers Labcoat"
+	desc = "An oddly special looking coat."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "rdcoat"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "rdcoat"

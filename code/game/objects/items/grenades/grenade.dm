@@ -10,7 +10,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	var/active = 0
@@ -107,10 +107,6 @@
 		add_fingerprint(user)
 	else
 		return ..()
-
-/obj/item/grenade/attack_hand()
-	walk(src, null, null)
-	..()
 
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)

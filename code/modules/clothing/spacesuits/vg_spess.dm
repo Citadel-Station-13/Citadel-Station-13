@@ -16,7 +16,7 @@
 	icon_state = "hardsuit-nazi"
 	slowdown = 1
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/gun,/obj/item/device/flashlight,/obj/item/tank,/obj/item/melee/)
+	allowed = list(/obj/item/gun,/obj/item/flashlight,/obj/item/tank,/obj/item/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/nazi
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 
@@ -36,7 +36,7 @@
 	icon_state = "hardsuit-soviet"
 	slowdown = 1
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/gun,/obj/item/device/flashlight,/obj/item/tank,/obj/item/melee/)
+	allowed = list(/obj/item/gun,/obj/item/flashlight,/obj/item/tank,/obj/item/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 

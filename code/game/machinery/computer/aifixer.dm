@@ -18,12 +18,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/aifixer/interact(mob/user)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
+	. = ..()
 
 	var/dat = ""
 
@@ -105,6 +101,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
+	updateUsrDialog()
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
@@ -122,7 +119,7 @@
 		else
 			add_overlay("ai-fixer-empty")
 
-/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
 	//Downloading AI from card to terminal.

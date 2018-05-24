@@ -64,7 +64,7 @@ field_generator power level display
 	if(active == FG_ONLINE)
 		calc_power()
 
-/obj/machinery/field/generator/attack_hand(mob/user)
+/obj/machinery/field/generator/interact(mob/user)
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
@@ -103,7 +103,7 @@ field_generator power level display
 			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 0)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
@@ -332,8 +332,10 @@ field_generator power level display
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
+					var/turf/T = get_turf(src)
+					var/area/A = get_area(T)
+					message_admins("A singulo exists and a containment field has failed at [A] [ADMIN_COORDJMP(T)].")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [A] [COORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

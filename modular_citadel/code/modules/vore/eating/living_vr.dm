@@ -191,16 +191,21 @@
 		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 
+	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
+		return FALSE
+		
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-
-
+		
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
+	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
+		return FALSE
+		
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
@@ -249,8 +254,8 @@
 				log_attack("[attacker] attempted to feed [H.contents] to [src] ([src.type]) but it failed.")
 
  // I just can't imagine this not being complained about
-	//Handle case: /obj/item/device/radio/beacon
-		if(/obj/item/device/radio/beacon)
+	//Handle case: /obj/item/radio/beacon
+		if(/obj/item/radio/beacon)
 			var/confirm = alert(user, "[src == user ? "Eat the beacon?" : "Feed the beacon to [src]?"]", "Confirmation", "Yes!", "Cancel")
 			if(confirm == "Yes!")
 				var/bellychoice = input("Which belly?","Select A Belly") in src.vore_organs
@@ -328,8 +333,8 @@
 			SA.update_icons()
 
 	//You're in a dogborg!
-	else if(istype(loc, /obj/item/device/dogborg/sleeper))
-		var/obj/item/device/dogborg/sleeper/belly = loc //The belly!
+	else if(istype(loc, /obj/item/dogborg/sleeper))
+		var/obj/item/dogborg/sleeper/belly = loc //The belly!
 
 		var/confirm = alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", "Okay", "Cancel")
 		if(!confirm == "Okay" || loc != belly)

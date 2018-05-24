@@ -48,7 +48,7 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return
 	if(ismob(loc))
 		return
@@ -207,9 +207,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 20
+			hallucination += 10
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5//Removed at 2 per tick so this will slowly build up
+			hallucination += 5
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
@@ -237,7 +237,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -328,10 +328,8 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(staminaloss && !combatmode && !aimingdownsights)//CIT CHANGE - prevents stamina regen while combat mode is active
+	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
-	else if(aimingdownsights)//CIT CHANGE - makes aiming down sights drain stamina
-		adjustStaminaLoss(resting ? 0.2 : 0.5)//CIT CHANGE - ditto. Raw spaghetti
 
 	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
 	if(bufferedstam && world.time > stambufferregentime)
@@ -351,22 +349,22 @@
 		var/saved_dizz = dizziness
 		if(C)
 			var/oldsrc = src
-			var/amplitude = dizziness*(sin(dizziness * 0.044 * world.time) + 1) / 70 // This shit is annoying at high strength
+			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
 			src = null
 			spawn(0)
 				if(C)
-					temp = amplitude * sin(0.008 * saved_dizz * world.time)
+					temp = amplitude * sin(saved_dizz * world.time)
 					pixel_x_diff += temp
 					C.pixel_x += temp
-					temp = amplitude * cos(0.008 * saved_dizz * world.time)
+					temp = amplitude * cos(saved_dizz * world.time)
 					pixel_y_diff += temp
 					C.pixel_y += temp
 					sleep(3)
 					if(C)
-						temp = amplitude * sin(0.008 * saved_dizz * world.time)
+						temp = amplitude * sin(saved_dizz * world.time)
 						pixel_x_diff += temp
 						C.pixel_x += temp
-						temp = amplitude * cos(0.008 * saved_dizz * world.time)
+						temp = amplitude * cos(saved_dizz * world.time)
 						pixel_y_diff += temp
 						C.pixel_y += temp
 					sleep(3)
@@ -454,7 +452,7 @@
 		return
 	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
 
 
 ////////////////

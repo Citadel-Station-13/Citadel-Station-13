@@ -156,7 +156,7 @@ GLOBAL_PROTECT(protected_ranks)
 			else
 				while(query_load_admin_ranks.NextRow())
 					var/skip
-					var/rank_name = query_load_admin_ranks.item[1]
+					var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
 					for(var/datum/admin_rank/R in GLOB.admin_ranks)
 						if(R.name == rank_name) //this rank was already loaded from txt override
 							skip = 1
@@ -230,7 +230,7 @@ GLOBAL_PROTECT(protected_ranks)
 			continue
 		new /datum/admins(rank_names[rank], ckey, 0, 1)
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
-		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] ORDER BY rank")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
@@ -242,7 +242,6 @@ GLOBAL_PROTECT(protected_ranks)
 				var/skip
 				if(rank_names[admin_rank] == null)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
-					log_sql("[admin_ckey] loaded with invalid admin rank [admin_rank].")
 					skip = 1
 				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
 					skip = 1

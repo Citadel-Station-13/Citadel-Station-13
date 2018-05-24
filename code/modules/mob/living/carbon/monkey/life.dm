@@ -1,4 +1,10 @@
+#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
+#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
+#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
+#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
 
 /mob/living/carbon/monkey
 
@@ -12,11 +18,18 @@
 	if(..())
 
 		if(!client)
-			if(stat == CONSCIOUS)
-				if(!handle_combat())
-					if(prob(33) && canmove && isturf(loc) && !pulledby)
+			if(stat == CONSCIOUS)	
+				if(on_fire || buckled || restrained() || (resting && canmove)) //CIT CHANGE - makes it so monkeys attempt to resist if they're resting
+					if(!resisting && prob(MONKEY_RESIST_PROB))
+						resisting = TRUE
+						walk_to(src,0)
+						resist()
+				else if(resisting)
+					resisting = FALSE
+				else if((mode == MONKEY_IDLE && !pickupTarget && !prob(MONKEY_SHENANIGAN_PROB)) || !handle_combat())
+					if(prob(25) && canmove && isturf(loc) && !pulledby)
 						step(src, pick(GLOB.cardinals))
-					if(prob(1))
+					else if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))
 			else
 				walk_to(src,0)
@@ -133,7 +146,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()
@@ -163,3 +176,11 @@
 
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+
+#undef HEAT_DAMAGE_LEVEL_1
+#undef HEAT_DAMAGE_LEVEL_2
+#undef HEAT_DAMAGE_LEVEL_3
+
+#undef COLD_DAMAGE_LEVEL_1
+#undef COLD_DAMAGE_LEVEL_2
+#undef COLD_DAMAGE_LEVEL_3
