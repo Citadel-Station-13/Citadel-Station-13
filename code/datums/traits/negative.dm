@@ -58,9 +58,9 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your backpack" = slot_in_backpack,
-		"in your left pocket" = slot_l_store,
-		"in your right pocket" = slot_r_store
+		"in your backpack" = SLOT_IN_BACKPACK,
+		"in your left pocket" = SLOT_L_STORE,
+		"in your right pocket" = SLOT_R_STORE
 	)
 	var/where = H.equip_in_one_of_slots(heirloom, slots)
 	if(!where)
@@ -121,7 +121,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, slot_glasses)
+	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 
 
@@ -230,16 +230,9 @@
 		return
 	if(prob(2)) //we'll all be mad soon enough
 		madness()
-
-/datum/quirk/insanity/proc/madness(mad_fools)
-	set waitfor = FALSE
-	if(!mad_fools)
-		mad_fools = prob(20)
-	if(mad_fools)
-		var/hallucination_type = pick(subtypesof(/datum/hallucination/rds))
-		new hallucination_type (quirk_holder, FALSE)
-	else
-		quirk_holder.hallucination += rand(10, 50)
+		
+/datum/quirk/insanity/proc/madness()
+	quirk_holder.hallucination += rand(10, 25)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)

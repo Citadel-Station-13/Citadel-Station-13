@@ -24,9 +24,11 @@
 	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
+	var/clothing_flags = NONE
+
 	//Var modification - PLEASE be careful with this I know who you are and where you live
-	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
-	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
+	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
+	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()
 
 	var/pocket_storage_component_path
 
@@ -72,12 +74,12 @@
 	..()
 	if(!istype(user))
 		return
-	if(user_vars_remembered && user_vars_remembered.len)
+	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
 				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
 					user.vars[variable] = user_vars_remembered[variable]
-		user_vars_remembered = list()
+		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
@@ -88,7 +90,7 @@
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
-					user.vv_edit_var(variable, user_vars_to_edit[variable])
+					user.vars[variable] = user_vars_to_edit[variable]
 
 /obj/item/clothing/examine(mob/user)
 	..()
@@ -262,7 +264,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	flags_1 ^= visor_flags
+	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
