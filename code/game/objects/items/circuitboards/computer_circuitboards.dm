@@ -154,6 +154,10 @@
 	name = "Labor Camp teleporter console (Computer Board)"
 	build_path = /obj/machinery/computer/gulag_teleporter_computer
 
+/obj/item/circuitboard/computer/rdconsole/production
+	name = "R&D Console Production Only (Computer Board)"
+	build_path = /obj/machinery/computer/rdconsole/production
+
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
 	build_path = /obj/machinery/computer/rdconsole/core
@@ -223,10 +227,6 @@
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
-
-/obj/item/circuitboard/computer/stockexchange
-	name = "circuit board (Stock Exchange Console)"
-	build_path = /obj/machinery/computer/stockexchange
 
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"

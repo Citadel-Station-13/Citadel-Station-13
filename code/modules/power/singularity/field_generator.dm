@@ -64,10 +64,7 @@ field_generator power level display
 	if(active == FG_ONLINE)
 		calc_power()
 
-/obj/machinery/field/generator/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/field/generator/interact(mob/user)
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
@@ -106,7 +103,7 @@ field_generator power level display
 			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 0)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)

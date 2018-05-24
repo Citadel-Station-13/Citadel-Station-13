@@ -24,7 +24,7 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
@@ -474,7 +474,7 @@
 
 /datum/outfit/ctf
 	name = "CTF"
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
@@ -496,10 +496,10 @@
 	W.update_label(W.registered_name, W.assignment)
 
 	// The shielded hardsuit is already NODROP_1
-	no_drops += H.get_item_by_slot(slot_gloves)
-	no_drops += H.get_item_by_slot(slot_shoes)
-	no_drops += H.get_item_by_slot(slot_w_uniform)
-	no_drops += H.get_item_by_slot(slot_ears)
+	no_drops += H.get_item_by_slot(SLOT_GLOVES)
+	no_drops += H.get_item_by_slot(SLOT_SHOES)
+	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
+	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		I.flags_1 |= NODROP_1
@@ -530,7 +530,7 @@
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
@@ -538,7 +538,7 @@
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE

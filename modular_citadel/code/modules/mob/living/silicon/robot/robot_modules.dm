@@ -36,8 +36,8 @@
 		/obj/item/dogborg/pounce,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/soap/tongue,
-		/obj/item/device/analyzer/nose,
-		/obj/item/device/dogborg/sleeper/K9,
+		/obj/item/analyzer/nose,
+		/obj/item/dogborg/sleeper/K9,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/pinpointer/crew)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
@@ -63,14 +63,14 @@
 	basic_modules = list(
 		/obj/item/dogborg/jaws/small,
 		/obj/item/storage/bag/borgdelivery,
-		/obj/item/device/analyzer/nose,
+		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue,
-		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper/medihound,
+		/obj/item/healthanalyzer,
+		/obj/item/dogborg/sleeper/medihound,
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/device/sensor_device)
+		/obj/item/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -88,10 +88,10 @@
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/dogborg/jaws/small,
-		/obj/item/device/analyzer/nose,
+		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue/scrubpup,
-		/obj/item/device/lightreplacer/cyborg,
-		/obj/item/device/dogborg/sleeper/compactor)
+		/obj/item/lightreplacer/cyborg,
+		/obj/item/dogborg/sleeper/compactor)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/janitor,
@@ -108,7 +108,7 @@
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
-	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
+	var/obj/item/lightreplacer/LR = locate(/obj/item/lightreplacer) in basic_modules
 	if(LR)
 		for(var/i in 1 to coeff)
 			LR.Charge(R)
@@ -122,9 +122,9 @@
 	basic_modules = list(
 		/obj/item/dogborg/jaws/small,
 		/obj/item/storage/bag/borgdelivery,
-		/obj/item/device/analyzer/nose,
+		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue,
-		/obj/item/device/healthanalyzer,
+		/obj/item/healthanalyzer,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
@@ -142,17 +142,17 @@
 	name = "Ore Pup"
 	basic_modules = list(
 		/obj/item/storage/bag/ore/cyborg,
-		/obj/item/device/analyzer/nose,
+		/obj/item/analyzer/nose,
 		/obj/item/storage/bag/borgdelivery,
-		/obj/item/device/dogborg/sleeper/ore,
+		/obj/item/dogborg/sleeper/ore,
 		/obj/item/pickaxe/drill/cyborg,
 		/obj/item/shovel,
 		/obj/item/crowbar/cyborg,
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
-		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
-		/obj/item/device/gps/cyborg)
+		/obj/item/gps/cyborg)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,

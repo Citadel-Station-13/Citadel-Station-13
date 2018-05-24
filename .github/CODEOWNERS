@@ -10,13 +10,3 @@
 #LetterJay 
 /modular_citadel/code/modules/client/loadout/__donator.dm @LetterJay 
 /SQL/database_changelog.txt @LetterJay
-
-#Poojawa
-
-/modular_citadel/code/modules/vore @Poojawa
-/code/game/objects/items/devices/dogborg_sleeper.dm @Poojawa
-/modular_citadel/code/modules/mob/living/silicon/robot/dogborg_equipment.dm @Poojawa
-/tgui/ @Poojawa
-/modular_citadel/code/modules/clothing/spacesuits/flightsuit.dm @Poojawa
-/modular_citadel/code/game/objects/ids.dm @Poojawa
-/sound/vore @Poojawa

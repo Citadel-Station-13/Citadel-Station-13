@@ -6,6 +6,6 @@
 
 /datum/crafting_recipe/potatos
 	name = "Potat-OS"
-	reqs = list(/obj/item/stack/cable_coil = 1, /obj/item/stack/rods = 1,  /obj/item/reagent_containers/food/snacks/grown/potato = 1, /obj/item/device/aicard = 1 )
-	result = /obj/item/device/aicard/potato
+	reqs = list(/obj/item/stack/cable_coil = 1, /obj/item/stack/rods = 1,  /obj/item/reagent_containers/food/snacks/grown/potato = 1, /obj/item/aicard = 1 )
+	result = /obj/item/aicard/potato
 	category = CAT_ROBOT
