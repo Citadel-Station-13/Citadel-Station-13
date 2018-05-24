@@ -24,7 +24,7 @@
 /obj/item/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_NECK)
-			if(user.get_item_by_slot(slot_neck))
+			if(user.get_item_by_slot(SLOT_NECK))
 				to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
 				return
 	..()

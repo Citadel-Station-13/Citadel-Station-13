@@ -290,7 +290,7 @@
 		H = loc
 	if(!H)
 		return
-	else if(H.get_item_by_slot(slot_neck) == src)
+	else if(H.get_item_by_slot(SLOT_NECK) == src)
 		if(H.arousalloss < H.max_arousal / 3)
 			H.arousalloss = H.max_arousal / 3
 		if(prob(5) && H.hallucination < 15)
