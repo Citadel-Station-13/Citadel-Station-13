@@ -290,7 +290,7 @@
 		H = loc
 	if(!H)
 		return
-	else if(H.get_item_by_slot(slot_neck) == src)
+	else if(H.get_item_by_slot(SLOT_NECK) == src)
 		if(H.arousalloss < H.max_arousal / 3)
 			H.arousalloss = H.max_arousal / 3
 		if(prob(5) && H.hallucination < 15)
@@ -343,3 +343,11 @@
 	desc = "A piece of paper folded into neat little hat."
 	icon_state = "paperhat"
 	item_state = "paperhat"
+
+/obj/item/clothing/suit/toggle/labcoat/mad/techcoat
+	name = "Techomancers Labcoat"
+	desc = "An oddly special looking coat."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "rdcoat"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "rdcoat"

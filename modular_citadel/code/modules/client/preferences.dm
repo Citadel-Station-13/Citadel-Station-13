@@ -664,11 +664,11 @@
 		var/occupied_slots = L[slot_to_string(initial(G.category))] ? L[slot_to_string(initial(G.category))] + 1 : 1
 		LAZYSET(L, slot_to_string(initial(G.category)), occupied_slots)
 	switch(slot)
-		if(slot_in_backpack)
-			if(L[slot_to_string(slot_in_backpack)] < BACKPACK_SLOT_AMT)
+		if(SLOT_IN_BACKPACK)
+			if(L[slot_to_string(SLOT_IN_BACKPACK)] < BACKPACK_SLOT_AMT)
 				return TRUE
-		if(slot_hands)
-			if(L[slot_to_string(slot_hands)] < HANDS_SLOT_AMT)
+		if(SLOT_HANDS)
+			if(L[slot_to_string(SLOT_HANDS)] < HANDS_SLOT_AMT)
 				return TRUE
 		else
 			if(L[slot_to_string(slot)] < DEFAULT_SLOT_AMT)

@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/deaf_type
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear them."
+			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
 			deaf_type = 1
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
@@ -241,9 +241,18 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
+
+	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
+	if(say_test(message) == "2")	//CIT CHANGE - ditto
+		yellareas = get_areas_in_range(message_range*0.5,src)	//CIT CHANGE - ditto
+
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(M.stat != DEAD) //not dead, not important
+			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
+				var/area/A = get_area(M)	//CIT CHANGE - ditto
+				if(istype(A) && A.ambientsounds != SPACE && A in yellareas)	//CIT CHANGE - ditto
+					listening |= M	//CIT CHANGE - ditto
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
 			continue

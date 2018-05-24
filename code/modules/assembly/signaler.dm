@@ -24,7 +24,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing them instantly!</span>")
+	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 
@@ -111,7 +111,7 @@ Code:
 		var/obj/item/assembly/signaler/signaler2 = W
 		if(secured && signaler2.secured)
 			code = signaler2.code
-			frequency = signaler2.frequency
+			set_frequency(signaler2.frequency)
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
@@ -186,6 +186,7 @@ Code:
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	var/anomaly_type = /obj/effect/anomaly
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
