@@ -44,14 +44,16 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
-		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/belly))
+	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/item/dogborg/sleeper))
-		return ONE_ATMOSPHERE
-	else
-		return pressure
+		return ONE_ATMOSPHERE //END OF CIT CHANGES
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
+			return ONE_ATMOSPHERE
+	return pressure
 
 
 /mob/living/carbon/human/handle_traits()
@@ -286,13 +288,14 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	if(glasses)
-		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head)
-		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+	if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+		var/obj/item/clothing/CH = head
+		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 
@@ -390,10 +393,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick(GLOB.ballmer_good_msg))
-					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
+					SSresearch.science_tech.add_points_all(TECHWEB_POINT_TYPE_DEFAULT, (BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.research_points -= BALLMER_POINTS
+						SSresearch.science_tech.remove_points_all(TECHWEB_POINT_TYPE_DEFAULT, BALLMER_POINTS)
 						say(pick(GLOB.ballmer_windows_me_msg))
 		if(drunkenness >= 41)
 			if(prob(25))

@@ -46,11 +46,11 @@
 	update_charge()
 
 /obj/item/defibrillator/proc/update_power()
-	if(cell)
-		if(cell.charge < paddles.revivecost)
+	if(!QDELETED(cell))
+		if(QDELETED(paddles) || cell.charge < paddles.revivecost)
 			powered = FALSE
 		else
-			powered = 1
+			powered = TRUE
 	else
 		powered = FALSE
 
@@ -67,7 +67,7 @@
 
 /obj/item/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
-		if(cell)
+		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
@@ -442,7 +442,7 @@
 	if(isliving(H.pulledby))		//CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by their contact with [H]!</span>")
+			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 			M.emote("scream")
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
@@ -505,7 +505,7 @@
 			shock_touching(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
-					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
+					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at [H.p_their()] chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
