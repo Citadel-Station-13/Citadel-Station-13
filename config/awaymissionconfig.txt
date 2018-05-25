@@ -21,3 +21,9 @@
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/Cabin.dmm
 #_maps/RandomZLevels/beach2.dmm
+<<<<<<< HEAD
+=======
+_maps/RandomZLevels/VR/murderdome.dmm
+_maps/RandomZLevels/VR/snowdin_VR.dmm
+_maps/RandomZLevels/VR/syndicate_trainer.dmm
+>>>>>>> 92a811e... Adds VR Snowdin and Syndicate Trainer/VR Update roll up (#37915)
