@@ -5319,6 +5319,7 @@
 	},
 /area/tdome/tdomeobserve)
 "oU" = (
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/bar{
 	locked = 0;
 	req_access_txt = "25"
@@ -5330,6 +5331,12 @@
 /area/centcom/holding)
 "oV" = (
 /obj/structure/reagent_dispensers/beerkeg,
+=======
+/obj/structure/table/wood/bar,
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /turf/open/floor/wood,
 /area/centcom/holding)
 "oW" = (
@@ -6049,6 +6056,7 @@
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
 "qF" = (
+<<<<<<< HEAD
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
@@ -6071,6 +6079,11 @@
 "qI" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
+=======
+/obj/structure/mopbucket,
+/obj/item/mop,
+/turf/open/floor/plasteel/cafeteria,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "qJ" = (
 /obj/machinery/computer/shuttle/syndicate/recall,
@@ -7076,6 +7089,7 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "sY" = (
 /mob/living/simple_animal/bot/medbot,
 /turf/open/floor/wood,
@@ -7103,6 +7117,11 @@
 /obj/effect/spawner/lootdrop/costume,
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/wood,
+=======
+"td" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/plasteel/cafeteria,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "te" = (
 /obj/structure/table/wood,
@@ -7489,6 +7508,7 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "tY" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -7522,6 +7542,11 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
+=======
+"ub" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel/whitegreen,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
@@ -7777,6 +7802,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "uK" = (
+<<<<<<< HEAD
 /obj/machinery/button/door{
 	id = "Proom2";
 	name = "Door Lock";
@@ -7786,6 +7812,14 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
+=======
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/book/manual/barman_recipes,
+/obj/item/book/granter/action/drink_fling,
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/cafeteria,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "uL" = (
 /obj/machinery/button/door{
@@ -8076,6 +8110,7 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
 "vy" = (
+<<<<<<< HEAD
 /obj/structure/chair/sofa{
 	dir = 1
 	},
@@ -8087,6 +8122,10 @@
 	name = "Room 3"
 	},
 /turf/open/floor/wood,
+=======
+/obj/machinery/processor,
+/turf/open/floor/plasteel/cafeteria,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "vA" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -8355,6 +8394,7 @@
 	},
 /turf/open/floor/carpet,
 /area/wizard_station)
+<<<<<<< HEAD
 "we" = (
 /obj/machinery/button/door{
 	id = "Proom3";
@@ -8416,6 +8456,17 @@
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/floor/carpet,
+=======
+"wh" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/window/eastright{
+	dir = 8;
+	name = "Animal Pen"
+	},
+/turf/open/floor/grass,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "wl" = (
 /obj/machinery/light,
@@ -8638,6 +8689,10 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
 /area/wizard_station)
+"wS" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
 "wV" = (
 /obj/machinery/computer/telecrystals/boss{
 	dir = 1
@@ -8851,6 +8906,12 @@
 /obj/machinery/light,
 /turf/open/floor/carpet,
 /area/wizard_station)
+"xA" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/centcom/holding)
 "xG" = (
 /turf/open/floor/plasteel/dark,
 /area/syndicate_mothership/control)
@@ -9197,6 +9258,14 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/grass,
 /area/wizard_station)
+"yL" = (
+/obj/structure/rack,
+/obj/item/nullrod/claymore/katana{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "yU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -9211,6 +9280,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"yV" = (
+/obj/structure/rack,
+/obj/item/nullrod/scythe/vibro{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "yX" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/dark,
@@ -9866,6 +9943,13 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno,
 /turf/open/floor/grass,
 /area/wizard_station)
+"Bk" = (
+/obj/item/clothing/under/jabroni,
+/obj/item/clothing/under/geisha,
+/obj/item/clothing/under/kilt,
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Bu" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -10468,6 +10552,14 @@
 	dir = 8
 	},
 /area/centcom/evac)
+"CU" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
 "CX" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
@@ -10579,6 +10671,14 @@
 	dir = 8
 	},
 /area/centcom/evac)
+"Dj" = (
+/obj/structure/rack,
+/obj/item/nullrod/claymore{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Dq" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/stripes/line{
@@ -11060,7 +11160,11 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "ED" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood";
+	smooth = 1
+	},
 /area/centcom/holding)
 "EE" = (
 /obj/structure/closet/crate/bin,
@@ -11198,23 +11302,47 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
+=======
+"Fa" = (
+/obj/structure/table/wood,
+/obj/item/instrument/piano_synth,
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Fb" = (
+/obj/structure/piano,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Fc" = (
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Ff" = (
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Fh" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/wood,
+/area/centcom/holding)
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 "Fi" = (
-/turf/open/floor/plating/beach/sand,
-/area/centcom/holding)
-"Fj" = (
-/obj/effect/overlay/palmtree_r,
-/obj/effect/overlay/coconut,
-/turf/open/floor/plating/beach/sand,
-/area/centcom/holding)
-"Fk" = (
+/obj/structure/chair/wood/wings{
+	dir = 3
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open/floor/wood,
 /area/centcom/holding)
-"Fl" = (
-/obj/effect/overlay/palmtree_l,
-/turf/open/floor/plating/beach/sand,
+"Fj" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Fm" = (
 /obj/machinery/shower{
@@ -11314,10 +11442,13 @@
 	dir = 5
 	},
 /area/tdome/tdomeobserve)
+<<<<<<< HEAD
 "FC" = (
 /obj/item/camera,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 "FD" = (
 /obj/machinery/shower{
 	dir = 4
@@ -11420,21 +11551,23 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+<<<<<<< HEAD
 "FZ" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
+=======
+"FW" = (
+/obj/structure/window/reinforced{
+	dir = 1
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 	},
-/obj/item/clothing/head/bandana{
-	pixel_y = -10
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/item/clothing/glasses/sunglasses,
-/turf/open/floor/plating/beach/sand,
+/turf/open/floor/wood,
 /area/centcom/holding)
-"Ga" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
-/turf/open/floor/plating/beach/sand,
+"FX" = (
+/turf/open/floor/plasteel/stairs,
 /area/centcom/holding)
 "Gb" = (
 /obj/machinery/shower{
@@ -11540,9 +11673,17 @@
 	},
 /turf/open/lava,
 /area/wizard_station)
+<<<<<<< HEAD
 "Gt" = (
 /obj/item/toy/beach_ball,
 /turf/open/floor/plating/beach/sand,
+=======
+"Gs" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "Gu" = (
 /obj/machinery/door/airlock/silver{
@@ -11819,6 +11960,7 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
 /area/wizard_station)
+<<<<<<< HEAD
 "GZ" = (
 /turf/open/floor/plating/beach/coastline_b,
 /area/centcom/holding)
@@ -11826,6 +11968,8 @@
 /obj/item/clothing/head/collectable/paper,
 /turf/open/floor/plating/beach/coastline_b,
 /area/centcom/holding)
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 "Hb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -11871,8 +12015,28 @@
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
+<<<<<<< HEAD
 "Hm" = (
 /turf/open/floor/plating/beach/water,
+=======
+"Hi" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"Hm" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 /area/centcom/holding)
 "Hn" = (
 /obj/structure/sink{
@@ -11973,14 +12137,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
-"Hy" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"Hz" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
 "HA" = (
 /obj/structure/sink{
 	dir = 8;
@@ -12034,10 +12190,6 @@
 	},
 /turf/open/space,
 /area/space)
-"HH" = (
-/obj/effect/landmark/holding_facility,
-/turf/open/floor/engine,
-/area/centcom/holding)
 "HI" = (
 /obj/structure/sink{
 	dir = 8;
@@ -13632,6 +13784,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
+"Mm" = (
+/obj/machinery/door/airlock/wood{
+	req_one_access_txt = "28"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
@@ -13646,6 +13804,10 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"MB" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
 "MD" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -13664,6 +13826,19 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"ML" = (
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
+"Ni" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Nj" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Nk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -13678,6 +13853,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Nn" = (
+/obj/machinery/vr_sleeper{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Nr" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Ns" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Nt" = (
+/obj/machinery/modular_computer/console/preset/research,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ny" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"NC" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/obj/item/reagent_containers/glass/beaker/large,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13692,6 +13901,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"NP" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/nullrod/claymore/darkblade{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
@@ -13705,6 +13925,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"NZ" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Of" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/centcom/holding)
+"Og" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Oj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -13719,6 +13960,319 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Om" = (
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Oq" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood";
+	smooth = 1
+	},
+/area/centcom/holding)
+"Or" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Ou" = (
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Ow" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/centcom/holding)
+"OA" = (
+/obj/machinery/gibber,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"OF" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"OH" = (
+/obj/machinery/vr_sleeper{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"OI" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"OS" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"OY" = (
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ph" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
+"Pj" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	locked = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Po" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_y = 28;
+	use_power = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Pr" = (
+/obj/item/clothing/under/roman,
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ps" = (
+/obj/structure/closet/secure_closet/hydroponics{
+	locked = 0
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"PT" = (
+/obj/structure/window/paperframe{
+	CanAtmosPass = 0
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"PX" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/centcom/holding)
+"Qc" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Qe" = (
+/obj/structure/table/wood/fancy,
+/obj/item/candle/infinite{
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Qg" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"Qi" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"Ql" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Qs" = (
+/obj/machinery/chem_dispenser/drinks,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood";
+	smooth = 1
+	},
+/area/centcom/holding)
+"QE" = (
+/obj/structure/table/wood/bar,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"QQ" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ra" = (
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Re" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/nullrod/claymore/saber/red{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ri" = (
+/obj/structure/table,
+/obj/item/stack/packageWrap,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Rl" = (
+/obj/structure/curtain,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
+"Rq" = (
+/mob/living/simple_animal/cow,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"RA" = (
+/obj/structure/closet/crate,
+/obj/item/vending_refill/autodrobe,
+/obj/item/stack/sheet/paperframes/fifty,
+/obj/item/stack/sheet/paperframes/fifty,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"RD" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"RG" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"RP" = (
+/obj/structure/closet/secure_closet/freezer/meat{
+	locked = 0
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"RW" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Sk" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"SB" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"SE" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"SI" = (
+/obj/structure/mineral_door/paperframe,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"SJ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/mob/living/simple_animal/chicken,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"SX" = (
+/obj/machinery/autolathe,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"To" = (
+/obj/structure/closet/chefcloset,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"Tp" = (
+/obj/machinery/vr_sleeper{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Tr" = (
+/obj/structure/dresser,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Tv" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
+"TB" = (
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"TJ" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"TV" = (
+/obj/machinery/vending/autodrobe{
+	req_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"TY" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ud" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
 "Un" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -13731,6 +14285,15 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Uz" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/centcom/holding)
 "UO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13745,6 +14308,93 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Va" = (
+/obj/effect/landmark/holding_facility,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Vd" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/centcom/holding)
+"Vf" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Vh" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Vp" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Vt" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"Vw" = (
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"VD" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"VE" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"VH" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/nullrod/claymore/saber{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"VJ" = (
+/obj/structure/table,
+/obj/item/book/manual/chef_recipes,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"VL" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"VM" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/nullrod/claymore/glowing{
+	damtype = "stamina";
+	force = 30
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"VT" = (
+/obj/structure/chair/wood/wings{
+	dir = 3
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"VU" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
 "VX" = (
 /obj/effect/landmark/shuttle_import,
 /turf/open/space/basic,
@@ -13763,6 +14413,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"Wn" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"Ws" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
 "WJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
@@ -13777,6 +14439,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
+"WL" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "WQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -13792,6 +14458,28 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"WS" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Xa" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"Xe" = (
+/obj/machinery/plantgenes/seedvault,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"Xq" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "Xt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13804,6 +14492,19 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Xv" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/machinery/button/door{
+	id = "lmrestroom";
+	name = "Lock Control";
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/centcom/holding)
 "Xy" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock"
@@ -13816,6 +14517,43 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"XF" = (
+/turf/open/floor/grass,
+/area/centcom/holding)
+"XK" = (
+/obj/structure/table/wood/bar,
+/obj/structure/safe/floor,
+/obj/item/seeds/cherry/bomb,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"XL" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	name = "BrewMaster 2199";
+	pixel_x = -4
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"XQ" = (
+/obj/structure/table/wood,
+/obj/item/camera/detective{
+	desc = "A polaroid camera with extra capacity for social media marketing.";
+	name = "Professional camera"
+	},
+/obj/item/camera_film,
+/obj/item/wallframe/newscaster,
+/obj/item/paper_bin,
+/obj/item/pen/fountain,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Yc" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Ym" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "Yt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13830,6 +14568,63 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"YB" = (
+/mob/living/simple_animal/bot/medbot/mysterious{
+	desc = "If you don't accidentally blow yourself up from time to time you're not really a wizard anyway.";
+	faction = list("neutral","silicon","creature");
+	name = "Nobody's Perfect"
+	},
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
+"YJ" = (
+/obj/structure/table,
+/obj/item/book/manual/hydroponics_pod_people,
+/obj/item/seeds/pumpkin/blumpkin,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
+"YP" = (
+/obj/machinery/door/airlock/wood{
+	req_one_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Zd" = (
+/obj/machinery/vr_sleeper{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Zg" = (
+/obj/structure/chair/wood/normal{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Zi" = (
+/obj/machinery/smartfridge,
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood";
+	smooth = 1
+	},
+/area/centcom/holding)
+"Zj" = (
+/obj/machinery/vending/boozeomat{
+	req_access_txt = "0"
+	},
+/turf/closed/indestructible{
+	icon = 'icons/turf/walls/wood_wall.dmi';
+	icon_state = "wood";
+	smooth = 1
+	},
+/area/centcom/holding)
+"Zn" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/whitegreen,
+/area/centcom/holding)
 "ZJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13858,6 +14653,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
+"ZY" = (
+/obj/machinery/door/airlock/wood{
+	id_tag = "lmrestroom"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
 
 (1,1,1) = {"
 aa
@@ -37941,38 +38742,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
 aa
 aa
 aa
@@ -38198,38 +38999,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+Zn
+Zn
+Zn
+Qi
+Zn
+Zn
+Zn
+ED
+Ph
+Ws
+Xv
+ED
+VT
+Qe
+RW
+PX
+Ff
+Ff
+RG
+PT
+SB
+Ym
+Ff
+PT
+Om
+OY
+Om
+Om
+OY
+Om
+ED
 aa
 aa
 aa
@@ -38455,38 +39256,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+CU
+TB
+TB
+TB
+TB
+TB
+TB
+ED
+ML
+ML
+ML
+ZY
+Ff
+Ff
+Ff
+Hi
+Ff
+Ff
+Qe
+PT
+Ff
+Ff
+Ff
+PT
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+ED
 aa
 aa
 aa
@@ -38712,38 +39513,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+Xa
+XL
+NC
+Vt
+Ud
+OF
+TJ
+ED
+wS
+ML
+ML
+ED
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+Vf
+PT
+SB
+Ym
+Ff
+PT
+Ff
+Nn
+Ff
+VD
+Ff
+OH
+ED
 aa
 aa
 aa
@@ -38969,38 +39770,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+TB
+TB
+TB
+TB
+TB
+TB
+TB
+ED
+Rl
+ML
+Tv
+ED
+Ff
+Ff
+Ff
+Ny
+Ff
+Hi
+Uz
+ED
+Gs
+Ff
+Ff
+SI
+Ff
+Nn
+Ff
+VD
+Ff
+Nn
+ED
 aa
 aa
 aa
@@ -39226,38 +40027,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ED
+Xe
+YJ
+ub
+TB
+VU
+Ps
+TB
+ED
+ED
+ED
+ED
+ED
+Ff
+Ff
+RG
+Vd
+Ff
+Ff
+RG
+PT
+WS
+Ym
+Ff
+PT
+Ff
+Nn
+Ff
+VD
+Ff
+OH
+ED
 aa
 aa
 aa
@@ -39483,38 +40284,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
 ED
 ED
 ED
+Nj
 ED
 ED
+Zi
 ED
+Ff
+Vp
+Ff
+YP
+Ff
+Ff
+Qe
+Hi
+Ff
+Ff
+Qe
+PT
+Ff
+Ff
+Ff
+PT
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
 ED
-ED
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -39740,16 +40541,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+<<<<<<< HEAD
 hH
 pU
 qG
@@ -39765,9 +40558,38 @@ ED
 ED
 ED
 ED
+=======
+SX
+Ff
+Vp
+Ff
+Ff
+Ff
+Ff
+Ql
+Ff
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 ED
 ED
 ED
+Gs
+Ff
+Vf
+Hi
+Ff
+Ff
+Vf
+PT
+TY
+Ym
+Ff
+PT
+Tp
+Zd
+Tp
+Tp
+Zd
+Tp
 ED
 aa
 aa
@@ -39775,9 +40597,12 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 KH
 KH
 KS
@@ -39997,16 +40822,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+QE
+Ff
+wh
+SJ
+ED
+OA
+Ou
+RP
+ED
+ED
+<<<<<<< HEAD
 jO
 pU
 pU
@@ -40029,6 +40856,29 @@ ED
 aa
 aa
 aa
+=======
+Fa
+SE
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+QQ
+ED
+Ff
+Ff
+Ff
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -40254,16 +41104,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+Ff
+Ff
+Ow
+XF
+ED
+vy
+Ou
+OS
+ED
+<<<<<<< HEAD
 oU
 pU
 qH
@@ -40286,6 +41137,30 @@ ED
 aa
 aa
 aa
+=======
+Fb
+Vw
+SE
+Ff
+Ff
+Vw
+Vw
+Vw
+Vw
+Vw
+SI
+Ff
+Ff
+Ff
+PT
+yL
+VH
+Bk
+Pr
+VM
+yV
+ED
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -40511,16 +41386,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+Ff
+Ff
+Ow
+Rq
+ED
+VJ
+Ou
+Pj
+ED
+<<<<<<< HEAD
 oV
 pU
 qI
@@ -40543,6 +41419,30 @@ ED
 aa
 aa
 aa
+=======
+Fc
+Vw
+SE
+Ff
+Ff
+Vw
+Vw
+Vw
+Vw
+Vw
+ED
+Gs
+Ra
+Ff
+SI
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+ED
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -40768,16 +41668,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+<<<<<<< HEAD
 px
 pU
 rb
@@ -40800,6 +41692,39 @@ ED
 aa
 aa
 aa
+=======
+ED
+Nj
+ED
+ED
+ED
+Xq
+Ou
+OI
+ED
+Qc
+Vw
+FW
+Ff
+Ff
+Vw
+Vw
+Vw
+Vw
+Vw
+SI
+Ff
+Ff
+Ff
+PT
+RG
+RG
+Ff
+RG
+RG
+Ff
+ED
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -41025,16 +41950,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+<<<<<<< HEAD
 py
 pU
 rc
@@ -41042,10 +41959,40 @@ qF
 pW
 pW
 ta
+=======
+XK
+Ff
+Vp
+Ff
+>>>>>>> bbade1d... Weeb jail updates (#37725)
+ED
+Of
+Ou
+VL
 ED
 ED
+Vw
+FX
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+QQ
 ED
+Ff
+Va
+Va
+PT
+Wn
+Wn
+Vw
+Wn
+Vh
+Ff
 ED
+<<<<<<< HEAD
 uK
 tm
 vt
@@ -41057,6 +42004,8 @@ ED
 aa
 aa
 aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -41282,6 +42231,7 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
 aa
@@ -41314,6 +42264,40 @@ ED
 ED
 aa
 aa
+=======
+ED
+Tr
+Ff
+Ff
+Ff
+ED
+Or
+Ou
+Ri
+ED
+ED
+ED
+ED
+Gs
+Ff
+RG
+Hi
+Ff
+Ff
+RG
+PT
+Ff
+Va
+Va
+PT
+Vw
+Vw
+Vw
+Vw
+MB
+Ff
+ED
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -41539,16 +42523,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+<<<<<<< HEAD
 pA
 pW
 pW
@@ -41568,6 +42544,38 @@ pU
 pU
 tZ
 wh
+=======
+oU
+Ff
+Ff
+Ff
+ED
+WL
+Ou
+xA
+Zj
+Vp
+Fh
+Og
+Ff
+Ff
+Qe
+Sk
+Ff
+Ff
+Qe
+PT
+Ff
+Va
+Va
+PT
+Vw
+Vw
+YB
+Vw
+MB
+Ff
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 ED
 aa
 aa
@@ -41576,8 +42584,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 KH
 KU
 Lb
@@ -41796,16 +42807,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+<<<<<<< HEAD
 pB
 pW
 pW
@@ -41825,6 +42828,38 @@ pU
 pU
 pU
 wi
+=======
+Yc
+Ff
+Ff
+Ff
+ED
+VE
+Ou
+Ou
+Zi
+Ff
+Fh
+Og
+Ff
+Ff
+Vf
+Hi
+Ff
+Ff
+Vf
+PT
+Ff
+Va
+Va
+PT
+Vw
+Vw
+Vw
+Vw
+MB
+Ff
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 ED
 aa
 aa
@@ -41832,8 +42867,11 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
 aa
 aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 KH
 KH
 KS
@@ -41998,70 +43036,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+<<<<<<< HEAD
 ED
 pC
 pW
@@ -42083,8 +43058,95 @@ ED
 wj
 ED
 ED
+=======
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ED
+TV
+Ff
+Ff
+Ff
+ED
+td
+Ou
+Ou
+Oq
+Ff
+Fh
+Og
+Ff
+Ff
+Ff
+Ny
+Ff
+Qg
+Uz
+ED
+Gs
+Va
+Va
+PT
+Ni
+Ni
+Vw
+Ni
+NZ
+Ff
+ED
 aa
 aa
 aa
@@ -42278,47 +43340,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+<<<<<<< HEAD
 ED
 pD
 qF
@@ -42340,8 +43362,72 @@ tY
 tm
 wk
 ED
+=======
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ED
+Nt
+Ff
+Ff
+Ff
+ED
+Po
+Ou
+uK
+Qs
+Ff
+Fh
+Og
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+RG
+PT
+Ff
+Ff
+Ff
+PT
+Vf
+Vf
+Ff
+Vf
+Vf
+Ff
+ED
 aa
 aa
 aa
@@ -42553,29 +43639,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+<<<<<<< HEAD
 ED
 pE
 qF
@@ -42597,8 +43661,54 @@ tW
 uc
 tm
 ED
+=======
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
+aa
+aa
+ED
+Ns
+Zg
+Ff
+Ff
+Nj
+Ou
+Ou
+Ou
+Mm
+Ff
+Fh
+Og
+Ff
+Ff
+Ff
+Hi
+Ff
+Ff
+Qe
+PT
+Ff
+Ff
+Ff
+SI
+Ff
+Ff
+Ff
+Ff
+Ff
+Ff
+ED
 aa
 aa
 aa
@@ -42824,16 +43934,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ED
+XQ
+Ff
+RD
+RA
+ED
+qF
+Nr
+To
+ED
+<<<<<<< HEAD
 pS
 qF
 pW
@@ -42854,8 +43965,29 @@ ED
 ED
 ED
 ED
-aa
-aa
+=======
+Fj
+ED
+ED
+Fi
+Qe
+RW
+Hm
+Ff
+Ff
+Vf
+PT
+Ff
+Ff
+Ff
+PT
+yL
+Re
+Bk
+Pr
+NP
+Dj
+ED
 aa
 aa
 aa
@@ -42873,6 +44005,7 @@ aa
 aa
 aa
 aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -43081,6 +44214,38 @@ aa
 aa
 aa
 aa
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
+ED
 aa
 aa
 aa
@@ -43090,6 +44255,20 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+<<<<<<< HEAD
 ED
 pS
 qF
@@ -43103,42 +44282,12 @@ ED
 ED
 ED
 ED
+=======
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -43347,6 +44496,43 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+<<<<<<< HEAD
 ED
 pT
 pU
@@ -43360,29 +44546,8 @@ ua
 uf
 uh
 ED
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -43438,10 +44603,15 @@ aa
 aa
 aa
 aa
+<<<<<<< HEAD
+"}
+(116,1,1) = {"
+=======
 aa
 aa
 aa
 aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -43604,6 +44774,34 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+<<<<<<< HEAD
 ED
 Fj
 Fi
@@ -43617,24 +44815,12 @@ ED
 ED
 ED
 ED
+=======
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -43861,6 +45047,25 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+<<<<<<< HEAD
 ED
 Fi
 Fi
@@ -43870,15 +45075,8 @@ Fi
 GZ
 Hm
 ED
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
@@ -44118,6 +45316,16 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+<<<<<<< HEAD
 ED
 Fk
 FC
@@ -44127,6 +45335,8 @@ Fi
 GZ
 Hm
 ED
+=======
+>>>>>>> bbade1d... Weeb jail updates (#37725)
 aa
 aa
 aa
