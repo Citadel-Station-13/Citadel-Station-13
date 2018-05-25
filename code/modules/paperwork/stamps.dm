@@ -69,6 +69,7 @@
 
 /obj/item/stamp/attack_paw(mob/user)
 	return attack_hand(user)
+<<<<<<< HEAD
 
 // Syndicate stamp to forge documents.
 
@@ -120,3 +121,5 @@
 
 /obj/item/stamp/chameleon/broken/process()
 	change_to(pick(stamp_types))
+=======
+>>>>>>> f325331... Added an action button to change your entire chameleon outfit at once (#37953)
