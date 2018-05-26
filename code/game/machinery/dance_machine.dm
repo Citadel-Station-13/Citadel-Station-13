@@ -379,15 +379,9 @@
 			M.setDir(pick(GLOB.cardinals))
 			// update resting manually to avoid chat spam
 			for(var/mob/living/carbon/NS in rangers)
-<<<<<<< HEAD
-				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
-		 time--*/ //CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
-	M.SpinAnimation(1,30)
-=======
 				NS.resting = !NS.resting
 				NS.update_canmove()
 		 time--
->>>>>>> 78db4ed... Merge pull request #37960 from AutomaticFrenzy/patch/resting
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
