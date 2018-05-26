@@ -63,7 +63,7 @@
 /obj/machinery/vr_sleeper/open_machine()
 	if(!state_open)
 		if(vr_human)
-			vr_human.revert_to_reality(FALSE, FALSE)
+			vr_human.revert_to_reality(FALSE)
 		if(occupant)
 			SStgui.close_user_uis(occupant, src)
 		..()
@@ -88,17 +88,22 @@
 			if(human_occupant && human_occupant.mind)
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_human)
-					vr_human.revert_to_reality(FALSE, FALSE)
-					human_occupant.mind.transfer_to(vr_human)
-					vr_human.real_me = occupant
+					SStgui.close_user_uis(occupant, src)
+					vr_human.revert_to_reality(FALSE)
+					vr_human.real_mind = human_occupant.mind
+					vr_human.ckey = human_occupant.ckey
 					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
-					SStgui.close_user_uis(vr_human, src)
 				else
 					if(allow_creating_vr_humans)
 						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
 						var/turf/T = get_vr_spawnpoint()
 						if(T)
+<<<<<<< HEAD
 							build_virtual_human(occupant, T)
+=======
+							SStgui.close_user_uis(occupant, src)
+							build_virtual_human(occupant, T, V.vr_outfit)
+>>>>>>> 9c16008... [READY] VR mind key transfer (#37909)
 							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
@@ -108,7 +113,7 @@
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
 				if(vr_human)
-					qdel(vr_human)
+					QDEL_NULL(vr_human)
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
@@ -154,21 +159,22 @@
 	if(H)
 		cleanup_vr_human()
 		vr_human = new /mob/living/carbon/human/virtual_reality(location)
+		vr_human.mind_initialize()
 		vr_human.vr_sleeper = src
-		vr_human.real_me = H
+		vr_human.real_mind = H.mind
 		H.dna.transfer_identity(vr_human)
 		vr_human.name = H.name
 		vr_human.real_name = H.real_name
 		vr_human.socks = H.socks
 		vr_human.undershirt = H.undershirt
 		vr_human.underwear = H.underwear
-		vr_human.updateappearance(1,1,1)
+		vr_human.updateappearance(TRUE, TRUE, TRUE)
 		if(outfit)
 			var/datum/outfit/O = new outfit()
 			O.equip(vr_human)
 		if(transfer && H.mind)
-			H.mind.transfer_to(vr_human)
-
+			SStgui.close_user_uis(H, src)
+			vr_human.ckey = H.ckey
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
 	if(vr_human)

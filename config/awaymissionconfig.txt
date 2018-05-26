@@ -21,3 +21,7 @@
 #_maps/RandomZLevels/research.dmm
 #_maps/RandomZLevels/Cabin.dmm
 #_maps/RandomZLevels/beach2.dmm
+<<<<<<< HEAD
+=======
+_maps/RandomZLevels/VR/murderdome.dmm
+>>>>>>> 9c16008... [READY] VR mind key transfer (#37909)
