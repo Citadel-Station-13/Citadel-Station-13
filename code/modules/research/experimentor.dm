@@ -45,7 +45,7 @@
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	for(var/I in typesof(/obj/item))
-		if(istype(I, /obj/item/relic))
+		if(ispath(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
@@ -53,6 +53,11 @@
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
+<<<<<<< HEAD
+=======
+				if(ispath(I, /obj/item/grenade/chem_grenade/tuberculosis))
+					continue
+>>>>>>> 1f88d80... [s] Fixes TB nades for real now (#38113)
 				valid_items["[I]"] += 15
 
 		if(ispath(I, /obj/item/reagent_containers/food))
