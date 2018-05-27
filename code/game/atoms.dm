@@ -4,7 +4,6 @@
 	var/level = 2
 
 	var/flags_1 = NONE
-	var/flags_2 = NONE
 	var/interaction_flags_atom = NONE
 	var/container_type = NONE
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
@@ -223,7 +222,7 @@
 
 /atom/proc/emp_act(severity)
 	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
-	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
+	if(istype(wires) && !(flags_1 & NO_EMP_WIRES_1))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -567,6 +566,8 @@
 			return wirecutter_act(user, I)
 		if(TOOL_WELDER)
 			return welder_act(user, I)
+		if(TOOL_ANALYZER)
+			return analyzer_act(user, I)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
 /atom/proc/crowbar_act(mob/living/user, obj/item/I)
@@ -585,6 +586,9 @@
 	return
 
 /atom/proc/welder_act(mob/living/user, obj/item/I)
+	return
+
+/atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return
 
 /atom/proc/GenerateTag()

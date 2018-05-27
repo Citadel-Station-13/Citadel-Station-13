@@ -47,28 +47,50 @@
 
 //=================================================
 
-/obj/item/card/emag_broken
-	desc = "It's a card with a melted magnetic strip, useless!"
-	name = "broken cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+/obj/item/emagrecharge
+	name = "electromagnet charging device"
+	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cell_mini"
 	flags_1 = NOBLUDGEON_1
-	item_flags = NO_MAT_REDEMPTION
-	color = rgb(35, 20, 11)
+	var/uses = 5	//Dictates how many charges the device adds to compatible items
+
+/obj/item/emagrecharge/examine(mob/user)
+	. = ..()
+	if(uses)
+		to_chat(user, "<span class='notice'>It can add up to [uses] charges to compatible devices</span>")
+	else
+		to_chat(user, "<span class='warning'>It has a small, red, blinking light coming from inside of it. It's spent.</span>")
 
 /obj/item/card/emag
 	var/uses = 10
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+/obj/item/card/emag/examine(mob/user)
 	. = ..()
-	uses--
+	to_chat(user, "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>")
 
-	if(uses<1)
-		user.visible_message("[src] fizzles and sparks. It's burned out!")
-		user.dropItemToGround(src)
-		var/obj/item/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
-		qdel(src)
+/obj/item/card/emag/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/emagrecharge))
+		var/obj/item/emagrecharge/ER = W
+		if(ER.uses)
+			uses += ER.uses
+			to_chat(user, "<span class='notice'>You have added [ER.uses] charges to [src]. It now has [uses] charges.</span>")
+			playsound(src, "sparks", 100, 1)
+			ER.uses = 0
+		else
+			to_chat(user, "<span class='warning'>[ER] has no charges left.</span>")
 		return
+	. = ..()
+
+/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+	if(!uses)
+		user.visible_message("<span class='warning'>[src] emits a weak spark. It's burnt out!</span>")
+		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+		return
+	. = ..()
+	uses = max(uses - 1, 0)
+	if(!uses)
+		user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
+		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+	else if(uses <= 3)
+		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead
