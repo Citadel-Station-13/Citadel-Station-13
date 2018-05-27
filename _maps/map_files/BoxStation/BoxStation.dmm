@@ -41148,7 +41148,7 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "bZQ" = (
-/obj/machinery/atmospherics/components/binary/valve/open{
+/obj/machinery/atmospherics/components/binary/valve/on{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -50899,7 +50899,38 @@
 /area/engine/engineering)
 "cGr" = (
 /obj/structure/cable{
+<<<<<<< HEAD
 	icon_state = "2-8"
+=======
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cGx" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
+/obj/machinery/meter,
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cGC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital/on{
+	dir = 4;
+	name = "Output Release"
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cGD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+>>>>>>> fa6ec2f... Fix premapped atmos machines turning on automatically when re-wrenched (#38065)
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
