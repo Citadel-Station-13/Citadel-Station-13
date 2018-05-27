@@ -368,11 +368,10 @@
 	M.lying_fix()
 
 
-
 /obj/machinery/jukebox/disco/proc/dance4(var/mob/living/M)
-	//var/speed = rand(1,3) CIT CHANGE -- comments this out to prevent compiling errors
+	var/speed = rand(1,3)
 	set waitfor = 0
-	/*var/time = 30
+	var/time = 30
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
