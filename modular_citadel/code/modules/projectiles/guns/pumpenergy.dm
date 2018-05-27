@@ -193,6 +193,7 @@
 	color = null
 	nodamage = 1
 	knockdown = 100
+	stamina = 5
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
