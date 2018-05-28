@@ -24357,6 +24357,7 @@
 /area/quartermaster/office)
 "bax" = (
 /obj/structure/table/reinforced,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -29046,6 +29047,7 @@
 /area/quartermaster/sorting)
 "bkn" = (
 /obj/structure/table,
+/obj/machinery/computer/stockexchange,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26
