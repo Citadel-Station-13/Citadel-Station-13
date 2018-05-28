@@ -368,19 +368,19 @@
 	M.lying_fix()
 
 
-
 /obj/machinery/jukebox/disco/proc/dance4(var/mob/living/M)
-	//var/speed = rand(1,3) CIT CHANGE -- comments this out to prevent compiling errors
+	var/speed = rand(1,3)
 	set waitfor = 0
-	/*var/time = 30
+	var/time = 30
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
+			// update resting manually to avoid chat spam
 			for(var/mob/living/carbon/NS in rangers)
-				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
-		 time--*/ //CIT CHANGE -- replaces dance4 with rapid spinning so that disco balls dont make weird shit happen
-	M.SpinAnimation(1,30)
+				NS.resting = !NS.resting
+				NS.update_canmove()
+		 time--
 
 /obj/machinery/jukebox/disco/proc/dance5(var/mob/living/M)
 	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)

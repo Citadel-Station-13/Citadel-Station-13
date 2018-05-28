@@ -27,6 +27,7 @@
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/combattoggle/selector in hud_used.static_inventory)
 			selector.rebasetointerbay(src)
+	SendSignal(COMSIG_COMBAT_TOGGLED, src, combatmode)
 	return TRUE
 
 /mob/living/carbon/Move(atom/newloc, direct = 0)

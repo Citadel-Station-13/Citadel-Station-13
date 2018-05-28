@@ -9,3 +9,7 @@
 			return max(total_mass,MIN_MELEE_STAMCOST)
 	else
 		return initial(w_class)*1.25
+
+/obj/item/melee/transforming/cleaving_saw
+	total_mass = 2.75
+	total_mass_on = 5
