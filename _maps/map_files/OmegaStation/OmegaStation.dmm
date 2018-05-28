@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -12291,11 +12291,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard/central)
-"ayT" = (
-/obj/structure/girder,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "ayU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -25494,11 +25489,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"bbQ" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/maintenance/port)
 "bbR" = (
 /turf/open/floor/wood,
 /area/maintenance/port)
@@ -35856,6 +35846,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"xkH" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/maintenance/port)
 "xrf" = (
 /obj/machinery/light{
 	dir = 8
@@ -36062,6 +36058,11 @@
 	dir = 5
 	},
 /area/engine/atmos)
+"BLz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/maintenance/starboard/central)
 
 (1,1,1) = {"
 aaa
@@ -68581,7 +68582,7 @@ sKx
 aZp
 bak
 bbc
-bbQ
+xkH
 dEa
 bdD
 beu
@@ -80629,7 +80630,7 @@ avr
 aww
 aum
 sDM
-ayT
+BLz
 azQ
 aAW
 aCf

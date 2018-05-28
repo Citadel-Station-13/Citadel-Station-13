@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -3135,10 +3135,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"ajB" = (
-/obj/item/storage/box/mousetraps,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "ajC" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
@@ -10635,21 +10631,6 @@
 /area/crew_quarters/fitness/recreation)
 "aBU" = (
 /obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/plasteel/arrival,
-/area/crew_quarters/fitness/recreation)
-"aBV" = (
-/obj/structure/closet/wardrobe/green,
-/turf/open/floor/plasteel/arrival,
-/area/crew_quarters/fitness/recreation)
-"aBW" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/machinery/light,
-/turf/open/floor/plasteel/arrival,
-/area/crew_quarters/fitness/recreation)
-"aBX" = (
-/obj/structure/closet/wardrobe/black,
-/obj/item/clothing/shoes/jackboots,
-/obj/item/storage/backpack,
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
 "aBY" = (
@@ -29670,13 +29651,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
-"bwm" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bwn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -36190,19 +36164,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/dark,
 /area/chapel/dock)
-"bKh" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Arena"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/chair/stool,
-/turf/open/floor/engine,
-/area/maintenance/department/engine)
 "bKi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -37555,16 +37516,6 @@
 /mob/living/simple_animal/chicken{
 	name = "Killer Cluck"
 	},
-/turf/open/floor/engine,
-/area/maintenance/department/engine)
-"bNJ" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	icon_state = "left";
-	name = "Arena"
-	},
-/obj/structure/window/reinforced,
-/obj/structure/chair/stool,
 /turf/open/floor/engine,
 /area/maintenance/department/engine)
 "bNK" = (
@@ -50571,6 +50522,19 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"txs" = (
+/obj/machinery/door/window/eastright{
+	base_state = "left";
+	icon_state = "left";
+	name = "Arena"
+	},
+/obj/structure/window/reinforced,
+/obj/structure/chair/stool,
+/obj/item/electropack/shockcollar{
+	code = 4
+	},
+/turf/open/floor/engine,
+/area/maintenance/department/engine)
 "tHk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50828,6 +50792,62 @@
 /obj/item/pen/blue,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"yTf" = (
+/obj/item/assembly/signaler{
+	code = 3;
+	frequency = 1449
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/maintenance/department/engine)
+"yZw" = (
+/obj/machinery/light,
+/obj/structure/closet/wardrobe/black,
+/obj/item/storage/backpack,
+/obj/item/clothing/shoes/jackboots,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
+"DLh" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
+"Iao" = (
+/obj/machinery/door/window/eastright{
+	base_state = "left";
+	dir = 8;
+	icon_state = "left";
+	name = "Arena"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/chair/stool,
+/obj/item/electropack/shockcollar{
+	code = 4
+	},
+/turf/open/floor/engine,
+/area/maintenance/department/engine)
+"KNd" = (
+/obj/item/assembly/signaler{
+	code = 4;
+	frequency = 1449
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/maintenance/department/engine)
+"OKX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"Yya" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
 
 (1,1,1) = {"
 aaa
@@ -67092,7 +67112,7 @@ aaa
 aaa
 ait
 aiV
-ajB
+ajD
 akr
 aiu
 ait
@@ -72049,7 +72069,7 @@ bEj
 bFF
 bva
 bHP
-bJb
+KNd
 bJb
 bJb
 bJb
@@ -72307,7 +72327,7 @@ bva
 bva
 bHQ
 bJc
-bKh
+Iao
 bLu
 bLu
 bNG
@@ -73081,7 +73101,7 @@ bJf
 bKk
 bLx
 bLx
-bNJ
+txs
 bOz
 bHQ
 cqy
@@ -73339,7 +73359,7 @@ bKl
 bJb
 bMC
 bJb
-bJb
+yTf
 bPq
 bva
 bva
@@ -92040,7 +92060,7 @@ axx
 ayv
 azD
 aAS
-aBV
+DLh
 atn
 aEh
 aFe
@@ -92297,7 +92317,7 @@ axw
 axw
 axw
 axw
-aBW
+yZw
 atn
 aEd
 aEd
@@ -92554,7 +92574,7 @@ axw
 axw
 axw
 axw
-aBX
+Yya
 atn
 aEi
 aEd
@@ -99794,7 +99814,7 @@ aKm
 aLi
 aLi
 aLi
-bwm
+OKX
 aEj
 abI
 aaa
