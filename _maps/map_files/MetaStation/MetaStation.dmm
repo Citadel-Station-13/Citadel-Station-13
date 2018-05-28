@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -53162,10 +53162,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"cjv" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "cjw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -57450,14 +57446,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"csf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/port/aft)
 "csg" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -58106,20 +58094,6 @@
 /obj/structure/grille/broken,
 /turf/open/space,
 /area/space/nearstation)
-"ctn" = (
-/obj/machinery/vending/cigarette,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"cto" = (
-/obj/machinery/vending/assist,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ctq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -60288,22 +60262,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"cxQ" = (
-/obj/machinery/computer/slot_machine{
-	pixel_y = 2
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/port/aft)
 "cxR" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"cxS" = (
-/obj/item/latexballon,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cxT" = (
@@ -73740,22 +73702,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"diF" = (
-/obj/structure/chair/stool,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/maintenance/port/aft)
-"diG" = (
-/obj/structure/chair/stool,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/port/aft)
 "diH" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -73766,27 +73712,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"diI" = (
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/drinks/ale,
-/obj/structure/table/wood,
-/obj/item/instrument/eguitar,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "diJ" = (
 /obj/structure/light_construct/small,
 /obj/structure/table/wood/poker,
@@ -73795,21 +73720,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/wood,
-/area/maintenance/port/aft)
-"diK" = (
-/obj/item/dice/d20,
-/obj/item/dice,
-/obj/structure/table/wood,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diL" = (
 /obj/item/tank/internals/air,
@@ -74494,11 +74404,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"dxv" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/port/aft)
 "dxQ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -75358,6 +75263,12 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"eiS" = (
+/obj/machinery/computer/slot_machine{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "eoK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -75469,6 +75380,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"fSZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/kink{
+	extended_inventory = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "gfh" = (
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
@@ -75816,6 +75736,27 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kWN" = (
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/ale,
+/obj/structure/table/wood,
+/obj/item/instrument/eguitar,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "kXU" = (
 /obj/structure/cable/white,
 /obj/effect/turf_decal/stripes/line{
@@ -75852,6 +75793,13 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"lkZ" = (
+/obj/structure/chair/stool,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_circuit_printer,
@@ -76667,6 +76615,57 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"CjG" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/maintenance/port/aft)
+"NIy" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"PMy" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"Soe" = (
+/obj/item/dice/d20,
+/obj/item/dice,
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/maintenance/port/aft)
+"WHE" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"WNx" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"Zgo" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -92501,7 +92500,7 @@ cjp
 ckO
 cmg
 cnh
-ckN
+ckP
 cpQ
 crg
 cjt
@@ -93525,15 +93524,15 @@ ceo
 dux
 cdc
 dux
-diF
+WNx
 cjt
 cjt
 cjt
 ckP
 ckP
 crh
-dxv
-ctn
+ckQ
+NIy
 dux
 dux
 cfA
@@ -93782,15 +93781,15 @@ dux
 dux
 csT
 dux
-cxQ
-ckS
+eiS
+CjG
 cmi
 cnk
 ckP
 cmi
-dvt
-csf
-cto
+cnk
+Zgo
+fSZ
 dux
 cvj
 cwh
@@ -94039,14 +94038,14 @@ dux
 cfC
 cdc
 dux
-cjv
-diG
+PMy
+lkZ
 dux
 cnl
 cox
 dux
-diI
-diK
+kWN
+Soe
 dux
 dux
 dux
@@ -95851,7 +95850,7 @@ cui
 cwj
 dyg
 dux
-cxS
+WHE
 dux
 aaf
 aaf
@@ -96365,7 +96364,7 @@ ceu
 dyg
 dyw
 dux
-cxS
+WHE
 dux
 aaa
 aaa
