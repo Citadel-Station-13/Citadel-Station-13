@@ -32,6 +32,11 @@
 	dash_toggled = !dash_toggled
 	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
 
+/obj/item/energy_katana/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit cyber-seppuku!</span>")
+	playsound(src, 'sound/weapons/blade1.ogg', 50, 1)
+	return(BRUTELOSS)
+
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		jaunt.Teleport(user, target)
