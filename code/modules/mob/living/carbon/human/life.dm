@@ -44,11 +44,15 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
+<<<<<<< HEAD
 	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
 		return ONE_ATMOSPHERE
 	if(istype(loc, /obj/item/dogborg/sleeper))
 		return ONE_ATMOSPHERE //END OF CIT CHANGES
 	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(head, GLOB.typecache_clothing))
+=======
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+>>>>>>> d335a0f... Make typecache checks twice as fast, stop using single-type typecaches where appropriate (#38075)
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
@@ -293,7 +297,7 @@
 	if(glasses)
 		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+	if(head && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CH = head
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
