@@ -117,7 +117,7 @@
 "aw" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4;
@@ -928,7 +928,7 @@
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1604,7 +1604,7 @@
 /obj/structure/table,
 /obj/item/stack/packageWrap,
 /obj/item/crowbar,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = 5
 	},
