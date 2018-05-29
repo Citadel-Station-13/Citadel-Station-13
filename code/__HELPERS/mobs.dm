@@ -278,8 +278,8 @@ Proc for attack log creation, because really why not
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/turf/attack_location = get_turf(target)
 
-	var/is_mob_user = user && GLOB.typecache_mob[user.type]
-	var/is_mob_target = target && GLOB.typecache_mob[target.type]
+	var/is_mob_user = user && ismob(user)
+	var/is_mob_target = target && ismob(target)
 
 	var/mob/living/living_target
 
@@ -505,7 +505,8 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(arglist(new_args))
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -515,7 +516,8 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
