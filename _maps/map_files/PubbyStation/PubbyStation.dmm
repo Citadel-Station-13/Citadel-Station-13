@@ -31115,10 +31115,6 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
-"bzg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/whitepurple/side,
-/area/science/xenobiology)
 "bzh" = (
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
@@ -50628,6 +50624,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"vdD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/whitepurple/side,
+/area/science/xenobiology)
 "vpz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
@@ -92877,7 +92878,7 @@ bto
 buD
 bvZ
 bxJ
-bzg
+vdD
 bAG
 bBQ
 bDa
