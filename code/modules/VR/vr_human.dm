@@ -26,22 +26,22 @@
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
-	var/mob/living/carbon/human/H = real_me
-	revert_to_reality(FALSE, FALSE)
-	if(H)
-		H.ghost()
+	var/mob/living/real_me = real_mind.current
+	revert_to_reality(FALSE)
+	if(real_me)
+		real_me.ghost()
 
-
-/mob/living/carbon/human/virtual_reality/proc/revert_to_reality(refcleanup = TRUE, deathchecks = TRUE)
-	if(real_me && mind)
-		mind.transfer_to(real_me)
-		if(deathchecks && vr_sleeper && vr_sleeper.you_die_in_the_game_you_die_for_real)
-			real_me.death(0)
-	if(refcleanup)
+/mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
+	if(real_mind && mind)
+		real_mind.current.ckey = ckey
+		real_mind.current.stop_sound_channel(CHANNEL_HEARTBEAT)
+		if(deathchecks && vr_sleeper)
+			if(vr_sleeper.you_die_in_the_game_you_die_for_real)
+				real_mind.current.death(0)
+	if(deathchecks && vr_sleeper)
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
-		real_me = null
-
+	real_mind = null
 
 /datum/action/quit_vr
 	name = "Quit Virtual Reality"
