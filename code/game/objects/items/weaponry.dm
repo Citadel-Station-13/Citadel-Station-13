@@ -103,7 +103,7 @@
 		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
 		H.adjustStaminaLoss(-5) //CIT CHANGE - AND MAY HE NEVER SUCCUMB TO EXHAUSTION
 	else
-		if(!admin_spawned)
+		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
 
 
