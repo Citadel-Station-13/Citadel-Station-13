@@ -19,7 +19,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	can_unwrench = TRUE
 
-	var/on = FALSE
 	var/transfer_rate = MAX_TRANSFER_RATE
 
 	var/frequency = 0
