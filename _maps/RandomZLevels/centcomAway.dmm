@@ -301,12 +301,6 @@
 	dir = 5
 	},
 /area/awaymission/centcomAway/hangar)
-"bf" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar{
-	dir = 2
-	},
-/area/awaymission/centcomAway/cafe)
 "bg" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/peppermill,
@@ -567,7 +561,12 @@
 /area/awaymission/centcomAway/maint)
 "ck" = (
 /obj/machinery/door/airlock/external,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plating/airless,
+=======
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 /area/awaymission/centcomAway/maint)
 "cl" = (
 /turf/open/floor/plating/airless,
@@ -2606,7 +2605,12 @@
 	name = "XCC Ferry Hangar"
 	},
 /obj/effect/turf_decal/delivery,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plasteel,
+=======
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 /area/awaymission/centcomAway/hangar)
 "jM" = (
 /obj/structure/chair,
@@ -2986,7 +2990,12 @@
 /area/awaymission/centcomAway/thunderdome)
 "kY" = (
 /obj/machinery/door/airlock/external,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plating,
+=======
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 /area/awaymission/centcomAway/thunderdome)
 "kZ" = (
 /obj/machinery/vending/coffee,
@@ -3255,6 +3264,7 @@
 	dir = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 "lQ" = (
 /turf/open/floor/plasteel/green/side{
 	dir = 2
@@ -3264,6 +3274,8 @@
 /obj/machinery/door/airlock/centcom,
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
+=======
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 "lS" = (
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/green{
@@ -3572,9 +3584,14 @@
 /area/awaymission/centcomAway/cafe)
 "mN" = (
 /obj/machinery/door/airlock/centcom,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
+=======
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 /area/awaymission/centcomAway/hangar)
 "mO" = (
 /obj/machinery/door/airlock/centcom,
@@ -3611,7 +3628,12 @@
 /area/awaymission/centcomAway/hangar)
 "mT" = (
 /obj/machinery/door/airlock/external,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plasteel/dark,
+=======
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 /area/awaymission/centcomAway/hangar)
 "mU" = (
 /obj/structure/rack,
@@ -3782,9 +3804,39 @@
 /obj/item/reagent_containers/food/condiment/sugar,
 /obj/item/reagent_containers/food/condiment/milk,
 /obj/item/reagent_containers/food/drinks/ice,
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 /turf/open/floor/plasteel/barber{
 	dir = 8;
 	heat_capacity = 1
+=======
+/turf/open/indestructible,
+/area/awaymission/centcomAway/thunderdome)
+"sL" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
+"zk" = (
+/turf/closed/indestructible/fakeglass,
+/area/awaymission/centcomAway/general)
+"GJ" = (
+/obj/structure/chair,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
+"KX" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
+"Tc" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/hangar)
+"TG" = (
+/obj/structure/window/reinforced{
+	dir = 1
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 	},
 /area/awaymission/centcomAway/thunderdome)
 
@@ -10716,8 +10768,13 @@ aV
 aV
 aV
 aV
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 cj
 cj
+=======
+ck
+ck
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 aV
 dp
 dv
@@ -12920,10 +12977,17 @@ ak
 aK
 bi
 aK
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 bf
 bf
 bf
 ak
+=======
+aW
+aW
+aW
+ac
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 aK
 cB
 aK
@@ -13723,6 +13787,7 @@ eX
 eu
 fQ
 eu
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 ah
 gA
 gA
@@ -13732,6 +13797,17 @@ gA
 hz
 lR
 hz
+=======
+aR
+eY
+eY
+eY
+fT
+eY
+eu
+dY
+eu
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 eu
 bk
 bk
@@ -16048,7 +16124,11 @@ ab
 bk
 bk
 ab
+<<<<<<< HEAD:_maps/RandomZLevels/centcomAway.dmm
 cj
+=======
+ck
+>>>>>>> 3c8493b... Fixes some minor bugs with the syndicate trainer and IDs (#38127):_maps/RandomZLevels/VR/syndicate_trainer.dmm
 ab
 bk
 bk
