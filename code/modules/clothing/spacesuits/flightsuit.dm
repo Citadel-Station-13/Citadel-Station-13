@@ -189,11 +189,13 @@
 	. = ..()
 
 /obj/item/flightpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/damage = severity == 1 ? emp_strong_damage : emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
 		usermessage("WARNING: Class [severity] EMP detected! Circuit damage at [(emp_damage/emp_disable_threshold)*100]%!", "boldwarning")
-	return ..()
 
 //Proc to change amount of momentum the wearer has, or dampen all momentum by a certain amount.
 /obj/item/flightpack/proc/adjust_momentum(amountx, amounty, reduce_amount_total = 0)
@@ -758,7 +760,7 @@
 	item_state = "flightsuit"
 	strip_delay = 30
 	w_class = WEIGHT_CLASS_BULKY
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
@@ -1079,12 +1081,12 @@
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
 	light_color = "#30ffff"
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	var/list/datahuds = list(DATA_HUD_SECURITY_BASIC, DATA_HUD_MEDICAL_BASIC, DATA_HUD_DIAGNOSTIC_BASIC) //CITADEL NERF
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_BASIC)
 	var/zoom_range = 12
 	var/zoom = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
