@@ -44,6 +44,8 @@ Clown
 
 	box = /obj/item/storage/box/hug/survival
 
+	chameleon_extras = /obj/item/stamp/clown
+
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -137,7 +139,7 @@ Curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/laser_pointer
-	//CITADEL EDIT removes runtimes from this pocket protector
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
@@ -185,6 +187,8 @@ Lawyer
 	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+
+	chameleon_extras = /obj/item/stamp/law
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

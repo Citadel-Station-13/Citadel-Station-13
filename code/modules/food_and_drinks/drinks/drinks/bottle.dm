@@ -320,7 +320,7 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list("fernet" = 100)
-	
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
