@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -2153,13 +2153,6 @@
 /obj/item/crowbar,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
-"gI" = (
-/obj/structure/noticeboard{
-	pixel_y = 32
-	},
-/obj/item/paper/fluff/ruins/spacehotel/notice,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/hotel/workroom)
 "gJ" = (
 /obj/structure/closet/secure_closet/freezer/kitchen/mining,
 /turf/open/floor/plasteel/dark,
@@ -2368,12 +2361,6 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
-"hq" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-18"
-	},
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/hotel/workroom)
 "hr" = (
 /obj/item/beacon,
 /turf/open/floor/plasteel/dark,
@@ -4346,6 +4333,13 @@
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
+"pr" = (
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/turf/open/floor/plasteel/neutral,
+/area/ruin/space/has_grav/hotel/custodial)
 "sN" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/cable/yellow{
@@ -4356,6 +4350,49 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"yg" = (
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
+/obj/item/paper/fluff/ruins/spacehotel/notice{
+	info = "<bold>!NOTICE!</bold><br><br><center>We are expecting arriving guests soon from a nearby station! Stay sharp and make sure guests enjoy their time spent here. Don't think you can sneak off while they're here, either. Put on a collar from the crate. It is only fair that guests should be able to reprimand the people serving them, no?</center>"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"zU" = (
+/obj/machinery/vending/assist{
+	name = "Vendomat"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/hotel/dock)
+"PA" = (
+/obj/machinery/vending/kink{
+	extended_inventory = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
+"Wg" = (
+/obj/structure/closet/crate,
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/obj/item/electropack/shockcollar{
+	name = "Staff Shock Collar"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/hotel/workroom)
 
 (1,1,1) = {"
 aa
@@ -6094,7 +6131,7 @@ kC
 kn
 lg
 jG
-ml
+pr
 mp
 mw
 mJ
@@ -6703,7 +6740,7 @@ cR
 di
 gF
 ha
-hq
+Wg
 hA
 di
 cF
@@ -6911,7 +6948,7 @@ fM
 cF
 cF
 di
-gI
+yg
 gG
 gG
 hC
@@ -7253,7 +7290,7 @@ di
 di
 ea
 ep
-dV
+PA
 di
 eT
 fp
@@ -7890,7 +7927,7 @@ fu
 fu
 fu
 eG
-gw
+zU
 gQ
 gw
 gw
