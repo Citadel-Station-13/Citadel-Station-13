@@ -45,7 +45,7 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
 	moduleselect_icon = "k9"
-	moduleselect_alternate_icon = 'modular_citadel/icons/hud/screen_cyborg.dmi'
+	moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "ksleeper"
@@ -77,7 +77,7 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
 	moduleselect_icon = "medihound"
-	moduleselect_alternate_icon = 'modular_citadel/icons/hud/screen_cyborg.dmi'
+	moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 	sleeper_overlay = "msleeper"
@@ -135,7 +135,7 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "borgi"
 	moduleselect_icon = "borgi"
-	moduleselect_alternate_icon = 'modular_citadel/icons/hud/screen_cyborg.dmi'
+	moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 	hat_offset = INFINITY
 	cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	has_snowflake_deadsprite = TRUE
