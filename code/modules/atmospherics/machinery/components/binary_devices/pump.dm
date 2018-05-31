@@ -19,7 +19,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	can_unwrench = TRUE
 
-	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0

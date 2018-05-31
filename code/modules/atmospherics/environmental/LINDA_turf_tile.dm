@@ -238,9 +238,6 @@
 		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
 			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
-/turf/closed/proc/high_pressure_movements()
-	return
-	
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
 

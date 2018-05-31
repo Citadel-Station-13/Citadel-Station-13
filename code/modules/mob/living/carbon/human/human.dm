@@ -497,12 +497,12 @@
 	// If targeting anything else, see if the wear suit is thin enough.
 	if (!penetrate_thick)
 		if(above_neck(target_zone))
-			if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+			if(head && istype(head, /obj/item/clothing))
 				var/obj/item/clothing/CH = head
 				if (CH.clothing_flags & THICKMATERIAL)
 					. = 0
 		else
-			if(wear_suit && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+			if(wear_suit && istype(wear_suit, /obj/item/clothing))
 				var/obj/item/clothing/CS = wear_suit
 				if (CS.clothing_flags & THICKMATERIAL)
 					. = 0
@@ -596,20 +596,16 @@
 		threatcount += 6 //fuk u antags <3
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
+	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
 	if(isloyal())
 		threatcount -= 1
 
-	//Agent cards lower threatlevel. But only enough to openly carry without being busted.
+	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/card/id/syndicate))
-		threatcount -= 2
-
-	//CentCom cards lower threat level. Even to emagged bots.
-	if(istype(idcard, /obj/item/card/id/centcom) || istype(idcard, /obj/item/card/id/ert))
-		threatcount -= 10
+		threatcount -= 5
 
 	return threatcount
 

@@ -1109,9 +1109,10 @@
 	},
 /area/mine/living_quarters)
 "dn" = (
-/obj/machinery/cryopod,
-/obj/machinery/computer/cryopod{
-	pixel_y = 26
+/obj/structure/table,
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
@@ -1244,10 +1245,6 @@
 "dE" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},

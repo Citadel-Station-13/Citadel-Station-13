@@ -1,4 +1,4 @@
-/client/verb/who()
+/*/client/verb/who() Commenting this file out to be overridden in modular_citadel
 	set name = "Who"
 	set category = "OOC"
 
@@ -87,3 +87,4 @@
 		msg += "<span class='info'>Adminhelps are also sent to Discord. If no admins are available in game adminhelp anyways and an admin on Discord will see it and respond.</span>"
 	to_chat(src, msg)
 
+*/

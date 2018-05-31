@@ -8,9 +8,6 @@
 	if(!holder)
 		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
-	if(holder && !check_rights(R_ADMIN, TRUE))
-		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
-		return
 	if( !ismob(M) || !M.client )
 		return
 	cmd_admin_pm(M.client,null)
@@ -22,9 +19,6 @@
 	set name = "Admin PM"
 	if(!holder)
 		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
-		return
-	if(holder && !check_rights(R_ADMIN, TRUE))
-		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)

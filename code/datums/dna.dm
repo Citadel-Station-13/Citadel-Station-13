@@ -1,10 +1,11 @@
+
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
@@ -29,7 +30,7 @@
 	previous.Cut()					//^
 
 	return ..()
-	
+
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return
