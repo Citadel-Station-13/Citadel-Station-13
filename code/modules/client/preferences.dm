@@ -1600,7 +1600,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(be_random_body)
 		random_character(gender)
 
-	if(CONFIG_GET(flag/humans_need_surnames))
+	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
 		if(!firstspace)	//we need a surname
