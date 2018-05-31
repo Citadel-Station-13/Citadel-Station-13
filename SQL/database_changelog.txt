@@ -22,7 +22,6 @@ ALTER TABLE `round`
 	ADD COLUMN `end_datetime` DATETIME NULL DEFAULT NULL AFTER `shutdown_datetime`;
 
 ----------------------------------------------------
-
 Version 4.3, 9 May 2018, by MrStonedOne
 Added table `role_time_log` and triggers `role_timeTlogupdate`, `role_timeTloginsert` and `role_timeTlogdelete` to update it from changes to `role_time`
 
