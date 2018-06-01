@@ -90,7 +90,7 @@
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/witchunter_hat)
+	/obj/item/clothing/head/helmet/chaplain/witchunter_hat)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -388,16 +388,11 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user && coil.use(1))
+			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
-				adjustFireLoss(-10)
-				adjustToxLoss(-10)
 			if (coil.use(1))
-				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-				if(!do_after(user, 30, target = src))
-					return
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()

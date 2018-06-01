@@ -19,7 +19,7 @@
 #define FAIL 8
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
-	desc = "A \"replacement\" for the deconstructive analyzer with a slight tendency to catastrophically fail."
+	desc = "A \"replacement\" for the destructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
 	density = TRUE
@@ -45,7 +45,7 @@
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	for(var/I in typesof(/obj/item))
-		if(istype(I, /obj/item/relic))
+		if(ispath(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
@@ -53,7 +53,7 @@
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				if(istype(I, /obj/item/grenade/chem_grenade/tuberculosis))
+				if(ispath(I, /obj/item/grenade/chem_grenade/tuberculosis))
 					continue
 				valid_items["[I]"] += 15
 

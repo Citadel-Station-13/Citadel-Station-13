@@ -931,7 +931,7 @@
 	id = "bicaridine"
 	description = "Restores bruising. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#BF0000"
+	color = "#C8A5DC"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
@@ -949,7 +949,7 @@
 	id = "dexalin"
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#0080FF"
+	color = "#C8A5DC"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
@@ -967,7 +967,7 @@
 	id = "kelotane"
 	description = "Restores fire damage. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#FFA800"
+	color = "#C8A5DC"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
@@ -985,7 +985,7 @@
 	id = "antitoxin"
 	description = "Heals toxin damage and removes toxins in the bloodstream. Overdose causes toxin damage."
 	reagent_state = LIQUID
-	color = "#00A000"
+	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "a roll of gauze"
 
@@ -1006,7 +1006,7 @@
 	id = "inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
-	color = "#00BFFF"
+	color = "#C8A5DC"
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/M)
 	if(M.losebreath >= 5)
@@ -1018,7 +1018,7 @@
 	id = "tricordrazine"
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
 	reagent_state = LIQUID
-	color = "#8040FF"
+	color = "#C8A5DC"
 	overdose_threshold = 30
 	taste_description = "grossness"
 

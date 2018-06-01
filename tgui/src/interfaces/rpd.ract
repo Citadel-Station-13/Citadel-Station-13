@@ -17,29 +17,27 @@
 	</ui-display>
 {{/if}}
 <ui-display title='Utilities'>
-	<ui-section>
-		<ui-button icon='{{data.mode >= 0 ? "check-square-o" : "square-o"}}' state='{{data.mode >= 0 ? "selected" : null}}'
-			action='mode' params='{"mode": {{data.screen}}}'>Lay Pipes</ui-button>
-	</ui-section>
-	<ui-section>
-		<ui-button icon='{{data.mode == -1 ? "check-square-o" : "square-o"}}' state='{{data.mode == -1 ? "selected" : null}}'
-			action='mode' params='{"mode": -1}'>Eat Pipes</ui-button>
-	</ui-section>
-	<ui-section>
-		<ui-button icon='{{data.mode == -2 ? "check-square-o" : "square-o"}}' state='{{data.mode == -2 ? "selected" : null}}'
-			action='mode' params='{"mode": -2}'>Paint Pipes</ui-button>
-	</ui-section>
+	<ui-button icon='{{data.mode & 1 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 1}'>Build</ui-button>
+	<ui-button icon='{{data.mode & 2 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 2}'>Wrench</ui-button>
+	<ui-button icon='{{data.mode & 4 ? "check-square-o" : "square-o"}}'
+		action='mode' params='{"mode": 4}'>Destroy</ui-button>
+	{{#if data.category == 0}}
+		<ui-button icon='{{data.mode & 8 ? "check-square-o" : "square-o"}}'
+			action='mode' params='{"mode": 8}'>Paint</ui-button>
+	{{/if}}
 </ui-display>
 <ui-display title='Category'>
 	<ui-section>
-		<ui-button icon='{{data.screen == 0 ? "check-square-o" : "square-o"}}' state='{{data.screen == 0 ? "selected" : null}}'
-			action='screen' params='{"screen": 0}'>Atmospherics</ui-button>
-		<ui-button icon='{{data.screen == 1 ? "check-square-o" : "square-o"}}' state='{{data.screen == 1 ? "selected" : null}}'
-			action='screen' params='{"screen": 1}'>Disposals</ui-button>
-		<ui-button icon='{{data.screen == 2 ? "check-square-o" : "square-o"}}' state='{{data.screen == 2 ? "selected" : null}}'
-			action='screen' params='{"screen": 2}'>Transit Tubes</ui-button>
+		<ui-button icon='{{data.category == 0 ? "check-square-o" : "square-o"}}' state='{{data.category <= 0 ? "selected" : null}}'
+			action='category' params='{"category": 0}'>Atmospherics</ui-button>
+		<ui-button icon='{{data.category == 1 ? "check-square-o" : "square-o"}}' state='{{data.category == 1 ? "selected" : null}}'
+			action='category' params='{"category": 1}'>Disposals</ui-button>
+		<ui-button icon='{{data.category == 2 ? "check-square-o" : "square-o"}}' state='{{data.category == 2 ? "selected" : null}}'
+			action='category' params='{"category": 2}'>Transit Tubes</ui-button>
 	</ui-section>
-	{{#if data.screen == 0}}
+	{{#if data.category == 0}}
 		<ui-section label='Piping Layer'>
 			<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
 				params='{"piping_layer": 1}'>1</ui-button>

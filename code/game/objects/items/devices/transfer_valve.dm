@@ -1,7 +1,6 @@
 /obj/item/transfer_valve
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
-	icon = 'icons/obj/device.dmi'
 	icon_state = "valve_1"
 	item_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'

@@ -314,7 +314,9 @@
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	atmos_spawn_air("TEMP=1000")
 
 
