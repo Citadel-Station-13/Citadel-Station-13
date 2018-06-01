@@ -32760,6 +32760,10 @@
 	dir = 1
 	},
 /area/hydroponics)
+"sbu" = (
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/nearstation)
 "sdL" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/hydroponics/soil,
@@ -79573,7 +79577,7 @@ bgY
 bgm
 bfP
 aad
-aac
+sbu
 aac
 aad
 aad
