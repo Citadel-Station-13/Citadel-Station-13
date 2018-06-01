@@ -47,5 +47,5 @@
 	for(var/i in progressbars_by_rider)
 		qdel(progressbars_by_rider[i])
 	progressbars_by_rider.Cut()
-    STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
