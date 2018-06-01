@@ -19872,21 +19872,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"aPQ" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/port)
 "aPR" = (
 /obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -35289,6 +35274,22 @@
 	dir = 8
 	},
 /area/engine/atmos)
+"tyW" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/vending_refill/kink,
+/turf/open/floor/plasteel,
+/area/maintenance/port)
 "tKM" = (
 /turf/closed/wall,
 /area/hallway/primary/fore)
@@ -35357,6 +35358,20 @@
 	dir = 9
 	},
 /area/engine/atmos)
+"ufy" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/item/vending_refill/kink,
+/turf/open/floor/engine,
+/area/engine/engineering)
 "ugK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -68747,7 +68762,7 @@ aIq
 aJy
 aJy
 aLV
-aMZ
+ufy
 aMZ
 aOF
 aPM
@@ -69778,7 +69793,7 @@ aLZ
 aNb
 aEt
 bbg
-aPQ
+tyW
 aQW
 aQW
 aQW
