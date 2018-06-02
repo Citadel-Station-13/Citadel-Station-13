@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -7629,7 +7629,6 @@
 	},
 /area/teleporter)
 "aoJ" = (
-/obj/machinery/droneDispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -14623,6 +14622,18 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/crew_quarters/dorms)
+"aEL" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/status_display{
+	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
@@ -35974,16 +35985,6 @@
 	dir = 5
 	},
 /area/engine/atmos)
-"ZwS" = (
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/vending/kink,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/crew_quarters/dorms)
 
 (1,1,1) = {"
 aaa
@@ -72590,7 +72591,7 @@ aAF
 aBO
 aCN
 aDD
-ZwS
+aEL
 awQ
 aGz
 aGM
