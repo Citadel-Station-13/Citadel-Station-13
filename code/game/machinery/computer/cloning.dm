@@ -276,8 +276,15 @@
 	if(href_list["task"])
 		switch(href_list["task"])
 			if("autoprocess")
+<<<<<<< HEAD
 				autoprocess = 1
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+=======
+				if(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL)
+					autoprocess = TRUE
+					START_PROCESSING(SSmachines, src)
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+>>>>>>> ce2d790... Fix autoprocessing cloners (#38264)
 			if("stopautoprocess")
 				autoprocess = 0
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
