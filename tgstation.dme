@@ -2732,6 +2732,7 @@
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
 #include "modular_citadel\code\game\objects\structures\crates_lockers\closets\secure\citadel_lockers.dm"
 #include "modular_citadel\code\modules\admin\admin.dm"
+#include "modular_citadel\code\modules\admin\chat_commands.dm"
 #include "modular_citadel\code\modules\admin\holder2.dm"
 #include "modular_citadel\code\modules\admin\secrets.dm"
 #include "modular_citadel\code\modules\admin\topic.dm"
