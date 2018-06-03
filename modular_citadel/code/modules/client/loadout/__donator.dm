@@ -284,7 +284,7 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/suit/toggle/labcoat/mad/techcoat
 	ckeywhitelist = list("wilchen")
 
-/datum/gear/ssk
+/datum/gear/leechjar
 	name = "Jar of Leeches"
 	category = SLOT_IN_BACKPACK
 	path = 	/obj/item/custom/leechjar
