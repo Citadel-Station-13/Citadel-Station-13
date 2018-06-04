@@ -1,5 +1,5 @@
 /obj/structure/table/alt_attack_hand(mob/user)
-	if(user && adjacent(user) && !incapacitated(user))
+	if(user && Adjacent(user) && !user.incapacitated())
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
