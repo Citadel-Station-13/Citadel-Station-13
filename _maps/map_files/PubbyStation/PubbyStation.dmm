@@ -48798,6 +48798,10 @@
 	icon_state = "wood-broken4"
 	},
 /area/maintenance/department/engine)
+"gWJ" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
 "gXg" = (
 /obj/item/extinguisher,
 /obj/structure/closet/crate{
@@ -49484,6 +49488,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"joe" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
 "jrG" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -52300,6 +52308,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"rxr" = (
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
 "rxQ" = (
 /obj/machinery/door/airlock/abandoned{
 	id_tag = "PottySci";
@@ -54475,6 +54487,79 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+<<<<<<< HEAD
+"yzM" = (
+/obj/machinery/light/small,
+/obj/item/storage/box/mousetraps,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"Drm" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel/green/corner,
+/area/hallway/primary/central)
+"EjC" = (
+/obj/machinery/cryopod,
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
+"Jcg" = (
+/obj/structure/mineral_door/silver,
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
+"JAb" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/taperecorder,
+/turf/open/floor/plating,
+/area/storage/emergency/starboard)
+"KhG" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"NDH" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
+"Ppd" = (
+/turf/open/floor/carpet/black,
+/area/maintenance/department/crew_quarters/dorms)
+"QYc" = (
+/obj/machinery/vending/kink,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
+"RST" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/hallway/primary/central)
+"Xmf" = (
+/obj/item/stack/sheet/metal{
+	amount = 20;
+	layer = 3.1
+	},
+/obj/item/stack/sheet/glass/fifty{
+	layer = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
+"YSB" = (
+/obj/machinery/vending/kink,
+/turf/closed/wall,
+/area/storage/emergency/starboard)
+"Zud" = (
+/obj/machinery/vending/kink,
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
+=======
+>>>>>>> refs/remotes/Citadel-Station-13/master
 
 (1,1,1) = {"
 aaa
@@ -89242,11 +89327,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+aiS
+aiS
+aiS
+aiS
 aaa
 aaa
 aaa
@@ -89499,11 +89584,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+rxr
+NDH
+joe
+aiS
 aaa
 aaa
 aaa
@@ -89756,11 +89841,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+Ppd
+Ppd
+Ppd
+aiS
 aaa
 cBU
 lcZ
@@ -90013,11 +90098,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+Ppd
+Ppd
+Ppd
+aiS
 aaa
 lcZ
 aoA
@@ -90270,11 +90355,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+gWJ
+Ppd
+Ppd
+aiS
 aaa
 cBU
 aoB
@@ -90528,9 +90613,9 @@ aiT
 aiS
 aiT
 aiS
-aiT
 aiS
-aiT
+aiS
+Jcg
 aiS
 aaa
 lcZ
