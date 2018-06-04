@@ -288,7 +288,11 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
-<<<<<<< HEAD
+/datum/config_entry/keyed_number_list/antag_rep
+
+/datum/config_entry/number/monkeycap
+	config_entry_value = 64
+	min_val = 0
 
 //Cit changes - Adds config options for crew objectives and miscreants
 /datum/config_entry/flag/allow_crew_objectives
@@ -306,10 +310,3 @@
 /datum/config_entry/number/nightshift_finish
 	config_entry_value = 6
 //End of Cit changes
-=======
-/datum/config_entry/keyed_number_list/antag_rep
-
-/datum/config_entry/number/monkeycap
-	config_entry_value = 64
-	min_val = 0
->>>>>>> d060e4e... Antag reputation rewards are now configurable (#38077)
