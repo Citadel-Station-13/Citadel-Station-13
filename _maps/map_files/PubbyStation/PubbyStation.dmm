@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -3054,6 +3054,10 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"ajB" = (
+/obj/item/storage/box/mousetraps,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "ajC" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plating,
@@ -3446,6 +3450,10 @@
 	name = "Station Intercom (General)";
 	pixel_x = -31
 	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
+"aks" = (
+/obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "akt" = (
@@ -10349,6 +10357,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"aBK" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/crowbar,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aBL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -10422,6 +10438,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"aBT" = (
+/obj/structure/closet/wardrobe/white,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
 "aBU" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/arrival,
@@ -12047,6 +12067,14 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"aFD" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/taperecorder,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aFE" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -12420,6 +12448,13 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"aGA" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/storage/emergency/starboard)
 "aGB" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -21172,10 +21207,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/cargo)
-"bdA" = (
-/obj/machinery/droneDispenser,
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
 "bdB" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -25732,7 +25763,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters_2";
@@ -33115,6 +33146,10 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"bHP" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plasteel/dark,
+/area/maintenance/department/engine)
 "bHQ" = (
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
@@ -43077,6 +43112,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
+"cjO" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/item/stack/sheet/glass/fifty{
+	layer = 4
+	},
+/obj/item/stack/sheet/metal{
+	amount = 20;
+	layer = 3.1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel/monastery)
 "cjP" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -47905,7 +47953,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -48014,16 +48061,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"eWf" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/cryopod,
-/obj/machinery/computer/cryopod{
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/central)
 "eWi" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/dark,
@@ -50999,11 +51036,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/lawoffice)
-"nSH" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/vending/kink,
-/turf/open/floor/plasteel/dark,
-/area/maintenance/department/engine)
 "nVU" = (
 /obj/item/twohanded/spear,
 /turf/open/floor/plating,
@@ -51965,15 +51997,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
-"qHi" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/crowbar,
-/obj/item/taperecorder,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "qHI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -52366,7 +52389,7 @@
 	width = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "rKr" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -53147,7 +53170,7 @@
 /area/construction/mining/aux_base)
 "uoS" = (
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "uqJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -54464,6 +54487,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+<<<<<<< HEAD
 "yzM" = (
 /obj/machinery/light/small,
 /obj/item/storage/box/mousetraps,
@@ -54534,6 +54558,8 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
+=======
+>>>>>>> refs/remotes/Citadel-Station-13/master
 
 (1,1,1) = {"
 aaa
@@ -70798,7 +70824,7 @@ aaa
 aaa
 ait
 aiV
-KhG
+ajB
 akr
 aiu
 ait
@@ -71172,7 +71198,7 @@ cvw
 cvI
 ckQ
 clf
-Xmf
+cwA
 cwA
 cwS
 cjm
@@ -71313,7 +71339,7 @@ aaa
 aiu
 aiX
 ajD
-yzM
+aks
 aiu
 ait
 ait
@@ -71428,7 +71454,7 @@ cgG
 cfn
 ciR
 cwa
-QYc
+cjO
 ckk
 ckC
 ckR
@@ -75754,7 +75780,7 @@ bDg
 bEj
 bFF
 bva
-nSH
+bHP
 bJb
 bJb
 bJb
@@ -90606,12 +90632,12 @@ awd
 abI
 awd
 aAM
-qHi
+aBK
 aDa
 aEb
-Drm
-RST
-RST
+aAM
+aFD
+aDa
 aAN
 aIf
 aJe
@@ -90867,8 +90893,8 @@ awd
 awd
 aAN
 aAN
-eWf
-EjC
+awd
+awd
 aAN
 aIg
 aJf
@@ -91123,10 +91149,10 @@ aaa
 aaa
 aaa
 aaa
-aAN
-aAN
-aAN
-aAN
+aaa
+aaa
+aaa
+awd
 aHN
 aIU
 aJI
@@ -91404,7 +91430,7 @@ aPY
 bau
 aLf
 aFi
-bdA
+aFi
 beI
 beI
 bgD
@@ -92410,7 +92436,7 @@ aDd
 apX
 aEU
 aFE
-JAb
+aGA
 aHn
 aIi
 aJi
@@ -92924,7 +92950,7 @@ com
 apX
 aET
 lKL
-YSB
+aET
 aET
 aHN
 aIU
@@ -95232,7 +95258,7 @@ axw
 ayu
 azC
 axw
-Zud
+aBT
 atn
 aEf
 aFc

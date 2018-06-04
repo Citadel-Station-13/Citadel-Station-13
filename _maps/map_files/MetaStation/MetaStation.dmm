@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -897,6 +897,13 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
+"acx" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/prison)
 "acy" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -1040,6 +1047,15 @@
 	dir = 8
 	},
 /obj/machinery/light,
+/turf/open/floor/plasteel/floorgrime,
+/area/security/prison)
+"acM" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "acN" = (
@@ -6013,6 +6029,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"amU" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/port)
 "amW" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
@@ -21704,6 +21725,18 @@
 "aUM" = (
 /turf/closed/wall,
 /area/crew_quarters/locker)
+"aUN" = (
+/obj/structure/closet/wardrobe/black,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
+"aUO" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
+"aUP" = (
+/obj/structure/closet/wardrobe/white,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
 "aUQ" = (
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
@@ -25513,6 +25546,12 @@
 	dir = 4
 	},
 /area/security/checkpoint/engineering)
+"bcO" = (
+/obj/structure/easel,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/fore)
 "bcP" = (
 /obj/machinery/light{
 	dir = 8
@@ -51477,7 +51516,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "research_shutters";
@@ -54179,8 +54218,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cmb" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo";
+/obj/machinery/chem_master{
 	pixel_x = -4
 	},
 /turf/open/floor/plating,
@@ -55657,7 +55695,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 4;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/item/folder/white{
 	pixel_x = 4;
@@ -56497,7 +56535,7 @@
 /obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Research and Development Deliveries";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -71272,6 +71310,10 @@
 /obj/structure/easel,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"dbl" = (
+/obj/structure/easel,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "dbm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -76064,14 +76106,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
-"hAJ" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/machinery/cryopod,
-/turf/open/floor/plasteel/floorgrime,
-/area/security/prison)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -76090,7 +76124,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	name = "Research and Development Desk";
-	req_access_txt = "7"
+	req_one_access_txt = "7;29"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -76334,10 +76368,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"mEW" = (
-/obj/machinery/vending/kink,
-/turf/open/floor/plasteel/vault,
-/area/crew_quarters/locker)
 "nnK" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/paper_bin,
@@ -76635,6 +76665,7 @@
 	},
 /turf/open/floor/wood,
 /area/library)
+<<<<<<< HEAD
 "qWJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -76648,6 +76679,8 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port)
+=======
+>>>>>>> refs/remotes/Citadel-Station-13/master
 "rzX" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -76869,15 +76902,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"vlg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green/side,
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 2
-	},
-/area/crew_quarters/locker)
 "vlx" = (
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/neutral/corner{
@@ -76933,7 +76957,6 @@
 /turf/closed/wall,
 /area/science/circuit)
 "wOE" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wPk" = (
@@ -77022,6 +77045,7 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+<<<<<<< HEAD
 "yTh" = (
 /obj/structure/closet,
 /turf/open/floor/plating{
@@ -77195,6 +77219,8 @@
 	},
 /turf/closed/wall,
 /area/maintenance/starboard)
+=======
+>>>>>>> refs/remotes/Citadel-Station-13/master
 
 (1,1,1) = {"
 aaa
@@ -95065,7 +95091,7 @@ bHQ
 bvW
 bLg
 bLf
-rhY
+amU
 bPL
 alK
 bOf
@@ -101680,8 +101706,8 @@ aay
 abs
 abK
 ace
-hAJ
-Xvm
+acx
+acM
 abe
 ady
 adT
@@ -110526,7 +110552,11 @@ cGl
 cHg
 cIh
 dAh
+<<<<<<< HEAD
 Eev
+=======
+dbl
+>>>>>>> refs/remotes/Citadel-Station-13/master
 dyc
 dxQ
 dvY
@@ -110714,8 +110744,8 @@ aOx
 aPJ
 aQT
 aOu
-XMx
-WoM
+aTt
+aUN
 aUM
 aYc
 aTC
@@ -110971,8 +111001,8 @@ aOy
 aOt
 aQU
 aSg
-vlg
-AIY
+aTt
+aUO
 aUM
 boW
 aZt
@@ -111228,8 +111258,8 @@ aOz
 aOu
 aQV
 aOv
-KHe
-SuJ
+aTt
+aUP
 aUM
 dCD
 aZt
@@ -112514,7 +112544,7 @@ aPL
 aQZ
 aSh
 aTA
-mEW
+aUT
 aUM
 aYh
 aCM
@@ -118400,7 +118430,11 @@ aaf
 aaf
 ack
 dni
+<<<<<<< HEAD
 sah
+=======
+bcO
+>>>>>>> refs/remotes/Citadel-Station-13/master
 dnS
 dnS
 dnS
