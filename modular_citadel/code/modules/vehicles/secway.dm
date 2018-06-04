@@ -25,7 +25,7 @@
 			charge--
 			new_speed = chargespeed
 	GET_COMPONENT(D, /datum/component/riding)
-	D.speed = new_speed
+	D.vehicle_move_delay = new_speed
 	return ..()
 
 /obj/vehicle/ridden/secway/buckle_mob(mob/living/M, force, check_loc)
