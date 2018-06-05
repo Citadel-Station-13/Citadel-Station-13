@@ -1,56 +1,52 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"e" = (
-/obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"i" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"k" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"t" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"v" = (
+"c" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"w" = (
-/obj/machinery/portable_atmospherics/canister/air,
+"d" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"x" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"z" = (
-/obj/machinery/light{
+"e" = (
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"P" = (
+"f" = (
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"h" = (
+/obj/machinery/camera{
+	dir = 1
+	},
+/obj/structure/mining_shuttle_beacon,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"i" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"j" = (
 /obj/docking_port/mobile/auxillary_base{
 	dheight = 4;
 	dir = 2;
@@ -63,123 +59,91 @@
 /obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
-"U" = (
+"k" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"l" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"m" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
+"n" = (
 /obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
-"W" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"X" = (
-/obj/machinery/camera{
-	dir = 1
-	},
-/obj/structure/mining_shuttle_beacon,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 
 (1,1,1) = {"
+b
 e
-b
-b
-b
-b
-b
-b
-b
-w
+e
+e
+e
+e
+l
 "}
 (2,1,1) = {"
-v
-k
-k
-k
-k
-k
-k
-k
-x
+c
+f
+f
+f
+f
+f
+m
 "}
 (3,1,1) = {"
-v
-k
-k
-k
-k
-k
-k
-k
-x
+c
+f
+f
+i
+f
+f
+m
 "}
 (4,1,1) = {"
-v
-k
-k
-k
-W
-k
-k
-k
-x
+c
+f
+h
+j
+f
+f
+m
 "}
 (5,1,1) = {"
-v
+c
+f
+f
 k
-k
-X
-P
-k
-k
-k
-x
+f
+f
+m
 "}
 (6,1,1) = {"
-v
-k
-k
-k
-z
-k
-k
-k
-x
+c
+f
+f
+f
+f
+f
+m
 "}
 (7,1,1) = {"
-v
-k
-k
-k
-k
-k
-k
-k
-x
-"}
-(8,1,1) = {"
-v
-k
-k
-k
-k
-k
-k
-k
-x
-"}
-(9,1,1) = {"
-i
-t
-t
-t
-t
-t
-t
-t
-U
+d
+g
+g
+g
+g
+g
+n
 "}
