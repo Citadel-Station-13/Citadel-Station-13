@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -10438,10 +10438,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aBT" = (
-/obj/structure/closet/wardrobe/white,
-/turf/open/floor/plasteel/arrival,
-/area/crew_quarters/fitness/recreation)
 "aBU" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/arrival,
@@ -48049,6 +48045,10 @@
 	dir = 5
 	},
 /area/science/explab)
+"eTg" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "eVy" = (
 /obj/effect/turf_decal/arrows{
 	dir = 8
@@ -53389,6 +53389,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"vcW" = (
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "veM" = (
 /obj/machinery/suit_storage_unit/rd,
 /obj/machinery/light{
@@ -54475,6 +54479,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"Ala" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
+"TBi" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
 
 (1,1,1) = {"
 aaa
@@ -89500,10 +89512,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+aiS
+aiS
+aiS
 aaa
 aaa
 aaa
@@ -89757,10 +89769,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+vcW
+alb
+aiS
 aaa
 cBU
 lcZ
@@ -90014,10 +90026,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+eTg
+alb
+aiS
 aaa
 lcZ
 aoA
@@ -90271,10 +90283,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+Ala
+alb
+aiS
 aaa
 cBU
 aoB
@@ -90528,9 +90540,9 @@ aiT
 aiS
 aiT
 aiS
-aiT
 aiS
-aiT
+aiS
+akg
 aiS
 aaa
 lcZ
@@ -95173,7 +95185,7 @@ axw
 ayu
 azC
 axw
-aBT
+TBi
 atn
 aEf
 aFc
