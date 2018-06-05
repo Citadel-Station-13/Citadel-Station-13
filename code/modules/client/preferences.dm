@@ -1380,11 +1380,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedui)
 						UI_style = pickedui
 				if("pda_style")
-<<<<<<< HEAD
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
-=======
 					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
->>>>>>> 513a5f1... Fixes pda style loading (#38238)
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
