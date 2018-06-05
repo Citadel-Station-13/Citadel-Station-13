@@ -200,11 +200,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-<<<<<<< HEAD
-	if(incapacitated() && !(I.flags_1&ABSTRACT_1)) //Cit change - Changes lying to incapacitated so that it's plausible to pick things up while on the ground
-=======
-	if(lying && !(I.item_flags & ABSTRACT))
->>>>>>> c65a99f... Move NODROP_1, DROPDEL_1, ABSTRACT_1 and NOBLUDGEON_1 to item_flags where they belong (#38171)
+	if(incapacitated() && !(I.item_flags & ABSTRACT)) //Cit change - Changes lying to incapacitated so that it's plausible to pick things up while on the ground
 		return FALSE
 	if(!istype(I))
 		return FALSE
