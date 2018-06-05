@@ -351,3 +351,10 @@
 	icon_state = "rdcoat"
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "rdcoat"
+
+/obj/item/custom/leechjar
+	name = "Jar of Leeches"
+	desc = "A dubious cure-all. The cork seems to be sealed fairly well, and the glass impossible to break."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "leechjar"
+	item_state = "leechjar"
