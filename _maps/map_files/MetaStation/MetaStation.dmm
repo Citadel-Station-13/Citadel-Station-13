@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -7793,14 +7793,6 @@
 "aqQ" = (
 /obj/item/vending_refill/cigarette,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
-"aqR" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /area/maintenance/port/fore)
 "aqS" = (
 /obj/structure/closet/crate,
@@ -21760,10 +21752,6 @@
 "aUQ" = (
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
-"aUR" = (
-/obj/structure/closet/wardrobe/green,
-/turf/open/floor/plasteel/vault,
-/area/crew_quarters/locker)
 "aUS" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/vault,
@@ -25566,12 +25554,6 @@
 	dir = 4
 	},
 /area/security/checkpoint/engineering)
-"bcO" = (
-/obj/structure/easel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/starboard/fore)
 "bcP" = (
 /obj/machinery/light{
 	dir = 8
@@ -58071,13 +58053,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"cto" = (
-/obj/machinery/vending/assist,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ctq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -71450,10 +71425,6 @@
 /obj/structure/easel,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"dbl" = (
-/obj/structure/easel,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dbm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -74402,13 +74373,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"diF" = (
-/obj/structure/chair/stool,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/maintenance/port/aft)
 "diG" = (
 /obj/structure/chair/stool,
 /obj/structure/sign/poster/contraband/random{
@@ -76224,6 +76188,10 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hqD" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "hyP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -76713,6 +76681,12 @@
 "qBq" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
+"qJu" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/fore)
 "qJZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -77008,9 +76982,6 @@
 	},
 /turf/closed/wall,
 /area/science/circuit)
-"wOE" = (
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "wPk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77097,6 +77068,34 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"CKB" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/fore)
+"HZF" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"Ljr" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"MVj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"RpM" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
 
 (1,1,1) = {"
 aaa
@@ -93955,7 +93954,7 @@ ceo
 dux
 cdc
 dux
-diF
+Ljr
 cjt
 cjt
 cjt
@@ -94220,7 +94219,7 @@ ckP
 cmi
 dvt
 csf
-cto
+MVj
 dux
 cvj
 cwh
@@ -97744,7 +97743,7 @@ aio
 aio
 dnM
 apy
-aqR
+qJu
 dne
 akm
 dne
@@ -107091,7 +107090,7 @@ cJN
 cCq
 cgN
 cMl
-wOE
+HZF
 bTs
 aaf
 aaf
@@ -110428,7 +110427,7 @@ cGl
 cHg
 cIh
 dAh
-dbl
+hqD
 dyc
 dxQ
 dvY
@@ -111645,7 +111644,7 @@ aOw
 aQX
 aOu
 aTt
-aUR
+RpM
 aUM
 aYe
 dnh
@@ -118302,7 +118301,7 @@ aaf
 aaf
 ack
 dni
-bcO
+CKB
 dnS
 dnS
 dnS
