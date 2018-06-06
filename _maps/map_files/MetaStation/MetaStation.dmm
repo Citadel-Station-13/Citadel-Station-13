@@ -76982,6 +76982,9 @@
 	},
 /turf/closed/wall,
 /area/science/circuit)
+"wOE" = (
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "wPk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77074,10 +77077,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard/fore)
-"HZF" = (
-/obj/machinery/droneDispenser,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "Ljr" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -107090,7 +107089,7 @@ cJN
 cCq
 cgN
 cMl
-HZF
+wOE
 bTs
 aaf
 aaf
