@@ -2846,5 +2846,9 @@
 #include "modular_citadel\code\modules\vore\eating\vore_vr.dm"
 #include "modular_citadel\code\modules\vore\eating\voreitems.dm"
 #include "modular_citadel\code\modules\vore\eating\vorepanel_vr.dm"
+#include "modular_citadel\datums\components\riding.dm"
+#include "modular_citadel\game\objects\items\melee\misc.dm"
 #include "modular_citadel\interface\skin.dmf"
+#include "modular_citadel\modules\mob\living\status_procs.dm"
+#include "modular_citadel\modules\vehicles\secway.dm"
 // END_INCLUDE
