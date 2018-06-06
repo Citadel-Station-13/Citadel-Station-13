@@ -39755,21 +39755,6 @@
 	dir = 1
 	},
 /area/engine/engineering)
-"bYK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/yellow/side{
-	dir = 1
-	},
-/area/engine/engineering)
 "bYL" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -47133,12 +47118,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"cBA" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/crew_quarters/dorms)
 "cBB" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -50571,6 +50550,21 @@
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
+"myL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/yellow/side{
+	dir = 1
+	},
+/area/engine/engineering)
 "mzl" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -83179,7 +83173,7 @@ bVG
 bWp
 bXh
 bXZ
-bYK
+myL
 bZz
 cah
 cbd
@@ -92087,7 +92081,7 @@ ajv
 ajv
 aju
 ajv
-cBA
+alP
 aiS
 akn
 apX
