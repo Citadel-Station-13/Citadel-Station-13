@@ -33,6 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(listener)
 	QDEL_LIST(beams)
 	. = ..()
 
@@ -166,7 +167,13 @@
 	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
 
 /obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
+<<<<<<< HEAD
 	if(offender && ((offender.flags_1 & ABSTRACT_1) || offender == src))
+=======
+	if(QDELETED(src))
+		return
+	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
+>>>>>>> 641a7d1... Fixes infrared emmiters partially. (#38301)
 		return
 	return refreshBeam()
 
