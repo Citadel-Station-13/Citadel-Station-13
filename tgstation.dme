@@ -2856,6 +2856,7 @@
 #include "modular_citadel\code\modules\research\techweb\all_nodes.dm"
 #include "modular_citadel\code\modules\research\xenobiology\xenobio_camera.dm"
 #include "modular_citadel\code\modules\uplink\uplink_items.dm"
+#include "modular_citadel\code\modules\vehicles\secway.dm"
 #include "modular_citadel\code\modules\vore\hook-defs_vr.dm"
 #include "modular_citadel\code\modules\vore\persistence.dm"
 #include "modular_citadel\code\modules\vore\trycatch_vr.dm"
