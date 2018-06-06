@@ -53238,13 +53238,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"eoU" = (
-/obj/structure/table/wood/bar,
-/obj/item/stack/sheet/mineral/wood{
-	amount = 10
-	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "eyM" = (
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 2;
@@ -53514,6 +53507,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"jti" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "jAD" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -53866,6 +53864,13 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"rAy" = (
+/obj/item/stack/sheet/mineral/wood{
+	amount = 10
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "rKP" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -53958,6 +53963,10 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
+"sZS" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "tal" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -54012,6 +54021,13 @@
 /obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"uih" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "uoB" = (
 /obj/structure/table/reinforced,
 /obj/item/multitool,
@@ -54234,6 +54250,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"yjF" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/tcommsat/server";
+	dir = 1;
+	name = "Maintenance Bar APC";
+	pixel_y = 25
+	},
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "AEJ" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -54247,11 +54275,6 @@
 /area/maintenance/bar)
 "DDw" = (
 /turf/closed/wall,
-/area/maintenance/bar)
-"DJu" = (
-/obj/structure/table/wood/bar,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/wood,
 /area/maintenance/bar)
 "DSZ" = (
 /obj/structure/table/wood/bar,
@@ -54277,6 +54300,12 @@
 "Fkt" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/plating,
+/area/maintenance/bar)
+"FIn" = (
+/obj/item/weaponcrafting/receiver,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
 /area/maintenance/bar)
 "IBr" = (
 /turf/open/floor/wood,
@@ -54307,25 +54336,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"JBr" = (
-/obj/structure/table/wood/bar,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
-"LzH" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/tcommsat/server";
-	dir = 1;
-	name = "Maintenance Bar APC";
-	pixel_y = 25
-	},
-/obj/structure/table/wood/bar,
-/obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "LBA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/carpet,
@@ -54388,10 +54398,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/bar)
-"RTO" = (
-/obj/structure/table/wood/bar,
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "Sgl" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -54407,12 +54413,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"VAU" = (
-/obj/structure/table/wood/bar,
-/obj/item/weaponcrafting/receiver,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "Wsz" = (
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
@@ -77214,8 +77214,8 @@ DDw
 Pic
 DDw
 DDw
-JBr
-RTO
+uih
+sZS
 ZxJ
 ova
 kOa
@@ -77467,12 +77467,12 @@ bCq
 bCq
 bHE
 DDw
-eoU
+rAy
 fRb
 sgR
 shN
 RiU
-DJu
+jti
 Ywj
 ova
 kOa
@@ -77724,12 +77724,12 @@ aaa
 bLv
 vXc
 Bos
-VAU
+FIn
 vgX
 tiA
 IYK
 dhh
-RTO
+sZS
 LYy
 LBA
 vFA
@@ -77981,12 +77981,12 @@ aaf
 bLv
 Ehp
 kqQ
-LzH
+yjF
 dwF
 IBr
 DSZ
 IBr
-RTO
+sZS
 LYy
 IBr
 IBr
