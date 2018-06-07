@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -5656,31 +5656,6 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/security/brig)
-"akU" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
-/obj/machinery/door/airlock/security{
-	name = "Armoury";
-	req_access_txt = "3"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel,
 /area/security/brig)
 "akV" = (
 /obj/structure/cable/white{
@@ -24694,15 +24669,6 @@
 "bar" = (
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bas" = (
-/obj/structure/dresser,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault/side{
-	dir = 8
-	},
-/area/maintenance/port)
 "bat" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/o2{
@@ -27143,18 +27109,6 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/maintenance/starboard/aft)
-"bft" = (
-/obj/structure/cable/white{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/starboard/aft";
-	dir = 2;
-	name = "Starboard Quater Maintenance APC";
-	pixel_y = -26
-	},
-/turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bfu" = (
 /turf/closed/wall,
@@ -32307,6 +32261,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nSF" = (
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/starboard/aft";
+	dir = 2;
+	name = "Starboard Quater Maintenance APC";
+	pixel_y = -26
+	},
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "nTi" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
@@ -32817,6 +32784,15 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
+"sve" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault/side{
+	dir = 8
+	},
+/area/maintenance/port)
 "sws" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -35985,6 +35961,31 @@
 	dir = 5
 	},
 /area/engine/atmos)
+"QKg" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Armory";
+	req_access_txt = "3"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/security/brig)
 
 (1,1,1) = {"
 aaa
@@ -69487,7 +69488,7 @@ sxc
 ain
 aiS
 ajS
-akU
+QKg
 alI
 amI
 anz
@@ -72100,7 +72101,7 @@ aXk
 aQW
 bbg
 aPV
-bas
+sve
 bbn
 bca
 bcR
@@ -83928,7 +83929,7 @@ bcE
 bdC
 bet
 sOM
-bft
+nSF
 sOM
 bgy
 sPY

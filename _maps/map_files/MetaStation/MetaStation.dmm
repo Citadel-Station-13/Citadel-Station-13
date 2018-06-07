@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -897,13 +897,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
-"acx" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel/floorgrime,
-/area/security/prison)
 "acy" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -1047,15 +1040,6 @@
 	dir = 8
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/floorgrime,
-/area/security/prison)
-"acM" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "acN" = (
@@ -3638,13 +3622,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/fore)
-"ahU" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/table,
-/obj/item/stock_parts/manipulator,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "ahV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -4073,22 +4050,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"aiP" = (
-/obj/structure/table,
-/obj/item/folder,
-/turf/open/floor/plating,
-/area/maintenance/fore)
-"aiQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
 "aiR" = (
 /obj/structure/table,
 /obj/item/clothing/under/sl_suit{
@@ -5137,10 +5098,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"alf" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness/recreation)
 "alg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -5844,10 +5801,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"amv" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/vault,
-/area/crew_quarters/fitness/recreation)
 "amw" = (
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright{
@@ -7793,14 +7746,6 @@
 "aqQ" = (
 /obj/item/vending_refill/cigarette,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
-"aqR" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /area/maintenance/port/fore)
 "aqS" = (
 /obj/structure/closet/crate,
@@ -21760,10 +21705,6 @@
 "aUQ" = (
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
-"aUR" = (
-/obj/structure/closet/wardrobe/green,
-/turf/open/floor/plasteel/vault,
-/area/crew_quarters/locker)
 "aUS" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/vault,
@@ -25566,12 +25507,6 @@
 	dir = 4
 	},
 /area/security/checkpoint/engineering)
-"bcO" = (
-/obj/structure/easel,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/starboard/fore)
 "bcP" = (
 /obj/machinery/light{
 	dir = 8
@@ -58037,13 +57972,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"cto" = (
-/obj/machinery/vending/assist,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ctq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -71376,10 +71304,6 @@
 /obj/structure/easel,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"dbl" = (
-/obj/structure/easel,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "dbm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -73590,21 +73514,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"dhp" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
 "dhq" = (
 /obj/structure/table/reinforced,
 /obj/structure/light_construct/small{
@@ -74323,13 +74232,6 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/turf/open/floor/wood,
-/area/maintenance/port/aft)
-"diF" = (
-/obj/structure/chair/stool,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -75975,6 +75877,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"dVe" = (
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
+/obj/machinery/computer/cryopod{
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/fitness/recreation)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -76150,6 +76063,22 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hnE" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (WEST)";
+	icon_state = "cryopod-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/prison)
+"hqD" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "hyP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -76407,6 +76336,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"mRA" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/closed/wall,
+/area/crew_quarters/fitness/recreation)
 "nnK" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/paper_bin,
@@ -76639,6 +76572,12 @@
 "qBq" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
+"qJu" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/fore)
 "qJZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -76950,6 +76889,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"xcn" = (
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "xkG" = (
 /obj/item/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
@@ -77023,6 +76970,62 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"CKB" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/starboard/fore)
+"Ljr" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"MVj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"PaP" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"RpM" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
+"XBJ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (EAST)";
+	icon_state = "cryopod-open";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
+"ZPF" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/prison)
 
 (1,1,1) = {"
 aaa
@@ -93881,7 +93884,7 @@ ceo
 dux
 cdc
 dux
-diF
+Ljr
 cjt
 cjt
 cjt
@@ -94146,7 +94149,7 @@ ckP
 cmi
 dvt
 csf
-cto
+MVj
 dux
 cvj
 cwh
@@ -97670,7 +97673,7 @@ aio
 aio
 dnM
 apy
-aqR
+qJu
 dne
 akm
 dne
@@ -101508,8 +101511,8 @@ aay
 abs
 abK
 ace
-acx
-acM
+hnE
+ZPF
 abe
 ady
 adT
@@ -110354,7 +110357,7 @@ cGl
 cHg
 cIh
 dAh
-dbl
+hqD
 dyc
 dxQ
 dvY
@@ -111540,8 +111543,8 @@ acQ
 afs
 agr
 acP
-ahU
-aiP
+mRA
+acP
 acP
 acP
 acP
@@ -111571,7 +111574,7 @@ aOw
 aQX
 aOu
 aTt
-aUR
+RpM
 aUM
 aYe
 dnh
@@ -111797,11 +111800,11 @@ acP
 acP
 ags
 acP
-acP
-acP
-acP
-alf
-amv
+xcn
+xcn
+XBJ
+xcn
+dVe
 acP
 aoS
 acP
@@ -112053,10 +112056,10 @@ aaa
 acQ
 aft
 agt
-ahf
 ahV
-aiQ
-dhp
+ahf
+ahf
+PaP
 alg
 alg
 anF
@@ -118228,7 +118231,7 @@ aaf
 aaf
 ack
 dni
-bcO
+CKB
 dnS
 dnS
 dnS

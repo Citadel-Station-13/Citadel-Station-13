@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -1529,10 +1529,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
-"afI" = (
-/obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afJ" = (
@@ -10438,10 +10434,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"aBT" = (
-/obj/structure/closet/wardrobe/white,
-/turf/open/floor/plasteel/arrival,
-/area/crew_quarters/fitness/recreation)
 "aBU" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/arrival,
@@ -13276,40 +13268,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aIW" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aIX" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/landmark/observer_start,
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aIY" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "aIZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -14031,11 +13989,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
-"aKV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "aKY" = (
 /turf/closed/wall/r_wall,
 /area/storage/eva)
@@ -39752,21 +39705,6 @@
 	dir = 1
 	},
 /area/engine/engineering)
-"bYK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/yellow/side{
-	dir = 1
-	},
-/area/engine/engineering)
 "bYL" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -44337,32 +44275,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"coz" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/blue/corner{
-	dir = 8
-	},
-/area/hallway/primary/central)
-"coB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "Central Primary Hallway Bridge";
-	dir = 1
-	},
-/turf/open/floor/plasteel/blue/corner{
-	dir = 8
-	},
-/area/hallway/primary/central)
 "coF" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -47086,12 +46998,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"cBA" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/crew_quarters/dorms)
 "cBB" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -47252,6 +47158,17 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
+"cGF" = (
+/obj/machinery/computer/cryopod{
+	pixel_x = 28
+	},
+/obj/machinery/cryopod{
+	tag = "icon-cryopod-open (WEST)";
+	icon_state = "cryopod-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "cHS" = (
 /obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firing Range"
@@ -47998,6 +47915,10 @@
 	dir = 5
 	},
 /area/science/explab)
+"eTg" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "eVy" = (
 /obj/effect/turf_decal/arrows{
 	dir = 8
@@ -50527,6 +50448,21 @@
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
+"myL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/yellow/side{
+	dir = 1
+	},
+/area/engine/engineering)
 "mzl" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -50630,6 +50566,16 @@
 "mVM" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"mWf" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/observer_start,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "mXq" = (
 /obj/item/taperecorder,
 /obj/item/cartridge/lawyer,
@@ -52500,6 +52446,15 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/closed/wall,
 /area/maintenance/department/security/brig)
+"sns" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "spz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -53365,6 +53320,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"vcW" = (
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "veM" = (
 /obj/machinery/suit_storage_unit/rd,
 /obj/machinery/light{
@@ -54457,6 +54416,51 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"Ala" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
+"Amd" = (
+/obj/machinery/cryopod{
+	dir = 1;
+	icon_state = "cryopod-open";
+	tag = "icon-cryopod-open (EAST)"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"LZc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway Bridge";
+	dir = 1
+	},
+/turf/open/floor/plasteel/blue/corner{
+	dir = 8
+	},
+/area/hallway/primary/central)
+"QFf" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"Sti" = (
+/obj/machinery/cryopod{
+	dir = 1;
+	icon_state = "cryopod-open";
+	tag = "icon-cryopod-open (EAST)"
+	},
+/obj/machinery/computer/cryopod{
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"TBi" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/arrival,
+/area/crew_quarters/fitness/recreation)
 
 (1,1,1) = {"
 aaa
@@ -75850,7 +75854,7 @@ aeu
 aeI
 lGp
 aeU
-afI
+cGF
 aeU
 aeU
 agy
@@ -83149,7 +83153,7 @@ bVG
 bWp
 bXh
 bXZ
-bYK
+myL
 bZz
 cah
 cbd
@@ -84626,10 +84630,10 @@ aAB
 aGo
 aHf
 aHX
-aIW
-coz
-aKV
-abI
+sns
+aJO
+aDZ
+Amd
 aKT
 coG
 aPE
@@ -84883,10 +84887,10 @@ aAB
 aGp
 aHf
 aHX
-aIW
-coz
-aKV
-abI
+sns
+aJO
+aDZ
+Amd
 aKT
 coH
 aPE
@@ -85140,10 +85144,10 @@ aAB
 aGq
 aHf
 aHY
-aIX
-coB
-aKV
-abI
+mWf
+LZc
+aDZ
+Sti
 aKT
 coH
 aPE
@@ -85397,10 +85401,10 @@ aAB
 aGr
 aHf
 aHX
-aIW
-coz
-aKV
-abI
+sns
+aJO
+aDZ
+Amd
 aKT
 coJ
 aPE
@@ -85654,10 +85658,10 @@ aAB
 aGs
 aHf
 aHX
-aIY
-coz
-aKV
-abI
+QFf
+aJO
+aDZ
+Amd
 aKT
 coJ
 aPE
@@ -89482,10 +89486,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+aiS
+aiS
+aiS
 aaa
 aaa
 aaa
@@ -89739,10 +89743,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+vcW
+alb
+aiS
 aaa
 cBU
 lcZ
@@ -89996,10 +90000,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+eTg
+alb
+aiS
 aaa
 lcZ
 aoA
@@ -90253,10 +90257,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aiS
+Ala
+alb
+aiS
 aaa
 cBU
 aoB
@@ -90510,9 +90514,9 @@ aiT
 aiS
 aiT
 aiS
-aiT
 aiS
-aiT
+aiS
+akg
 aiS
 aaa
 lcZ
@@ -92057,7 +92061,7 @@ ajv
 ajv
 aju
 ajv
-cBA
+alP
 aiS
 akn
 apX
@@ -95155,7 +95159,7 @@ axw
 ayu
 azC
 axw
-aBT
+TBi
 atn
 aEf
 aFc

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -4345,6 +4345,15 @@
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
+"qP" = (
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/turf/open/floor/plasteel/neutral,
+/area/ruin/space/has_grav/hotel/custodial)
 "sN" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/cable/yellow{
@@ -4355,6 +4364,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"JZ" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
 
 (1,1,1) = {"
 aa
@@ -6093,7 +6106,7 @@ kC
 kn
 lg
 jG
-ml
+qP
 mp
 mw
 mJ
@@ -7252,7 +7265,7 @@ di
 di
 ea
 ep
-dV
+JZ
 di
 eT
 fp
