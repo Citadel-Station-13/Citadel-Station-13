@@ -290,3 +290,8 @@ datum/gear/darksabresheath
 	path = 	/obj/item/custom/leechjar
 	ckeywhitelist = list("sgtryder")
 
+/datum/gear/devilwings
+	name = "Strange Wings"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/devilwings
+	ckeywhitelist = list("kitsun")
