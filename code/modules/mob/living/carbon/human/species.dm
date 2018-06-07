@@ -1259,15 +1259,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(flight)
 				. += ((health_deficiency-39) / 75) // CIT CHANGE - adds -39 to health deficiency penalty to make the transition to low health movement a little less jarring
 			else
-<<<<<<< HEAD
 				. += ((health_deficiency-39) / 25) // CIT CHANGE - ditto
-=======
-				. += (health_deficiency / 25)
 		if(CONFIG_GET(flag/disable_human_mood))
 			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
 			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
 				. += hungry / 50
->>>>>>> c06c3b7... Readds Hunger Slowdown (#38294)
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
