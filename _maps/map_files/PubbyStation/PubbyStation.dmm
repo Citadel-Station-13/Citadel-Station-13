@@ -7813,10 +7813,6 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/obj/machinery/computer/cryopod{
-	tag = "0";
-	step_y = 31
-	},
 /obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -48340,11 +48336,6 @@
 	dir = 1
 	},
 /area/hallway/secondary/exit/departure_lounge)
-"fVZ" = (
-/obj/structure/lattice,
-/obj/structure/reagent_dispensers/keg/aphro/strong,
-/turf/open/space,
-/area/space/nearstation)
 "fWv" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
@@ -49444,6 +49435,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"jqN" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "jrG" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -52331,6 +52326,11 @@
 "rHA" = (
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"rHP" = (
+/obj/structure/lattice,
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/space,
+/area/space/nearstation)
 "rJg" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/light/small{
@@ -53846,10 +53846,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
-"wBX" = (
-/obj/effect/spawner/lootdrop/keg,
-/turf/open/floor/wood,
-/area/maintenance/department/crew_quarters/dorms)
 "wDm" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -54424,6 +54420,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"yap" = (
+/obj/machinery/computer/cryopod,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "ybX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -88689,7 +88689,7 @@ aaa
 aaa
 aaa
 aby
-fVZ
+rHP
 abO
 abX
 acg
@@ -91552,7 +91552,7 @@ cBo
 alQ
 alb
 cBw
-wBX
+jqN
 aiS
 aiS
 aiS
@@ -94649,7 +94649,7 @@ aaa
 aaa
 apX
 apX
-apX
+yap
 avl
 fIu
 dbi
