@@ -7813,6 +7813,11 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/computer/cryopod{
+	tag = "0";
+	step_y = 31
+	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -10447,7 +10452,7 @@
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
 "aBV" = (
-/obj/structure/closet/wardrobe/green,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
 "aBW" = (
@@ -11037,6 +11042,7 @@
 /turf/open/floor/plasteel/white/side,
 /area/crew_quarters/dorms)
 "aDk" = (
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/white/corner{
 	icon_state = "whitecorner";
 	dir = 8
@@ -48334,6 +48340,11 @@
 	dir = 1
 	},
 /area/hallway/secondary/exit/departure_lounge)
+"fVZ" = (
+/obj/structure/lattice,
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/space,
+/area/space/nearstation)
 "fWv" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
@@ -52444,7 +52455,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "sbk" = (
-/obj/structure/girder,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "sbY" = (
@@ -53835,6 +53846,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
+"wBX" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "wDm" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -88674,7 +88689,7 @@ aaa
 aaa
 aaa
 aby
-abI
+fVZ
 abO
 abX
 acg
@@ -91537,7 +91552,7 @@ cBo
 alQ
 alb
 cBw
-alb
+wBX
 aiS
 aiS
 aiS
