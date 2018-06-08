@@ -165,9 +165,9 @@
 	)
 	// These items will NOT be preserved
 	var/list/do_not_preserve_items = list (
-		/obj/item/mmi/posibrain
-		/obj/item/gun/energy/disabler/cyborg
-		/obj/item/gun/energy/kinetic_accelerator/cyborg
+		/obj/item/mmi/posibrain,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gun/energy/laser/cyborg
 	)
 
