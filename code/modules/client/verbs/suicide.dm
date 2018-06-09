@@ -199,16 +199,10 @@
 		death(0)
 
 /mob/living/proc/suicide_log()
-	var/turf/T = get_turf(src)
-
-	log_game("[key_name(src)] committed suicide at [get_area(src)][COORD(T)] as [src.type].")
-	message_admins("[key_name(src)] committed suicide at [get_area(src)] as [src.type].")
+	log_game("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
 
 /mob/living/carbon/human/suicide_log()
-	var/turf/T = get_turf(src)
-
-	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [get_area(src)][COORD(T)].")
-	message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
+	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
