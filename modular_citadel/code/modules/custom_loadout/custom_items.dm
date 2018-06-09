@@ -367,3 +367,4 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/devilwings64x64.dmi'
 	item_state = "devilwings"
 	worn_x_dimension = 64
+	worn_y_dimension = 34
