@@ -106,11 +106,13 @@
 
 /obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID, var/target)
 	. = ..()
-	var/delayTime = 30//default time is 30 seconds
+	var/delayTime = 17		//forcefully admin spawned, a little faster.
 	switch(podID)
+		if(POD_STANDARD)
+			delayTime = 30
 		if(POD_BLUESPACE)
 			delayTime = 15
-		if(POD_CENTCOM)
+		if(POD_CENTCOM)		//admin smite, even faster.
 			delayTime = 5//speedy delivery
 
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
@@ -127,12 +129,15 @@
 	else if (podID == POD_BLUESPACE)
 		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
-	else
+	else if (podID == POD_CENTCOM)
 		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)//CentCom supplypods dont create explosions; instead they directly deal 40 fire damage to people on the turf
 		var/turf/T = get_turf(src)
 		T.hotspot_expose(700, 50, 1)//same as fireball
 		for(var/mob/living/M in T.contents)
 			M.adjustFireLoss(40)
+	else
+		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
+		explosion(src,0,0,2, flame_range = 3)		//Adminspawned via buildmode or otherwise, blow them up damnit.	
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()
