@@ -328,6 +328,16 @@
 		/obj/item/toy/sword/darksabre
 		))
 
+/obj/item/clothing/suit/armor/vest/darkcarapace
+	name = "Dark Armor"
+	desc = "A dark, non-functional piece of armor sporting a red and black finish."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "darkcarapace"
+	item_state = "darkcarapace"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back
+
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
 	desc = "This cloak doesn't seem too special."
