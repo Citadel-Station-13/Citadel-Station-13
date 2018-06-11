@@ -290,3 +290,8 @@ datum/gear/darksabresheath
 	path = 	/obj/item/custom/leechjar
 	ckeywhitelist = list("sgtryder")
 
+/datum/gear/darkarmor
+	name = "Dark Armor"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/suit/armor/vest/darkcarapace
+	ckeywhitelist = list("inferno707")
