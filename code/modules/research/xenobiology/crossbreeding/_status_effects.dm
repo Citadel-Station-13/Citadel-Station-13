@@ -760,9 +760,24 @@ datum/status_effect/stabilized/blue/on_remove()
 	var/mob/living/simple_animal/familiar
 
 /datum/status_effect/stabilized/gold/tick()
+<<<<<<< HEAD
 	if(!familiar)
 		familiar = create_random_mob(get_turf(owner.loc), FRIENDLY_SPAWN)
 		familiar.del_on_death = TRUE
+=======
+	var/obj/item/slimecross/stabilized/gold/linked = linked_extract
+	if(QDELETED(familiar))
+		familiar = new linked.mob_type(get_turf(owner.loc))
+		familiar.name = linked.mob_name
+		familiar.del_on_death = TRUE
+		familiar.copy_known_languages_from(owner, FALSE)
+		if(linked.saved_mind)
+			linked.saved_mind.transfer_to(familiar)
+			familiar.ckey = linked.saved_mind.key
+	else
+		if(familiar.mind)
+			linked.saved_mind = familiar.mind
+>>>>>>> b2e9fe8... Fixes and Upgrades Stabilized Gold Extracts (#38394)
 	return ..()
 
 /datum/status_effect/stabilized/gold/on_remove()
