@@ -46228,12 +46228,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUT" = (
-/obj/structure/rack,
-/obj/item/weldingtool,
-/obj/item/screwdriver{
-	pixel_y = 16
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
 	},
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/reagent_containers/food/condiment/flour,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUU" = (
@@ -46247,20 +46246,16 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUX" = (
-/obj/structure/rack,
-/obj/item/stack/cable_coil{
-	pixel_x = -1;
-	pixel_y = -3
-	},
-/obj/item/stack/cable_coil,
-/obj/item/wirecutters,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate/bin,
+/obj/item/kitchen/knife,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUY" = (
@@ -46717,25 +46712,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bVW" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/maintenance/port/aft)
-"bVX" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"bVZ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"bWa" = (
-/obj/effect/landmark/blobstart,
-/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bWb" = (
 /obj/structure/cable/yellow{
@@ -47471,12 +47453,11 @@
 	},
 /area/maintenance/port/aft)
 "bXA" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"bXB" = (
-/obj/structure/chair/stool,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXC" = (
@@ -47915,25 +47896,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"bYG" = (
-/obj/structure/table,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/pen,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "bYH" = (
-/obj/structure/light_construct,
+/obj/structure/rack,
+/obj/item/stack/rods{
+	amount = 4
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -50093,8 +50060,6 @@
 /turf/open/space,
 /area/solar/port/aft)
 "cdb" = (
-/obj/structure/girder,
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -50122,6 +50087,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/girder,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cde" = (
@@ -50662,8 +50629,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceo" = (
-/obj/structure/girder,
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -50698,19 +50663,6 @@
 	amount = 23
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
-"ces" = (
-/obj/structure/table,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/pen,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceu" = (
@@ -71333,11 +71285,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"dbk" = (
-/obj/item/hand_labeler_refill,
-/obj/structure/easel,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "dbl" = (
 /obj/structure/easel,
 /turf/open/floor/plating,
@@ -74197,12 +74144,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "diy" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/poster/random_contraband,
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diz" = (
@@ -76040,6 +75982,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"gqA" = (
+/obj/machinery/button/door{
+	dir = 2;
+	id = "abandoned_kitchen";
+	name = "Shutters Control";
+	pixel_x = 26;
+	pixel_y = 6;
+	req_one_access_txt = null
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/apron/chef,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "gra" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -76116,6 +76071,11 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hvt" = (
+/obj/structure/kitchenspike_frame,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hyP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -76125,6 +76085,13 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"hIt" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "abandoned_kitchen"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -76152,6 +76119,10 @@
 	},
 /turf/open/floor/plasteel/whitepurple,
 /area/science/lab)
+"iLj" = (
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "jeV" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
@@ -76373,6 +76344,7 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+<<<<<<< HEAD
 "mSt" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -76382,6 +76354,15 @@
 	dir = 1
 	},
 /area/crew_quarters/fitness/recreation)
+=======
+"mWg" = (
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/aft)
+>>>>>>> b599107... Adds an abandoned kitchen to Metastation (#38280)
 "nnK" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/paper_bin,
@@ -76528,6 +76509,17 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"oZg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/girder,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "pmc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -76598,6 +76590,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"qhe" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -76890,6 +76888,10 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"wmt" = (
+/obj/effect/decal/cleanable/flour,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "wxc" = (
 /obj/machinery/door/airlock/external{
 	name = "Atmospherics External Airlock";
@@ -76974,6 +76976,13 @@
 /obj/structure/chair/comfy,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"xEf" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp{
+	on = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -76989,6 +76998,16 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine/cult,
 /area/library)
+"ydn" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 3
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "ygk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -93592,10 +93611,10 @@ bPJ
 alK
 cgH
 dux
-bUU
-bVX
-bXB
-bYG
+iLj
+dvt
+bXE
+hvt
 dux
 dux
 dux
@@ -93849,8 +93868,8 @@ aqK
 alK
 dit
 dux
-bUV
-duH
+ydn
+wmt
 bXC
 bYH
 dux
@@ -94107,12 +94126,12 @@ alK
 bSu
 dux
 bUW
-bVZ
+bXE
 bXD
 bYI
 bZO
 cbt
-cdc
+oZg
 dux
 dux
 csT
@@ -94364,11 +94383,11 @@ alK
 bSr
 dux
 bUX
-bWa
-bXE
-bYJ
+bUU
+gqA
+xEf
 dux
-dvt
+mWg
 cdd
 dux
 cfC
@@ -94621,7 +94640,7 @@ bRf
 bSv
 dux
 dux
-dux
+hIt
 dux
 dux
 dux
@@ -94878,7 +94897,7 @@ alK
 bOf
 bOv
 alC
-dbk
+qhe
 dux
 bYK
 bZP
@@ -95398,7 +95417,7 @@ bYM
 bZP
 cbx
 cdh
-bXE
+bUV
 dux
 dwc
 cia
@@ -95912,7 +95931,7 @@ bYN
 dux
 cbz
 bXE
-ces
+bYJ
 dux
 dwe
 cic
