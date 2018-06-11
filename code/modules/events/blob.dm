@@ -14,7 +14,16 @@
 	fakeable = TRUE
 
 /datum/round_event/ghost_role/blob/announce(fake)
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+	if(prob(75))
+		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
+	else
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		for(var/obj/machinery/computer/communications/C in GLOB.machines)
+			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+				var/obj/item/paper/P = new(C.loc)
+				P.name = "level 5 biohazard"
+				P.info = "Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak."
+				P.update_icon()
 
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
@@ -25,6 +34,6 @@
 	var/mob/dead/observer/new_blob = pick(candidates)
 	var/mob/camera/blob/BC = new_blob.become_overmind()
 	spawned_mobs += BC
-	message_admins("[key_name_admin(BC)] has been made into a blob overmind by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(BC)] has been made into a blob overmind by an event.")
 	log_game("[key_name(BC)] was spawned as a blob overmind by an event.")
 	return SUCCESSFUL_SPAWN

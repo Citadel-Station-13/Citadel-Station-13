@@ -5,4 +5,5 @@
 #include "reagent_recipe_collisions.dm"
 #include "reagent_id_typos.dm"
 //#include "vore_tests.dm"
+#include "subsystem_init.dm"
 #endif

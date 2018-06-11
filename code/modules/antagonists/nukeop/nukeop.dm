@@ -65,6 +65,8 @@
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
+			for(var/obj/machinery/nuclearbomb/beer/beernuke in GLOB.nuke_list)
+				beernuke.r_code = nuke_team.memorized_code
 		else
 			stack_trace("Syndicate nuke not found during nuke team creation.")
 			nuke_team.memorized_code = null
@@ -218,7 +220,7 @@
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
 		else
-			stack_trace("Station self destruct ot found during lone op team creation.")
+			stack_trace("Station self destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/reinforcement
@@ -325,6 +327,7 @@
 	var/text = "<br><span class='header'>The syndicate operatives were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
+	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 	for(var/I in members)
 		var/datum/mind/syndicate = I
 		var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[syndicate.key]

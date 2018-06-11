@@ -21,13 +21,16 @@
 	var/mob/owner
 
 /datum/action/New(Target)
-	target = Target
+	link_to(Target)
 	button = new
 	button.linked_action = src
 	button.name = name
 	button.actiontooltipstyle = buttontooltipstyle
 	if(desc)
 		button.desc = desc
+
+/datum/action/proc/link_to(Target)
+	target = Target
 
 /datum/action/Destroy()
 	if(owner)
@@ -270,8 +273,8 @@
 	desc = "Change the type of instrument your synthesizer is playing as."
 
 /datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/device/instrument/piano_synth))
-		var/obj/item/device/instrument/piano_synth/synth = target
+	if(istype(target, /obj/item/instrument/piano_synth))
+		var/obj/item/instrument/piano_synth/synth = target
 		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
 		if(!synth.insTypes[chosen])
 			return
@@ -430,8 +433,8 @@
 	desc = "Use the instrument specified"
 
 /datum/action/item_action/instrument/Trigger()
-	if(istype(target, /obj/item/device/instrument))
-		var/obj/item/device/instrument/I = target
+	if(istype(target, /obj/item/instrument))
+		var/obj/item/instrument/I = target
 		I.interact(usr)
 		return
 	return ..()
@@ -477,7 +480,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, slot_hands))
+	if(owner.can_equip(I, SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
@@ -561,19 +564,6 @@
 /datum/action/innate/proc/Deactivate()
 	return
 
-//Preset for action that call specific procs (consider innate).
-/datum/action/generic
-	check_flags = 0
-	var/procname
-
-/datum/action/generic/Trigger()
-	if(!..())
-		return 0
-	if(target && procname)
-		call(target, procname)(usr)
-	return 1
-
-
 //Preset for an action with a cooldown
 
 /datum/action/cooldown
@@ -647,3 +637,67 @@
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
 
+/datum/action/item_action/wheelys
+	name = "Toggle Wheely-Heel's Wheels"
+	desc = "Pops out or in your wheely-heel's wheels."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "wheelys"
+
+/datum/action/item_action/kindleKicks
+	name = "Activate Kindle Kicks"
+	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "kindleKicks"
+
+//Small sprites
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite"
+	desc = "Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
+	var/small = FALSE
+	var/small_icon
+	var/small_icon_state
+
+/datum/action/small_sprite/queen
+	small_icon = 'icons/mob/alien.dmi'
+	small_icon_state = "alienq"
+
+/datum/action/small_sprite/drake
+	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	small_icon_state = "ash_whelp"
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(!small)
+		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)
+		I.override = TRUE
+		I.pixel_x -= owner.pixel_x
+		I.pixel_y -= owner.pixel_y
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I)
+		small = TRUE
+	else
+		owner.remove_alt_appearance("smallsprite")
+		small = FALSE
+
+/datum/action/item_action/storage_gather_mode
+	name = "Switch gathering mode"
+	desc = "Switches the gathering mode of a storage object."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "storage_gather_switch"
+
+/datum/action/item_action/storage_gather_mode/ApplyIcon(obj/screen/movable/action_button/current_button)
+	. = ..()
+	var/old_layer = target.layer
+	var/old_plane = target.plane
+	target.layer = FLOAT_LAYER //AAAH
+	target.plane = FLOAT_PLANE //^ what that guy said
+	current_button.cut_overlays()
+	current_button.add_overlay(target)
+	target.layer = old_layer
+	target.plane = old_plane
+	current_button.appearance_cache = target.appearance
+
+/datum/action/item_action/storage_gather_mode/Trigger()
+	GET_COMPONENT_FROM(STR, /datum/component/storage, target)
+	STR.gather_mode_switch(owner)

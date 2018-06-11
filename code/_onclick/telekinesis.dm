@@ -15,7 +15,7 @@
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
 		return
-	new /obj/effect/temp_visual/telekinesis(loc)
+	new /obj/effect/temp_visual/telekinesis(get_turf(src))
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	add_hiddenprint(user)
 	return
@@ -99,13 +99,16 @@
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		return
 	qdel(src)
 	return
 
-/obj/item/tk_grab/attack_hand(mob/user)
-	return
+/obj/item/tk_grab/examine(user)
+	if (focus)
+		focus.examine(user)
+	else
+		..()
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)

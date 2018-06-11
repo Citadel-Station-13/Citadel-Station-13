@@ -88,6 +88,7 @@
 	icon = 'icons/misc/beach.dmi'
 	flags_1 = NONE
 	attachment_holes = FALSE
+	bullet_bounce_sound = null
 
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -118,6 +119,9 @@
 	icon_state = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
 
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner
+	icon_state = "sandwater_inner"
+	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
 /turf/open/floor/plating/ironsand
 	name = "iron sand"
@@ -143,21 +147,15 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
-	wet = TURF_WET_PERMAFROST
 	attachment_holes = FALSE
+	bullet_sizzle = TRUE
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()
-	UpdateSlip()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
 
 /turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
-
-/turf/open/floor/plating/ice/HandleWet()
-	if(wet == TURF_WET_ICE)
-		return
-	..()
-	MakeSlippery(TURF_WET_ICE) //rewet after ..() clears out lube/ice etc.
 
 /turf/open/floor/plating/ice/smooth
 	icon_state = "smooth"

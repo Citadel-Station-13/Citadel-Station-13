@@ -3,9 +3,9 @@
 	var/bufferedstam = 0
 	var/stambuffer = 20
 	var/stambufferregentime
-	var/aimingdownsights = FALSE
 	var/attemptingstandup = FALSE
 	var/intentionalresting = FALSE
+	var/attemptingcrawl = FALSE
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = ..()
@@ -38,9 +38,6 @@
 			CitFootstep(newloc)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
-		if(aimingdownsights)
-			aimingdownsights = FALSE
-			to_chat(src, "<span class='notice'>You are no longer aiming down your weapon's sights.</span>")
 
 /mob/living/proc/lay_down()
 	set name = "Rest"
@@ -71,11 +68,11 @@
 		return TRUE
 	else
 		var/totaldelay = 3 //A little bit less than half of a second as a baseline for getting up from a rest
-		if(staminaloss >= STAMINA_SOFTCRIT)
+		if(getStaminaLoss() >= STAMINA_SOFTCRIT)
 			to_chat(src, "<span class='warning'>You're too exhausted to get up!")
 			return FALSE
 		attemptingstandup = TRUE
-		var/health_deficiency = max((maxHealth - (health - staminaloss))*0.5, 0)
+		var/health_deficiency = max((maxHealth - (health - getStaminaLoss()))*0.5, 0)
 		if(!has_gravity())
 			health_deficiency = health_deficiency*0.2
 		totaldelay += health_deficiency
@@ -105,18 +102,20 @@
 				playsound(src, "bodyfall", 20, 1)
 			return FALSE
 
-/mob/living/carbon/proc/update_stamina()
-	var/total_health = (min(health*2,100) - staminaloss)
-	if(staminaloss)
+/mob/living/carbon/update_stamina()
+	var/total_health = (min(health*2,100) - getStaminaLoss())
+	if(getStaminaLoss())
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
 			if(combatmode)
 				toggle_combat_mode()
 			recoveringstam = TRUE
+			filters += CIT_FILTER_STAMINACRIT
 			update_canmove()
 	if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		recoveringstam = FALSE
+		filters -= CIT_FILTER_STAMINACRIT
 		update_canmove()
 	update_health_hud()

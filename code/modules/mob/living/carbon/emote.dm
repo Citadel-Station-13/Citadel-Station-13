@@ -23,6 +23,19 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
+	. = ..()
+	if (.)
+		if (ishuman(user))
+			// Need hands to clap
+			if (!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
+				return
+			var/clap = pick('sound/misc/clap1.ogg',
+				            'sound/misc/clap2.ogg',
+				            'sound/misc/clap3.ogg',
+				            'sound/misc/clap4.ogg')
+			playsound(user, clap, 50, 1, -1)
+
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"
@@ -67,17 +80,6 @@
 	. = ..()
 	if(!isnum(text2num(params)))
 		return message
-
-/datum/emote/sound/carbon/snap
-	key = "snap"
-	key_third_person = "snaps"
-	message = "snaps their fingers."
-	muzzle_ignore = TRUE
-	restraint_check = TRUE
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/effects/snap01.ogg'
-	mob_type_allowed_typecache = list(/mob/living/carbon/)
-
 
 /datum/emote/living/carbon/sign/signal
 	key = "signal"

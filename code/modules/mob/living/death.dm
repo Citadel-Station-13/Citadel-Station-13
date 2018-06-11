@@ -26,8 +26,11 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE)
-	death(1)
+/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
+	death(TRUE)
+
+	if(drop_items)
+		unequip_everything()
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
@@ -71,6 +74,7 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+	stop_pulling()
 
 	if (client)
 		client.move_delay = initial(client.move_delay)

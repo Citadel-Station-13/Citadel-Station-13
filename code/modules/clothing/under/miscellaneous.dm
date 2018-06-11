@@ -641,14 +641,14 @@
 				return
 			next_extinguish = world.time + extinguish_cooldown
 			extinguishes_left--
-			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
+			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes [H.p_them()]!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
 			new /obj/effect/particle_effect/water(get_turf(H))
 	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
-	if (istype(E, /obj/item/device/extinguisher_refill))
+	if (istype(E, /obj/item/extinguisher_refill))
 		if (extinguishes_left == 5)
 			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
@@ -660,10 +660,11 @@
 		return
 	return
 
-/obj/item/device/extinguisher_refill
+/obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
+	icon = 'icons/obj/device.dmi'
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"
@@ -731,3 +732,35 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/swimsuit
+	name = "black swimsuit"
+	desc = "Perfect for the beach episode."
+	icon_state = "swim_black"
+	item_state = "bl_suit"
+	item_color = "swim_black"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/swimsuit/blue
+	name = "blue swimsuit"
+	icon_state = "swim_blue"
+	item_state = "b_suit"
+	item_color = "swim_blue"
+
+/obj/item/clothing/under/swimsuit/green
+	name = "green swimsuit"
+	icon_state = "swim_green"
+	item_state = "g_suit"
+	item_color = "swim_green"
+
+/obj/item/clothing/under/swimsuit/purple
+	name = "purple swimsuit"
+	icon_state = "swim_purple"
+	item_state = "p_suit"
+	item_color = "swim_purple"
+
+/obj/item/clothing/under/swimsuit/red
+	name = "red swimsuit"
+	icon_state = "swim_red"
+	item_state = "r_suit"
+	item_color = "swim_red"

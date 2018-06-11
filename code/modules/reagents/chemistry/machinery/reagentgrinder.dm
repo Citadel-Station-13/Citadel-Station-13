@@ -7,7 +7,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
 	layer = BELOW_OBJ_LAYER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -101,16 +100,14 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
-		var/obj/item/storage/bag/B = I
-		for (var/obj/item/reagent_containers/food/snacks/grown/G in B.contents)
-			B.remove_from_storage(G, src)
-			holdingitems[G] = TRUE
-			if(length(holdingitems) >= limit) //Sanity checking so the blender doesn't overfill
+		var/list/inserted = list()
+		if(I.SendSignal(COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+			if(!I.contents.len)
+				to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
+			else
 				to_chat(user, "<span class='notice'>You fill [src] to the brim.</span>")
-				break
-
-		if(!I.contents.len)
-			to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
 		updateUsrDialog()
 		return TRUE
@@ -131,17 +128,8 @@
 		updateUsrDialog()
 		return FALSE
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/reagentgrinder/attack_ai(mob/user)
-	return FALSE
-
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+	. = ..()
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""

@@ -13,7 +13,6 @@ The console is located at computer/gulag_teleporter.dm
 	icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
@@ -47,6 +46,7 @@ The console is located at computer/gulag_teleporter.dm
 	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
+	. = ..()
 	if(locked)
 		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return

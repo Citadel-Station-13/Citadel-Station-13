@@ -26,6 +26,11 @@
 	if(!length(touchable_items))
 		return SSBELLIES_PROCESSED
 
+//////////////////////// Absorbed Handling ////////////////////////
+	for(var/mob/living/M in contents)
+		if(M.absorbed)
+			M.Stun(5)
+
 ////////////////////////// Sound vars /////////////////////////////
 	var/sound/prey_digest = sound(get_sfx("digest_prey"))
 	var/sound/prey_death = sound(get_sfx("death_prey"))
@@ -41,7 +46,7 @@
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 45)
@@ -72,7 +77,7 @@
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(DIGESTION_NOISES)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(DIGESTION_NOISES)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
@@ -101,7 +106,7 @@
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 65)
@@ -120,11 +125,44 @@
 			if(prob(35))
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
+						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local(get_turf(M), prey_digest, 65)
+
+
+//////////////////////////// DM_ABSORB ////////////////////////////
+	else if(digest_mode == DM_ABSORB)
+
+		for (var/mob/living/M in contents)
+
+			if(prob(10)) //Less often than gurgles. People might leave this on forever.
+				M.stop_sound_channel(CHANNEL_DIGEST)
+				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
 					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), prey_digest, 65)
 
+			if(M.absorbed)
+				continue
+
+			if(M.nutrition >= 100) //Drain them until there's no nutrients left. Slowly "absorb" them.
+				var/oldnutrition = (M.nutrition * 0.05)
+				M.nutrition = (M.nutrition * 0.95)
+				owner.nutrition += oldnutrition
+			else if(M.nutrition < 100) //When they're finally drained.
+				absorb_living(M)
+
+//////////////////////////// DM_UNABSORB ////////////////////////////
+	else if(digest_mode == DM_UNABSORB)
+
+		for (var/mob/living/M in contents)
+			if(M.absorbed && owner.nutrition >= 100)
+				M.absorbed = 0
+				to_chat(M,"<span class='notice'>You suddenly feel solid again </span>")
+				to_chat(owner,"<span class='notice'>You feel like a part of you is missing.</span>")
+				owner.nutrition -= 100
 
 //////////////////////////DM_DRAGON /////////////////////////////////////
 //because dragons need snowflake guts
@@ -133,7 +171,7 @@
 			if(prob(25))
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"digest_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_digest, 65)
@@ -161,7 +199,7 @@
 
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-					if(H.client && H.client.prefs.toggles & DIGESTION_NOISES)
+					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)
 						playsound(get_turf(owner),"death_pred",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_DIGEST)
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				M.playsound_local(get_turf(M), prey_death, 65)

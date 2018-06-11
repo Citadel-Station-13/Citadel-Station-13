@@ -19,6 +19,9 @@
 	if(!(prefs.toggles & CHAT_OOC))
 		to_chat(src, "<span class='danger'> You have OOC muted.</span>")
 		return
+	if(jobban_isbanned(mob, "OOC"))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
+		return
 
 	if(!holder)
 		if(!GLOB.ooc_allowed)
@@ -66,7 +69,7 @@
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C,"<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C,"<font color='#6699CC'><span class='ooc'>[ADMIN_FLW(usr)]<span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	/*for(var/mob/dead/observer/G in world)
 		if(!G.client)

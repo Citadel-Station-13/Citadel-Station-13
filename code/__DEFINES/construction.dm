@@ -14,7 +14,7 @@
 #define SUPPORT_LINES 1
 #define COVER 2
 #define CUT_COVER 3
-#define BOLTS 4
+#define ANCHOR_BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
 
@@ -44,11 +44,6 @@
 #define CABLED_CORE 3
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
-
-//emitter construction defines
-#define EM_UNSECURED 0
-#define EM_SECURED 1
-#define EM_WELDED 2
 
 //Construction defines for the pinion airlock
 #define GEAR_SECURE 1
@@ -80,7 +75,7 @@
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"
-#define MAT_PLASTIC		"$plastic"
+#define MAT_PLASTIC	"$plastic"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.

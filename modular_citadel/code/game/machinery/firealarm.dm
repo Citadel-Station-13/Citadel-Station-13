@@ -1,5 +1,5 @@
 /obj/machinery/firealarm/alt_attack_hand(mob/user)
-	if(is_interactable() && !user.stat)
+	if(can_interact(usr))
 		var/area/A = get_area(src)
 		if(istype(A))
 			if(A.fire)

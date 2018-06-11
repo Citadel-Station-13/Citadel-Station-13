@@ -7,7 +7,7 @@
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 
-/obj/item/device/ssword_kit
+/obj/item/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"
 	icon = 'icons/obj/vending_restock.dmi'
@@ -29,3 +29,5 @@
 				to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
 		else
 			to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
+
+

@@ -42,7 +42,7 @@
 
 /obj/item/ammo_box/magazine/flechette
 	name = "flechette magazine (armor piercing)"
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "flechettemag"
 	ammo_type = /obj/item/ammo_casing/caseless/flechetteap
 	caliber = "flechette"
@@ -58,12 +58,12 @@
 /obj/item/gun/ballistic/automatic/flechette
 	name = "\improper CX Flechette Launcher"
 	desc = "A flechette launching machine pistol with an unconventional bullpup frame."
-	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "flechettegun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = 0
-	/obj/item/device/firing_pin/implant/pindicate
+	/obj/item/firing_pin/implant/pindicate
 	mag_type = /obj/item/ammo_box/magazine/flechette/
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0

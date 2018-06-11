@@ -16,7 +16,7 @@
 	icon_state = "cellconsole_1"
 	circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
-	interact_offline = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
 	var/mode = null
 
@@ -28,12 +28,8 @@
 	var/storage_name = "Cryogenic Oversight Control"
 	var/allow_items = TRUE
 
-/obj/machinery/computer/cryopod/attack_ai()
-	attack_hand()
-
-/obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/computer/cryopod/ui_interact(mob/user = usr)
+	. = ..()
 
 	user.set_machine(src)
 	add_fingerprint(user)
@@ -118,7 +114,6 @@
 			frozen_items -= I
 
 	updateUsrDialog()
-	return
 
 /obj/item/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
@@ -149,9 +144,9 @@
 	var/list/preserve_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
-		/obj/item/device/aicard,
-		/obj/item/device/mmi,
-		/obj/item/device/paicard,
+		/obj/item/aicard,
+		/obj/item/mmi,
+		/obj/item/paicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
@@ -170,7 +165,7 @@
 	)
 	// These items will NOT be preserved
 	var/list/do_not_preserve_items = list (
-		/obj/item/device/mmi/posibrain
+		/obj/item/mmi/posibrain
 	)
 
 /obj/machinery/cryopod/Initialize()
@@ -178,8 +173,8 @@
 	find_control_computer()
 	return ..()
 
-/obj/machinery/cryopod/proc/find_control_computer(urgent = 0)
-	for(var/obj/machinery/computer/cryopod/C in area_contents(get_area(src)))
+/obj/machinery/cryopod/proc/find_control_computer(urgent = 0,area/A)
+	for(var/obj/machinery/computer/cryopod/C in A)
 		control_computer = C
 		break
 
@@ -420,6 +415,9 @@
 			target.client.cryo_warned = world.time
 			return
 
+	if(!Adjacent(user))
+		return
+
 	if(target == user)
 		visible_message("[user] starts climbing into the cryo pod.")
 	else
@@ -428,6 +426,7 @@
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
+
 	close_machine(target)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")

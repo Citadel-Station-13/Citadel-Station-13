@@ -27,8 +27,8 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce()
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", 'sound/ai/commandreport.ogg')
-
+	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+	
 	if(!control) //Means this is false alarm, todo : explicit checks instead of using announceWhen
 		return
 	threat = new
@@ -63,7 +63,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/pirate_event_ship/ship = new
+	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -82,7 +82,7 @@
 			else
 				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') //CITADEL EDIT also metabreak here too
 
 //Shuttle equipment
 
@@ -92,15 +92,14 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = TRUE
-	anchored = TRUE
 	var/active = FALSE
-	var/obj/item/device/gps/gps
+	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/device/gps/internal/pirate(src)
+	gps = new/obj/item/gps/internal/pirate(src)
 	gps.tracking = FALSE
 	update_icon()
 
@@ -174,11 +173,7 @@
 	QDEL_NULL(gps)
 	return ..()
 
-/datum/map_template/pirate_event_ship
-	name = "Pirate Ship"
-	mappath = "_maps/templates/pirate_ship.dmm"
-
-/obj/item/device/gps/internal/pirate
+/obj/item/gps/internal/pirate
 	gpstag = "Nautical Signal"
 	desc = "You can hear shanties over the static."
 
@@ -238,7 +233,6 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
-	anchored = TRUE
 	var/cooldown = 0
 	var/result_count = 3 //Show X results.
 

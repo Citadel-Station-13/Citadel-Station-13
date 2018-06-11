@@ -17,34 +17,43 @@
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/preyloop_refresh
 	M.verbs += /mob/living/proc/lick
+	M.verbs += /mob/living/proc/escapeOOC
+
 	if(M.no_vore) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return 1
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	if(!M.vore_organs || !M.vore_organs.len)
-		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
-			if(!M) return
-
-			if(M.client && M.client.prefs_vr)
-				if(!M.copy_from_prefs_vr())
-					to_chat(M,"<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>")
-					return 0
-				if(M.vore_organs && M.vore_organs.len)
-					M.vore_selected = M.vore_organs[1]
-
-			if(!M.vore_organs || !M.vore_organs.len)
-				if(!M.vore_organs)
-					M.vore_organs = list()
-				var/obj/belly/B = new /obj/belly(M)
-				M.vore_selected = B
-				B.immutable = TRUE
-				B.name = "Stomach"
-				B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
-				B.can_taste = FALSE
+	spawn(20 SECONDS) // long delay because the server delays in its startup. just on the safe side.
+		M.init_vore()
 
 	//Return 1 to hook-caller
 	return 1
+
+/mob/living/proc/init_vore()
+	//Something else made organs, meanwhile.
+	if(LAZYLEN(vore_organs))
+		return TRUE
+
+	//We'll load our client's organs if we have one
+	if(client && client.prefs_vr)
+		if(!copy_from_prefs_vr())
+			to_chat(src,"<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>")
+			return FALSE
+		if(LAZYLEN(vore_organs))
+			vore_selected = vore_organs[1]
+			return TRUE
+
+	//Or, we can create a basic one for them
+	if(!LAZYLEN(vore_organs))
+		LAZYINITLIST(vore_organs)
+		var/obj/belly/B = new /obj/belly(src)
+		vore_selected = B
+		B.immutable = 1
+		B.name = "Stomach"
+		B.desc = "It appears to be rather warm and wet. Makes sense, considering it's inside [name]."
+		B.can_taste = 1
+		return TRUE
 
 /*
 // Hide vore organs in contents
@@ -182,20 +191,25 @@
 		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 
+	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
+		return FALSE
+		
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-
-
+		
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
+	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
+		return FALSE
+		
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
-		if(M.client && M.client.prefs.toggles & EATING_NOISES)
+		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 			playsound(get_turf(user),"[belly.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	// Actually shove prey into the belly.
@@ -240,8 +254,8 @@
 				log_attack("[attacker] attempted to feed [H.contents] to [src] ([src.type]) but it failed.")
 
  // I just can't imagine this not being complained about
-	//Handle case: /obj/item/device/radio/beacon
-		if(/obj/item/device/radio/beacon)
+	//Handle case: /obj/item/radio/beacon
+		if(/obj/item/radio/beacon)
 			var/confirm = alert(user, "[src == user ? "Eat the beacon?" : "Feed the beacon to [src]?"]", "Confirmation", "Yes!", "Cancel")
 			if(confirm == "Yes!")
 				var/bellychoice = input("Which belly?","Select A Belly") in src.vore_organs
@@ -287,7 +301,7 @@
 /mob/living/proc/preyloop_refresh()
 	set name = "Internal loop refresh"
 	set category = "Vore"
-	if(istype(src.loc, /obj/belly))
+	if(isbelly(loc))
 		src.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 		var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 		src.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
@@ -297,46 +311,60 @@
 // OOC Escape code for pref-breaking or AFK preds
 //
 /mob/living/proc/escapeOOC()
-	set name = "Animal Escape"
+	set name = "OOC Escape"
 	set category = "Vore"
 
-	//You're in an animal!
-	if(istype(src.loc,/mob/living/simple_animal))
-		var/mob/living/simple_animal/pred = src.loc
-		var/confirm = alert(src, "You're in a mob. Use this as a trick to get out of hostile animals. If you are in more than one pred, use this more than once.", "Confirmation", "Okay", "Cancel")
-		if(confirm == "Okay")
-			for(var/I in pred.vore_organs)
-				var/obj/belly/B = pred.vore_organs[I]
-				B.release_specific_contents(src)
+	//You're in a belly!
+	if(isbelly(loc))
+		var/obj/belly/B = loc
+		var/confirm = alert(src, "You're in a mob. If you're otherwise unable to escape from a pred AFK for a long time, use this.", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || loc != B)
+			return
+		//Actual escaping
+		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
+		if(is_blind(src) && !has_trait(TRAIT_BLIND))
+			src.adjust_blindness(-1)
+		src.stop_sound_channel(CHANNEL_PREYLOOP)
+		for(var/mob/living/simple_animal/SA in range(10))
+			SA.prey_excludes[src] = world.time
 
-			for(var/mob/living/simple_animal/SA in range(10))
-				SA.prey_excludes += src
-				spawn(18000)
-					if(src && SA)
-						SA.prey_excludes -= src
+		if(isanimal(B.owner))
+			var/mob/living/simple_animal/SA = B.owner
+			SA.update_icons()
 
-			pred.update_icons()
+	//You're in a dogborg!
+	else if(istype(loc, /obj/item/dogborg/sleeper))
+		var/obj/item/dogborg/sleeper/belly = loc //The belly!
 
+		var/confirm = alert(src, "You're in a dogborg sleeper. This is for escaping from preference-breaking or if your predator disconnects/AFKs. You can also resist out naturally too.", "Confirmation", "Okay", "Cancel")
+		if(!confirm == "Okay" || loc != belly)
+			return
+		//Actual escaping
+		belly.go_out(src) //Just force-ejects from the borg as if they'd clicked the eject button.
 	else
-		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
+		to_chat(src,"<span class='alert'>You aren't inside anyone, though, is the thing.</span>")
 
 //
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		return FALSE
 	if(!copy_to_prefs_vr())
 		return FALSE
-	if(!client.prefs_vr.save_vore())
+	if(client && !client.prefs_vr.save_vore())
 		return FALSE
 
 	return TRUE
 
 /mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!client)
 		return FALSE
-	if(!client.prefs_vr.load_vore())
+	if(client && !client.prefs_vr)
+		return FALSE
+	if(client && !client.prefs_vr.load_vore())
 		return FALSE
 	if(!copy_from_prefs_vr())
 		return FALSE
@@ -344,7 +372,9 @@
 	return TRUE
 
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
 		return FALSE
 
@@ -367,7 +397,9 @@
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
+	if(!client)
+		return FALSE
+	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
 		return FALSE
 
@@ -433,7 +465,7 @@
 	if(src == stat)
 		return
 
-	src.setClickCooldown(50)
+	src.setClickCooldown(100)
 
 	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 

@@ -99,11 +99,11 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	permeability_coefficient = 0.50
 	allowed = list(
-		/obj/item/device/flashlight, /obj/item/device/analyzer,
-		/obj/item/device/radio, /obj/item/tank/internals/emergency_oxygen,
-		/obj/item/reagent_containers/hypospray, /obj/item/device/healthanalyzer,/obj/item/reagent_containers/syringe,
+		/obj/item/flashlight, /obj/item/analyzer,
+		/obj/item/radio, /obj/item/tank/internals/emergency_oxygen,
+		/obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer,/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/bottle/vial,/obj/item/reagent_containers/glass/beaker,
-		/obj/item/reagent_containers/pill,/obj/item/storage/pill_bottle, /obj/item/restraints/handcuffs
+		/obj/item/reagent_containers/pill,/obj/item/storage/pill_bottle, /obj/item/restraints/handcuffs,/obj/item/hypospray
 		)
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
 
@@ -146,19 +146,20 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 				/obj/item/tank/internals/emergency_oxygen,
-				/obj/item/device/flashlight,
-				/obj/item/device/analyzer,
-				/obj/item/device/radio,
+				/obj/item/flashlight,
+				/obj/item/analyzer,
+				/obj/item/radio,
 				/obj/item/gun,
 				/obj/item/melee/baton,
 				/obj/item/restraints/handcuffs,
 				/obj/item/reagent_containers/hypospray,
-				/obj/item/device/healthanalyzer,
+				/obj/item/hypospray,
+				/obj/item/healthanalyzer,
 				/obj/item/reagent_containers/syringe,
 				/obj/item/reagent_containers/glass/bottle/vial,
 				/obj/item/reagent_containers/glass/beaker,
 				/obj/item/storage/pill_bottle,
-				/obj/item/device/taperecorder)
+				/obj/item/taperecorder)
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
 	var/unbuttoned = 0
 
@@ -211,11 +212,11 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 				/obj/item/tank/internals/emergency_oxygen,
-				/obj/item/device/flashlight,
+				/obj/item/flashlight,
 				/obj/item/gun,
 				/obj/item/melee/baton,
 				/obj/item/restraints/handcuffs,
-				/obj/item/device/taperecorder)
+				/obj/item/taperecorder)
 	armor = list("melee" = 45, "bullet" = 25, "laser" = 25,"energy" = 25, "bomb" = 25, "bio" = 25, "rad" = 50, "fire" = 50, "acid" = 50)
 
 	//Variants

@@ -104,7 +104,7 @@
 
 	authorized += ID
 
-	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
+	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch")
 	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
@@ -143,13 +143,10 @@
 		return
 
 	var/time = TIME_LEFT
-	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(user)]'>?</A>) \
-	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(user)]'>FLW</A>) \
-	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
-	log_game("[key_name(user)] has emagged the emergency shuttle in \
-		[COORD(src)] [time] seconds before launch.")
+	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.")
+	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 	obj_flags |= EMAGGED
+	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
@@ -406,6 +403,7 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
+	timid = FALSE
 	dwidth = 1
 	width = 3
 	height = 4
@@ -413,19 +411,35 @@
 
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
-
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && (S.obj_flags & EMAGGED)))
+	if(!istype(S, /obj/machinery/computer/shuttle/pod))
+		return ..()
+	if(GLOB.security_level >= SEC_LEVEL_RED || (S && (S.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
-		return 1
+		return TRUE
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
-	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	var/static/i = 1
+	if(id == initial(id))
+		id = "[initial(id)][i]"
+	if(name == initial(name))
+		name = "[initial(name)] [i]"
+
+	for(var/k in shuttle_areas)
+		var/area/place = k
+		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
+			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
+				pod_comp.shuttleId = id
+			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
+				pod_comp.possible_destinations = "pod_lavaland[i]"
+
+	i++
+
+
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -518,16 +532,24 @@
 	new /obj/item/storage/toolbox/emergency(src)
 
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
-	return
-
-/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
-		. = ..()
-	else
-		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
+	if (can_interact(user))
+		return ..()
 
 /obj/item/storage/pod/attack_hand(mob/user)
-	return MouseDrop(user)
+	if (can_interact(user))
+		SendSignal(COMSIG_TRY_STORAGE_SHOW, user)
+	return TRUE
+
+/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
+	if(can_interact(usr))
+		return ..()
+
+/obj/item/storage/pod/can_interact(mob/user)
+	if(!..())
+		return FALSE
+	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
+		return TRUE
+	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
@@ -547,7 +569,7 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-#undef TIMELEFT
+#undef TIME_LEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED

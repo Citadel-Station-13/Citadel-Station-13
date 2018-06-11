@@ -1,7 +1,6 @@
 /obj/machinery/chem_heater
 	name = "chemical heater"
 	density = TRUE
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
 	use_power = IDLE_POWER_USE
@@ -58,9 +57,6 @@
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	if(default_deconstruction_crowbar(I))
