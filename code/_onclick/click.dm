@@ -188,6 +188,7 @@
 			return TRUE
 	return FALSE
 
+<<<<<<< HEAD
 //Can [target] in this container be reached by [user], can't be more than [depth] levels deep
 /atom/proc/CanReachStorage(atom/target,user,depth)
 	return FALSE
@@ -198,6 +199,24 @@
 		depth--
 		if(target == src)
 			return TRUE
+=======
+			if (!target.loc)
+				continue
+			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
+			if (storage)
+				var/datum/component/storage/concrete/master = storage.master()
+				if (master)
+					next += master.parent
+					for(var/S in master.slaves)
+						var/datum/component/storage/slave = S
+						next += slave.parent
+				else
+					next += target.loc
+			else
+				next += target.loc
+
+		checking = next
+>>>>>>> 009a303... Merge pull request #38377 from AutomaticFrenzy/patch/splash-runtime
 	return FALSE
 
 /atom/movable/proc/DirectAccess(atom/target)
