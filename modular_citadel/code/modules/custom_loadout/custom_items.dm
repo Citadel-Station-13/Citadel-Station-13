@@ -328,6 +328,18 @@
 		/obj/item/toy/sword/darksabre
 		))
 
+/obj/item/clothing/suit/armor/vest/darkcarapace
+	name = "Dark Armor"
+	desc = "A dark, non-functional piece of armor sporting a red and black finish."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "darkcarapace"
+	item_state = "darkcarapace"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	
+
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
 	desc = "This cloak doesn't seem too special."
@@ -351,3 +363,10 @@
 	icon_state = "rdcoat"
 	icon_override = 'icons/mob/custom_w.dmi'
 	item_state = "rdcoat"
+
+/obj/item/custom/leechjar
+	name = "Jar of Leeches"
+	desc = "A dubious cure-all. The cork seems to be sealed fairly well, and the glass impossible to break."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "leechjar"
+	item_state = "leechjar"

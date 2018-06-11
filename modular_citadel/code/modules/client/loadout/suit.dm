@@ -74,6 +74,12 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/ianshirt
 
+/datum/gear/flakjack
+	name = "Flak Jacket"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/flakjack
+	cost = 2
+
 /datum/gear/trekds9_coat
 	name = "DS9 Overcoat (use uniform)"
 	category = SLOT_WEAR_SUIT

@@ -392,7 +392,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
+													investigate_log("[key_name(src)] has been set from [R.fields["criminal"]] to [setcriminal] by [key_name(usr)].", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return
@@ -434,6 +434,7 @@
 														return
 													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
+													investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
@@ -449,6 +450,7 @@
 														return
 													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
+													investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [R.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
 
@@ -673,23 +675,6 @@
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
-
-/mob/living/carbon/human/generateStaticOverlay()
-	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["static"] = staticOverlay
-
-	staticOverlay = image(icon('icons/effects/effects.dmi', "blank"), loc = src)
-	staticOverlay.override = 1
-	staticOverlays["blank"] = staticOverlay
-
-	staticOverlay = getLetterImage(src, "H", 1)
-	staticOverlay.override = 1
-	staticOverlays["letter"] = staticOverlay
-
-	staticOverlay = getRandomAnimalImage(src)
-	staticOverlay.override = 1
-	staticOverlays["animal"] = staticOverlay
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
@@ -933,6 +918,9 @@
 /mob/living/carbon/human/species/corporate
 	race = /datum/species/corporate
 
+/mob/living/carbon/human/species/dullahan
+	race = /datum/species/dullahan
+
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly
 
@@ -996,17 +984,35 @@
 /mob/living/carbon/human/species/golem/plastic
 	race = /datum/species/golem/plastic
 
+/mob/living/carbon/human/species/golem/clockwork
+	race = /datum/species/golem/clockwork
+
+/mob/living/carbon/human/species/golem/clockwork/no_scrap
+	race = /datum/species/golem/clockwork/no_scrap
+
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly
 
 /mob/living/carbon/human/species/jelly/slime
 	race = /datum/species/jelly/slime
 
+/mob/living/carbon/human/species/jelly/stargazer
+	race = /datum/species/jelly/stargazer
+
+/mob/living/carbon/human/species/jelly/luminescent
+	race = /datum/species/jelly/luminescent
+
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
 
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
+
+/mob/living/carbon/human/species/moth
+	race = /datum/species/moth
+
+/mob/living/carbon/human/species/mush
+	race = /datum/species/mush
 
 /mob/living/carbon/human/species/plasma
 	race = /datum/species/plasmaman
@@ -1017,6 +1023,9 @@
 /mob/living/carbon/human/species/shadow
 	race = /datum/species/shadow
 
+/mob/living/carbon/human/species/shadow/nightmare
+	race = /datum/species/shadow/nightmare
+
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton
 
@@ -1025,6 +1034,9 @@
 
 /mob/living/carbon/human/species/synth/military
 	race = /datum/species/synth/military
+
+/mob/living/carbon/human/species/vampire
+	race = /datum/species/vampire
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie

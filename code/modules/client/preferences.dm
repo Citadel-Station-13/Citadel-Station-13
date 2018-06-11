@@ -1380,7 +1380,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(pickedui)
 						UI_style = pickedui
 				if("pda_style")
-					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
+					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference", pda_style)  as null|anything in GLOB.pda_styles
 					if(pickedPDAStyle)
 						pda_style = pickedPDAStyle
 				if("pda_color")
