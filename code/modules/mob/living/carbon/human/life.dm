@@ -236,6 +236,7 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
+<<<<<<< HEAD
 	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 //CITADEL EDIT Mandatory for vore code.
@@ -246,6 +247,8 @@
 	if(ismob(loc))
 		return TRUE //because lazy and being inside somemone insulates you from space
 //END EDIT
+=======
+>>>>>>> 9089af5... Merge pull request #38414 from XDTM/cold_never_bothered_me_anyway
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
