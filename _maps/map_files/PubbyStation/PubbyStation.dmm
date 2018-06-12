@@ -7813,6 +7813,7 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -10447,7 +10448,7 @@
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
 "aBV" = (
-/obj/structure/closet/wardrobe/green,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/arrival,
 /area/crew_quarters/fitness/recreation)
 "aBW" = (
@@ -11037,6 +11038,7 @@
 /turf/open/floor/plasteel/white/side,
 /area/crew_quarters/dorms)
 "aDk" = (
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/white/corner{
 	icon_state = "whitecorner";
 	dir = 8
@@ -46986,10 +46988,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cBk" = (
-/obj/machinery/vending/boozeomat{
-	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1, /obj/item/reagent_containers/food/drinks/bottle/absinthe = 1, /obj/item/reagent_containers/food/drinks/bottle/limejuice = 1, /obj/item/reagent_containers/food/drinks/bottle/cream = 1, /obj/item/reagent_containers/food/drinks/soda_cans/tonic = 1, /obj/item/reagent_containers/food/drinks/drinkingglass = 10, /obj/item/reagent_containers/food/drinks/ice = 3, /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6, /obj/item/reagent_containers/food/drinks/flask = 1);
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat/maint,
 /turf/closed/wall,
 /area/maintenance/department/crew_quarters/dorms)
 "cBl" = (
@@ -49436,6 +49435,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"jqN" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "jrG" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -52323,6 +52326,11 @@
 "rHA" = (
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"rHP" = (
+/obj/structure/lattice,
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/space,
+/area/space/nearstation)
 "rJg" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/light/small{
@@ -52447,7 +52455,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "sbk" = (
-/obj/structure/girder,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "sbY" = (
@@ -54412,6 +54420,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"yap" = (
+/obj/machinery/computer/cryopod,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
 "ybX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -88677,7 +88689,7 @@ aaa
 aaa
 aaa
 aby
-abI
+rHP
 abO
 abX
 acg
@@ -91540,7 +91552,7 @@ cBo
 alQ
 alb
 cBw
-alb
+jqN
 aiS
 aiS
 aiS
@@ -94637,7 +94649,7 @@ aaa
 aaa
 apX
 apX
-apX
+yap
 avl
 fIu
 dbi
