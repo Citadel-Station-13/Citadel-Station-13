@@ -2,7 +2,8 @@
 	name = "Anomaly: Pyroclastic"
 	typepath = /datum/round_event/anomaly/anomaly_pyro
 	max_occurrences = 5
-	weight = 20
+	weight = 15
+	min_players = 25
 
 /datum/round_event/anomaly/anomaly_pyro
 	startWhen = 3
