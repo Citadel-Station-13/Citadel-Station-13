@@ -4,9 +4,9 @@
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
 	weight = 4
-	min_players = 30
-	max_occurrences = 2
-	earliest_start = 45 MINUTES
+	min_players = 15
+	max_occurrences = 3
+	earliest_start = 25 MINUTES
 
 /datum/round_event/meteor_wave
 	startWhen		= 6
@@ -25,9 +25,9 @@
 		wave_name = "halloween"
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"normal" = 55,
+			"normal" = 50,
 			"threatening" = 40,
-			"catastrophic" = 5))
+			"catastrophic" = 10))
 	switch(wave_name)
 		if("normal")
 			wave_type = GLOB.meteors_normal
