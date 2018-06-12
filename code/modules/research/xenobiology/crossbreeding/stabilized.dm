@@ -96,8 +96,6 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/gold
 	colour = "gold"
-<<<<<<< HEAD
-=======
 	var/mob_type
 	var/datum/mind/saved_mind
 	var/mob_name = "Familiar"
@@ -141,7 +139,6 @@ Stabilized extracts:
 			mob_name = newname
 		to_chat(user, "<span class='notice'>You speak softly into [src], and it shakes slightly in response.</span>")
 		START_PROCESSING(SSobj, src)
->>>>>>> b2e9fe8... Fixes and Upgrades Stabilized Gold Extracts (#38394)
 
 /obj/item/slimecross/stabilized/oil
 	colour = "oil"
