@@ -46,6 +46,7 @@
 	if(stat & NOPOWER)
 		return
 	if(on)
+<<<<<<< HEAD
 		if(beaker)
 			if(beaker.reagents.chem_temp > target_temperature)
 				beaker.reagents.chem_temp += min(-1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
@@ -53,6 +54,10 @@
 				beaker.reagents.chem_temp += max(1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
 
 			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
+=======
+		if(beaker && beaker.reagents.total_volume)
+			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+>>>>>>> 80d8289... Fixes chem heater trying to heat up empty beakers. (#38434)
 			beaker.reagents.handle_reactions()
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
