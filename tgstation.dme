@@ -2711,6 +2711,7 @@
 #include "modular_citadel\code\game\objects\items\balls.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"
 #include "modular_citadel\code\game\objects\items\holy_weapons.dm"
+#include "modular_citadel\code\game\objects\items\honk.dm"
 #include "modular_citadel\code\game\objects\items\meat.dm"
 #include "modular_citadel\code\game\objects\items\stunsword.dm"
 #include "modular_citadel\code\game\objects\items\vending_items.dm"
