@@ -236,8 +236,6 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
-	if(has_trait(TRAIT_RESISTCOLD))
-		return TRUE
 //CITADEL EDIT Mandatory for vore code.
 	if(istype(loc, /obj/item/dogborg/sleeper))
 		return TRUE //freezing to death in sleepers ruins fun.
