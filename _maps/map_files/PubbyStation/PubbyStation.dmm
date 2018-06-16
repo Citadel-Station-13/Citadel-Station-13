@@ -8640,7 +8640,9 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -9184,10 +9186,16 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -9196,6 +9204,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayI" = (
@@ -9203,15 +9214,15 @@
 	codes_txt = "patrol;next_patrol=BrigS2";
 	location = "BrigP"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"ayK" = (
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -9737,6 +9748,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAd" = (
@@ -9757,6 +9769,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAf" = (
@@ -9774,7 +9787,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aAh" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -23812,11 +23824,6 @@
 "bkX" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Port Emergency Storage APC";
-	pixel_y = 24
 	},
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
@@ -47640,7 +47647,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/research/glass{
-	name = "Research Pit"
+	name = "Research Pit";
+	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -75126,7 +75134,7 @@ aux
 avs
 awI
 axF
-axG
+ayL
 aAd
 ebD
 aCf
@@ -76154,7 +76162,7 @@ aux
 avv
 awK
 axG
-axG
+ayL
 aAi
 aBd
 aCi
@@ -76411,7 +76419,7 @@ auA
 avw
 awJ
 axG
-axG
+ayL
 aAi
 aBd
 aCj
@@ -76925,7 +76933,7 @@ ajM
 ajM
 atB
 axI
-ayK
+ayL
 aAh
 aBf
 aCl
@@ -103926,11 +103934,11 @@ aaa
 aaa
 aaa
 aaa
-aby
-aed
-aby
-aby
-aby
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104183,11 +104191,11 @@ aaa
 aaa
 aaa
 aaa
-aby
 aaa
 aaa
 aaa
-abI
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104440,11 +104448,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aby
+aed
+aby
+aby
+aby
 aaa
 aaa
 aaa
@@ -104697,11 +104705,11 @@ aaa
 aaa
 aaa
 aaa
+aby
 aaa
 aaa
 aaa
-aaa
-aaa
+abI
 aaa
 aaa
 aaa
@@ -104976,7 +104984,7 @@ aTC
 aTC
 aTC
 aaa
-mZE
+aby
 aaa
 bnd
 qYq
@@ -105232,8 +105240,8 @@ beU
 beU
 beU
 beU
-aaa
-mZE
+abI
+aby
 aaa
 bnd
 lGS
@@ -105489,7 +105497,7 @@ aTE
 aTE
 aTE
 aTE
-abI
+aaa
 aby
 aaa
 bkF
@@ -105747,7 +105755,7 @@ aaa
 aaa
 aaa
 aaa
-aby
+aed
 aaa
 bkF
 bkF
