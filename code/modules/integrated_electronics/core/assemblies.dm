@@ -181,6 +181,21 @@
 	if(..())
 		return 1
 
+<<<<<<< HEAD
+=======
+	if(href_list["ghostscan"])
+		if(isobserver(usr) && ckeys_allowed_to_scan[usr.ckey])
+			if(assembly_components.len)
+				var/saved = "On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(src)]</code>"
+				usr << browse(saved, "window=circuit_scan;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
+			else
+				to_chat(usr, "<span class='warning'>The circuit is empty!</span>")
+		return
+		
+	if(!check_interactivity(usr))
+		return
+
+>>>>>>> df7ca16... Merge pull request #38535 from DaxDupont/circuits
 	if(href_list["rename"])
 		rename(usr)
 
