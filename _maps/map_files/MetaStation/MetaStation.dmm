@@ -74284,10 +74284,10 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diF" = (
-/obj/structure/chair/stool,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/machinery/jukebox,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diG" = (
