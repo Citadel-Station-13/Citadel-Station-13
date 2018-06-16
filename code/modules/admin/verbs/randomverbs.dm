@@ -45,8 +45,6 @@
 	admin_ticket_log(M, msg)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Subtle Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-<<<<<<< HEAD
-=======
 /client/proc/cmd_admin_headset_message(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Headset Message"
@@ -83,7 +81,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
->>>>>>> 78e7c5f... Merge pull request #38482 from DaxDupont/syndicatemess
 /client/proc/cmd_admin_mod_antag_rep(client/C in GLOB.clients, var/operation)
 	set category = "Special Verbs"
 	set name = "Modify Antagonist Reputation"
