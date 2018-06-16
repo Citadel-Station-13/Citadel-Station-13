@@ -111,8 +111,13 @@ GLOBAL_LIST_INIT(bitfields, list(
 		),
 	"flags_1" = list(
 		"NOJAUNT_1" = NOJAUNT_1,
+<<<<<<< HEAD
 		"NODROP_1 / UNUSED_TRANSIT_TURF_1 (turfs)" = NODROP_1,
 		"NOBLUDGEON_1 / CAN_BE_DIRTY_1 (turfs)" = NOBLUDGEON_1,
+=======
+		"UNUSED_RESERVATION_TURF_1" = UNUSED_RESERVATION_TURF_1,
+		"CAN_BE_DIRTY_1" = CAN_BE_DIRTY_1,
+>>>>>>> 0510704... Merge pull request #38098 from kevinz000/transit_space_refactor
 		"HEAR_1 / NO_DEATHRATTLE_1 (turfs)" = HEAR_1,
 		"CHECK_RICOCHET_1 / NO_RUINS_1 (turfs)" = CHECK_RICOCHET_1,
 		"CONDUCT_1 / NO_LAVA_GEN_1" = CONDUCT_1,
