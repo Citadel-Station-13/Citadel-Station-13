@@ -1829,14 +1829,8 @@
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
 			return
 
-<<<<<<< HEAD
-		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
-		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
-=======
 		var/mob/M = locate(href_list["CentComReply"])
 		usr.client.admin_headset_message(M, "CentCom")
->>>>>>> 78e7c5f... Merge pull request #38482 from DaxDupont/syndicatemess
 
 	else if(href_list["SyndicateReply"])
 		if(!check_rights(R_ADMIN))
