@@ -53617,6 +53617,7 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/science/circuit)
+<<<<<<< HEAD
 "lBy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/vending/games,
@@ -53631,6 +53632,14 @@
 "lFY" = (
 /turf/closed/wall,
 /area/maintenance/bar)
+=======
+"lCi" = (
+/obj/docking_port/stationary/public_mining_dock{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
+>>>>>>> 0619afd... Merge pull request #38522 from AutomaticFrenzy/patch/auxbase
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -65409,7 +65418,7 @@ apN
 apN
 apN
 apN
-apN
+lCi
 apN
 apN
 apN
