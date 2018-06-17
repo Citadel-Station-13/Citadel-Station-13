@@ -373,7 +373,7 @@
 
 /obj/item/clothing/neck/devilwings
 	name = "Strange Wings"
-	desc = "These strange wings look like they once attached to something... or someone...? whatever the case, their presence makes you feel uneasy.."
+	desc = "These strange wings look like they once attached to something... or someone...? Whatever the case, their presence makes you feel uneasy.."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "devilwings"
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/devilwings64x64.dmi'
