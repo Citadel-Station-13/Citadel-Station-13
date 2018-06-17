@@ -79,8 +79,8 @@
 			to_chat(user, "<span class='notice'>There's no room for another VTEC unit!</span>")
 			return FALSE
 
+        //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
 		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
-
 
 
 /obj/effect/proc_holder/silicon/cyborg/vtecControl
