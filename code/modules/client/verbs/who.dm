@@ -1,4 +1,4 @@
-/client/verb/who()
+/*/client/verb/who() Commenting this file out to be overridden in modular_citadel
 	set name = "Who"
 	set category = "OOC"
 
@@ -84,6 +84,7 @@
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+		msg += "<span class='info'>Adminhelps are also sent to Discord. If no admins are available in game adminhelp anyways and an admin on Discord will see it and respond.</span>"
 	to_chat(src, msg)
 
+*/

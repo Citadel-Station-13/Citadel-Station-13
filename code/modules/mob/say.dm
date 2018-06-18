@@ -5,7 +5,8 @@
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	usr.say(message)
+	if(message)
+		say(message)
 
 
 /mob/verb/whisper_verb(message as text)
@@ -19,7 +20,7 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as message)
+/mob/verb/me_verb(message as message) // CIT CHANGE - makes me command input box bigger
 	set name = "Me"
 	set category = "IC"
 
@@ -27,8 +28,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/list/replace_chars = list("\n"=" ","\t"=" ")
-	message = copytext(sanitize(message, replace_chars), 1, (MAX_MESSAGE_LEN*2))
+	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message)
 
@@ -70,14 +70,16 @@
 
 	message = src.say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
-
+	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
-/mob/proc/emote(var/act)
-	return
+/mob/proc/check_emote(message)
+	if(copytext(message, 1, 2) == "*")
+		emote(copytext(message, 2))
+		return 1
 
 /mob/proc/hivecheck()
 	return 0
 
 /mob/proc/lingcheck()
-	return 0
+	return LINGHIVE_NONE

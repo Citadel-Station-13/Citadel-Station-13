@@ -1,3 +1,33 @@
+//Areas
+
+/area/awaymission/caves/BMP_asteroid
+	name = "\improper BMP Asteroid Level 1"
+	icon_state = "awaycontent1"
+
+/area/awaymission/caves/BMP_asteroid/level_two
+	name = "\improper BMP Asteroid Level 2"
+	icon_state = "awaycontent2"
+
+/area/awaymission/caves/BMP_asteroid/level_three
+	name = "\improper BMP Asteroid Level 3"
+	icon_state = "awaycontent3"
+
+/area/awaymission/caves/BMP_asteroid/level_four
+	name = "\improper BMP Asteroid Level 4"
+	icon_state = "awaycontent4"
+
+/area/awaymission/caves/research
+	name = "Research Outpost"
+	icon_state = "awaycontent5"
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+
+/area/awaymission/caves/northblock //engineering, bridge (not really north but it doesnt really need its own APC)
+
+/area/awaymission/caves/listeningpost
+	name = "Listening Post"
+	icon_state = "awaycontent6"
+	requires_power = FALSE
+
 //caves papers
 
 /obj/item/paper/crumpled/awaymissions/caves/unsafe_area
@@ -12,7 +42,7 @@
 
 /obj/item/paper/fluff/awaymissions/caves/work_notice
 	name = "work notice"
-	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this infomation and hopefully we'll all go home alive.</center>"
+	info = "<center><b>Survival Info For Miners</b></center><br><br><center>The caves are an unforgiving place, the only thing you'll have to traverse is the supplies in your locker and your own wit. Travel in packs when mining and try to shut down the monster dens before they overwhelm you. The job is dangerous but the haul is good, so remember this information and hopefully we'll all go home alive.</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/shipment_notice
 	name = "shipment notice"

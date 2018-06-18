@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -37,8 +37,8 @@ var opts = {
 	'restarting': false, //Is the round restarting?
 
 	//Options menu
-	'subOptionsLoop': null, //Contains the interval loop for closing the options menu
-	'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
+	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
+	'suppressSubClose': false, //Whether or not we should be hiding the selected sub menu
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
@@ -65,6 +65,10 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
+	
+	'defaultMusicVolume': 25,
+
+	'messageCombining': true,
 
 };
 
@@ -194,7 +198,7 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	message = byondDecode(message)
+	message = byondDecode(message).trim();
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -292,26 +296,59 @@ function output(message, flag) {
 		opts.messageCount--; //I guess the count should only ever equal the limit
 	}
 
-	//Actually append the message
+	// Create the element - if combining is off, we use it, and if it's on, we
+	// might discard it bug need to check its text content. Some messages vary
+	// only in HTML markup, have the same text content, and should combine.
 	var entry = document.createElement('div');
-	entry.className = 'entry';
+	entry.innerHTML = message;
+	var trimmed_message = entry.textContent || entry.innerText || "";
 
-	if (filteredOut) {
-		entry.className += ' hidden';
-		entry.setAttribute('data-filter', filteredOut);
+	var handled = false;
+	if (opts.messageCombining) {
+		var lastmessages = $messages.children('div.entry:last-child').last();
+		if (lastmessages.length && $last_message && $last_message == trimmed_message) {
+			var badge = lastmessages.children('.r').last();
+			if (badge.length) {
+				badge = badge.detach();
+				badge.text(parseInt(badge.text()) + 1);
+			} else {
+				badge = $('<span/>', {'class': 'r', 'text': 2});
+			}
+			lastmessages.html(message);
+			lastmessages.append(badge);
+			badge.animate({
+				"font-size": "0.9em"
+			}, 100, function() {
+				badge.animate({
+					"font-size": "0.7em"
+				}, 100);
+			});
+			opts.messageCount--;
+			handled = true;
+		}
 	}
 
-	entry.innerHTML = message.trim();
-	$messages[0].appendChild(entry);
-	$(entry).find("img.icon").error(iconError);
-	//Actually do the snap
+	if (!handled) {
+		//Actually append the message
+		entry.className = 'entry';
+
+		if (filteredOut) {
+			entry.className += ' hidden';
+			entry.setAttribute('data-filter', filteredOut);
+		}
+
+		$last_message = trimmed_message;
+		$messages[0].appendChild(entry);
+		$(entry).find("img.icon").error(iconError);
+		//Actually do the snap
+		//Stuff we can do after the message shows can go here, in the interests of responsiveness
+		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
+			highlightTerms(entry);
+		}
+	}
+
 	if (!filteredOut && atBottom) {
 		$('body,html').scrollTop($messages.outerHeight());
-	}
-
-	//Stuff we can do after the message shows can go here, in the interests of responsiveness
-	if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-		highlightTerms(entry);
 	}
 }
 
@@ -405,6 +442,8 @@ function ehjaxCallback(data) {
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
+	} else if (data == 'stopMusic') {
+		$('#adminMusic').prop('src', '');
 	} else {
 		//Oh we're actually being sent data instead of an instruction
 		var dataJ;
@@ -483,6 +522,46 @@ function sendVolumeUpdate() {
 	}
 }
 
+function subSlideUp() {
+	$(this).removeClass('scroll');
+	$(this).css('height', '');
+}
+
+function startSubLoop() {
+	if (opts.selectedSubLoop) {
+		clearInterval(opts.selectedSubLoop);
+	}
+	return setInterval(function() {
+		if (!opts.suppressSubClose && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
+		}
+	}, 5000); //every 5 seconds
+}
+
+function handleToggleClick($sub, $toggle) {
+	if ($selectedSub !== $sub && $selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+	}
+	$selectedSub = $sub
+	if ($selectedSub.is(':visible')) {
+		$selectedSub.slideUp('fast', subSlideUp);
+		clearInterval(opts.selectedSubLoop);
+	} else {
+		$selectedSub.slideDown('fast', function() {
+			var windowHeight = $(window).height();
+			var toggleHeight = $toggle.outerHeight();
+			var priorSubHeight = $selectedSub.outerHeight();
+			var newSubHeight = windowHeight - toggleHeight;
+			$(this).height(newSubHeight);
+			if (priorSubHeight > (windowHeight - toggleHeight)) {
+				$(this).addClass('scroll');
+			}
+		});
+		opts.selectedSubLoop = startSubLoop();
+	}
+}
+
 /*****************************************
 *
 * DOM READY
@@ -497,6 +576,8 @@ if (typeof $ === 'undefined') {
 $(function() {
 	$messages = $('#messages');
 	$subOptions = $('#subOptions');
+	$subAudio = $('#subAudio');
+	$selectedSub = $subOptions;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -520,15 +601,21 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
+		'slineHeight': getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
+		'smessagecombining': getCookie('messagecombining'),
 	};
 
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	}
+	if (savedConfig.slineHeight) {
+		$("body").css('line-height', savedConfig.slineHeight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -563,6 +650,18 @@ $(function() {
 		sendVolumeUpdate();
 		internalOutput('<span class="internal boldnshit">Loaded music volume of: '+savedConfig.smusicVolume+'</span>', 'internal');
 	}
+	else{
+		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
+	}
+	
+	if (savedConfig.smessagecombining) {
+		if (savedConfig.smessagecombining == 'false') {
+			opts.messageCombining = false;
+		} else {
+			opts.messageCombining = true;
+		}
+	}
+
 
 	(function() {
 		var dataCookie = getCookie('connData');
@@ -607,12 +706,9 @@ $(function() {
 	});
 
 	$messages.on('mousedown', function(e) {
-		if ($subOptions && $subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
+		if ($selectedSub && $selectedSub.is(':visible')) {
+			$selectedSub.slideUp('fast', subSlideUp);
+			clearInterval(opts.selectedSubLoop);
 		}
 	});
 
@@ -731,41 +827,19 @@ $(function() {
 	});
 
 	$('#toggleOptions').click(function(e) {
-		if ($subOptions.is(':visible')) {
-			$subOptions.slideUp('fast', function() {
-				$(this).removeClass('scroll');
-				$(this).css('height', '');
-			});
-			clearInterval(opts.subOptionsLoop);
-		} else {
-			$subOptions.slideDown('fast', function() {
-				var windowHeight = $(window).height();
-				var toggleHeight = $('#toggleOptions').outerHeight();
-				var priorSubHeight = $subOptions.outerHeight();
-				var newSubHeight = windowHeight - toggleHeight;
-				$(this).height(newSubHeight);
-				if (priorSubHeight > (windowHeight - toggleHeight)) {
-					$(this).addClass('scroll');
-				}
-			});
-			opts.subOptionsLoop = setInterval(function() {
-				if (!opts.suppressOptionsClose && $('#subOptions').is(':visible')) {
-					$subOptions.slideUp('fast', function() {
-						$(this).removeClass('scroll');
-						$(this).css('height', '');
-					});
-					clearInterval(opts.subOptionsLoop);
-				}
-			}, 5000); //Every 5 seconds
-		}
+		handleToggleClick($subOptions, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseenter(function() {
-		opts.suppressOptionsClose = true;
+	$('#toggleAudio').click(function(e) {
+		handleToggleClick($subAudio, $(this));
 	});
 
-	$('#subOptions, #toggleOptions').mouseleave(function() {
-		opts.suppressOptionsClose = false;
+	$('.sub, .toggle').mouseenter(function() {
+		opts.suppressSubClose = true;
+	});
+
+	$('.sub, .toggle').mouseleave(function() {
+		opts.suppressSubClose = false;
 	});
 
 	$('#decreaseFont').click(function(e) {
@@ -782,6 +856,28 @@ $(function() {
 		$messages.css({'font-size': fontSize});
 		setCookie('fontsize', fontSize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+	});
+
+	$('#decreaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar -= 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+	});
+
+	$('#increaseLineHeight').click(function(e) {
+		var Heightline = parseFloat($("body").css('line-height'));
+		var Sizefont = parseFloat($("body").css('font-size'));
+		var lineheightvar = Heightline / Sizefont
+		lineheightvar += 0.1;
+		lineheightvar = lineheightvar.toFixed(1)
+		$("body").css({'line-height': lineheightvar});
+		setCookie('lineheight', lineheightvar, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
 	});
 
 	$('#togglePing').click(function(e) {
@@ -899,6 +995,11 @@ $(function() {
 			setTimeout(sendVolumeUpdate, opts.volumeUpdateDelay);
 			opts.volumeUpdating = true;
 		}
+	});
+
+	$('#toggleCombine').click(function(e) {
+		opts.messageCombining = !opts.messageCombining;
+		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
 	});
 
 	$('img.icon').error(iconError);

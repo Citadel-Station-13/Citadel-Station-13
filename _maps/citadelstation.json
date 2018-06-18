@@ -1,7 +1,0 @@
-{
-    "map_name": "Citadel Station",
-    "map_path": "map_files/CitadelStation",
-    "map_file": "CitadelStation-1.2.1.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default"
-}

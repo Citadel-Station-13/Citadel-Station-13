@@ -2,9 +2,19 @@
 //Be sure to update the min/max of these if you do change them.
 //Measurements are in imperial units. Inches, feet, yards, miles. Tsp, tbsp, cups, quarts, gallons, etc
 
-//arousal HUD location
-#define  ui_arousal "EAST-1:28,CENTER-3:11"//Below the health doll
+//HUD stuff
+#define  ui_arousal "EAST-1:28,CENTER-4:8"//Below the health doll
+#define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
+#define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
+#define ui_combat_toggle "EAST-4:22,SOUTH:5"
 
+//1:1 HUD layout stuff
+#define ui_boxcraft "EAST-4:22,SOUTH+1:6"
+#define ui_boxarea "EAST-4:6,SOUTH+1:6"
+#define ui_boxlang "EAST-5:22,SOUTH+1:6"
+
+//Filters
+#define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
 
 //organ defines
 #define COCK_SIZE_MIN		1
@@ -71,3 +81,58 @@
 #define ADMIN_MARKREAD(client) "(<a href='?_src_=holder;markedread=\ref[client]'>MARK READ</a>)"//marks an adminhelp as read and under investigation
 #define ADMIN_IC(client) "(<a href='?_src_=holder;icissue=\ref[client]'>IC</a>)"//marks and adminhelp as an IC issue
 #define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer
+
+//Damage stuffs
+#define AROUSAL "arousal"
+
+//DNA stuffs. Remember to change this if upstream adds more snowflake options
+#define DNA_EYE_COLOR_TWO_BLOCK		8
+#define DNA_EYE_COLOR_SWITCH_BLOCK	9
+#define DNA_EYE_COLOR_BLOCK			10
+#define DNA_COLOR_ONE_BLOCK			11
+#define DNA_COLOR_TWO_BLOCK			12
+#define DNA_COLOR_THR_BLOCK			13
+#define DNA_COLOR_SWITCH_BLOCK		14
+#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
+#define DNA_COCK_BLOCK				15
+#define DNA_MUTANTRACE_BLOCK		16
+#define DNA_MUTANTTAIL_BLOCK		17
+#define DNA_MUTANTWING_BLOCK		18
+#define DNA_WINGCOLOR_BLOCK			19
+
+
+//Species stuffs. Remember to change this if upstream updates species flags
+#define MUTCOLORS2		35
+#define MUTCOLORS3		36
+#define NOAROUSAL		37 //Stops all arousal effects
+#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
+
+//Citadel istypes
+#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+#define isipcperson(A) (is_species(A, /datum/species/ipc))
+
+#define CITADEL_MENTOR_OOC_COLOUR "#224724"
+
+//xenobio console upgrade stuff
+#define XENOBIO_UPGRADE_MONKEYS				1
+#define XENOBIO_UPGRADE_SLIMEBASIC		2
+#define XENOBIO_UPGRADE_SLIMEADV			4
+
+//stamina stuff
+#define STAMINA_SOFTCRIT							100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
+#define STAMINA_CRIT									140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_SOFTCRIT_TRADITIONAL	0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
+#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+#define MIN_MELEE_STAMCOST						1.25 //Minimum cost for swinging items around. Will be extra useful when stats and skills are introduced.
+
+#define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
+
+//Citadel toggles because bitflag memes
+#define MEDIHOUND_SLEEPER 1
+#define EATING_NOISES	2
+#define DIGESTION_NOISES 4
+
+#define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)
+
+//component stuff
+#define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)

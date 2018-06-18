@@ -32,7 +32,7 @@
 
 /obj/effect/holodeck_effect/cards/activate(var/obj/machinery/computer/holodeck/HC)
 	D = new(loc)
-	safety(!HC.emagged)
+	safety(!(HC.obj_flags & EMAGGED))
 	D.holo = HC
 	return D
 
@@ -76,7 +76,7 @@
 	mob = new mobtype(loc)
 
 	// these vars are not really standardized but all would theoretically create stuff on death
-	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & mob.vars)
+	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume","vore_organs") & mob.vars) //CITADEL EDIT, maybe stops ghost bellies
 		mob.vars[v] = null
 	return mob
 

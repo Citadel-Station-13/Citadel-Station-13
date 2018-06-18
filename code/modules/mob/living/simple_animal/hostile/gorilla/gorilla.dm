@@ -9,6 +9,7 @@
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
@@ -22,19 +23,20 @@
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
 	obj_damage = 20
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attacktext = "pummels"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
+	held_items = list(null, null)
 	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	faction = list("jungle")
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
 	minbodytemp = 270
 	maxbodytemp = 350
+	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
-	devourable = TRUE
-	no_vore = FALSE
+	var/oogas = 0
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -51,6 +53,8 @@
 			return parts
 
 /mob/living/simple_animal/hostile/gorilla/AttackingTarget()
+	if(client)
+		oogaooga()
 	var/list/parts = target_bodyparts(target)
 	if(parts)
 		if(!parts.len)
@@ -72,8 +76,33 @@
 	var/list/parts = target_bodyparts(target)
 	return ..() && !istype(the_target, /mob/living/carbon/monkey) && (!parts  || parts.len > 3)
 
+
+/mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
+	return iswallturf(T)
+
+
+/mob/living/simple_animal/hostile/gorilla/gib(no_brain)
+	if(!no_brain)
+		var/mob/living/brain/B = new(drop_location())
+		B.name = real_name
+		B.real_name = real_name
+		if(mind)
+			mind.transfer_to(B)
+	..()
+
 /mob/living/simple_animal/hostile/gorilla/handle_automated_speech(override)
 	if(speak_chance && (override || prob(speak_chance)))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 	..()
+
+/mob/living/simple_animal/hostile/gorilla/can_use_guns(obj/item/G)
+	to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
+	return FALSE
+
+
+/mob/living/simple_animal/hostile/gorilla/proc/oogaooga()
+	oogas++
+	if(oogas >= rand(2,6))
+		playsound(src, "sound/creatures/gorilla.ogg", 200)
+		oogas = 0
 

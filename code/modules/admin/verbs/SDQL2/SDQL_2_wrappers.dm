@@ -3,9 +3,11 @@
 /proc/_abs(A)
 	return abs(A)
 
-/*/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags_1 = null)
-	animate(A, set_vars, time, loop, easing, flags_1)
-	Borked. If anyone wants to fix this be my guest.*/
+/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
+	var/mutable_appearance/MA = new()
+	for(var/v in set_vars)
+		MA.vars[v] = set_vars[v]
+	animate(A, appearance = MA, time, loop, easing, flags)
 
 /proc/_acrccos(A)
 	return arccos(A)
@@ -112,8 +114,8 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
-/proc/_regex(pattern, flags_1)
-	return regex(pattern, flags_1)
+/proc/_regex(pattern, flags)
+	return regex(pattern, flags)
 
 /proc/_REGEX_QUOTE(text)
 	return REGEX_QUOTE(text)
@@ -141,9 +143,6 @@
 
 /proc/_sin(X)
 	return sin(X)
-
-/proc/_step(Ref, Dir, Speed = 0)
-	return step(Ref, Dir, Speed)
 
 /proc/_list_add(list/L, ...)
 	if (args.len < 2)
@@ -178,5 +177,35 @@
 
 /proc/_list_swap(list/L, Index1, Index2)
 	L.Swap(Index1, Index2)
+
+/proc/_walk(ref, dir, lag)
+	walk(ref, dir, lag)
+
+/proc/_walk_towards(ref, trg, lag)
+	walk_towards(ref, trg, lag)
+
+/proc/_walk_to(ref, trg, min, lag)
+	walk_to(ref, trg, min, lag)
+
+/proc/_walk_away(ref, trg, max, lag)
+	walk_away(ref, trg, max, lag)
+
+/proc/_walk_rand(ref, lag)
+	walk_rand(ref, lag)
+
+/proc/_step(ref, dir)
+	step(ref, dir)
+
+/proc/_step_rand(ref)
+	step_rand(ref)
+
+/proc/_step_to(ref, trg, min)
+	step_to(ref, trg, min)
+
+/proc/_step_towards(ref, trg)
+	step_towards(ref, trg)
+
+/proc/_step_away(ref, trg, max)
+	step_away(ref, trg, max)
 
 

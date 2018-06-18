@@ -6,13 +6,14 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
+	anchored = FALSE
 	density = TRUE
 	max_integrity = 100
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
-	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
+	var/projectile_type = /obj/item/projectile/bullet/manned_turret
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
@@ -37,7 +38,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -68,14 +69,15 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
-	if(!LAZYLEN(buckled_mobs))
+	if (!update_positioning())
 		return PROCESS_KILL
-	update_positioning()
 
 /obj/machinery/manned_turret/proc/update_positioning()
+	if (!LAZYLEN(buckled_mobs))
+		return FALSE
 	var/mob/living/controller = buckled_mobs[1]
 	if(!istype(controller))
-		return
+		return FALSE
 	var/client/C = controller.client
 	if(C)
 		var/atom/A = C.mouseObject
@@ -143,14 +145,13 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
-	if(user.incapacitated())
+	if(user.incapacitated() || !(user in buckled_mobs))
 		return
 	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
-	P.current = targets_from
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
@@ -165,7 +166,7 @@
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
 	name = "Infinity Gun"
 	view_range = 12
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	projectile_type = /obj/item/projectile/bullet/manned_turret
 
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
@@ -184,10 +185,10 @@
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
-    . = ..()
-    turret = loc
-    if(!istype(turret))
-        return INITIALIZE_HINT_QDEL
+	. = ..()
+	turret = loc
+	if(!istype(turret))
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun_control/Destroy()
 	turret = null
@@ -201,8 +202,8 @@
 	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 

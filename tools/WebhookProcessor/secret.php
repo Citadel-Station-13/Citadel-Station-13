@@ -8,6 +8,7 @@
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 //Api key for pushing changelogs.
+//This requires the public_repo (or repo for private repositories) and read:org permissions
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
 //Used to prevent potential RCEs
@@ -32,7 +33,7 @@ $tracked_branch = "master";
 
 $trackPRBalance = true;	//set this to false to disable PR balance tracking
 $prBalanceJson = '';	//Set this to the path you'd like the writable pr balance file to be stored, not setting it writes it to the working directory
-$startingPRBalance = 3;	//Starting balance for never before seen users
+$startingPRBalance = 5;	//Starting balance for never before seen users
 //team 133041: tgstation/commit-access
 $maintainer_team_id = 133041;	//org team id that is exempt from PR balance system, setting this to null will use anyone with write access to the repo. Get from https://api.github.com/orgs/:org/teams
 
@@ -47,3 +48,6 @@ $validation = "org";
 
 //how many merged prs must they have under the rules above to have their pr announced to the game servers.
 $validation_count = 1;
+
+//enforce changelogs on PRs
+$require_changelogs = false;

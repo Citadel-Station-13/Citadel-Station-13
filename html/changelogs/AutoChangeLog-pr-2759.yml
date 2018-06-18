@@ -1,8 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Added inhands for a few weapons"
-  - rscadd: "sweaters and some vg clothes"
-  - rscadd: "icon_override now works. Use that instead of putting shit in uniform.dmi for snowflake clothes"
-  - rscadd: "AK-47s FOR EVERYONE!! button for Admins to use."
-  - rscadd: "Plasma Rifle Gunlocker, for mapping memes. Unbreakable and emags don't work, they only unlock during Red or Delta security alerts. Mainly designed for Anti-Xenomorph or Blob duty."

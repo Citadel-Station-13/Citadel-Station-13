@@ -1,6 +1,10 @@
+//CITADEL EDIT
+GLOBAL_LIST_EMPTY(objectives)
+//END EDIT
+
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
-	var/datum/objective_team/team       //An alternative to 'owner': a team. Use this when writing new code.
+	var/datum/team/team       //An alternative to 'owner': a team. Use this when writing new code.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
@@ -9,6 +13,7 @@
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
+	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS
 	if(text)
 		explanation_text = text
 
@@ -16,14 +21,6 @@
 	. = (team && team.members) ? team.members.Copy() : list()
 	if(owner)
 		. += owner
-
-/datum/objective/proc/considered_alive(var/datum/mind/M)
-	if(M && M.current)
-		var/mob/living/carbon/human/H
-		if(ishuman(M.current))
-			H = M.current
-		return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
-	return FALSE
 
 /datum/objective/proc/considered_escaped(datum/mind/M)
 	if(!considered_alive(M))
@@ -36,9 +33,6 @@
 	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/brig)) // Fails if they are in the shuttle brig
 		return FALSE
 	return location.onCentCom() || location.onSyndieBase()
-
-/datum/objective/proc/considered_afk(datum/mind/M)
-	return !M || !M.current || !M.current.client || M.current.client.is_afk()
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -58,18 +52,33 @@
 	. = list()
 	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
 	var/list/datum/mind/owners = get_owners()
 	var/list/possible_targets = list()
+	var/try_target_late_joiners = FALSE
+	for(var/I in owners)
+		var/datum/mind/O = I
+		if(O.late_joiner)
+			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
 			possible_targets += possible_target
+	if(try_target_late_joiners)
+		var/list/all_possible_targets = possible_targets.Copy()
+		for(var/I in all_possible_targets)
+			var/datum/mind/PT = I
+			if(!PT.late_joiner)
+				possible_targets -= PT
+		if(!possible_targets.len)
+			possible_targets = all_possible_targets
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
+	else
+		target = null//we'd rather have no target than an invalid one // CITADEL EDIT
 	update_explanation_text()
 	return target
 
@@ -105,7 +114,7 @@
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = slot_in_backpack)
+			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -121,7 +130,7 @@
 	return target
 
 /datum/objective/assassinate/check_completion()
-	return !target || !considered_alive(target)
+	return !considered_alive(target) || considered_afk(target)
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -152,7 +161,7 @@
 	if(!target || !considered_alive(target) || considered_afk(target))
 		return TRUE
 	var/turf/T = get_turf(target.current)
-	return T && !(T.z in GLOB.station_z_levels)
+	return T && !is_station_level(T.z)
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -192,10 +201,8 @@
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
 		return TRUE
-
 	if(!target.current || !isbrain(target.current))
 		return FALSE
-
 	var/atom/A = target.current
 	var/list/datum/mind/owners = get_owners()
 
@@ -214,8 +221,9 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/protect//The opposite of killing a dude.
-	var/target_role_type=0
 	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
 
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
@@ -224,7 +232,7 @@
 	return target
 
 /datum/objective/protect/check_completion()
-	return !target || considered_alive(target)
+	return !target || considered_alive(target, enforce_human = human_check)
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -232,6 +240,9 @@
 		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/protect/nonhuman
+	human_check = FALSE
 
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
@@ -348,6 +359,15 @@
 			return FALSE
 	return TRUE
 
+/datum/objective/survive/exist //Like survive, but works for silicons and zombies and such.
+
+/datum/objective/survive/exist/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_alive(M, FALSE))
+			return FALSE
+	return TRUE
+
 /datum/objective/martyr
 	explanation_text = "Die a glorious death."
 
@@ -409,14 +429,17 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/steal/proc/select_target() //For admins setting objectives manually.
 	var/list/possible_items_all = GLOB.possible_items+"custom"
 	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
-	if (!new_target) return
+	if (!new_target)
+		return
 
 	if (new_target == "custom") //Can set custom items.
 		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target) return
+		if (!custom_target)
+			return
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
-		if (!custom_name) return
+		if (!custom_name)
+			return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
 
@@ -494,28 +517,25 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/download
 
 /datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(10,20)
-	explanation_text = "Download [target_amount] research level\s."
+	target_amount = rand(20,40)
+	explanation_text = "Download [target_amount] research node\s."
 	return target_amount
 
-/datum/objective/download/check_completion()//NINJACODE.
-	var/current_amount = 0
+/datum/objective/download/check_completion()
+	var/datum/techweb/checking = new
 	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!ishuman(owner.current))
-			continue
-		var/mob/living/carbon/human/H = owner.current
-		if(!H || H.stat == DEAD || !istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-			continue
-		var/obj/item/clothing/suit/space/space_ninja/SN = H.wear_suit
-		if(!SN.s_initialized)
-			continue
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
-	return current_amount >= target_amount
-
-
+	for(var/datum/mind/owner in owners)
+		if(ismob(owner.current))
+			var/mob/M = owner.current			//Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
+					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
+					S.stored_research.copy_research_to(checking)
+			var/list/otherwise = M.GetAllContents()
+			for(var/obj/item/disk/tech_disk/TD in otherwise)
+				TD.stored_research.copy_research_to(checking)
+	return checking.researched_nodes.len >= target_amount
 
 /datum/objective/capture
 
@@ -528,30 +548,32 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/captured_amount = 0
 	var/area/centcom/holding/A = locate() in GLOB.sortedAreas
 	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(M.stat==2)//Dead folks are worth less.
+		if(M.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
-			if(M.stat==2)
+			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat==2)
+		if(M.stat == DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2
 	return captured_amount >= target_amount
 
+
+//Changeling Objectives
 
 /datum/objective/absorb
 
@@ -565,7 +587,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(P.client && !(P.mind in SSticker.mode.changelings) && !(P.mind in owners))
+			if(P.client && !(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -576,12 +598,55 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/list/datum/mind/owners = get_owners()
 	var/absorbedcount = 0
 	for(var/datum/mind/M in owners)
-		if(!owner || !owner.changeling || !owner.changeling.stored_profiles)
+		if(!M)
 			continue
-		absorbedcount += M.changeling.absorbedcount 
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling || !changeling.stored_profiles)
+			continue
+		absorbedcount += changeling.absorbedcount
 	return absorbedcount >= target_amount
 
+/datum/objective/absorb_most
+	explanation_text = "Extract more compatible genomes than any other Changeling."
 
+/datum/objective/absorb_most/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/absorbedcount = 0
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling || !changeling.stored_profiles)
+			continue
+		absorbedcount += changeling.absorbedcount
+
+	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
+		if(!changeling2.owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+			continue
+		return FALSE
+	return TRUE
+
+/datum/objective/absorb_changeling
+	explanation_text = "Absorb another Changeling."
+
+/datum/objective/absorb_changeling/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling)
+			continue
+		var/total_genetic_points = changeling.geneticpoints
+
+		for(var/obj/effect/proc_holder/changeling/p in changeling.purchasedpowers)
+			total_genetic_points += p.dna_cost
+
+		if(total_genetic_points > initial(changeling.geneticpoints))
+			return TRUE
+	return FALSE
+
+//End Changeling Objectives
 
 /datum/objective/destroy
 	martyr_compatible = 1
@@ -622,7 +687,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type/summon_magic
 	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/device/necromantic_stone)
+	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -647,16 +712,31 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 
+/datum/objective/changeling_team_objective/proc/prepare()
+	return FALSE
 
 //Impersonate department
 //Picks as many people as it can from a department (Security,Engineer,Medical,Science)
 //and tasks the lings with killing and replacing them
 /datum/objective/changeling_team_objective/impersonate_department
-	explanation_text = "Ensure X derpartment are killed, impersonated, and replaced by Changelings"
+	explanation_text = "Ensure X department are killed, impersonated, and replaced by Changelings"
 	var/command_staff_only = FALSE //if this is true, it picks command staff instead
 	var/list/department_minds = list()
 	var/list/department_real_names = list()
 	var/department_string = ""
+
+
+/datum/objective/changeling_team_objective/impersonate_department/prepare()
+	var/result = FALSE
+	if(command_staff_only)
+		result = get_heads()
+	else
+		result = get_department_staff()
+	if(result)
+		update_explanation_text()
+		return TRUE
+	else
+		return FALSE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_department_staff()
@@ -675,10 +755,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if("Chief Medical Officer")
 			department_string = "medical"
 
-	var/ling_count = SSticker.mode.changelings
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
+	var/ling_count = lings.len
 
 	for(var/datum/mind/M in SSticker.minds)
-		if(M in SSticker.mode.changelings)
+		if(M in lings)
 			continue
 		if(department_head in get_department_heads(M.assigned_role))
 			if(ling_count)
@@ -690,9 +771,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department staff, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/proc/get_heads()
@@ -702,13 +782,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Needed heads is between min_lings and the maximum possible amount of command roles
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
-
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
 	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
-	needed_heads = min(SSticker.mode.changelings.len,needed_heads)
+	needed_heads = min(lings.len,needed_heads)
 
-	var/list/heads = SSticker.mode.get_living_heads()
+	var/list/heads = SSjob.get_living_heads()
 	for(var/datum/mind/head in heads)
-		if(head in SSticker.mode.changelings) //Looking at you HoP.
+		if(head in lings) //Looking at you HoP.
 			continue
 		if(needed_heads)
 			department_minds += head
@@ -719,19 +799,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	if(!department_minds.len)
 		log_game("[type] has failed to find department heads, and has removed itself. the round will continue normally")
-		owner.objectives -= src
-		qdel(src)
-		return
-
-
-/datum/objective/changeling_team_objective/impersonate_department/New(var/text)
-	..()
-	if(command_staff_only)
-		get_heads()
-	else
-		get_department_staff()
-
-	update_explanation_text()
+		return FALSE
+	return TRUE
 
 
 /datum/objective/changeling_team_objective/impersonate_department/update_explanation_text()
@@ -762,26 +831,26 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/changeling_team_objective/impersonate_department/check_completion()
 	if(!department_real_names.len || !department_minds.len)
-		return 1 //Something fucked up, give them a win
+		return TRUE //Something fucked up, give them a win
 
 	var/list/check_names = department_real_names.Copy()
 
 	//Check each department member's mind to see if any of them made it to centcom alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
-		if(M in SSticker.mode.changelings) //Lings aren't picked for this, but let's be safe
+		if(M.has_antag_datum(/datum/antagonist/changeling)) //Lings aren't picked for this, but let's be safe
 			continue
 
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
 			if(mloc.onCentCom() && (M.current.stat != DEAD))
-				return 0 //A Non-ling living target got to centcom, fail
+				return FALSE //A Non-ling living target got to centcom, fail
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
-		for(var/datum/mind/changeling in SSticker.mode.changelings)
+		for(var/datum/mind/changeling in get_antag_minds(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
-				return 1
+				return TRUE
 			if(ishuman(changeling.current))
 				var/mob/living/carbon/human/H = changeling.current
 				var/turf/cloc = get_turf(changeling.current)
@@ -793,13 +862,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 							continue changelings
 
 	if(success >= department_minds.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
-
-
-
-//A subtype of impersonate_derpartment
+//A subtype of impersonate_department
 //This subtype always picks as many command staff as it can (HoS,HoP,Cap,CE,CMO,RD)
 //and tasks the lings with killing and replacing them
 /datum/objective/changeling_team_objective/impersonate_department/impersonate_heads

@@ -4,11 +4,10 @@
 	weight = 10
 
 /datum/round_event/mice_migration
-	announceWhen = 0
 	var/minimum_mice = 5
 	var/maximum_mice = 15
 
-/datum/round_event/mice_migration/announce()
+/datum/round_event/mice_migration/announce(fake)
 	var/cause = pick("space-winter", "budget-cuts", "Ragnarok",
 		"space being cold", "\[REDACTED\]", "climate change",
 		"bad luck")
@@ -19,10 +18,18 @@
 	var/movement = pick("migrated", "swarmed", "stampeded", "descended")
 	var/location = pick("maintenance tunnels", "maintenance areas",
 		"\[REDACTED\]", "place with all those juicy wires")
-
-	priority_announce("Due to [cause], [plural] [name] have [movement] \
+	if(prob(50))
+		priority_announce("Due to [cause], [plural] [name] have [movement] \
 		into the [location].", "Migration Alert",
-		'sound/effects/mousesqueek.ogg', 100, 1)
+		'sound/effects/mousesqueek.ogg')
+	else
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+		for(var/obj/machinery/computer/communications/C in GLOB.machines)
+			if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+				var/obj/item/paper/P = new(C.loc)
+				P.name = "Rodent Migration"
+				P.info = "Due to [cause], [plural] [name] have [movement] into the [location]."
+				P.update_icon()
 
 /datum/round_event/mice_migration/start()
 	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))

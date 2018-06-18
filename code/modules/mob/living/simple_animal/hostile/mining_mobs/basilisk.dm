@@ -8,15 +8,13 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
 	ranged_cooldown_time = 30
-	ranged_telegraph = "gathers energy and stares at *TARGET*!"
-	ranged_telegraph_sound = 'sound/magic/magic_missile.ogg'
-	ranged_telegraph_time = 7
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -30,11 +28,12 @@
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	vision_range = 2
 	aggro_vision_range = 9
-	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/ore/diamond{layer = ABOVE_MOB_LAYER},
-				/obj/item/ore/diamond{layer = ABOVE_MOB_LAYER})
+	gold_core_spawnable = HOSTILE_SPAWN
+	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -73,17 +72,15 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
-	ranged_telegraph = "fixates on *TARGET* as its eye shines blue!"
-	ranged_telegraph_sound = 'sound/magic/tail_swing.ogg'
-	ranged_telegraph_time = 5
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
+	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = UNCONSCIOUS
 	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
-	butcher_results = list(/obj/item/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
 	. = ..()
@@ -120,7 +117,7 @@
 	maxHealth = 170
 	health = 170
 	projectiletype = /obj/item/projectile/temp/basilisk/icewing
-	butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	crusher_drop_mod = 30
 
@@ -136,8 +133,9 @@
 	. = ..()
 	if(.)
 		var/mob/living/L = target
-		L.adjust_fire_stacks(0.1)
-		L.IgniteMob()
+		if (istype(L))
+			L.adjust_fire_stacks(0.1)
+			L.IgniteMob()
 
 /obj/item/projectile/temp/basilisk/icewing
 	damage = 5

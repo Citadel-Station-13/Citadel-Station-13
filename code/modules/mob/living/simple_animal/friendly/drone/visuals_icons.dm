@@ -86,7 +86,7 @@
 		if(istype(head, /obj/item/clothing/mask))
 			used_head_icon = 'icons/mob/mask.dmi'
 		var/mutable_appearance/head_overlay = head.build_worn_icon(state = head.icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = used_head_icon)
-		head_overlay.pixel_y += -15
+		head_overlay.pixel_y -= 15
 
 		drone_overlays[DRONE_HEAD_LAYER] = head_overlay
 
@@ -139,28 +139,3 @@
 			. = 0
 		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6
-
-/mob/living/simple_animal/drone/proc/updateSeeStaticMobs()
-	if(!client)
-		return
-
-	for(var/i in staticOverlays)
-		client.images.Remove(i)
-		staticOverlays.Remove(i)
-	staticOverlays.len = 0
-
-	if(seeStatic)
-		for(var/mob/living/L in GLOB.mob_list)
-			if(isdrone(L))
-				continue
-			var/image/chosen
-			if(staticChoice in L.staticOverlays)
-				chosen = L.staticOverlays[staticChoice]
-			else
-				chosen = L.staticOverlays["static"]
-			staticOverlays |= chosen
-			client.images |= chosen
-
-
-/mob/living/simple_animal/drone/generateStaticOverlay()
-	return

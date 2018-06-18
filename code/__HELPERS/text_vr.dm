@@ -17,11 +17,15 @@ proc/TextPreview(var/string,var/len=40)
 	else
 		return "[copytext(string, 1, 37)]..."
 
-GLOBAL_LIST_EMPTY(mentor_log)
-GLOBAL_PROTECT(mentor_log)
+GLOBAL_LIST_EMPTY(mentorlog)
+GLOBAL_PROTECT(mentorlog)
 
 GLOBAL_LIST_EMPTY(whitelisted_species_list)
 
 /proc/log_mentor(text)
-		GLOB.mentor_log.Add(text)
-		GLOB.world_game_log << "\[[time_stamp()]]MENTOR: [text]"
+	GLOB.mentorlog.Add(text)
+	WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]MENTOR: [text]")
+
+/proc/log_looc(text)
+	if (CONFIG_GET(flag/log_ooc))
+		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]LOOC: [text]")

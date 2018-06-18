@@ -4,7 +4,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
-	desc = "Goes great with Robust Coffee."
+	desc = "Goes great with robust coffee."
 	icon_state = "donut1"
 	bitesize = 5
 	bonus_reagents = list("sugar" = 1)
@@ -22,6 +22,21 @@
 		reagents.add_reagent("sprinkles", 2)
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
+
+
+/obj/item/reagent_containers/food/snacks/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
+	if(last_check_time + 50 < world.time)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.mind && H.mind.assigned_role == "Security Officer" && !H.has_trait(TRAIT_AGEUSIA))
+				to_chat(H,"<span class='notice'>I love this taste!</span>")
+				H.adjust_disgust(-5 + -2.5 * fraction)
+				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+				if(mood)
+					mood.add_event("fav_food", /datum/mood_event/favorite_food)
+				last_check_time = world.time
+				return
+	..()
 
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
@@ -303,7 +318,7 @@
 
 /obj/item/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
-	desc = "The best of both cookie and oat"
+	desc = "The best of both cookie and oat."
 	icon_state = "oatmealcookie"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
@@ -333,7 +348,7 @@
 
 /obj/item/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
-	desc = "Blue cherries inside a delicious cupcake"
+	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
@@ -350,3 +365,113 @@
 	filling_color = "#F2CE91"
 	tastes = list("pastry" = 1, "sweetness" = 1)
 	foodtype = GRAIN
+
+#define PANCAKE_MAX_STACK 10
+
+/obj/item/reagent_containers/food/snacks/pancakes
+	name = "pancake"
+	desc = "A fluffy pancake. The softer, superior relative of the waffle."
+	icon_state = "pancakes_1"
+	item_state = "pancakes"
+	bonus_reagents = list("vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+	filling_color = "#D2691E"
+	tastes = list("pancakes" = 1)
+	foodtype = GRAIN | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pancakes/blueberry
+	name = "blueberry pancake"
+	desc = "A fluffy and delicious blueberry pancake."
+	icon_state = "bbpancakes_1"
+	item_state = "bbpancakes"
+	bonus_reagents = list("vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "vitamin" = 3)
+	tastes = list("pancakes" = 1, "blueberries" = 1)
+
+/obj/item/reagent_containers/food/snacks/pancakes/chocolatechip
+	name = "chocolate chip pancake"
+	desc = "A fluffy and delicious chocolate chip pancake."
+	icon_state = "ccpancakes_1"
+	item_state = "ccpancakes"
+	bonus_reagents = list("vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "vitamin" = 3)
+	tastes = list("pancakes" = 1, "chocolate" = 1)
+
+/obj/item/reagent_containers/food/snacks/pancakes/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/reagent_containers/food/snacks/pancakes/update_icon()
+	if(contents.len)
+		name = "stack of pancakes"
+	else
+		name = initial(name)
+	if(contents.len < LAZYLEN(our_overlays))
+		cut_overlay(our_overlays[our_overlays.len])
+
+/obj/item/reagent_containers/food/snacks/pancakes/examine(mob/user)
+	var/ingredients_listed = ""
+	var/pancakeCount = contents.len
+	switch(pancakeCount)
+		if(0)
+			desc = initial(desc)
+		if(1 to 2)
+			desc = "A stack of fluffy pancakes."
+		if(3 to 6)
+			desc = "A fat stack of fluffy pancakes!"
+		if(7 to 9)
+			desc = "A grand tower of fluffy, delicious pancakes!"
+		if(PANCAKE_MAX_STACK to INFINITY)
+			desc = "A massive towering spire of fluffy, delicious pancakes. It looks like it could tumble over!"
+	var/originalBites = bitecount
+	if (pancakeCount)
+		var/obj/item/reagent_containers/food/snacks/S = contents[pancakeCount]
+		bitecount = S.bitecount
+	..()
+	if (pancakeCount)
+		for(var/obj/item/reagent_containers/food/snacks/pancakes/ING in contents)
+			ingredients_listed += "[ING.name], "
+		to_chat(user, "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)].")
+	bitecount = originalBites
+
+/obj/item/reagent_containers/food/snacks/pancakes/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/pancakes/))
+		var/obj/item/reagent_containers/food/snacks/pancakes/P = I
+		if((contents.len >= PANCAKE_MAX_STACK) || ((P.contents.len + contents.len) > PANCAKE_MAX_STACK) || (reagents.total_volume >= volume))
+			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
+		else
+			if(!user.transferItemToLoc(I, src))
+				return
+			to_chat(user, "<span class='notice'>You add the [I] to the [name].</span>")
+			P.name = initial(P.name)
+			contents += P
+			update_overlays(P)
+			if (P.contents.len)
+				for(var/V in P.contents)
+					P = V
+					P.name = initial(P.name)
+					contents += P
+					update_overlays(P)
+			P = I
+			clearlist(P.contents)
+		return
+	else if(contents.len)
+		var/obj/O = contents[contents.len]
+		return O.attackby(I, user, params)
+	..()
+
+/obj/item/reagent_containers/food/snacks/pancakes/update_overlays(obj/item/reagent_containers/food/snacks/P)
+	var/mutable_appearance/pancake = mutable_appearance(icon, "[P.item_state]_[rand(1,3)]")
+	pancake.pixel_x = rand(-1,1)
+	pancake.pixel_y = 3 * contents.len - 1
+	add_overlay(pancake)
+	update_icon()
+
+/obj/item/reagent_containers/food/snacks/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
+	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+		return ..()
+	var/obj/item/O = contents[contents.len]
+	. = O.attack(M, user, def_zone, FALSE)
+	update_icon()
+
+#undef PANCAKE_MAX_STACK

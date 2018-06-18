@@ -5,8 +5,10 @@
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur")
 	mutanttongue = /obj/item/organ/tongue/lizard
+	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
 	heatmod = 0.67
 	default_features = list("mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "taur" = "None")
@@ -16,8 +18,8 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = NONE
-	liked_food = NONE
+	disliked_food = GRAIN | DAIRY
+	liked_food = GROSS | MEAT
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/draconic)
@@ -35,11 +37,16 @@
 
 /datum/species/lizard/qualifies_for_rank(rank, list/features)
 	return TRUE
-
+	
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+
+/datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		H.endTailWag()
+	. = ..()
 
 /*
  Lizard subspecies: ASHWALKERS
@@ -48,4 +55,5 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	inherent_traits = list(TRAIT_NOGUNS,TRAIT_NOBREATH)

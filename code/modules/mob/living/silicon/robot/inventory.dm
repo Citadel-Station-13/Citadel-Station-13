@@ -7,7 +7,6 @@
 
 
 
-/*-------TODOOOOOOOOOO--------*/ //fuck yooooooooooooou
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
@@ -17,20 +16,21 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
-	else if(istype(O,/obj/item/gun/energy/laser/cyborg))
-		laser = 0
+		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
+	//CITADEL EDIT reee proc, Dogborg modules
+	if(istype(O,/obj/item/gun/energy/laser/cyborg))
+		laser = FALSE
 		update_icons()
 	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
-		disabler = 0
+		disabler = FALSE
+		update_icons() //PUT THE GUN AWAY
+	else if(istype(O,/obj/item/dogborg/sleeper))
+		sleeper_g = FALSE
+		sleeper_r = FALSE
 		update_icons()
-	else if(istype(O,/obj/item/device/dogborg/sleeper))
-		sleeper_g = 0
-		sleeper_r = 0
-		update_icons()
-		var/obj/item/device/dogborg/sleeper/S = O
-		S.go_out()
+		var/obj/item/dogborg/sleeper/S = O
+		S.go_out() //this should stop edgecase deletions
+	//END CITADEL EDIT
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
@@ -59,15 +59,17 @@
 	. = FALSE
 	if(!(O in module.modules))
 		return
+	//CITADEL EDIT Dogborg lasers
+	if(istype(O,/obj/item/gun/energy/laser/cyborg))
+		laser = TRUE
+		update_icons() //REEEEEEACH FOR THE SKY
+	if(istype(O,/obj/item/gun/energy/disabler/cyborg))
+		disabler = TRUE
+		update_icons()
+	//END CITADEL EDIT
 	if(activated(O))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
-	if(istype(O,/obj/item/gun/energy/laser/cyborg))
-		laser = 1
-		update_icons()
-	if(istype(O,/obj/item/gun/energy/disabler/cyborg))
-		disabler = 1
-		update_icons()
 	if(!held_items[1])
 		held_items[1] = O
 		O.screen_loc = inv1.screen_loc
@@ -83,7 +85,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, slot_hands)
+		O.equipped(src, SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE
@@ -194,7 +196,8 @@
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/proc/toggle_module(module) //Module is 1-3
-	if(module < 1 || module > 3) return
+	if(module < 1 || module > 3)
+		return
 
 	if(module_selected(module))
 		deselect_module(module)

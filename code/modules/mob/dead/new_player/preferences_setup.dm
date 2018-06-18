@@ -1,4 +1,5 @@
-//The mob should have a gender you want before running this proc. Will run fine without H
+
+	//The mob should have a gender you want before running this proc. Will run fine without H
 /datum/preferences/proc/random_character(gender_override)
 	if(gender_override)
 		gender = gender_override
@@ -14,12 +15,12 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon(nude = 0)
+/datum/preferences/proc/update_preview_icon(nude = FALSE)
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -59,6 +60,7 @@
 	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)

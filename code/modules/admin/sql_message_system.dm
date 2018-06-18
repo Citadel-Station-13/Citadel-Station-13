@@ -33,8 +33,9 @@
 	if(!timestamp)
 		timestamp = SQLtime()
 	if(!server)
-		if (config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
@@ -145,14 +146,15 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/output
+	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
-	var/navbar = "<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
+	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;[HrefToken()];nonalpha=2'>\[#\]</a>")
 	for(var/letter in GLOB.alphabet)
 		navbar += "|<a href='?_src_=holder;[HrefToken()];showmessages=[letter]'>\[[letter]\]</a>"
-	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;showwatch=1'>\[Watchlist\]</a>"
+	navbar += "|<a href='?_src_=holder;[HrefToken()];showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;[HrefToken()];showwatch=1'>\[Watchlist\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
+	[HrefTokenFormField()]\
 	<input type='text' name='searchmessages' value='[index]'>\
 	<input type='submit' value='Search'></form>"
 	if(!linkless)
@@ -196,9 +198,9 @@
 		var/datum/DBQuery/query_get_messages = SSdbcore.NewQuery("SELECT type, secret, id, adminckey, text, timestamp, server, lasteditor, DATEDIFF(NOW(), timestamp) AS `age` FROM [format_table_name("messages")] WHERE type <> 'memo' AND targetckey = '[target_ckey]' AND deleted = 0 ORDER BY timestamp DESC")
 		if(!query_get_messages.warn_execute())
 			return
-		var/messagedata
-		var/watchdata
-		var/notedata
+		var/list/messagedata = list()
+		var/list/watchdata = list()
+		var/list/notedata = list()
 		var/skipped = 0
 		while(query_get_messages.NextRow())
 			type = query_get_messages.item[1]
@@ -215,8 +217,10 @@
 			var/editor_ckey = query_get_messages.item[8]
 			var/age = text2num(query_get_messages.item[9])
 			var/alphatext = ""
-			if (agegate && type == "note" && isnum(config.note_stale_days) && isnum(config.note_fresh_days) && config.note_stale_days > config.note_fresh_days)
-				var/alpha = Clamp(100 - (age - config.note_fresh_days) * (85 / (config.note_stale_days - config.note_fresh_days)), 15, 100)
+			var/nsd = CONFIG_GET(number/note_stale_days)
+			var/nfd = CONFIG_GET(number/note_fresh_days)
+			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
+				var/alpha = CLAMP(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
@@ -226,8 +230,7 @@
 						skipped = TRUE
 					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
 
-			var/data
-			data += "<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>"
+			var/list/data = list("<p style='margin:0px;[alphatext]'> <b>[timestamp] | [server] | [admin_ckey]</b>")
 			if(!linkless)
 				data += " <a href='?_src_=holder;[HrefToken()];deletemessage=[id]'>\[Delete\]</a>"
 				if(type == "note")
@@ -300,7 +303,7 @@
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;[HrefToken()];addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[output]</body></html>"}, "window=browse_messages;size=900x500")
+	usr << browse({"<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /></head><body>[jointext(output, "")]</body></html>"}, "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())
@@ -331,7 +334,7 @@ proc/get_message_output(type, target_ckey)
 				if(!query_message_read.warn_execute())
 					return
 			if("watchlist entry")
-				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] is on the watchlist and has just connected - Reason: [text]</font>")
+				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
 				send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_ckey]</span> on [timestamp]"
@@ -352,8 +355,9 @@ proc/get_message_output(type, target_ckey)
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if(config && config.server_sql_name)
-			server = config.server_sql_name
+		var/ssqlname = CONFIG_GET(string/serversqlname)
+		if (ssqlname)
+			server = ssqlname
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
 		var/timestamp = note.group[1]

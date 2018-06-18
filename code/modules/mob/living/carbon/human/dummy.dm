@@ -14,11 +14,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
-	QDEL_LIST(contents)
+	delete_equipment()
 	cut_overlays(TRUE)
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
+GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 /proc/generate_or_wait_for_human_dummy(slotkey)
 	if(!slotkey)
@@ -31,6 +32,7 @@ GLOBAL_LIST_EMPTY(human_dummy_list)
 	if(QDELETED(D))
 		D = new
 		GLOB.human_dummy_list[slotkey] = D
+		GLOB.dummy_mob_list += D
 	D.in_use = TRUE
 	return D
 

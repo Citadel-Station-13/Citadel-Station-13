@@ -1,5 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - rscadd: "Ash Drakes can actually devour you now. Must have devourment on to actually get eaten, else it'll gib you outright as normal."
-  - rscadd: "Ash Drake digestion will drop your brain in addition to your equipment. Something something reasons. Don't mind the funny smell."

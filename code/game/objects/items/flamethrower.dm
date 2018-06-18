@@ -13,19 +13,18 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
-	var/obj/item/device/assembly/igniter/igniter = null
+	var/obj/item/assembly/igniter/igniter = null
 	var/obj/item/tank/internals/plasma/ptank = null
 	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
-	var/igniter_type = /obj/item/device/assembly/igniter
+	var/igniter_type = /obj/item/assembly/igniter
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/flamethrower/Destroy()
@@ -102,7 +101,7 @@
 		return
 
 	else if(isigniter(W))
-		var/obj/item/device/assembly/igniter/I = W
+		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
 			return
 		if(igniter)
@@ -126,25 +125,28 @@
 		update_icon()
 		return
 
-	else if(istype(W, /obj/item/device/analyzer) && ptank)
-		atmosanalyzer_scan(ptank.air_contents, user)
 	else
 		return ..()
+
+/obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
+	if(ptank)
+		ptank.analyzer_act(user, I)
 
 
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && !user.incapacitated() && Adjacent(user))
+	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
 	..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \the [ptank] attached. Alt-click to remove it.</span>")
+		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -167,7 +169,7 @@
 /obj/item/flamethrower/CheckParts(list/parts_list)
 	..()
 	weldtool = locate(/obj/item/weldingtool) in contents
-	igniter = locate(/obj/item/device/assembly/igniter) in contents
+	igniter = locate(/obj/item/assembly/igniter) in contents
 	weldtool.status = FALSE
 	igniter.secured = FALSE
 	status = TRUE
@@ -201,8 +203,8 @@
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
 	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(release_amount)
-	if(air_transfer.gases["plasma"])
-		air_transfer.gases["plasma"][MOLES] *= 5
+	if(air_transfer.gases[/datum/gas/plasma])
+		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
@@ -224,7 +226,7 @@
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_icon()
 
-/obj/item/flamethrower/full/tank
+/obj/item/flamethrower/full
 	create_full = TRUE
 
 /obj/item/flamethrower/full/tank
@@ -233,18 +235,18 @@
 /obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
-		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
+		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them
 
 
-/obj/item/device/assembly/igniter/proc/flamethrower_process(turf/open/location)
+/obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
 
-/obj/item/device/assembly/igniter/cold/flamethrower_process(turf/open/location)
+/obj/item/assembly/igniter/cold/flamethrower_process(turf/open/location)
 	return
 
-/obj/item/device/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
+/obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)

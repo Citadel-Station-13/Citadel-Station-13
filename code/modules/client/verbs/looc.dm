@@ -4,12 +4,12 @@
 	set category = "OOC"
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'> Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'> Speech is currently admin-disabled.</span>")
 		return
 
 	if(!mob)	return
 	if(IsGuestKey(key))
-		src << "Guests may not use OOC."
+		to_chat(src, "Guests may not use OOC.")
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -17,23 +17,26 @@
 		return
 
 	if(!(prefs.toggles & CHAT_OOC))
-		src << "<span class='danger'> You have OOC muted.</span>"
+		to_chat(src, "<span class='danger'> You have OOC muted.</span>")
+		return
+	if(jobban_isbanned(mob, "OOC"))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 		return
 
 	if(!holder)
 		if(!GLOB.ooc_allowed)
-			src << "<span class='danger'> OOC is globally muted</span>"
+			to_chat(src, "<span class='danger'> OOC is globally muted</span>")
 			return
 		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
-			usr << "<span class='danger'> OOC for dead mobs has been turned off.</span>"
+			to_chat(usr, "<span class='danger'> OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "<span class='danger'> You cannot use OOC (muted).</span>"
+			to_chat(src, "<span class='danger'> You cannot use OOC (muted).</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			src << "<B>Advertising other servers is not allowed.</B>"
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 
@@ -66,7 +69,7 @@
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C,"<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C,"<font color='#6699CC'><span class='ooc'>[ADMIN_FLW(usr)]<span class='prefix'>[prefix]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	/*for(var/mob/dead/observer/G in world)
 		if(!G.client)
