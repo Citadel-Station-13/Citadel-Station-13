@@ -180,9 +180,6 @@
 /obj/item/electronic_assembly/Topic(href, href_list)
 	if(..())
 		return 1
-
-<<<<<<< HEAD
-=======
 	if(href_list["ghostscan"])
 		if(isobserver(usr) && ckeys_allowed_to_scan[usr.ckey])
 			if(assembly_components.len)
@@ -194,8 +191,6 @@
 		
 	if(!check_interactivity(usr))
 		return
-
->>>>>>> df7ca16... Merge pull request #38535 from DaxDupont/circuits
 	if(href_list["rename"])
 		rename(usr)
 
