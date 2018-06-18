@@ -53270,7 +53270,6 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "fZE" = (
-/obj/item/restraints/legcuffs,
 /obj/item/restraints/handcuffs/fake,
 /obj/structure/bed/dogbed,
 /turf/open/floor/plating,
@@ -53666,6 +53665,7 @@
 /area/maintenance/bar)
 "mLY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/jukebox,
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -53778,10 +53778,6 @@
 /obj/machinery/door/airlock/wood{
 	name = "Maintenance Bar"
 	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
-"pxN" = (
-/obj/item/weaponcrafting/stock,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "pHl" = (
@@ -78068,7 +78064,7 @@ aaa
 bLv
 bUs
 lFY
-pxN
+kPI
 fFm
 kPI
 lSY

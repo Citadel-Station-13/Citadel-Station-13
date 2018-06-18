@@ -73558,6 +73558,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -74286,10 +74289,10 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diF" = (
-/obj/structure/chair/stool,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/machinery/jukebox,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diG" = (
@@ -76379,6 +76382,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1

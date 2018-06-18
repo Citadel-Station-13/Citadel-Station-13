@@ -47308,7 +47308,7 @@
 	},
 /area/science/xenobiology)
 "cPO" = (
-/obj/item/chair/stool,
+/obj/machinery/jukebox,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -49815,6 +49815,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"koO" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "kpK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -92592,7 +92596,7 @@ aiS
 aiS
 aob
 eaw
-ajv
+koO
 ajv
 cnX
 aiS
