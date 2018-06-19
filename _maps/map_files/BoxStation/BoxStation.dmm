@@ -34880,6 +34880,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+<<<<<<< HEAD
+=======
+"bJP" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+>>>>>>> 07c44a1... Fixes access reqs on public autodrobes/boozeomats (#38603)
 "bJQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
