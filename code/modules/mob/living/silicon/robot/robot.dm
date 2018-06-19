@@ -164,8 +164,8 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
+	var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
 			mmi.forceMove(T)
 		if(mmi.brainmob)
@@ -180,6 +180,11 @@
 			ghostize()
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
+	//CITADEL EDIT: Cyborgs drop encryption keys on destroy
+	if(istype(radio) && istype(radio.keyslot))
+		radio.keyslot.forceMove(T)
+		radio.keyslot = null
+	//END CITADEL EDIT
 	if(connected_ai)
 		connected_ai.connected_robots -= src
 	if(shell)
