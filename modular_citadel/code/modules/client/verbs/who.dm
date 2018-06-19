@@ -26,29 +26,40 @@
 	set category = "OOC"
 
 	var/msg = ""
+	var/admin_mode = holder && isobserver(mob)
+	if(admin_mode)
+		var/mob/dead/observer/G = mob
+		if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
+			log_admin("[key_name(usr)] checked advanced who in-round")
 
 	var/list/Lines = list()
+	var/list/current = list() 
 	if(length(GLOB.admins))
 		Lines += "<b>Admins:</b>"
 		for(var/X in GLOB.admins)
 			var/client/C = X
-			if(C && C.holder && !C.holder.fakekey)
-				Lines += "\t <font color='#FF0000'>[C.key]</font>[show_admin_info(C)] ([round(C.avgping, 1)]ms)"
+			if(adminmode || (C && C.holder && !C.holder.fakekey))
+				current += "\t <font color='#FF0000'>[C.key]</font>[adminmode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
+		lines += sortList(current)
+	current.Cut()
 	if(length(GLOB.mentors))
 		Lines += "<b>Mentors:</b>"
 		for(var/X in GLOB.mentors)
 			var/client/C = X
 			if(C)
-				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_admin_info(C)] ([round(C.avgping, 1)]ms)"
+				current += "\t <font color='#0033CC'>[C.key]</font>[adminmode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
+		Lines += sortList(current)
+	current.Cut()
 
 	Lines += "<b>Players:</b>"
-	for(var/X in sortList(GLOB.clients))
+	for(var/X in GLOB.clients)
 		var/client/C = X
 		if(!C) continue
 		var/key = C.key
 		if(C.holder && C.holder.fakekey)
 			key = C.holder.fakekey
-		Lines += "\t [key][show_admin_info(C)] ([round(C.avgping, 1)]ms)"
+		current += "\t [key][adminmode? "[show_admin_info(C)]":""] ([round(C.avgping, 1)]ms)"
+		Lines += sortlist(current)
 
 	for(var/line in Lines)
 		msg += "[line]\n"
@@ -58,9 +69,6 @@
 
 /client/proc/show_admin_info(var/client/C)
 	if(!C)
-		return ""
-
-	if(!check_rights_for(src, R_ADMIN))
 		return ""
 
 	var/entry = ""
