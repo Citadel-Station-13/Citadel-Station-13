@@ -2,6 +2,7 @@
 ##Citadel Station 13 <BR>
 Based and maintained from /tg/station.<BR>
 
+<<<<<<< HEAD
 [![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com)
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
@@ -15,6 +16,12 @@ Based and maintained from /tg/station.<BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+=======
+**Website:** https://www.tgstation13.org
+**Code:** https://github.com/tgstation/tgstation
+**Wiki** https://tgstation13.org/wiki/Main_Page
+**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus)
+>>>>>>> db91401... removes unnecessary <br> at README.md (#38600)
 
 **Citadel Station Information** <BR>
 **Forums:** http://citadel-station.net/forum/ <BR>
