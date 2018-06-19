@@ -122,13 +122,8 @@
 			message = pick("Ree!!", "Reee!!","REEE!!","REEEEE!!") //but its usually just angry gibberish,
 	return message
 
-<<<<<<< HEAD
-obj/item/clothing/mask/frog/cursed
-	flags_1 = NODROP_1 //reee!!
-=======
 /obj/item/clothing/mask/frog/cursed
-	item_flags = NODROP //reee!!
->>>>>>> 6d558b6... puts a / at the start of some obj instances (#38545)
+	flags_1 = NODROP_1 //reee!!
 
 /obj/item/clothing/mask/frog/cursed/attack_self(mob/user)
 	return //no voicebox to alter.
