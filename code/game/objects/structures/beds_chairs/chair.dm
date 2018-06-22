@@ -411,6 +411,7 @@
 /obj/structure/chair/shuttle
 	name = "shuttle seat"
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+<<<<<<< HEAD
 	icon_state = "shuttle_chair"
 	buildstackamount = 2
 	var/mutable_appearance/armrest
@@ -420,3 +421,8 @@
 	armrest = mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
+=======
+	icon = 'goon/icons/obj/chairs.dmi'
+	icon_state = "shuttle_chair" //thanks gannets!
+
+>>>>>>> 50eeeb5... Merge pull request #38664 from praisenarsie/THISISGOOOOOOOOON
