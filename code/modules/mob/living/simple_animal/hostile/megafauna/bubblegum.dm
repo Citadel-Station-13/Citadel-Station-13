@@ -12,10 +12,17 @@ If it fails to warp to a target, it may summon up to 6 slaughterlings from the b
 If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood.
 At half health, it will either charge three times or warp, then charge, instead of doing a single charge.
 
+<<<<<<< HEAD
 When Bubblegum dies, it leaves behind a H.E.C.K. mining suit as well as a chest that can contain three things:
  1. A bottle that, when activated, drives everyone nearby into a frenzy
  2. A contract that marks for death the chosen target
  3. A spellblade that can slice off limbs at range
+=======
+When Bubblegum dies, it leaves behind a H.E.C.K. suit+helmet as well as a chest that can contain three things:
+ 1. A spellblade that can slice off limbs at range
+ 2. A bottle that, when activated, drives everyone nearby into a frenzy
+ 3. A contract that marks for death the chosen target
+>>>>>>> c6ca01f... Merge pull request #38661 from 81Denton/fug
 
 Difficulty: Hard
 
