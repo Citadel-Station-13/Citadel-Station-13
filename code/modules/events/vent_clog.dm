@@ -102,11 +102,11 @@
 	name = "Aphrodisiac Backpressure Surge"
 	max_occurrences = 0
 	typepath = /datum/round_event/vent_clog/aphro
-	var/reagentid = "aphro"
-	var/annoucemsg = "The scrubbers network is experiencing an unexpected surge of pressurized aphrodisiac. Some ejection of contents may occur."
 
 /datum/round_event/vent_clog/aphro
 	reagentsAmount = 100
+	var/reagentid = "aphro"
+	var/annoucemsg = "The scrubbers network is experiencing an unexpected surge of pressurized aphrodisiac. Some ejection of contents may occur."
 
 /datum/round_event/vent_clog/aphro/announce()
 	priority_announce(announcemsg, "Atmospherics alert")
