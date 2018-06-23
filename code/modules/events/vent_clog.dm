@@ -96,3 +96,29 @@
 			foam.set_up(200, get_turf(vent), R)
 			foam.start()
 		CHECK_TICK
+
+//lazy citadel edit
+/datum/round_event_control/vent_clog/aphro
+	name = "Aphrodisiac Backpressure Surge"
+	max_occurrences = 0
+	typepath = /datum/round_event/vent_clog/aphro
+	var/reagentid = "aphro"
+	var/annoucemsg = "The scrubbers network is experiencing an unexpected surge of pressurized aphrodisiac. Some ejection of contents may occur."
+
+/datum/round_event/vent_clog/aphro
+	reagentsAmount = 100
+
+/datum/round_event/vent_clog/aphro/announce()
+	priority_announce(announcemsg, "Atmospherics alert")
+
+/datum/round_event/vent_clog/aphro/start()
+	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
+		if(vent && vent.loc)
+			var/datum/reagents/R = new/datum/reagents(1000)
+			R.my_atom = vent
+			R.add_reagent(reagentid, reagentsAmount)
+
+			var/datum/effect_system/foam_spread/foam = new
+			foam.set_up(200, get_turf(vent), R)
+			foam.start()
+		CHECK_TICK
