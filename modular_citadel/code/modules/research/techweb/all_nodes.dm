@@ -10,6 +10,10 @@
 	. = ..()
 	design_ids += "xenobio_slimeadv"
 
+/datum/techweb_node/ballistic_weapons/New()
+	. = ..()
+	design_ids += "mag_oldsmg_rubber"
+
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
 	display_name = "Games and Toys"
