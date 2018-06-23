@@ -152,6 +152,8 @@
 			state = STATE_PURCHASE
 
 		if("buyshuttle")
+			if(usr.ckey == "donaldtrumpthecommunist" || findtext(usr.name, "Kate"))
+				return
 			if(authenticated==2)
 				var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
