@@ -497,6 +497,33 @@
 		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
 		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
 
+//lazy citadel edit begin
+/obj/machinery/nuclearbomb/beer/aphro
+	name = "Nanotrasen-brand nuclear fission explosive"
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back. It smells of a sickening sweet flavor."
+
+/obj/machinery/nuclearbomb/beer/aphro/Initialize()
+	. = ..()
+	if(keg)
+		keg.reagents.remove_any(INFINITY)
+		keg.reagents.add_reagent("aphro", 1000)
+
+/obj/machinery/nuclearbomb/beer/aphro/actually_explode()
+	var/turf/bomb_location = get_turf(src)
+	if(!bomb_location)
+		disarm()
+		return
+	if(is_station_level(bomb_location.z))
+		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/aphro) in SSevents.control
+		if(E)
+			E.runEvent()
+		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
+	else
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
+		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
+
+//lazy citadel edit end
+
 /obj/machinery/nuclearbomb/beer/proc/disarm()
 	bomb_set = FALSE
 	detonation_timer = null
