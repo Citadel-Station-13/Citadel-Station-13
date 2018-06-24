@@ -1104,8 +1104,6 @@
 	else
 		activate_pin(3)
 
-<<<<<<< HEAD
-=======
 /obj/item/integrated_circuit/input/atmospheric_analyzer
 	name = "atmospheric analyzer"
 	desc = "A miniaturized analyzer which can scan anything that contains gases. Leave target as NULL to scan the air around the assembly."
@@ -1207,4 +1205,3 @@
 	else
 		return FALSE
 	return TRUE
->>>>>>> 1572e4f... Adds atmos circuit (#38111)
