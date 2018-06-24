@@ -1103,7 +1103,7 @@
 		activate_pin(2)
 	else
 		activate_pin(3)
-
+    
 /obj/item/integrated_circuit/input/atmospheric_analyzer
 	name = "atmospheric analyzer"
 	desc = "A miniaturized analyzer which can scan anything that contains gases. Leave target as NULL to scan the air around the assembly."
