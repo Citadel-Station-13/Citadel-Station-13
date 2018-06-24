@@ -434,12 +434,16 @@ SUBSYSTEM_DEF(job)
 			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
+<<<<<<< HEAD
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
 		job.after_spawn(H, M, joined_late)
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
 	//handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role) //CIT CHANGE - makes donators spawn with their items. This can safely be commented out when all of the donator items are migrated to the loadout system
+=======
+		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+>>>>>>> 501fd35... Fixed cyborgs not getting their names at round start  (#38675)
 
 	return H
 

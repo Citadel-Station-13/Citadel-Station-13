@@ -381,8 +381,7 @@
 	else if(transfer_after)
 		R.key = key
 
-	if (CONFIG_GET(flag/rename_cyborg))
-		R.rename_self("cyborg")
+	R.rename_self("cyborg")
 
 	if(R.mmi)
 		R.mmi.name = "Man-Machine Interface: [real_name]"
