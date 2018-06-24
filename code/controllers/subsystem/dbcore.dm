@@ -214,12 +214,8 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if (warn)
 		. = Query.warn_execute()
 	else
-<<<<<<< HEAD
-		return Query.Execute()
-=======
 		. = Query.Execute()
 	qdel(Query)
->>>>>>> 84ae366... Fixes MassInsert query deleting (#38610)
 
 
 /datum/DBQuery
