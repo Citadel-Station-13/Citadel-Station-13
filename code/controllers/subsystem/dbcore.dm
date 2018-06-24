@@ -237,8 +237,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	item = list()
 	_db_query = _dm_db_new_query()
 
-<<<<<<< HEAD
-=======
 /datum/DBQuery/Destroy()
 	Close()
 	SSdbcore.active_queries -= src
@@ -252,7 +250,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	last_activity = activity
 	last_activity_time = world.time
 
->>>>>>> 1a22d45... [s] Fixes stack overflow (#38592)
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
