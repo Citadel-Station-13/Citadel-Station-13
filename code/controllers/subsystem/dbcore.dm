@@ -237,10 +237,28 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	item = list()
 	_db_query = _dm_db_new_query()
 
+/datum/DBQuery/Destroy()
+	Close()
+	SSdbcore.active_queries -= src
+	return ..()
+
+/datum/DBQuery/CanProcCall(proc_name)
+	//fuck off kevinz
+	return FALSE
+
+/datum/DBQuery/proc/Activity(activity)
+	last_activity = activity
+	last_activity_time = world.time
+
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
+
+/datum/DBQuery/proc/SetQuery(new_sql)
+	Activity("SetQuery")
+	Close()
+	sql = new_sql
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
 	var/start_time
