@@ -155,8 +155,6 @@
 	if(nadeassembly)
 		nadeassembly.on_found(finder)
 
-<<<<<<< HEAD
-=======
 /obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
 	..()
 	var/reagent_string = ""
@@ -170,8 +168,7 @@
 	message_admins(message)
 	log_game("[src] primed by [user] at [AREACOORD(T)] contained [reagent_string].")
 	add_logs(user, src, "primed", addition = "[reagent_string] inside.")
-
->>>>>>> cb0f3a8... Merge pull request #38609 from AnturK/missedthatinreviewwhoops
+	
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
 		return
