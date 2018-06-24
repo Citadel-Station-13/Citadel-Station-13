@@ -10,9 +10,9 @@
 /obj/item/projectile/temp/on_hit(atom/target, blocked = FALSE)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
-		var/mob/M = target
-		M.bodytemperature = temperature
-	return TRUE
+ TRUE
+		var/mob/living/L = target
+		L.adjust_bodytemperature(((100-blocked)/100)*(temperature - L.bodytemperature)) // the new body temperature is adjusted by 100-blocked % of the delta between body temperature and the bullet's effect temperature
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
