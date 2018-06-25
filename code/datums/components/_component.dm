@@ -96,7 +96,7 @@
 
 		if(sig_type[1] == "!")
 			SSdcs.RegisterSignal(src, sig_type)
-		
+
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
