@@ -167,6 +167,7 @@
 /area/tcommsat/chamber)
 "aG" = (
 /obj/structure/grille/broken,
+/obj/item/clothing/gloves/combat,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "aH" = (
@@ -624,7 +625,7 @@
 /turf/open/floor/plating,
 /area/tcommsat/chamber)
 "cd" = (
-/obj/item/storage/toolbox/syndicate,
+/obj/item/storage/belt/utility/full/engi,
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/chamber)
 "ce" = (
@@ -904,6 +905,10 @@
 "da" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
+/area/tcommsat/chamber)
+"SH" = (
+/obj/item/dildo/random,
+/turf/open/floor/plating/airless,
 /area/tcommsat/chamber)
 
 (1,1,1) = {"
@@ -2702,7 +2707,7 @@ ac
 bw
 bw
 bw
-ac
+SH
 ca
 cf
 bw

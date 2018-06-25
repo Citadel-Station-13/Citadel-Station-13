@@ -274,6 +274,9 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else
 			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
 			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			var/mob/living/L = target
+			if(istype(L) && L.fire_stacks > 0)
+				L.adjust_fire_stacks(-10)
 			return
 	else if(istype(target, /obj/structure/window))
 		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")

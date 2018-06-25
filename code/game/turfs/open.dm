@@ -2,7 +2,6 @@
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/mutable_appearance/wet_overlay
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
 	var/list/archdrops
@@ -12,6 +11,8 @@
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
+	if(LAZYLEN(archdrops))
+		AddComponent(/datum/component/archaeology, archdrops)
 
 /turf/open/indestructible
 	name = "floor"
@@ -84,7 +85,7 @@
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
-	name = "cogmetal"
+	name = "cogmetal floor"
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room

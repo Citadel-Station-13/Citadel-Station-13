@@ -2,6 +2,7 @@
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
+	gender = PLURAL
 	name = "asteroid sand"
 	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
@@ -20,10 +21,6 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
-
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
-
 
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -266,6 +263,7 @@
 
 
 /turf/open/floor/plating/asteroid/snow
+	gender = PLURAL
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
@@ -292,7 +290,7 @@
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/ice
-	name = "icey snow"
+	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"

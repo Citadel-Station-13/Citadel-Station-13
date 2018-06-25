@@ -164,8 +164,8 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
+	var/atom/T = drop_location()//To hopefully prevent run time errors.
 	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)
 			mmi.forceMove(T)
 		if(mmi.brainmob)
@@ -184,6 +184,10 @@
 		connected_ai.connected_robots -= src
 	if(shell)
 		GLOB.available_ai_shells -= src
+	else
+		if(T && istype(radio) && istype(radio.keyslot))
+			radio.keyslot.forceMove(T)
+			radio.keyslot = null
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -537,7 +541,7 @@
 	else if(istype(W, /obj/item/flashlight))
 		if(!opened)
 			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
-		if(lamp_cooldown <= world.time)
+		else if(lamp_cooldown <= world.time)
 			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
 		else
 			if(!user.temporarilyRemoveItemFromInventory(W))
@@ -893,14 +897,17 @@
 	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
 		if(uneq_module(held_items[3]))
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 1, 1)
-			visible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>", "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
+			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 3 OFFLINE.\"</span>")
+			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
 		if(health < 0)
 			if(uneq_module(held_items[2]))
-				visible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>", "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
+				audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module 2 OFFLINE.\"</span>")
+				to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
 				playsound(loc, 'sound/machines/warning-buzzer.ogg', 60, 1, 1)
 			if(health < -maxHealth*0.5)
 				if(uneq_module(held_items[1]))
-					visible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>", "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
+					audible_message("<span class='warning'>[src] sounds an alarm! \"CRITICAL ERROR: All modules OFFLINE.\"</span>")
+					to_chat(src, "<span class='userdanger'>CRITICAL ERROR: All modules OFFLINE.</span>")
 					playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, 1, 1)
 
 /mob/living/silicon/robot/update_sight()

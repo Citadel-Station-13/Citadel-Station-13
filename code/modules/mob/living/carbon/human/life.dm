@@ -236,8 +236,6 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
-	if(has_trait(TRAIT_RESISTCOLD))
-		return TRUE
 //CITADEL EDIT Mandatory for vore code.
 	if(istype(loc, /obj/item/dogborg/sleeper))
 		return TRUE //freezing to death in sleepers ruins fun.
@@ -397,10 +395,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick(GLOB.ballmer_good_msg))
-					SSresearch.science_tech.add_points_all(TECHWEB_POINT_TYPE_DEFAULT, (BALLMER_POINTS * ballmer_percent))
+					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.remove_points_all(TECHWEB_POINT_TYPE_DEFAULT, BALLMER_POINTS)
+						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
 						say(pick(GLOB.ballmer_windows_me_msg))
 
 		if(drunkenness >= 41)

@@ -4355,6 +4355,24 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"Dv" = (
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/item/vending_refill/kink,
+/obj/structure/closet,
+/turf/open/floor/plasteel/neutral,
+/area/ruin/space/has_grav/hotel/custodial)
+"Fy" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/white,
+/area/ruin/space/has_grav/hotel/workroom)
+"MK" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel)
 
 (1,1,1) = {"
 aa
@@ -5365,7 +5383,7 @@ ee
 dH
 cZ
 eJ
-aw
+MK
 fi
 fQ
 fQ
@@ -6093,7 +6111,7 @@ kC
 kn
 lg
 jG
-ml
+Dv
 mp
 mw
 mJ
@@ -7252,7 +7270,7 @@ di
 di
 ea
 ep
-dV
+Fy
 di
 eT
 fp
@@ -7532,7 +7550,7 @@ di
 di
 di
 dV
-dV
+Fy
 di
 eW
 ft

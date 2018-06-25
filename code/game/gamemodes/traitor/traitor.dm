@@ -11,7 +11,7 @@
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")	//citadel change - adds HoP, CE, CMO, and RD to ling role blacklist
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")	//citadel change - adds HoP, CE, CMO, and RD to ling role blacklist
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -53,7 +53,7 @@
 		pre_traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
-		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
+		log_game("[key_name(traitor)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
 	return !traitors_required || pre_traitors.len > 0

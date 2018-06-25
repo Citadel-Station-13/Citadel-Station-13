@@ -466,6 +466,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "abv" = (
@@ -1519,6 +1520,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
 "adG" = (
@@ -73556,6 +73558,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -74284,10 +74289,10 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diF" = (
-/obj/structure/chair/stool,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/machinery/jukebox,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "diG" = (
@@ -76378,6 +76383,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -76916,6 +76924,10 @@
 "wOE" = (
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"wOY" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/space/basic,
+/area/space)
 "wPk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -86362,7 +86374,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wOY
 aSH
 aUb
 aVt
@@ -86876,7 +86888,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wOY
 aSI
 aRA
 aVv
@@ -101998,7 +102010,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wOY
 abL
 acf
 acy
@@ -102512,7 +102524,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+wOY
 abN
 ach
 aax
@@ -114596,9 +114608,9 @@ aaa
 aaf
 aaa
 acP
-aaa
+wOY
 adF
-aaa
+wOY
 acP
 afB
 agz
@@ -120295,9 +120307,9 @@ dgp
 cXI
 cYj
 atm
-aaa
+wOY
 adF
-aaa
+wOY
 bhT
 bpv
 brL

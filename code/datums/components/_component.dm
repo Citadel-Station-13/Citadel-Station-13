@@ -58,6 +58,7 @@
 	if(!silent)
 		P.SendSignal(COMSIG_COMPONENT_REMOVING, src)
 	parent = null
+	SSdcs.UnregisterSignal(src, signal_procs)
 	LAZYCLEARLIST(signal_procs)
 	return ..()
 
@@ -85,18 +86,26 @@
 		procs = list()
 		signal_procs = procs
 
+	if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
+		proc_or_callback = CALLBACK(src, proc_or_callback)
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
-		if(!override)
-			. = procs[sig_type]
-			if(.)
-				stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+		if(!override && procs[sig_type])
+			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
-		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
-			proc_or_callback = CALLBACK(src, proc_or_callback)
+		if(sig_type[1] == "!")
+			SSdcs.RegisterSignal(src, sig_type)
+
 		procs[sig_type] = proc_or_callback
 
 	enabled = TRUE
+
+/datum/component/proc/HasSignal(sig_type)
+	return signal_procs[sig_type] != null
+
+/datum/component/proc/UnregisterSignal(sig_type_or_types)
+	signal_procs -= sig_type_or_types
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
