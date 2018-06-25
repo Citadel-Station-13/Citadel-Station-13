@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	materials = list()		// To be filled later
 	var/list/assembly_components = list()
 	var/list/ckeys_allowed_to_scan = list() // Players who built the circuit can scan it as a ghost.

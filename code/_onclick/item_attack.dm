@@ -53,7 +53,7 @@
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
-	if(flags_1 & NOBLUDGEON_1)
+	if(item_flags & NOBLUDGEON)
 		return
 
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
@@ -84,7 +84,7 @@
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
-	if(flags_1 & NOBLUDGEON_1)
+	if(item_flags & NOBLUDGEON)
 		return
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) // CIT CHANGE - makes it impossible to attack in stamina softcrit
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
