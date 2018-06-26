@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(research)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 49)
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 20)			//citadel edit - techwebs nerf
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
 
