@@ -120,8 +120,12 @@
 	name = "Capture the Flag"
 	icon_state = "yellow"
 	requires_power = FALSE
+<<<<<<< HEAD
 	has_gravity = TRUE
 	flags_1 = NO_DEATHRATTLE_1
+=======
+	has_gravity = STANDARD_GRAVITY
+>>>>>>> 9a56845... Fix flags_1 overlap and VV, remove CTF deathrattle (#38711)
 
 /area/ctf/control_room
 	name = "Control Room A"
