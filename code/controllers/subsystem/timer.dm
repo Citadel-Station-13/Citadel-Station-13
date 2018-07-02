@@ -485,6 +485,8 @@ SUBSYSTEM_DEF(timer)
 					if (hash_timer.flags & TIMER_STOPPABLE)
 						. = hash_timer.id
 					return
+	else if(flags & TIMER_OVERRIDE)
+		stack_trace("TIMER_OVERRIDE used without TIMER_UNIQUE")
 
 
 	var/timeToRun = world.time + wait
@@ -510,9 +512,6 @@ SUBSYSTEM_DEF(timer)
 		return TRUE
 	return FALSE
 
-/datum/controller/subsystem/timer/proc/tump_buckets()
-	reset_buckets()
-	SSticker.tumpedbuckets = TRUE
 
 #undef BUCKET_LEN
 #undef BUCKET_POS
