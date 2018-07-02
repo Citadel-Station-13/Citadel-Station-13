@@ -13642,7 +13642,7 @@
 /turf/open/floor/grass,
 /area/centcom/holding)
 "Qm" = (
-/obj/singularity/wizard,
+/obj/singularity/wizard/mapped,
 /turf/open/indestructible/binary,
 /area/fabric_of_reality)
 "Qu" = (
