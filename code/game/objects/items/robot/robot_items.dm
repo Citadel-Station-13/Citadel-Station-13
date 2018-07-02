@@ -151,7 +151,7 @@
 /obj/item/borg/charger
 	name = "power connector"
 	icon_state = "charger_draw"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/mode = "draw"
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
@@ -194,7 +194,7 @@
 
 				M.use_power(200)
 
-			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
 		else if(is_type_in_list(target, charge_items))
 			var/obj/item/stock_parts/cell/cell = target
@@ -233,7 +233,7 @@
 					break
 				target.update_icon()
 
-			to_chat(user, "<span class='notice'>You stop charging youself.</span>")
+			to_chat(user, "<span class='notice'>You stop charging yourself.</span>")
 
 	else if(is_type_in_list(target, charge_items))
 		var/obj/item/stock_parts/cell/cell = target
@@ -693,7 +693,7 @@
 
 
 /obj/item/borg/sight/xray
-	name = "\proper x-ray vision"
+	name = "\proper X-ray vision"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY

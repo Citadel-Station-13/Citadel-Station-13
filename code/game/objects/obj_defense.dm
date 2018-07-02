@@ -222,7 +222,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
-//The surgeon general warns that being buckled to certain objects recieving powerful shocks is greatly hazardous to your health
+//The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health
 //Only tesla coils and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
 /obj/proc/tesla_buckle_check(var/strength)
 	if(has_buckled_mobs())
@@ -235,7 +235,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
-	SendSignal(COMSIG_OBJ_DECONSTRUCT, disassembled)
+	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
 //what happens when the obj's health is below integrity_failure level.
