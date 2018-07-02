@@ -279,7 +279,7 @@
 				emote("wag")
 			else if(dna && dna.species && ("mam_tail" in dna.species.mutant_bodyparts) && (dna.features["mam_tail"])!= "None")
 				emote("wag")
-			SendSignal(COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \

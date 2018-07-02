@@ -512,6 +512,9 @@ SUBSYSTEM_DEF(timer)
 		return TRUE
 	return FALSE
 
+/datum/controller/subsystem/timer/proc/tump_buckets()
+	reset_buckets()
+	SSticker.tumpedbuckets = TRUE
 
 #undef BUCKET_LEN
 #undef BUCKET_POS
