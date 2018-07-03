@@ -31,3 +31,16 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
 	item_state = "r_suit"
 	can_adjust = FALSE
+	
+/obj/item/clothing/under/rank/captain/femformal
+	name ="captain's female formal outfit"
+	desc = ""
+	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
+	icon_state = "lewdcap"
+	icon_override = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
+	item_state = "lewdcap"
+	item_color = "lewdcap"
+	can_adjust = FALSE
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	sensor_mode = SENSOR_COORDS  //it's still a captain's suit nerd
+	random_sensor = FALSE
