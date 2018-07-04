@@ -274,7 +274,7 @@
 				// Display a warning if the user mocks up
 				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		..()
+	..()	//CITADEL CHANGE - removes a tab from behind this ..() so that flavortext can actually be examined
 
 
 ///////HUDs///////
