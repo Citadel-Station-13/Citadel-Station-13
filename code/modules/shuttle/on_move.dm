@@ -53,7 +53,7 @@ All ShuttleMove procs go here
 	if(!shuttle_boundary)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
 	var/depth = baseturfs.len - shuttle_boundary + 1
-	newT.CopyOnTop(src, 1, depth)
+	newT.CopyOnTop(src, 1, depth, TRUE)
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
@@ -288,7 +288,14 @@ All ShuttleMove procs go here
 			shake_force *= 0.25
 		shake_camera(src, shake_force, 1)
 
+<<<<<<< HEAD
 /mob/living/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+=======
+/mob/living/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
+	if(buckled)
+		return
+
+>>>>>>> 02986a7... Transfer air along with turfs when shuttles move (#38901)
 	. = ..()
 	if(movement_force && !buckled)
 		if(movement_force["THROW"])
