@@ -30950,6 +30950,17 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
+<<<<<<< HEAD
+=======
+"coR" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/smartfridge/disks{
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/neutral,
+/area/hydroponics)
+>>>>>>> c610897... Puts toasters on tables (#38803)
 "csX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -35406,8 +35417,11 @@
 	},
 /area/hallway/primary/starboard)
 "uuj" = (
-/obj/machinery/plantgenes,
+/obj/machinery/plantgenes{
+	pixel_y = 6
+	},
 /obj/effect/turf_decal/bot,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
 "uuJ" = (
