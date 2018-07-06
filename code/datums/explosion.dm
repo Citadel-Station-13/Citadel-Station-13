@@ -201,7 +201,8 @@ GLOBAL_LIST_EMPTY(explosions)
 				items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O
-				A.ex_act(dist)
+				if(!QDELETED(A))
+					A.ex_act(dist)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
@@ -357,7 +358,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input("Devestation range (Tiles):") as num
+			dev = input("Devastation range (Tiles):") as num
 			heavy = input("Heavy impact range (Tiles):") as num
 			light = input("Light impact range (Tiles):") as num
 

@@ -37,6 +37,7 @@
 	desc = "A vending machine for all your unmentionable desires."
 	icon = 'icons/obj/citvending.dmi'
 	icon_state = "kink"
+	circuit = /obj/item/circuitboard/machine/kinkmate
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
@@ -116,17 +117,11 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
-	charges 		= list(8, 5, 1)// of 20 standard, 12 contraband, 3 premium
-	init_charges 	= list(8, 5, 1)
 
 /obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"
 	icon_state 		= "refill_nazi"
-	charges 		= list(33, 13, 0)
-	init_charges 	= list(33, 13, 0)
 
 /obj/item/vending_refill/soviet
 	machine_name 	= "sovietvend"
 	icon_state 		= "refill_soviet"
-	charges 		= list(47, 7, 0)
-	init_charges 	= list(47, 7, 0)

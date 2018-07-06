@@ -171,6 +171,10 @@
 		return
 	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
 		return
+	if (offender && isitem(offender))
+		var/obj/item/I = offender
+		if (I.item_flags & ABSTRACT)
+			return
 	return refreshBeam()
 
 /obj/item/assembly/infra/ui_interact(mob/user)//TODO: change this this to the wire control panel
@@ -219,10 +223,13 @@
 	var/obj/item/assembly/infra/master
 	anchored = TRUE
 	density = FALSE
-	flags_1 = ABSTRACT_1
 	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
-	if(istype(AM, /obj/effect/beam) || (AM.flags_1 & ABSTRACT_1))
+	if(istype(AM, /obj/effect/beam))
 		return
+	if (isitem(AM))
+		var/obj/item/I = AM
+		if (I.item_flags & ABSTRACT)
+			return
 	master.trigger_beam(AM, get_turf(src))

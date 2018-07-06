@@ -206,8 +206,8 @@
 
 /obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword/cx))
-		if((W.flags_1 & NODROP_1) || (flags_1 & NODROP_1))
-			to_chat(user, "<span class='warning'>\the [flags_1 & NODROP_1 ? src : W] is stuck to your hand, you can't attach it to \the [flags_1 & NODROP_1 ? W : src]!</span>")
+		if((W.item_flags & NODROP) || (item_flags & NODROP))
+			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
@@ -307,7 +307,7 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)//blood overlays get weird otherwise, because the sprite changes. (retained from original desword because I have no idea what this is)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)//blood overlays get weird otherwise, because the sprite changes. (retained from original desword because I have no idea what this is)
 
 /obj/item/twohanded/hypereutactic/AltClick(mob/living/user)
 	if(!in_range(src, user))	//Basic checks to prevent abuse

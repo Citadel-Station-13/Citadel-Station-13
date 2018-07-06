@@ -98,8 +98,8 @@
 	density = FALSE
 	var/duration = 0
 
-/obj/effect/mine/pickup/New()
-	..()
+/obj/effect/mine/pickup/Initialize()
+	. = ..()
 	animate(src, pixel_y = 4, time = 20, loop = -1)
 
 /obj/effect/mine/pickup/triggermine(mob/victim)
@@ -131,7 +131,7 @@
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	add_logs(victim, null, "entered a blood frenzy")
 
-	chainsaw.flags_1 |= NODROP_1
+	chainsaw.item_flags |= NODROP
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
