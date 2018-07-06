@@ -24,3 +24,8 @@
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
+
+/obj/item/projectile/bullet/c46x30mm_tx
+	name = "toxin tipped 4.6x30mm bullet"
+	damage = 15
+	damage_type = TOX
