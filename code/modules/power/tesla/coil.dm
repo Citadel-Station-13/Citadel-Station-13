@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-	//	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
+	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -62,9 +62,9 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	/*if(is_wire_tool(W) && panel_open)			CITADEL EDIT - They removed the wires because they don't like my cheating
+	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
-		return*/
+		return
 
 	return ..()
 
