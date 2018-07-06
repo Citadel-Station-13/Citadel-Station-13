@@ -14,10 +14,6 @@
 	icon_state = "46x30mmtA-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
 
-/obj/item/ammo_box/magazine/wt550m9/wttx
-	name = "wt550 magazine (Toxin Tipped 4.6x30mm)"
-	ammo_type = /obj/item/ammo_casing/c46x30mmtox
-
 /obj/item/ammo_box/magazine/wt550m9/wtap/update_icon()
 	..()
 	icon_state = "46x30mmtA-[round(ammo_count(),4)]"
