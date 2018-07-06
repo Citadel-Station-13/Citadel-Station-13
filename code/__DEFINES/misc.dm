@@ -86,6 +86,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
 #define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
+#define UNDER_HEAD_LAYER			(HEAD_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
@@ -430,6 +431,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
 
+
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
@@ -448,5 +450,10 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
+
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
+
+
+#define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs

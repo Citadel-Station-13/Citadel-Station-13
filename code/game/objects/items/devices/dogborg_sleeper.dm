@@ -48,7 +48,7 @@
 /obj/item/dogborg/sleeper/New()
 	..()
 	update_icon()
-	flags_1 |= NOBLUDGEON_1 //No more attack messages
+	item_flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/dogborg/sleeper/Exit(atom/movable/O)
 	return 0

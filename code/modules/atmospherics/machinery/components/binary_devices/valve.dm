@@ -13,7 +13,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	var/frequency = 0
 	var/id = null
 
-	var/open = FALSE
 	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()
 
 	construction_type = /obj/item/pipe/binary
