@@ -371,7 +371,6 @@
 	icon_state = "leechjar"
 	item_state = "leechjar"
 
-<<<<<<< HEAD
 /obj/item/clothing/neck/devilwings
 	name = "Strange Wings"
 	desc = "These strange wings look like they once attached to something... or someone...? Whatever the case, their presence makes you feel uneasy.."
@@ -381,7 +380,7 @@
 	item_state = "devilwings"
 	worn_x_dimension = 64
 	worn_y_dimension = 34
-=======
+
 /obj/item/bedsheet/custom/flagcape
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
@@ -389,4 +388,3 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
->>>>>>> flagcape
