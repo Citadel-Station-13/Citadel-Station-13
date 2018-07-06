@@ -295,3 +295,9 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/suit/armor/vest/darkcarapace
 	ckeywhitelist = list("inferno707")
+
+/datum/gear/devilwings
+	name = "Strange Wings"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/devilwings
+	ckeywhitelist = list("kitsun")
