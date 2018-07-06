@@ -49,7 +49,11 @@ SUBSYSTEM_DEF(mapping)
 	if(initialized)
 		return
 	if(config.defaulted)
-		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
+		var/old_config = config
+		config = global.config.defaultmap
+		if(!config || config.defaulted)
+			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
+			config = old_config
 	loader = new
 	loadWorld()
 	repopulate_sorted_areas()
@@ -219,6 +223,7 @@ SUBSYSTEM_DEF(mapping)
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
 		query_round_map_name.Execute()
+		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
 	// TODO: remove this when the DB is prepared for the z-levels getting reordered

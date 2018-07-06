@@ -2,7 +2,7 @@
 	var/atom/A = parent
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Abort", "Proceed")
-		if(safety == "Abort" || !in_range(A, user) || !A || !W || user.incapacitated())
+		if(safety != "Proceed" || QDELETED(A) || QDELETED(W) || QDELETED(user) || !user.canUseTopic(A, BE_CLOSE, iscarbon(user)))
 			return
 		var/turf/loccheck = get_turf(A)
 		if(is_reebe(loccheck.z))
@@ -14,6 +14,7 @@
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+		user.gib(TRUE, TRUE, TRUE)
 		for(var/turf/T in range(6,loccheck))
 			if(istype(T, /turf/open/space/transit))
 				continue

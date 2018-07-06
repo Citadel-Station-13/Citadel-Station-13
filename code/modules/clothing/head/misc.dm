@@ -221,7 +221,7 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	dog_fashion = null
 
 /obj/item/clothing/head/cone
@@ -305,8 +305,8 @@
 	icon_state = "drfreeze_hat"
 	flags_inv = HIDEHAIR
 
-/obj/item/clothing/head/pharoah
-	name = "pharoah hat"
+/obj/item/clothing/head/pharaoh
+	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 	icon_state = "pharoah_hat"
@@ -318,7 +318,7 @@
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/nemes
-	name = "headress of Nemes"
+	name = "headdress of Nemes"
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
