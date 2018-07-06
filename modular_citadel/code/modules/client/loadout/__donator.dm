@@ -296,8 +296,16 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/suit/armor/vest/darkcarapace
 	ckeywhitelist = list("inferno707")
 
+<<<<<<< HEAD
 /datum/gear/devilwings
 	name = "Strange Wings"
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/devilwings
 	ckeywhitelist = list("kitsun")
+=======
+/datum/gear/flagcape
+	name = "US Flag Cape"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/bedsheet/custom/flagcape
+	ckeywhitelist = list("darnchacha")
+>>>>>>> flagcape
