@@ -375,5 +375,6 @@
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
