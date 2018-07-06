@@ -19,7 +19,7 @@
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
 					suiciding = FALSE
-					SendSignal(COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
 				suicide_log()
@@ -219,7 +219,4 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
-//	if(has_brain_worms())
-//		to_chat(src, "You can't bring yourself to commit suicide!")
-//		return
 	return TRUE

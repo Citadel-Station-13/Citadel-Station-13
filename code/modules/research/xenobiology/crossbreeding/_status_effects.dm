@@ -564,6 +564,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/cerulean/on_remove()
 	if(clone)
 		clone.visible_message("<span class='warning'>[clone] dissolves into a puddle of goo!</span>")
+		clone.unequip_everything()
 		qdel(clone)
 
 /datum/status_effect/stabilized/pyrite
