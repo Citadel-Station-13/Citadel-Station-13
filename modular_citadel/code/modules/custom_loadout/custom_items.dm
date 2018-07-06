@@ -371,11 +371,7 @@
 	icon_state = "leechjar"
 	item_state = "leechjar"
 
-<<<<<<< HEAD
-	path = /obj/item/bedsheet/custom/flagcape
-=======
 /obj/item/bedsheet/custom/flagcape
->>>>>>> 5924595c8d02754cc68433771a8bedbfafdd26dd
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
