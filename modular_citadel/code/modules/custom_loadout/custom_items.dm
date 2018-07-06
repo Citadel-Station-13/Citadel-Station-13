@@ -371,7 +371,7 @@
 	icon_state = "leechjar"
 	item_state = "leechjar"
 
-/obj/item/bedsheet/rd/royal_cape
+/obj/item/bedsheet/custom/flagcape
 	name = "Flag Cape"
 	desc = "A truly patriotic form of heroic attire."
 	icon = 'icons/obj/custom.dmi'
