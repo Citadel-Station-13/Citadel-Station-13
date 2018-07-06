@@ -142,7 +142,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 200
 	health = 200
-	casingtype = /obj/item/ammo_casing/shotgun/tengauge
+	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	projectilesound = 'sound/weapons/gunshot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 

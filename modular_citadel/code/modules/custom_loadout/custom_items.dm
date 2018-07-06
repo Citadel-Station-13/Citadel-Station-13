@@ -8,7 +8,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "cebu"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 /obj/item/soap/cebu //real versions, for admin shenanigans. Adminspawn only
 	desc = "A bright blue bar of soap that smells of wolves"
@@ -338,7 +338,7 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	
+
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"

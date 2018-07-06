@@ -5,7 +5,8 @@
 	item_state = "plastic-explosive"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
+	flags_1 = NONE
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -217,7 +218,7 @@
 		return
 	if(loc == AM)
 		return
-	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
+	if(SEND_SIGNAL(AM, COMSIG_CONTAINS_STORAGE) && !SEND_SIGNAL(AM, COMSIG_IS_STORAGE_LOCKED))
 		return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
