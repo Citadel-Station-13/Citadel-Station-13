@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 =======
 Optimumtact = Host
+CitrusGender = Game Master
 NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
