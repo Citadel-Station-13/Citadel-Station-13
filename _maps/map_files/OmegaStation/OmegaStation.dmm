@@ -11804,14 +11804,13 @@
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/crew_quarters/dorms)
 "axG" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/black,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -12105,18 +12104,6 @@
 "ayx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/neutral/corner{
-	dir = 4
-	},
-/area/crew_quarters/dorms)
-"ayy" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
 /area/crew_quarters/dorms)
@@ -12508,8 +12495,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "azB" = (
-/obj/structure/table,
-/obj/item/camera,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
@@ -30671,6 +30656,13 @@
 /area/engine/atmos)
 "bxJ" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/computer/cryopod{
+	pixel_x = 30
+	},
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -73106,7 +73098,7 @@ auT
 avY
 awQ
 axG
-ayy
+axG
 bxJ
 aAH
 aBQ
