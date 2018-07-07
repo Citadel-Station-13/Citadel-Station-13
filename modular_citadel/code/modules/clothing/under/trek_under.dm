@@ -24,13 +24,13 @@
 	item_state = "trek_command"
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 0, "acid" = 0) // Considering only staff heads get to pick it
 
-/obj/item/clothing/under/rank/trek/engsec   //Cit Change removed armor form here
+/obj/item/clothing/under/rank/trek/engsec  
 	name = "Operations Uniform"
 	desc = "The uniform worn by operations officers of the mid 2260s. You feel strangely vulnerable just seeing this..."
 	icon_state = "trek_engsec"
 	item_state = "trek_engsec"
 
-/obj/item/clothing/under/rank/trek/medsci   //Cit Change removed armor form here
+/obj/item/clothing/under/rank/trek/medsci   
 	name = "MedSci Uniform"
 	desc = "The uniform worn by medsci officers in the mid 2260s."
 	icon_state = "trek_medsci"
