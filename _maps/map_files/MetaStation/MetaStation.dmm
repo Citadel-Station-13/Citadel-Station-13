@@ -5133,7 +5133,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "alf" = (
-/obj/structure/closet/firecloset,
+/obj/machinery/cryopod{
+	icon_state = "cryopod-open";
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "alg" = (
@@ -5840,7 +5843,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "amv" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/cryopod{
+	icon_state = "cryopod-open";
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/fitness/recreation)
 "amw" = (
@@ -21748,7 +21754,7 @@
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
 "aUR" = (
-/obj/structure/closet/wardrobe/green,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/vault,
 /area/crew_quarters/locker)
 "aUS" = (
@@ -52985,6 +52991,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
+/obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -57952,10 +57959,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cto" = (
-/obj/machinery/vending/assist,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ctq" = (
@@ -73501,8 +73505,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
+/obj/machinery/computer/cryopod{
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
