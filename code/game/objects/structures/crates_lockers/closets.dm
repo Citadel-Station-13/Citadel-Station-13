@@ -36,11 +36,11 @@
 
 
 /obj/structure/closet/Initialize(mapload)
-	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	. = ..()
 	update_icon()
 	PopulateContents()
+	if(mapload && !opened)
+		take_contents()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -167,6 +167,8 @@
 			var/obj/item/I = AM
 			if (I.item_flags & NODROP)
 				return
+		else if(istype(AM, /obj/effect))
+			return
 		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)
