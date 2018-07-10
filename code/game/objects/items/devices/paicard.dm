@@ -1,6 +1,6 @@
 /obj/item/paicard
 	name = "personal AI device"
-	icon = 'icons/obj/aicards.dmi'
+	icon = 'modular_citadel/icons/obj/aicards.dmi' // CITADEL EDIT
 	icon_state = "pai"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -147,6 +147,10 @@
 				src.add_overlay("pai-what")
 			if(10)
 				src.add_overlay("pai-null")
+			if(11)
+				src.add_overlay("pai-exclamation") // CITADEL EDIT
+			if(12)
+				src.add_overlay("pai-question") // CITADEL EDIT
 
 /obj/item/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
