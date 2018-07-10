@@ -119,7 +119,15 @@
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
 		           /obj/item/shield/riot/roman/fake = 1,
-		           /obj/item/skub = 1)
+		           /obj/item/skub = 1,
+		           /obj/item/clothing/under/lobster = 1,	 // CIT CHANGES	           
+		           /obj/item/clothing/head/lobsterhat = 1,
+		           /obj/item/clothing/head/drfreezehat = 1,
+		           /obj/item/clothing/suit/dracula = 1,
+		           /obj/item/clothing/suit/drfreeze_coat = 1,
+		           /obj/item/clothing/suit/gothcoat = 2,
+		           /obj/item/clothing/under/draculass = 1,
+                   /obj/item/clothing/under/drfreeze = 1)    //End of Cit Changes
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/autodrobe/all_access
