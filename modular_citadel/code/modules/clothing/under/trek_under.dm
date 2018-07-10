@@ -29,7 +29,6 @@
 	desc = "The uniform worn by operations officers of the mid 2260s. You feel strangely vulnerable just seeing this..."
 	icon_state = "trek_engsec"
 	item_state = "trek_engsec"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 10, "acid" = 0) // since they're shared between jobs and kinda moot.
 
 /obj/item/clothing/under/rank/trek/medsci
 	name = "MedSci Uniform"
@@ -37,7 +36,6 @@
 	icon_state = "trek_medsci"
 	item_state = "trek_medsci"
 	permeability_coefficient = 0.50
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 0, "acid" = 10) // basically a copy of vanilla sci/med
 
 //TNG
 /obj/item/clothing/under/rank/trek/command/next
