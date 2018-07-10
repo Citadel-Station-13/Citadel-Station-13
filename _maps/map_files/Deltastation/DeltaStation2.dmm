@@ -59000,7 +59000,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/computer/cryopod{
+	pixel_x = 30
+	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -59794,7 +59797,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -99639,6 +99642,10 @@
 	dir = 5
 	},
 /area/science/mixing)
+"fow" = (
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "fpQ" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -99724,6 +99731,12 @@
 	dir = 1
 	},
 /area/science/circuit)
+"gVS" = (
+/obj/item/clothing/head/kitty,
+/obj/item/clothing/under/maid,
+/obj/item/clothing/mask/muzzle,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "gXn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -99811,10 +99824,19 @@
 	dir = 9
 	},
 /area/science/circuit)
+"hPM" = (
+/obj/item/restraints/handcuffs/fake,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "iaF" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/research)
+"ijB" = (
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "ixL" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
@@ -100109,6 +100131,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"mIi" = (
+/obj/item/electropack/shockcollar,
+/obj/item/assembly/signaler,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "mQE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -100131,6 +100158,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
+"nyN" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "nSh" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
@@ -100218,6 +100249,13 @@
 	dir = 1
 	},
 /area/science/circuit)
+"poI" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/item/tank/internals/anesthetic,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "psi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -100259,6 +100297,10 @@
 	dir = 5
 	},
 /area/science/circuit)
+"qBG" = (
+/obj/effect/spawner/lootdrop/keg,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -100367,6 +100409,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"vhA" = (
+/obj/item/clothing/under/color/grey,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "vqd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
@@ -122792,7 +122838,7 @@ dvV
 dsW
 dsW
 dmj
-dod
+qBG
 dhD
 aaa
 aad
@@ -124076,11 +124122,11 @@ dui
 dvW
 dxG
 dzc
-dhD
-dhD
-dhD
-aaa
-aad
+dfY
+dfY
+dfY
+dfY
+dfY
 aaa
 aaa
 aaa
@@ -124334,10 +124380,10 @@ dvX
 dlc
 dzd
 dfY
-aad
-aaa
-aaa
-aad
+nyN
+gVS
+hPM
+dfY
 ajr
 aaa
 aaa
@@ -124590,11 +124636,11 @@ dlc
 dlc
 dmn
 djm
-dhD
-aad
-aad
-aad
-aad
+fow
+dod
+dod
+poI
+dfY
 ajr
 aad
 aad
@@ -124848,10 +124894,10 @@ dvY
 dod
 dmi
 dfY
-aad
-aaa
-aaa
-aad
+ijB
+vhA
+mIi
+dfY
 ajr
 aaa
 aaa
@@ -125108,7 +125154,7 @@ dhQ
 dhQ
 dhQ
 dhQ
-aad
+dfY
 ajr
 aaa
 aaa

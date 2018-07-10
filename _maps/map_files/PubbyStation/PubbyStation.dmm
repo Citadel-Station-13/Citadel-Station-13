@@ -7814,6 +7814,10 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/machinery/computer/cryopod{
+	pixel_y = 30
+	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -8294,15 +8298,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
-"awx" = (
-/obj/structure/closet/athletic_mixed,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/arrival{
-	dir = 1
-	},
 /area/crew_quarters/fitness/recreation)
 "awy" = (
 /obj/structure/closet/lasertag/blue,
@@ -11056,6 +11051,10 @@
 /turf/open/floor/plasteel/white/side,
 /area/crew_quarters/dorms)
 "aDk" = (
+/obj/machinery/vr_sleeper{
+	icon_state = "sleeper";
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/corner{
 	icon_state = "whitecorner";
 	dir = 8
@@ -47360,7 +47359,10 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "dbi" = (
-/obj/machinery/vr_sleeper,
+/obj/machinery/vr_sleeper{
+	icon_state = "sleeper";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "dci" = (
@@ -48248,7 +48250,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/vr_sleeper,
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "fIN" = (
@@ -48323,6 +48325,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
+"gcj" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/crew_quarters/fitness/recreation)
 "gdJ" = (
 /obj/structure/table/glass,
 /obj/item/folder/blue,
@@ -49226,7 +49234,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "iEU" = (
-/obj/item/clothing/suit/apron/chef,
+/obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "iFI" = (
@@ -50697,6 +50705,10 @@
 	},
 /obj/item/stack/spacecash/c10,
 /turf/open/floor/plasteel/dark,
+/area/maintenance/department/crew_quarters/dorms)
+"noC" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/dorms)
 "noM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -52693,6 +52705,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"tap" = (
+/obj/structure/reagent_dispensers/keg/aphro,
+/turf/open/floor/wood,
+/area/maintenance/department/crew_quarters/dorms)
 "taA" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/dark,
@@ -91514,7 +91530,7 @@ cBo
 alQ
 alb
 cBw
-alb
+noC
 aiS
 aiS
 aiS
@@ -91771,7 +91787,7 @@ ajt
 alQ
 mnG
 alb
-alb
+tap
 aiS
 anY
 apt
@@ -95127,7 +95143,7 @@ aiS
 atm
 aun
 atn
-awx
+awz
 axw
 ayu
 azC
@@ -95641,7 +95657,7 @@ asl
 aiS
 aup
 atn
-awz
+awA
 axx
 ayv
 azD
@@ -95898,7 +95914,7 @@ apu
 ale
 auq
 atn
-awA
+awB
 axw
 axw
 axw
@@ -96155,7 +96171,7 @@ akn
 ajv
 aqZ
 atn
-awB
+gcj
 axw
 axw
 axw
