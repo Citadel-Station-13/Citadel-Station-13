@@ -194,6 +194,37 @@
 #define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
 #define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
 
+//AIRLOCK CONTROLLER TAGS
+
+//RnD toxins burn chamber
+#define INCINERATOR_TOXMIX_IGNITER 				"toxmix_igniter"
+#define INCINERATOR_TOXMIX_VENT 				"toxmix_vent"
+#define INCINERATOR_TOXMIX_DP_VENTPUMP			"toxmix_airlock_pump"
+#define INCINERATOR_TOXMIX_AIRLOCK_SENSOR 		"toxmix_airlock_sensor"
+#define INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER 	"toxmix_airlock_controller"
+#define INCINERATOR_TOXMIX_AIRLOCK_INTERIOR 	"toxmix_airlock_interior"
+#define INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR 	"toxmix_airlock_exterior"
+
+//Atmospherics/maintenance incinerator
+#define INCINERATOR_ATMOS_IGNITER 				"atmos_incinerator_igniter"
+#define INCINERATOR_ATMOS_MAINVENT 				"atmos_incinerator_mainvent"
+#define INCINERATOR_ATMOS_AUXVENT 				"atmos_incinerator_auxvent"
+#define INCINERATOR_ATMOS_DP_VENTPUMP			"atmos_incinerator_airlock_pump"
+#define INCINERATOR_ATMOS_AIRLOCK_SENSOR 		"atmos_incinerator_airlock_sensor"
+#define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER	"atmos_incinerator_airlock_controller"
+#define INCINERATOR_ATMOS_AIRLOCK_INTERIOR 		"atmos_incinerator_airlock_interior"
+#define INCINERATOR_ATMOS_AIRLOCK_EXTERIOR 		"atmos_incinerator_airlock_exterior"
+
+//Syndicate lavaland base incinerator (lavaland_surface_syndicate_base1.dmm)
+#define INCINERATOR_SYNDICATELAVA_IGNITER 				"syndicatelava_igniter"
+#define INCINERATOR_SYNDICATELAVA_MAINVENT 				"syndicatelava_mainvent"
+#define INCINERATOR_SYNDICATELAVA_AUXVENT 				"syndicatelava_auxvent"
+#define INCINERATOR_SYNDICATELAVA_DP_VENTPUMP			"syndicatelava_airlock_pump"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR 		"syndicatelava_airlock_sensor"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER 	"syndicatelava_airlock_controller"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR 		"syndicatelava_airlock_interior"
+#define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR	 	"syndicatelava_airlock_exterior"
+
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 #define PIPING_LAYER_MIN 1
@@ -217,16 +248,16 @@
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
-		"Amethyst" = rgb(130,43,255), //supplymain
-		"Blue" = rgb(0,0,255),
-		"Brown" = rgb(178,100,56),
-		"Cyan" = rgb(0,255,249),
-		"Dark" = rgb(69,69,69),
-		"Green" = rgb(30,255,0),
-		"Grey" = rgb(255,255,255),
-		"Orange" = rgb(255,129,25),
-		"Purple" = rgb(128,0,182),
-		"Red" = rgb(255,0,0),
-		"Violet" = rgb(64,0,128),
-		"Yellow" = rgb(255,198,0)
-		))
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))

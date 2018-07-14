@@ -29,9 +29,9 @@
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
-				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
-				message_admins("[key_name_admin(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
+				add_logs(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
+				log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [AREACOORD(target)].")
+				message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 			reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
@@ -286,10 +286,16 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_HEAD && reagents.total_volume)
-		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
-		reagents.reaction(user, TOUCH)
-		reagents.clear_reagents()
+	if (slot == SLOT_HEAD)
+		if(reagents.total_volume)
+			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
+			reagents.reaction(user, TOUCH)
+			reagents.clear_reagents()
+		container_type = NONE
+
+/obj/item/reagent_containers/glass/bucket/dropped(mob/user)
+	. = ..()
+	container_type = initial(container_type)
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head

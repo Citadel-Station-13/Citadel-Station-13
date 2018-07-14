@@ -1,5 +1,8 @@
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
+		if(!(I.slot_flags & ITEM_SLOT_HEAD))
+			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
+			return
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
@@ -44,7 +47,7 @@
 		damage = rand(20, 40)
 	else
 		damage = rand(5, 35)
-	damage = round(damage / 2) // borgs recieve half damage
+	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
 	updatehealth()
 
@@ -77,12 +80,14 @@
 
 
 /mob/living/silicon/robot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			Stun(160)
 		if(2)
 			Stun(60)
-	..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -128,7 +133,7 @@
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
-	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")

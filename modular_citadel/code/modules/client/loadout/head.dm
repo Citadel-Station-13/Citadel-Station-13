@@ -48,6 +48,12 @@
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/that
 
+/datum/gear/flakhelm
+	name = "Flak Helmet"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/flakhelm
+	cost = 2
+
 //trek fancy Hats!
 /datum/gear/trekcap
 	name = "Federation Officer's Cap"

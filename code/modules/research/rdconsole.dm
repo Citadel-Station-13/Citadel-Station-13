@@ -594,9 +594,9 @@ Nothing else in the console has ID requirements.
 				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
 			l += "</div>[RDSCREEN_NOBREAK]"
 
-		var/list/materials = linked_destroy.loaded_item.materials
-		if (materials.len)
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>Material Reclamation</A>"
+		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
+			var/list/materials = linked_destroy.loaded_item.materials
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[materials.len? "Material Reclamation" : "Destroy Item"]</A>"
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"
@@ -861,7 +861,7 @@ Nothing else in the console has ID requirements.
 		switch(ls["disconnect"])
 			if("destroy")
 				if(QDELETED(linked_destroy))
-					say("No Deconstructive Analyzer Linked!")
+					say("No Destructive Analyzer Linked!")
 					return
 				linked_destroy.linked_console = null
 				linked_destroy = null
@@ -887,9 +887,10 @@ Nothing else in the console has ID requirements.
 		say("Ejecting Technology Disk")
 	if(ls["deconstruct"])
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
-		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
+		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
@@ -995,7 +996,7 @@ Nothing else in the console has ID requirements.
 		screen = RDSCREEN_DESIGNDISK
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(QDELETED(linked_destroy))
-			say("No Deconstructive Analyzer Linked!")
+			say("No Destructive Analyzer Linked!")
 			return
 		if(linked_destroy.busy)
 			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")

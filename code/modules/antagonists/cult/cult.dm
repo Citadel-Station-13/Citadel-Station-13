@@ -95,7 +95,7 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			mob.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, mob)
+			SEND_SIGNAL(mob.back, COMSIG_TRY_STORAGE_SHOW, mob)
 		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
@@ -128,7 +128,7 @@
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.p_their()] old faith!</span>", null, null, null, owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
@@ -228,7 +228,7 @@
 			target_candidates += player.mind
 
 	if(target_candidates.len == 0)
-		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
+		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
 				target_candidates += player.mind
@@ -248,7 +248,7 @@
 
 		objectives += sac_objective
 	else
-		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 
 
 	//SUMMON OBJECTIVE

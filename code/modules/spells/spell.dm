@@ -68,27 +68,19 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return
 	user.ranged_ability = src
 	user.click_intercept = src
-	add_mousepointer(user.client)
+	user.update_mouse_pointer()
 	ranged_ability_user = user
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	active = TRUE
 	update_icon()
 
-/obj/effect/proc_holder/proc/add_mousepointer(client/C)
-	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
-		C.mouse_pointer_icon = ranged_mousepointer
-
-/obj/effect/proc_holder/proc/remove_mousepointer(client/C)
-	if(C && ranged_mousepointer && C.mouse_pointer_icon == ranged_mousepointer)
-		C.mouse_pointer_icon = initial(C.mouse_pointer_icon)
-
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	ranged_ability_user.ranged_ability = null
 	ranged_ability_user.click_intercept = null
-	remove_mousepointer(ranged_ability_user.client)
+	ranged_ability_user.update_mouse_pointer()
 	if(msg)
 		to_chat(ranged_ability_user, msg)
 	ranged_ability_user = null
@@ -381,7 +373,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("unconscious")
 			target.AdjustUnconscious(amount)
 		else
-			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
+			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existent vars
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range

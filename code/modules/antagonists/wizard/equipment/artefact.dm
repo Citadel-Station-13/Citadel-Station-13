@@ -98,8 +98,10 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	grav_pull = 6
+	dissipate = 0
+	move_self = 0
 	consume_range = 3
+	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 
@@ -107,6 +109,10 @@
 	move()
 	eat()
 	return
+
+/obj/singularity/wizard/mapped/admin_investigate_setup()
+	return
+
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/scrying
@@ -203,7 +209,7 @@
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
-	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
@@ -277,7 +283,7 @@
 			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
-				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
+				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)

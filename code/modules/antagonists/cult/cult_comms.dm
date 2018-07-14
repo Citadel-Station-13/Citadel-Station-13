@@ -215,7 +215,7 @@
 	var/cooldown = 0
 	var/base_cooldown = 1200
 
-/datum/action/innate/cult/master/cultmark/New()
+/datum/action/innate/cult/master/cultmark/New(Target)
 	CM = new()
 	CM.attached_action = src
 	..()
@@ -299,7 +299,7 @@
 	name = "Mark a Blood Target for the Cult"
 	desc = "Marks a target for the entire cult to track."
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/cult/master/cultmark/ghost/IsAvailable()
 	if(istype(owner, /mob/dead/observer) && iscultist(owner.mind.current))
 		return TRUE
 	else
@@ -457,7 +457,6 @@
 			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
 			attached_action.throwing = FALSE
 			attached_action.cooldown = world.time + attached_action.base_cooldown
-			remove_mousepointer(ranged_ability_user.client)
 			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [attached_action.throwee] through time and space.</span>")
 			caller.update_action_buttons_icon()
 			addtimer(CALLBACK(caller, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)

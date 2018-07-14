@@ -85,7 +85,7 @@
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
 					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
-					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
+					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-ray vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
@@ -399,6 +399,11 @@
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return
 
+/obj/item/flashlight/emp/debug //for testing emp_act()
+	name = "debug EMP flashlight"
+	emp_max_charges = 100
+	emp_cur_charges = 100
+
 // Glowsticks, in the uncomfortable range of similar to flares,
 // but not similar enough to make it worth a refactor
 /obj/item/flashlight/glowstick
@@ -530,5 +535,6 @@
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	brightness_on = 15
 	flashlight_power = 1
-	flags_1 = CONDUCT_1 | DROPDEL_1
+	flags_1 = CONDUCT_1
+	item_flags = DROPDEL
 	actions_types = list()

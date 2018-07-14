@@ -22,10 +22,12 @@
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
-	cell.use(round(cell.charge / severity))
-	chambered = null //we empty the chamber
-	recharge_newshot() //and try to charge a new shot
-	update_icon()
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+		chambered = null //we empty the chamber
+		recharge_newshot() //and try to charge a new shot
+		update_icon()
 
 /obj/item/gun/energy/get_cell()
 	return cell
@@ -128,6 +130,8 @@
 	return
 
 /obj/item/gun/energy/update_icon(force_update)
+	if(QDELETED(src))
+		return
 	..()
 	if(!automatic_charge_overlays)
 		return
@@ -164,8 +168,8 @@
 /obj/item/gun/energy/ui_action_click()
 	toggle_gunlight()
 
-/obj/item/gun/energy/suicide_act(mob/user)
-	if (can_shoot() && can_trigger_gun(user))
+/obj/item/gun/energy/suicide_act(mob/living/user)
+	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
@@ -179,7 +183,7 @@
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
 		playsound(src, "gun_dry_fire", 30, 1)
 		return (OXYLOSS)
 

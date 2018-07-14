@@ -48,6 +48,8 @@ Research Director
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 
+	chameleon_extras = /obj/item/stamp/rd
+
 /datum/outfit/job/rd/rig
 	name = "Research Director (Hardsuit)"
 

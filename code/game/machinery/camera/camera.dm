@@ -19,9 +19,7 @@
 	integrity_failure = 50
 	var/list/network = list("ss13")
 	var/c_tag = null
-	var/c_tag_order = 999
 	var/status = TRUE
-	anchored = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/camera_bug/bug = null
@@ -36,11 +34,22 @@
 	var/alarm_on = FALSE
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
+	var/in_use_lights = 0
 
 	// Upgrades bitflag
 	var/upgrades = 0
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
+
+/obj/machinery/camera/preset/toxins //Bomb test site in space
+	name = "Hardened Bomb-Test Camera"
+	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."
+	c_tag = "Bomb Testing Site"
+	network = list("rd","toxins")
+	use_power = NO_POWER_USE //Test site is an unpowered area
+	invuln = TRUE
+	light_range = 10
+	start_active = TRUE
 
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
@@ -77,9 +86,10 @@
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
+	. = ..()
 	if(!status)
 		return
-	if(!isEmpProof())
+	if(!(. & EMP_PROTECT_SELF))
 		if(prob(150/severity))
 			update_icon()
 			var/list/previous_network = network
@@ -107,13 +117,6 @@
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, "The screen bursts into static.")
-			..()
-
-/obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
-	if(isEmpProof())
-		return
-	..()
-	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -291,7 +294,7 @@
 	else if (stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[initial(icon_state)][in_use_lights ? "_in_use" : ""]"
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status

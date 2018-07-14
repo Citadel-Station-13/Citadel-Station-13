@@ -9,14 +9,15 @@
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/toner/ink = null
 
-/obj/item/airlock_painter/New()
-	..()
+/obj/item/airlock_painter/Initialize()
+	. = ..()
 	ink = new /obj/item/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.

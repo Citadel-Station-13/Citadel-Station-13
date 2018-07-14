@@ -8,7 +8,7 @@
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	hitsound = 'sound/weapons/pierce.ogg'
@@ -36,10 +36,6 @@
 	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
 
 	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
-<<<<<<< ours
-	var/pixel_speed = 33	//pixels per move - DO NOT FUCK WITH THIS UNLESS YOU ABSOLUTELY KNOW WHAT YOU ARE DOING OR UNEXPECTED THINGS /WILL/ HAPPEN!
-=======
->>>>>>> theirs
 	var/Angle = 0
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
@@ -370,7 +366,7 @@
 	fired = TRUE
 	if(hitscan)
 		process_hitscan()
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1, FALSE)	//move it now!
 

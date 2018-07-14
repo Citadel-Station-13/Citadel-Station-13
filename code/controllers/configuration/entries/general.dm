@@ -55,6 +55,8 @@
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
+/datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 
 /datum/config_entry/flag/allow_vote_restart	// allow votes to restart
@@ -176,6 +178,10 @@
 
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+
+/datum/config_entry/string/roundstatsurl
+
+/datum/config_entry/string/gamelogurl
 
 /datum/config_entry/number/githubrepoid
 	config_entry_value = null

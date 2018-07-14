@@ -53,7 +53,7 @@
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
-	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
+	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
 	flags_inv = 0
@@ -234,9 +234,3 @@
 /obj/item/clothing/suit/armor/riot/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
-
-/obj/item/clothing/suit/armor/riot/knight/templar
-	name = "crusader armour"
-	desc = "God wills it!"
-	icon_state = "knight_templar"
-	item_state = "knight_templar"

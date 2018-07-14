@@ -202,7 +202,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	anchored = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -875,7 +874,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		say("Breaking news from [channel]!")
 		alert = TRUE
 		update_icon()
-		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_OVERRIDE)
+		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
 		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")

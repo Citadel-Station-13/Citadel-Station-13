@@ -7,7 +7,6 @@
 	icon_state = "mflash1"
 	max_integrity = 250
 	integrity_failure = 100
-	anchored = TRUE
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -119,12 +118,12 @@
 
 
 /obj/machinery/flasher/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()
 			power_change()
-	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -168,13 +167,13 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			anchored = TRUE
+			setAnchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			anchored = FALSE
+			setAnchored(FALSE)
 			power_change()
 			proximity_monitor.SetRange(0)
 

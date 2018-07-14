@@ -17,6 +17,6 @@ GLOBAL_VAR_INIT(terrorism, FALSE)
 		qdel(I)
 	var/obj/item/gun/energy/laser/LaserAK/AK = new(src)
 	if(!GLOB.terrorism)
-		AK.admin_spawned = TRUE //To prevent announcing
+		AK.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	put_in_hands(AK)
 	AK.pickup(src) //For the stun shielding

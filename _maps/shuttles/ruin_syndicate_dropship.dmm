@@ -1,10 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "al" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 4;
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
@@ -90,25 +88,23 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "hF" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Syndicate Drop Ship APC";
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
 "ka" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -173,7 +169,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "rV" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -189,7 +185,7 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "sn" = (
-/obj/structure/chair,
+/obj/structure/chair/shuttle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
@@ -251,7 +247,7 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/shuttle/caravan/syndicate3)
 "Cm" = (
-/obj/structure/chair{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /obj/machinery/firealarm{
@@ -282,11 +278,9 @@
 	},
 /area/shuttle/caravan/syndicate3)
 "EO" = (
-/obj/structure/chair,
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = null;
-	req_access_txt = "150"
+/obj/structure/chair/shuttle,
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
@@ -302,11 +296,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "Gx" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 4;
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
@@ -327,9 +319,8 @@
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/syndicate{
-	environment_smash = 0;
-	name = "Syndicate Salvage Pilot"
+/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+	environment_smash = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)

@@ -127,9 +127,10 @@
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
-	for(var/obj/O in contents)
-		O.emp_act(severity)
-
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/O in contents)
+			O.emp_act(severity)
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	if(firing_burst)
@@ -347,7 +348,7 @@
 			var/state = "bayonet"							//Generic state.
 			if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
 				state = bayonet.icon_state
-			var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi' 
+			var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi'
 			knife_overlay = mutable_appearance(bayonet_icons, state)
 			knife_overlay.pixel_x = knife_x_offset
 			knife_overlay.pixel_y = knife_y_offset
@@ -527,3 +528,8 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
+
+/obj/item/gun/handle_atom_del(atom/A)
+	if(A == chambered)
+		chambered = null
+		update_icon()

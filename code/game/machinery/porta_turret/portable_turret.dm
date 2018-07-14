@@ -8,7 +8,6 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = TRUE
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = TRUE
@@ -20,9 +19,6 @@
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
-
-	var/emp_vunerable = TRUE // Can be empd
-
 	var/scan_range = 7
 	var/atom/base = null //for turrets inside other objects
 
@@ -265,7 +261,7 @@
 
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
-			anchored = TRUE
+			setAnchored(TRUE)
 			invisibility = INVISIBILITY_MAXIMUM
 			update_icon()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -273,7 +269,7 @@
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			power_change()
 			invisibility = 0
@@ -307,7 +303,10 @@
 
 
 /obj/machinery/porta_turret/emp_act(severity)
-	if(on && emp_vunerable)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	if(on)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
 		check_records = pick(0, 1)
@@ -321,8 +320,6 @@
 		spawn(rand(60,600))
 			if(!on)
 				on = TRUE
-
-	..()
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
@@ -646,8 +643,11 @@
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list(ROLE_SYNDICATE)
-	emp_vunerable = 0
 	desc = "A ballistic machine gun auto-turret."
+
+/obj/machinery/porta_turret/syndicate/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"
@@ -723,8 +723,11 @@
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = list("neutral","silicon","turret")
-	emp_vunerable = 0
 	mode = TURRET_LETHAL
+
+/obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
@@ -750,7 +753,6 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = TRUE
 	density = FALSE
 	var/enabled = 1
 	var/lethal = 0

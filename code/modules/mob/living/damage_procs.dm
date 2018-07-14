@@ -27,9 +27,6 @@
 			adjustStaminaLoss(damage * hit_percent)
 		if(BRAIN)
 			adjustBrainLoss(damage * hit_percent)
-		//citadel code
-		if(AROUSAL)
-			adjustArousalLoss(damage * hit_percent)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -48,9 +45,6 @@
 			return adjustStaminaLoss(damage)
 		if(BRAIN)
 			return adjustBrainLoss(damage)
-		//citadel code
-		if(AROUSAL)
-			return adjustArousalLoss(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -68,12 +62,9 @@
 			return getStaminaLoss()
 		if(BRAIN)
 			return getBrainLoss()
-		//citadel code
-		if(AROUSAL)
-			return getArousalLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0, arousal = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -90,9 +81,6 @@
 		apply_damage(stamina, STAMINA, def_zone, blocked)
 	if(brain)
 		apply_damage(brain, BRAIN, def_zone, blocked)
-	//citadel code
-	if(arousal)
-		apply_damage(arousal, AROUSAL, def_zone, blocked)
 	return 1
 
 

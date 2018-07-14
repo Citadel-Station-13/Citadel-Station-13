@@ -34,7 +34,7 @@ AI
 			H.forceMove(lateJoinCore.loc)
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
-	AI.rename_self("ai", M.client)			//If this runtimes oh well jobcode is fucked.
+	AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked.
 
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
@@ -60,9 +60,7 @@ AI
 
 /datum/job/ai/announce(mob/living/silicon/ai/AI)
 	. = ..()
-	var/area/A = get_area(AI)
-	var/turf/T = get_turf(AI)
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "[AI] has been downloaded to an empty bluespace-networked AI core at [COORD(T)], [A.name]."))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "[AI] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(AI)]."))
 
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)
@@ -87,5 +85,4 @@ Cyborg
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
-	if(CONFIG_GET(flag/rename_cyborg))	//name can't be set in robot/New without the client
-		R.rename_self("cyborg", M.client)
+	R.updatename(M.client)

@@ -73,14 +73,7 @@
 	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
-/proc/is_type_in_typecache(atom/A, list/L)
-	if(!LAZYLEN(L) || !A)
-
-		return FALSE
-	if(ispath(A))
-		. = L[A]
-	else
-		. = L[A.type]
+#define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
@@ -494,6 +487,11 @@
 	. = list()
 	for(var/key in key_list)
 		. |= key_list[key]
+
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
