@@ -307,3 +307,10 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/custom/flagcape
 	ckeywhitelist = list("darnchacha")
+
+/datum/gear/raiqbawks
+	name = "Miami Boombox"
+	category = SLOT_HANDS
+	cost = 2
+	path = /obj/item/boombox/raiq
+	ckeywhitelist = list("chefferz")
