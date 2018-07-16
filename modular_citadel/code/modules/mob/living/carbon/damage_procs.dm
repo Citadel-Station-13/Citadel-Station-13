@@ -12,8 +12,8 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	amount = CLAMP(amount, 0, 200 - getStaminaLoss())
 	if(amount > 0)
+		amount = CLAMP(amount, 0, 200 - getStaminaLoss())
 		take_overall_damage(0, 0, amount, updating_health)
 	else
 		heal_overall_damage(0, 0, abs(amount), FALSE, FALSE, updating_health)
