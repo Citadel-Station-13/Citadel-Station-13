@@ -103,6 +103,10 @@
 			return FALSE
 
 /mob/living/carbon/update_stamina()
+	var/overstamcap = getStaminaLoss() - STAMINA_CAP
+	if(overstamcap > 0)
+		adjustStaminaLoss(-overstamcap)
+		return
 	var/total_health = (min(health*2,100) - getStaminaLoss())
 	if(getStaminaLoss())
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
