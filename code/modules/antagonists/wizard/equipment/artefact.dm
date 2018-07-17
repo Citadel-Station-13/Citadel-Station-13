@@ -259,11 +259,6 @@
 				to_chat(user, "You attach [I] to the doll.")
 				update_targets()
 
-/obj/item/voodoo/check_eye(mob/user)
-	if(loc != user)
-		user.reset_perspective(null)
-		user.unset_machine()
-
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
