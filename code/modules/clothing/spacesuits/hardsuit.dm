@@ -208,7 +208,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Much of the protective qualities have been given up for superior movement."
 	icon_state = "hardsuit0-construction"
 	item_state = "con_helm"
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 5, bio = 100, rad = 0)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 5, "bio" = 100, "rad" = 0)
 	item_color = "construction"
 	resistance_flags = FIRE_PROOF
 
@@ -217,7 +217,7 @@
 	desc = "A special hardsuit designed for work in a hazardous, low-pressure environment. Much of the protective qualities have been given up for superior movement."
 	icon_state = "hardsuit-construction"
 	item_state = "con_hardsuit"
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 5, bio = 100, rad = 0)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 5, "bio" = 100, "rad" = 0)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/construct
 	slowdown = 0.75
 	resistance_flags = FIRE_PROOF
