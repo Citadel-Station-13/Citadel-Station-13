@@ -86,19 +86,6 @@
 #define AROUSAL "arousal"
 
 //DNA stuffs. Remember to change this if upstream adds more snowflake options
-#define DNA_EYE_COLOR_TWO_BLOCK		8
-#define DNA_EYE_COLOR_SWITCH_BLOCK	9
-#define DNA_EYE_COLOR_BLOCK			10
-#define DNA_COLOR_ONE_BLOCK			11
-#define DNA_COLOR_TWO_BLOCK			12
-#define DNA_COLOR_THR_BLOCK			13
-#define DNA_COLOR_SWITCH_BLOCK		14
-#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				15
-#define DNA_MUTANTRACE_BLOCK		16
-#define DNA_MUTANTTAIL_BLOCK		17
-#define DNA_MUTANTWING_BLOCK		18
-#define DNA_WINGCOLOR_BLOCK			19
 
 
 //Species stuffs. Remember to change this if upstream updates species flags
