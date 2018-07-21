@@ -3,6 +3,7 @@
 	icon_state = "spark"
 	hitsound = "sparks"
 	nodamage = TRUE
+	hitscan = TRUE
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB
 	var/obj/item/gun/energy/wormhole_projector/gun
 	color = "#33CCFF"
