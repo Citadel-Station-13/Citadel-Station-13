@@ -307,3 +307,9 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/custom/flagcape
 	ckeywhitelist = list("darnchacha")
+
+/datum/gear/luckyjack
+	name = "Lucky Jackboots"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/shoes/lucky
+	ckeywhitelist = list("donaldtrumpthecommunist")
