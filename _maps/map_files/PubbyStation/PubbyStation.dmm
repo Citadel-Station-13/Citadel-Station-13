@@ -6,7 +6,7 @@
 "aaf" = (/obj/structure/sink/kitchen{desc = "A sink used for washing one's hands and face. It looks rusty and home-made"; name = "old sink"; pixel_y = 28},/obj/item/stack/cable_coil/orange,/obj/item/storage/toolbox/mechanical,/turf/open/floor/plasteel/whitepurple/side{dir = 1},/area/science/lab)
 "aag" = (/obj/machinery/chem_heater,/turf/open/floor/plasteel/whiteyellow/corner{dir = 4},/area/medical/chemistry)
 "aah" = (/obj/structure/plasticflaps/opaque,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/science/lab)
-"aai" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/table/glass{step_x = 0; step_y = 0},/obj/machinery/reagentgrinder,/turf/open/floor/plasteel/white,/area/medical/chemistry)
+"aai" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/table/glass,/obj/machinery/reagentgrinder,/turf/open/floor/plasteel/white,/area/medical/chemistry)
 "aaj" = (/turf/open/floor/plasteel/yellow/corner{dir = 1},/area/hallway/primary/central)
 "aak" = (/obj/structure/rack,/obj/item/clothing/glasses/science,/obj/item/stack/packageWrap,/obj/item/hand_labeler,/turf/open/floor/plasteel/whiteyellow/side,/area/medical/chemistry)
 "aal" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/hallway/primary/aft)
