@@ -388,3 +388,12 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
+
+
+/obj/item/clothing/shoes/lucky
+	name = "Lucky Jackboots"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	desc = "Comfortable-looking and lucky boots."
+	item_state = "luckyJack"
+	icon_state = "luckyJack_w"
