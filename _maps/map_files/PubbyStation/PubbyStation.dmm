@@ -16023,21 +16023,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"aQA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "aQB" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -26307,23 +26298,22 @@
 "brl" = (
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper,
+/obj/structure/table,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 1
 	},
 /area/medical/chemistry)
 "brm" = (
 /obj/machinery/chem_master,
-/obj/machinery/button/door{
-	id = "chemistry_shutters";
-	name = "Shutters Control";
-	pixel_x = 26;
-	pixel_y = 4;
-	req_access_txt = "5; 33"
+/obj/machinery/requests_console{
+	department = "Chemistry";
+	departmentType = 2;
+	pixel_x = 32;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
@@ -26900,7 +26890,7 @@
 /area/medical/chemistry)
 "bsL" = (
 /obj/item/storage/box/beakers,
-/obj/structure/table/glass,
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bsM" = (
@@ -28453,18 +28443,12 @@
 /obj/item/hand_labeler,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
-/obj/machinery/light_switch{
-	pixel_x = 25
-	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 6
 	},
 /area/medical/chemistry)
 "bxa" = (
 /obj/structure/table/glass,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
 /obj/item/book/manual/research_and_development,
 /obj/item/disk/tech_disk,
 /obj/item/disk/design_disk,
@@ -47590,6 +47574,22 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/engine)
+"dHZ" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/landmark/start/chemist,
+/obj/machinery/button/door{
+	id = "chemistry_shutters";
+	name = "Shutters Control";
+	pixel_x = 26;
+	pixel_y = 4;
+	req_access_txt = "5; 33"
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 1
+	},
+/area/medical/chemistry)
 "dJm" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -48583,12 +48583,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "gGA" = (
-/obj/machinery/requests_console{
-	department = "Chemistry";
-	departmentType = 2;
-	pixel_x = 32;
-	receive_ore_updates = 1
-	},
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -49539,9 +49533,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-17"
-	},
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
@@ -49688,6 +49679,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/engine)
+"jZG" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/medical/chemistry)
 "kfh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -50054,6 +50049,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"kYM" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel/purple/side{
+	icon_state = "purplecorner"
+	},
+/area/hallway/primary/aft)
 "lcU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -50384,6 +50387,9 @@
 /area/engine/engineering)
 "mhn" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/purple/side{
 	icon_state = "purplecorner"
 	},
@@ -51613,7 +51619,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/medical/chemistry)
 "pBD" = (
 /obj/structure/cable{
@@ -51786,6 +51793,9 @@
 "pYw" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-03"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
@@ -52047,6 +52057,15 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"qTV" = (
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/blue/corner{
+	dir = 8
+	},
+/area/hallway/primary/aft)
 "qUw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral,
@@ -52957,6 +52976,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"tzH" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/science/lab)
 "tAK" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -53635,6 +53658,9 @@
 /area/maintenance/department/security/brig)
 "vKq" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
+	},
 /turf/open/floor/plasteel/blue/corner{
 	dir = 8
 	},
@@ -78290,7 +78316,7 @@ aAL
 aMR
 aAL
 aAL
-aQA
+aHE
 aAL
 aAL
 aTO
@@ -85512,7 +85538,7 @@ bmz
 bnG
 boN
 bpW
-brk
+dHZ
 bsK
 buk
 bvs
@@ -86544,7 +86570,7 @@ bpY
 bpY
 bpY
 pxD
-bpY
+jZG
 bpY
 bpY
 bpY
@@ -86806,7 +86832,7 @@ tqO
 mqp
 cKV
 iwe
-nTr
+qTV
 xDj
 blt
 jCv
@@ -87317,7 +87343,7 @@ ltE
 ltE
 ltE
 imE
-ltE
+kYM
 bmC
 fdQ
 bmD
@@ -87571,8 +87597,8 @@ cCl
 cCl
 cCl
 tJr
-cCl
-cCl
+tzH
+tzH
 byD
 bAm
 dhz
