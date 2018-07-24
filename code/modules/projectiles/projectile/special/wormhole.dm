@@ -2,6 +2,7 @@
 	name = "bluespace beam"
 	icon_state = "spark"
 	hitsound = "sparks"
+	damage = 0
 	nodamage = TRUE
 	hitscan = TRUE
 	pass_flags = PASSGLASS | PASSTABLE | PASSGRILLE | PASSMOB
