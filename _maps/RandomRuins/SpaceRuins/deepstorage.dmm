@@ -2164,10 +2164,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
-"fo" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/space/has_grav/deepstorage/power)
 "fp" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2799,6 +2795,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/mechanical,
+/obj/item/tank/jetpack/oxygen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gX" = (
@@ -2991,6 +2988,9 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"sN" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
 "Bb" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -2998,6 +2998,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"Bg" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/power)
 
 (1,1,1) = {"
 aa
@@ -4444,7 +4448,7 @@ fp
 fp
 fp
 fp
-ab
+fp
 ab
 ac
 ac
@@ -4494,9 +4498,9 @@ gA
 gM
 gT
 fp
+Bg
 hb
 fp
-ab
 ab
 ab
 ac
@@ -4546,9 +4550,9 @@ gB
 gN
 gU
 gY
+sN
 hc
 fp
-ab
 ab
 ab
 ac
@@ -4598,9 +4602,9 @@ fI
 gO
 gV
 fp
+Bg
 hd
 fp
-ab
 ab
 ab
 ac
@@ -4640,7 +4644,7 @@ ef
 ev
 eN
 fb
-fo
+gN
 fA
 fJ
 gb
@@ -4652,7 +4656,7 @@ gW
 fp
 fp
 fp
-ab
+fp
 ab
 ab
 ac
