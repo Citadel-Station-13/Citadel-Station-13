@@ -48539,6 +48539,15 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/lawoffice)
+"gDR" = (
+/obj/machinery/camera{
+	c_tag = "Central Primary Hallway Escape";
+	dir = 4
+	},
+/turf/open/floor/plasteel/blue/corner{
+	dir = 8
+	},
+/area/hallway/primary/aft)
 "gDZ" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -53279,6 +53288,10 @@
 /obj/structure/chair{
 	dir = 8;
 	name = "Defense"
+	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics Starboard";
+	dir = 8
 	},
 /turf/open/floor/plasteel/purple/side{
 	icon_state = "purplecorner"
@@ -86824,7 +86837,7 @@ aBI
 bmB
 vKq
 nTr
-nTr
+gDR
 vzA
 bvu
 hIZ
