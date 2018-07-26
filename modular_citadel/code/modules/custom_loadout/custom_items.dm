@@ -396,4 +396,4 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
-	icon_state = "luckyjack_w"
+	icon_state = "luckyjack"
