@@ -42,7 +42,7 @@
 	switch(state)
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-		if(EM_SECURED)
+		if(ENGINE_WRENCHED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
@@ -55,7 +55,7 @@
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				alter_engine_power(engine_power)
 
-		if(EM_WELDED)
+		if(ENGINE_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
 
@@ -88,6 +88,7 @@
 	icon_state = "heater"
 	desc = "Directs energy into compressed particles in order to power engines."
 	engine_power = 0 // todo make these into 2x1 parts
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/shuttle/engine/platform
 	name = "engine platform"
@@ -149,3 +150,8 @@
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = 0
+
+#undef ENGINE_UNWRENCHED
+#undef ENGINE_WRENCHED
+#undef ENGINE_WELDED
+#undef ENGINE_WELDTIME

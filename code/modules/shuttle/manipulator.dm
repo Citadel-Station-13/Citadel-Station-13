@@ -155,8 +155,7 @@
 				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
 					M.setTimer(50)
 					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled \
-						[M]")
+					message_admins("[key_name_admin(usr)] fast travelled [M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[M.name]")
 					break
@@ -181,10 +180,8 @@
 				var/obj/docking_port/mobile/mdp = action_load(S)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
-					message_admins("[key_name_admin(usr)] loaded [mdp] \
-						with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the \
-						shuttle manipulator.</span>")
+					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
 	update_icon()
@@ -227,7 +224,11 @@
 	if(existing_shuttle)
 		existing_shuttle.jumpToNullSpace()
 
+	var/list/force_memory = preview_shuttle.movement_force
+	preview_shuttle.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	preview_shuttle.initiate_docking(D)
+	preview_shuttle.movement_force = force_memory
+	
 	. = preview_shuttle
 
 	// Shuttle state involves a mode and a timer based on world.time, so

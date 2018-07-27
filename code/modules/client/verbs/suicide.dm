@@ -19,7 +19,7 @@
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
 					suiciding = FALSE
-					SendSignal(COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
 				suicide_log()
@@ -199,16 +199,10 @@
 		death(0)
 
 /mob/living/proc/suicide_log()
-	var/turf/T = get_turf(src)
-
-	log_game("[key_name(src)] committed suicide at [get_area(src)][COORD(T)] as [src.type].")
-	message_admins("[key_name(src)] committed suicide at [get_area(src)] as [src.type].")
+	log_game("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
 
 /mob/living/carbon/human/suicide_log()
-	var/turf/T = get_turf(src)
-
-	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [get_area(src)][COORD(T)].")
-	message_admins("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
+	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
@@ -225,7 +219,4 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
-//	if(has_brain_worms())
-//		to_chat(src, "You can't bring yourself to commit suicide!")
-//		return
 	return TRUE

@@ -34,9 +34,9 @@
 	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	master.add_overlay(overlay)
 
-	RegisterSignal(COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
-	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
-	RegisterSignal(COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
+	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 
 /datum/component/thermite/Destroy()
 	var/turf/master = parent
@@ -60,7 +60,7 @@
 
 	if(amount >= 50)
 		var/burning_time = max(100, 100-amount)
-		master = master.ScrapeAway()
+		master = master.Melt()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)

@@ -10,6 +10,10 @@
 	. = ..()
 	design_ids += "xenobio_slimeadv"
 
+/datum/techweb_node/ballistic_weapons/New()
+	. = ..()
+	design_ids += "mag_oldsmg_rubber"
+
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
 	display_name = "Games and Toys"
@@ -18,6 +22,9 @@
 	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
+
+/datum/techweb_node/ballistic_weapons
+	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx")
 
 /datum/techweb_node/advanced_illegl_ballistics
 	id = "advanced_illegal_ballistics"

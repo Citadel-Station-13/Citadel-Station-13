@@ -182,7 +182,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/soap/tongue/New()
 	..()
-	flags_1 |= NOBLUDGEON_1 //No more attack messages
+	item_flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/trash/rkibble
 	name = "robo kibble"
@@ -258,7 +258,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(R,"<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else if(ishuman(target))
 		if(R.emagged)
 			var/mob/living/L = target
@@ -274,6 +274,9 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else
 			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
 			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			var/mob/living/L = target
+			if(istype(L) && L.fire_stacks > 0)
+				L.adjust_fire_stacks(-10)
 			return
 	else if(istype(target, /obj/structure/window))
 		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
@@ -290,7 +293,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(R, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	return
 
 
@@ -315,7 +318,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/pounce/New()
 	..()
-	flags_1 |= NOBLUDGEON_1
+	item_flags |= NOBLUDGEON
 
 /mob/living/silicon/robot
 	var/leaping = 0

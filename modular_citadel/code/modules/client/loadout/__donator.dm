@@ -290,3 +290,26 @@ datum/gear/darksabresheath
 	path = 	/obj/item/custom/leechjar
 	ckeywhitelist = list("sgtryder")
 
+/datum/gear/darkarmor
+	name = "Dark Armor"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/suit/armor/vest/darkcarapace
+	ckeywhitelist = list("inferno707")
+
+/datum/gear/devilwings
+	name = "Strange Wings"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/devilwings
+	ckeywhitelist = list("kitsun")
+
+/datum/gear/flagcape
+	name = "US Flag Cape"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/bedsheet/custom/flagcape
+	ckeywhitelist = list("darnchacha")
+
+/datum/gear/luckyjack
+	name = "Lucky Jackboots"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/shoes/lucky
+	ckeywhitelist = list("donaldtrumpthecommunist")

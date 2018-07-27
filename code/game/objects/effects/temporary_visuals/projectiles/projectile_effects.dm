@@ -4,11 +4,7 @@
 	icon_state = "nothing"
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
-	light_power = 1
-	light_range = 2
-	light_color = "#00ffff"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flags_1 = ABSTRACT_1
 	appearance_flags = 0
 
 /obj/effect/projectile/singularity_pull()
@@ -54,3 +50,7 @@
 	for(var/i in 1 to increment)
 		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)
 		pixel_y += round((cos(angle_override)+16*cos(angle_override)*2), 1)
+
+/obj/effect/projectile_lighting/Initialize(mapload, color, range, intensity)
+	. = ..()
+	set_light(range, intensity, color)
