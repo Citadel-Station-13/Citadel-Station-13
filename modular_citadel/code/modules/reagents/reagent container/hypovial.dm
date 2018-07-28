@@ -67,11 +67,11 @@
 
 /obj/item/reagent_containers/glass/bottle/vial/small
 	name = "hypovial"
-	volume = 30
+	volume = 60
 	possible_transfer_amounts = list(5,10,15,30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
-	volume = 60
+	volume = 120
 	possible_transfer_amounts = list(5,10,15,20,30,60)
 	name = "bluespace hypovial"
 	icon_state = "hypovialbs"
@@ -81,7 +81,7 @@
 	name = "large hypovial"
 	desc = "A large hypovial, for deluxe hypospray models."
 	icon_state = "hypoviallarge"
-	volume = 60
+	volume = 120
 	possible_transfer_amounts = list(5,10,15,20,30,60)
 	unique_reskin = list("large hypovial" = "hypoviallarge",
 						"large red hypovial" = "hypoviallarge-b",
@@ -116,7 +116,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
 	name = "bluespace large hypovial"
-	volume = 120
+	volume = 240
 	icon_state = "hypoviallargebs"
 	unique_reskin = null
 
