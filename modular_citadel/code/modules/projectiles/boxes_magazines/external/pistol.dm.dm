@@ -11,7 +11,7 @@
 /datum/design/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
-	id = "mm10"
+	id = "m10mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000)
 	build_path = /obj/item/ammo_box/magazine/m10mm
