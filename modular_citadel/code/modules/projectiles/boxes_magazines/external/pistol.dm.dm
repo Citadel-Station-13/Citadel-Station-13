@@ -3,7 +3,7 @@
 	desc = "A gun magazine. Loaded with rounds which ignite the target.."
 	id = "10mminc"
 	build_type = PROTOLATHE
-	materials = list(MAT_PLASMA = 2000,MAT_METAL = 18000)
+	materials = list(MAT_PLASMA = 2000, MAT_METAL = 18000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/fire
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
