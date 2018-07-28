@@ -2846,7 +2846,7 @@
 #include "modular_citadel\code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
 #include "modular_citadel\code\modules\projectiles\boxes_magazines\external\smg\smg.dm"
 #include "modular_citadel\code\modules\projectiles\bullets\bullets\smg.dm"
-#include "modular_citadel\code\modules\projectiles\boxes_magazines\external\pistol.dm.dm"
+#include "modular_citadel\code\modules\projectiles\boxes_magazines\external\pistol.dm"
 #include "modular_citadel\code\modules\projectiles\guns\pumpenergy.dm"
 #include "modular_citadel\code\modules\projectiles\guns\toys.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\flechette.dm"
