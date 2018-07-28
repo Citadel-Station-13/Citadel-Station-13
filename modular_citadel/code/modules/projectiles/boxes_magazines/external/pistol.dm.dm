@@ -8,10 +8,10 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/10m
+/datum/design/mm10
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
-	id = "10m"
+	id = "mm10"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000)
 	build_path = /obj/item/ammo_box/magazine/m10mm
@@ -28,10 +28,10 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/10map
+/datum/design/ap10
 	name = "pistol magazine (10mm AP)"
 	desc = "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
-	id = "10map"
+	id = "ap10"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000, MAT_TITANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/ap
