@@ -19,7 +19,6 @@
 		if(!cell)
 			return
 		cell.give(100)
-	update_icon()
 
 /obj/item/gun/energy/pumpaction/attack_self(mob/living/user)	//makes clicking on it in hand pump it
 	if(recentpump > world.time)
