@@ -33,7 +33,7 @@ datum/design/10mmap
 	desc = "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
 	id = "10mmap"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 18000 MAT_TITANIUM = 2000)
+	materials = list(MAT_METAL = 18000, MAT_TITANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/ap
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
