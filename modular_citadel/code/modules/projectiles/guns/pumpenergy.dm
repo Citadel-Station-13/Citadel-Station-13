@@ -12,7 +12,7 @@
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
 	cell.use(round(cell.charge / severity))
-	var/recentpump = null //we empty the chamber
+	chamber = null //we empty the chamber
 	update_icon()
 
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
