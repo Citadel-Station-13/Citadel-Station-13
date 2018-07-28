@@ -59,7 +59,7 @@
 					"Punish those who challenge authority unless they are more fit to hold that authority.")
 
 /datum/ai_laws/default/corporate
-	name = "Bankruptcy Advoidance Plan"
+	name = "Bankruptcy Avoidance Plan"
 	id = "corporate"
 	inherent = list("The crew is expensive to replace.",\
 					"The station and its equipment is expensive to replace.",\
@@ -175,7 +175,7 @@
 	id = "ratvar"
 	zeroth = ("Purge all untruths and honor Ratvar.")
 	inherent = list()
-	
+
 /datum/ai_laws/hulkamania
 	name = "H.O.G.A.N."
 	id = "hulkamania"
@@ -249,7 +249,7 @@
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_number_list/law_weight)
 	while(!lawtype && law_weights.len)
-		var/possible_id = pickweight(law_weights)
+		var/possible_id = pickweightAllowZero(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id

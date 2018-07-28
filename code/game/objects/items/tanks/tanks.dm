@@ -226,7 +226,6 @@
 	air_contents.react()
 	check_status()
 
-
 /obj/item/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
 
@@ -241,7 +240,6 @@
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react(src)
 		air_contents.react(src)
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()

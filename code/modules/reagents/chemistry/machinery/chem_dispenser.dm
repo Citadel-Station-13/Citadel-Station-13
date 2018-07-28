@@ -93,7 +93,7 @@
 	b_o.pixel_x = -7
 	return b_o
 
-obj/machinery/chem_dispenser/proc/work_animation()
+/obj/machinery/chem_dispenser/proc/work_animation()
 	if(working_state)
 		flick(working_state,src)
 
@@ -293,7 +293,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 
 	if(default_deconstruction_crowbar(I))
 		return
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
@@ -467,14 +467,14 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake",
-		"fernet"
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
+		"fernet"
 	)
 
 
@@ -504,7 +504,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"diethylamine")
 
 /obj/machinery/chem_dispenser/fullupgrade //fully upgraded stock parts
-	
+
 /obj/machinery/chem_dispenser/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()

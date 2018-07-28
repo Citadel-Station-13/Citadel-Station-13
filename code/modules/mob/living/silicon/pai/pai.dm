@@ -1,6 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'icons/mob/pai.dmi'
+	icon = 'modular_citadel/icons/mob/pai.dmi' // CITADEL EDIT
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
@@ -58,7 +58,7 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE , "parrot" = FALSE, "bear" = FALSE , "mushroom" = FALSE, "crow" = FALSE , "fairy" = FALSE , "spiderbot" = FALSE )		//assoc value is whether it can be picked up.-- borgi and on = // CITADEL EDIT
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -90,6 +90,11 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	if (loc != card)
+		card.forceMove(drop_location())
+	card.pai = null
+	card.cut_overlays()
+	card.add_overlay("pai-off")
 	GLOB.pai_list -= src
 	return ..()
 
@@ -231,7 +236,7 @@
 		P.fold_out()
 
 /datum/action/innate/pai/chassis
-	name = "Holochassis Appearence Composite"
+	name = "Holochassis Appearance Composite"
 	button_icon_state = "pai_chassis"
 	background_icon_state = "bg_tech"
 

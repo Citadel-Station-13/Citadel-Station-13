@@ -22,14 +22,9 @@ SUBSYSTEM_DEF(research)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 20)			//citadel edit - techwebs nerf
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
-	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
-
-	//Aiming for 1.5 hours to max R&D
-	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
-	//Around 450000 points max???
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -44,9 +39,8 @@ SUBSYSTEM_DEF(research)
 	handle_research_income()
 
 /datum/controller/subsystem/research/proc/handle_research_income()
-	var/list/bitcoins
+	var/list/bitcoins = list()
 	if(multiserver_calculation)
-		bitcoins = list()
 		var/eff = calculate_server_coefficient()
 		for(var/obj/machinery/rnd/server/miner in servers)
 			var/list/result = (miner.mine())	//SLAVE AWAY, SLAVE.

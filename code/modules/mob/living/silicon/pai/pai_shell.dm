@@ -57,7 +57,7 @@
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
-	var/turf/T = get_turf(src)
+	var/turf/T = drop_location()
 	card.forceMove(T)
 	forceMove(card)
 	canmove = FALSE
@@ -116,6 +116,6 @@
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])
-		to_chat(user, "<span class='wraning'>[src]'s current form isn't able to be carried!</span>")
+		to_chat(user, "<span class='warning'>[src]'s current form isn't able to be carried!</span>")
 		return FALSE
 	return ..()

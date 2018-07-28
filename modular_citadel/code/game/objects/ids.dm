@@ -52,7 +52,7 @@
 	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for charging the small batteries found in electromagnetic devices."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/uses = 5	//Dictates how many charges the device adds to compatible items
 
 /obj/item/emagrecharge/examine(mob/user)
