@@ -10,6 +10,11 @@
 	cell_type = /obj/item/stock_parts/cell/pumpaction
 	var/recentpump = 0 // to prevent spammage
 
+/obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
+	cell.use(round(cell.charge / severity))
+	chambered = null //we empty the chamber
+	update_icon()
+
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
 	if(selfcharge)
 		charge_tick++
@@ -19,6 +24,7 @@
 		if(!cell)
 			return
 		cell.give(100)
+	update_icon()
 
 /obj/item/gun/energy/pumpaction/attack_self(mob/living/user)	//makes clicking on it in hand pump it
 	if(recentpump > world.time)
