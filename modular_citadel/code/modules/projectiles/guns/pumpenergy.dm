@@ -10,11 +10,6 @@
 	cell_type = /obj/item/stock_parts/cell/pumpaction
 	var/recentpump = 0 // to prevent spammage
 
-/obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
-	cell.use(round(cell.charge / severity))
-	chamber = null //we empty the chamber
-	update_icon()
-
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
 	if(selfcharge)
 		charge_tick++
