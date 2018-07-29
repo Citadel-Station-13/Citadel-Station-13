@@ -50403,6 +50403,10 @@
 	icon_state = "purplecorner"
 	},
 /area/hallway/primary/aft)
+"mjn" = (
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "mlr" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/junction{
@@ -86302,7 +86306,7 @@ aSS
 aUg
 aVf
 aWi
-bah
+mjn
 aYe
 aZb
 bag
