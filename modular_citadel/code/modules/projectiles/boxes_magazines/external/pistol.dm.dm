@@ -1,7 +1,7 @@
 /datum/design/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
 	desc = "A gun magazine. Loaded with rounds which ignite the target.."
-	id = "fire"
+	id = "10mminc"
 	build_type = PROTOLATHE
 	materials = list(MAT_PLASMA = 2000, MAT_METAL = 18000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/fire
@@ -11,7 +11,7 @@
 /datum/design/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A gun magazine."
-	id = "m10mm"
+	id = "10mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000)
 	build_path = /obj/item/ammo_box/magazine/m10mm
@@ -21,7 +21,7 @@
 /datum/design/m10mm/hp
 	name = "pistol magazine (10mm HP)"
 	desc = "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
-	id = "hp"
+	id = "10mmhp"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000, MAT_GLASS = 2000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/hp
@@ -31,7 +31,7 @@
 /datum/design/m10mm/ap
 	name = "pistol magazine (10mm AP)"
 	desc = "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
-	id = "ap"
+	id = "10mmap"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 18000, MAT_TITANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/m10mm/ap
