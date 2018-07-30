@@ -501,6 +501,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/engine_hardsuit
+	id = "engi_hardsuit"
+	description = "Production of EVA construction equipment."
+	design_ids = list("chardsuit", "hardsuitjpack")
+	prereq_ids = list("adv_engi", "exp_tools")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
 	id = "weaponry"
