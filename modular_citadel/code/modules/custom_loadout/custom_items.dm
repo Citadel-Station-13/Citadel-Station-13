@@ -397,3 +397,11 @@
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
+
+/obj/item/toy/gun/m41
+	name = "M41"
+	desc = "An M41 that fires dummy rounds!"
+	icon_state = "toym41"
+	icon = 'icons/obj/custom.dmi'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	materials = list(MAT_METAL=2000, MAT_GLASS=250)
