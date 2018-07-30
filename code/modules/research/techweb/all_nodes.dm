@@ -503,6 +503,7 @@
 
 /datum/techweb_node/engine_hardsuit
 	id = "engi_hardsuit"
+	display_name = "EVA Construction Equipment"
 	description = "Production of EVA construction equipment."
 	design_ids = list("chardsuit", "hardsuitjpack")
 	prereq_ids = list("adv_engi", "exp_tools")
