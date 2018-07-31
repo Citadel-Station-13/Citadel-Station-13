@@ -29192,6 +29192,9 @@
 	req_one_access_txt = "7;29;30"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "byE" = (
