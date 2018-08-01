@@ -28,7 +28,7 @@
 
 /datum/techweb_node/advanced_illegl_ballistics
 	id = "advanced_illegal_ballistics"
-	display_name = "Advanced Illegal Ballistics
+	display_name = "Advanced Illegal Ballistics"
 	description = "Advanced Ballistic for Illegal weaponds."
 	design_ids = list("10mm","10mmap","10mminc","10mmhp","9mm","point_45","bolt_clip")
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
