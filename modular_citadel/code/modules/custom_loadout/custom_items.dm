@@ -399,9 +399,8 @@
 	icon_state = "luckyjack"
 
 /obj/item/toy/gun/m41
-	name = "M41"
-	desc = "An M41 that fires dummy rounds!"
+	name = "Toy M41A Pulse Rifle"
+	desc = "A toy replica of the Corporate Mercenaries' standard issue rifle."For Avtomat" is inscribed on the side."
 	icon_state = "toym41"
 	icon = 'icons/obj/custom.dmi'
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	materials = list(MAT_METAL=2000, MAT_GLASS=250)
