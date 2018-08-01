@@ -66,6 +66,7 @@
 		/obj/item/storage/bag/borgdelivery,
 		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue,
+		/obj/item/extinguisher/mini,
 		/obj/item/healthanalyzer,
 		/obj/item/dogborg/sleeper/medihound,
 		/obj/item/reagent_containers/borghypo,
@@ -93,6 +94,7 @@
 		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue/scrubpup,
 		/obj/item/lightreplacer/cyborg,
+		/obj/item/extinguisher/mini,
 		/obj/item/dogborg/sleeper/compactor)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
@@ -127,6 +129,7 @@
 		/obj/item/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/healthanalyzer,
+		/obj/item/extinguisher/mini,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(
