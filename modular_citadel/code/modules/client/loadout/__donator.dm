@@ -320,3 +320,9 @@ datum/gear/darksabresheath
 	cost = 2
 	path = /obj/item/boombox/raiq
 	ckeywhitelist = list("chefferz")
+
+/datum/gear/m41
+	name = "Toy M41"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/gun/m41
+	ckeywhitelist = list("ThalVerscholen")

@@ -393,7 +393,7 @@
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	desc = "Comfortable-looking and lucky boots."
-	item_state = "luckyJack"
-	icon_state = "luckyJack_w"
+	icon_override = 'icons/mob/custom_w.dmi'
+	desc = "Comfy Lucky Jackboots with the word Luck on them."
+	item_state = "luckyjack"
+	icon_state = "luckyjack"
