@@ -58,3 +58,12 @@
 	icon_state = "justicar"
 	icon = 'modular_citadel/icons/obj/guns/toys.dmi'
 	materials = list(MAT_METAL=2000, MAT_GLASS=250)
+
+
+/obj/item/toy/gun/m41
+	name = "Toy M41A Pulse Rifle"
+	desc = "A toy replica of the Corporate Mercenaries' standard issue rifle. For Avtomat is inscribed on the side."
+	icon_state = "toym41"
+	icon = 'modular_citadel/icons/obj/guns/toys.dmi'
+	fire_sound = 'sound/weapons/magrifle.ogg'
+	materials = list(MAT_METAL=2000, MAT_GLASS=250)
