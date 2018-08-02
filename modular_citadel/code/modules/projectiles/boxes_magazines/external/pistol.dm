@@ -58,3 +58,13 @@
 	build_path = /obj/item/ammo_box/magazine/m45
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/m9mm
+	name = "pistol magazine (9mm)"
+	desc = "A gun magazine."
+ 	id = "m9mm"
+ 	build_type = PROTOLATHE
+ 	materials = list(MAT_METAL = 16000)
+ 	build_path = /obj/item/ammo_box/magazine/pistolm9mm
+ 	category = list("Weapons")
+ 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
