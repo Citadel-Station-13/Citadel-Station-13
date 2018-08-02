@@ -59,3 +59,12 @@
  	build_path = /obj/item/ammo_box/magazine/pistolm9mm
  	category = list("Weapons")
  	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/m45 //Kinda NT in throey
+	name = "handgun magazine (.45)"
+	id = "m45"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000)
+	build_path = /obj/item/ammo_box/magazine/m45
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
