@@ -37,5 +37,4 @@
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 				new picked_hallucination(C, TRUE)
 		if(5)
-			for(var/i in GLOB.alive_mob_list)
-				to_chat(i, "<span class="big bold"><font color="red">Shuttle Purchase</font><br>Kate Walker has purchased Standby Evacuation Vessel "Scrapheap Challenge" for -1000 credits.</span>")
+			/proc/minor_announce("Kate Walker has purchased Standby Evacuation Vessel "Scrapheap Challenge" for -1000 credits.", "Shuttle Purchase", 0)
