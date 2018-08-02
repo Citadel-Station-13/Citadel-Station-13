@@ -9,7 +9,7 @@
 	fakeable = FALSE
 
 /datum/round_event/mass_hallucination/start()
-	switch(rand(1,4))
+	switch(rand(1,5))
 		if(1) //same sound for everyone
 			var/sound = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
@@ -22,7 +22,7 @@
 			var/stationmessage = pick("ratvar","shuttle_dock","blob_alert","malf_ai","meteors","supermatter")
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 				new /datum/hallucination/stationmessage(C, TRUE, stationmessage)
-		if(4 to 6)
+		if(4)
 			var/picked_hallucination = pick(	/datum/hallucination/bolts,
 												/datum/hallucination/chat,
 												/datum/hallucination/message,
@@ -36,3 +36,6 @@
 												/datum/hallucination/oh_yeah)
 			for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 				new picked_hallucination(C, TRUE)
+		if(5)
+			for(var/i in GLOB.alive_mob_list)
+				to_chat(i, "<span class="big bold"><font color="red">Shuttle Purchase</font><br>Kate Walker has purchased Standby Evacuation Vessel "Scrapheap Challenge" for -1000 credits.</span>")
