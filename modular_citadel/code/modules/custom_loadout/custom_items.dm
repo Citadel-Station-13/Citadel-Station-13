@@ -176,8 +176,8 @@
 	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
-	icon_state = "sexymime"
-	item_state = "sexymime"
+	icon_state = "hheart"
+	item_state = "hheart"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/trenchcoat/green
