@@ -314,6 +314,13 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/shoes/lucky
 	ckeywhitelist = list("donaldtrumpthecommunist")
 
+/datum/gear/raiqbawks
+	name = "Miami Boombox"
+	category = SLOT_HANDS
+	cost = 2
+	path = /obj/item/boombox/raiq
+	ckeywhitelist = list("chefferz")
+
 /datum/gear/m41
 	name = "Toy M41"
 	category = SLOT_IN_BACKPACK
