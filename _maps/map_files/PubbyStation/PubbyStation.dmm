@@ -48124,6 +48124,13 @@
 	dir = 1
 	},
 /area/security/checkpoint/customs)
+"fpC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "fpT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -48403,6 +48410,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"gjM" = (
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor6"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "gjN" = (
 /obj/item/weldingtool,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -49933,13 +49946,6 @@
 	dir = 9
 	},
 /area/science/xenobiology)
-"kGi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "kIo" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -53453,12 +53459,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
-"vtJ" = (
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "vtT" = (
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
@@ -81355,8 +81355,8 @@ cam
 cam
 cdI
 bXk
-kGi
-vtJ
+fpC
+gjM
 cbV
 cbV
 ceq
