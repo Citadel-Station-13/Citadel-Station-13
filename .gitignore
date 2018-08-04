@@ -202,6 +202,3 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #Jukebox audio files
 /config/jukebox_music/**/*
-*.dmm
-_maps/nanostation.dm
-_maps/nanotstation.json
