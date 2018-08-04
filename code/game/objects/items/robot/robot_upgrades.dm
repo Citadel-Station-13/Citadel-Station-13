@@ -79,7 +79,40 @@
 			to_chat(user, "<span class='notice'>There's no room for another VTEC unit!</span>")
 			return FALSE
 
-		R.speed = -2 // Gotta go fast.
+        //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
+		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
+
+
+/obj/effect/proc_holder/silicon/cyborg/vtecControl
+	name = "vTec Control"
+	desc = "Allows finer-grained control of the vTec speed boost."
+	action_icon = 'icons/mob/actions.dmi'
+	action_icon_state = "Chevron_State_0"
+
+	var/currentState = 0
+	var/maxReduction = 2
+
+
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
+
+	var/mob/living/silicon/robot/self = usr
+
+	currentState = (currentState + 1) % 3
+
+	if(usr)
+		switch(currentState)
+			if (0)
+				self.speed += maxReduction
+			if (1)
+				self.speed -= maxReduction*0.5
+			if (2)
+				self.speed -= maxReduction*0.5
+
+	action.button_icon_state = "Chevron_State_[currentState]"
+	action.UpdateButtonIcon()
+
+	return
+
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -192,6 +225,60 @@
 		var/obj/item/storage/bag/ore/cyborg/S = new (R.module)
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
+
+/obj/item/borg/upgrade/tboh
+	name = "janitor cyborg trash bag of holding"
+	desc = "A trash bag of holding replace for the janiborgs standard trash bag."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/cyborg/TB in R.module.modules)
+			R.module.remove_module(TB, TRUE)
+
+		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.module)
+		R.module.basic_modules += B
+		R.module.add_module(B, FALSE, TRUE)
+
+/obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.module.modules)
+			R.module.remove_module(B, TRUE)
+
+		var/obj/item/storage/bag/trash/cyborg/TB = new (R.module)
+		R.module.basic_modules += TB
+		R.module.add_module(TB, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop
+	name = "janitor cyborg advanced mop"
+	desc = "An advanced mop replacement from the janiborgs standard mop."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/cyborg/M in R.module.modules)
+			R.module.remove_module(M, TRUE)
+
+	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+	R.module.basic_modules += A
+	R.module.add_module(A, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/advanced/cyborg/A in R.module.modules)
+			R.module.remove_module(A, TRUE)
+
+		var/obj/item/mop/cyborg/M = new (R.module)
+		R.module.basic_modules += M
+		R.module.add_module(M, FALSE, TRUE)
 
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
@@ -543,3 +630,20 @@
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		if (PP)
 			R.module.remove_module(PP, TRUE)
+
+/obj/item/borg/upgrade/transform
+	name = "borg module picker (Standard)"
+	desc = "Allows you to to turn a cyborg into a standard cyborg."
+	icon_state = "cyborg_upgrade3"
+	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
+
+/obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		R.module.transform_to(new_module)
+
+/obj/item/borg/upgrade/transform/clown
+	name = "borg module picker (Clown)"
+	desc = "Allows you to to turn a cyborg into a clown, honk."
+	icon_state = "cyborg_upgrade3"
+	new_module = /obj/item/robot_module/clown

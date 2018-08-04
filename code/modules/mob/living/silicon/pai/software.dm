@@ -140,7 +140,7 @@
 			radio.attack_self(src)
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What" , "Exclamation" ,"Question") // CITADEL EDIT
 			var/pID = 1
 
 			switch(newImage)
@@ -164,6 +164,10 @@
 					pID = 9
 				if("Null")
 					pID = 10
+				if("Exclamation") // CITADEL EDIT
+					pID = 11
+				if("Question") // CITADEL EDIT
+					pID = 12
 			card.setEmotion(pID)
 
 		if("signaller")
@@ -209,7 +213,7 @@
 					pda.silent = !pda.silent
 				else if(href_list["target"])
 					if(silent)
-						return alert("Communications circuits remain unitialized.")
+						return alert("Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)

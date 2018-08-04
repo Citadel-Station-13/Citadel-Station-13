@@ -179,7 +179,7 @@
 
 /obj/item/robot_module/medical/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Droid")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Droid", "Eyebot")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -189,11 +189,15 @@
 			cyborg_base_icon = "medical"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 			hat_offset = 4
+		if("Eyebot")
+			cyborg_base_icon = "eyebotmed"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			special_light_key = "eyebotmed"
 	return ..()
 
 /obj/item/robot_module/security/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads", "Droid")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads", "Droid", "Spider")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -207,11 +211,15 @@
 			cyborg_base_icon = "Security"
 			special_light_key = "service"
 			hat_offset = 0
+		if("Spider")
+			cyborg_base_icon = "spidersec"
+			special_light_key = "spidersec"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	return ..()
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Handy")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -225,6 +233,10 @@
 			cyborg_base_icon = "loader"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 			has_snowflake_deadsprite = TRUE
+		if("Handy")
+			cyborg_base_icon = "handyeng"
+			special_light_key = "handyeng"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	return ..()
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)

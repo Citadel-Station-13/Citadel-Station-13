@@ -1,5 +1,5 @@
 /obj/item/nullrod/rosary
-	icon = 'modular_citadel/icons/obj/weapons.dmi'
+	icon = 'modular_citadel/icons/obj/items_and_weapons.dmi'
 	icon_state = "rosary"
 	item_state = null
 	name = "prayer beads"

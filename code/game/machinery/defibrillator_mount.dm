@@ -37,7 +37,7 @@
 		use_power(200)
 		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
 		update_icon()
-	
+
 /obj/machinery/defibrillator_mount/update_icon()
 	cut_overlays()
 	if(defib)
@@ -69,7 +69,7 @@
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(I.flags_1 & NODROP_1 || !user.transferItemToLoc(I, src))
+		if(I.item_flags & NODROP || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \

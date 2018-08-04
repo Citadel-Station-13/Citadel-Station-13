@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return COMPONENT_INCOMPATIBLE
 	GLOB.uplinks += src
 	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
-	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	owner = _owner
 	if(owner)
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -178,4 +178,3 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
 	return TRUE
-

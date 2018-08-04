@@ -11,7 +11,10 @@
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
 		input = capitalize(copytext(input, customsayverb+1))
-	return "[message_spans_start(spans)][input]</span>"
+	if(input)
+		return "[message_spans_start(spans)][input]</span>"
+	else
+		return
 
 /mob/living/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	. = ..()

@@ -18,9 +18,9 @@
 	filter_border = _border
 	filter_color = _color
 
-	RegisterSignal(COMSIG_COMBAT_TOGGLED, .proc/handlefilterstuff)
-	RegisterSignal(COMSIG_ITEM_EQUIPPED, .proc/OnEquipped)
-	RegisterSignal(COMSIG_ITEM_DROPPED, .proc/OnDropped)
+	RegisterSignal(parent, COMSIG_COMBAT_TOGGLED, .proc/handlefilterstuff)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/OnEquipped)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/OnDropped)
 
 /datum/component/phantomthief/proc/handlefilterstuff(mob/user, combatmodestate)
 	if(istype(user))

@@ -135,10 +135,10 @@
 		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
-		AI.aicamera.toggle_camera_mode()
+		AI.aicamera.toggle_camera_mode(usr)
 	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
-		R.aicamera.toggle_camera_mode()
+		R.aicamera.toggle_camera_mode(usr)
 
 /obj/screen/ai/image_view
 	name = "View Images"
@@ -149,10 +149,10 @@
 		return
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
-		AI.aicamera.viewpictures()
+		AI.aicamera.viewpictures(usr)
 	else if(iscyborg(usr))
 		var/mob/living/silicon/robot/R = usr
-		R.aicamera.viewpictures()
+		R.aicamera.viewpictures(usr)
 
 /obj/screen/ai/sensors
 	name = "Sensor Augmentation"
@@ -186,9 +186,9 @@
 
 
 /datum/hud/ai
-	ui_style_icon = 'icons/mob/screen_ai.dmi'
+	ui_style = 'icons/mob/screen_ai.dmi'
 
-/datum/hud/ai/New(mob/owner, ui_style = 'icons/mob/screen_ai.dmi')
+/datum/hud/ai/New(mob/owner)
 	..()
 	var/obj/screen/using
 
