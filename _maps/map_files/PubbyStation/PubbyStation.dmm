@@ -47352,6 +47352,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/tesla_coil/power,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "daY" = (
@@ -49932,6 +49933,13 @@
 	dir = 9
 	},
 /area/science/xenobiology)
+"kGi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "kIo" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -50353,13 +50361,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"mci" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "mdL" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -50374,13 +50375,6 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/airless,
-/area/engine/engineering)
-"mhl" = (
-/obj/machinery/power/emitter,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/engine/engineering)
 "mlr" = (
 /obj/structure/lattice,
@@ -53006,6 +53000,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/power/tesla_coil/power,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ubW" = (
@@ -53458,6 +53453,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"vtJ" = (
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor6"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "vtT" = (
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
@@ -53880,7 +53881,10 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "wKK" = (
-/obj/machinery/power/tesla_coil,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/power/emitter,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "wLo" = (
@@ -80837,15 +80841,15 @@ bBX
 fdS
 xTi
 bXk
-jlb
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
+hTr
+mZE
+aaa
+aaa
+eNF
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -81094,14 +81098,14 @@ kDJ
 oYj
 uMo
 bXk
-mci
-cbX
-ceq
-ceq
-ceq
-mhl
-ceq
-ceq
+jlb
+bXk
+bXk
+bXk
+bXk
+bXk
+bXk
+bXk
 bXk
 aaa
 aaa
@@ -81350,15 +81354,15 @@ tcY
 cam
 cam
 cdI
-cri
-eVW
-cbX
+bXk
+kGi
+vtJ
+cbV
+cbV
+ceq
 wKK
-wKK
-wKK
-wKK
-wKK
-wKK
+ceq
+ceq
 bXk
 aaa
 aaa
@@ -81610,12 +81614,12 @@ cdI
 cri
 eVW
 cbX
-cBQ
-cBQ
-cBQ
-cBQ
-cBQ
-cBQ
+ccQ
+ccQ
+ccQ
+ccQ
+ceq
+ceq
 bXk
 aaa
 aaa
@@ -81867,12 +81871,12 @@ ous
 bXk
 tuL
 ccR
-cbV
-cbV
-ccQ
-ccQ
-ccQ
-ccQ
+cBQ
+cBQ
+cBQ
+cBQ
+cBQ
+cBQ
 bXk
 aaa
 aaa
