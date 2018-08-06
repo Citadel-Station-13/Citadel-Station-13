@@ -171,7 +171,7 @@
 	item_state = "santa"
 	slowdown = 0
 
-/obj/item/clothing/mask/sexymime
+/obj/item/clothing/mask/hheart
 	name = "The Hollow heart"
 	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'

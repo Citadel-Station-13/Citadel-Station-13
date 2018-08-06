@@ -42,10 +42,10 @@
 	path = /obj/item/clothing/accessory/medal/steele
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/sexymimemask
-	name = "The hollow heart"
+/datum/gear/hheart
+	name = "The Hollow Heart"
 	category = SLOT_WEAR_MASK
-	path = /obj/item/clothing/mask/sexymime
+	path = /obj/item/clothing/mask/hheart
 	ckeywhitelist = list("inferno707")
 
 /datum/gear/engravedzippo
