@@ -7198,7 +7198,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/bridge)
+/area/ai_monitored/turret_protected/aisat_interior)
 "atN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -7278,7 +7278,7 @@
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,
-/area/bridge)
+/area/ai_monitored/turret_protected/aisat_interior)
 "aua" = (
 /obj/structure/closet/secure_closet/freezer/money,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
@@ -8052,7 +8052,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/bridge)
+/area/ai_monitored/turret_protected/aisat_interior)
 "avR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -8136,7 +8136,7 @@
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,
-/area/bridge)
+/area/ai_monitored/turret_protected/aisat_interior)
 "awd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -8967,7 +8967,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
-/area/bridge)
+/area/ai_monitored/turret_protected/aisat_interior)
 "ayf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
