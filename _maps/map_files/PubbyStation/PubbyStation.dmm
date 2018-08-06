@@ -27217,6 +27217,9 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
+"btG" = (
+/turf/open/space/basic,
+/area)
 "btK" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -47963,6 +47966,15 @@
 	dir = 5
 	},
 /area/science/explab)
+"eUT" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 1"
+	},
+/turf/open/floor/plating,
+/area/security/main)
 "eVy" = (
 /obj/effect/turf_decal/arrows{
 	dir = 8
@@ -48236,6 +48248,17 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/engine/engineering)
+"fGQ" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
+	},
+/turf/open/space/basic,
+/area/space)
 "fIu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -48968,6 +48991,9 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"hRK" = (
+/turf/closed/wall/r_wall,
+/area/security/main)
 "hSM" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -50585,6 +50611,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"mGq" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 1"
+	},
+/turf/open/floor/plating,
+/area/security/main)
 "mHy" = (
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 /turf/open/floor/wood,
@@ -51086,6 +51121,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/darkblue/side,
 /area/science/xenobiology)
+"ofS" = (
+/obj/machinery/light{
+	dir = 1;
+	light_color = "#706891"
+	},
+/turf/open/floor/plating,
+/area/security/main)
 "ofX" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -51573,6 +51615,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"pjW" = (
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_lavaland4";
+	name = "lavaland"
+	},
+/turf/open/space,
+/area/space)
 "pkM" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "22"
@@ -80870,9 +80920,9 @@ aaa
 aby
 abI
 agP
-agQ
-agQ
-agQ
+hRK
+mGq
+hRK
 agP
 agP
 agP
@@ -81127,9 +81177,9 @@ aaa
 aaa
 aaa
 aaa
-abI
-abI
-abI
+agQ
+ofS
+agQ
 abI
 abI
 abI
@@ -81384,9 +81434,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+hRK
+eUT
+hRK
 aaa
 aaa
 abI
@@ -81642,8 +81692,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-afJ
+fGQ
+mZE
 aaa
 aaa
 abI
@@ -82670,7 +82720,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+pjW
 aaa
 aaa
 aaa
@@ -93988,7 +94038,7 @@ akn
 alg
 aaa
 aaa
-aaa
+btG
 aaa
 aaa
 aaa
