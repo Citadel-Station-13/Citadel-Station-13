@@ -325,4 +325,4 @@ datum/gear/darksabresheath
 	name = "Toy M41"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/gun/m41
-	ckeywhitelist = list("ThalVerscholen")
+	ckeywhitelist = list("thalverscholen")
