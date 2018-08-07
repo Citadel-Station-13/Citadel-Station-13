@@ -290,10 +290,10 @@
 	prisoner.notransform = FALSE
 	prisoner = null
 
-//Some armor so it's harder to kill someone by mistake.
+//Some armor so it's harder to kill someone by mistake. EDITED - Hugboxed
 /obj/structure/puzzle_element/prison
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 50, "acid" = 50)
-
+	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF
+	
 /obj/structure/puzzle_element/prison/relaymove(mob/user)
 	return
 
