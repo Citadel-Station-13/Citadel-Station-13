@@ -609,3 +609,9 @@
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/movable/proc/remove_filter(name)
+	if(filter_data[name])
+		filter_data -= name
+		update_filters()
+		return TRUE

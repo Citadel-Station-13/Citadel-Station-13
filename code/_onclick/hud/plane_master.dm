@@ -29,9 +29,11 @@
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
-	filters = list()
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
-		filters += AMBIENT_OCCLUSION
+		add_filter("ambient_occlusion", 0, list("type" = "drop_shadow", "x" = 0, "y" = -2, "size" = 4, "border" = 4, "color" = "#04080FAA"))
+	else
+		remove_filter("ambient_occlusion")
+	update_filters()
 
 /obj/screen/plane_master/lighting
 	name = "lighting plane master"
