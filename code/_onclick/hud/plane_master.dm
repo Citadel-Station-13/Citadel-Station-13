@@ -30,7 +30,7 @@
 
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
-		add_filter("ambient_occlusion", 0, list("type" = "drop_shadow", "x" = 0, "y" = -2, "size" = 4, "border" = 4, "color" = "#04080FAA"))
+		add_filter("ambient_occlusion", 0, AMBIENT_OCCLUSION)
 	else
 		remove_filter("ambient_occlusion")
 	update_filters()
