@@ -21,7 +21,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/product_path = null
 	var/amount = 0
 	var/max_amount = 0
-	var/display_color = "blue"
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
@@ -66,6 +65,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/scan_id = 1
 	var/obj/item/coin/coin
 	var/obj/item/stack/spacecash/bill
+	
+	var/global/vending_cache = list() //used for storing the icons of items being vended
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -158,7 +159,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.display_color = pick("#ff8080","#80ff80","#8080ff")
 		recordlist += R
 
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
@@ -317,7 +317,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			return
 	return ..()
 
-/obj/machinery/vending/interact(mob/user)
+/obj/machinery/vending/ui_interact(mob/user)
 	var/dat = ""
 
 	dat += "<h3>Select an item</h3>"
@@ -332,17 +332,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			display_records = product_records + coin_records
 		if((coin || bill) && extended_inventory)
 			display_records = product_records + hidden_records + coin_records
-		dat += "<ul>"
+		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
+			dat += "<tr><td><img src='data:image/jpeg;base64," + GetIconForProduct(R) + "'/></td>"
+			dat += "<td style=\"width: 100%\"><b>[sanitize(R.name)]</b></td>"
 			if(R.amount > 0)
-				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
 			else
-				dat += "<span class='linkOff'>Sold out</span> "
-			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)]</b>:</font>"
-			dat += " <b>[R.amount]</b>"
-			dat += "</li>"
-		dat += "</ul>"
+				dat += "<td>0&nbsp;</td><td><span class='linkOff'>Vend</span></td>"
+			dat += "</tr>"
+		dat += "</table>"
 	dat += "</div>"
 	if(premium.len > 0)
 		dat += "<b>Change Return:</b> "
@@ -364,6 +363,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
+
+/obj/machinery/vending/proc/GetIconForProduct(datum/data/vending_product/P)
+	if(vending_cache[P.product_path])
+		return vending_cache[P.product_path]
+	var/product = new P.product_path()
+	vending_cache[P.product_path] = icon2base64(getFlatIcon(product))
+	qdel(product)
+	return vending_cache[P.product_path]
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
@@ -461,10 +468,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
-		new R.product_path(get_turf(src))
+		var/vended = new R.product_path(get_turf(src))
+		if(usr.put_in_hands(vended))
+			to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
+		else
+			to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
-		return
 
 		updateUsrDialog()
 		return
