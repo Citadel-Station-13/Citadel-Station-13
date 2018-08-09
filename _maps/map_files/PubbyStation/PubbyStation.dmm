@@ -47321,6 +47321,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/tesla_coil/power,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "daY" = (
@@ -53093,6 +53094,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/power/tesla_coil/power,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ubW" = (
@@ -54019,10 +54021,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
-"wKK" = (
-/obj/machinery/power/tesla_coil,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "wLo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -80977,15 +80975,15 @@ bBX
 fdS
 xTi
 bXk
-jlb
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
-bXk
+hTr
+mZE
+aaa
+aaa
+eNF
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -81234,14 +81232,14 @@ kDJ
 oYj
 uMo
 bXk
-mci
-cbX
-ceq
-ceq
-ceq
-mhl
-ceq
-ceq
+jlb
+bXk
+bXk
+bXk
+bXk
+bXk
+bXk
+bXk
 bXk
 aaa
 aaa
@@ -81490,15 +81488,15 @@ tcY
 cam
 cam
 cdI
-cri
-eVW
+bXk
+mci
 cbX
-wKK
-wKK
-wKK
-wKK
-wKK
-wKK
+ceq
+ceq
+ceq
+mhl
+cBQ
+cBQ
 bXk
 aaa
 aaa
@@ -81750,10 +81748,10 @@ cdI
 cri
 eVW
 cbX
-cBQ
-cBQ
-cBQ
-cBQ
+cbV
+cbV
+ceq
+ceq
 cBQ
 cBQ
 bXk
@@ -82007,12 +82005,12 @@ ous
 bXk
 tuL
 ccR
-cbV
-cbV
 ccQ
 ccQ
 ccQ
 ccQ
+cBQ
+cBQ
 bXk
 aaa
 aaa
