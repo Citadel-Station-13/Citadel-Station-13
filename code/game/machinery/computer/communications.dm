@@ -421,6 +421,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	SSshuttle.shuttle_purchase_requirements_met |= "emagged"
 	if(authenticated == 1)
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
