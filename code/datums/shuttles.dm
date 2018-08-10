@@ -227,9 +227,15 @@
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
-	credit_cost = 5000
+	credit_cost = 1000
 	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile. <span class='danger'>VIRUS ALERT: This entry seems to be booby-trapped with a redirector trap. Buy this at your own risk.</span>"
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+
+/datum/map_template/shuttle/emergency/scrapheap/prerequisites_met(mob/user)
+	if("emagged" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	to_chat(user, "<span class='notice'>Central Command has deemed this shuttle too dangerous for general usage. The console's safeties prevent its purchase.</span>")
+	return FALSE
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
