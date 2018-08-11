@@ -794,3 +794,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (item_flags & NODROP)
 		return
 	return ..()
+
+/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
+	return
