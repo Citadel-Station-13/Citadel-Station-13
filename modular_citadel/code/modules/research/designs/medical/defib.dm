@@ -1,4 +1,4 @@
-/datum/design/comp_defib
+//datum/design/comp_defib
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed"
 	id = "comp_defib"
@@ -7,7 +7,7 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 6000, MAT_SILVER = 6000, MAT_TITANIUM = 16000)
 	construction_time = 100
 	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	//departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_heal
 	name = "Defibrillartor Healing disk"
