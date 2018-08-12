@@ -76012,6 +76012,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"gFV" = (
+/obj/structure/closet/wardrobe/polychromic,
+/turf/open/floor/plasteel/vault,
+/area/crew_quarters/locker)
 "gGT" = (
 /obj/effect/landmark/start/scientist,
 /obj/structure/chair/office/light{
@@ -112298,7 +112302,7 @@ aPL
 aQZ
 aSh
 aTA
-aUT
+gFV
 aUM
 aYh
 aCM

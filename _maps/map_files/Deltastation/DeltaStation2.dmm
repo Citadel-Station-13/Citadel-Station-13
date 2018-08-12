@@ -61278,7 +61278,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/locker)
 "cCb" = (
-/obj/structure/closet/wardrobe/green,
+/obj/structure/closet/wardrobe/polychromic,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},

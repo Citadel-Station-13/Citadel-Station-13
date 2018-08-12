@@ -11794,7 +11794,7 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/white,
+/obj/structure/closet/wardrobe/polychromic,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
