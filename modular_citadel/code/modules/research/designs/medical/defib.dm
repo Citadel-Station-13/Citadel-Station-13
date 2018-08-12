@@ -44,7 +44,7 @@
 
 /datum/design/defib_speed
 	name = "Defibrllartor Pre-Primer Disk"
-	desc = "A belt-equipped defibrillator that can be rapidly deployed"
+	desc = "A disk that cuts the time charg time in half for defubrillator use"
 	id = "defib_speed"
 	build_type = PROTOLATHE
 	build_path = /obj/item/disk/defib_speed
