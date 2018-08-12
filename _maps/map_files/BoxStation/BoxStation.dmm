@@ -17507,10 +17507,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aTw" = (
-/obj/structure/closet/wardrobe/green,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/polychromic,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aTx" = (
