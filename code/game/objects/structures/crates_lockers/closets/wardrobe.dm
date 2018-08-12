@@ -175,3 +175,24 @@
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
+
+/obj/structure/closet/wardrobe/polychromic
+	name = "polychromic wardrobe"
+	icon_door = "white"
+
+/obj/structure/closet/wardrobe/polychromic/PopulateContents()
+	new /obj/item/clothing/under/polychromic/bottomless(src)
+	new /obj/item/clothing/under/polychromic/bottomless(src)
+	new /obj/item/clothing/under/polychromic/femtank(src)
+	new /obj/item/clothing/under/polychromic/femtank(src)
+	new /obj/item/clothing/under/polychromic/kilt(src)
+	new /obj/item/clothing/under/polychromic/kilt(src)
+	new /obj/item/clothing/under/polychromic/shorts(src)
+	new /obj/item/clothing/under/polychromic/shorts(src)
+	new /obj/item/clothing/under/polychromic/jumpsuit(src)
+	new /obj/item/clothing/under/polychromic/jumpsuit(src)
+	new /obj/item/clothing/under/polychromic/shimatank(src)
+	new /obj/item/clothing/under/polychromic/shortpants(src)
+	new /obj/item/clothing/under/polychromic/shortpants/pantsu(src)
+	new /obj/item/clothing/under/polychromic/skirt(src)
+	new /obj/item/clothing/under/polychromic/skirt(src)
