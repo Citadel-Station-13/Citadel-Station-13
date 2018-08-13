@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return FALSE
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
-		return 
+		return
 	var/adjusted = orig_light - 10
 	if(adjusted <= 0)
 		say("Explosion not large enough for research calculations.")
@@ -129,4 +129,4 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	linked_techweb = SSresearch.science_tech
 
 /proc/techweb_scale_bomb(lightradius)
-	return lightradius ** 1.36
+	return lightradius ** 50
