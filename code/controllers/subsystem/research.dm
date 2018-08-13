@@ -18,11 +18,15 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000),   // Cit three more anomalys anomalys
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 7500),   
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 5000),
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 2500)     // End of Cit changes
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 20)			//citadel edit - techwebs nerf
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 25)			//citadel edit - techwebs nerf
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
 
