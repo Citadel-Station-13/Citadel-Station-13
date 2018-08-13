@@ -171,13 +171,13 @@
 	item_state = "santa"
 	slowdown = 0
 
-/obj/item/clothing/mask/sexymime
+/obj/item/clothing/mask/hheart
 	name = "The Hollow heart"
 	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
-	icon_state = "sexymime"
-	item_state = "sexymime"
+	icon_state = "hheart"
+	item_state = "hheart"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/trenchcoat/green
@@ -388,3 +388,12 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "flagcape"
 	item_state = "flagcape"
+
+
+/obj/item/clothing/shoes/lucky
+	name = "Lucky Jackboots"
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	desc = "Comfy Lucky Jackboots with the word Luck on them."
+	item_state = "luckyjack"
+	icon_state = "luckyjack"

@@ -3,8 +3,9 @@
 	var/stun_stam_cost_coeff = 1.25
 	var/hardstun_ds = 1
 	var/softstun_ds = 0
-	var/stam_dmg = 40
+	var/stam_dmg = 30
 	cooldown = 20
+	total_mass = 3.75
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
