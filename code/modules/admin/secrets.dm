@@ -7,7 +7,6 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=mentor_log'>Mentor Log</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
@@ -111,18 +110,6 @@
 
 		if("mentor_log")
 			CitadelMentorLogSecret()
-
-		if("list_job_debug")
-			var/dat = "<B>Job Debug info.</B><HR>"
-			for(var/line in SSjob.job_debug)
-				dat += "[line]<BR>"
-			dat+= "*******<BR><BR>"
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job)
-					continue
-				dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-			usr << browse(dat, "window=jobdebug;size=600x500")
-
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
 			if(GLOB.admin_datums)
@@ -173,7 +160,7 @@
 		if("night_shift_set")
 			if(!check_rights(R_ADMIN))
 				return
-			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "On", "Off", "Automatic")
+			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
 			switch(val)
 				if("Automatic")
 					if(CONFIG_GET(flag/enable_night_shifts))
@@ -367,7 +354,7 @@
 					continue
 				if(is_special_character(H))
 					continue
-				var/datum/antagonist/traitor/human/T = new()
+				var/datum/antagonist/traitor/T = new()
 				T.give_objectives = FALSE
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
@@ -415,8 +402,10 @@
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						H.dna.features["tail_human"] = "Cat"
-						H.dna.features["ears"] = "Cat"
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
+						ears.Insert(H, drop_if_replaced=FALSE)
+						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
@@ -428,10 +417,10 @@
 						var/obj/item/clothing/under/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, slot_w_uniform)
+						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.flags_1 |= NODROP_1
+							I.item_flags |= NODROP
 				else
 					to_chat(H, "You're not kawaii enough for this.")
 
@@ -486,7 +475,7 @@
 			message_admins("[key_name_admin(usr)] activated AK-47s for Everyone!")
 			usr.client.ak47s()
 			sound_to_playing_players('sound/misc/ak47s.ogg')
-
+			
 		if("guns")
 			if(!check_rights(R_FUN))
 				return

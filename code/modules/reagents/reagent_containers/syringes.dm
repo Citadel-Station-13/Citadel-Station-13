@@ -36,8 +36,9 @@
 	mode = !mode
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/reagent_containers/syringe/attack_hand()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/reagent_containers/syringe/attack_paw(mob/user)
@@ -223,7 +224,7 @@
 	list_reagents = list("chloralhydrate" = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
-	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
+	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
 
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"

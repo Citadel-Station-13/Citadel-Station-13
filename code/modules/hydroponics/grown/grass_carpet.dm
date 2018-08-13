@@ -16,7 +16,7 @@
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet)
-	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
+	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05, "oxygen" = 0.03) //CITADEL CHANGE - adds 0.03 oxygen to grass
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
@@ -36,19 +36,8 @@
 			continue
 		grassAmt += 1 + round(G.seed.potency * tile_coefficient)
 		qdel(G)
-	var/obj/item/stack/tile/GT = new stacktype(user.loc)
-	while(grassAmt > GT.max_amount)
-		GT.amount = GT.max_amount
-		grassAmt -= GT.max_amount
-		GT = new stacktype(user.loc)
-	GT.amount = grassAmt
-	for(var/obj/item/stack/tile/T in user.loc)
-		if((T.type == stacktype) && (T.amount < T.max_amount))
-			GT.merge(T)
-			if(GT.amount <= 0)
-				break
+	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
-	return
 
 // Carpet
 /obj/item/seeds/grass/carpet

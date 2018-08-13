@@ -16,8 +16,7 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	//CITADEL EDIT reee proc, Dogborg modules
 	if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = FALSE
@@ -25,22 +24,16 @@
 	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
 		disabler = FALSE
 		update_icons() //PUT THE GUN AWAY
-	else if(istype(O,/obj/item/device/dogborg/sleeper))
+	else if(istype(O,/obj/item/dogborg/sleeper))
 		sleeper_g = FALSE
 		sleeper_r = FALSE
 		update_icons()
-		var/obj/item/device/dogborg/sleeper/S = O
+		var/obj/item/dogborg/sleeper/S = O
 		S.go_out() //this should stop edgecase deletions
 	//END CITADEL EDIT
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
-	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
-
-	if(O.flags_1 & DROPDEL_1)
-		O.flags_1 &= ~DROPDEL_1 //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
-
-	O.dropped(src)
 
 	if(module_active == O)
 		module_active = null
@@ -53,6 +46,12 @@
 	else if(held_items[3] == O)
 		inv3.icon_state = "inv3"
 		held_items[3] = null
+
+	if(O.item_flags & DROPDEL)
+		O.item_flags &= ~DROPDEL //we shouldn't HAVE things with DROPDEL_1 in our modules, but better safe than runtiming horribly
+
+	O.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
+
 	hud_used.update_robot_modules_display()
 	return 1
 
@@ -86,7 +85,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, slot_hands)
+		O.equipped(src, SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE

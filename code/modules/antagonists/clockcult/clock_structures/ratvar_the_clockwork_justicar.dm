@@ -17,7 +17,7 @@
 	var/convert_range = 10
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
-/obj/structure/destructible/clockwork/massive/ratvar/Initialize()
+/obj/structure/destructible/clockwork/massive/ratvar/Initialize(mapload, is_from_gateway = FALSE)
 	. = ..()
 	GLOB.ratvar_awakens++
 	for(var/obj/O in GLOB.all_clockwork_objects)
@@ -29,7 +29,8 @@
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 10, null, FALSE, 0)
+	if(is_from_gateway)			//citadel edit - hugbox
+		INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 10, null, FALSE, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -38,6 +39,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || QDELETED(O) || !istype(O) || !O.key)

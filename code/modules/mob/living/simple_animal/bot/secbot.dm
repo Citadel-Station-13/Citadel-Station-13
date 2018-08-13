@@ -10,7 +10,7 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
-	radio_key = /obj/item/device/encryptionkey/secbot //AI Priv + Security
+	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = "Security" //Security channel
 	bot_type = SEC_BOT
 	model = "Securitron"
@@ -305,7 +305,7 @@ Auto Patrol: []"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if( !Adjacent(target) || !isturf(target.loc) || target.staminaloss <= 120 || !target.recoveringstam) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
+			if( !Adjacent(target) || !isturf(target.loc) || target.getStaminaLoss() <= 120 || !target.recoveringstam) //CIT CHANGE - replaces amountknockdown with checks for stamina so secbots dont run into an infinite loop
 				back_to_hunt()
 				return
 
@@ -332,7 +332,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.staminaloss <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss check
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.
@@ -391,10 +391,11 @@ Auto Patrol: []"},
 			break
 		else
 			continue
+
 /mob/living/simple_animal/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
 
@@ -406,7 +407,7 @@ Auto Patrol: []"},
 	Sa.build_step = 1
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(baton_type, Tsec)
 
 	if(prob(50))

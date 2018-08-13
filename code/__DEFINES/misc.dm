@@ -23,6 +23,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
 //define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
+#define NOT_IMPLEMENTED "NOT_IMPLEMENTED"
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -85,11 +87,12 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SUIT_LAYER			SUIT_LAYER+1
+#define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
+#define UNDER_HEAD_LAYER			(HEAD_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
-#define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
+#define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
+#define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
 
 
 //Security levels
@@ -195,7 +198,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
 //Maximum amount of time, (in deciseconds) a tile can be wet for.
-#define MAXIMUM_WET_TIME 3000
+#define MAXIMUM_WET_TIME 5 MINUTES
 
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"
@@ -254,6 +257,8 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ORBITRON	"Orbitron"
 #define SHARE		"Share Tech Mono"
 
+GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
+
 //Color Defines
 #define OOC_COLOR  "#002eb8"
 
@@ -267,7 +272,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
 #define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
 #define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
-#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			(RESET_COLOR|NO_CLIENT_COLOR)
 #define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
 #define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
 
@@ -275,15 +280,15 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
 #define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
 #define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
-#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		(~RESET_COLOR|~NO_CLIENT_COLOR)
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
 */
 
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
+#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
+#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -378,7 +383,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
 
-//http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+//https://secure.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0
 #define MOUSE_OPACITY_ICON 1
 #define MOUSE_OPACITY_OPAQUE 2
@@ -402,8 +407,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
 
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
-
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
@@ -430,6 +433,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
 
+
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
@@ -445,3 +449,18 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NO_INIT_PARAMETER "no-init"
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+
+// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
+#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
+
+//Filters
+#define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"border"=4,"color"="#04080FAA")
+#define EYE_BLUR list("type"="blur", "size"=3)
+#define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
+
+#define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
+#define GRAVITY_DAMAGE_TRESHOLD 3 //Starting with this value gravity will start to damage mobs
+
+#define CAMERA_NO_GHOSTS 0
+#define CAMERA_SEE_GHOSTS_BASIC 1
+#define CAMERA_SEE_GHOSTS_ORBIT 2

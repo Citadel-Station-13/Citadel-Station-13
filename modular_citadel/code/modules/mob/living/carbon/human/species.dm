@@ -19,7 +19,7 @@
 	return FALSE
 
 /datum/species/proc/altdisarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.staminaloss >= STAMINA_SOFTCRIT)
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
 	else if(target.check_block())
@@ -35,7 +35,7 @@
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)
-		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/randn = rand(1, 100)
 		if(user.resting)
@@ -47,7 +47,7 @@
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+			target.apply_effect(40, EFFECT_KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return

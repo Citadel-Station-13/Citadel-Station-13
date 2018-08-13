@@ -3,22 +3,26 @@
 //////////////////////////////////
 
 /obj/item/storage/daki
-	name = "dakimakura" 
+	name = "dakimakura"
 	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
 	icon = 'icons/obj/daki.dmi'
 	icon_state = "daki_base"
 	slot_flags = SLOT_BACK
-	storage_slots = 3
-	w_class = 4
-	max_w_class = 3
-	max_combined_w_class = 21
 	var/cooldowntime = 20
 	var/static/list/dakimakura_options = list("Callie","Casca","Chaika","Elisabeth","Foxy Grandpa","Haruko","Holo","Ian","Jolyne","Kurisu","Marie","Mugi","Nar'Sie","Patchouli","Plutia","Rei","Reisen","Naga","Squid","Squigly","Tomoko","Toriel","Umaru","Yaranaika","Yoko") //Kurisu is the ideal girl." - Me, Logos.
+
+/obj/item/storage/daki/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_combined_w_class = 21
+	STR.max_items = 3
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
 
 /obj/item/storage/daki/attack_self(mob/living/user)
 	var/body_choice
 	var/custom_name
-	
+
 	if(icon_state == "daki_base")
 		body_choice = input("Pick a body.") in dakimakura_options
 		icon_state = "daki_[body_choice]"

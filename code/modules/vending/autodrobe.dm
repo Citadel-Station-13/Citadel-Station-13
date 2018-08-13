@@ -3,7 +3,7 @@
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
 	icon_deny = "theater-deny"
-	req_access_txt = "46" //Theatre access needed, unless hacked.
+	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
@@ -114,16 +114,26 @@
 		              /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 		           /obj/item/clothing/head/pirate/captain = 2,
-		           /obj/item/clothing/head/helmet/roman = 1,
-		           /obj/item/clothing/head/helmet/roman/legionaire = 1,
+		           /obj/item/clothing/head/helmet/roman/fake = 1,
+		           /obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
-		           /obj/item/shield/riot/roman = 1,
-		           /obj/item/skub = 1)
+		           /obj/item/shield/riot/roman/fake = 1,
+		           /obj/item/skub = 1,
+		           /obj/item/clothing/under/lobster = 1,	 // CIT CHANGES	           
+		           /obj/item/clothing/head/lobsterhat = 1,
+		           /obj/item/clothing/head/drfreezehat = 1,
+		           /obj/item/clothing/suit/dracula = 1,
+		           /obj/item/clothing/suit/drfreeze_coat = 1,
+		           /obj/item/clothing/suit/gothcoat = 2,
+		           /obj/item/clothing/under/draculass = 1,
+                   /obj/item/clothing/under/drfreeze = 1)    //End of Cit Changes
 	refill_canister = /obj/item/vending_refill/autodrobe
+
+/obj/machinery/vending/autodrobe/all_access
+	desc = "A vending machine for costumes. This model appears to have no access restrictions."
+	req_access = null
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
-	init_charges = list(32, 2, 3)

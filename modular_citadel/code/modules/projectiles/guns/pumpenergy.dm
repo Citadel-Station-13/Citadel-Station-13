@@ -143,7 +143,7 @@
 /obj/item/ammo_casing/energy/laser/scatter/disabler/pump
 	projectile_type = /obj/item/projectile/beam/disabler/weak
 	e_cost = 150
-	pellets = 5
+	pellets = 4
 	variance = 30
 	fire_sound = 'modular_citadel/sound/weapons/ParticleBlaster.ogg'
 	select_name  = "disable"
@@ -174,13 +174,13 @@
 
 /obj/item/projectile/beam/disabler/weak
 	name = "particle blast"
-	damage = 18
+	damage = 13
 	icon_state = "disablerpellet"
 	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 
 /obj/item/projectile/beam/disabler/slug
 	name = "positron blast"
-	damage = 60
+	damage = 80
 	range = 14
 	speed = 0.6
 	icon_state = "disablerslug"
@@ -193,6 +193,7 @@
 	color = null
 	nodamage = 1
 	knockdown = 100
+	stamina = 5
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'

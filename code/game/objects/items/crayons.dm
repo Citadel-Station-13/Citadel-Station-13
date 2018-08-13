@@ -32,7 +32,7 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard")
+	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag","prolizard","antilizard", "tile") //cit edit
 	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
@@ -247,6 +247,8 @@
 	var/cost = 1
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		cost = 5
+	if(istype(target, /obj/item/canvas))
+		cost = 0
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
 		return
@@ -458,13 +460,14 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
-	storage_slots = 7
-	can_hold = list(
-		/obj/item/toy/crayon
-	)
 
-/obj/item/storage/crayons/New()
-	..()
+/obj/item/storage/crayons/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.can_hold = typecacheof(list(/obj/item/toy/crayon))
+
+/obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)

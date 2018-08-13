@@ -1,12 +1,12 @@
 /obj/machinery/vending/security
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/device/ssword_kit = 1)
-	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/device/ssword_kit = 1)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/ssword_kit = 1)
+	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/ssword_kit = 1)
 
 /obj/machinery/vending/medical
 	products = list(/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
-					/obj/item/device/healthanalyzer = 4,
-					/obj/item/device/sensor_device = 2,
+					/obj/item/healthanalyzer = 4,
+					/obj/item/sensor_device = 2,
 					/obj/item/pinpointer/crew = 2,
 					/obj/item/reagent_containers/medspray/sterilizine = 1,
 					/obj/item/stack/medical/gauze = 8,
@@ -27,7 +27,11 @@
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
-
+					
+/obj/machinery/vending/wardrobe/chap_wardrobe
+	premium = list(/obj/item/toy/plush/plushvar = 1,
+					/obj/item/toy/plush/narplush = 1)
+	
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
 #define COIN_CHARGE 3
@@ -37,6 +41,7 @@
 	desc = "A vending machine for all your unmentionable desires."
 	icon = 'icons/obj/citvending.dmi'
 	icon_state = "kink"
+	circuit = /obj/item/circuitboard/machine/kinkmate
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
@@ -50,7 +55,7 @@
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
 					)
-	premium = list(/obj/item/device/electropack/shockcollar = 3)
+	premium = list(/obj/item/electropack/shockcollar = 3)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend
@@ -116,17 +121,11 @@
 	machine_name 	= "KinkMate"
 	icon			= 'modular_citadel/icons/vending_restock.dmi'
 	icon_state 		= "refill_kink"
-	charges 		= list(8, 5, 1)// of 20 standard, 12 contraband, 3 premium
-	init_charges 	= list(8, 5, 1)
 
 /obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"
 	icon_state 		= "refill_nazi"
-	charges 		= list(33, 13, 0)
-	init_charges 	= list(33, 13, 0)
 
 /obj/item/vending_refill/soviet
 	machine_name 	= "sovietvend"
 	icon_state 		= "refill_soviet"
-	charges 		= list(47, 7, 0)
-	init_charges 	= list(47, 7, 0)

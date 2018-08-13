@@ -175,6 +175,11 @@
 	if(has_trait(TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+		if(tod)
+			var/tdelta = round(world.time - timeofdeath)
+			if(tdelta < (DEFIB_TIME_LIMIT * 10))
+				holder.icon_state = "huddefib"
+				return
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
@@ -248,7 +253,7 @@
 				if("Incarcerated")
 					holder.icon_state = "hudincarcerated"
 					return
-				if("Parolled")
+				if("Paroled")
 					holder.icon_state = "hudparolled"
 					return
 				if("Discharged")
@@ -421,7 +426,7 @@
 /*~~~~~~~~~~~~
 	Circutry!
 ~~~~~~~~~~~~~*/
-/obj/item/device/electronic_assembly/proc/diag_hud_set_circuithealth(hide = FALSE)
+/obj/item/electronic_assembly/proc/diag_hud_set_circuithealth(hide = FALSE)
 	var/image/holder = hud_list[DIAG_CIRCUIT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -430,7 +435,7 @@
 	else
 		holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
 
-/obj/item/device/electronic_assembly/proc/diag_hud_set_circuitcell(hide = FALSE)
+/obj/item/electronic_assembly/proc/diag_hud_set_circuitcell(hide = FALSE)
 	var/image/holder = hud_list[DIAG_BATT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -442,7 +447,7 @@
 	else
 		holder.icon_state = "hudnobatt"
 
-/obj/item/device/electronic_assembly/proc/diag_hud_set_circuitstat(hide = FALSE) //On, On and dangerous, or Off
+/obj/item/electronic_assembly/proc/diag_hud_set_circuitstat(hide = FALSE) //On, On and dangerous, or Off
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
@@ -457,7 +462,7 @@
 	else //Bot is on and not dangerous
 		holder.icon_state = prefered_hud_icon
 
-/obj/item/device/electronic_assembly/proc/diag_hud_set_circuittracking(hide = FALSE)
+/obj/item/electronic_assembly/proc/diag_hud_set_circuittracking(hide = FALSE)
 	var/image/holder = hud_list[DIAG_TRACK_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size

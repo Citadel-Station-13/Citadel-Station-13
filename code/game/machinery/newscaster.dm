@@ -126,9 +126,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newMsg.is_admin_message = adminMessage
 	newMsg.locked = !allow_comments
 	if(photo)
-		newMsg.img = photo.img
+		newMsg.img = photo.picture.picture_image
 		newMsg.caption = photo.scribble
-		newMsg.photo_file = save_photo(photo.img)
+		newMsg.photo_file = save_photo(photo.picture.picture_image)
 	for(var/datum/newscaster/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
@@ -145,8 +145,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	wanted_issue.scannedUser = scanned_user
 	wanted_issue.isAdminMsg = adminMsg
 	if(photo)
-		wanted_issue.img = photo.img
-		wanted_issue.photo_file = save_photo(photo.img)
+		wanted_issue.img = photo.picture.picture_image
+		wanted_issue.photo_file = save_photo(photo.picture.picture_image)
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()
@@ -202,7 +202,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/c_locked=0
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	anchored = TRUE
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
@@ -263,12 +262,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	. = ..()
 	update_icon()
 
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/newscaster/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/newscaster/ui_interact(mob/user)
+	. = ..()
 	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat
@@ -799,10 +794,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(photo && !user.transferItemToLoc(photo, src))
 		photo = null
 	if(issilicon(user))
-		var/list/nametemp = list()
-		var/find
-		var/datum/picture/selection
-		var/obj/item/device/camera/siliconcam/targetcam = null
+		var/obj/item/camera/siliconcam/targetcam
 		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
@@ -814,19 +806,12 @@ GLOBAL_LIST_EMPTY(allCasters)
 				targetcam = R.aicamera
 		else
 			to_chat(user, "<span class='warning'>You cannot interface with silicon photo uploading!</span>")
-		if(targetcam.aipictures.len == 0)
+		if(!targetcam.stored.len)
 			to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 			return
-		for(var/datum/picture/t in targetcam.aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		var/obj/item/photo/P = new/obj/item/photo()
-		for(var/datum/picture/q in targetcam.aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-		P.sillynewscastervar = 1
+		var/datum/picture/selection = targetcam.selectpicture(user)
+		var/obj/item/photo/P = new(null, selection)
+		P.sillynewscastervar = TRUE
 		photo = P
 		qdel(P)
 
@@ -834,8 +819,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
-			if(istype(human_user.wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/P = human_user.wear_id
+			if(istype(human_user.wear_id, /obj/item/pda))
+				var/obj/item/pda/P = human_user.wear_id
 				if(P.id)
 					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 				else
@@ -869,14 +854,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
+
+/obj/machinery/newscaster/proc/remove_alert()
+	alert = FALSE
+	update_icon()
+
 /obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
 		say("Breaking news from [channel]!")
-		alert ++
+		alert = TRUE
 		update_icon()
-		spawn(alert_delay)
-			alert --
-			update_icon()
+		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_UNIQUE|TIMER_OVERRIDE)
 		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")

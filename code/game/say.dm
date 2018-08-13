@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		spans |= SPAN_YELL
 
 	var/spanned = attach_spans(input, spans)
-	return "[say_mod(input, message_mode)], \"[spanned]\""
+	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/virtualspeaker
 	var/job
 	var/atom/movable/source
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)

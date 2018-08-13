@@ -7,7 +7,7 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if(ismob(loc))
 		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/item/device/dogborg/sleeper))
+	if(istype(loc, /obj/item/dogborg/sleeper))
 		return ONE_ATMOSPHERE
 	. = ..()
 

@@ -35,7 +35,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/pet/penguin
-	no_vore = FALSE
+	no_vore = TRUE
 
 /mob/living/simple_animal/pet
 	devourable = TRUE
@@ -79,4 +79,7 @@
 	devourable = TRUE
 
 /mob/living/carbon/monkey
+	devourable = TRUE
+	
+/mob/living/simple_animal/hostile/carp
 	devourable = TRUE

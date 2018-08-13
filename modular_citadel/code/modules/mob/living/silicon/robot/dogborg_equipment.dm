@@ -82,7 +82,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 //Boop
 
-/obj/item/device/analyzer/nose
+/obj/item/analyzer/nose
 	name = "boop module"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "nose"
@@ -93,7 +93,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	attack_verb = list("nuzzled", "nosed", "booped")
 	w_class = 1
 
-/obj/item/device/analyzer/nose/attack_self(mob/user)
+/obj/item/analyzer/nose/attack_self(mob/user)
 	user.visible_message("[user] sniffs around the air.", "<span class='warning'>You sniff the air for gas traces.</span>")
 
 	var/turf/location = user.loc
@@ -148,7 +148,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/device/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+/obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 
 //Delivery
@@ -158,16 +158,15 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	desc = "Fetch the thing!"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "dbag"
-	//Can hold one big item at a time. Drops contents on unequip.(see inventory.dm)
-	w_class = 5
-	max_w_class = 2
-	max_combined_w_class = 2
-	storage_slots = 1
-	collection_mode = 0
-	can_hold = list() // any
-	cant_hold = list(/obj/item/disk/nuclear)
+	w_class = WEIGHT_CLASS_BULKY
 
-
+/obj/item/storage/bag/borgdelivery/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 5
+	STR.max_items = 1
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
 //Tongue stuff
 
 /obj/item/soap/tongue
@@ -183,7 +182,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/soap/tongue/New()
 	..()
-	flags_1 |= NOBLUDGEON_1 //No more attack messages
+	item_flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/trash/rkibble
 	name = "robo kibble"
@@ -259,7 +258,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(R,"<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else if(ishuman(target))
 		if(R.emagged)
 			var/mob/living/L = target
@@ -267,7 +266,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
 			L.Knockdown(80)
-			L.apply_effect(STUTTER, 4)
+			L.apply_effect(EFFECT_STUTTER, 4)
 			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[R] has shocked you with its tongue! You can feel the betrayal.</span>")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
@@ -275,6 +274,9 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		else
 			R.visible_message("<span class='warning'>\the [R] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
 			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+			var/mob/living/L = target
+			if(istype(L) && L.fire_stacks > 0)
+				L.adjust_fire_stacks(-10)
 			return
 	else if(istype(target, /obj/structure/window))
 		R.visible_message("[R] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
@@ -291,7 +293,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			to_chat(R, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
-			SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	return
 
 
@@ -316,7 +318,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/pounce/New()
 	..()
-	flags_1 |= NOBLUDGEON_1
+	item_flags |= NOBLUDGEON
 
 /mob/living/silicon/robot
 	var/leaping = 0

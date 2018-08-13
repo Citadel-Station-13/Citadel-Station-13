@@ -59,7 +59,10 @@
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/living/proc/IsSleeping() //If we're asleep
+/mob/proc/IsSleeping() //non-living mobs shouldn't be sleeping either
+	return FALSE
+
+/mob/living/IsSleeping() //If we're asleep
 	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
@@ -202,25 +205,37 @@
 		var/old_eye_blurry = eye_blurry
 		eye_blurry = max(amount, eye_blurry)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur()
 
 /mob/proc/adjust_blurriness(amount)
 	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(eye_blurry+amount, 0)
 	if(amount>0)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur()
 	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
+		remove_eyeblur()
 
 /mob/proc/set_blurriness(amount)
 	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(amount, 0)
 	if(amount>0)
 		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			add_eyeblur()
 	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
+		remove_eyeblur()
+
+/mob/proc/add_eyeblur()
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
+	GW.add_filter("blurry_eyes", 2, EYE_BLUR)
+	F.add_filter("blurry_eyes", 2, EYE_BLUR)
+
+/mob/proc/remove_eyeblur()
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
+	GW.remove_filter("blurry_eyes")
+	F.remove_filter("blurry_eyes")
 
 /////////////////////////////////// DRUGGY ////////////////////////////////////
 
@@ -243,8 +258,3 @@
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
 	if(bodytemperature > min_temp && bodytemperature < max_temp)
 		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
-
-
-
-
-

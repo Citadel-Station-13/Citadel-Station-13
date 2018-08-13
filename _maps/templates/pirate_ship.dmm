@@ -29,7 +29,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
@@ -564,8 +564,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bx" = (
@@ -615,8 +615,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -717,7 +717,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "bL" = (
@@ -961,8 +961,7 @@
 	},
 /obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 12;
-	pixel_y = 7;
-	pixel_z = 0
+	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1055,22 +1054,15 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cv" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "N2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cw" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	name = "Air Mixer";
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
-	},
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cx" = (
@@ -1085,7 +1077,7 @@
 /obj/item/storage/belt/utility{
 	pixel_x = 4
 	},
-/obj/item/device/analyzer{
+/obj/item/analyzer{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -1221,10 +1213,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cK" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "O2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1596,9 +1587,8 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	on = 1;
 	target_pressure = 4500
 	},
 /obj/machinery/button/door{
@@ -1624,7 +1614,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/corner,
@@ -1720,10 +1710,7 @@
 /area/shuttle/pirate)
 "dN" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "pirateincinerator";
-	luminosity = 2;
-	on = 0
+	id = "pirateincinerator"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
@@ -1734,9 +1721,8 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{

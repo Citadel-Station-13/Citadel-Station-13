@@ -39,9 +39,14 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
-	w_class = WEIGHT_CLASS_SMALL
-	max_combined_w_class = 5		//half that of regular kits
-	storage_slots = 5
+
+/obj/item/storage/hypospraykit/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_combined_w_class = 5
+	STR.max_items = 5
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
 
 /obj/item/storage/hypospraykit/regular
 	icon_state = "firstaid-mini"
@@ -107,7 +112,6 @@
 	name = "combat hypospray kit"
 	desc = "A hypospray kit best suited for combat situations."
 	icon_state = "tactical-mini"
-	max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/hypospraykit/tactical/PopulateContents()
 	if(empty)
@@ -121,9 +125,14 @@
 	name = "deluxe hypospray kit"
 	desc = "A kit containing a Deluxe hypospray and Vials."
 	icon_state = "tactical-mini"
-	max_w_class = WEIGHT_CLASS_NORMAL
-	storage_slots = 6
-	max_combined_w_class = 6
+
+/obj/item/storage/hypospraykit/cmo/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_combined_w_class = 6
+	STR.max_items = 6
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
 
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)

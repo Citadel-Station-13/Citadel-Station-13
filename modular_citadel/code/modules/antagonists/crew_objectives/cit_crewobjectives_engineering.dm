@@ -29,6 +29,6 @@
 /datum/objective/crew/poly/check_completion()
 	for(var/mob/living/simple_animal/parrot/Poly/dumbbird in GLOB.mob_list)
 		if(!(dumbbird.stat == DEAD) && dumbbird.ears)
-			if(istype(dumbbird.ears, /obj/item/device/radio/headset))
+			if(istype(dumbbird.ears, /obj/item/radio/headset))
 				return TRUE
 	return FALSE

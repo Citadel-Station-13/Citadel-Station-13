@@ -1,10 +1,11 @@
+
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
@@ -13,8 +14,22 @@
 	var/mob/living/holder
 
 /datum/dna/New(mob/living/new_holder)
-	if(new_holder)
+	if(istype(new_holder))
 		holder = new_holder
+
+/datum/dna/Destroy()
+	if(iscarbon(holder))
+		var/mob/living/carbon/cholder = holder
+		if(cholder.dna == src)
+			cholder.dna = null
+	holder = null
+	QDEL_NULL(species)
+
+	mutations.Cut()					//This only references mutations, just dereference.
+	temporary_mutations.Cut()		//^
+	previous.Cut()					//^
+
+	return ..()
 
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
@@ -81,6 +96,21 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
+		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"])
+		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"])
+		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"])
+		if(!GLOB.mam_tails_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
+		L[DNA_MUTANTTAIL_BLOCK] = construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
+		if(!GLOB.mam_ears_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+		L[DNA_MUTANTEAR_BLOCK] = construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
+		if(!GLOB.mam_body_markings_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
+		L[DNA_MUTANTMARKING_BLOCK] = construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(!GLOB.taur_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, GLOB.taur_list)
+		L[DNA_TAUR_BLOCK] = construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -131,6 +161,20 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
+		if(DNA_COLOR_ONE_BLOCK)
+			sanitize_hexcolor(features["mcolor"])
+		if(DNA_COLOR_TWO_BLOCK)
+			sanitize_hexcolor(features["mcolor2"])
+		if(DNA_COLOR_THREE_BLOCK)
+			sanitize_hexcolor(features["mcolor3"])
+		if(DNA_MUTANTTAIL_BLOCK)
+			construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
+		if(DNA_MUTANTEAR_BLOCK)
+			construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
+		if(DNA_MUTANTMARKING_BLOCK)
+			construct_block(GLOB.mam_body_markings_list.Find(features["mam_body_markings"]), GLOB.mam_body_markings_list.len)
+		if(DNA_TAUR_BLOCK)
+			construct_block(GLOB.taur_list.Find(features["taur"]), GLOB.taur_list.len)
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -165,10 +209,10 @@
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
+	features = random_features()
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
-	features = random_features()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna

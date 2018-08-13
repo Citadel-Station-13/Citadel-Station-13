@@ -218,8 +218,8 @@
 
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
-		. = capitalize(moth_name())
-
+		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+	
 		if(!findname(.))
 			break
 
@@ -278,8 +278,8 @@ Proc for attack log creation, because really why not
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
 	var/turf/attack_location = get_turf(target)
 
-	var/is_mob_user = user && GLOB.typecache_mob[user.type]
-	var/is_mob_target = target && GLOB.typecache_mob[target.type]
+	var/is_mob_user = user && ismob(user)
+	var/is_mob_target = target && ismob(target)
 
 	var/mob/living/living_target
 
@@ -288,7 +288,7 @@ Proc for attack log creation, because really why not
 
 	var/hp =" "
 	if(living_target)
-		hp = "(NEWHP: [living_target.health])"
+		hp = " (NEWHP: [living_target.health]) "
 
 	var/starget = "NON-EXISTENT SUBJECT"
 	if(target)
@@ -307,20 +307,22 @@ Proc for attack log creation, because really why not
 	var/sobject = ""
 	if(object)
 		sobject = "[object]"
+		if(addition)
+			addition = " [addition]"
 
 	var/sattackloc = ""
 	if(attack_location)
 		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
 
 	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
 	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource] with [sobject][addition] [hp] [sattackloc]</font>"
+		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
 		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
 
-	log_attack("[ssource] [what_done] [starget] with [sobject][addition] [hp] [sattackloc]")
+	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
@@ -396,17 +398,11 @@ Proc for attack log creation, because really why not
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
+	delay *= user.do_after_coefficent()
+
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, delay, target)
-
-	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-	if(mood)
-		switch(mood.sanity) //Alters do_after delay based on how sane you are
-			if(SANITY_INSANE to SANITY_DISTURBED)
-				delay *= 1.25
-			if(SANITY_NEUTRAL to SANITY_GREAT)
-				delay *= 0.90
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -441,6 +437,10 @@ Proc for attack log creation, because really why not
 				break
 	if (progress)
 		qdel(progbar)
+
+/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
+	. = 1
+	return
 
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
@@ -505,7 +505,8 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(arglist(new_args))
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -515,7 +516,8 @@ Proc for attack log creation, because really why not
 
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -527,6 +529,7 @@ Proc for attack log creation, because really why not
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='linkify'>[message]</span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
@@ -601,6 +604,7 @@ Proc for attack log creation, because really why not
 			log_adminsay(logmessage)
 		if(LOGOOC)
 			log_ooc(logmessage)
+			log_looc(logmessage) //CITADEL EDIT, logging LOOC because why not
 		else
 			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)

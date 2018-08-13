@@ -8,7 +8,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "cebu"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 
 /obj/item/soap/cebu //real versions, for admin shenanigans. Adminspawn only
 	desc = "A bright blue bar of soap that smells of wolves"
@@ -171,13 +171,13 @@
 	item_state = "santa"
 	slowdown = 0
 
-/obj/item/clothing/mask/sexymime
+/obj/item/clothing/mask/hheart
 	name = "The Hollow heart"
 	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
-	icon_state = "sexymime"
-	item_state = "sexymime"
+	icon_state = "hheart"
+	item_state = "hheart"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/trenchcoat/green
@@ -290,7 +290,7 @@
 		H = loc
 	if(!H)
 		return
-	else if(H.get_item_by_slot(slot_neck) == src)
+	else if(H.get_item_by_slot(SLOT_NECK) == src)
 		if(H.arousalloss < H.max_arousal / 3)
 			H.arousalloss = H.max_arousal / 3
 		if(prob(5) && H.hallucination < 15)
@@ -316,13 +316,29 @@
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
-	storage_slots = 1
-	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_BULKY
-	can_hold = list(
+
+/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/toy/sword/darksabre
-		)
+		))
+
+/obj/item/clothing/suit/armor/vest/darkcarapace
+	name = "Dark Armor"
+	desc = "A dark, non-functional piece of armor sporting a red and black finish."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "darkcarapace"
+	item_state = "darkcarapace"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
@@ -333,3 +349,51 @@
 	item_state = "wintergreencloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/head/paperhat
+	name = "paperhat"
+	desc = "A piece of paper folded into neat little hat."
+	icon_state = "paperhat"
+	item_state = "paperhat"
+
+/obj/item/clothing/suit/toggle/labcoat/mad/techcoat
+	name = "Techomancers Labcoat"
+	desc = "An oddly special looking coat."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "rdcoat"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "rdcoat"
+
+/obj/item/custom/leechjar
+	name = "Jar of Leeches"
+	desc = "A dubious cure-all. The cork seems to be sealed fairly well, and the glass impossible to break."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "leechjar"
+	item_state = "leechjar"
+
+/obj/item/clothing/neck/devilwings
+	name = "Strange Wings"
+	desc = "These strange wings look like they once attached to something... or someone...? Whatever the case, their presence makes you feel uneasy.."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "devilwings"
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/devilwings64x64.dmi'
+	item_state = "devilwings"
+	worn_x_dimension = 64
+	worn_y_dimension = 34
+
+/obj/item/bedsheet/custom/flagcape
+	name = "Flag Cape"
+	desc = "A truly patriotic form of heroic attire."
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "flagcape"
+	item_state = "flagcape"
+
+
+/obj/item/clothing/shoes/lucky
+	name = "Lucky Jackboots"
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	desc = "Comfy Lucky Jackboots with the word Luck on them."
+	item_state = "luckyjack"
+	icon_state = "luckyjack"

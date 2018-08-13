@@ -118,13 +118,13 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[slot_wear_mask])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_mask]
+	if(client && hud_used && hud_used.inv_slots[SLOT_WEAR_MASK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
 		inv.update_icon()
 
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = ((wear_mask.icon_override) ? wear_mask.icon_override : 'icons/mob/mask.dmi'))
+			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -132,13 +132,13 @@
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[slot_neck])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_neck]
+	if(client && hud_used && hud_used.inv_slots[SLOT_NECK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_NECK]
 		inv.update_icon()
 
 	if(wear_neck)
 		if(!(head && (head.flags_inv & HIDENECK)))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = ((wear_neck.icon_override) ? wear_neck.icon_override : 'icons/mob/neck.dmi'))
+			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -146,12 +146,12 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[slot_back])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_back]
+	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_BACK]
 		inv.update_icon()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'))
+		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
@@ -162,12 +162,12 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used && hud_used.inv_slots[slot_back])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_head]
+	if(client && hud_used && hud_used.inv_slots[SLOT_BACK])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 		inv.update_icon()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = ((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'))
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)
@@ -235,22 +235,11 @@
 	if(limb_icon_cache[icon_render_key])
 		load_limb_from_cache()
 		return
-	//Taur code goes here, since humans just inherit this proc
-	var/is_taur = FALSE
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
-			is_taur = TRUE
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-
-		if(istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg))
-			if(is_taur)
-				continue
-
 		new_limbs += BP.get_limb_icon()
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs

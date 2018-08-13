@@ -130,6 +130,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
+	S["ambientocclusion"]	>> ambientocclusion
+	S["auto_fit_viewport"]	>> auto_fit_viewport
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -150,7 +152,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
@@ -160,13 +162,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
+	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
-	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
@@ -210,6 +214,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["uses_glasses_colour"], uses_glasses_colour)
 	WRITE_FILE(S["clientfps"], clientfps)
 	WRITE_FILE(S["parallax"], parallax)
+	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
+	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
@@ -257,7 +263,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
-	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
@@ -310,11 +315,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
-	//Traits
-	S["all_traits"]			>> all_traits
-	S["positive_traits"]	>> positive_traits
-	S["negative_traits"]	>> negative_traits
-	S["neutral_traits"]		>> neutral_traits
+	//Quirks
+	S["all_quirks"]			>> all_quirks
+	S["positive_quirks"]	>> positive_quirks
+	S["negative_quirks"]	>> negative_quirks
+	S["neutral_quirks"]		>> neutral_quirks
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
@@ -371,7 +376,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
@@ -421,10 +425,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-	all_traits = SANITIZE_LIST(all_traits)
-	positive_traits = SANITIZE_LIST(positive_traits)
-	negative_traits = SANITIZE_LIST(negative_traits)
-	neutral_traits = SANITIZE_LIST(neutral_traits)
+	all_quirks = SANITIZE_LIST(all_quirks)
+	positive_quirks = SANITIZE_LIST(positive_quirks)
+	negative_quirks = SANITIZE_LIST(negative_quirks)
+	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
 	cit_character_pref_load(S)
 
@@ -441,7 +445,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["OOC_Notes"]			, metadata)
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
@@ -491,11 +494,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
-	//Traits
-	WRITE_FILE(S["all_traits"]		, all_traits)
-	WRITE_FILE(S["positive_traits"]		, positive_traits)
-	WRITE_FILE(S["negative_traits"]		, negative_traits)
-	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
+	//Quirks
+	WRITE_FILE(S["all_quirks"]			, all_quirks)
+	WRITE_FILE(S["positive_quirks"]		, positive_quirks)
+	WRITE_FILE(S["negative_quirks"]		, negative_quirks)
+	WRITE_FILE(S["neutral_quirks"]		, neutral_quirks)
 
 	cit_character_pref_save(S)
 

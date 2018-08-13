@@ -47,7 +47,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		19 //CIT CHANGE - adds more DNA blocks for cit's mutant bodyparts. Update citadel_defines.dm if this gets changed.
+#define DNA_UNI_IDENTITY_BLOCKS		14
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -55,19 +55,26 @@
 #define DNA_GENDER_BLOCK			5
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_COLOR_ONE_BLOCK			8
+#define DNA_COLOR_TWO_BLOCK			9
+#define DNA_COLOR_THREE_BLOCK			10
+#define DNA_MUTANTTAIL_BLOCK		11
+#define DNA_MUTANTEAR_BLOCK		12
+#define DNA_MUTANTMARKING_BLOCK	13
+#define DNA_TAUR_BLOCK 14
 
 #define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
-#define TR_KEEPITEMS	1
-#define TR_KEEPVIRUS	2
-#define TR_KEEPDAMAGE	4
-#define TR_HASHNAME		8	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
-#define TR_KEEPIMPLANTS	16
-#define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
-#define TR_DEFAULTMSG	64
-#define TR_KEEPORGANS	256
+#define TR_KEEPITEMS	(1<<0)
+#define TR_KEEPVIRUS	(1<<1)
+#define TR_KEEPDAMAGE	(1<<2)
+#define TR_HASHNAME		(1<<3)	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+#define TR_KEEPIMPLANTS	(1<<4)
+#define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
+#define TR_DEFAULTMSG	(1<<6)
+#define TR_KEEPORGANS	(1<<8)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -89,17 +96,14 @@
 #define NOSTOMACH		13
 #define NO_DNA_COPY     14
 #define DRINKSBLOOD		15
-#define SPECIES_ORGANIC 16
-#define SPECIES_INORGANIC 17
-#define SPECIES_UNDEAD  18
-#define SPECIES_ROBOTIC 19
-#define NOEYES			20
+#define NOEYES			16
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device"
 #define ORGAN_SLOT_STOMACH "stomach"
+#define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"

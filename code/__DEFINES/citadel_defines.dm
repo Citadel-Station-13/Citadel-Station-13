@@ -13,6 +13,8 @@
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
 
+//Filters
+#define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
 
 //organ defines
 #define COCK_SIZE_MIN		1
@@ -84,19 +86,6 @@
 #define AROUSAL "arousal"
 
 //DNA stuffs. Remember to change this if upstream adds more snowflake options
-#define DNA_EYE_COLOR_TWO_BLOCK		8
-#define DNA_EYE_COLOR_SWITCH_BLOCK	9
-#define DNA_EYE_COLOR_BLOCK			10
-#define DNA_COLOR_ONE_BLOCK			11
-#define DNA_COLOR_TWO_BLOCK			12
-#define DNA_COLOR_THR_BLOCK			13
-#define DNA_COLOR_SWITCH_BLOCK		14
-#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				15
-#define DNA_MUTANTRACE_BLOCK		16
-#define DNA_MUTANTTAIL_BLOCK		17
-#define DNA_MUTANTWING_BLOCK		18
-#define DNA_WINGCOLOR_BLOCK			19
 
 
 //Species stuffs. Remember to change this if upstream updates species flags
@@ -131,3 +120,6 @@
 #define DIGESTION_NOISES 4
 
 #define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)
+
+//component stuff
+#define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)

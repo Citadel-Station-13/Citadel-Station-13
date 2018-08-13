@@ -36,9 +36,9 @@
 	if(canbearoused && dna)
 		var/datum/species/S
 		S = dna.species
-		if(S && SSmobs.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
+		if(S && !(SSmobs.times_fired % 36) && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
 			adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
-			if(dna.features["exhibitionist"])
+			if(dna.features["exhibitionist"] && client)
 				var/amt_nude = 0
 				if(is_chest_exposed() && (gender == FEMALE || getorganslot("breasts")))
 					amt_nude++
@@ -47,13 +47,16 @@
 						amt_nude++
 					if(getorganslot("vagina"))
 						amt_nude++
-				var/mob/living/M
-				var/watchers = 0
-				for(M in view(world.view, src))
-					if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
-						watchers++
-				if(watchers && amt_nude)
-					adjustArousalLoss((amt_nude * watchers) + S.arousal_gain_rate)
+				if(amt_nude)
+					var/watchers = 0
+					for(var/mob/_M in view(world.view, src))
+						var/mob/living/M = _M
+						if(!istype(M))
+							continue
+						if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
+							watchers++
+					if(watchers)
+						adjustArousalLoss((amt_nude * watchers) + S.arousal_gain_rate)
 
 
 /mob/living/proc/getArousalLoss()
@@ -168,7 +171,7 @@
 				src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
 								"<span class='userdanger'>You start masturbating.</span>")
 				if(do_after(src, 30, target = src))
-					src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
+					src.visible_message("<span class='danger'>[src] relieves [p_them()]self!</span>", \
 								"<span class='userdanger'>You have relieved yourself.</span>")
 					setArousalLoss(min_arousal)
 					/*
@@ -387,7 +390,7 @@
 /mob/living/carbon/human/mob_climax(forced_climax=FALSE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
-			to_chat(src, "<span class='warning'>You need to wait [round((mb_cd_timer - world.time)/(20))] seconds before you can do that again!</span>")
+			to_chat(src, "<span class='warning'>You need to wait [DisplayTimeText((mb_cd_timer - world.time), TRUE)] before you can do that again!</span>")
 		return
 	mb_cd_timer = (world.time + mb_cd_length)
 

@@ -108,8 +108,8 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	var/new_flavor = (input(src, "Enter your new flavor text:", "Flavor text", null) as text|null)
-	if(new_flavor)
+	var/new_flavor = input(src, "Enter your new flavor text:", "Flavor text", null) as message|null
+	if(!isnull(new_flavor))
 		flavor_text = sanitize(new_flavor)
 		to_chat(src, "Your flavor text has been updated.")
 

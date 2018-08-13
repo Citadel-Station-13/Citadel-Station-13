@@ -16,6 +16,24 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
+///////security rifles special ammo///////
+
+/obj/item/ammo_casing/c46x30mm/rubber
+	name = "4.6x30mm rubberbullet casing"
+	desc = "A 4.6x30mm rubberbullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/c46x30mm/rubber
+
+/obj/item/ammo_box/magazine/wt550m9/wtrubber
+	name = "wt550 magazine (Rubber bullets 4.6x30mm)"
+	icon_state = "46x30mmtA-20"
+	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
+
+/obj/item/projectile/bullet/c46x30mm/rubber
+	name = "4.6x30mm bullet"
+	damage = 5
+	stamina = 20
+
 ///toy memes///
 
 /obj/item/ammo_box/magazine/toy/x9
@@ -105,7 +123,7 @@
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = 0
-	/obj/item/device/firing_pin/implant/pindicate
+	/obj/item/firing_pin/implant/pindicate
 	mag_type = /obj/item/ammo_box/magazine/flechette/
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0

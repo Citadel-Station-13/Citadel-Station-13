@@ -337,7 +337,7 @@
 	description = "Weapons using magnetic technology"
 	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
 	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
-	research_cost = 2500
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
 

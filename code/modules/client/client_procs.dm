@@ -6,6 +6,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
 
 	))
 
@@ -62,7 +63,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
-				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
+				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -81,7 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -115,16 +116,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
-
-	var/datum/real_src = hsrc
-	if(QDELETED(real_src))
-		return
+	if (hsrc)
+		var/datum/real_src = hsrc
+		if(QDELETED(real_src))
+			return
 
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
-		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
+		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
 
@@ -165,6 +166,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
+	world.SetConfig("APP/admin", ckey, "role=admin")			//CITADEL EDIT - Allows admins to reboot in OOM situations
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
@@ -179,10 +181,15 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
 	holder = GLOB.admin_datums[ckey]
+	var/debug_tools_allowed = FALSE			//CITADEL EDIT
 	if(holder)
 		GLOB.admins |= src
 		holder.owner = src
 		connecting_admin = TRUE
+		//CITADEL EDIT
+		if(check_rights_for(src, R_DEBUG))
+			debug_tools_allowed = TRUE
+		//END CITADEL EDIT
 	else if(GLOB.deadmins[ckey])
 		verbs += /client/proc/readmin
 		connecting_admin = TRUE
@@ -197,6 +204,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autorank, ckey)
+	//CITADEL EDIT
+	if(check_rights_for(src, R_DEBUG))	//check if autoadmin gave us it
+		debug_tools_allowed = TRUE
+	if(!debug_tools_allowed)
+		world.SetConfig("APP/admin", ckey, null)
+	//END CITADEL EDIT
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(isnull(address) || (address in localhost_addresses))
@@ -204,12 +217,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
-	if(!prefs)
+	if(prefs)
+		prefs.parent = src
+	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
+
+	if(fexists(roundend_report_file()))
+		verbs += /client/proc/show_previous_roundend_report
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
@@ -243,7 +261,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-	#if DM_VERSION >= 512
+
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
@@ -255,13 +273,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			log_access("Failed login: [key] - blacklisted byond version")
 			to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
 			to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]].</span>")
-			to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
+			to_chat(src, "<span class='danger'>Please download a new version of byond. If [byond_build] is the latest, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions.</span>")
 			if(connecting_admin)
 				to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
 			else
 				qdel(src)
 				return
-	#endif
+
 	if(SSinput.initialized)
 		set_macros()
 
@@ -278,11 +296,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/cev = CONFIG_GET(number/client_error_version)
 	var/cwv = CONFIG_GET(number/client_warn_version)
 	if (byond_version < cev)		//Out of date client.
-		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
+		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [cev] or later")
-		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
@@ -294,14 +312,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
 			msg += "Your version: [byond_version]<br>"
 			msg += "Required version to remove this message: [cwv] or later<br>"
-			msg += "Visit http://www.byond.com/download/ to get the latest version of byond.<br>"
+			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
 			src << browse(msg, "window=warning_popup")
 		else
 			to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
 			to_chat(src, CONFIG_GET(string/client_warn_message))
 			to_chat(src, "Your version: [byond_version]")
 			to_chat(src, "Required version to remove this message: [cwv] or later")
-			to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
+			to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 
 	if (connection == "web" && !connecting_admin)
 		if (!CONFIG_GET(flag/allow_webclient))
@@ -381,7 +399,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
-			winset(src, "[url_encode(child)]", "[entries[child]]")
+			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
@@ -449,12 +467,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
+	qdel(query_get_related_ip)
 	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_related_cid.Execute())
 		return
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
 		related_accounts_cid += "[query_get_related_cid.item[1]], "
+	qdel(query_get_related_cid)
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank.name
@@ -467,12 +487,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/new_player
 	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_client_in_db.Execute())
+		qdel(query_client_in_db)
 		return
 	if(!query_client_in_db.NextRow())
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
+			to_chat(src, "You must first join the Discord to verify your account before joining this server. Please ping an admin once you've joined and read the rules. https://discord.gg/E6SQuhz") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
@@ -480,6 +501,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
 				winset(src, null, "command=.options")
 				src << link("[panic_addr]?redirect=1")
+			qdel(query_client_in_db)
 			qdel(src)
 			return
 
@@ -487,12 +509,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		account_join_date = sanitizeSQL(findJoinDate())
 		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
+			qdel(query_client_in_db)
+			qdel(query_add_player)
 			return
+		qdel(query_add_player)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
+	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
+		qdel(query_get_client_age)
 		return
 	if(query_get_client_age.NextRow())
 		player_join_date = query_get_client_age.item[1]
@@ -505,19 +532,25 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),[account_join_date])")
+					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
 					if(!query_datediff.Execute())
+						qdel(query_datediff)
 						return
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
+					qdel(query_datediff)
+	qdel(query_get_client_age)
 	if(!new_player)
 		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
+			qdel(query_log_player)
 			return
+		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+	qdel(query_log_connection)
 	if(new_player)
 		player_age = -1
 	. = player_age
@@ -546,7 +579,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	query_cidcheck.Execute()
 
+	var/lastcid
+	if (query_cidcheck.NextRow())
+		lastcid = query_cidcheck.item[1]
+	qdel(query_cidcheck)
 	var/oldcid = cidcheck[ckey]
 
 	if (oldcid)
@@ -565,7 +605,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(src)
 			return TRUE
 
-		if (oldcid != computer_id) //IT CHANGED!!!
+		if (oldcid != computer_id && computer_id != lastcid) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
@@ -590,26 +630,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
-	else
-		var/sql_ckey = sanitizeSQL(ckey)
-		var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-		query_cidcheck.Execute()
+	else if (computer_id != lastcid)
+		cidcheck[ckey] = computer_id
+		tokens[ckey] = cid_check_reconnect()
 
-		var/lastcid
-		if (query_cidcheck.NextRow())
-			lastcid = query_cidcheck.item[1]
+		sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
 
-		if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
+		//we sleep after telling the client to reconnect, so if we still exist something is up
+		log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
-			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
-
-			//we sleep after telling the client to reconnect, so if we still exist something is up
-			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-
-			qdel(src)
-			return TRUE
+		qdel(src)
+		return TRUE
 
 /client/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
@@ -629,16 +660,22 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	//check to see if we noted them in the last day.
 	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
+		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())
+		qdel(query_get_notes)
 		return
+	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
 	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
+		qdel(query_get_notes)
 		return
 	if(query_get_notes.NextRow())
 		if (query_get_notes.item[1] == system_ckey)
+			qdel(query_get_notes)
 			return
+	qdel(query_get_notes)
 	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
 
@@ -650,6 +687,59 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
+/client/Click(atom/object, atom/location, control, params)
+	var/ab = FALSE
+	var/list/L = params2list(params)
+	if (object && object == middragatom && L["left"])
+		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+	var/mcl = CONFIG_GET(number/minute_click_limit)
+	if (!holder && mcl)
+		var/minute = round(world.time, 600)
+		if (!clicklimiter)
+			clicklimiter = new(LIMITER_SIZE)
+		if (minute != clicklimiter[CURRENT_MINUTE])
+			clicklimiter[CURRENT_MINUTE] = minute
+			clicklimiter[MINUTE_COUNT] = 0
+		clicklimiter[MINUTE_COUNT] += 1+(ab)
+		if (clicklimiter[MINUTE_COUNT] > mcl)
+			var/msg = "Your previous click was ignored because you've done too many in a minute."
+			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+				clicklimiter[ADMINSWARNED_AT] = minute
+
+				msg += " Administrators have been informed."
+				if (ab)
+					log_game("[key_name(src)] is using the middle click aimbot exploit")
+					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
+					add_system_note("aimbot", "Is using the middle click aimbot exploit")
+
+				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
+				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
+			to_chat(src, "<span class='danger'>[msg]</span>")
+			return
+
+	var/scl = CONFIG_GET(number/second_click_limit)
+	if (!holder && scl)
+		var/second = round(world.time, 10)
+		if (!clicklimiter)
+			clicklimiter = new(LIMITER_SIZE)
+		if (second != clicklimiter[CURRENT_SECOND])
+			clicklimiter[CURRENT_SECOND] = second
+			clicklimiter[SECOND_COUNT] = 0
+		clicklimiter[SECOND_COUNT] += 1+(!!ab)
+		if (clicklimiter[SECOND_COUNT] > scl)
+			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
+			return
+	
+	if(ab)
+		return
+
+	if (prefs.hotkeys)
+		// If hotkey mode is enabled, then clicking the map will automatically
+		// unfocus the text bar. This removes the red color from the text bar
+		// so that the visual focus indicator matches reality.
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+
+	..()
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
@@ -658,9 +748,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/self_playtime
 
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
-#undef MIN_CLIENT_VERSION
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -668,17 +756,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(inactivity > duration)
 		return inactivity
 	return FALSE
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
-	. = ..()
-	if (holder)
-		stoplag(1)
-	else
-		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -736,7 +813,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
 //CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
 	if(prefs && CONFIG_GET(string/default_view))
 		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
@@ -744,9 +820,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 //END OF CIT CHANGES
 	view = new_size
 	apply_clickcatcher()
+	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
+	if (prefs.auto_fit_viewport)
+		fit_viewport()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

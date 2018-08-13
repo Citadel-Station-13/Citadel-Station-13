@@ -111,6 +111,11 @@
 			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
 			blade_inhand.color = light_color
 			. += blade_inhand
+//Broken version. Not a toy, but not as strong.
+/obj/item/melee/transforming/energy/sword/cx/broken
+	name = "misaligned non-eutactic blade"
+	desc = "The Non-Eutactic Blade utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. This one seems to have a damaged handle and misaligned components, causing the blade to be unstable at best"
+	force_on = 15 //As strong a survival knife/bone dagger
 
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
@@ -201,8 +206,8 @@
 
 /obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword/cx))
-		if((W.flags_1 & NODROP_1) || (flags_1 & NODROP_1))
-			to_chat(user, "<span class='warning'>\the [flags_1 & NODROP_1 ? src : W] is stuck to your hand, you can't attach it to \the [flags_1 & NODROP_1 ? W : src]!</span>")
+		if((W.item_flags & NODROP) || (item_flags & NODROP))
+			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
@@ -249,7 +254,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/twohanded/hypereutactic/pre_altattackby(atom/A, mob/living/user, params)	//checks if it can do right click memes
 	altafterattack(A, user, TRUE, params)
@@ -302,7 +307,7 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)//blood overlays get weird otherwise, because the sprite changes. (retained from original desword because I have no idea what this is)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)//blood overlays get weird otherwise, because the sprite changes. (retained from original desword because I have no idea what this is)
 
 /obj/item/twohanded/hypereutactic/AltClick(mob/living/user)
 	if(!in_range(src, user))	//Basic checks to prevent abuse
@@ -437,7 +442,6 @@
 /obj/item/twohanded/hypereutactic/toy/rainbow
 	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
 	desc = "A custom-built toy with fancy rainbow lights built-in."
-	flags_2 = NONE
 	var/list/rainbow_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF","#FF00FF", "#3399ff", "#ff9900", "#fb008b", "#9800ff", "#00ffa3", "#ccff00")
 
 /obj/item/twohanded/hypereutactic/toy/rainbow/process()

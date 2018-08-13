@@ -30,7 +30,16 @@
 
 /datum/round_event/grey_tide/announce(fake)
 	if(areasToOpen && areasToOpen.len > 0)
-		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
+		if(prob(50))
+			priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
+		else
+			priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+			for(var/obj/machinery/computer/communications/C in GLOB.machines)
+				if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+					var/obj/item/paper/P = new(C.loc)
+					P.name = "Gr3y.T1d3 virus"
+					P.info = "Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement."
+					P.update_icon()
 	else
 		log_world("ERROR: Could not initate grey-tide. No areas in the list!")
 		kill()
@@ -53,6 +62,8 @@
 				temp.update_icon()
 			else if(istype(O, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O
+				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.
+					continue
 				temp.prison_open()
 			else if(istype(O, /obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O
