@@ -43,9 +43,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/radio,
+/obj/item/storage/backpack/clown,
 /obj/item/bikehorn,
-/obj/item/clothing/head/welding,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "ak" = (
@@ -75,10 +74,10 @@
 /obj/structure/bed/nest,
 /obj/structure/alien/weeds,
 /obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /obj/item/clothing/gloves/combat,
 /obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/under/syndicate/tacticool,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aq" = (
@@ -122,16 +121,6 @@
 /obj/structure/alien/weeds,
 /turf/open/space/basic,
 /area/ruin/unpowered/xenonest)
-"ay" = (
-/obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/alien/queen/large{
-	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
-	name = "alien queen";
-	pixel_x = -16;
-	plants_off = 1
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "aA" = (
 /obj/structure/alien/weeds,
 /obj/item/flamethrower,
@@ -141,6 +130,7 @@
 /obj/structure/alien/weeds,
 /obj/item/ammo_casing/c45,
 /obj/effect/decal/cleanable/blood/gibs,
+/mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aC" = (
@@ -148,11 +138,6 @@
 /obj/item/ammo_casing/c45{
 	pixel_x = -6
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"aD" = (
-/obj/structure/alien/weeds,
-/obj/item/organ/alien/eggsac,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aE" = (
@@ -185,13 +170,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"aK" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/weldingtool/largetank,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "aL" = (
 /obj/structure/alien/weeds,
 /obj/item/tank/internals/plasma,
@@ -202,21 +180,6 @@
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"aN" = (
-/obj/structure/alien/weeds,
-/obj/item/pickaxe,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"aO" = (
-/obj/structure/alien/weeds,
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"aP" = (
-/obj/structure/alien/weeds,
-/obj/item/stack/ore/titanium,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "aQ" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -224,21 +187,13 @@
 /obj/item/clothing/suit/bio_suit/security,
 /obj/item/clothing/head/bio_hood/security,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"aR" = (
-/obj/structure/alien/weeds,
-/obj/item/xenos_claw,
-/mob/living/simple_animal/hostile/alien,
+/obj/item/flashlight/seclite,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aS" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/clothing/mask/gas/explorer,
-/obj/item/tank/internals/oxygen,
-/obj/item/clothing/suit/hooded/explorer,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aT" = (
@@ -249,17 +204,15 @@
 "aU" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/mob/living/carbon/human/species/lizard/ashwalker{
-	health = 0
-	},
+/obj/item/twohanded/fireaxe/boneaxe,
+/obj/item/clothing/head/helmet/gladiator,
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aV" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/organ/alien/hivenode,
-/obj/item/organ/alien/plasmavessel/large/queen,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
@@ -270,7 +223,6 @@
 "aX" = (
 /obj/structure/alien/weeds,
 /obj/effect/gibspawner/xeno,
-/obj/item/organ/eyes/night_vision/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aY" = (
@@ -347,7 +299,7 @@
 /area/ruin/unpowered/xenonest)
 "bg" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/robot_debris,
+/obj/item/clothing/mask/facehugger/dead,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "bh" = (
@@ -361,6 +313,14 @@
 	dir = 8
 	},
 /turf/open/indestructible/boss/air,
+/area/ruin/unpowered/xenonest)
+"bi" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/book_of_babel,
+/obj/item/clothing/head/wizard/black,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "bj" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -534,9 +494,7 @@
 "bC" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/twohanded/bonespear,
-/obj/item/clothing/head/helmet/gladiator,
+/mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "bD" = (
@@ -556,41 +514,78 @@
 /obj/structure/stone_tile/center/cracked,
 /turf/open/chasm/lavaland,
 /area/ruin/unpowered/xenonest)
-"gS" = (
-/obj/structure/alien/weeds,
-/obj/item/organ/alien/acid,
+"ci" = (
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/queen/large{
+	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
+	name = "alien queen";
+	pixel_x = -16;
+	plants_off = 1
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"hB" = (
-/obj/structure/alien/weeds,
-/obj/item/organ/alien/neurotoxin,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"kv" = (
-/obj/structure/alien/weeds,
-/obj/item/organ/alien/plasmavessel/small,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"op" = (
-/obj/structure/alien/weeds,
-/obj/item/organ/alien/hivenode,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"DD" = (
+"jj" = (
 /obj/structure/bed/nest,
 /obj/structure/alien/weeds,
-/obj/item/organ/alien/resinspinner,
+/obj/item/clothing/suit/space/hardsuit/mining,
+/obj/item/clothing/gloves/color/black,
+/obj/item/radio/headset/headset_cargo/mining,
+/obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"IK" = (
+"jr" = (
 /obj/structure/alien/weeds,
-/obj/item/organ/tongue/alien,
+/obj/effect/gibspawner/human,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"WJ" = (
+"pK" = (
 /obj/structure/alien/weeds,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
+/obj/structure/bed/nest,
+/obj/item/healthanalyzer,
+/obj/item/clothing/suit/bio_suit/scientist,
+/obj/item/reagent_containers/hypospray/medipen,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Ae" = (
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Dz" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/human/corpse/damaged,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"PZ" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/head/welding,
+/obj/item/weldingtool/largetank,
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"QH" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/alien/corpse/humanoid/queen,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"VB" = (
+/obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
+/obj/item/storage/backpack/duffelbag/sec/surgery,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"WI" = (
+/obj/structure/alien/weeds,
+/obj/item/xenos_claw,
+/obj/effect/mob_spawn/alien/corpse/humanoid/drone,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"Zr" = (
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 
@@ -755,7 +750,7 @@ ad
 af
 ag
 ak
-av
+ag
 ag
 ac
 ac
@@ -766,14 +761,14 @@ af
 ag
 aE
 ag
-al
+aF
 ac
 ag
 ag
 aL
 ag
 ag
-ag
+jr
 ag
 ag
 ag
@@ -808,7 +803,7 @@ ag
 au
 ag
 ag
-ag
+av
 ac
 ag
 ag
@@ -855,7 +850,7 @@ ac
 af
 ak
 ag
-ag
+al
 ac
 ac
 ag
@@ -879,11 +874,11 @@ ac
 ac
 an
 ac
-aF
+al
 ac
 ag
 ag
-ar
+ao
 ag
 ag
 ac
@@ -906,11 +901,11 @@ ac
 ag
 ag
 ag
-al
 ag
 ag
 ag
 ag
+ag
 ac
 ac
 ag
@@ -934,7 +929,7 @@ ac
 ac
 ac
 ac
-am
+Dz
 ac
 ag
 ag
@@ -1081,7 +1076,7 @@ an
 ac
 ac
 ac
-am
+bi
 aY
 ac
 ac
@@ -1183,11 +1178,11 @@ ac
 am
 ag
 ar
-av
+QH
 ag
 ag
 ag
-ag
+aF
 ac
 an
 ac
@@ -1226,7 +1221,7 @@ ac
 ac
 aG
 ag
-am
+PZ
 ac
 an
 an
@@ -1282,7 +1277,7 @@ ac
 an
 an
 ac
-WJ
+VB
 ai
 ak
 ag
@@ -1298,7 +1293,7 @@ ac
 ag
 ag
 ag
-am
+pK
 ac
 aa
 aa
@@ -1313,7 +1308,7 @@ ab
 ac
 ac
 ai
-aD
+ag
 at
 ai
 ac
@@ -1338,7 +1333,7 @@ ac
 ac
 ac
 ac
-aF
+av
 ag
 bg
 ac
@@ -1365,9 +1360,9 @@ ac
 af
 ag
 ar
+al
 ag
 ag
-av
 ag
 ad
 ag
@@ -1380,7 +1375,7 @@ an
 ac
 ag
 aI
-aK
+am
 ac
 an
 ac
@@ -1450,7 +1445,7 @@ an
 an
 ac
 ac
-aF
+ag
 ak
 ac
 aa
@@ -1474,7 +1469,7 @@ ag
 at
 aQ
 at
-av
+ag
 aw
 ac
 ac
@@ -1494,7 +1489,7 @@ an
 an
 ac
 ag
-ag
+aX
 ac
 an
 an
@@ -1515,11 +1510,11 @@ aa
 (19,1,1) = {"
 ab
 ac
-DD
+ah
 af
 ah
-ar
-ah
+Ae
+jj
 ak
 ag
 ag
@@ -1531,7 +1526,7 @@ af
 ac
 ac
 ac
-ar
+Zr
 ag
 ac
 ac
@@ -1570,10 +1565,10 @@ ac
 ah
 ac
 ah
-al
+ag
 ac
 ag
-ay
+ag
 ag
 ag
 ag
@@ -1583,7 +1578,7 @@ ak
 ar
 ag
 ag
-av
+ag
 ag
 ac
 ac
@@ -1625,7 +1620,7 @@ ag
 ag
 ag
 ag
-ar
+ci
 ag
 at
 ag
@@ -1638,7 +1633,7 @@ ag
 ag
 ag
 ak
-aO
+ag
 ac
 am
 ac
@@ -1677,7 +1672,7 @@ ac
 at
 ag
 ag
-av
+ag
 ag
 ag
 ag
@@ -1689,8 +1684,8 @@ ag
 ag
 ar
 ag
-aP
-gS
+ag
+aT
 af
 ac
 aW
@@ -1739,11 +1734,11 @@ ac
 ac
 ac
 ac
-aN
+ag
 ag
 ag
 ar
-kv
+ag
 ac
 ac
 aZ
@@ -1771,31 +1766,31 @@ bD
 ab
 ac
 ac
-hB
+ag
 ac
 ak
 ac
 ac
 ag
 at
+av
 ag
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+aF
 ag
-ac
-ac
-ac
-ab
-ab
-ab
-ab
-ab
-ab
-ac
-ac
-ac
-aR
-ag
-aT
 aX
+ag
 ag
 ba
 bd
@@ -1823,7 +1818,7 @@ ab
 ac
 ai
 ag
-ar
+Ae
 ag
 ag
 ac
@@ -1845,9 +1840,9 @@ ab
 ac
 ac
 ac
-op
 ag
-IK
+WI
+ag
 aZ
 be
 bo
@@ -1877,7 +1872,7 @@ af
 ai
 af
 ag
-av
+ag
 ag
 ag
 aw
