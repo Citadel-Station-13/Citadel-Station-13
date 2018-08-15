@@ -27,7 +27,7 @@ LINEN BINS
 		..()
 
 /obj/item/bedsheet/attack_self(mob/user)
-	if(loc != user)
+	if((loc != user) && !Adjacent(user))
 		return
 	if(!user.dropItemToGround(src))
 		return
