@@ -14,10 +14,10 @@
 	desc = "A disk alowing for grater amounts of healing"
 	id = "defib_heal"
 	build_type = PROTOLATHE
-  	build_path = /obj/item/disk/defib_heal
-  	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
-  	construction_time = 10
-  	category = list("Misc")
+	build_path = /obj/item/disk/defib_heal
+	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
+	construction_time = 10
+	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_shock
