@@ -104,8 +104,8 @@
 
 /datum/emote/living/nya
 	key = "nya"
-	key_third_person = "nya's audibly"
-	message = "nya's"
+	key_third_person = "nyas audibly"
+	message = "nyas"
 	emote_type = EMOTA_AUDIBLE
 	sound = 'sound/effects/nya.ogg'
 	mob_type_allowed_typecache = list(/mob/living/carbon/)
