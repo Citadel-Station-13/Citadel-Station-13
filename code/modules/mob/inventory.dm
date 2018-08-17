@@ -176,6 +176,7 @@
 			return FALSE
 		if(get_item_for_held_index(hand_index) != null)
 			dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
+		playsound(src,'sound/effects/itemscream.ogg',40,1)
 		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
