@@ -101,3 +101,11 @@
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
 	. = ..()
+
+/datum/emote/living/nya
+	key = "nya"
+	key_third_person = "nyas audibly"
+	message = "nyas"
+	emote_type = EMOTA_AUDIBLE
+	sound = 'sound/effects/nya.ogg'
+	mob_type_allowed_typecache = list(/mob/living/carbon/)
