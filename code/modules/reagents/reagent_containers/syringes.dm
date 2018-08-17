@@ -260,3 +260,10 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
+
+/obj/item/reagent_containers/syringe/alien
+	name = "Hive's Blessing"
+	desc = "A syringe filled with a strange viscous liquid. It might be best to leave it alone."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("xenomicrobes" = 1)
