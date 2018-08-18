@@ -30560,8 +30560,8 @@
 /area/science/mixing)
 "bBL" = (
 /obj/structure/closet/bombcloset,
-/obj/machinery/airalarm{
-	pixel_y = 22
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
@@ -30590,7 +30590,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 26
 	},
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bBQ" = (
@@ -30616,6 +30616,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -30645,6 +30646,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -33575,9 +33577,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bIL" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
 /area/science/mixing)
 "bIM" = (
@@ -34516,11 +34516,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bLf" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/engine,
 /area/science/mixing)
 "bLh" = (
