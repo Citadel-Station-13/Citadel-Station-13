@@ -101,3 +101,45 @@
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
 	. = ..()
+
+/datum/emote/living/awoo
+	key = "awoo"
+	key_third_person = "lets out an awoo"
+	message = "lets out an awoo!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/awoo/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/awoo.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/nya
+	key = "nya"
+	key_third_person = "lets out a nya"
+	message = "lets out a nya!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/nya/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/weh
+	key = "weh"
+	key_third_person = "lets out a weh"
+	message = "lets out a weh!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/weh/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/weh.ogg', 50, 1, -1)
+	. = ..()

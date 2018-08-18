@@ -39,7 +39,7 @@
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
-			return list("reason"="guest", "desc"="\nReason: You must first sign into your BYOND account or join the Discord to verify your account before joining this server. Please ping an admin once you've joined and read the rules. https://discord.gg/E6SQuhz")
+			return list("reason"="guest", "desc"="\nReason: You must first join the Discord to verify your account before joining this server. To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: https://discord.gg/E6SQuhz")
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)

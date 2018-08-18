@@ -348,6 +348,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+/obj/item/toy/katana/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
+	return(BRUTELOSS)
+
 /*
  * Snap pops
  */
