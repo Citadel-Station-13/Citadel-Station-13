@@ -436,12 +436,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				return
 			if(coin && coin.string_attached)
 				if(prob(50))
-					if(usr.put_in_hands(coin))
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-						coin = null
+					if(usr.CanReach(src))
+						if(usr.put_in_hands(coin))
+							to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
+							coin = null
+						else
+							to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
+							QDEL_NULL(coin)
 					else
-						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-						QDEL_NULL(coin)
+						to_chat(usr, "<span class='notice'>You successfully pull [coin] out of [src] to the floor.</span>")
+						coin = null
 				else
 					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
 					QDEL_NULL(coin)
@@ -469,10 +473,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		var/vended = new R.product_path(get_turf(src))
-		if(usr.put_in_hands(vended))
-			to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
+		if(usr.CanReach(src))
+			if(usr.put_in_hands(vended))
+				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
+			else
+				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
 		else
-			to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
+			to_chat(usr, "<span class'warning'>[capitalize(R.name)] falls onto the floor!</span>")
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
 
