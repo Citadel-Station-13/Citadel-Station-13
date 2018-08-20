@@ -15166,21 +15166,8 @@
 /area/maintenance/disposal)
 "aNV" = (
 /obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
-	},
-/obj/machinery/mineral/stacking_unit_console{
-	dir = 2;
-	machinedir = 8;
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aNW" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
+	dir = 8;
+	id = "EngLoad"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -15608,10 +15595,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aPg" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -15621,15 +15604,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aPh" = (
 /obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
+	dir = 4;
+	id = "atmosdeliver"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -15958,8 +15935,9 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
+	icon_state = "conveyor_map";
+	dir = 1;
+	id = "EngLoad"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -52170,8 +52148,9 @@
 /area/medical/sleeper)
 "rax" = (
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
+	icon_state = "conveyor_map";
+	dir = 1;
+	id = "EngLoad"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -100440,8 +100419,8 @@ aaa
 aLm
 aLm
 aNU
+aNV
 dqY
-aPh
 aRv
 sZh
 aLm
@@ -100697,8 +100676,8 @@ aaa
 aLm
 aME
 aNV
+aNV
 dqY
-aPh
 aRw
 sqQ
 aLm
@@ -100953,8 +100932,8 @@ aaa
 aaa
 aLo
 aMF
-aNW
-dqY
+aNV
+aNV
 cvf
 aQn
 sqQ
@@ -101211,7 +101190,7 @@ aaa
 aLo
 aMG
 aNX
-dqY
+aNV
 rax
 aRy
 aSn
