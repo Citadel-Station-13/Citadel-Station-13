@@ -20,8 +20,6 @@
 	if(check_emote(message))
 		return
 
-	message = emoji_parse(message)
-
 	. = say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
