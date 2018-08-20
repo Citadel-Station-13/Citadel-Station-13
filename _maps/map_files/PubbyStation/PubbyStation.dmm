@@ -15595,6 +15595,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aPg" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -15603,10 +15607,6 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "atmosdeliver"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -15935,9 +15935,8 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	icon_state = "conveyor_map";
-	dir = 1;
-	id = "EngLoad"
+	dir = 2;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -47861,6 +47860,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"eFG" = (
+/obj/machinery/mineral/stacking_unit_console{
+	dir = 2;
+	machinedir = 8;
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "EngLoad"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "eHI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
@@ -54195,6 +54207,13 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"xer" = (
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "xeB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -100161,7 +100180,7 @@ aaa
 aaa
 aLn
 aNT
-rax
+xer
 aQo
 aPg
 aRu
@@ -100675,7 +100694,7 @@ aaa
 aaa
 aLm
 aME
-aNV
+eFG
 aNV
 dqY
 aRw
