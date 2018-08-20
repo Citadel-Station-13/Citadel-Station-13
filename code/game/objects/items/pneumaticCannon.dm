@@ -34,7 +34,6 @@
 	var/selfcharge = FALSE
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
-
 /obj/item/pneumatic_cannon/Initialize()
 	. = ..()
 	if(selfcharge)
@@ -289,3 +288,12 @@
 	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
 	maxWeightClass = 6		//2 pies
 	charge_ticks = 2		//4 second/pie
+
+/obj/item/pneumatic_cannon/grenadelauncher
+	var/gtimer = 15
+
+/obj/item/pneumatic_cannon/grenadelauncher/throw_item(turf/target, obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/grenade))
+		var/obj/item/grenade/G = I
+		G.preprime(null, gtimer)
