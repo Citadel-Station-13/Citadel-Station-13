@@ -452,24 +452,30 @@
 		return
 	if(!req_defib && !combat)
 		return
+	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
+			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
-	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
-			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
-	M.adjustStaminaLoss(50)
-	M.Knockdown(100)
-	M.updatehealth() //forces health update before next life tick
-	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
-	M.emote("gasp")
-	add_logs(user, M, "stunned", src)
-	if(req_defib)
-		defib.deductcharge(revivecost)
-		cooldown = TRUE
+	update_icon()
+	if(do_after(user, 10, target = M))
+		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
+				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
+		M.adjustStaminaLoss(50)
+		M.Knockdown(100)
+		M.updatehealth() //forces health update before next life tick
+		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
+		M.emote("gasp")
+		add_logs(user, M, "stunned", src)
+		if(req_defib)
+			defib.deductcharge(revivecost)
+			cooldown = TRUE
+		busy = FALSE
+		update_icon()
+		if(!req_defib)
+			recharge(60)
+		if(req_defib && (defib.cooldowncheck(user)))
+			return
 	busy = FALSE
 	update_icon()
-	if(req_defib)
-		defib.cooldowncheck(user)
-	else
-		recharge(60)
 
 /obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(req_defib && defib.safety)
