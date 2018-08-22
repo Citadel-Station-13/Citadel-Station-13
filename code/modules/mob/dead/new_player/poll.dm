@@ -579,7 +579,7 @@
 		return 1
 	var/i
 	if(query_multi_choicelen.NextRow())
-		i = text2num(query_multi_choicelen.item[1])	
+		i = text2num(query_multi_choicelen.item[1])
 	qdel(query_multi_choicelen)
 	var/datum/DBQuery/query_multi_hasvoted = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_multi_hasvoted.warn_execute())
