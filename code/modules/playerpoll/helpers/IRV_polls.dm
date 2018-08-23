@@ -49,7 +49,7 @@
 
 /datum/IRV_poll_tally
 	var/id
-	var/list/IRV_poll_round/rounds = list()			//simple list of rounds ordered by elimination
+	var/list/datum/IRV_poll_tally_round/rounds = list()			//simple list of rounds ordered by elimination
 	var/list/initial_options = list()				//see above
 	var/list/initial_total_vote_value = list()
 	var/list/initial_first_vote_value = list()
@@ -139,7 +139,7 @@
 		for(var/ckey in results_by_ckey)		//remove the loser
 			var/list/L = results_by_ckey[ckey]
 			L -= loser_id
-		options_left -= L
+		options_left -= loser_id
 		var/list/current_total_vote_value = list()		//get the current values
 		var/list/current_first_vote_value = list()
 		for(var/id in options_left)
@@ -150,14 +150,14 @@
 			if(results.len <= 0)
 				continue
 			current_first_vote_value[results[1]]++
-			for(var/i in 1 to L.len)
-				current_total_vote_value[L[i]] += (initial_options.len - i + 1)
+			for(var/i in 1 to results.len)
+				current_total_vote_value[results[i]] += (initial_options.len - i + 1)
 		var/datum/IRV_poll_tally_round/currentround = new
 		currentround.options = options_left.Copy()
 		currentround.total_vote_value = current_total_vote_value.Copy()
 		currentround.first_vote_value = current_first_vote_value.Copy()
 		retval = currentround.elimination()
-	while(ratval == ELIMINATION_CONTINUE)
+	while(retval == ELIMINATION_CONTINUE)
 	if(!check())
 		usr = oldusr
 		RETURN_ERROR
