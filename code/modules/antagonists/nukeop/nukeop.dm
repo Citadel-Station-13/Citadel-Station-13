@@ -32,9 +32,14 @@
 		return
 	var/mob/living/carbon/human/H = owner.current
 
-	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
-
 	H.equipOutfit(nukeop_outfit)
+
+	if(!isplasmaman(owner.current))
+		return
+	var/mob/living/carbon/human/plasma = owner.current
+
+	plasma.set_species(/datum/species/human) //Plasmamen burn up otherwise.
+
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
