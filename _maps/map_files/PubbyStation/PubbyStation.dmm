@@ -15166,21 +15166,8 @@
 /area/maintenance/disposal)
 "aNV" = (
 /obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
-	},
-/obj/machinery/mineral/stacking_unit_console{
-	dir = 2;
-	machinedir = 8;
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aNW" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbagestacked"
+	dir = 8;
+	id = "EngLoad"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -15620,16 +15607,6 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"aPh" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -47880,6 +47857,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"eFG" = (
+/obj/machinery/mineral/stacking_unit_console{
+	dir = 2;
+	machinedir = 8;
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "EngLoad"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "eHI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
@@ -52167,8 +52157,9 @@
 /area/medical/sleeper)
 "rax" = (
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
+	icon_state = "conveyor_map";
+	dir = 1;
+	id = "EngLoad"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -54210,6 +54201,13 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"xer" = (
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "xeB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -100176,7 +100174,7 @@ aaa
 aaa
 aLn
 aNT
-rax
+xer
 aQo
 aPg
 aRu
@@ -100434,8 +100432,8 @@ aaa
 aLm
 aLm
 aNU
+aNV
 dqY
-aPh
 aRv
 sZh
 aLm
@@ -100690,9 +100688,9 @@ aaa
 aaa
 aLm
 aME
+eFG
 aNV
 dqY
-aPh
 aRw
 sqQ
 aLm
@@ -100947,8 +100945,8 @@ aaa
 aaa
 aLo
 aMF
-aNW
-dqY
+aNV
+aNV
 cvf
 aQn
 sqQ
@@ -101205,7 +101203,7 @@ aaa
 aLo
 aMG
 aNX
-dqY
+aNV
 rax
 aRy
 aSn
