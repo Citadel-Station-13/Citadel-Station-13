@@ -2196,6 +2196,8 @@
 #include "code\modules\playerpoll\helpers\player_alts.dm"
 #include "code\modules\playerpoll\helpers\player_connections.dm"
 #include "code\modules\playerpoll\helpers\player_playtime.dm"
+#include "code\modules\playerpoll\poll_tally\IRV.dm"
+#include "code\modules\playerpoll\poll_tally\poll_tally.dm"
 #include "code\modules\playerpoll\viewer\IRV.dm"
 #include "code\modules\playerpoll\viewer\viewer_main.dm"
 #include "code\modules\power\apc.dm"
