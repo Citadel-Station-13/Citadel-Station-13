@@ -46,4 +46,3 @@
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
-	return ..()
