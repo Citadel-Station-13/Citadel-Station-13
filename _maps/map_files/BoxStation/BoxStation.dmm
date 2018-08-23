@@ -1129,7 +1129,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "acV" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -1333,7 +1333,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "ads" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -1912,7 +1912,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -2241,9 +2241,6 @@
 	dir = 5
 	},
 /area/security/main)
-"afn" = (
-/turf/open/floor/plating,
-/area/security/main)
 "afo" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
@@ -2252,7 +2249,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "afp" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -2516,7 +2513,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "agd" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
@@ -49756,7 +49753,7 @@
 	name = "Escape Pod Three"
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "cxJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -53939,7 +53936,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "sXA" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall,
@@ -88782,7 +88779,7 @@ acU
 adr
 sXy
 aeC
-afn
+anF
 agc
 abp
 ahk
