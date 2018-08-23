@@ -614,6 +614,10 @@
 			resist_fire() //stop, drop, and roll
 		else if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
+		else if(istype(src, /mob/living/carbon))
+			var/mob/living/carbon/C = src
+			if(!C.handcuffed && !C.legcuffed)
+				return TRUE
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 

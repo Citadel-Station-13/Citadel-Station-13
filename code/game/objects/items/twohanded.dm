@@ -463,7 +463,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
+	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -478,14 +478,25 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 
+/obj/item/twohanded/spear/attack_self(mob/user)
+	if(explosive)
+		explosive.attack_self(user)
+		return
+	. = ..()
+
+/obj/item/twohanded/rightclick_attack_self(mob/user)
+	if(wielded) //Trying to unwield it
+		unwield(user)
+	else //Trying to wield it
+		wield(user)
+	return TRUE
+
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(explosive)
 		user.say("[war_cry]")
-		explosive.forceMove(user)
 		explosive.prime()
 		user.gib()
-		qdel(src)
 		return BRUTELOSS
 	return BRUTELOSS
 
@@ -496,7 +507,7 @@
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
 	if(explosive)
-		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+		to_chat(user, "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>")
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)
@@ -511,17 +522,11 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.forceMove(AM)
 		explosive.prime()
-		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/throw_impact(atom/target)
-	. = ..()
-	if(!.) //not caught
-		if(explosive)
-			explosive.prime()
-			qdel(src)
+/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade)
+	nade.forceMove(get_turf(src))
+	qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
