@@ -1,6 +1,5 @@
 /proc/DB_CountCkeyConnectionsDaysBefore(ckey, daysbefore, current_date)
-	var/list/L = SQLDatetimeToList(current_date)
-	L[
+	//wip
 
 /proc/DB_CountCkeyConnectionsBetweenDates(ckey, start, end)
 	. = "ERROR"
@@ -15,4 +14,5 @@
 	if(!amount.warn_execute())
 		qdel(amount)
 		return
+	usr = oldusr
 	return amount.item[1]
