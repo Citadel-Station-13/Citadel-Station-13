@@ -261,6 +261,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
+#define AOOC_COLOR "#b8002e"
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
