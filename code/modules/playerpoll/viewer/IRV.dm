@@ -6,11 +6,11 @@ GLOBAL_VAR(last_poll_tally)
 	GLOB.last_poll_tally = tally
 	if(tally.Execute() != TRUE)
 		return "ERROR"
-	. = list()
-	. += "Poll results, ID [pollid]:"
+	var/list/L = list()
+	L += "Poll results, ID [pollid]:"
 	for(var/round_iteration in 1 to tally.rounds.len)
 		var/datum/IRV_poll_tally_round/round = tally.rounds[round_iteration]
-		. += "ROUND [round_iteration]------------------------------------------------------"
+		L += "ROUND [round_iteration]------------------------------------------------------"
 		var/list/options = list()
 		for(var/id in round.options)
 			if(!options.len)
@@ -23,10 +23,16 @@ GLOBAL_VAR(last_poll_tally)
 					continue
 				options[id] = round.options[id]
 		for(var/i in options)
-			. += "Choice ID [i] - [round.options[i]] - First pick votes [round.first_vote_value[i]] - Total vote value [round.total_vote_value[i]]"
-		. += "ELIMINATED: Choice ID [round.eliminated_id] - [round.options[round.eliminated_id]]"
-	var/list/L = .
-	L.Join("<br>")
+			L += "Choice ID [i] - [round.options[i]] - First pick votes [round.first_vote_value[i]] - Total vote value [round.total_vote_value[i]]"
+		if(round.eliminated_id)
+			L += "ELIMINATED: Choice ID [round.eliminated_id] - [round.options[round.eliminated_id]]"
+	L += "WINNER:"
+	var/datum/IRV_poll_tally_round/last_round = tally.rounds[tally.rounds.len]
+	if(last_round && last_round.options.len == 1)
+		L += "[last_round.options[last_round.options[1]]]"
+	else
+		L += "ERROR: WINNER COULD NOT BE AUTOMATICALLY SHOWN. INSPECT GLOB.LAST_POLL_TALLY!"
+	return L.Join("<br>")
 
 /client/proc/irv_poll_tally()
 	set name = "Poll Tally - IRV"
