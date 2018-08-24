@@ -9,6 +9,8 @@
 	if(!msg)
 		return
 
+	msg = emoji_parse(msg)
+
 	log_talk(mob,"[key_name(src)] : [msg]",LOGASAY)
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))

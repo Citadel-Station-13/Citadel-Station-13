@@ -47,7 +47,7 @@
 	if(jb)
 		to_chat(src, "<span class='danger'>You have been banned from deadchat.</span>")
 		return
-	
+
 
 
 	if (src.client)
@@ -75,6 +75,7 @@
 		K = src.key
 
 	message = src.say_quote(message, get_spans())
+	message = emoji_parse(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)

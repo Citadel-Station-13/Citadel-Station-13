@@ -46,6 +46,8 @@
 			to_chat(src, "<span class='danger'>You cannot use LOOC while ghosting.</span>")
 			return
 
+	msg = emoji_parse(msg)
+
 	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
 	mob.log_message("(LOCAL): [msg]", INDIVIDUAL_OOC_LOG)
 

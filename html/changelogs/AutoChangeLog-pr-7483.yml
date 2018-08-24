@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "The disarm attack on EMP'd defibs now has an interruptible 1 second timer before it actually lands."
