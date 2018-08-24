@@ -198,7 +198,10 @@
 				state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(authenticated)
-				SSshuttle.cancelEvac(usr)
+				if(world.time > SSshuttle.auto_call)
+					say("Warning: Emergency shuttle recalls have been blocked by Central Command due to ongoing crew transfer procedures.")
+				else
+					SSshuttle.cancelEvac(usr)
 			state = STATE_DEFAULT
 		if("messagelist")
 			currmsg = 0
