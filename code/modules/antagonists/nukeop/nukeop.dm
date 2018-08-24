@@ -35,7 +35,7 @@
 	H.equipOutfit(nukeop_outfit)
 
 	if(!isplasmaman(owner.current))
-		return
+		return TRUE
 	var/mob/living/carbon/human/plasma = owner.current
 
 	plasma.set_species(/datum/species/human) //Plasmamen burn up otherwise.
