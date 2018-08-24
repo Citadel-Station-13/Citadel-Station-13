@@ -1,14 +1,16 @@
-
 //until a unified one is done, here it is:
-/proc/basic_IRV_poll_tally(id)
-	var/datum/IRV_poll_tally/tally = new(id)
-	if(tally.Execute() != RETURN_SUCCESS)
+GLOBAL_VAR(last_poll_tally)
+
+/proc/basic_IRV_poll_tally(pollid)
+	var/datum/IRV_poll_tally/tally = new(pollid)
+	GLOB.last_poll_tally = tally
+	if(tally.Execute() != TRUE)
 		return "ERROR"
 	. = list()
-	. += "Poll results, ID [id]:"
-	for(var/i in 1 to tally.rounds.len)
-		var/datum/IRV_poll_tally_round/round = tally.rounds[i]
-		. += "ROUND [i]------------------------------------------------------"
+	. += "Poll results, ID [pollid]:"
+	for(var/round_iteration in 1 to tally.rounds.len)
+		var/datum/IRV_poll_tally_round/round = tally.rounds[round_iteration]
+		. += "ROUND [round_iteration]------------------------------------------------------"
 		var/list/options = list()
 		for(var/id in round.options)
 			if(!options.len)
