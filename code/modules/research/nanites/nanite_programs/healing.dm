@@ -228,12 +228,12 @@
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
 	if(QDELETED(BR) || BR.damaged_brain)
 		return FALSE
-	if(!C.get_ghost())
+	if(!C.ckey && !C.get_ghost())
 		return FALSE
 	return TRUE
 
 /datum/nanite_program/triggered/defib/proc/zap()
-	if(check_revivable())
+	if(check_revivable() && host_mob.ckey)
 		var/mob/living/carbon/C = host_mob
 		playsound(C, 'sound/machines/defib_success.ogg', 50, 0)
 		C.set_heartattack(FALSE)
@@ -246,5 +246,5 @@
 			C.adjustBrainLoss( max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
-		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+		playsound(host_mob, 'sound/machines/defib_failed.ogg', 50, 0)
 
