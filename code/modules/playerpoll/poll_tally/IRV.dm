@@ -34,6 +34,7 @@
 	var/id
 	var/list/datum/IRV_poll_tally_round/rounds = list()			//simple list of rounds ordered by elimination
 	var/list/initial_options = list()				//see above
+	var/list/force_eliminations			//forcefully eliminate these first.
 	var/list/initial_total_vote_value = list()
 	var/list/initial_first_vote_value = list()
 
@@ -66,6 +67,10 @@
 	for(var/i in initial_options)
 		initial_total_vote_value[i] = 0
 		initial_first_vote_value[i] = 0
+	if(force_eliminations)
+		for(var/i in force_eliminations)
+			if(!initial_options[i])
+				force_eliminations -= i
 	//Unfortunately the way we store IRV votes is ordering the vote ids in the DB so we have to process one ckey at a time.
 	var/list/ckeys = list()			//internally fetch and store the ckeys
 	var/datum/DBQuery/query_irv_get_ckeys = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("poll_vote")] WHERE pollid = [pollid]")
@@ -107,7 +112,15 @@
 		cround.total_vote_value = initial_total_vote_value.Copy()
 		cround.first_vote_value = current_first_vote_value.Copy()
 		cround.options = options_left.Copy()
-		retval = cround.elimination()
+		var/loser
+		if(force_eliminations && force_eliminations.len)
+			retval = ELIMINATION_CONTINUE
+			loser = force_eliminations[force_eliminations.len]
+			cround.eliminated_id = loser
+			force_eliminations.len--
+		else
+			retval = cround.elimination()
+			loser = cround.eliminated_id
 		if(retval == ELIMINATION_ERROR)
 			usr = oldusr
 			RETURN_ERROR
@@ -117,7 +130,6 @@
 		else if(retval != ELIMINATION_CONTINUE)
 			usr = oldusr
 			RETURN_ERROR
-		var/loser = cround.eliminated_id
 		if(!loser)
 			usr = oldusr
 			RETURN_ERROR
