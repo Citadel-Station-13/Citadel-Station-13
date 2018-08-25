@@ -19,6 +19,9 @@
 
 	if (!msg)
 		return
+
+	msg = emoji_parse(msg)
+
 	var/static/nicknames = world.file2list("[global.config.directory]/admin_nicknames.txt")
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[uppertext(holder.rank)]([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"

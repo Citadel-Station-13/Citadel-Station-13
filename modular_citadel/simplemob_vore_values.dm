@@ -80,3 +80,6 @@
 
 /mob/living/carbon/monkey
 	devourable = TRUE
+	
+/mob/living/simple_animal/hostile/carp
+	devourable = TRUE

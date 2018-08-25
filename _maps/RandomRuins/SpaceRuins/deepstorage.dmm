@@ -2165,7 +2165,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fo" = (
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/item/tank/jetpack/oxygen,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "fp" = (
