@@ -80,3 +80,4 @@
 
 /obj/item/clothing/gloves/alchemy
 	name = "Sigil Gloves"
+	desc = "Cotton gloves with an sigil marked unto them"
