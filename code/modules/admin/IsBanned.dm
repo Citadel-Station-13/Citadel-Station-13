@@ -79,7 +79,7 @@
 		if(!query_ban_check.Execute())
 			qdel(query_ban_check)
 			return
-		while(query_ban_check.NextRow())https://github.com/Citadel-Station-13/Citadel-Station-13
+		while(query_ban_check.NextRow())
 			var/pkey = query_ban_check.item[1]
 			var/akey = query_ban_check.item[2]
 			var/reason = query_ban_check.item[3]
