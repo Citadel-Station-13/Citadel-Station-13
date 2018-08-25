@@ -3,13 +3,14 @@ GLOBAL_VAR(last_poll_tally)
 
 /proc/basic_IRV_poll_tally(pollid, list/force_elims)
 	var/datum/IRV_poll_tally/tally = new(pollid)
-	tally.force_eliminations = force_elims.Copy()
+	if(force_elims)
+		tally.force_eliminations = force_elims
 	GLOB.last_poll_tally = tally
 	if(tally.Execute() != TRUE)
 		return "ERROR"
 	var/list/L = list()
 	L += "Poll results, ID [pollid]:"
-	if(force_elims)
+	if(force_elims && force_elims.len)
 		var/list/elims = list()
 		for(var/i in force_elims)
 			if(!tally.initial_options["[i]"])

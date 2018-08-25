@@ -50,6 +50,7 @@
 	src.id = id
 
 /datum/IRV_poll_tally/proc/Execute()
+	var/list/force_eliminations = src.force_eliminations.Copy()
 	var/oldusr = usr
 	usr = null				//shitcode to allow admin proccalls
 	initial_options.Cut()
@@ -71,6 +72,7 @@
 		for(var/i in force_eliminations)
 			if(!initial_options[i])
 				force_eliminations -= i
+				src.force_eliminations -= i
 	//Unfortunately the way we store IRV votes is ordering the vote ids in the DB so we have to process one ckey at a time.
 	var/list/ckeys = list()			//internally fetch and store the ckeys
 	var/datum/DBQuery/query_irv_get_ckeys = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("poll_vote")] WHERE pollid = [pollid]")
