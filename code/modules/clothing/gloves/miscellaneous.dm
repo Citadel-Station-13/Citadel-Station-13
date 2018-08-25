@@ -77,3 +77,6 @@
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(input)
 		warcry = input
+
+/obj/item/clothing/gloves/alchemy
+	name = "Sigil Gloves"
