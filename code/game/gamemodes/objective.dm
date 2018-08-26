@@ -522,7 +522,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "ERROR: Point type goal not found in SSresearch income. Contact an admin."
 		return
 	if(SSresearch.single_server_income.Find(point_type))
-		target_amount = single_server_income[point_type] * (SSshuttle.auto_call / 10) + rand(10000, 50000)
+		target_amount = SSresearch.single_server_income[point_type] * (SSshuttle.auto_call / 10) + rand(10000, 50000)
 	else
 		target_amount = rand(10000, 25000)
 	explanation_text = "Download [target_amount] points of [SSresearch.point_types[point_type]] as research nodes."
