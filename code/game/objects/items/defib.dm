@@ -24,6 +24,7 @@
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 	var/pullshocksafely = FALSE // Will we shock people dragging the body?
+	var/healdisk = FALSE //Dose the unit have the healdisk upgrade?
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -606,6 +607,10 @@
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)
+						if(var/healdisk = TRUE)
+							H.adjustFireLoss((mobhealth - 20)
+							H.adjustBruteLoss((mobhealth - 20)
+							H.adjustToxLoss((mobhealth - 5)	
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
@@ -660,23 +665,35 @@
 	. = ..()
 	if(istype(Z, /obj/item/disk/defib_heal))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
-
+	var/healdisk = TRUE
+	else
+	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+	
 /obj/item/defibrillator/attackby(/obj/item/K, mob/user, params)
 	. = ..()
 	if(istype(K, /obj/item/disk/defib_shock))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
 	var/pullshocksafely = TRUE
+	else
+	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+	
 
 /obj/item/defibrillator/attackby(/obj/item/Y, mob/user, params)
 	. = ..()
 	if(istype(Y, /obj/item/disk/defib_decay))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
 		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubbles the time you can defib someone
+	else
+	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+		
 
 /obj/item/defibrillator/attackby(/obj/item/Q, mob/user, params)
 	. = ..()
 	if(istype(Q, /obj/item/disk/defib_speed))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Speed Charger upgrade disk!</span>")
+		
+	else
+	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 	
 	
