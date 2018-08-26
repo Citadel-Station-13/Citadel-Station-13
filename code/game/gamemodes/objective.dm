@@ -513,12 +513,19 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
 
-
 /datum/objective/download
+	var/point_type = TECHWEB_POINT_TYPE_GENERIC
 
 /datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(20,40)
-	explanation_text = "Download [target_amount] research node\s."
+	if(!SSresearch.point_types.Find(point_type))
+		target_amount = 1337
+		explanation_text = "ERROR: Point type goal not found in SSresearch income. Contact an admin."
+		return
+	if(SSresearch.single_server_income.Find(point_type))
+		target_amount = single_server_income[point_type] * (SSshuttle.auto_call / 10) + 50000
+	else
+		target_amount = rand(10000, 25000)
+	explanation_text = "Download [target_amount] points of [SSresearch.point_types[point_type]] as research nodes."
 	return target_amount
 
 /datum/objective/download/check_completion()
@@ -535,7 +542,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			var/list/otherwise = M.GetAllContents()
 			for(var/obj/item/disk/tech_disk/TD in otherwise)
 				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target_amount
+	var/current_amount = 0
+	for(var/id in checking.researched_nodes)
+		var/datum/techweb_node/TN = checking.researched_nodes[id]
+		if(istype(TN) && islist(TN.point_cost) && TN.point_cost.Find(point_type))
+			current_amount += TN.point_cost[point_type]
+	return current_amount >= target_amount
 
 /datum/objective/capture
 
