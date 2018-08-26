@@ -393,6 +393,7 @@
 #include "code\datums\diseases\transformation.dm"
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\datums\diseases\wizarditis.dm"
+#include "code\datums\diseases\xenomicrobes.dm"
 #include "code\datums\diseases\advance\advance.dm"
 #include "code\datums\diseases\advance\presets.dm"
 #include "code\datums\diseases\advance\symptoms\beard.dm"
