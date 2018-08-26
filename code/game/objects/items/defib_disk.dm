@@ -19,9 +19,9 @@
 	icon_state = "defibdisk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
  
- /obj/item/disk/defib_speed
+/* /obj/item/disk/defib_speed
 	name = "Defibrllartor Pre-Primer Disk"
 	desc = "A disk that cuts the time charg time in half for defubrillator use"
 	icon = 'modular_citadel/code/modules/research/designs/medical/defibdisk.dmi'
 	icon_state = "defibdisk"
-	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
+/*	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
