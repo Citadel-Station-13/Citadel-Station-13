@@ -179,7 +179,7 @@
 		remove_paddles(user)
 
 	update_icon()
-	for(var/in actions)
+	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
@@ -645,6 +645,7 @@
 			combat = FALSE
 	else
 		combat = FALSE
+ 	. = ..()
 
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
