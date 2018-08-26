@@ -682,19 +682,8 @@
 	. = ..()
 	if(istype(Y, /obj/item/disk/defib_decay))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
-		
-	else
-		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
-/obj/item/defibrillator/attackby(/obj/item/Q, mob/user, params)
-	. = ..()
-	if(istype(Q, /obj/item/disk/defib_speed))
-		to_chat(user, "<span class='notice'>You upgrade the unit with Speed Charger upgrade disk!</span>")
-		var/tlimit = DEFIB_TIME_LIMIT * 5 //Half the time to charge defib unit in head
+		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubble the time to you can defib someone
 	else
 		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
-	
-	
-	
-
 #undef HALFWAYCRITDEATH
