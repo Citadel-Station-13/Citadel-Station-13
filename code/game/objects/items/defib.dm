@@ -23,6 +23,7 @@
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
+	var/pullshocksafely = FALSE // Will we shock people dragging the body?
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -178,7 +179,7 @@
 		remove_paddles(user)
 
 	update_icon()
-	for(var/X in actions)
+	for(var/in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
@@ -441,11 +442,16 @@
 	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(isliving(H.pulledby))		//CLEAR!
-		var/mob/living/M = H.pulledby
-		if(M.electrocute_act(30, src))
-			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
-			M.emote("scream")
+		if(isliving(H.pulledby))		//CLEAR!
+			if(pullshocksafely = FALSE)
+			var/mob/living/M = H.pulledby
+			if(M.electrocute_act(30, src))
+				M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
+				M.emote("scream")
+		else
+			if(pullshocksafely = TRUE)
+			M.visible_message("The defibrillator safely discharges excessive charge into the floor!")
+			
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(req_defib && defib.safety)
@@ -640,8 +646,6 @@
 	else
 		combat = FALSE
 
-	. = ..()
-
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
@@ -650,5 +654,31 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
+
+/obj/item/defibrillator/attackby(/obj/item/Z, mob/user, params)
+	. = ..()
+	if(istype(Z, /obj/item/disk/defib_heal))
+		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
+
+/obj/item/defibrillator/attackby(/obj/item/K, mob/user, params)
+	. = ..()
+	if(istype(K, /obj/item/disk/defib_shock))
+		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
+	var/pullshocksafely = TRUE
+
+/obj/item/defibrillator/attackby(/obj/item/Y, mob/user, params)
+	. = ..()
+	if(istype(Y, /obj/item/disk/defib_decay))
+		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
+		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubbles the time you can defib someone
+
+/obj/item/defibrillator/attackby(/obj/item/Q, mob/user, params)
+	. = ..()
+	if(istype(Q, /obj/item/disk/defib_speed))
+		to_chat(user, "<span class='notice'>You upgrade the unit with Speed Charger upgrade disk!</span>")
+	
+	
+	
+	
 
 #undef HALFWAYCRITDEATH
