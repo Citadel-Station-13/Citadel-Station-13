@@ -677,7 +677,6 @@
 	else
 	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
-
 /obj/item/defibrillator/attackby(/obj/item/Y, mob/user, params)
 	. = ..()
 	if(istype(Y, /obj/item/disk/defib_decay))
