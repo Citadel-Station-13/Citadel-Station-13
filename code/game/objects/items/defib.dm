@@ -617,7 +617,7 @@
 				update_icon()
 				if(req_defib)
 					defib.cooldowncheck(user)
-				else
+					else
 					recharge(60)
 			else if (!H.getorgan(/obj/item/organ/heart))
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted.</span>")
@@ -628,7 +628,7 @@
 				playsound(src, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
 
-			else
+				else
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 	busy = FALSE
@@ -646,9 +646,9 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
 			combat = TRUE
-		else
+			else
 			combat = FALSE
-	else
+		else
 		combat = FALSE
  	. = ..()
 
@@ -665,7 +665,7 @@
 	. = ..()
 	if(istype(Z, /obj/item/disk/defib_heal))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
-	var/healdisk = TRUE
+		var/healdisk = TRUE
 	else
 	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
@@ -673,7 +673,7 @@
 	. = ..()
 	if(istype(K, /obj/item/disk/defib_shock))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
-	var/pullshocksafely = TRUE
+		var/pullshocksafely = TRUE
 	else
 	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
@@ -683,6 +683,6 @@
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
 		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubble the time to you can defib someone
 	else
-		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 #undef HALFWAYCRITDEATH
