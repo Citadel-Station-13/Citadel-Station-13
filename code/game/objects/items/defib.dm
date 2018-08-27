@@ -444,14 +444,14 @@
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
 		if(isliving(H.pulledby))		//CLEAR!
-			if(K = FALSE)
+			if(pullshocksafely == FALSE)
 			var/mob/living/M = H.pulledby
 			if(M.electrocute_act(30, src))
 				M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 				M.emote("scream")
-			else
-			if(K = TRUE)
-			M.visible_message("The defibrillator safely discharges excessive charge into the floor!")
+		else
+		if(pullshocksafely == TRUE)
+		M.visible_message("<span class='danger'>"The defibrillator safely discharges excessive charge into the floor!</span>")
 			
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
@@ -607,10 +607,10 @@
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)
-						if(healdisk = TRUE)
-							H.adjustFireLoss(mobhealth - 20)
-							H.adjustBruteLoss(mobhealth - 20)
-							H.adjustToxLoss(mobhealth - 5)	
+							if(healdisk == TRUE)
+								H.adjustFireLoss(mobhealth - 20)
+								H.adjustBruteLoss(mobhealth - 20)
+								H.adjustToxLoss(mobhealth - 5)	
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
