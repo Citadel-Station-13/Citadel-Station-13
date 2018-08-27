@@ -39930,6 +39930,7 @@
 /obj/item/clipboard,
 /obj/item/toy/figure/captain,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bKM" = (

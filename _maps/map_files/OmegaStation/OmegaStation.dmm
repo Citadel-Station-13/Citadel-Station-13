@@ -3373,6 +3373,7 @@
 	},
 /obj/item/melee/chainofcommand,
 /obj/item/stamp/captain,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "agS" = (
