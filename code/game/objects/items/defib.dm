@@ -664,23 +664,23 @@
 	if(istype(Z, /obj/item/disk/defib_heal))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
 		var/healdisk = TRUE
-	else
-	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+				else
+					to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 /obj/item/defibrillator/attackby(/obj/item/K, mob/user, params)
 	. = ..()
 	if(istype(K, /obj/item/disk/defib_shock))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
 		var/pullshocksafely = TRUE
-	else
-	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+				else
+					to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 /obj/item/defibrillator/attackby(/obj/item/Y, mob/user, params)
 	. = ..()
 	if(istype(Y, /obj/item/disk/defib_decay))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
 		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubble the time to you can defib someone
-	else
-	to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
+				else
+					to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 #undef HALFWAYCRITDEATH
