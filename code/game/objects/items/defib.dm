@@ -617,7 +617,7 @@
 				update_icon()
 				if(req_defib)
 					defib.cooldowncheck(user)
-					else
+				else
 					recharge(60)
 			else if (!H.getorgan(/obj/item/organ/heart))
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted.</span>")
@@ -626,9 +626,7 @@
 				H.set_heartattack(FALSE)
 				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 				playsound(src, 'sound/machines/defib_zap.ogg', 50, 1, -1)
-
-
-				else
+			else
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 	busy = FALSE
