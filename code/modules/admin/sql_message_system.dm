@@ -23,8 +23,13 @@
 		target_key = new_key
 	if(QDELETED(usr))
 		return
+	if(!target_ckey)
+		if(target_key)
+			target_ckey = ckey(target_key)
+		else
+			return
 	if(target_ckey)
-		target_ckey = sanitizeSQL(target_ckey)
+		target_ckey = sanitizeSQL(ckey(target_ckey))
 	if(!target_key)
 		target_key = target_ckey
 	if(!admin_ckey)
