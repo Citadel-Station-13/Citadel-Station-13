@@ -608,9 +608,9 @@
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)
 						if(var/healdisk = TRUE)
-							H.adjustFireLoss((mobhealth - 20)
-							H.adjustBruteLoss((mobhealth - 20)
-							H.adjustToxLoss((mobhealth - 5)	
+							H.adjustFireLoss(mobhealth - 20)
+							H.adjustBruteLoss(mobhealth - 20)
+							H.adjustToxLoss(mobhealth - 5)	
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
