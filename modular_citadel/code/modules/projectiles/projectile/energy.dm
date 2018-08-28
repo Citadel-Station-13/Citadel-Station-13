@@ -1,2 +1,2 @@
 /obj/item/projectile/energy/electrode
-	stamina = 30
+	stamina = 36
