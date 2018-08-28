@@ -32,7 +32,7 @@
 	export_price = 5000
 
 /datum/techweb_node/adv_defibrillator_tec
-	id = adv_defibrillator_tec"
+	id = "adv_defibrillator_tec"
 	display_name = "Adv Defibrillartor tec"
 	description = "More ways to bring back the freshly dead."
 	prereq_ids = list("adv_biotech", "exp_surgery", "adv_engi", "adv_power")
