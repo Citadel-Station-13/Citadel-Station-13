@@ -605,10 +605,6 @@
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					add_logs(user, H, "revived", defib)
-					if(healdisk == TRUE)
-						H.adjustFireLoss(mobhealth - 20)
-						H.adjustBruteLoss(mobhealth - 20)
-						H.adjustToxLoss(mobhealth - 5)	
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
@@ -627,6 +623,10 @@
 			else
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+	if(healdisk == TRUE)
+		H.adjustFireLoss(mobhealth - 20)
+		H.adjustBruteLoss(mobhealth - 20)
+		H.adjustToxLoss(mobhealth - 5)
 	busy = FALSE
 	update_icon()
 
