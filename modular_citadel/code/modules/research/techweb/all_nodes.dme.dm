@@ -23,14 +23,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
 
-/datum/techweb_node/ballistic_weapons
-	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx")
-
 /datum/techweb_node/advanced_illegl_ballistics
 	id = "advanced_illegal_ballistics"
-	display_name = "Advanced Illegal Ballistics"
+	display_name = "Advanced Illegal Ballistics
 	description = "Advanced Ballistic for Illegal weaponds."
-	design_ids = list("10mm","10mmap","10mminc","10mmhp","pistolm9mm","m45","bolt_clip")
+	design_ids = list("10mm","10mmap","10mminc","10mmhp","9mm","point_45","bolt_clip")
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns form traitors or space.
 	export_price = 7000
