@@ -597,7 +597,7 @@
 	id = "defib_heal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
-	build_path = /obj/item/disk/medical/defib_heal
+	build_path = /obj/item/disk/defib_heal
 	construction_time = 10
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -608,7 +608,7 @@
 	id = "defib_shock"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
-	build_path = /obj/item/disk/medical/defib_shock
+	build_path = /obj/item/disk/defib_shock
 	construction_time = 10
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -619,7 +619,7 @@
 	id = "defib_decay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
-	build_path = /obj/item/disk/medical/defib_decay
+	build_path = /obj/item/disk/defib_decay
 	construction_time = 10
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
