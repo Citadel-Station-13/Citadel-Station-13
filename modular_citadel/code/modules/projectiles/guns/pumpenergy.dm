@@ -12,7 +12,7 @@
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
 	cell.use(round(cell.charge / severity))
-	chambered = null //we empty the chamber
+	chambered = 0 //we empty the chamber
 	update_icon()
 
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
@@ -37,7 +37,7 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost)//... drain the cell cell
-	chambered = null //either way, released the prepared shot
+	chambered = 0 //either way, released the prepared shot
 
 /obj/item/gun/energy/pumpaction/select_fire(mob/living/user)	//makes it so that it doesn't rack itself when changing firing modes unless already racked
 	select++
@@ -49,7 +49,7 @@
 	if (shot.select_name)
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	if(chambered)
-		chambered = null
+		chambered = 0
 		recharge_newshot(1)
 	update_icon()
 	if(ismob(loc))		//forces inhands to update
