@@ -596,7 +596,7 @@
 	desc = "A disk alowing for grater amounts of healing"
 	id = "defib_heal"
 	build_type = PROTOLATHE
-	build_path = /obj/item/disk/defib_heal
+	build_path = /obj/item/disk/medical/defib_heal
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
 	construction_time = 10
 	category = list("Misc")
@@ -607,7 +607,7 @@
 	desc = "A disk that helps agains shocking anyone, other then the intented target"
 	id = "defib_shock"
 	build_type = PROTOLATHE
-	build_path = /obj/item/disk/defib_shock
+	build_path = /obj/item/disk/medical/defib_shock
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
 	construction_time = 10
 	category = list("Misc")
@@ -618,7 +618,7 @@
 	desc = "A disk that helps defibrillators revive the longer decayed dead"
 	id = "defib_decay"
 	build_type = PROTOLATHE
-	build_path = /obj/item/disk/defib_decay
+	build_path = /obj/item/disk/medical/defib_decay
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
 	construction_time = 10
 	category = list("Misc")
