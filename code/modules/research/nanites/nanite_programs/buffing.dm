@@ -16,7 +16,7 @@
 	. = ..()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		C.adjustStaminaLoss(-5)
+		C.adjustStaminaLoss(-2)
 
 /datum/nanite_program/nervous/disable_passive_effect()
 	. = ..()
