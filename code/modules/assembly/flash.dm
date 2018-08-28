@@ -108,7 +108,7 @@
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
 		if(M.flash_act(1, 1))
-			M.confused += power
+			M.confused = CLAMP(M.confused + power, 0, power * 2)
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -125,7 +125,7 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 	else
 		if(M.flash_act())
-			M.confused += power
+			M.confused = CLAMP(M.confused + power, 0, power * 2)
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
@@ -138,7 +138,7 @@
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
 		M.Knockdown(rand(80,120))
-		R.confused += 5
+		R.confused = CLAMP(R.confused + 5, 0, 10)
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return TRUE
