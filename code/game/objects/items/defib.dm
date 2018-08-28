@@ -449,7 +449,7 @@
 		if(M.electrocute_act(30, src))
 				M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 				M.emote("scream")
-		else
+	else
 		if(pullshocksafely == TRUE)
 		M.visible_message("<span class='danger'>The defibrillator safely discharges excessive charge into the floor!</span>")
 			
@@ -644,9 +644,9 @@
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
 			combat = TRUE
-			else
-			combat = FALSE
 		else
+			combat = FALSE
+	else
 		combat = FALSE
  	. = ..()
 
