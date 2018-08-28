@@ -26,6 +26,12 @@
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
 
+/obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun
+	name = "\improper Kitchen Gun (TM)"
+	desc = "Say goodbye to dirt with Kitchen Gun (TM)! Laser sight and night vision accessories sold separately."
+	icon_state = "kitchengun"
+	mag_type = /obj/item/ammo_box/magazine/m45/kitchengun
+
 /obj/item/gun/ballistic/automatic/pistol/deagle
 	name = "\improper Desert Eagle"
 	desc = "A robust .50 AE handgun."
@@ -78,4 +84,3 @@
 	else
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
-
