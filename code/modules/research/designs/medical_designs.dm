@@ -633,4 +633,4 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
 	construction_time = 10
 	category = list("Misc")
-/*	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL */
