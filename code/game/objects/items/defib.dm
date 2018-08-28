@@ -659,7 +659,7 @@
 
 /obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_heal, mob/user, params)
 	. = ..()
-	if(istype(/obj/item/disk/defib_heal))
+	if(istype(/obj/item/disk/medical/defib_heal))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
 		var/healdisk = TRUE
 	else
@@ -667,7 +667,7 @@
 	
 /obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_shock, mob/user, params)
 	. = ..()
-	if(istype(/obj/item/disk/defib_shock))
+	if(istype(/obj/item/disk/medical/defib_shock))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
 		var/pullshocksafely = TRUE
 	else
@@ -675,7 +675,7 @@
 	
 /obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_decay, mob/user, params)
 	. = ..()
-	if(istype(/obj/item/disk/defib_decay))
+	if(istype(/obj/item/disk/medical/defib_decay))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
 		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubble the time to you can defib someone
 	else
