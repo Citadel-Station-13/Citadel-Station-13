@@ -450,8 +450,8 @@
 				M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
 				M.emote("scream")
 	else
-	if(pullshocksafely == TRUE)
-	M.visible_message("<span class='danger'>The defibrillator safely discharges excessive charge into the floor!</span>")
+		if(pullshocksafely == TRUE)
+		M.visible_message("<span class='danger'>The defibrillator safely discharges excessive charge into the floor!</span>")
 			
 
 /obj/item/twohanded/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
