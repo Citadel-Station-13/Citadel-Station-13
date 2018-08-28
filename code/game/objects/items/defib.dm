@@ -657,28 +657,28 @@
 	item_state = "defibpaddles0"
 	req_defib = FALSE
 
-/obj/item/defibrillator/attackby(/obj/I, mob/user, params)
+/obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_heal, mob/user)
 	. = ..()
-	if(istype(I, /obj/item/disk/medical/defib_heal))
+	if(istype(defib_heal))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Heal upgrade disk!</span>")
 		var/healdisk = TRUE
-	else
+	else(istype(defib_heal))
 		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
-/obj/item/defibrillator/attackby(/obj/Q, mob/user, params)
+/obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_shock, mob/user)
 	. = ..()
-	if(istype(Q, /obj/item/disk/medical/defib_shock))
+	if(istype(defib_shock))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Shock upgrade disk!</span>")
 		var/pullshocksafely = TRUE
-	else
+	else(istype(defib_shock))
 		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
-/obj/item/defibrillator/attackby(/obj/B, mob/user, params)
+/obj/item/defibrillator/attackby(/obj/item/disk/medical/defib_decay/, mob/user)
 	. = ..()
-	if(istype(B, /obj/item/disk/medical/defib_decay))
+	if(istype(defib_decay))
 		to_chat(user, "<span class='notice'>You upgrade the unit with Anit-Decay upgrade disk!</span>")
 		var/tlimit = DEFIB_TIME_LIMIT * 20 //Dubble the time to you can defib someone
-	else
+	else(istype(defib_decay))
 		to_chat(user, "<span class='notice'>This unit is allready upgraded with this disk!</span>")
 	
 #undef HALFWAYCRITDEATH
