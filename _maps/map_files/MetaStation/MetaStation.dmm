@@ -26783,7 +26783,9 @@
 	pixel_x = -30;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/melee/chainofcommand,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/coin/plasma,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bfz" = (
@@ -32299,7 +32301,6 @@
 /area/bridge)
 "bqV" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Captain's Quarters APC";
@@ -32312,9 +32313,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/card/id/captains_spare,
 /obj/item/paper/fluff/gateway,
-/obj/item/coin/plasma,
-/obj/item/melee/chainofcommand,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "bqW" = (
@@ -35947,7 +35947,7 @@
 /area/crew_quarters/heads/captain/private)
 "byr" = (
 /obj/structure/table/wood,
-/obj/item/card/id/captains_spare,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bys" = (

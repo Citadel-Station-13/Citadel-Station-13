@@ -9866,6 +9866,7 @@
 "aAs" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/fork,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "aAt" = (
@@ -9894,7 +9895,6 @@
 /area/crew_quarters/heads/captain)
 "aAx" = (
 /obj/structure/table/wood,
-/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aAy" = (

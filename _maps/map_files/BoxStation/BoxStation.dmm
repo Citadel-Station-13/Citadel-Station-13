@@ -22131,7 +22131,13 @@
 "bfB" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/card/id/captains_spare,
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_y = 6
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bfC" = (
@@ -26100,13 +26106,12 @@
 /area/crew_quarters/heads/captain)
 "bpl" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/matches,
 /obj/item/razor{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/item/reagent_containers/food/drinks/flask/gold,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "bpm" = (
