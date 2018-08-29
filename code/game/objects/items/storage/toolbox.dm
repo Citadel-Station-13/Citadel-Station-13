@@ -113,9 +113,9 @@
 		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
-	name = "black and red striped toolbox"
+	name = "black and red toolbox"
 	icon_state = "syndicate"
-	desc = "A toolbox painted black with a red stripe. It looks more heavy then normal toolboxes."
+	desc = "A toolbox painted black with a red stripe. It looks more heavier then normal toolboxes."
 	item_state = "toolbox_syndi"
 	force = 15
 	throwforce = 18
