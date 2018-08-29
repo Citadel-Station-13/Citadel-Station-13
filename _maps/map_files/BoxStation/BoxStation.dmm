@@ -36955,6 +36955,12 @@
 	location = "Atmospherics"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	icon_state = "left";
+	name = "Atmospherics Desk";
+	req_access_txt = "24"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOU" = (
