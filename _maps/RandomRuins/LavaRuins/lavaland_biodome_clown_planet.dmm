@@ -648,6 +648,7 @@
 /area/ruin/powered/clownplanet)
 "bV" = (
 /obj/structure/table/glass,
+/obj/item/gun/magic/staff/honk,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bW" = (
