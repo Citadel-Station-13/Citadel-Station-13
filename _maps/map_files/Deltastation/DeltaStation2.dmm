@@ -43798,6 +43798,7 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "bSO" = (
@@ -82122,11 +82123,11 @@
 	},
 /area/science/explab)
 "duF" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm/unlocked{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "duG" = (
@@ -89452,6 +89453,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dJO" = (
@@ -99648,7 +99650,6 @@
 /area/crew_quarters/abandoned_gambling_den)
 "fpQ" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
 "fGq" = (
@@ -100179,7 +100180,6 @@
 /area/science/mixing)
 "oIE" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
 "oMw" = (
@@ -100195,6 +100195,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
