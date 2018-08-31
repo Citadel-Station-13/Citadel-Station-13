@@ -1017,6 +1017,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "acb" = (
