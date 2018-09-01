@@ -10,7 +10,7 @@ html, body {
 	color: #000000;
 }
 body {
-	background: #E0E0E0; /*CIT CHANGE - darkens chatbox a lil*/
+	background: #fff;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
     line-height: 1.2;
@@ -264,7 +264,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
-.adminobserver			{color: #996600;	font-weight: bold;}
+.adminsay   			{color: #FF4500;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
