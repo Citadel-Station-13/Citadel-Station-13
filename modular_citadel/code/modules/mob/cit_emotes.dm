@@ -1,9 +1,26 @@
+#define INSULTS_FILE "insult.json"
+
 /mob
 	var/nextsoundemote = 1
 
 //Disables the custom emote blacklist from TG that normally applies to slimes.
 /datum/emote/living/custom
 	mob_type_blacklist_typecache = list(/mob/living/brain)
+
+/datum/emote/living/insult
+	key = "insult"
+	key_third_person = "insults"
+	message = "spews insults."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/insult/run_emote(mob/living/user, params)
+	var/insult_message = ""
+	if(!user.is_muzzled())
+		insult_message += pick_list_replacements(INSULTS_FILE, "insult_gen")
+		message = insult_message
+	else
+		message = "muffles something."
+	. = ..()
 
 /datum/emote/living/scream/run_emote(mob/living/user, params) //I can't not port this shit, come on.
 	if(user.nextsoundemote >= world.time || user.stat != CONSCIOUS)
