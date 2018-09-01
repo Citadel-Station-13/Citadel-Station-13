@@ -1145,7 +1145,8 @@
 			return
 		var/message_id = href_list["editmessageexpiry"]
 		edit_message_expiry(message_id)
- 	else if(href_list["editmessageexpiryempty"])
+
+	else if(href_list["editmessageexpiryempty"])
 		if(!check_rights(R_ADMIN))
 			return
 		var/message_id = href_list["editmessageexpiryempty"]
