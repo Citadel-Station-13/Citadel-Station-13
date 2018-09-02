@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(research)
 	/obj/item/slime_extract/gold = (TECHWEB_POINT_TYPE_GENERIC = 1250),
 	/obj/item/slime_extract/black = (TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/adamantine = (TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/oil = (TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/lightpink = (TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/rainbow = (TECHWEB_POINT_TYPE_GENERIC = 2500)      // End of Cit changes	
 	)
