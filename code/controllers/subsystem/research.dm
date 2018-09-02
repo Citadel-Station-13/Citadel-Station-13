@@ -17,10 +17,26 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
 	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000),   // Cit three more anomalys anomalys
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 7500),   
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 5000),
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 2500)     // End of Cit changes
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000),   // Adds in slime core deconing
+	/obj/item/slime_extract/grey = (TECHWEB_POINT_TYPE_GENERIC = 500),
+	/obj/item/slime_extract/metal = (TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/purple = (TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/orange = (TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/blue = (TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/yellow = (TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/silver = (TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/darkblue = (TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/darkpurple = (TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/bluespace = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/cerulean = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/pyrite = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/green = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/pink = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/gold = (TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/black = (TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/adamantine = (TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/lightpink = (TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/rainbow = (TECHWEB_POINT_TYPE_GENERIC = 2500)      // End of Cit changes	
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
