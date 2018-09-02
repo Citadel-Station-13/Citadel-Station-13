@@ -18,26 +18,26 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000),   // Adds in slime core deconing
-	/obj/item/slime_extract/grey = (TECHWEB_POINT_TYPE_GENERIC = 500),
-	/obj/item/slime_extract/metal = (TECHWEB_POINT_TYPE_GENERIC = 750),
-	/obj/item/slime_extract/purple = (TECHWEB_POINT_TYPE_GENERIC = 750),
-	/obj/item/slime_extract/orange = (TECHWEB_POINT_TYPE_GENERIC = 750),
-	/obj/item/slime_extract/blue = (TECHWEB_POINT_TYPE_GENERIC = 750),
-	/obj/item/slime_extract/yellow = (TECHWEB_POINT_TYPE_GENERIC = 1000),
-	/obj/item/slime_extract/silver = (TECHWEB_POINT_TYPE_GENERIC = 1000),
-	/obj/item/slime_extract/darkblue = (TECHWEB_POINT_TYPE_GENERIC = 1000),
-	/obj/item/slime_extract/darkpurple = (TECHWEB_POINT_TYPE_GENERIC = 1000),
-	/obj/item/slime_extract/bluespace = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/cerulean = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/pyrite = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/green = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/pink = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/gold = (TECHWEB_POINT_TYPE_GENERIC = 1250),
-	/obj/item/slime_extract/black = (TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/adamantine = (TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/oil = (TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/lightpink = (TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/rainbow = (TECHWEB_POINT_TYPE_GENERIC = 2500)      // End of Cit changes	
+	/obj/item/slime_extract/grey = list(TECHWEB_POINT_TYPE_GENERIC = 500),
+	/obj/item/slime_extract/metal = list(TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/purple = list(TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/orange = list(TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/blue = list(TECHWEB_POINT_TYPE_GENERIC = 750),
+	/obj/item/slime_extract/yellow = list(TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/silver = list(TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/darkblue = list(TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/darkpurple = list(TECHWEB_POINT_TYPE_GENERIC = 1000),
+	/obj/item/slime_extract/bluespace = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/cerulean = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/pyrite = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/green = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/pink = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/gold = list(TECHWEB_POINT_TYPE_GENERIC = 1250),
+	/obj/item/slime_extract/black = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/adamantine =list (TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/oil = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/lightpink = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
+	/obj/item/slime_extract/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 2500)      // End of Cit changes	
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
