@@ -9,7 +9,7 @@
 	outputs = list()
 	activators = list("fire" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
-	power_draw_per_use = 800
+	power_draw_per_use = 500
 	cooldown_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/electric_stimulator/do_work()
@@ -21,9 +21,13 @@
 		if(M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
 			var/mob/living/carbon/human/H = M
 			var/orgasm_message = pick("A sharp pulse of electricity pushes you to orgasm!", "You feel a jolt of electricity force you into orgasm!")
-			to_chat(H, "<span class='love'>[orgasm_message]</span>")
+			H.visible_message("<span class='warning'>\The [assembly] electrodes shock [H]!</span>", "<span class='warning'>[orgasm_message]</span>")
+			playsound(src, "sound/effects/light_flicker.ogg", 30, 1)
 			H.mob_climax(forced_climax=TRUE)
 		else
 			M.adjustArousalLoss(35)
 			var/stimulate_message = pick("You feel a sharp warming tingle of electricity through your body!", "A burst of arousing electricity flows through your body!")
-			to_chat(M, "<span class='love'>[stimulate_message]</span>")
+			M.visible_message("<span class='warning'>\The [assembly] electrodes shock [M]!</span>", "<span class='warning'>[stimulate_message]</span>")
+			playsound(src, "sound/effects/light_flicker.ogg", 30, 1)
+	else
+		visible_message("<span class='warning'>\The [assembly] electrodes fail to shock [M]!</span>")
