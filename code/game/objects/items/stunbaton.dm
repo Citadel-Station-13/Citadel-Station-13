@@ -165,6 +165,7 @@
 	L.Knockdown(stunforce)
 	L.adjustStaminaLoss(stunforce*0.1)//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey

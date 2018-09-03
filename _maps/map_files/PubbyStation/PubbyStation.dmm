@@ -9866,6 +9866,7 @@
 "aAs" = (
 /obj/structure/table/wood,
 /obj/item/kitchen/fork,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "aAt" = (
@@ -49684,7 +49685,11 @@
 	},
 /area/maintenance/department/engine)
 "jZG" = (
-/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_shutters";
+	name = "chemistry shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "kfh" = (
@@ -51627,7 +51632,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_shutters";
+	name = "chemistry shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "pBD" = (
@@ -52986,7 +52995,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "tzH" = (
-/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "research_shutters_2";
+	name = "research shutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/lab)
 "tAK" = (
@@ -53024,6 +53037,10 @@
 "tJr" = (
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "research_shutters_2";
+	name = "research shutters"
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "tPm" = (
