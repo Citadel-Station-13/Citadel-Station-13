@@ -328,7 +328,7 @@ SLIME SCANNER
 		if(cyberimp_detect)
 			to_chat(user, "<span class='notice'>Detected cybernetic modifications:</span>")
 			to_chat(user, "<span class='notice'>[cyberimp_detect]</span>")
-	SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
+	//SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, FALSE)
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(istype(M))
@@ -635,6 +635,6 @@ SLIME SCANNER
 
 	add_fingerprint(user)
 
-	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
-	if(!response)
-		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+	//var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
+	//if(!response)
+	//	to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
