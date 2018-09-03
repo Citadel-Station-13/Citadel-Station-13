@@ -520,6 +520,7 @@
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)
+			SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 			if(req_defib)
 				defib.deductcharge(revivecost)
 				cooldown = TRUE
@@ -602,6 +603,7 @@
 					H.set_heartattack(FALSE)
 					H.revive()
 					H.emote("gasp")
+					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 					H.Jitter(100)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
