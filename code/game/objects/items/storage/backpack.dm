@@ -258,7 +258,7 @@
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 15
+	STR.max_combined_w_class = 6
 	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
