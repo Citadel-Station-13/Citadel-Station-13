@@ -16,7 +16,7 @@
 			return
 	..()
 
-obj/item/clothing/mask/muzzle/ballgag
+/obj/item/clothing/mask/muzzle/ballgag
 	name = "Ball gag"
 	desc = "To stop that awful noise, but in a kinkier way."
 	icon_state = "gag"

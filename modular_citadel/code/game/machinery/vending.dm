@@ -27,11 +27,11 @@
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
-					
+
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	premium = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
-	
+
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
 #define COIN_CHARGE 3
@@ -49,6 +49,7 @@
 				/obj/item/clothing/under/stripper_pink = 5,
 				/obj/item/clothing/under/stripper_green = 5,
 				/obj/item/dildo/custom = 5
+				/obj/item/clothing/mask/muzzle/ballgag = 5
 				)
 	contraband = list(/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/neck/petcollar = 5,
