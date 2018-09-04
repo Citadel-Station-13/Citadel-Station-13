@@ -16,6 +16,15 @@
 			return
 	..()
 
+obj/item/clothing/mask/muzzle/ballgag
+	name = "Ball gag"
+	desc = "To stop that awful noise, but in a kinkier way."
+	icon_state = "gag"
+	item_state = "gag"
+	flags_cover = MASKCOVERSMOUTH
+	gas_transfer_coefficient = 0.9
+	equip_delay_other = 20
+
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
