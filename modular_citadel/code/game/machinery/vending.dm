@@ -48,7 +48,7 @@
 				/obj/item/clothing/under/maid = 5,
 				/obj/item/clothing/under/stripper_pink = 5,
 				/obj/item/clothing/under/stripper_green = 5,
-				/obj/item/dildo/custom = 5
+				/obj/item/dildo/custom = 5,
 				/obj/item/clothing/mask/muzzle/ballgag = 5
 				)
 	contraband = list(/obj/item/restraints/handcuffs/fake/kinky = 5,
