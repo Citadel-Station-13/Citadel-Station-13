@@ -247,7 +247,7 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	w_class = WEIGHT_CLASS_BULKY //Can fit in backpacks itself.
 	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
