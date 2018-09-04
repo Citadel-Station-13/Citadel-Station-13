@@ -402,4 +402,4 @@
 	name = "Mehki's Tophat"
 	icon_state = "tophat"
 	item_state = "that"
-	desc = "A normal looking top hat warn by Mehki Anderson. Little is known about it, some say it hides Cat-like ears well others believe that its a mind controlling parasite that is plotting are doom! No one really knows but Mehki himself..."
+	desc = "A normal looking top hat warn by Mehki Anderson. Little is known about it, some say it hides Cat-like ears while others believe that its a mind controlling parasite that is plotting our doom! No one really knows but Mehki himself..."
