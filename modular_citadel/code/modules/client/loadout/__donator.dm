@@ -326,3 +326,10 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/gun/m41
 	ckeywhitelist = list("thalverscholen")
+	
+/datum/gear/Kevhat
+	name = "Mehki's Tophat"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/head/collectable/Kevhat
+	ckeywhitelist = list("kevinz000")
+	
