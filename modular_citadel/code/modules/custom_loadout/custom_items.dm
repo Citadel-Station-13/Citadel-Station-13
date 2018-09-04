@@ -398,7 +398,7 @@
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
 	
-/obj/item/clothing/head/collectable/Kevhat
+/obj/item/clothing/head/collectable/kevhat
 	name = "Mehki's Tophat"
 	icon_state = "tophat"
 	item_state = "that"
