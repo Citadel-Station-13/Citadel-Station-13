@@ -200,6 +200,9 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 #GitHub Atom
 .atom-build.json
 
+#Jukebox audio files
+/config/jukebox_music/**/*
+
 #extra map stuff
 /_maps/**/backup/
 /_maps/templates.dm
