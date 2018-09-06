@@ -40,6 +40,6 @@
 	display_name = "Adv Defibrillartor tec"
 	description = "More ways to bring back the freshly dead."
 	prereq_ids = list("adv_biotech", "exp_surgery", "adv_engi", "adv_power")
-	design_ids = list("defib_decay", "defib_shock", "defib_heal", "comp_defib")
+	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
