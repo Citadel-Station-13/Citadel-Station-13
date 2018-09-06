@@ -19,7 +19,7 @@
 				T.temperature = T.air.temperature
 			else
 				T.air.copy_from_turf(T)
-	SSair.add_to_active(T)
+		SSair.add_to_active(T)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete
 	spawnableAtoms = list()
