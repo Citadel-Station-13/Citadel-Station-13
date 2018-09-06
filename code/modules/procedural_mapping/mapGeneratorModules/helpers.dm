@@ -14,8 +14,12 @@
 		SSair.remove_from_active(T)
 	for(var/turf/open/T in map)
 		if(T.air)
-			T.air.copy_from_turf(T)
-		SSair.add_to_active(T)
+			if(T.initial_gas_mix)
+				T.air.parse_gas_string(T.initial_gas_mix)
+				T.temperature = T.air.temperature
+			else
+				T.air.copy_from_turf(T)
+	SSair.add_to_active(T)
 
 /datum/mapGeneratorModule/bottomLayer/massdelete
 	spawnableAtoms = list()
