@@ -15,7 +15,7 @@
 
 /datum/design/defib_heal
 	name = "Defibrillartor Healing disk"
-	desc = "A disk alowing for grater amounts of healing"
+	desc = "A disk allowing for greater amounts of healing"
 	id = "defib_heal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
@@ -36,8 +36,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_decay
-	name = "Defibrillartor Body-Decay exstender Disk"
-	desc = "A disk that helps defibrillators revive the longer decayed dead"
+	name = "Defibrillartor Body-Decay extender Disk"
+	desc = "A disk that helps defibrillator revive the longer decayed dead"
 	id = "defib_decay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
@@ -48,7 +48,7 @@
 
 /datum/design/defib_speed
 	name = "Defibrllartor Pre-Primer Disk"
-	desc = "A disk that cuts the time charg time in half for defubrillator use"
+	desc = "A disk that cuts the time charg time in half for defibrillator use"
 	id = "defib_speed"
 	build_type = PROTOLATHE
 	build_path = /obj/item/disk/medical/defib_speed
