@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 15
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
@@ -131,6 +131,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2 //faster!
+	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
 
@@ -377,7 +378,3 @@
 			id = /obj/item/card/id/knight //END OF CIT CHANGE
 			id_job = "Knight"
 	. = ..()
-
-
-
-

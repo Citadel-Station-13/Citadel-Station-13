@@ -65,9 +65,9 @@ Difficulty: Hard
 
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
-	var/chaser_speed = 3 //how fast chasers are currently
-	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
-	var/major_attack_cooldown = 60 //base cooldown for major attacks
+	var/chaser_speed = 2 //how fast chasers are currently
+	var/chaser_cooldown = 50 //base cooldown/cooldown var between spawning chasers
+	var/major_attack_cooldown = 40 //base cooldown for major attacks
 	var/arena_cooldown = 200 //base cooldown/cooldown var for creating an arena
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
@@ -204,7 +204,7 @@ Difficulty: Hard
 			return
 		target_slowness += L.movement_delay()
 	target_slowness = max(target_slowness, 1)
-	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
+	chaser_speed = max(1, (2 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
 
 	arena_trap(target)
 	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.

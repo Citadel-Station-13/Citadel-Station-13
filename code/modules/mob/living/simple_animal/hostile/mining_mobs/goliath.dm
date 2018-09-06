@@ -10,9 +10,9 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 40
+	move_to_delay = 5
 	ranged = 1
-	ranged_cooldown_time = 120
+	ranged_cooldown_time = 40
 	friendly = "wails at"
 	speak_emote = list("bellows")
 	vision_range = 4
@@ -65,7 +65,7 @@
 		pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	ranged_cooldown -= 10
+	ranged_cooldown -= 5
 	handle_preattack()
 	. = ..()
 
@@ -109,6 +109,7 @@
 	maxHealth = 400
 	health = 400
 	speed = 4
+	ranged_cooldown_time = 60
 	pre_attack_icon = "Goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days

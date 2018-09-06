@@ -79,14 +79,14 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
 
 	else if(prob(20))
-		ranged_cooldown = world.time + 30
+		ranged_cooldown = world.time + 2
 		random_shots()
 	else
 		if(prob(70))
-			ranged_cooldown = world.time + 20
+			ranged_cooldown = world.time + 10
 			blast()
 		else
-			ranged_cooldown = world.time + 40
+			ranged_cooldown = world.time + 20
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
