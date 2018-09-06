@@ -1,8 +1,8 @@
 /obj/item/defibrillator
 	var/healdisk = FALSE // Will we shock people dragging the body?
 	var/pullshocksafely = FALSE //Dose the unit have the healdisk upgrade?
-	var/fastasfuck = 0 // is the defib faster
-	var/snowflake = 10
+	var/primetime = 0 // is the defib faster
+	var/timedeath = 10
 
 /obj/item/twohanded/shockpaddles/shock_touching(dmg, mob/H)
 	if(defib.pullshocksafely && isliving(H.pulledby))
@@ -26,17 +26,17 @@
 		pullshocksafely = TRUE
 		return TRUE
 	if(istype(I, /obj/item/disk/medical/defib_speed))
-		if(!fastasfuck == initial(fastasfuck))
+		if(!primetime == initial(primetime))
 			to_chat(user, "<span class='notice'>This unit is already upgraded with this disk!</span>")
 			return TRUE
 		to_chat(user, "<span class='notice'>You upgrade the unit with Speed upgrade disk!</span>")
-		fastasfuck = 10
+		primetime = 10
 		return TRUE
 	if(istype(I, /obj/item/disk/medical/defib_decay))
-		if(!snowflake == initial(snowflake))
+		if(!timedeath == initial(timedeath))
 			to_chat(user, "<span class='notice'>This unit is already upgraded with this disk!</span>")
 			return TRUE
 		to_chat(user, "<span class='notice'>You upgrade the unit with Longer Decay upgrade disk!</span>")
-		snowflake = 20
+		timedeath = 20
 		return TRUE
 	return ..()
