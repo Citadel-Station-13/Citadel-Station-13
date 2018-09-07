@@ -173,6 +173,7 @@
 				if(do_after(src, 30, target = src))
 					src.visible_message("<span class='danger'>[src] relieves [p_them()]self!</span>", \
 								"<span class='userdanger'>You have relieved yourself.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 					setArousalLoss(min_arousal)
 					/*
 					switch(gender)
@@ -211,6 +212,7 @@
 		src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
 							"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
 							"<span class='green'>You have relieved yourself.</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
 
@@ -247,6 +249,7 @@
 			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
 								"<span class='green'>You climax using your [G.name].</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
 
