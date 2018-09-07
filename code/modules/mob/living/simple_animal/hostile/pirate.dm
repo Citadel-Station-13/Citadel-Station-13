@@ -12,8 +12,8 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	maxHealth = 100
-	health = 100
+	maxHealth = 115
+	health = 115
 	spacewalk = TRUE
 
 	harm_intent_damage = 5
