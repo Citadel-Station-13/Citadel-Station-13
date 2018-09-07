@@ -45,7 +45,7 @@ Difficulty: Medium
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
-	vision_range = 13
+	vision_range = 10
 	wander = FALSE
 	elimination = 1
 	appearance_flags = 0
