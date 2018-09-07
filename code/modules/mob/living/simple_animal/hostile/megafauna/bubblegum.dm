@@ -40,7 +40,7 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
-	move_to_delay = 6
+	move_to_delay = 10
 	ranged_cooldown_time = 10
 	ranged = 1
 	pixel_x = -32
@@ -61,7 +61,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = CLAMP(round((health/maxHealth) * 6), 2, 6)
+	move_to_delay = CLAMP(round((health/maxHealth) * 10), 3, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
