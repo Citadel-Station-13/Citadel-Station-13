@@ -73,10 +73,10 @@
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
-	name = "iron ore"
+	name = "metal ore"
 	icon_state = "Iron ore"
 	item_state = "Iron ore"
-	singular_name = "iron ore chunk"
+	singular_name = "metal ore chunk"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	grind_results = list("carbon" = 4)
 
 /obj/item/coin/iron
-	name = "iron coin"
+	name = "metal coin"
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
