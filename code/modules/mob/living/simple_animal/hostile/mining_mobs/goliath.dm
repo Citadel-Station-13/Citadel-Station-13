@@ -10,7 +10,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 5
+	move_to_delay = 10
 	ranged = 1
 	ranged_cooldown_time = 60
 	friendly = "wails at"
