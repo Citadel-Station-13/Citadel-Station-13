@@ -166,7 +166,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.max_combined_w_class = 5
 	STR.max_items = 1
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear || /obj/item/radio/intercom))
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear, /obj/item/radio/intercom))
 //Tongue stuff
 
 /obj/item/soap/tongue
