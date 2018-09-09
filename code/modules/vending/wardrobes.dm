@@ -21,8 +21,7 @@
 					/obj/item/clothing/under/pants/khaki = 3)
 	premium = list(/obj/item/clothing/under/rank/security/navyblue = 3,
 					/obj/item/clothing/suit/security/officer = 3,
-					/obj/item/clothing/head/beret/sec/navyofficer = 3,
-					/obj/item/reagent_containers/pill/stimulant = 2)
+					/obj/item/clothing/head/beret/sec/navyofficer = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
@@ -51,7 +50,7 @@
 					/obj/item/clothing/head/soft/emt = 3,
 					/obj/item/clothing/suit/apron/surgical = 1,
 					/obj/item/clothing/mask/surgical = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 2)
+	premium = list(/obj/item/reagent_containers/pill/stimulant = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -72,7 +71,6 @@
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
 					/obj/item/clothing/head/hardhat = 3)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 
 /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -109,7 +107,6 @@
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft = 3,
 					/obj/item/radio/headset/headset_cargo = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
@@ -128,7 +125,6 @@
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/mask/bandana/skull = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 
 /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -149,7 +145,6 @@
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/radio/headset/headset_sci = 2,
 					/obj/item/clothing/mask/gas = 3)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 
 /obj/item/vending_refill/wardrobe/science_wardrobe
@@ -168,7 +163,6 @@
 					/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/under/rank/hydroponics = 3,
 					/obj/item/clothing/mask/bandana = 3)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
@@ -186,7 +180,6 @@
 					/obj/item/clothing/shoes/workboots/mining = 1,
 					/obj/item/storage/backpack/satchel/explorer = 1,
 					/obj/item/storage/bag/books = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 
 /obj/item/vending_refill/wardrobe/curator_wardrobe
@@ -214,7 +207,6 @@
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
 					/obj/item/clothing/neck/petcollar = 1,
 					/obj/item/storage/belt/bandolier = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 
 /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -237,7 +229,6 @@
 					/obj/item/clothing/under/rank/chef = 1,
 					/obj/item/clothing/head/chefhat = 1,
 					/obj/item/reagent_containers/glass/rag = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -264,7 +255,6 @@
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
 					/obj/item/storage/belt/janitor = 1)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe
@@ -287,7 +277,6 @@
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 
 /obj/item/vending_refill/wardrobe/law_wardrobe
@@ -308,7 +297,6 @@
 					/obj/item/clothing/head/nun_hood = 1,
 					/obj/item/clothing/suit/holidaypriest = 1,
 					/obj/item/storage/fancy/candle_box = 2)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe
