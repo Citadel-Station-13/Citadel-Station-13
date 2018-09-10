@@ -19,3 +19,8 @@
 	description = "<span class='nicegreen'>I've played with plushes recently.</span>\n"
 	mood_change = 3
 	timeout = 3000
+
+/datum/mood_event/orgasm
+	description = "<font color = #780A53><i><b>I came!</font></i></b>" //funny meme haha
+	mood_change = 3
+	timeout = 1000
