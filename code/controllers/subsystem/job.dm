@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(job)
 		LoadJobs()
 	generate_selectable_species()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
-	..()
+	return ..()
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = GetJob(new_overflow_role)
@@ -583,7 +583,7 @@ SUBSYSTEM_DEF(job)
 					return
 
 		//pick an open spot on arrivals and dump em
-		var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
+		var/list/arrivals_turfs = shuffle(GLOB.areas_by_type[/area/shuttle/arrival]))
 		if(arrivals_turfs.len)
 			for(var/turf/T in arrivals_turfs)
 				if(!is_blocked_turf(T, TRUE))
