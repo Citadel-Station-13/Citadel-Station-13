@@ -50,6 +50,7 @@
 					/obj/item/clothing/head/soft/emt = 3,
 					/obj/item/clothing/suit/apron/surgical = 1,
 					/obj/item/clothing/mask/surgical = 1)
+	premium = list(/obj/item/reagent_containers/pill/stimulant = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -312,6 +313,7 @@
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
 					/obj/item/storage/bag/chemistry = 2)
+	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe
@@ -328,6 +330,7 @@
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,
 					/obj/item/storage/backpack/satchel/gen = 2)
+	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -345,6 +348,7 @@
 					/obj/item/clothing/mask/surgical = 2,
 					/obj/item/storage/backpack/virology = 2,
 					/obj/item/storage/backpack/satchel/vir = 2)
+	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
