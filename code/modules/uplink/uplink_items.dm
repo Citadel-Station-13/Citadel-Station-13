@@ -1293,6 +1293,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	cant_discount = TRUE
 
+/datum/uplink_item/cyber_implants/stealthimplant
+	name = "Stealth Implant"
+	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
+	item = /obj/item/implanter/stealth
+	cost = 8
+
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
@@ -1331,6 +1337,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 6
 	surplus = 20
 	restricted_roles = list("Janitor")
+
+/datum/uplink_item/role_restricted/kitchen_gun
+	name = "Kitchen Gun (TM)"
+	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
+	cost = 10
+	surplus = 40
+	restricted_roles = list("Cook", "Janitor")
+	item = /obj/item/storage/box/syndie_kit/kitchen_gun
+
+/datum/uplink_item/role_restricted/kitchen_gun_ammo
+	name = "Kitchen Gun (TM) .45 Magazine"
+	desc = "An extra eight bullets for an extra eight uses of Kitchen Gun (TM)!"
+	cost = 1
+	surplus = 0
+	restricted_roles = list("Cook", "Janitor")
+	item = /obj/item/ammo_box/magazine/m45/kitchengun
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"

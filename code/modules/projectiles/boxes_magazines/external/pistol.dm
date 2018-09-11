@@ -36,6 +36,11 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/m45/kitchengun
+	name = "handgun magazine (.45 cleaning)"
+	desc = "BANG! BANG! BANG!"
+	ammo_type = /obj/item/ammo_casing/c45/kitchengun
+
 /obj/item/ammo_box/magazine/pistolm9mm
 	name = "pistol magazine (9mm)"
 	icon_state = "9x19p-8"
