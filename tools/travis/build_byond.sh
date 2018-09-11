@@ -47,7 +47,7 @@ if [ "$BUILD_TOOLS" = false ]; then
 	else
 		tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme
 		
-		tools/deploy.sh travis_test
+		sh tools/deploy.sh travis_test
 		mkdir travis_test/config
 
 		#test config
