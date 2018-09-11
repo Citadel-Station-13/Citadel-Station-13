@@ -109,6 +109,7 @@
 			D.onMouseMove(object, location, control, params)
 	if(mob)	//CIT CHANGE - passes onmousemove() to mobs
 		mob.onMouseMove(object, location, control, params)	//CIT CHANGE - ditto
+	..()
 
 /datum/proc/onMouseMove(object, location, control, params)
 	return
