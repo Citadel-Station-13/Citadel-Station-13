@@ -37,7 +37,7 @@
 
 /datum/techweb_node/adv_defibrillator_tec
 	id = "adv_defibrillator_tec"
-	display_name = "Adv Defibrillartor tec"
+	display_name = "Adv Defibrillato tec"
 	description = "More ways to bring back the freshly dead."
 	prereq_ids = list("adv_biotech", "exp_surgery", "adv_engi", "adv_power")
 	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
