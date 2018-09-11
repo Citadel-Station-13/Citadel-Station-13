@@ -10,23 +10,32 @@
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
 
-
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
 
-//Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
-		H.endTailWag()
+		stop_wagging_tail(H)
 
 /datum/species/human/spec_stun(mob/living/carbon/human/H,amount)
 	if(H)
-		H.endTailWag()
+		stop_wagging_tail(H)
 	. = ..()
 
-/datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	if(H.dna.features["ears"] == "Cat")
-		mutantears = /obj/item/organ/ears/cat
-	if(H.dna.features["tail_human"] == "Cat")
-		mutanttail = /obj/item/organ/tail/cat
-	..()
+/datum/species/human/can_wag_tail(mob/living/carbon/human/H)
+	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/human/is_wagging_tail(mob/living/carbon/human/H)
+	return ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/human/start_wagging_tail(mob/living/carbon/human/H)
+	if("tail_human" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_tail"
+		mutant_bodyparts |= "mam_waggingtail"
+	H.update_body()
+
+/datum/species/human/stop_wagging_tail(mob/living/carbon/human/H)
+	if("mam_waggingtail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_waggingtail"
+		mutant_bodyparts |= "mam_tail"
+	H.update_body()

@@ -257,7 +257,7 @@
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
 		fusion_prepare_to_die_edition_rng = 100 //Wait a minute..
-		do_explosion = TRUE
+		do_explosion = TRUE			
 		zap_range = FUSION_ZAP_RANGE_SUPER
 
 	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
@@ -433,3 +433,30 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
+	
+
+/datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
+	priority = -10 //after all the heating from fires etc. is done
+	name = "Dry Heat Sterilization"
+	id = "sterilization"
+
+/datum/gas_reaction/miaster/init_reqs()
+	min_requirements = list(
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST+70,
+		/datum/gas/miasma = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	// As the name says it, it needs to be dry
+	if(/datum/gas/water_vapor in cached_gases)
+		if(cached_gases[/datum/gas/water_vapor]/air.total_moles() > 0.1)
+			return
+
+	//Replace miasma with oxygen
+	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
+	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
+	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
+
+	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
+	air.temperature += cleaned_air * 0.002

@@ -52,6 +52,8 @@ Difficulty: Hard
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
+	do_footstep = TRUE
+
 /obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
@@ -147,7 +149,7 @@ Difficulty: Hard
 	Goto(target, move_to_delay, minimum_distance)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)

@@ -12,12 +12,6 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 0.5
 
-/datum/nanite_program/nervous/active_effect()
-	. = ..()
-	if(iscarbon(host_mob))
-		var/mob/living/carbon/C = host_mob
-		C.adjustStaminaLoss(-2)
-
 /datum/nanite_program/nervous/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))

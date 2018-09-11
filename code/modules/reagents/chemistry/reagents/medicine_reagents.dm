@@ -803,7 +803,7 @@
 				M.updatehealth()
 				if(M.revive())
 					M.emote("gasp")
-					add_logs(M, M, "revived", src)
+					log_combat(M, M, "revived", src)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
@@ -1173,6 +1173,14 @@
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
 	self_consuming = TRUE
+
+/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
+	..()
+	M.add_trait(TRAIT_STABLEHEART, id)
+
+/datum/reagent/medicine/corazone/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_STABLEHEART, id)
+	..()
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

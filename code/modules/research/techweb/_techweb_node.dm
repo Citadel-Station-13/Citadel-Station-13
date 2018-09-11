@@ -15,7 +15,7 @@
 	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
 	var/export_price = 0					//Cargo export price.
-	var/list/research_costs = list()					//Point cost to research. type = amount
+	var/list/research_costs = 0					//Point cost to research. type = amount
 	var/category = "Misc"				//Category
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
