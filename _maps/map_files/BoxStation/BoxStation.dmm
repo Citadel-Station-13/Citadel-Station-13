@@ -33591,7 +33591,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
-/obj/machinery/status_display/supply
+/obj/machinery/status_display/supply,
 /obj/machinery/computer/security/qm{
 	dir = 4
 	},
