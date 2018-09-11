@@ -609,7 +609,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "</td>"
 			dat += "</tr></table>"
 
-			if(3)
+		if(3)
 			if(!gear_tab)
 				gear_tab = GLOB.loadout_items[1]
 			dat += "<table align='center' width='100%'>"

@@ -1394,7 +1394,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
-		target.endTailWag()
+		stop_wagging_tail(target)
 		return FALSE
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")

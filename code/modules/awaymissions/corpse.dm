@@ -400,7 +400,7 @@
 	name = "lifeguard sleeper"
 	id_job = "Lifeguard"
 	uniform = /obj/item/clothing/under/shorts/red
-	
+
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses

@@ -130,11 +130,11 @@
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	//CITADEL EDIT Vore code required overrides
 	if(istype(loc, /obj/item/dogborg/sleeper))
-		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	if(ismob(loc))
-		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	if(isbelly(loc))
-		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
 //END EDIT
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)

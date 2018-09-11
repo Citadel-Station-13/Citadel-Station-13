@@ -599,8 +599,6 @@
 			log_whisper(log_text)
 		if(LOG_EMOTE)
 			log_emote(log_text)
-		if(LOG_SUBTLE)
-			log_subtle(log_text)
 		if(LOG_DSAY)
 			log_dsay(log_text)
 		if(LOG_PDA)
@@ -613,8 +611,6 @@
 			log_telecomms(log_text)
 		if(LOG_OOC)
 			log_ooc(log_text)
-		if(LOG_LOOC)
-			log_looc(log_text)
 		if(LOG_ADMIN)
 			log_admin(log_text)
 		if(LOG_ADMIN_PRIVATE)
@@ -698,3 +694,9 @@ Proc for attack log creation, because really why not
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/movable/proc/remove_filter(name)
+	if(filter_data[name])
+		filter_data -= name
+		update_filters()
+		return TRUE

@@ -74,8 +74,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 				C.update_inv_handcuffed(0)
 				to_chat(user,"<span class='notice'>You handcuff [C].</span>")
-				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-				add_logs(user, C, "handcuffed")
+				playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+				log_combat(user, C, "handcuffed")
 		else
 			to_chat(user,"<span class='warning'>You fail to handcuff [C]!</span>")
 

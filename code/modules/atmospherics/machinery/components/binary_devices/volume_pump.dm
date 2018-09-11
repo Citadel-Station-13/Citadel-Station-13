@@ -128,6 +128,8 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
 		return
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
@@ -183,6 +185,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
+	var/area/A = get_area(src)
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
