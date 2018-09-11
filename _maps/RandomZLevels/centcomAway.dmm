@@ -34,56 +34,108 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "ai" = (
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aj" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ak" = (
 /turf/closed/wall,
 /area/awaymission/centcomAway/cafe)
 "al" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "am" = (
 /obj/structure/closet/chefcloset,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "an" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ao" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ap" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aq" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ar" = (
 /obj/structure/table,
@@ -92,17 +144,33 @@
 	pixel_y = 3
 	},
 /obj/item/kitchen/rollingpin,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "as" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/food/condiment/enzyme,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "at" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -119,9 +187,17 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/cafe)
 "aw" = (
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ax" = (
 /turf/open/floor/plasteel/cafeteria,
@@ -137,9 +213,17 @@
 /area/awaymission/centcomAway/cafe)
 "aA" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -148,14 +232,26 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/cafe)
 "aC" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 9
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aD" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 5
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aE" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -176,13 +272,25 @@
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aJ" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/redyellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -199,19 +307,33 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/area/awaymission/centcomAway/cafe)
-"aN" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 8
-	},
-/area/awaymission/centcomAway/cafe)
-"aO" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/cafe)
+"aN" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/cafe)
+"aO" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aP" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -226,9 +348,11 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "101"
 	},
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/maint)
 "aS" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -251,30 +375,62 @@
 /area/awaymission/centcomAway/hangar)
 "aW" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aX" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aY" = (
 /obj/structure/sink,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ba" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
@@ -291,29 +447,55 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "bd" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "be" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "bf" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bg" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/peppermill,
 /obj/item/reagent_containers/food/condiment/saltshaker,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bh" = (
 /obj/structure/chair{
@@ -323,9 +505,17 @@
 /area/awaymission/centcomAway/maint)
 "bi" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bj" = (
 /obj/structure/rack,
@@ -372,9 +562,17 @@
 /area/awaymission/centcomAway/hangar)
 "bs" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "bt" = (
 /obj/machinery/door/airlock/centcom,
@@ -436,15 +634,25 @@
 /area/awaymission/centcomAway/hangar)
 "bJ" = (
 /obj/structure/chair/comfy/brown,
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bK" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bL" = (
 /obj/structure/kitchenspike,
@@ -460,19 +668,30 @@
 /area/awaymission/centcomAway/cafe)
 "bN" = (
 /obj/machinery/autolathe,
-/turf/open/floor/plasteel/yellow/side{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "bO" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bP" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "bQ" = (
 /obj/structure/table,
@@ -521,18 +740,42 @@
 "cb" = (
 /obj/item/paper_bin,
 /obj/structure/table,
-/turf/open/floor/plasteel/redyellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cc" = (
 /obj/item/clipboard,
 /obj/structure/table,
-/turf/open/floor/plasteel/redyellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cd" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel/yellow/side{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ce" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -540,9 +783,17 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/cafe)
 "cf" = (
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/cafe)
 "cg" = (
 /obj/structure/sign/departments/botany,
@@ -553,7 +804,7 @@
 /obj/item/reagent_containers/spray/plantbgone{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/hydrofloor,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ci" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -581,7 +832,17 @@
 "co" = (
 /obj/item/pen,
 /obj/structure/table,
-/turf/open/floor/plasteel/redyellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cp" = (
 /turf/open/floor/plasteel/grimy,
@@ -599,9 +860,14 @@
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/cafe)
 "cs" = (
-/turf/open/floor/plasteel/yellow/side{
-	dir = 5
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ct" = (
 /turf/open/floor/plasteel/hydrofloor,
@@ -641,21 +907,21 @@
 /area/awaymission/centcomAway/cafe)
 "cE" = (
 /obj/machinery/seed_extractor,
-/turf/open/floor/plasteel/hydrofloor,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cF" = (
 /obj/machinery/vending/hydroseeds{
 	slogan_delay = 700
 	},
-/turf/open/floor/plasteel/hydrofloor,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cG" = (
 /obj/machinery/vending/hydronutrients,
-/turf/open/floor/plasteel/hydrofloor,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cH" = (
 /obj/machinery/biogenerator,
-/turf/open/floor/plasteel/hydrofloor,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "cJ" = (
 /obj/structure/table/reinforced,
@@ -704,9 +970,13 @@
 "cT" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/neck/stethoscope,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "cU" = (
 /obj/machinery/computer/secure_data{
@@ -733,9 +1003,16 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "cY" = (
-/turf/open/floor/plasteel/yellow/side{
-	dir = 9
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "cZ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
@@ -757,9 +1034,17 @@
 /area/awaymission/centcomAway/hangar)
 "dd" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "de" = (
 /turf/open/floor/plasteel/vault{
@@ -767,29 +1052,78 @@
 	},
 /area/awaymission/centcomAway/hangar)
 "df" = (
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dg" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dh" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "di" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/red,
-/area/awaymission/centcomAway/cafe)
-"dj" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/cafe)
+"dj" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dk" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dl" = (
 /obj/structure/table,
@@ -833,7 +1167,11 @@
 "dr" = (
 /obj/structure/table/reinforced,
 /obj/item/t_scanner,
-/turf/open/floor/plasteel/yellow/side,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ds" = (
 /obj/structure/disposalpipe/trunk{
@@ -843,9 +1181,11 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/cafe)
 "dt" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dv" = (
 /obj/structure/closet/crate,
@@ -856,14 +1196,23 @@
 /area/awaymission/centcomAway/hangar)
 "dw" = (
 /obj/structure/tank_dispenser,
-/turf/open/floor/plasteel/yellow/side{
-	dir = 6
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/area/awaymission/centcomAway/general)
-"dx" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/general)
+"dx" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dy" = (
 /obj/structure/closet/firecloset/full,
@@ -890,24 +1239,64 @@
 "dC" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
-/turf/open/floor/plasteel/redyellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dD" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dE" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dF" = (
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dG" = (
 /obj/structure/bed,
@@ -919,7 +1308,17 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dI" = (
 /turf/open/floor/plasteel/dark/corner{
@@ -932,7 +1331,11 @@
 	},
 /area/awaymission/centcomAway/general)
 "dK" = (
-/turf/open/floor/plasteel/yellow/side,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "dL" = (
 /obj/machinery/door/airlock/hatch{
@@ -961,9 +1364,14 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "dP" = (
-/turf/open/floor/plasteel/yellow/side{
-	dir = 10
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "dQ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -973,23 +1381,51 @@
 /area/awaymission/centcomAway/cafe)
 "dV" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dW" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dX" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 6
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "dY" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "dZ" = (
 /obj/structure/table,
@@ -1050,27 +1486,77 @@
 /area/awaymission/centcomAway/cafe)
 "ej" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ek" = (
 /obj/structure/closet/chefcloset,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "el" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "em" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "en" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "eo" = (
 /obj/structure/table,
@@ -1079,13 +1565,33 @@
 	pixel_y = 3
 	},
 /obj/item/kitchen/rollingpin,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "ep" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/food/condiment/enzyme,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "et" = (
 /obj/machinery/door/airlock/hatch{
@@ -1131,9 +1637,16 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "eC" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 9
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "eD" = (
 /turf/open/floor/plasteel{
@@ -1141,19 +1654,33 @@
 	},
 /area/awaymission/centcomAway/general)
 "eE" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 5
-	},
-/area/awaymission/centcomAway/general)
-"eF" = (
-/turf/open/floor/plasteel/yellow/side{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/general)
+"eF" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "eG" = (
-/turf/open/floor/plasteel/yellow/side{
-	dir = 6
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "eH" = (
 /obj/machinery/sleeper{
@@ -1184,9 +1711,13 @@
 "eM" = (
 /obj/structure/table/reinforced,
 /obj/item/extinguisher/mini,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eN" = (
 /obj/structure/chair{
@@ -1196,21 +1727,33 @@
 /area/awaymission/centcomAway/courtroom)
 "eO" = (
 /obj/machinery/clonepod,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eP" = (
 /obj/machinery/computer/cloning,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eQ" = (
 /obj/machinery/dna_scannernew,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eR" = (
 /obj/structure/chair,
@@ -1244,9 +1787,11 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eX" = (
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "eY" = (
 /turf/closed/wall,
@@ -1278,12 +1823,21 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "fe" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ff" = (
-/turf/open/floor/plasteel/green/side,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fg" = (
 /obj/structure/table/wood,
@@ -1300,9 +1854,13 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/courtroom)
 "fi" = (
-/turf/open/floor/plasteel/purple/side{
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fj" = (
 /obj/structure/bed,
@@ -1345,9 +1903,10 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "fs" = (
-/turf/open/floor/plasteel/purple/corner{
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ft" = (
 /obj/structure/sign/warning/electricshock,
@@ -1374,9 +1933,10 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/general)
 "fz" = (
-/turf/open/floor/plasteel/yellow/corner{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fA" = (
 /obj/structure/window/reinforced{
@@ -1405,9 +1965,11 @@
 /area/awaymission/centcomAway/general)
 "fD" = (
 /obj/machinery/dna_scannernew,
-/turf/open/floor/plasteel/whitepurple/side{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
 "fE" = (
 /turf/open/floor/carpet,
@@ -1480,9 +2042,14 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "fP" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fQ" = (
 /obj/structure/sign/departments/science,
@@ -1526,12 +2093,14 @@
 /turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fX" = (
-/turf/open/floor/plasteel/green/corner,
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fY" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "fZ" = (
 /obj/structure/table,
@@ -1548,9 +2117,11 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "gc" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "gd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
@@ -1572,9 +2143,13 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "gi" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "gj" = (
 /obj/structure/chair{
@@ -1617,9 +2192,10 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "gq" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "gr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
@@ -1675,9 +2251,10 @@
 	},
 /area/awaymission/centcomAway/general)
 "gz" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "gA" = (
 /turf/closed/wall/r_wall,
@@ -1795,9 +2372,17 @@
 /turf/open/floor/plasteel/dark/corner,
 /area/awaymission/centcomAway/general)
 "gW" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "gX" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -2002,9 +2587,13 @@
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hI" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "hJ" = (
 /obj/structure/toilet{
@@ -2084,9 +2673,17 @@
 /area/awaymission/centcomAway/general)
 "hW" = (
 /obj/item/twohanded/required/kirbyplants,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "hX" = (
 /obj/machinery/button/crematorium{
@@ -2153,9 +2750,17 @@
 /area/awaymission/centcomAway/hangar)
 "im" = (
 /obj/structure/closet/secure_closet/personal,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "in" = (
 /obj/structure/rack,
@@ -2238,9 +2843,17 @@
 /area/awaymission/centcomAway/hangar)
 "iD" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "iE" = (
 /turf/open/floor/plasteel/grimy,
@@ -2253,9 +2866,17 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "iI" = (
 /turf/open/floor/plasteel{
@@ -2268,9 +2889,17 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "iK" = (
 /obj/machinery/door/airlock/centcom{
@@ -2287,15 +2916,31 @@
 /area/awaymission/centcomAway/general)
 "iM" = (
 /obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "iN" = (
 /obj/structure/mecha_wreckage/seraph,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "iO" = (
 /turf/open/floor/plasteel/dark/corner{
@@ -2315,9 +2960,17 @@
 /area/awaymission/centcomAway/general)
 "iR" = (
 /obj/structure/closet/secure_closet/security,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "iS" = (
 /turf/open/floor/plasteel{
@@ -2377,9 +3030,17 @@
 	name = "XCC Mechbay Mass Driver";
 	pixel_x = 25
 	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "jb" = (
 /obj/machinery/mecha_part_fabricator,
@@ -2429,18 +3090,27 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "jk" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/centcomAway/general)
 "jm" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 2
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "jn" = (
 /obj/structure/table/reinforced,
@@ -2462,36 +3132,94 @@
 "jq" = (
 /obj/item/stamp,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "jr" = (
 /obj/structure/table,
 /obj/item/bot_assembly/medbot,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "js" = (
 /obj/structure/table,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "jt" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "ju" = (
 /obj/structure/table,
 /obj/item/mmi,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "jv" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plasteel/vault,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "jw" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -2531,17 +3259,23 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "jC" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "jD" = (
 /obj/structure/flora/ausbushes,
@@ -2616,15 +3350,21 @@
 /area/awaymission/centcomAway/general)
 "jN" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "jO" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "jP" = (
 /obj/machinery/door/airlock/external{
@@ -2778,9 +3518,17 @@
 "kq" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/pamphlet/centcom/visitor_info,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kr" = (
 /obj/structure/table/reinforced,
@@ -2800,9 +3548,17 @@
 /obj/machinery/computer/secure_data{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "ku" = (
 /obj/item/paper_bin,
@@ -2821,22 +3577,36 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/general)
 "kw" = (
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "kx" = (
-/turf/open/floor/plasteel/neutral/side{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "ky" = (
 /obj/machinery/computer/card{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kz" = (
 /obj/structure/chair{
@@ -2856,18 +3626,34 @@
 /area/awaymission/centcomAway/general)
 "kB" = (
 /obj/machinery/photocopier,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kC" = (
 /obj/item/clipboard,
 /obj/structure/table,
 /obj/item/taperecorder,
 /obj/item/stamp,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kD" = (
 /obj/machinery/door/window/northright{
@@ -2887,44 +3673,74 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kF" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "kG" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/area/awaymission/centcomAway/general)
-"kH" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 2
-	},
-/area/awaymission/centcomAway/general)
-"kI" = (
-/turf/open/floor/plasteel/red/corner{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/general)
+"kH" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/general)
+"kI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "kJ" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs,
 /obj/item/stamp,
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/general)
 "kK" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "kL" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/general)
 "kN" = (
 /obj/structure/table/wood,
@@ -2973,16 +3789,32 @@
 "kW" = (
 /obj/structure/table,
 /obj/item/paicard,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "kX" = (
 /obj/structure/table,
 /obj/item/camera,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "kY" = (
 /obj/machinery/door/airlock/external,
@@ -2990,35 +3822,75 @@
 /area/awaymission/centcomAway/thunderdome)
 "kZ" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "la" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lb" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lc" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "ld" = (
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/thunderdome)
 "le" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lf" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -3026,19 +3898,40 @@
 /area/awaymission/centcomAway/thunderdome)
 "lg" = (
 /obj/machinery/door/window/southright,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lh" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "li" = (
-/turf/open/floor/plasteel/barber{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria{
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
@@ -3046,57 +3939,126 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/area/awaymission/centcomAway/thunderdome)
-"lk" = (
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"lk" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ll" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lm" = (
 /obj/structure/closet/crate/trashcart,
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ln" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lo" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lp" = (
 /obj/structure/table,
 /obj/item/lipstick,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lq" = (
 /obj/structure/table/wood,
 /obj/item/radio/off,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lr" = (
 /obj/machinery/icecream_vat,
-/turf/open/floor/plasteel/barber{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria{
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
@@ -3104,20 +4066,40 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "lt" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/redblue{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lu" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lv" = (
 /obj/structure/rack,
@@ -3142,9 +4124,11 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/thunderdome)
 "lz" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lA" = (
 /obj/machinery/door/poddoor{
@@ -3251,9 +4235,13 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/courtroom)
 "lP" = (
-/turf/open/floor/plasteel/whitered/side{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
 "lQ" = (
 /turf/open/floor/plasteel/green/side{
@@ -3266,14 +4254,26 @@
 /area/awaymission/centcomAway/general)
 "lS" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "lT" = (
-/turf/open/floor/plasteel/whitegreen/side{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
 "lU" = (
 /obj/structure/urinal{
@@ -3295,9 +4295,17 @@
 "lX" = (
 /obj/machinery/chem_dispenser,
 /obj/item/storage/box/beakers,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "lY" = (
 /turf/open/floor/plasteel/vault{
@@ -3340,24 +4348,48 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/centcomAway/cafe)
 "mf" = (
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mg" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mh" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/popcorn,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mi" = (
 /obj/structure/disposalpipe/segment,
@@ -3367,15 +4399,28 @@
 "mj" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/window/southright,
-/turf/open/floor/plasteel/green{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mk" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/snacks/popcorn,
-/turf/open/floor/plasteel/barber{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria{
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
@@ -3383,59 +4428,123 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/cafe)
 "mm" = (
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mn" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mo" = (
 /obj/structure/frame/computer{
 	dir = 1
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mp" = (
 /obj/structure/closet/secure_closet/bar,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mq" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mr" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ms" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mt" = (
 /obj/machinery/button/door{
@@ -3475,22 +4584,42 @@
 /area/awaymission/centcomAway/thunderdome)
 "mx" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/maint)
 "my" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/plasteel/vault{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/cafe)
 "mz" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/window/northright,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mA" = (
 /obj/machinery/vending/boozeomat{
@@ -3501,11 +4630,31 @@
 "mB" = (
 /obj/machinery/chem_dispenser,
 /obj/item/storage/box/beakers,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mC" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mD" = (
 /obj/machinery/door/airlock/centcom,
@@ -3562,13 +4711,25 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/peppermill,
 /obj/item/reagent_containers/food/condiment/saltshaker,
-/turf/open/floor/plasteel/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mM" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/bar{
-	dir = 2
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/cafe)
 "mN" = (
 /obj/machinery/door/airlock/centcom,
@@ -3599,15 +4760,31 @@
 /area/awaymission/centcomAway/general)
 "mR" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "mS" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "mT" = (
 /obj/machinery/door/airlock/external,
@@ -3623,9 +4800,17 @@
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mX" = (
 /obj/machinery/door/airlock/centcom{
@@ -3633,56 +4818,94 @@
 	opacity = 1;
 	req_access_txt = "102"
 	},
-/turf/open/floor/plasteel/redyellow{
-	dir = 5
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mY" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/vault{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/thunderdome)
 "mZ" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/plasteel/barber{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria{
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
 "na" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nb" = (
-/turf/open/floor/plasteel/red/corner{
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nc" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green{
 	dir = 2
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nd" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ne" = (
-/turf/open/floor/plasteel/red/corner{
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nf" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ng" = (
-/turf/open/floor/plasteel/red/side,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nh" = (
 /obj/machinery/door/airlock/centcom{
@@ -3694,71 +4917,120 @@
 /area/awaymission/centcomAway/thunderdome)
 "ni" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/turf/open/floor/plasteel/green/side{
-	dir = 6
-	},
-/area/awaymission/centcomAway/thunderdome)
-"nj" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 2
-	},
-/area/awaymission/centcomAway/thunderdome)
-"nk" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
-	},
-/area/awaymission/centcomAway/thunderdome)
-"nl" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 6
-	},
-/area/awaymission/centcomAway/thunderdome)
-"nm" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 1
-	},
-/area/awaymission/centcomAway/thunderdome)
-"nn" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 5
-	},
-/area/awaymission/centcomAway/thunderdome)
-"no" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
-"np" = (
-/turf/open/floor/plasteel/red/corner{
+"nj" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nk" = (
+/obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nl" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nm" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nn" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"no" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"np" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nq" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 9
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nr" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/turf/open/floor/plasteel/green/side{
-	dir = 5
+/obj/effect/turf_decal/tile/green{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ns" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/turf/open/floor/plasteel/red/side{
-	dir = 9
+/obj/effect/turf_decal/tile/red{
+	dir = 1
 	},
-/area/awaymission/centcomAway/thunderdome)
-"nt" = (
-/turf/open/floor/plasteel/red/corner{
-	dir = 2
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
-/area/awaymission/centcomAway/thunderdome)
-"nu" = (
-/turf/open/floor/plasteel/green/corner{
+/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nt" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/centcomAway/thunderdome)
+"nu" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nv" = (
 /obj/machinery/door/airlock/centcom,
@@ -3768,22 +5040,33 @@
 /turf/open/floor/goonplaque,
 /area/awaymission/centcomAway/thunderdome)
 "nx" = (
-/turf/open/floor/plasteel/red/side{
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ny" = (
-/turf/open/floor/plasteel/green/side{
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nz" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/sugar,
 /obj/item/reagent_containers/food/condiment/milk,
 /obj/item/reagent_containers/food/drinks/ice,
-/turf/open/floor/plasteel/barber{
-	dir = 8;
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria{
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
@@ -7851,36 +9134,36 @@ aa
 aa
 aV
 bc
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
-bm
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
 hK
 hU
 aV
@@ -7893,13 +9176,13 @@ cz
 iz
 aV
 bc
-bm
-bm
-bm
-bm
-bm
-bm
-bm
+bd
+bd
+bd
+bd
+bd
+bd
+bd
 kf
 hU
 aV
@@ -8004,7 +9287,7 @@ bd
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8134,7 +9417,7 @@ bd
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8264,7 +9547,7 @@ bd
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8274,13 +9557,13 @@ bB
 gD
 aV
 ij
-gm
+bd
 ij
-gm
+bd
 ij
-gm
+bd
 ij
-gm
+bd
 aV
 bR
 gD
@@ -8394,7 +9677,7 @@ bd
 bd
 be
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8403,14 +9686,14 @@ dc
 bB
 gD
 aV
-gm
-gm
-gm
-gm
-gm
-gm
-gm
-gm
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
 aV
 gD
 gD
@@ -8524,7 +9807,7 @@ bd
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8536,8 +9819,8 @@ aV
 il
 gD
 gD
-gm
-gm
+bd
+bd
 gD
 gD
 gD
@@ -8654,7 +9937,7 @@ bd
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gR
@@ -8665,12 +9948,12 @@ gD
 aV
 im
 im
-de
-bm
-bm
+bd
+bd
+bd
 ja
-ji
-ji
+im
+im
 aV
 bR
 bR
@@ -8784,7 +10067,7 @@ bn
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gD
@@ -8914,7 +10197,7 @@ fn
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 gS
@@ -9044,7 +10327,7 @@ fo
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 bB
@@ -9174,7 +10457,7 @@ fo
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 bB
@@ -9304,7 +10587,7 @@ fo
 bd
 bd
 bd
-gm
+bd
 gD
 gD
 bn
@@ -9434,7 +10717,7 @@ fp
 bd
 be
 bd
-gm
+bd
 gD
 gD
 gD
@@ -9564,14 +10847,14 @@ bn
 bd
 bd
 bd
-gm
-gm
-gm
-gm
-gm
-gm
-gm
-gm
+bd
+bd
+bd
+bd
+bd
+bd
+bd
+bd
 aV
 cz
 cz
@@ -10328,12 +11611,12 @@ bd
 bd
 bd
 bd
-de
-bm
-bm
-bm
-bm
-bm
+bd
+bd
+bd
+bd
+bd
+bd
 aV
 bs
 bd
@@ -10458,7 +11741,7 @@ bd
 bd
 bR
 bd
-de
+bd
 dn
 bc
 bc
@@ -10917,7 +12200,7 @@ lG
 lG
 lG
 lG
-lW
+lc
 nh
 lc
 lc
@@ -11412,10 +12695,10 @@ eD
 eD
 kj
 kq
-iZ
-iZ
+gW
+gW
 kB
-iZ
+gW
 iR
 eu
 aa
@@ -11806,7 +13089,7 @@ ks
 ev
 ev
 ev
-iL
+gW
 eu
 aa
 aa
@@ -11935,8 +13218,8 @@ jn
 kt
 ky
 kC
-iL
-iL
+gW
+gW
 eu
 aa
 aa
@@ -12561,7 +13844,7 @@ gZ
 hl
 fv
 hI
-lQ
+ff
 eu
 it
 eV
@@ -12821,7 +14104,7 @@ gZ
 hn
 fv
 hI
-lQ
+ff
 eu
 it
 eV
@@ -13215,7 +14498,7 @@ gV
 eu
 eV
 eu
-iL
+gW
 ev
 iY
 jh
@@ -13477,8 +14760,8 @@ iv
 eu
 iM
 iR
-iZ
-iZ
+gW
+gW
 jq
 eu
 jD
@@ -13494,9 +14777,9 @@ eD
 eD
 kj
 iQ
-iZ
-iZ
-iZ
+gW
+gW
+gW
 eu
 aa
 aa
@@ -13626,7 +14909,7 @@ kj
 iX
 kE
 ev
-iZ
+gW
 eu
 aa
 aa
@@ -13756,7 +15039,7 @@ kj
 jg
 ks
 ev
-iL
+gW
 eu
 aa
 aa
@@ -14354,9 +15637,9 @@ aN
 by
 bO
 cf
-ct
-ct
-ct
+by
+by
+by
 cf
 dj
 by
@@ -14484,9 +15767,9 @@ aO
 aO
 bP
 cf
-ct
+by
 cE
-ct
+by
 cf
 dk
 dt
@@ -14557,7 +15840,7 @@ lL
 lL
 lL
 lL
-lY
+lc
 nh
 lc
 lc
@@ -14614,9 +15897,9 @@ lS
 bz
 bz
 aK
-ct
+by
 cF
-ct
+by
 aK
 bz
 bz
@@ -14744,9 +16027,9 @@ ak
 ak
 ak
 cg
-ct
+by
 cG
-ct
+by
 cg
 ak
 ak
@@ -14874,9 +16157,9 @@ bj
 bA
 ak
 ch
-ct
+by
 cH
-ct
+by
 ch
 ak
 bA
@@ -15004,9 +16287,9 @@ ag
 ag
 ak
 ch
-ct
-ct
-ct
+by
+by
+by
 ch
 ak
 ag
