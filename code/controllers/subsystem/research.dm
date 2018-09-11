@@ -40,7 +40,8 @@ SUBSYSTEM_DEF(research)
 	/obj/item/slime_extract/adamantine =list (TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/oil = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/lightpink = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 2500)      // End of Cit changes
+	/obj/item/slime_extract/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	)      // End of Cit changes
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------

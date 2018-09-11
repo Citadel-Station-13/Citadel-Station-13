@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/panicbunker,
 	/client/proc/stop_sounds,
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs		/*hides all our hideable adminverbs*/
+	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
