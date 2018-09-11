@@ -76,3 +76,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+//Citadel Specific Flags
+#define GOLIATH_RESISTANCE (1<<0)
+#define GOLIATH_WEAKNESS (1<<1)
