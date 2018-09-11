@@ -21710,7 +21710,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aQO" = (
-/obj/machinery/status_display/supply
+/obj/machinery/status_display/supply,
 /turf/closed/wall,
 /area/quartermaster/qm)
 "aQP" = (
