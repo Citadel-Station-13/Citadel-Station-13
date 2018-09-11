@@ -161,7 +161,8 @@
 	belly.nom_mob(prey, user)
 	if (pred == user)
 		message_admins("[key_name(pred)] ate [key_name(prey)].")
-		log_attack("[key_name(pred)] ate [key_name(prey)]")
+		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
 	return TRUE
 //
 // Master vore proc that actually does vore procedures
@@ -230,10 +231,13 @@
 			prey_braindead = 1
 	if (pred == user)
 		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
-		log_attack("[key_name(pred)] ate [key_name(prey)]")
+		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
 	else
 		message_admins("[ADMIN_LOOKUPFLW(user)] forced [ADMIN_LOOKUPFLW(pred)] to eat [ADMIN_LOOKUPFLW(prey)].")
-		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
+		user.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
+		pred.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
 	return TRUE
 
 //
