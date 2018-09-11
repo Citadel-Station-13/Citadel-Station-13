@@ -89,7 +89,6 @@
 					/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 					/obj/item/clothing/under/rank/atmospheric_technician = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3)
-	premium = list(/obj/item/reagent_containers/pill/stimulant = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
