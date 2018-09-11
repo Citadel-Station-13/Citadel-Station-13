@@ -22865,7 +22865,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/status_display/supply
+/obj/machinery/status_display/supply,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
