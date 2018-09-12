@@ -17,7 +17,7 @@
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
 /obj/item/encryptionkey/syndicate/basic
-	name = "syndicate encryption key"
+	name = "syndicate basic encryption key"
 	desc = "An encryption key for a radio headset. To access the syndicate channel, use :t."
 	icon_state = "syn_cypherkey"
 	channels = list("Syndicate" = 1)
