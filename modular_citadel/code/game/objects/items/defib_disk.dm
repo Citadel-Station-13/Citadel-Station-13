@@ -13,7 +13,7 @@
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
 
 /obj/item/disk/medical/defib_shock
-	name = "Defibrillator Anit-Shock Disk"
+	name = "Defibrillator Anti-Shock Disk"
 	desc = "A disk that helps agains shocking anyone, other then the intented target"
 	icon_state = "zap_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
