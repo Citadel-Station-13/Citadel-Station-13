@@ -1075,7 +1075,6 @@
     ..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-    M.adjustToxLoss(0*REM, 0)
     M.adjustOxyLoss(2.6*REM, 0)
     M.adjustBruteLoss(3.5*REM, 0)
     M.adjustFireLoss(3.5*REM, 0)
