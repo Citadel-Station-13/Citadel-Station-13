@@ -1067,18 +1067,18 @@
     taste_description = "jelly"
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
-    M.adjustBruteLoss(-1.5REM, 0)
-    M.adjustFireLoss(-1.5REM, 0)
-    M.adjustOxyLoss(-1.5REM, 0)
-    M.adjustToxLoss(-1.5REM, 0, TRUE) //heals TOXINLOVERs
+    M.adjustBruteLoss(-1.5*REM, 0)
+    M.adjustFireLoss(-1.5*REM, 0)
+    M.adjustOxyLoss(-1.5*REM, 0)
+    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
     . = 1
     ..()
 
 /datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
-    M.adjustToxLoss(0REM, 0)
-    M.adjustOxyLoss(2.6REM, 0)
-    M.adjustBruteLoss(3.5REM, 0)
-    M.adjustFireLoss(3.5REM, 0)
+    M.adjustToxLoss(0*REM, 0)
+    M.adjustOxyLoss(2.6*REM, 0)
+    M.adjustBruteLoss(3.5*REM, 0)
+    M.adjustFireLoss(3.5*REM, 0)
     ..()
     . = 1
 
