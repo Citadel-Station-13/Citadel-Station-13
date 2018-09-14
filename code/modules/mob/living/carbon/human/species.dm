@@ -1470,6 +1470,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
+	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 	switch(M.a_intent)
 		if("help")
 			help(M, H, attacker_style)
