@@ -56,14 +56,4 @@
 /datum/gear/dildo
 	name = "Customizable dildo"
 	category = SLOT_IN_BACKPACK
-<<<<<<< HEAD
 	path = /obj/item/dildo/custom
-=======
-	path = /obj/item/dildo/custom
-
-/datum/gear/tracking
-	name = "Tracking Implant"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/implanter/tracking
-	restricted_roles = list("Head of Security", "Captain", "Warden", "Detective", "Security Officer")
->>>>>>> be9d39f31dd805e220cd8d8b7bd34b27a0d776f3
