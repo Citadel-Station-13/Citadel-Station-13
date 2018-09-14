@@ -12,3 +12,4 @@
 	name = "Gas Mask"
 	category = SLOT_WEAR_MASK
 	path = /obj/item/clothing/mask/gas
+	restricted_roles = list("Chief Engineer", "Research Director", "Station Engineer", "Atmospheric Technician", "Scientist", "Roboticist")
