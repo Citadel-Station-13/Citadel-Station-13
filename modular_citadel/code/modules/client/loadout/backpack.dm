@@ -62,3 +62,4 @@
 	name = "Tracking Implant"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/implanter/tracking
+	restricted_roles = list("Head of Security", "Captain", "Warden", "Detective", "Security Officer")
