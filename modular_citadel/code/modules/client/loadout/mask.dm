@@ -7,8 +7,3 @@
 	name = "Fake moustache"
 	category = SLOT_WEAR_MASK
 	path = /obj/item/clothing/mask/fakemoustache
-
-/datum/gear/gas
-	name = "Gas Mask"
-	category = SLOT_WEAR_MASK
-	path = /obj/item/clothing/mask/gas

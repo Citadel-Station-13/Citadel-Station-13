@@ -57,8 +57,3 @@
 	name = "Customizable dildo"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/dildo/custom
-
-/datum/gear/tracking
-	name = "Tracking Implant"
-	category = SLOT_IN_BACKPACK
-	path = /obj/item/implanter/tracking
