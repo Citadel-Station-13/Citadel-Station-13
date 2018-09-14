@@ -117,6 +117,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -126,6 +129,9 @@ LOG_LAW
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
@@ -134,7 +140,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-LOG_PICTURES
+# LOG_PICTURES
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -153,9 +159,6 @@ ALLOW_ADMIN_OOCCOLOR
 
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
-
-## If metadata is supported
-ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
@@ -234,6 +237,17 @@ CHECK_RANDOMIZER
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
+## Round specific stats address
+## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
+## This will take priority over the game logs address during reboot.
+## Example: https://atlantaned.space/statbus/round.php?round=
+# ROUNDSTATSURL
+
+## Game Logs address
+## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
+# GAMELOGURL
+
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
 ##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
@@ -257,7 +271,7 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -366,10 +380,6 @@ AUTOADMIN_RANK Game Master
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
-
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.

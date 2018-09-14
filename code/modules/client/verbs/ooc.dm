@@ -50,7 +50,7 @@
 		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
 		return
 
-	mob.log_talk(raw_msg, LOG_OOC)
+	mob.log_talk(raw_msg, LOG_OOC, tag="(OOC)")
 
 	var/keyname = key
 	if(prefs.unlock_content)

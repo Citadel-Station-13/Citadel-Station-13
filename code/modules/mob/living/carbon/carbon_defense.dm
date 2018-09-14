@@ -271,20 +271,18 @@
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
 
 		else if(check_zone(M.zone_selected) == "head")
-			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
-			if(dna && dna.species && ("tail_lizard" in dna.species.mutant_bodyparts) && (dna.features["tail_lizard"])!= "None")
-				emote("wag") //lewd
-			else if(dna && dna.species && ("tail_human" in dna.species.mutant_bodyparts) && (dna.features["tail_human"])!= "None")
-				emote("wag")
-			else if(dna && dna.species && ("mam_tail" in dna.species.mutant_bodyparts) && (dna.features["mam_tail"])!= "None")
-				emote("wag")
+			var/mob/living/carbon/human/H = src
+			M.visible_message("<span class='notice'>[M] gives [H] a pat on the head to make [p_them()] feel better!</span>", \
+						"<span class='notice'>You give [H] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+			if(H.dna.species.can_wag_tail(H) && (H.dna.features["tail_human"]!= "None" || H.dna.features["tail_lizard"]!= "None" || H.dna.features["mam_tail"])!= "None")
+				H.emote("wag")
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)

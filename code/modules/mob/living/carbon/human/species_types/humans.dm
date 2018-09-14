@@ -29,7 +29,7 @@
 	return ("mam_waggingtail" in mutant_bodyparts)
 
 /datum/species/human/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if("mam_tail" in mutant_bodyparts)
 		mutant_bodyparts -= "mam_tail"
 		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
