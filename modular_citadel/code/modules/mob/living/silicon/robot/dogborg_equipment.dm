@@ -91,7 +91,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	flags_1 = CONDUCT_1
 	force = 0
 	throwforce = 0
-	attack_verb = list("nuzzled", "nosed", "booped")
+	attack_verb = list("nuzzles", "pushes", "boops")
 	w_class = 1
 
 /obj/item/analyzer/nose/attack_self(mob/user)
@@ -152,8 +152,10 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 
-/obj/item/analyzer/nose/attack(atom/target, mob/user)
+/obj/item/analyzer/nose/afterattack(atom/target, mob/user)
 	. = ..()
+	do_attack_animation(target, null, src)
+	user.visible_message("<span class='notice'>[user] [pick(attack_verb)] \the [target.name] with their nose!</span>")
 
 //Delivery
 /obj/item/storage/bag/borgdelivery
