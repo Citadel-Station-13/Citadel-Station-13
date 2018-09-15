@@ -188,7 +188,6 @@
 	shuttleId = "pirateship"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
-	shuttlePortName = "custom location"
 	x_offset = 9
 	y_offset = 0
 	see_hidden = FALSE

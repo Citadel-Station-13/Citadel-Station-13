@@ -92,6 +92,7 @@
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
+	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
