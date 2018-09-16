@@ -398,8 +398,12 @@
 			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 			if(!W.use_tool(src, user, 50))
 				return
-
-		adjustBruteLoss(-30)
+			adjustBruteLoss(-10)
+		else
+			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+			if(!do_after(user, 30, target = src))
+				return
+			adjustBruteLoss(-30)
 		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
@@ -409,11 +413,16 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user)
+			if(src == user && coil.use(1))
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
+				adjustFireLoss(-10)
+				adjustToxLoss(-10)
 			if (coil.use(1))
+				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+				if(!do_after(user, 30, target = src))
+					return
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
