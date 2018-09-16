@@ -10,6 +10,7 @@
 	var/openpanel = 0					// Is the vore panel open?
 	var/noisy = FALSE					// tummies are rumbly?
 	var/absorbed = FALSE				//are we absorbed?
+	var/next_preyloop
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -24,7 +25,7 @@
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	spawn(20 SECONDS) // long delay because the server delays in its startup. just on the safe side.
+	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
 		M.init_vore()
 
 	//Return 1 to hook-caller
@@ -138,10 +139,6 @@
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
-/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
-	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
-	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
-
 		// Prepare messages
 	if(user == pred) //Feeding someone to yourself
 		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
@@ -194,19 +191,19 @@
 
 	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
 		return FALSE
-		
+
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-		
+
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
 		return FALSE
-		
+
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))

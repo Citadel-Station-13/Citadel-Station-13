@@ -18,7 +18,7 @@
 
 // Release belly contents beforey being gc'd!
 /mob/living/simple_animal/Destroy()
-	release_vore_contents()
+	release_vore_contents(silent = TRUE)
 	prey_excludes.Cut()
 	. = ..()
 
@@ -54,7 +54,7 @@
 */
 
 /mob/living/simple_animal/death()
-	release_vore_contents()
+	release_vore_contents(silent = TRUE)
 	. = ..()
 
 // Simple animals have only one belly.  This creates it (if it isn't already set up)

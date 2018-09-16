@@ -32,7 +32,7 @@
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 	var/silent = FALSE
 
-	var/transferlocation = null	// Location that the prey is released if they struggle and get dropped off.
+	var/transferlocation = null				// Location that the prey is released if they struggle and get dropped off.
 	var/transferchance = 0 					// % Chance of prey being transferred to transfer location when resisting
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
@@ -193,8 +193,9 @@
 	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
 		if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
 			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+	if(!silent)
+		owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	items_preserved.Cut()
-	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
 
 	return count
@@ -228,8 +229,8 @@
 					if(P.absorbed)
 						absorbed_count++
 				Pred.reagents.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
-
-	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
+	if(!silent)
+		owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
 	return TRUE
 
@@ -237,50 +238,48 @@
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
 /obj/belly/proc/nom_mob(var/mob/prey, var/mob/user)
-	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 	if(owner.stat == DEAD)
 		return
 	if (prey.buckled)
 		prey.buckled.unbuckle_mob(prey,TRUE)
 
 	prey.forceMove(src)
-	prey.playsound_local(loc,preyloop,70,0, channel = CHANNEL_PREYLOOP)
+	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+	if(!silent)
+		prey.playsound_local(loc,preyloop,70,0, channel = CHANNEL_PREYLOOP)
 	owner.updateVRPanel()
 
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()
 		M.become_blind("belly_[REF(src)]")
 
-
-
 	// Setup the autotransfer checks if needed
-	if(transferlocation && autotransferchance > 0)
+	if(transferlocation != null && autotransferchance > 0)
 		addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
 
-/obj/belly/proc/check_autotransfer(var/mob/prey)
+/obj/belly/proc/check_autotransfer(var/mob/prey, var/obj/belly/target)
 	// Some sanity checks
 	if(transferlocation && (autotransferchance > 0) && (prey in contents))
 		if(prob(autotransferchance))
-			// Double check transferlocation isn't insane
-			if(verify_transferlocation())
-				transfer_contents(prey, transferlocation)
+			transfer_contents(prey, transferlocation)
 		else
 			// Didn't transfer, so wait before retrying
 			addtimer(CALLBACK(src, /obj/belly/.proc/check_autotransfer, prey), autotransferwait)
 
-/obj/belly/proc/verify_transferlocation()
-	for(var/I in owner.vore_organs)
-		var/obj/belly/B = owner.vore_organs[I]
-		if(B == transferlocation)
-			return TRUE
-
-	for(var/I in owner.vore_organs)
-		var/obj/belly/B = owner.vore_organs[I]
-		if(B == transferlocation)
-			transferlocation = B
-			return TRUE
-	return FALSE
-
+//Transfers contents from one belly to another
+/obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
+	if(!(content in src) || !istype(target))
+		return
+	for(var/mob/living/M in contents)
+		M.cure_blind("belly_[REF(src)]")
+	target.nom_mob(content, target.owner)
+	if(!silent)
+		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
+				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+	owner.updateVRPanel()
+	for(var/mob/living/M in contents)
+		M.updateVRPanel()
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
@@ -386,20 +385,9 @@
 		if(!M.dropItemToGround(W))
 			qdel(W)
 
-/*	//Reagent transfer //maybe someday
-	if(ishuman(owner))
-		var/mob/living/carbon/human/Pred = owner
-		if(ishuman(M))
-			var/mob/living/carbon/human/Prey = M
-			Prey.bloodstr.del_reagent("numbenzyme")
-			Prey.bloodstr.trans_to_holder(Pred.bloodstr, Prey.bloodstr.total_volume, 0.5, TRUE) // Copy=TRUE because we're deleted anyway
-			Prey.ingested.trans_to_holder(Pred.bloodstr, Prey.ingested.total_volume, 0.5, TRUE) // Therefore don't bother spending cpu
-			Prey.touching.trans_to_holder(Pred.bloodstr, Prey.touching.total_volume, 0.5, TRUE) // On updating the prey's reagents
-		else if(M.reagents)
-			M.reagents.trans_to_holder(Pred.bloodstr, M.reagents.total_volume, 0.5, TRUE) */
-
 	// Delete the digested mob
 	qdel(M)
+	M.stop_sound_channel(CHANNEL_PREYLOOP)
 	//Update owner
 	owner.updateVRPanel()
 
@@ -409,19 +397,6 @@
 	to_chat(M,"<span class='notice'>[owner]'s [lowertext(name)] absorbs your body, making you part of them.</span>")
 	to_chat(owner,"<span class='notice'>Your [lowertext(name)] absorbs [M]'s body, making them part of you.</span>")
 
-// Reagent sharing is neat, but eh. I'll figure it out later
-/*	if(ishuman(M) && ishuman(owner))
-		var/mob/living/carbon/human/Prey = M
-		var/mob/living/carbon/human/Pred = owner
-		//Reagent sharing for absorbed with pred - Copy so both pred and prey have these reagents.
-		Prey.bloodstr.trans_to_holder(Pred.bloodstr, Prey.bloodstr.total_volume, copy = TRUE)
-		Prey.ingested.trans_to_holder(Pred.bloodstr, Prey.ingested.total_volume, copy = TRUE)
-		Prey.touching.trans_to_holder(Pred.bloodstr, Prey.touching.total_volume, copy = TRUE)
-		// TODO - Find a way to make the absorbed prey share the effects with the pred.
-		// Currently this is infeasible because reagent containers are designed to have a single my_atom, and we get
-		// problems when A absorbs B, and then C absorbs A,  resulting in B holding onto an invalid reagent container.
-*/
-	//This is probably already the case, but for sub-prey, it won't be.
 	if(M.loc != src)
 		M.forceMove(src)
 
@@ -506,17 +481,17 @@
 			to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
 			to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
 			return
-	else //failsafe to make sure people are able to struggle out. friendly ERP should be on help intent.
+	else if(R.a_intent != INTENT_HELP) //failsafe to make sure people are able to struggle out. friendly ERP should be on help intent.
 		to_chat(R,"<span class='warning'>You attempt to climb out of [lowertext(name)]. (This will take around [escapetime] seconds.)</span>")
 		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
 		if(!do_mob(R,owner,escapetime))
 			return
 		release_specific_contents(R)
 		return
-
-	for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
-		M.show_message(struggle_outer_message, 1) // visible
-	to_chat(R,struggle_user_message)
+	else if (R.a_intent == INTENT_HELP)
+		for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
+			M.show_message(struggle_outer_message, 1) // visible
+		to_chat(R,struggle_user_message)
 
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
@@ -572,20 +547,19 @@
 		to_chat(owner,"<span class='warning'>Your prey appears to be unable to make any progress in escaping your [lowertext(name)].</span>")
 		return
 
-//Transfers contents from one belly to another
-/obj/belly/proc/transfer_contents(var/atom/movable/content, var/obj/belly/target, silent = FALSE)
-	if(!(content in src) || !istype(target))
-		return
-	for(var/mob/living/M in contents)
-		M.cure_blind("belly_[REF(src)]")
-	target.nom_mob(content, target.owner)
-	if(!silent)
-		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
-			if(M.client && M.client.prefs.cit_toggles & EATING_NOISES)
-				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
-	owner.updateVRPanel()
-	for(var/mob/living/M in contents)
-		M.updateVRPanel()
+/obj/belly/proc/get_mobs_and_objs_in_belly()
+	var/list/see = list()
+	var/list/belly_mobs = list()
+	see["mobs"] = belly_mobs
+	var/list/belly_objs = list()
+	see["objs"] = belly_objs
+	for(var/mob/living/L in loc.contents)
+		belly_mobs |= L
+	for(var/obj/O in loc.contents)
+		belly_objs |= O
+
+	return see
+
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes AND KEPT IN ORDER OF THE VARS ABOVE AS WELL!
