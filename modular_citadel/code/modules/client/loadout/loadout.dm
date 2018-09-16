@@ -33,7 +33,13 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 		if(!GLOB.loadout_items[slot_to_string(I.category)])
 			LAZYINITLIST(GLOB.loadout_items[slot_to_string(I.category)])
 		LAZYSET(GLOB.loadout_items[slot_to_string(I.category)], I.name, I)
-		if(I.geargroupID in GLOB.loadout_whitelist_ids)
+		if(islist(I.geargroupID))
+			var/list/ggidlist = I.geargroupID
+			I.ckeywhitelist = list()
+			for(var/entry in ggidlist)
+				if(entry in GLOB.loadout_whitelist_ids)
+					I.ckeywhitelist |= GLOB.loadout_whitelist_ids["[entry]"]
+		else if(I.geargroupID in GLOB.loadout_whitelist_ids)
 			I.ckeywhitelist = GLOB.loadout_whitelist_ids["[I.geargroupID]"]
 
 

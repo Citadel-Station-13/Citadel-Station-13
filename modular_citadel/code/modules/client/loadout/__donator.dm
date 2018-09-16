@@ -10,7 +10,7 @@
 	name = "Donor item testing bikehorn"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bikehorn
-	geargroupID = "DONORTEST"
+	geargroupID = list("DONORTEST") //This is a list mainly for the sake of testing, but geargroupID works just fine with ordinary strings
 
 /datum/gear/kevhorn
 	name = "Airhorn"
