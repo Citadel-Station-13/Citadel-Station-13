@@ -2427,7 +2427,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
 "fo" = (
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/item/tank/jetpack/oxygen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage/power)
