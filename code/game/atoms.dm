@@ -74,6 +74,9 @@
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
+	if (canSmoothWith)
+		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+
 	ComponentInitialize()
 
 	return INITIALIZE_HINT_NORMAL
@@ -694,9 +697,10 @@ Proc for attack log creation, because really why not
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
-
+		
 /atom/movable/proc/remove_filter(name)
 	if(filter_data[name])
 		filter_data -= name
 		update_filters()
 		return TRUE
+		

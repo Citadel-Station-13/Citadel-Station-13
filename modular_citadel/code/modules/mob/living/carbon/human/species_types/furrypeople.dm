@@ -52,6 +52,7 @@
 /datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
 	. = ..()
+
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
