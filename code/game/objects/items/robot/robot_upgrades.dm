@@ -79,7 +79,9 @@
 			to_chat(user, "<span class='notice'>There's no room for another VTEC unit!</span>")
 			return FALSE
 
-		R.speed = -2 // Gotta go fast.
+		//R.speed = -2 // Gotta go fast.
+		 //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
+		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
