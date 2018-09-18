@@ -617,7 +617,7 @@
 			resist_fire() //stop, drop, and roll
 		else if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
-		else if(istype(src, /mob/living/carbon))
+		else if(iscarbon(src)) //Citadel Change for embedded removal memes
 			var/mob/living/carbon/C = src
 			if(!C.handcuffed && !C.legcuffed)
 				return TRUE

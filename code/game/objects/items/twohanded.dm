@@ -485,6 +485,8 @@
 		return
 	. = ..()
 
+//Citadel additions : attack_self and rightclick_attack_self
+
 /obj/item/twohanded/rightclick_attack_self(mob/user)
 	if(wielded) //Trying to unwield it
 		unwield(user)
@@ -494,12 +496,10 @@
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive)
+	if(explosive) //Citadel Edit removes qdel and explosive.forcemove(AM)
 		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(user)
 		explosive.prime()
 		user.gib()
-		qdel(src)
 		return BRUTELOSS
 	return BRUTELOSS
 
@@ -524,13 +524,11 @@
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
-	if(explosive && wielded)
+	if(explosive && wielded) //Citadel edit removes qdel and explosive.forcemove(AM)
 		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(AM)
 		explosive.prime()
-		qdel(src)
 
-/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade)
+/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade) //Citadel edit, removes throw_impact because memes
 	nade.forceMove(get_turf(src))
 	qdel(src)
 

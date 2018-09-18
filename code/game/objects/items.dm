@@ -112,10 +112,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/Initialize()
 
 	materials =	typelist("materials", materials)
-	
+
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
-		
+
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
@@ -799,6 +799,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (item_flags & NODROP)
 		return
 	return ..()
-
-/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
-	return
