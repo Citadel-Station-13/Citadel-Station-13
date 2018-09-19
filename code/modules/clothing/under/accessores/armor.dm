@@ -5,15 +5,8 @@
 	item_state = "armor"
 	armor = list("melee" = 10, "bullet" = 15, "laser" = 15,"energy" = 5, "bomb" = 15, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 20)
 
-/obj/item/clothing/accessory/talisman
-	name = "bone talisman"
-	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
-	icon_state = "talisman"
-	item_color = "talisman"
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
-
 /obj/item/clothing/accessory/bio_vest
-	name = "Biohazard resistant vest.."
+	name = "Biohazard resistant vest."
 	desc = "Biohazard resistant vest that is easily attached to a jumpsuit."
 	icon_state = "armor"
 	item_state = "armor"
