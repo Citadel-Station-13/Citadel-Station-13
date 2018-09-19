@@ -8,7 +8,7 @@
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-
+	msg = emoji_parse(msg)
 	mob.log_talk(msg, LOG_ASAY)
 
 	msg = keywords_lookup(msg)

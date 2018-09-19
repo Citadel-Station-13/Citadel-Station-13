@@ -75,6 +75,7 @@
 		K = src.key
 
 	var/spanned = src.say_quote(message, get_spans())
+	message = emoji_parse(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
