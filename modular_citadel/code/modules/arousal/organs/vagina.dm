@@ -64,9 +64,3 @@
 		if(linked_organ)
 			linked_organ.linked_organ = null
 		linked_organ = null
-
-/obj/item/organ/genital/vagina/is_exposed()
-	. = ..()
-	if(.)
-		return TRUE
-	return owner.is_groin_exposed()
