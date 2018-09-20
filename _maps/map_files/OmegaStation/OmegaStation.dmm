@@ -20486,15 +20486,9 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/mousetraps,
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/requests_console{
 	department = "Custodial Closet";
@@ -31360,7 +31354,6 @@
 "bdH" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -42329,7 +42322,6 @@
 "sOw" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 8
 	},
 /turf/open/floor/plating,

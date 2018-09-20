@@ -37966,9 +37966,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
-	icon_state = "wood"
-	},
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "buP" = (
 /obj/machinery/computer/slot_machine{
@@ -39025,10 +39023,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bwQ" = (
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/structure/disposalpipe/trunk{

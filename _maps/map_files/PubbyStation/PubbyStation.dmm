@@ -3466,9 +3466,8 @@
 "akb" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/plaques/atmos{
+/obj/structure/sign/plaques/kiddie{
 	desc = "An embossed piece of paper from the University of Nanotrasen at Portpoint.";
-	icon_state = "kiddieplaque";
 	name = "\improper 'Diploma' frame";
 	pixel_y = 32
 	},
@@ -4701,7 +4700,6 @@
 /area/crew_quarters/heads/hos)
 "amA" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
@@ -4719,7 +4717,6 @@
 /area/space/nearstation)
 "amD" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
@@ -6900,7 +6897,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -8623,10 +8619,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+//obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -10078,10 +10071,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -11539,10 +11529,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -12266,7 +12253,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 8
 	},
 /area/crew_quarters/dorms)
@@ -15252,7 +15238,6 @@
 	icon_state = "plant-04"
 	},
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -20433,10 +20418,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aWM" = (
 /obj/machinery/washing_machine,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -33772,7 +33754,6 @@
 /area/science/xenobiology)
 "bAI" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -37097,7 +37078,6 @@
 /area/medical/virology)
 "bGV" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /obj/item/radio/intercom{
@@ -38736,7 +38716,6 @@
 /area/maintenance/department/engine)
 "bKm" = (
 /obj/structure/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -40179,7 +40158,6 @@
 /area/chapel/dock)
 "bNx" = (
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -41206,8 +41184,7 @@
 /area/chapel/asteroid/monastery)
 "bQe" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /turf/open/floor/plating/asteroid,
 /area/chapel/asteroid/monastery)
@@ -46689,8 +46666,7 @@
 /area/chapel/main/monastery)
 "ccL" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
@@ -47975,10 +47951,7 @@
 /area/chapel/main/monastery)
 "cgM" = (
 /obj/structure/dresser,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
@@ -49065,8 +49038,7 @@
 /area/library)
 "clj" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
@@ -52786,7 +52758,6 @@
 "czC" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern{
-	on = 1;
 	icon_state = "lantern-on";
 	pixel_y = 8
 	},
@@ -55891,10 +55862,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "jsD" = (
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -59394,10 +59362,7 @@
 /area/maintenance/department/security/brig)
 "syQ" = (
 /obj/machinery/vending/games,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /turf/open/floor/plating{
@@ -61370,9 +61335,8 @@
 /area/science/mixing)
 "xJy" = (
 /obj/structure/chair/comfy/black,
-/obj/structure/sign/plaques/atmos{
+/obj/structure/sign/plaques/kiddie{
 	desc = "An embossed piece of paper from the Third University of Harvard.";
-	icon_state = "kiddieplaque";
 	name = "\improper 'Diploma' frame";
 	pixel_y = 32
 	},
