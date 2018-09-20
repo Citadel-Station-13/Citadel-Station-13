@@ -30,7 +30,7 @@
 	return ("mam_waggingtail" in mutant_bodyparts)
 
 /datum/species/mammal/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if("mam_tail" in mutant_bodyparts)
 		mutant_bodyparts -= "mam_tail"
 		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
@@ -85,7 +85,7 @@
 	return ("mam_waggingtail" in mutant_bodyparts)
 
 /datum/species/avian/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if("mam_tail" in mutant_bodyparts)
 		mutant_bodyparts -= "mam_tail"
 		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
@@ -115,7 +115,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "Shark", "mam_ears" = "None")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "Shark", "mam_body_markings" = "Shark", "mam_ears" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -139,7 +139,7 @@
 	return ("mam_waggingtail" in mutant_bodyparts)
 
 /datum/species/aquatic/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if("mam_tail" in mutant_bodyparts)
 		mutant_bodyparts -= "mam_tail"
 		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
@@ -169,7 +169,7 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur", "moth_wings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None", "moth_wings" = "Plain")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "<oth", "mam_tail" = "None", "mam_ears" = "None", "moth_wings" = "Plain")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -192,7 +192,7 @@
 	return ("mam_waggingtail" in mutant_bodyparts)
 
 /datum/species/insect/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if("mam_tail" in mutant_bodyparts)
 		mutant_bodyparts -= "mam_tail"
 		mutant_bodyparts |= "mam_waggingtail"
 	H.update_body()
@@ -234,12 +234,20 @@
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
 
-/datum/species/xeno/on_species_gain(mob/living/carbon/human/C)
+/datum/species/xeno/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
-/datum/species/xeno/on_species_loss(mob/living/carbon/human/C)
+/datum/species/xeno/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 //Praise the Omnissiah, A challange worthy of my skills - HS

@@ -82,16 +82,24 @@
 		var/mob/living/L = target
 		if(L.stat != DEAD)
 			if(vore_active == TRUE && L.devourable == TRUE)
-				dragon_feeding(src,L)
+				if(L.Adjacent(targets_from))
+					dragon_feeding(src,L)
+				else if(!client && ranged && ranged_cooldown <= world.time)
+					OpenFire()
 				if(L.loc == src.contents)
-					L = null
+					LoseTarget()
+					return 0
+
 			else if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 		else if(L.stat >= SOFT_CRIT)
 			if(vore_active == TRUE && L.devourable == TRUE)
-				dragon_feeding(src,L)
+				if(L.Adjacent(targets_from))
+					dragon_feeding(src,L)
+
 				if(L.loc == src.contents)
-					L = null
+					LoseTarget()
+					return 0
 			else
 				devour(L)
 

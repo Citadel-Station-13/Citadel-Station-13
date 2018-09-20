@@ -11,7 +11,8 @@
 	death = TRUE
 	name = "alien drone"
 	mob_name = "alien drone"
- /obj/effect/mob_spawn/alien/corpse/humanoid/queen
+
+/obj/effect/mob_spawn/alien/corpse/humanoid/queen
 	mob_type = /mob/living/carbon/alien/humanoid/royal/queen
 	death = TRUE
 	name = "alien queen"
