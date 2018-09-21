@@ -141,6 +141,11 @@
 	path = /obj/item/clothing/under/polychromic/shortpants
 	cost = 2
 
+/datum/gear/nudeharness
+	name = "Simple Harness"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/nudeharness
+
 // Trekie things
 //TOS
 /datum/gear/trekcmdtos

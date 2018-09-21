@@ -31,7 +31,7 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
 	item_state = "r_suit"
 	can_adjust = FALSE
-	
+
 /obj/item/clothing/under/rank/captain/femformal
 	name ="captain's female formal outfit"
 	desc = ""
@@ -43,3 +43,13 @@
 	can_adjust = FALSE
 	sensor_mode = SENSOR_COORDS  //it's still a captain's suit nerd
 	random_sensor = FALSE
+
+/obj/item/clothing/under/nudeharness
+	name = "simple harness"
+	desc = "A simple equipment harness with an ID slot, pockets, and a belt clip. Not included is modesty."
+	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
+	icon_state = "nudeharness"
+	icon_override = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
+	item_state = "nudeharness"
+	can_adjust = FALSE
+	body_parts_covered = 0
