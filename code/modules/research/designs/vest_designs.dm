@@ -100,7 +100,7 @@
 	departmental_flags =  DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/power_vest
-	name = "Engery protection padding"
+	name = "Energy protection padding"
 	desc = "Padding used on suits to try to prevent shocks form being as lethal."
 	id = "power_vest"
 	build_type = PROTOLATHE
