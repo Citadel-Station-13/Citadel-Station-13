@@ -31461,9 +31461,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkpurplecorners"
-	},
+/turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bvP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -32794,9 +32792,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purple"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "byK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -32976,9 +32972,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkpurplecorners"
-	},
+/turf/open/floor/plasteel/dark,
 /area/science/explab)
 "byZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -35276,9 +35270,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bDB" = (
 /obj/machinery/airalarm/unlocked{
@@ -36012,9 +36004,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bER" = (
 /obj/machinery/computer/mecha{
@@ -53512,9 +53502,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "dir" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -53877,9 +53865,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eeQ" = (
 /obj/machinery/door/firedoor,
@@ -55451,9 +55437,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purple"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "ioj" = (
 /obj/effect/turf_decal/stripes/line{
@@ -56492,9 +56476,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "lcU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -56573,9 +56555,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "lzJ" = (
 /obj/structure/closet/crate/bin,
@@ -56869,9 +56849,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "mjn" = (
 /obj/machinery/jukebox,
@@ -60050,9 +60028,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purplecorner"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "uzn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
