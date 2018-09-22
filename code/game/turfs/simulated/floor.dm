@@ -22,7 +22,10 @@
 	tiled_dirt = TRUE
 
 /turf/open/floor/Initialize(mapload)
-	broken_states = typelist("broken_states", broken_states)
+	if (!broken_states)
+		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	else
+		broken_states = typelist("broken_states", broken_states)
 	burnt_states = typelist("burnt_states", burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
