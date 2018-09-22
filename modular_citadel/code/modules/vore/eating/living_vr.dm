@@ -133,7 +133,11 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return
+		return FALSE
+
+	if(istype(pred, /mob/living/simple_animal/hostile/megafauna/dragon))
+		if(isliving(prey) && !prey.Adjacent(pred))
+			return FALSE
 
 	// The belly selected at the time of noms
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
@@ -143,6 +147,9 @@
 	if(user == pred) //Feeding someone to yourself
 		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
+
+	if(!prey.Adjacent(user)) // let's doublecheck for sanity's sake.
+		return FALSE
 
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
@@ -161,6 +168,7 @@
 		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
 		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
 	return TRUE
+
 //
 // Master vore proc that actually does vore procedures
 //
@@ -169,17 +177,15 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return
+		return FALSE
+
 	if (!prey.devourable)
 		to_chat(user, "This can't be eaten!")
-		return
+		return FALSE
+
 	// The belly selected at the time of noms
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
-
-/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
-	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
-	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
 
 	// Prepare messages
 	if(user == pred) //Feeding someone to yourself
@@ -212,7 +218,6 @@
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
-//	user.update_icons()
 	stop_pulling()
 
 	// Flavor handling

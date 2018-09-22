@@ -25,7 +25,7 @@
 	desc = "The maw of the dreaded Ash drake closes around you, engulfing you into a swelteringly hot, disgusting enviroment. The acidic saliva tingles over your form while that tongue pushes you further back...towards the dark gullet beyond."
 	vore_verb = "scoop"
 	vore_sound = "Stomach Move"
-	swallow_time = 20
+	swallow_time = 60
 	escapechance = 25
 	// From above, will transfer into gullet
 	transferchance = 25
