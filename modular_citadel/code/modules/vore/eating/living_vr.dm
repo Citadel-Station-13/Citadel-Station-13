@@ -1,6 +1,6 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/digestable = TRUE					// Can the mob be digested inside a belly?
+	var/digestable = FALSE					// Can the mob be digested inside a belly?
 	var/obj/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
