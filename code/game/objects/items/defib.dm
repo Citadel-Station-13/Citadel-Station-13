@@ -537,7 +537,7 @@
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
-	if(do_after(user, 30, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, 30 - defib.primetime, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 		var/tplus = world.time - H.timeofdeath
@@ -545,10 +545,10 @@
 		// (in deciseconds)
 		// brain damage starts setting in on the patient after
 		// some time left rotting
-		var/tloss = DEFIB_TIME_LOSS * 10
+		var/tloss = DEFIB_TIME_LOSS * defib.timedeath
 		var/total_burn	= 0
 		var/total_brute	= 0
-		if(do_after(user, 20, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, 20 - defib.primetime, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
 				if(istype(carried_item, /obj/item/clothing/suit/space))
 					if((!combat && !req_defib) || (req_defib && !defib.combat))
@@ -607,6 +607,8 @@
 					H.Jitter(100)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
+					if(defib.healdisk)
+						H.heal_overall_damage(25, 25)
 					add_logs(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)

@@ -34,3 +34,12 @@
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns form traitors or space.
 	export_price = 7000
+
+/datum/techweb_node/adv_defibrillator_tec
+	id = "adv_defibrillator_tec"
+	display_name = "Adv Defibrillator tec"
+	description = "More ways to bring back the freshly dead."
+	prereq_ids = list("adv_biotech", "exp_surgery", "adv_engi", "adv_power")
+	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 5000
