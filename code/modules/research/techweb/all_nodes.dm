@@ -844,7 +844,7 @@
 	id = "nanite_base"
 	display_name = "Basic Nanite Programming"
 	description = "The basics of nanite construction and programming."
-	prereq_ids = list("datatheory","robotics")
+	prereq_ids = list("datatheory","robotics","high_efficiency", "emp_adv", "adv_biotech")
 	design_ids = list("nanite_disk","nanite_remote","nanite_scanner",\
 						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
 						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_nanite_volume", "repeater_nanites", "relay_repeater_nanites")
@@ -855,7 +855,7 @@
 	id = "nanite_smart"
 	display_name = "Smart Nanite Programming"
 	description = "Nanite programs that require nanites to perform complex actions, act independently, roam or seek targets."
-	prereq_ids = list("nanite_base","adv_robotics")
+	prereq_ids = list("nanite_base","adv_robotics", "adv_datatheory")
 	design_ids = list("purging_nanites", "metabolic_nanites", "stealth_nanites", "memleak_nanites","sensor_voice_nanites", "voice_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 4000
@@ -873,7 +873,7 @@
 	id = "nanite_bio"
 	display_name = "Biological Nanite Programming"
 	description = "Nanite programs that require complex biological interaction."
-	prereq_ids = list("nanite_base","biotech")
+	prereq_ids = list("nanite_base","adv_datatheory", "adv_surgery")
 	design_ids = list("regenerative_nanites", "bloodheal_nanites", "coagulating_nanites","poison_nanites","flesheating_nanites",\
 					"sensor_crit_nanites","sensor_death_nanites", "sensor_health_nanites", "sensor_damage_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
