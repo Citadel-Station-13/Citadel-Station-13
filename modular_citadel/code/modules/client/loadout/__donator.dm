@@ -12,6 +12,24 @@
 	path = /obj/item/bikehorn
 	geargroupID = list("DONORTEST") //This is a list mainly for the sake of testing, but geargroupID works just fine with ordinary strings
 
+/datum/gear/hat1
+	name = "Sombrero"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/head/sombrero
+	ckeywhitelist = list("T1")
+
+/datum/gear/hat2
+	name = "Jester Hat"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/head/jester
+	ckeywhitelist = list("T1")
+
+/datum/gear/hat3
+	name = "Rice Hat"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/head/rice_hat
+	ckeywhitelist = list("T1")
+
 /datum/gear/kevhorn
 	name = "Airhorn"
 	category = SLOT_IN_BACKPACK
