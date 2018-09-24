@@ -53,6 +53,9 @@
 	if (!mat_container)
 		return
 
+	if(istype(O, /obj/item/stack/ore/bluespace_crystal/refined))
+		return
+
 	ore_buffer -= O
 
 	if(O && O.refined_type)
@@ -179,6 +182,11 @@
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
+
+	if(istype(W, /obj/item/stack/ore/bluespace_crystal/refined))
+		to_chat(user, "<span class='notice'>[W] has already been refined!</span>")
+		return
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
