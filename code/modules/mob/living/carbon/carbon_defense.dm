@@ -276,7 +276,8 @@
 						"<span class='notice'>You give [H] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			if(H.dna.species.can_wag_tail(H) && (H.dna.features["tail_human"]!= "None" || H.dna.features["tail_lizard"]!= "None" || H.dna.features["mam_tail"])!= "None")
-				H.emote("wag")
+				if(!H.dna.species.is_wagging_tail())
+					H.emote("wag")
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
