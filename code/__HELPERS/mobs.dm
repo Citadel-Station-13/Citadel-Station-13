@@ -85,6 +85,13 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
 	if(!GLOB.ipc_antennas_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/antenna, GLOB.ipc_antennas_list)
+	if(!GLOB.mam_body_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
+	if(!GLOB.mam_tails_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
+	if(!GLOB.mam_ears_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
 	/*	if(H.gender == MALE) Fuck if I know how to fix this.
@@ -106,7 +113,7 @@
 		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"tail_lizard" = pick(GLOB.tails_list_lizard),
-		"tail_human" = pick(GLOB.tails_list_human),
+		"tail_human" = "None",
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
 		"horns" = pick(GLOB.horns_list),
@@ -118,10 +125,9 @@
 		"caps" = pick(GLOB.caps_list),
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
-		"mam_body_markings" = "None",
-		"mam_ears" 			= "None",
+		"mam_body_markings" = pick(GLOB.mam_body_markings_list),
+		"mam_ears" 			= pick(GLOB.mam_ears_list),
 		"mam_tail"			= pick(GLOB.mam_tails_list),
-		"mam_tail" 			= "None",
 		"mam_tail_animated" = "None",
 		"xenodorsal" 		= "Standard",
 		"xenohead" 			= "Standard",

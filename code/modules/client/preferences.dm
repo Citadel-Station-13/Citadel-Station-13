@@ -1475,7 +1475,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("tail_human")
-					var/list/snowflake_tails_list = list("Normal" = null)
+					var/list/snowflake_tails_list = list("None" = null)
 					for(var/path in GLOB.tails_list_human)
 						var/datum/sprite_accessory/tails/human/instance = GLOB.tails_list_human[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1492,7 +1492,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("mam_tail")
-					var/list/snowflake_tails_list = list("Normal" = null)
+					var/list/snowflake_tails_list = list("None" = null)
 					for(var/path in GLOB.mam_tails_list)
 						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
 						if(istype(instance, /datum/sprite_accessory))

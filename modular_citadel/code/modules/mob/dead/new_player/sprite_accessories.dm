@@ -426,6 +426,7 @@
 
 /datum/sprite_accessory/mam_tails
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
+	
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 
