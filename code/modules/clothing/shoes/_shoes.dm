@@ -15,6 +15,10 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+	//CITADEL EDIT Enables digitigrade shoe styles
+	adjusted = NORMAL_STYLE
+	alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
+
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
@@ -59,6 +63,11 @@
 		worn_y_dimension -= (offset * 2)
 		user.update_inv_shoes()
 		equipped_before_drop = TRUE
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.species_traits)
+			adjusted = DIGITIGRADE_STYLE
+		H.update_inv_shoes()
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
