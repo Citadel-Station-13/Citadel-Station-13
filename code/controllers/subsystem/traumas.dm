@@ -32,10 +32,10 @@ SUBSYSTEM_DEF(traumas)
 						"strangers"	= strings(PHOBIA_FILE, "strangers"),
 						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
 						"birds" = strings(PHOBIA_FILE, "birds"),
-						"anime" = strings(PHOBIA_FILE, "anime")
-						"falling" = strings(PHOBIA_FILE, "falling")
-						"mimes" = strings(PHOBIA_FILE, "mimes"),
-					   )
+						"falling" = strings(PHOBIA_FILE, "falling"),
+						"anime" = strings(PHOBIA_FILE, "anime"),
+						"mimes" = strings(PHOBIA_FILE, "mimes")
+            )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
 					   "security" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209)),
@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/owl, /obj/item/clothing/mask/gas/owl_mask,
 						/obj/item/clothing/under/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
 						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom)),
-					
+				
 					"anime" = typecacheof(list(/obj/item/clothing/under/schoolgirl, /obj/item/katana, /obj/item/reagent_containers/food/snacks/sashimi, /obj/item/reagent_containers/food/snacks/chawanmushi,
 					   /obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
 					   /obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/twohanded/vibro_weapon,
@@ -162,14 +162,15 @@ SUBSYSTEM_DEF(traumas)
 						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
 						)
 
-	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
+	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
 						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
-						  "robots"   = typecacheof(list(/datum/species/android)),
+						  "robots" = typecacheof(list(/datum/species/android)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
-						  /datum/species/shadow))
-						 )
+						  /datum/species/shadow)),
+						  "anime" = typecacheof(list(/datum/species/human/felinid))
+						 )				 
 
 	return ..()
 

@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/cmd_admin_headset_message,	/*send an message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
+	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
 	/client/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
@@ -71,7 +72,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/panicbunker,
 	/client/proc/stop_sounds,
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
-	/client/proc/hide_most_verbs		/*hides all our hideable adminverbs*/
+	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
+	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -161,6 +163,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/pump_random_event,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
+	/client/proc/reload_configuration,
 	/datum/admins/proc/create_or_modify_area,
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -457,7 +460,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce? WARNING: These ignore the maxcap") as null|anything in choices
+	var/choice = input("What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap") as null|anything in choices
 	var/turf/epicenter = mob.loc
 
 	switch(choice)

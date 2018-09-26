@@ -26,9 +26,17 @@
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/camera/aiEye/eye)
+/datum/camerachunk/proc/remove(mob/camera/aiEye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
+	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
+		var/client/client = eye.GetViewerClient()
+		if(client)
+			switch(eye.use_static)
+				if(USE_STATIC_TRANSPARENT)
+					client.images -= GLOB.cameranet.obscured_transparent
+				if(USE_STATIC_OPAQUE)
+					client.images -= GLOB.cameranet.obscured
 
 // Called when a chunk has changed. I.E: A wall was deleted.
 
@@ -81,12 +89,12 @@
 
 	for(var/turf in visAdded)
 		var/turf/t = turf
-		t.vis_contents -= GLOB.cameranet.vis_contents
+		t.vis_contents -= GLOB.cameranet.vis_contents_objects
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
 		if(obscuredTurfs[t] && !istype(t, /turf/open/ai_visible))
-			t.vis_contents += GLOB.cameranet.vis_contents
+			t.vis_contents += GLOB.cameranet.vis_contents_objects
 
 	changed = 0
 
@@ -128,7 +136,7 @@
 
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
-		t.vis_contents += GLOB.cameranet.vis_contents
+		t.vis_contents += GLOB.cameranet.vis_contents_objects
 
 #undef UPDATE_BUFFER
 #undef CHUNK_SIZE

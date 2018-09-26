@@ -79,7 +79,7 @@
 		new /obj/structure/grille/ratvar(src.loc)
 	qdel(src)
 
-/obj/structure/grille/CollidedWith(atom/movable/AM)
+/obj/structure/grille/Bumped(atom/movable/AM)
 	if(!ismob(AM))
 		return
 	var/mob/M = AM
@@ -109,6 +109,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "hit")
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
@@ -269,8 +270,8 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-					tesla_zap(src, 3, C.powernet.avail * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
-					C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
+					tesla_zap(src, 3, C.newavail() * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
 /obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)

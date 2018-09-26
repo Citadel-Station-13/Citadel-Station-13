@@ -37,7 +37,7 @@
 /obj/item/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(cell.charge > shot.e_cost)
+	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
 /obj/item/gun/energy/floragun
@@ -153,7 +153,7 @@
 
 // Tool procs, in case plasma cutter is used as welder
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
-	if(cell.charge >= amount * 100)
+	if(!QDELETED(cell) && (cell.charge >= amount * 100))
 		return TRUE
 
 	to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
@@ -295,7 +295,7 @@
 /obj/item/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
-	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
+	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4

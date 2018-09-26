@@ -81,10 +81,10 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "old, robust toolbox" //this will be named "X family toolbox"
 	desc = "It's seen better days."
-	force = 12
+	//Citadel change buffed to base levels
 	total_mass = 2
 
-/obj/item/storage/toolbox/mechanical/old/heirloom/afterattack(atom/A, mob/user, proximity)
+/obj/item/storage/toolbox/mechanical/old/heirloom/afterattack(atom/A, mob/user, proximity) //Citadel Adds massive buff to machinery destruction
 	. = ..()
 	if(proximity)
 		if(isobj(A))
@@ -115,8 +115,8 @@
 /obj/item/storage/toolbox/syndicate
 	name = "black and red toolbox"
 	icon_state = "syndicate"
-	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	item_state = "toolbox_syndi"
+	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
 

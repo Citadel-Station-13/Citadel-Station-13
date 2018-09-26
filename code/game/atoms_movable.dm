@@ -1,6 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_move_time = 0
 	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
@@ -58,8 +59,11 @@
 				return TRUE
 			return FALSE
 		if("loc")
-			if(var_value == null || istype(var_value, /atom))
+			if(istype(var_value, /atom))
 				forceMove(var_value)
+				return TRUE
+			else if(isnull(var_value))
+				moveToNullspace()
 				return TRUE
 			return FALSE
 	return ..()
@@ -84,14 +88,14 @@
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)
-		add_logs(AM, AM.pulledby, "pulled from", src)
+		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
 	grab_state = gs
 	if(ismob(AM))
 		var/mob/M = AM
-		add_logs(src, M, "grabbed", addition="passive grab")
+		log_combat(src, M, "grabbed", addition="passive grab")
 		visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 	return TRUE
 
@@ -139,10 +143,54 @@
 			stop_pulling()
 			return
 
+////////////////////////////////////////
+// Here's where we rewrite how byond handles movement except slightly different
+// To be removed on step_ conversion
+// All this work to prevent a second bump
+/atom/movable/Move(atom/newloc, direct=0)
+	. = FALSE
+	if(!newloc || newloc == loc)
+		return
 
+	if(!direct)
+		direct = get_dir(src, newloc)
+	setDir(direct)
 
+	if(!loc.Exit(src, newloc))
+		return
 
-/atom/movable/Move(atom/newloc, direct = 0)
+	if(!newloc.Enter(src, src.loc))
+		return
+
+	// Past this is the point of no return
+	var/atom/oldloc = loc
+	var/area/oldarea = get_area(oldloc)
+	var/area/newarea = get_area(newloc)
+	loc = newloc
+	. = TRUE
+	oldloc.Exited(src, newloc)
+	if(oldarea != newarea)
+		oldarea.Exited(src, newloc)
+
+	for(var/i in oldloc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Uncrossed(src)
+
+	newloc.Entered(src, oldloc)
+	if(oldarea != newarea)
+		newarea.Entered(src, oldloc)
+
+	for(var/i in loc)
+		if(i == src) // Multi tile objects
+			continue
+		var/atom/movable/thing = i
+		thing.Crossed(src)
+//
+////////////////////////////////////////
+
+/atom/movable/Move(atom/newloc, direct)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(pulling)
@@ -163,7 +211,7 @@
 			moving_diagonally = FIRST_DIAG_STEP
 			var/first_step_dir
 			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Collided, etc. call will interrupt
+			// place due to a Crossed, Bumped, etc. call will interrupt
 			// the second half of the diagonal movement, or the second attempt
 			// at a first half if step() fails because we hit something.
 			if (direct & NORTH)
@@ -257,7 +305,6 @@
 	return 1
 
 /atom/movable/Destroy(force)
-
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
@@ -265,6 +312,10 @@
 
 	. = ..()
 	if(loc)
+		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
+		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
+			CanAtmosPass = ATMOS_PASS_YES
+			air_update_turf(TRUE)
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
@@ -273,28 +324,38 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
+// You probably want CanPass()
+/atom/movable/Cross(atom/movable/AM)
+	. = TRUE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, AM)
+	return CanPass(AM, AM.loc, TRUE)
 
-// Previously known as HasEntered()
-// This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
+/atom/movable/Uncross(atom/movable/AM, atom/newloc)
+	. = ..()
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSS, AM) & COMPONENT_MOVABLE_BLOCK_UNCROSS)
+		return FALSE
+	if(isturf(newloc) && !CheckExit(AM, newloc))
+		return FALSE
+
 /atom/movable/Uncrossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNCROSSED, AM)
 
-//This is tg's equivalent to the byond bump, it used to be called bump with a second arg
-//to differentiate it, naturally everyone forgot about this immediately and so some things
-//would bump twice, so now it's called Collide
-/atom/movable/proc/Collide(atom/A)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_COLLIDE, A)
-	if(A)
-		if(throwing)
-			throwing.hit_atom(A)
-			. = TRUE
-			if(!A || QDELETED(A))
-				return
-		A.CollidedWith(src)
+/atom/movable/Bump(atom/A)
+	if(!A)
+		CRASH("Bump was called with no argument.")
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
+	. = ..()
+	if(!QDELETED(throwing))
+		throwing.hit_atom(A)
+		. = TRUE
+		if(QDELETED(A))
+			return
+	A.Bumped(src)
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
@@ -322,8 +383,10 @@
 		if(!same_loc)
 			if(oldloc)
 				oldloc.Exited(src, destination)
-				if(old_area)
+				if(old_area && old_area != destarea)
 					old_area.Exited(src, destination)
+			for(var/atom/movable/AM in oldloc)
+				AM.Uncrossed(src)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -413,6 +476,9 @@
 	if (!target || speed <= 0)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
+		return
+
 	if (pulledby)
 		pulledby.stop_pulling()
 
@@ -482,12 +548,11 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, TT, spin)			//CITADEL - THIS IS BORKED. PENDING SYNC.
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -721,3 +786,36 @@
 	if(anchored || throwing)
 		return FALSE
 	return TRUE
+
+
+/obj/item/proc/do_pickup_animation(atom/target)
+	set waitfor = FALSE
+	if(!istype(loc, /turf))
+		return
+	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
+	I.plane = GAME_PLANE
+	I.transform *= 0.75
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/turf/T = get_turf(src)
+	var/direction
+	var/to_x = 0
+	var/to_y = 0
+
+	if(!QDELETED(T) && !QDELETED(target))
+		direction = get_dir(T, target)
+	if(direction & NORTH)
+		to_y = 32
+	else if(direction & SOUTH)
+		to_y = -32
+	if(direction & EAST)
+		to_x = 32
+	else if(direction & WEST)
+		to_x = -32
+	if(!direction)
+		to_y = 16
+	flick_overlay(I, GLOB.clients, 6)
+	var/matrix/M = new
+	M.Turn(pick(-30, 30))
+	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
+	sleep(1)
+	animate(I, alpha = 0, transform = matrix(), time = 1)

@@ -88,7 +88,7 @@
 	cyborg_pixel_offset = -16
 
 /obj/item/robot_module/scrubpup
-	name = "Janitor"
+	name = "Scrub Pup"
 	basic_modules = list(
 		/obj/item/dogborg/jaws/small,
 		/obj/item/analyzer/nose,
