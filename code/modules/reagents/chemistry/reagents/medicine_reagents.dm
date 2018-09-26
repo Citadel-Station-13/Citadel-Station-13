@@ -345,7 +345,7 @@
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
 	C.adjustBruteLoss(-0.25*REM, 0)
 	C.adjustFireLoss(-0.25*REM, 0)
-	C.adjustStaminaLoss(-2*REM, 0)
+	C.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	return TRUE
 
@@ -1247,7 +1247,7 @@
 		M.AdjustStun(-5, 0)
 		M.AdjustKnockdown(-5, 0)
 		M.AdjustUnconscious(-5, 0)
-		M.adjustStaminaLoss(-10*REM, 0)
+		M.adjustStaminaLoss(-1*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
 		. = TRUE
