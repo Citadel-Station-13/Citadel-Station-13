@@ -73,13 +73,11 @@
 
 	"mimes": [
 		"mime",
-		"...",
 		"silence",
 		"mimic",
 		"invisible",
 		"french",
 		"oui",
-		"surrender",
 		"pretending",
 		"nothing"
 	],
