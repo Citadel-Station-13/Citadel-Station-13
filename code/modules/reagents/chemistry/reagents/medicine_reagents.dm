@@ -345,6 +345,7 @@
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
 	C.adjustBruteLoss(-0.25*REM, 0)
 	C.adjustFireLoss(-0.25*REM, 0)
+	C.adjustStaminaLoss(-2*REM, 0)
 	..()
 	return TRUE
 
@@ -883,7 +884,7 @@
 	M.AdjustStun(-60, 0)
 	M.AdjustKnockdown(-60, 0)
 	M.AdjustUnconscious(-60, 0)
-	M.adjustStaminaLoss(-5*REM, 0)
+	M.adjustStaminaLoss(-20*REM, 0)
 	..()
 	. = 1
 
@@ -1053,6 +1054,7 @@
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	M.adjustStaminaLoss(-20*REM,0)
 	..()
 	. = 1
 
@@ -1161,12 +1163,12 @@
 	M.AdjustUnconscious(-20, 0)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
-	M.adjustStaminaLoss(-1, 0)
+	M.adjustStaminaLoss(-30, 0)
 	..()
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(5, 0) //let's make this mildly more toxic because of the stamina buff
 	..()
 	return TRUE
 
@@ -1245,7 +1247,7 @@
 		M.AdjustStun(-5, 0)
 		M.AdjustKnockdown(-5, 0)
 		M.AdjustUnconscious(-5, 0)
-		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.adjustStaminaLoss(-10*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
 		. = TRUE
