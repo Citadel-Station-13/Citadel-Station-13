@@ -278,7 +278,7 @@
 /datum/quirk/phobia
 	name = "Phobia"
 	desc = "You've had a traumatic past, that has scared you for life while dealing with your greatest fear."
-	value = -3 // It can hardstun you. You can be a job that your phobia targets...
+	value = -2 // It can hardstun you. You can be a job that your phobia targets...
 	gain_text = "<span class='danger'>You feel your fears manifest themselfs.</span>"
 	lose_text = "<span class='notice'>You feel your fears fade away.</span>"
 	medical_record_text = "Patient has an extreme or irrational fear of or aversion to something."
@@ -290,4 +290,4 @@
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
 
 /datum/quirk/phobia/remove()
-	qdel(phobia)
+	QDEL_NULL
