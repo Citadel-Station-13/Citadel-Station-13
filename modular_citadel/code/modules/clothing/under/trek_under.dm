@@ -240,7 +240,6 @@
 	icon_state = "fedcapofficer"
 	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer_mob"
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 0, "acid" = 0)
 
 	//Variants
 /obj/item/clothing/head/caphat/formal/fedcover/medsci
