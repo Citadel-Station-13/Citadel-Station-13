@@ -1,4 +1,4 @@
-/mob/dead/observer/say(message)
+/mob/dead/observer/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
@@ -15,7 +15,7 @@
 			client.dsay(message)
 		return
 
-	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
+	src.log_talk(message, LOG_SAY, tag="ghost")
 
 	if(check_emote(message))
 		return
@@ -37,3 +37,4 @@
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	to_chat(src, "[link] [message]")
+

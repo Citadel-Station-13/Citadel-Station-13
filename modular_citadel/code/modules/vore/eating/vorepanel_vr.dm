@@ -711,15 +711,5 @@
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable
 
-	if(href_list["togglenoisy"])
-		var/choice = alert(user, "Toggle audible hunger noises. Currently: [user.noisy ? "Enabled" : "Disabled"]", "", "Enable audible hunger", "Cancel", "Disable audible hunger")
-		switch(choice)
-			if("Cancel")
-				return 0
-			if("Enable audible hunger")
-				user.noisy = TRUE
-			if("Disable audible hunger")
-				user.noisy = FALSE
-
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

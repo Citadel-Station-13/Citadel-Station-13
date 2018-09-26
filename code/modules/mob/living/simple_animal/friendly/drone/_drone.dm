@@ -59,7 +59,7 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -69,7 +69,7 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = FALSE //If we have laws to destroy the station
 	var/flavortext = \
-	"\n<big><span class='warning'>UNLESS YOU ARE A FREE DRONE, DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
+	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
 	"<span class='notify'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
 	"<span class='notify'>Actions that constitute interference include, but are not limited to:</span>\n"+\
 	"<span class='notify'>     - Interacting with round critical objects (IDs, weapons, contraband, powersinks, bombs, etc.)</span>\n"+\

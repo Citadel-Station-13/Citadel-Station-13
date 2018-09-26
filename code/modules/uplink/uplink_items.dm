@@ -202,6 +202,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/carbine
+	name = "M-90gl Carbine"
+	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
+			with a togglable 40mm under-barrel grenade launcher."
+	item = /obj/item/gun/ballistic/automatic/m90
+	cost = 18
+	surplus = 50
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
@@ -395,6 +404,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	player_minimum = 25
 	restricted = TRUE
 
+/datum/uplink_item/dangerous/buzzkill
+	name = "Buzzkill Grenade Box"
+	desc = "A box with three grenades that release a swarm of angry bees upon activation. These bees indiscriminately attack friend or foe \
+			with random toxins. Courtesy of the BLF and Tiger Cooperative."
+	item = /obj/item/storage/box/syndie_kit/bee_grenades
+	cost = 15
+	surplus = 35
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
@@ -509,6 +527,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/carbine
+	name = "5.56mm Toploader Magazine"
+	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
+			These bullets pack less punch than 1.95mm rounds, but they still offer more power than .45 ammo."
+	item = /obj/item/ammo_box/magazine/m556
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/a40mm
+	name = "40mm Grenade"
+	desc = "A 40mm HE grenade for use with the M-90gl's under-barrel grenade launcher. \
+			Your teammates will ask you to not shoot these down small hallways."
+	item = /obj/item/ammo_casing/a40mm
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/machinegun
 	cost = 6
 	surplus = 0
@@ -531,6 +565,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
 	item = /obj/item/ammo_box/magazine/mm195x129/ap
+	cost = 9
 
 /datum/uplink_item/ammo/machinegun/incen
 	name = "1.95x129mm (Incendiary) Box Magazine"
@@ -1002,8 +1037,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
-			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
+	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
+			activated to display their exact viewing location and nearby security camera blind spots. Knowing when \
+			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
+			blind spots can help you identify escape routes."
 	item = /obj/item/multitool/ai_detect
 	cost = 1
 
@@ -1016,15 +1053,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
-	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
-			Also includes a remote control. Touch the briefcase with the remote to link it."
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to eight tiles away from the briefcase. \
+			Also includes a remote control, disguised as an ordinary folder. Touch the briefcase with the remote to link it."
 	surplus = 0
-	item = /obj/item/briefcase_launchpad
+	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
-
-/datum/uplink_item/device_tools/briefcase_launchpad/purchase(mob/user, datum/component/uplink/U)
-	spawn_item(/obj/item/launchpad_remote, user) //free remote
-	..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1256,6 +1289,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	restricted = TRUE
 
+/datum/uplink_item/implants/stealthimplant
+	name = "Stealth Implant"
+	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
+	item = /obj/item/implanter/stealth
+	cost = 8
+
 // Cybernetics
 /datum/uplink_item/cyber_implants
 	category = "Cybernetic Implants"
@@ -1292,12 +1331,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/cyber_implants
 	cost = 40
 	cant_discount = TRUE
-
-/datum/uplink_item/cyber_implants/stealthimplant
-	name = "Stealth Implant"
-	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right."
-	item = /obj/item/implanter/stealth
-	cost = 8
 
 // Role-specific items
 /datum/uplink_item/role_restricted
@@ -1452,6 +1485,17 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/sbeacondrop/clownbomb
+	cost = 15
+	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/clowncar
+	name = "Clown Car"
+	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
+			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
+			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
+			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
+			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
+	item = /obj/vehicle/sealed/car/clowncar
 	cost = 15
 	restricted_roles = list("Clown")
 

@@ -39,7 +39,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 /datum/vore_preferences
 	//Actual preferences
-	var/digestable = TRUE
+	var/digestable = FALSE
 	var/devourable = FALSE
 //	var/allowmobvore = TRUE
 	var/list/belly_prefs = list()
@@ -113,7 +113,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	//Quick sanitize
 	if(isnull(digestable))
-		digestable = TRUE
+		digestable = FALSE
 	if(isnull(devourable))
 		devourable = FALSE
 	if(isnull(belly_prefs))

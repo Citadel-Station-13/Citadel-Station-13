@@ -49,6 +49,8 @@
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
+/datum/config_entry/flag/log_telecomms	// log telecomms messages
+
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
 /datum/config_entry/flag/log_world_topic	// log all world.Topic() calls
@@ -323,8 +325,6 @@
 /datum/config_entry/flag/announce_admin_login
 
 /datum/config_entry/flag/allow_map_voting
-
-/datum/config_entry/flag/generate_minimaps
 
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null

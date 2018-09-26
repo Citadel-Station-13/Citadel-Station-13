@@ -233,7 +233,7 @@
 		return 0
 
 	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_pressure()
+	var/temperature = air_contents.return_temperature()
 
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc, /obj/item/transfer_valve))
@@ -242,6 +242,7 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		air_contents.react(src)
+		//Citadel Edit: removing extra react for "balance"
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)

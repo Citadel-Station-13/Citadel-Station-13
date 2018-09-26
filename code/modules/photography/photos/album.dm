@@ -37,21 +37,39 @@
 			continue
 		. |= P.picture.id
 
+//Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
+/obj/item/storage/photo_album/proc/persistence_load()
+	var/list/data = SSpersistence.GetPhotoAlbums()
+	if(data[persistence_id])
+		populate_from_id_list(data[persistence_id])
+
 /obj/item/storage/photo_album/proc/populate_from_id_list(list/ids)
+	var/list/current_ids = get_picture_id_list()
 	for(var/i in ids)
+		if(i in current_ids)
+			continue
 		var/obj/item/photo/P = load_photo_from_disk(i)
 		if(istype(P))
 			if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, P, null, TRUE, TRUE))
 				qdel(P)
 
-#define ALBUM_DEFINE(id) /obj/item/storage/photo_album/##id/persistence_id = #id
+/obj/item/storage/photo_album/HoS
+	persistence_id = "HoS"
 
-ALBUM_DEFINE(HoS)
-ALBUM_DEFINE(RD)
-ALBUM_DEFINE(HoP)
-ALBUM_DEFINE(Captain)
-ALBUM_DEFINE(CMO)
-ALBUM_DEFINE(QM)
-ALBUM_DEFINE(CE)
+/obj/item/storage/photo_album/RD
+	persistence_id = "RD"
 
-#undef ALBUM_DEFINE
+/obj/item/storage/photo_album/HoP
+	persistence_id = "HoP"
+
+/obj/item/storage/photo_album/Captain
+	persistence_id = "Captain"
+
+/obj/item/storage/photo_album/CMO
+	persistence_id = "CMO"
+
+/obj/item/storage/photo_album/QM
+	persistence_id = "QM"
+
+/obj/item/storage/photo_album/CE
+	persistence_id = "CE"

@@ -1,6 +1,6 @@
 /datum/component/storage/concrete/bluespace/bag_of_holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, mob/living/user)
 	var/atom/A = parent
-	if(A == W)
+	if(A == W)		//don't put yourself into yourself.
 		return
 	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(W.GetAllContents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= A
@@ -30,7 +30,7 @@
 		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
 			ladder.ActivateAlmonds()
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
-		log_game("[key_name(user)] detonated a bag of holding at [AREACOORD(loccheck)].")
+		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
 		qdel(A)
 		return
 	. = ..()

@@ -46,7 +46,7 @@
 	icon_state = "hardsuit0-knight"
 	item_state = "hardsuit0-knight"
 	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	item_color="knight"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 
@@ -58,7 +58,7 @@
 	slowdown = 1
 	allowed = list(/obj/item/gun,/obj/item/melee/baton,/obj/item/tank,/obj/item/shield/energy,/obj/item/claymore)
 	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0.5
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/knight
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
@@ -135,5 +135,5 @@ obj/item/clothing/suit/space/bomberman
 	slowdown = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	siemens_coefficient = 0
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'

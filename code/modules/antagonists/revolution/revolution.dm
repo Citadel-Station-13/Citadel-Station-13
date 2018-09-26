@@ -35,7 +35,7 @@
 	. = ..()
 	create_objectives()
 	equip_rev()
-	owner.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
 
 /datum/antagonist/rev/on_removal()
 	remove_objectives()
@@ -209,7 +209,7 @@
 
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[owner.current] (Key: [key_name(owner.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
+	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [key_name(deconverter)]!")
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
@@ -281,7 +281,7 @@
 		var/list/datum/mind/heads = SSjob.get_all_heads()
 		var/list/sec = SSjob.get_all_sec()
 
-		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((3 - sec.len) / 3)))
+		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
