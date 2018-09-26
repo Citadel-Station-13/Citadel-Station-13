@@ -101,8 +101,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/last_force_string_check = 0
 	var/tip_timer
 
-	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
-
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
 	//Grinder vars

@@ -23,7 +23,7 @@
 	desc = "The design on this seems a little too familiar."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcloak"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -33,7 +33,7 @@
 	desc = "A soft black collar that seems to stretch to fit whoever wears it."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcollar"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "infcollar"
 	item_color = null
 	tagname = null
@@ -64,7 +64,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "zombscarf"
 	desc = "A fashionable collar"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
 
@@ -73,7 +73,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "labred"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labred"
 
 /obj/item/clothing/suit/toggle/labcoat/labredblack
@@ -81,7 +81,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "labredblack"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labredblack"
 
 /obj/item/toy/plush/carrot
@@ -99,7 +99,7 @@
 	name = "carrot cloak"
 	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "carrotcloak"
 	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "satchel_carrot"
 	item_state = "satchel_carrot"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
 /obj/item/storage/backpack/satchel/carrot/Initialize()
 	. = ..()
@@ -134,7 +134,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "festive"
 	item_state = "festive"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -142,7 +142,7 @@
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "lucharzigfie"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "lucharzigfie"
 
 /obj/item/clothing/head/hardhat/reindeer/fluff
@@ -185,7 +185,7 @@
 	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "hos-g"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
@@ -201,7 +201,7 @@
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "stalker"
 
 /obj/item/reagent_containers/food/drinks/flask/steel
@@ -216,7 +216,7 @@
 	desc = "It's a collar..."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "petcollar-stripe"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "petcollar-stripe"
 	tagname = null
 
@@ -225,7 +225,7 @@
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "singer"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "singer"
 	item_color = "singer"
 	fitted = NO_FEMALE_UNIFORM
@@ -235,7 +235,7 @@
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pink"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "pink"
 
 /obj/item/clothing/neck/tie/bloodred
@@ -243,13 +243,13 @@
 	desc = "A neosilk clip-on tie. This one has a black S on the tipping and looks rather unique."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "bloodredtie"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
 /obj/item/clothing/suit/puffydress
 	name = "Puffy Dress"
 	desc = "A formal puffy black and red Victorian dress."
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "puffydress"
 	item_state = "puffydress"
 	body_parts_covered = CHEST|GROIN|LEGS
@@ -261,7 +261,7 @@
 	item_state = "vermillion"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 
 /obj/item/clothing/under/bb_sweater/black/naomi
 	name = "worn black sweater"
@@ -300,7 +300,7 @@
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darksabre"
 	item_state = "darksabre"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
@@ -313,7 +313,7 @@
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darksheath"
 	item_state = "darksheath"
 	w_class = WEIGHT_CLASS_BULKY
@@ -332,7 +332,7 @@
 	name = "Dark Armor"
 	desc = "A dark, non-functional piece of armor sporting a red and black finish."
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	icon_state = "darkcarapace"
 	item_state = "darkcarapace"
 	blood_overlay_type = "armor"
@@ -345,7 +345,7 @@
 	desc = "This cloak doesn't seem too special."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "wintergreencloak"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "wintergreencloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -361,7 +361,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "rdcoat"
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "rdcoat"
 
 /obj/item/custom/leechjar
@@ -393,7 +393,7 @@
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"

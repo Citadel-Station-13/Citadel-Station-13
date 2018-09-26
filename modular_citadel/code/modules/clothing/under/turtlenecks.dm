@@ -44,7 +44,7 @@
 	body_parts_covered = CHEST|ARMS
 	can_adjust = 1
 	icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
-	icon_override = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/uniforms.dmi'
 
 /obj/item/clothing/under/bb_sweater/black
 	name = "black sweater"
