@@ -1,0 +1,4 @@
+author: "izzyinbox"
+delete-after: True
+changes: 
+  - bugfix: "Tennis balls now equip and show up in the correct slots"
