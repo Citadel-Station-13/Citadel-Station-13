@@ -109,6 +109,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
 
+// Standard Issue Gear
+/datum/uplink_item/standard_issue
+	category = "Standard Issue Gear"
+	surplus = 0
+	cost = 0
+	limited_stock = 1
+	restricted = TRUE
+	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/standard_issue/headset
+	name = "Syndicate Basic Encryption Key"
+	desc = "A key that, when inserted into a radio headset, allows you to talk on an encrypted Syndicate channel with other agents that also have access to the channel. \
+			Be warned, if Nanotrasen personnel discover this key, it could compromise your mission and the communications of other agents. Purchase with caution."
+	item = /obj/item/encryptionkey/syndicate/basic
+
 // Nuclear Operative (Special Offers)
 /datum/uplink_item/nukeoffer
 	category = "Special Offers"
@@ -1029,9 +1045,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
 	desc = "A key that, when inserted into a radio headset, allows you to listen to all station department channels \
-			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
+			as well as talk on an encrypted Syndicate channel with other agents that also have access to the channel."
 	item = /obj/item/encryptionkey/syndicate
-	cost = 2
+	cost = 1
 	surplus = 75
 	restricted = TRUE
 
