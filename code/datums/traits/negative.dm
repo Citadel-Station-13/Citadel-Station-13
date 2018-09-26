@@ -288,6 +288,3 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
-
-/datum/quirk/phobia/remove()
-	QDEL_NULL
