@@ -183,11 +183,16 @@
 		var/atom/movable/AM = thing
 		if(isliving(AM))
 			var/mob/living/L = AM
+			var/mob/living/OW = owner
 			if(L.absorbed && !include_absorbed)
 				continue
 			L.absorbed = FALSE
 			L.stop_sound_channel(CHANNEL_PREYLOOP)
 			L.cure_blind("belly_[REF(src)]")
+			SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
+			SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
+			SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
 	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
@@ -219,6 +224,11 @@
 		var/mob/living/OW = owner
 		ML.stop_sound_channel(CHANNEL_PREYLOOP)
 		ML.cure_blind("belly_[REF(src)]")
+		SEND_SIGNAL(OW, COMSIG_CLEAR_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
+		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
+		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
+		SEND_SIGNAL(ML, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
+			
 		if(ML.absorbed)
 			ML.absorbed = FALSE
 			if(ishuman(M) && ishuman(OW))
@@ -242,7 +252,14 @@
 		return
 	if (prey.buckled)
 		prey.buckled.unbuckle_mob(prey,TRUE)
-
+	
+	if(!isbelly(prey.loc))
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
+		SEND_SIGNAL(prey, COMSIG_ADD_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
+	else
+		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
+		SEND_SIGNAL(prey, COMSIG_CLEAR_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
+		
 	prey.forceMove(src)
 	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 	if(!silent)
