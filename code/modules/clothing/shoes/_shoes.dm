@@ -58,18 +58,21 @@
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
-	if(offset && slot_flags & slotdefine2slotbit(slot))
-		user.pixel_y += offset
-		worn_y_dimension -= (offset * 2)
-		user.update_inv_shoes()
-		equipped_before_drop = TRUE
 
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(DIGITIGRADE in H.dna.species.species_traits)
 			adjusted = DIGITIGRADE_STYLE
+			H.update_inv_shoes()
 		else if(adjusted == DIGITIGRADE_STYLE)
 			adjusted = NORMAL_STYLE
+			H.update_inv_shoes()
+
+	if(offset && slot_flags & slotdefine2slotbit(slot))
+		user.pixel_y += offset
+		worn_y_dimension -= (offset * 2)
+		user.update_inv_shoes()
+		equipped_before_drop = TRUE
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
