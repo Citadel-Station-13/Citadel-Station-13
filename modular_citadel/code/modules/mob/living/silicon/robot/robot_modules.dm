@@ -222,7 +222,7 @@
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Handy")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default","Loader","Default - Treads","Handy")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
