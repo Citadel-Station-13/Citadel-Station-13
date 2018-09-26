@@ -268,6 +268,7 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(shoes)
+		var/obj/item/clothing/shoes/S = shoes
 		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open
@@ -281,6 +282,12 @@ There are several things that need to be remembered:
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 	apply_overlay(SHOES_LAYER)
 
+var/obj/item/clothing/shoes/S = H.shoes
+			if(swap_back)
+					S.adjusted = NORMAL_STYLE
+				else
+					S.adjusted = DIGITIGRADE_STYLE
+				H.update_inv_w_uniform()
 
 /mob/living/carbon/human/update_inv_s_store()
 	remove_overlay(SUIT_STORE_LAYER)
