@@ -52,8 +52,6 @@ Difficulty: Hard
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
-	do_footstep = TRUE
-
 /obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
@@ -91,8 +89,8 @@ Difficulty: Hard
 			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
-		bloodspell.phased = TRUE
+	if(istype(loc, /obj/effect/dummy/slaughter))
+		bloodspell.phased = 1
 	internal = new/obj/item/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
@@ -149,7 +147,7 @@ Difficulty: Hard
 	Goto(target, move_to_delay, minimum_distance)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)

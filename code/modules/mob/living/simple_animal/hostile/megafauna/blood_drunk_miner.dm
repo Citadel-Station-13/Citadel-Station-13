@@ -53,8 +53,6 @@ Difficulty: Medium
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	death_sound = "bodyfall"
 
-	do_footstep = TRUE
-
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE
 

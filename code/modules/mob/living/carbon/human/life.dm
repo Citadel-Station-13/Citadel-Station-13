@@ -23,12 +23,7 @@
 	if (notransform)
 		return
 
-	. = ..()
-
-	if (QDELETED(src))
-		return 0
-
-	if(.) //not dead
+	if(..()) //not dead
 		handle_active_genes()
 
 	if(stat != DEAD)
@@ -49,15 +44,15 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
+	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
+		return ONE_ATMOSPHERE
+	if(istype(loc, /obj/item/dogborg/sleeper))
+		return ONE_ATMOSPHERE //END OF CIT CHANGES
 	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
 		var/obj/item/clothing/CS = wear_suit
 		var/obj/item/clothing/CH = head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 			return ONE_ATMOSPHERE
-	if(istype(loc, /obj/belly)) //START OF CIT CHANGES - Makes it so you don't suffocate while inside vore organs. Remind me to modularize this some time - Bhijn
-		return ONE_ATMOSPHERE
-	if(istype(loc, /obj/item/dogborg/sleeper))
-		return ONE_ATMOSPHERE //END OF CIT CHANGES
 	return pressure
 
 
@@ -70,7 +65,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 30) //Citadel change to make memes more often.
+	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 		if(prob(3))
 			if(prob(25))
@@ -93,7 +88,7 @@
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
-		if(health >= crit_threshold)
+		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
 		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
@@ -130,11 +125,11 @@
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	//CITADEL EDIT Vore code required overrides
 	if(istype(loc, /obj/item/dogborg/sleeper))
-		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(ismob(loc))
-		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	if(isbelly(loc))
-		return FIRE_IMMUNITY_MAX_TEMP_PROTECT
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 //END EDIT
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
@@ -325,9 +320,17 @@
 		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
+	if(!can_heartattack())
+		return
+
 	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
+
 	if(!undergoing_cardiac_arrest())
+		return
+
+	// Cardiac arrest, unless heart is stabilized
+	if(has_trait(TRAIT_STABLEHEART))
 		return
 
 	if(we_breath)

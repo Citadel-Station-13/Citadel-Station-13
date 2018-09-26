@@ -1,6 +1,10 @@
+/obj/item/disk/surgery/pacification
+	name = "Pacification Surgery Disk"
+	desc = "The disk provides instructions on how to suppress violence by manipulating the patient's brain."
+	surgeries = list(/datum/surgery/advanced/pacify)
+
 /datum/surgery/advanced/pacify
-	name = "Pacification"
-	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
+	name = "violence neutralization"
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/saw,

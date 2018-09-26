@@ -16,6 +16,59 @@
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
+/obj/item/integrated_circuit/reagent/smoke
+	name = "smoke generator"
+	desc = "Unlike most electronics, creating smoke is completely intentional."
+	icon_state = "smoke"
+	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
+	into the smoke clouds when activated. The reagents are consumed when the smoke is made."
+	ext_cooldown = 1
+	container_type = OPENCONTAINER
+	volume = 100
+
+	complexity = 20
+	cooldown_per_use = 1 SECONDS
+	inputs = list()
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"create smoke" = IC_PINTYPE_PULSE_IN,
+		"on smoked" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+		)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 20
+	var/smoke_radius = 5
+	var/notified = FALSE
+
+/obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
+	//reset warning only if we have reagents now
+	if(changetype == ADD_REAGENT)
+		notified = FALSE
+	push_vol()
+
+/obj/item/integrated_circuit/reagent/smoke/do_work(ord)
+	switch(ord)
+		if(1)
+			if(!reagents || (reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS))
+				return
+			var/location = get_turf(src)
+			var/datum/effect_system/smoke_spread/chem/S = new
+			S.attach(location)
+			playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+			if(S)
+				S.set_up(reagents, smoke_radius, location, notified)
+				if(!notified)
+					notified = TRUE
+				S.start()
+			reagents.clear_reagents()
+			activate_pin(2)
+		if(3)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
 // Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
 // This is a dirty hack to make injecting reagents into them work.
 // TODO: refactor that.
@@ -65,7 +118,7 @@
 		)
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
-		"self reference" = IC_PINTYPE_SELFREF
+		"self reference" = IC_PINTYPE_REF
 		)
 	activators = list(
 		"inject" = IC_PINTYPE_PULSE_IN,
@@ -133,7 +186,7 @@
 
 			//Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			log_combat(src, L, "attempted to inject", addition="which had [contained]")
+			add_logs(src, L, "attempted to inject", addition="which had [contained]")
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
@@ -141,7 +194,7 @@
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
-				log_combat(src, L, "injected", addition="which had [contained]")
+				add_logs(src, L, "injected", addition="which had [contained]")
 				L.visible_message("<span class='danger'>[acting_object] injects [L] with its needle!</span>", \
 									"<span class='userdanger'>[acting_object] injects you with its needle!</span>")
 			else
@@ -267,7 +320,7 @@
 	inputs = list()
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
-		"self reference" = IC_PINTYPE_SELFREF
+		"self reference" = IC_PINTYPE_REF
 		)
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -314,7 +367,7 @@
 		)
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
-		"self reference" = IC_PINTYPE_SELFREF
+		"self reference" = IC_PINTYPE_REF
 		)
 	activators = list(
 		"grind" = IC_PINTYPE_PULSE_IN,
@@ -361,7 +414,7 @@
 		)
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
-		"self reference" = IC_PINTYPE_SELFREF
+		"self reference" = IC_PINTYPE_REF
 		)
 	activators = list(
 		"juice" = IC_PINTYPE_PULSE_IN,
@@ -406,7 +459,7 @@
 	complexity = 8
 	outputs = list(
 		"volume used" = IC_PINTYPE_NUMBER,
-		"self reference" = IC_PINTYPE_SELFREF,
+		"self reference" = IC_PINTYPE_REF,
 		"list of reagents" = IC_PINTYPE_LIST
 		)
 	activators = list(
@@ -508,7 +561,7 @@
 		"on" = IC_PINTYPE_BOOLEAN
 		)
 	inputs_default = list("1" = 300)
-	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_SELFREF,"temperature" = IC_PINTYPE_NUMBER)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"temperature" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/heater_coefficient = 0.1
 

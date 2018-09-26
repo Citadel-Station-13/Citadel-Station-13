@@ -28,13 +28,6 @@
 	else
 		obj_flags &= ~EMAGGED
 
-/obj/machinery/computer/cargo/proc/get_export_categories()
-	var/cat = EXPORT_CARGO
-	if(contraband)
-		cat |= EXPORT_CONTRABAND
-	if(obj_flags & EMAGGED)
-		cat |= EXPORT_EMAG
-
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
@@ -122,7 +115,11 @@
 				say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
-				SSshuttle.supply.export_categories = get_export_categories()
+				if (obj_flags & EMAGGED)
+					SSshuttle.supply.obj_flags |= EMAGGED
+				else
+					SSshuttle.supply.obj_flags = (SSshuttle.supply.obj_flags & ~EMAGGED)
+				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)

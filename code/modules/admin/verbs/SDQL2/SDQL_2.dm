@@ -196,10 +196,9 @@
 
 
 /proc/SDQL_testout(list/query_tree, indent = 0)
-	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
 	for(var/s = 0, s < indent, s++)
-		spaces += whitespace
+		spaces += "    "
 
 	for(var/item in query_tree)
 		if(istype(item, /list))
@@ -213,12 +212,12 @@
 		if(!isnum(item) && query_tree[item])
 
 			if(istype(query_tree[item], /list))
-				to_chat(usr, "[spaces][whitespace](")
+				to_chat(usr, "[spaces]    (")
 				SDQL_testout(query_tree[item], indent + 2)
-				to_chat(usr, "[spaces][whitespace])")
+				to_chat(usr, "[spaces]    )")
 
 			else
-				to_chat(usr, "[spaces][whitespace][query_tree[item]]")
+				to_chat(usr, "[spaces]    [query_tree[item]]")
 
 
 

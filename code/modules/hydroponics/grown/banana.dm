@@ -25,7 +25,6 @@
 	bitesize = 5
 	foodtype = FRUIT
 	juice_results = list("banana" = 0)
-	distill_reagent = "bananahonk"
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -33,7 +32,7 @@
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
-	user.say("BANG!", forced = "banana")
+	user.say("BANG!")
 	sleep(25)
 	if(!user)
 		return (OXYLOSS)
@@ -80,7 +79,6 @@
 	icon_state = "mimana"
 	trash = /obj/item/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
-	distill_reagent = "silencer"
 
 /obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
@@ -111,8 +109,6 @@
 	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	tastes = list("banana" = 1)
-	wine_power = 60
-	wine_flavor = "slippery hypercubes"
 
 /obj/item/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace

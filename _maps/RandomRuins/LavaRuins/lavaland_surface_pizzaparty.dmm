@@ -57,7 +57,11 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/lootdrop{
+	loot = list(/obj/item/pizzabox/margherita = 3, /obj/item/pizzabox/meat = 3, /obj/item/pizzabox/mushroom = 3, /obj/item/pizzabox/bomb = 1);
+	lootdoubles = 0;
+	name = "pizza spawner"
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -68,7 +72,11 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/lootdrop{
+	loot = list(/obj/item/pizzabox/margherita = 3, /obj/item/pizzabox/meat = 3, /obj/item/pizzabox/mushroom = 3, /obj/item/pizzabox/bomb = 1);
+	lootdoubles = 0;
+	name = "pizza spawner"
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
@@ -153,7 +161,11 @@
 /area/ruin/unpowered)
 "x" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/lootdrop{
+	loot = list(/obj/item/pizzabox/margherita = 3, /obj/item/pizzabox/meat = 3, /obj/item/pizzabox/mushroom = 3, /obj/item/pizzabox/bomb = 1);
+	lootdoubles = 0;
+	name = "pizza spawner"
+	},
 /turf/open/floor/wood{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},

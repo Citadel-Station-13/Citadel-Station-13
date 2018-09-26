@@ -12,22 +12,17 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
-/obj/item/aicard/aitater
-	name = "intelliTater"
-	desc = "A stylish upgrade (?) to the intelliCard."
-	icon_state = "aitater"
-
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
 	return BRUTELOSS
 
 /obj/item/aicard/afterattack(atom/target, mob/user, proximity)
-	. = ..()
+	..()
 	if(!proximity || !target)
 		return
 	if(AI) //AI is on the card, implies user wants to upload it.
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
-		log_combat(user, AI, "carded", src)
+		add_logs(user, AI, "carded", src)
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
@@ -37,11 +32,11 @@
 	if(AI)
 		name = "[initial(name)]- [AI.name]"
 		if(AI.stat == DEAD)
-			icon_state = "[initial(icon_state)]-404"
+			icon_state = "aicard-404"
 		else
-			icon_state = "[initial(icon_state)]-full"
+			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			add_overlay("[initial(icon_state)]-on")
+			add_overlay("aicard-on")
 		AI.cancel_camera()
 	else
 		name = initial(name)

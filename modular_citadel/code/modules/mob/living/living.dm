@@ -34,6 +34,8 @@
 /mob/living/Move(atom/newloc, direct)
 	. = ..()
 	if(.)
+		if(makesfootstepsounds)
+			CitFootstep(newloc)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
 

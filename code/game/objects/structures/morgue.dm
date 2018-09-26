@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	var/turf/T = get_step(src, dir)
-	connected.setDir(dir)
+	connected.dir=dir
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
@@ -256,10 +256,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				log_combat(user, M, "cremated")
+				user.log_message("Cremated <b>[key_name(M)]</b>", INDIVIDUAL_ATTACK_LOG)
+				log_attack("[key_name(user)] cremated [key_name(M)]")
 			else
-				M.log_message("was cremated", LOG_ATTACK)
-
+				log_attack("UNKNOWN cremated [key_name(M)]")
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()

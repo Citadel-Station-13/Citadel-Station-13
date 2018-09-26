@@ -36,7 +36,6 @@
 		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
 /obj/item/chameleon/afterattack(atom/target, mob/user , proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(!check_sprite(target))
@@ -77,7 +76,7 @@
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
+		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(user))
 		C.activate(user, saved_appearance, src)
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))

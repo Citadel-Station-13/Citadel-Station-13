@@ -1,3 +1,6 @@
+#define VEHICLE_CONTROL_PERMISSION 1
+#define VEHICLE_CONTROL_DRIVE 2
+
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
@@ -69,8 +72,8 @@
 		return FALSE
 	occupants[M] = NONE
 	add_control_flags(M, control_flags)
-	after_add_occupant(M)
 	grant_passenger_actions(M)
+	after_add_occupant(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -116,11 +119,7 @@
 			step(trailer, dir_to_move)
 		return did_move
 	else
-		after_move(direction)
 		return step(src, direction)
-
-/obj/vehicle/proc/after_move(direction)
-	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
@@ -140,12 +139,12 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
-/obj/vehicle/Bump(atom/movable/M)
+/obj/vehicle/Collide(atom/movable/M)
 	. = ..()
 	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door))
+		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
 			for(var/m in occupants)
-				M.Bumped(m)
+				M.CollidedWith(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

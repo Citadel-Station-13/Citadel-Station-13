@@ -37,16 +37,14 @@
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
-		return TRUE
+		return 1
 	else if(isliving(mover))
-		if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
-			return TRUE
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
-			return FALSE
+			return 0
 	else if(istype(mover, /obj/item/projectile))
 		return prob(30)
-	return TRUE
+	return 1
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
@@ -122,7 +120,7 @@
 /obj/structure/spider/spiderling/tarantula
 	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 
-/obj/structure/spider/spiderling/Bump(atom/user)
+/obj/structure/spider/spiderling/Collide(atom/user)
 	if(istype(user, /obj/structure/table))
 		forceMove(user.loc)
 	else

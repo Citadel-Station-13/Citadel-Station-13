@@ -16,7 +16,7 @@
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
-	var/atom/movable/firer = null//Who shot it
+	var/mob/firer = null//Who shot it
 	var/suppressed = FALSE	//Attack message
 	var/yo = null
 	var/xo = null
@@ -191,11 +191,7 @@
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
 
-	if(ismob(firer))
-		log_combat(firer, L, "shot", src, reagent_note)
-	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
-
+	add_logs(firer, L, "shot", src, reagent_note)
 	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
@@ -212,7 +208,7 @@
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/item/projectile/Bump(atom/A)
+/obj/item/projectile/Collide(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -339,7 +335,7 @@
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
-		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
+		add_logs(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
 		if(prehit(direct_target))
 			direct_target.bullet_act(src, def_zone)
@@ -434,7 +430,7 @@
 			continue
 		if(safety-- <= 0)
 			if(loc)
-				Bump(loc)
+				Collide(loc)
 			if(!QDELETED(src))
 				qdel(src)
 			return	//Kill!
@@ -475,7 +471,7 @@
 			step_towards(src, T)
 			hitscan_last = loc
 		if(can_hit_target(original, permutated))
-			Bump(original)
+			Collide(original)
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -520,6 +516,13 @@
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc) + spread)
+
+	//CIT CHANGES START HERE - makes it so laying down makes you unable to shoot through most objects
+	if(iscarbon(source))
+		var/mob/living/carbon/checklad = source
+		if(istype(checklad) && checklad.resting)
+			pass_flags = 0
+	//END OF CIT CHANGES
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
@@ -569,7 +572,7 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Bump(AM)
+		Collide(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

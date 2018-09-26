@@ -38,8 +38,6 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
-
-/obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
@@ -56,7 +54,7 @@
 	name = "\improper X-ray beam"
 	icon_state = "xray"
 	damage = 15
-	irradiate = 300
+	irradiate = 30
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
 
@@ -69,7 +67,7 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 24 // Citadel change for balance from 36
+	damage = 24
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'

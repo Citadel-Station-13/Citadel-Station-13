@@ -1,7 +1,6 @@
 /mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
 	no_vore = FALSE
-	isPredator = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	// Create and register 'stomachs'
@@ -25,11 +24,11 @@
 	desc = "The maw of the dreaded Ash drake closes around you, engulfing you into a swelteringly hot, disgusting enviroment. The acidic saliva tingles over your form while that tongue pushes you further back...towards the dark gullet beyond."
 	vore_verb = "scoop"
 	vore_sound = "Stomach Move"
-	swallow_time = 60
+	swallow_time = 20
 	escapechance = 25
 	// From above, will transfer into gullet
 	transferchance = 25
-	autotransferchance = 90
+	autotransferchance = 66
 	autotransferwait = 200
 
 /obj/belly/megafauna/dragon/gullet
@@ -40,7 +39,7 @@
 	vore_sound = "Squish2"
 	// From above, will transfer into gut
 	transferchance = 25
-	autotransferchance = 90
+	autotransferchance = 50
 	autotransferwait = 200
 
 /obj/belly/megafauna/dragon/gut

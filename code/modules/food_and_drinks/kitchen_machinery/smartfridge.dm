@@ -13,7 +13,8 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
-	var/allow_ai_retrieve = FALSE
+	var/icon_on = "smartfridge"
+	var/icon_off = "smartfridge-off"
 	var/list/initial_contents
 
 /obj/machinery/smartfridge/Initialize()
@@ -38,11 +39,10 @@
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
-	var/startstate = initial(icon_state)
 	if(!stat)
-		icon_state = startstate
+		icon_state = icon_on
 	else
-		icon_state = "[startstate]-off"
+		icon_state = icon_off
 
 
 
@@ -168,10 +168,6 @@
 		if("Release")
 			var/desired = 0
 
-			if(!allow_ai_retrieve && isAI(usr))
-				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
-				return
-
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
@@ -207,10 +203,12 @@
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "drying_rack"
+	icon_state = "drying_rack_on"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
+	icon_on = "drying_rack_on"
+	icon_off = "drying_rack"
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -415,7 +413,6 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	pass_flags = PASSTABLE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

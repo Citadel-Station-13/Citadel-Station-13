@@ -159,6 +159,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
+/client/can_vv_get(var_name)
+	return var_name != NAMEOF(src, holder) && ..()
+
+/client/vv_edit_var(var_name, var_value)
+	return var_name != NAMEOF(src, holder) && ..()
+
 /client/New(TopicData)
 	world.SetConfig("APP/admin", ckey, "role=admin")			//CITADEL EDIT - Allows admins to reboot in OOM situations
 	var/tdata = TopicData //save this for later use
@@ -207,7 +213,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+			var/datum/admin_rank/localhost_rank = new("!localhost!", 65535, 16384, 65535) //+EVERYTHING -DBRANKS *EVERYTHING
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
@@ -223,9 +229,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
 
-	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
-	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
-
+	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
 	if(CONFIG_GET(flag/log_access))
 		for(var/I in GLOB.clients)
@@ -251,10 +255,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	if(GLOB.player_details[ckey])
 		player_details = GLOB.player_details[ckey]
-		player_details.byond_version = full_version
 	else
 		player_details = new
-		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
 
@@ -469,7 +471,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	qdel(query_get_related_ip)
 	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	if(!query_get_related_cid.Execute())
-		qdel(query_get_related_cid)
 		return
 	related_accounts_cid = ""
 	while (query_get_related_cid.NextRow())
@@ -595,6 +596,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			else
 				CRASH("Key check regex failed for [ckey]")
 
+
 /client/proc/check_randomizer(topic)
 	. = FALSE
 	if (connection != "seeker")
@@ -685,7 +687,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND expire_timestamp > NOW()")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -694,7 +696,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND expire_timestamp > NOW() ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -703,7 +705,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(query_get_notes)
 			return
 	qdel(query_get_notes)
-	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0, 0)
+	create_message("note", key, system_ckey, message, null, null, 0, 0)
 
 
 /client/proc/check_ip_intel()
@@ -757,7 +759,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
 
-	if(ab) //Citadel edit, things with stuff.
+	if(ab)
 		return
 
 	if (prefs.hotkeys)
@@ -840,13 +842,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
 //CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
 	if(prefs && CONFIG_GET(string/default_view))
 		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
 			new_size = "15x15"
 //END OF CIT CHANGES
-
 	view = new_size
 	apply_clickcatcher()
 	mob.reload_fullscreen()

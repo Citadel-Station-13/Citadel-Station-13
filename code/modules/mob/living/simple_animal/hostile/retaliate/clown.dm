@@ -33,8 +33,6 @@
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
 
-	do_footstep = TRUE
-
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(10)

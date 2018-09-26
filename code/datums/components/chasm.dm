@@ -19,8 +19,7 @@
 		/obj/effect/temp_visual,
 		/obj/effect/light_emitter/tendril,
 		/obj/effect/collapse,
-		/obj/effect/particle_effect/ion_trails,
-		/obj/effect/dummy/phased_mob
+		/obj/effect/particle_effect/ion_trails
 		))
 
 /datum/component/chasm/Initialize(turf/target)
@@ -28,7 +27,7 @@
 	target_turf = target
 	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
 
-/datum/component/chasm/proc/Entered(datum/source, atom/movable/AM)
+/datum/component/chasm/proc/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
 

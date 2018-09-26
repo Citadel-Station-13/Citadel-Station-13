@@ -40,15 +40,11 @@
 	return ..()
 
 /obj/machinery/meter/proc/reattach_to_layer()
-	var/obj/machinery/atmospherics/candidate
 	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
 		if(pipe.piping_layer == target_layer)
-			candidate = pipe
-			if(pipe.level == 2)
-				break
-	if(candidate)
-		target = candidate
-		setAttachLayer(candidate.piping_layer)
+			target = pipe
+			setAttachLayer(pipe.piping_layer)
+			break
 
 /obj/machinery/meter/proc/setAttachLayer(var/new_layer)
 	target_layer = new_layer
@@ -144,5 +140,6 @@
 //	why are you yelling?
 /obj/machinery/meter/turf
 
-/obj/machinery/meter/turf/reattach_to_layer()
+/obj/machinery/meter/turf/Initialize()
+	. = ..()
 	target = loc

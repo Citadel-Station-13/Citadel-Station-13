@@ -14,8 +14,6 @@
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
-		if(iscyborg(user))
-			success = TRUE
 
 	if(accept_any_item)
 		if(tool && tool_check(user, tool))

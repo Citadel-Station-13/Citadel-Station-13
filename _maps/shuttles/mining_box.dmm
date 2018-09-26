@@ -15,10 +15,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "e" = (
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "f" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -27,7 +27,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "h" = (
 /obj/machinery/door/airlock/titanium{
@@ -50,16 +50,6 @@
 /area/shuttle/mining)
 "j" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "k" = (
@@ -68,13 +58,11 @@
 /area/shuttle/mining)
 "l" = (
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/open/floor/plating/airless,
-/area/shuttle/mining)
-"Q" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/plating/airless,
 /area/shuttle/mining)
 
 (1,1,1) = {"
@@ -98,7 +86,7 @@ a
 (3,1,1) = {"
 b
 d
-Q
+f
 e
 f
 j

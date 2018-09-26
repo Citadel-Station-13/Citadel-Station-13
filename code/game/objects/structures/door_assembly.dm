@@ -237,7 +237,6 @@
 				else
 					door = new airlock_type( loc )
 				door.setDir(dir)
-				door.unres_sides = electronics.unres_sides
 				//door.req_access = req_access
 				door.electronics = electronics
 				door.heat_proof = heat_proof_finished
@@ -251,7 +250,6 @@
 					door.name = base_name
 				door.previous_airlock = previous_assembly
 				electronics.forceMove(door)
-				door.update_icon()
 				qdel(src)
 	else
 		return ..()

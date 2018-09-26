@@ -161,14 +161,10 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
-/obj/item/stack/sheet/metal,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/bar{
 	initial_gas_mix = "TEMP=2.7"
 	},
+/obj/item/stack/sheet/metal,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -181,21 +177,13 @@
 /area/ruin/unpowered)
 "aF" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aH" = (
 /turf/open/floor/plating/airless,
@@ -224,27 +212,15 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "aM" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aN" = (
 /obj/item/trash/plate,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aO" = (
 /obj/item/chair,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aP" = (
 /obj/machinery/light{
@@ -269,11 +245,7 @@
 /area/ruin/unpowered)
 "aT" = (
 /obj/item/kitchen/fork,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aU" = (
 /obj/structure/table/wood,
@@ -295,11 +267,7 @@
 /area/ruin/unpowered)
 "aX" = (
 /obj/item/chair/stool/bar,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "aY" = (
 /obj/structure/lattice,
@@ -326,11 +294,7 @@
 /area/ruin/unpowered)
 "bd" = (
 /obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/airless/bar,
 /area/ruin/unpowered)
 "be" = (
 /turf/open/floor/plating/airless{

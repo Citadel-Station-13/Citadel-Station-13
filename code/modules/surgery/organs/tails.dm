@@ -10,8 +10,9 @@
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
-	if(H && H.dna && H.dna.species)
-		H.dna.species.stop_wagging_tail(H)
+	if(istype(H))
+		H.endTailWag()
+
 
 /obj/item/organ/tail/cat
 	name = "cat tail"

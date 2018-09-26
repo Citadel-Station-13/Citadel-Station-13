@@ -85,10 +85,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "o" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "p" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -139,9 +139,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"C" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/arrival)
 
 (1,1,1) = {"
 a
@@ -170,8 +167,8 @@ b
 (4,1,1) = {"
 b
 e
-C
-C
+f
+f
 s
 b
 "}
@@ -186,8 +183,8 @@ c
 (6,1,1) = {"
 b
 g
-C
-C
+f
+f
 t
 b
 "}
@@ -202,8 +199,8 @@ d
 (8,1,1) = {"
 d
 i
-C
-C
+f
+f
 f
 d
 "}
@@ -226,8 +223,8 @@ b
 (11,1,1) = {"
 c
 f
-C
-C
+f
+f
 f
 c
 "}

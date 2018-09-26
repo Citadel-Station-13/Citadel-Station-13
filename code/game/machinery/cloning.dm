@@ -207,7 +207,6 @@
 			Q.on_clone(quirks[V])
 
 		H.set_cloned_appearance()
-		H.give_genitals(TRUE)
 
 		H.suiciding = FALSE
 	attempting = FALSE

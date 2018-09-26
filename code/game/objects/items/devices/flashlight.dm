@@ -17,8 +17,6 @@
 
 /obj/item/flashlight/Initialize()
 	. = ..()
-	if(icon_state == "[initial(icon_state)]-on")
-		on = TRUE
 	update_brightness()
 
 /obj/item/flashlight/proc/update_brightness(mob/user = null)
@@ -170,7 +168,6 @@
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
 	if(!proximity_flag)
 		if(holo_cooldown > world.time)
 			to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
@@ -180,6 +177,7 @@
 			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
+	..()
 
 /obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
@@ -382,7 +380,6 @@
 	return
 
 /obj/item/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
 
@@ -391,7 +388,7 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			log_combat(user, M, "attacked", "EMP-light")
+			add_logs(user, M, "attacked", "EMP-light")
 			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
 								"<span class='userdanger'>[user] blinks \the [src] at you.")
 		else

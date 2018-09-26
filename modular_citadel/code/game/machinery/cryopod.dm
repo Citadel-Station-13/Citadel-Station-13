@@ -172,15 +172,14 @@
 	)
 
 /obj/machinery/cryopod/Initialize()
-	. = ..()
 	update_icon()
-	find_control_computer(TRUE)
+	find_control_computer()
+	return ..()
 
-/obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
-	for(var/obj/machinery/computer/cryopod/C in get_area(src))
+/obj/machinery/cryopod/proc/find_control_computer(urgent = 0,area/A)
+	for(var/obj/machinery/computer/cryopod/C in A)
 		control_computer = C
-		if(C)
-			return C
+		break
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
@@ -188,7 +187,7 @@
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
-	return null
+	return control_computer != null
 
 /obj/machinery/cryopod/close_machine(mob/user)
 	if(!control_computer)

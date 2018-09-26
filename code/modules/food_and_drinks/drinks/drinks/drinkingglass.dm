@@ -108,14 +108,13 @@
 	if(user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
-		log_combat(user, target, "splashed", src)
+		add_logs(user, target, "splashed", src)
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
 	..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
-	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
@@ -125,4 +124,5 @@
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
+	..()
 

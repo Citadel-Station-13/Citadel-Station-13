@@ -68,7 +68,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
@@ -89,6 +89,11 @@
 "aw" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/transport)
+"ay" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -132,7 +137,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aK" = (
@@ -199,7 +204,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -626,11 +631,11 @@ aa
 aa
 aa
 aa
-az
+ay
 aI
 aE
 aW
-az
+ay
 aa
 aa
 aa
@@ -753,9 +758,9 @@ aa
 aa
 aa
 ad
-az
+ay
 aO
-az
+ay
 ad
 aa
 aa

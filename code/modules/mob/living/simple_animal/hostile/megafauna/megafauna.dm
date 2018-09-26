@@ -68,8 +68,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
-	if(!force && health > 0)
+/mob/living/simple_animal/hostile/megafauna/dust()
+	if(health > 0)
 		return
 	else
 		..()
@@ -83,17 +83,10 @@
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
-
 		else if(L.stat >= SOFT_CRIT)
 			if(vore_active == TRUE && L.devourable == TRUE)
-				if(isliving(target) && !target.Adjacent(targets_from))
-					return
-				else
-					dragon_feeding(src,L)
-					if(L.loc == src.contents)
-						LoseTarget()
-						return 0
-			else
+				dragon_feeding(src,L)
+			else if(L.stat == DEAD)
 				devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)

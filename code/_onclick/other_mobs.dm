@@ -56,11 +56,6 @@
 		return FALSE
 	return TRUE
 
-/atom/ui_status(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		. = min(., UI_UPDATE)
-
 /atom/movable/can_interact(mob/user)
 	. = ..()
 	if(!.)
@@ -86,7 +81,6 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
-	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
@@ -97,7 +91,6 @@
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
-		return
 
 /*
 	Animals & All Unspecified

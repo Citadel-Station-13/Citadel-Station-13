@@ -9,13 +9,11 @@
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
-	footstep = FOOTSTEP_SAND
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
+	archdrops = list(/obj/item/stack/ore/glass = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	attachment_holes = FALSE
-	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
-	var/dug
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -23,20 +21,6 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
-
-/turf/open/floor/plating/asteroid/proc/getDug()
-	new digResult(src, 5)
-	if(postdig_icon_change)
-		if(!postdig_icon)
-			icon_plating = "[environment_type]_dug"
-			icon_state = "[environment_type]_dug"
-	dug = TRUE
-
-/turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
-	if(!dug)
-		return TRUE
-	if(user)
-		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -51,27 +35,11 @@
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(!.)
-		if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
-			if(!can_dig(user))
-				return TRUE
-
-			if(!isturf(user.loc))
-				return
-
-			to_chat(user, "<span class='notice'>You start digging...</span>")
-
-			if(W.use_tool(src, user, 40, volume=50))
-				if(!can_dig(user))
-					return TRUE
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
-				getDug()
-				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
-				return TRUE
-		else if(istype(W, /obj/item/storage/bag/ore))
-			for(var/obj/item/stack/ore/O in src)
-				SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
+	if(..())
+		return TRUE
+	if(istype(W, /obj/item/storage/bag/ore))
+		for(var/obj/item/stack/ore/O in src)
+			SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
@@ -92,23 +60,21 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
+	archdrops = list(/obj/item/stack/ore/glass/basalt = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	floor_variance = 15
-	digResult = /obj/item/stack/ore/glass/basalt
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
-	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
 	set_basalt_light(src)
-
-/turf/open/floor/plating/asteroid/getDug()
-	set_light(0)
-	return ..()
+	GET_COMPONENT(arch, /datum/component/archaeology)
+	ASSERT(isnull(arch.callback))
+	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
@@ -309,10 +275,10 @@
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = list(ARCH_PROB = 100, ARCH_MAXDROP = 5))
 	burnt_states = list("snow_dug")
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
-	digResult = /obj/item/stack/sheet/mineral/snow
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -332,7 +298,6 @@
 	icon_state = "snow-ice"
 	icon_plating = "snow-ice"
 	environment_type = "snow_cavern"
-	footstep = FOOTSTEP_FLOOR
 
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE

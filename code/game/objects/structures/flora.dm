@@ -294,6 +294,9 @@
 	throw_speed = 2
 	throw_range = 4
 
+/obj/item/twohanded/required/kirbyplants/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
@@ -361,6 +364,10 @@
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
 	desc = "A pile of rocks."
+
+/obj/structure/flora/rock/pile/Initialize()
+	. = ..()
+	icon_state = "[icon_state][rand(1,3)]"
 
 //Jungle grass
 

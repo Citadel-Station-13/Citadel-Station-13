@@ -110,6 +110,11 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
+/obj/screen/fullscreen/depression
+	icon_state = "depression"
+	layer = FLASH_LAYER
+	plane = FULLSCREEN_PLANE
+
 /obj/screen/fullscreen/curse
 	icon_state = "curse"
 	layer = CURSE_LAYER
@@ -117,11 +122,6 @@
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
-
-/obj/screen/fullscreen/blurry
-	icon = 'icons/mob/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	icon_state = "blurry"
 
 /obj/screen/fullscreen/flash
 	icon = 'icons/mob/screen_gen.dmi'

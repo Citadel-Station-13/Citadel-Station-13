@@ -48,7 +48,6 @@
 	return
 
 /obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
-	. = ..()
 	if(busy)
 		return
 	if(!proximity)
@@ -111,7 +110,7 @@
 		if(SYRINGE_INJECT)
 			// Always log attemped injections for admins
 			var/contained = reagents.log_list()
-			log_combat(user, target, "attempted to inject", src, addition="which had [contained]")
+			add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
 
 			if(!reagents.total_volume)
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
@@ -141,9 +140,11 @@
 									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
 
 				if(L != user)
-					log_combat(user, L, "injected", src, addition="which had [contained]")
+					add_logs(user, L, "injected", src, addition="which had [contained]")
 				else
-					L.log_message("injected themselves ([contained]) with [src.name]", LOG_ATTACK, color="orange")
+					log_attack("<font color='red'>[key_name(user)] injected [key_name(L)] with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
+					L.log_message("<font color='orange'>Injected themselves ([contained]) with [src.name].</font>", INDIVIDUAL_ATTACK_LOG)
+
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)
 			reagents.trans_to(target, amount_per_transfer_from_this)
@@ -223,7 +224,7 @@
 	list_reagents = list("chloralhydrate" = 50)
 
 /obj/item/reagent_containers/syringe/lethal/execution
-	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10) //Citadel edit, changing out plasma from lethals
+	list_reagents = list("amatoxin" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
 
 /obj/item/reagent_containers/syringe/mulligan
 	name = "Mulligan"
@@ -259,3 +260,10 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
+
+/obj/item/reagent_containers/syringe/alien
+	name = "Hive's Blessing"
+	desc = "A syringe filled with a strange viscous liquid. It might be best to leave it alone."
+	amount_per_transfer_from_this = 1
+	volume = 1
+	list_reagents = list("xenomicrobes" = 1)

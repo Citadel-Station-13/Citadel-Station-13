@@ -13,19 +13,19 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -31
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "d" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "e" = (
 /obj/item/folder/red,
 /obj/item/restraints/handcuffs,
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "f" = (
 /obj/structure/grille,
@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "g" = (
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "h" = (
 /obj/machinery/button/flasher{
@@ -46,15 +46,15 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/light,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "i" = (
-/obj/machinery/mineral/stacking_unit_console{
+/obj/machinery/mineral/labor_claim_console{
 	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
 "j" = (
 /obj/machinery/door/airlock/shuttle{
@@ -67,7 +67,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "k" = (
 /obj/machinery/door/airlock/shuttle{
@@ -120,7 +120,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "q" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -133,7 +133,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "s" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair/shuttle{
 	dir = 8
 	},
 /obj/machinery/flasher{
@@ -228,11 +228,15 @@
 /area/shuttle/labor)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "v" = (
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/labor)
 "w" = (
@@ -255,7 +259,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/white,
 /area/shuttle/labor)
 "x" = (
 /obj/structure/shuttle/engine/heater,

@@ -30,7 +30,7 @@
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]", forced="banner")
+		user.say("[warcry]")
 	var/old_transform = user.transform
 	user.transform *= 1.2
 	animate(user, transform = old_transform, time = 10)
@@ -288,7 +288,6 @@
 
 
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
 	user.visible_message("[user] chants deeply and waves [user.p_their()] staff!")

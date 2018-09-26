@@ -119,7 +119,6 @@
 		return  // Avoid hearing the same thing twice
 	if(!anyai && !(speaker in ai))
 		return
-	..()
 
 /obj/item/radio/intercom/process()
 	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))

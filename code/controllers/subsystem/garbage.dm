@@ -85,21 +85,41 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
-	var/queue = GC_QUEUE_CHECK
+	var/queue = GC_QUEUE_PREQUEUE
 
 	while (state == SS_RUNNING)
 		switch (queue)
+			if (GC_QUEUE_PREQUEUE)
+				HandlePreQueue()
+				queue = GC_QUEUE_PREQUEUE+1
 			if (GC_QUEUE_CHECK)
 				HandleQueue(GC_QUEUE_CHECK)
 				queue = GC_QUEUE_CHECK+1
 			if (GC_QUEUE_HARDDELETE)
 				HandleQueue(GC_QUEUE_HARDDELETE)
-				if (state == SS_PAUSED) //make us wait again before the next run.
-					state = SS_RUNNING
 				break
 
-	
+	if (state == SS_PAUSED) //make us wait again before the next run.
+		state = SS_RUNNING
 
+//If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
+//Don't attempt to optimize, not worth the effort.
+/datum/controller/subsystem/garbage/proc/HandlePreQueue()
+	var/list/tobequeued = queues[GC_QUEUE_PREQUEUE]
+	var/static/count = 0
+	if (count)
+		var/c = count
+		count = 0 //so if we runtime on the Cut, we don't try again.
+		tobequeued.Cut(1,c+1)
+
+	for (var/ref in tobequeued)
+		count++
+		Queue(ref, GC_QUEUE_PREQUEUE+1)
+		if (MC_TICK_CHECK)
+			break
+	if (count)
+		tobequeued.Cut(1,count+1)
+		count = 0
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
@@ -121,7 +141,7 @@ SUBSYSTEM_DEF(garbage)
 		if (!refID)
 			count++
 			if (MC_TICK_CHECK)
-				return
+				break
 			continue
 
 		var/GCd_at_time = queue[refID]
@@ -140,7 +160,7 @@ SUBSYSTEM_DEF(garbage)
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
-				return
+				break
 			continue
 
 		// Something's still referring to the qdel'd object.
@@ -163,20 +183,27 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
-					return
+					break
 				continue
 
 		Queue(D, level+1)
 
 		if (MC_TICK_CHECK)
-			return
+			break
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
 
+/datum/controller/subsystem/garbage/proc/PreQueue(datum/D)
+	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		queues[GC_QUEUE_PREQUEUE] += D
+		D.gc_destroyed = GC_QUEUED_FOR_QUEUING
+
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
 	if (isnull(D))
 		return
+	if (D.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
+		level = GC_QUEUE_HARDDELETE
 	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
@@ -221,6 +248,11 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time)
+
+/datum/controller/subsystem/garbage/proc/HardQueue(datum/D)
+	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		queues[GC_QUEUE_PREQUEUE] += D
+		D.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
 /datum/controller/subsystem/garbage/Recover()
 	if (istype(SSgarbage.queues))
@@ -276,7 +308,7 @@ SUBSYSTEM_DEF(garbage)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
-				SSgarbage.Queue(D)
+				SSgarbage.PreQueue(D)
 			if (QDEL_HINT_IWILLGC)
 				D.gc_destroyed = world.time
 				return
@@ -296,18 +328,18 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				I.no_respect_force++
 
-				SSgarbage.Queue(D)
-			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete
-				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
+				SSgarbage.PreQueue(D)
+			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
+				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
-				SSgarbage.Queue(D)
+				SSgarbage.PreQueue(D)
 				#ifdef TESTING
 				D.find_references()
 				#endif
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
-				SSgarbage.Queue(D)
+				SSgarbage.PreQueue(D)
 				#ifdef TESTING
 				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
 				#endif
@@ -317,7 +349,7 @@ SUBSYSTEM_DEF(garbage)
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				#endif
 				I.no_hint++
-				SSgarbage.Queue(D)
+				SSgarbage.PreQueue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 

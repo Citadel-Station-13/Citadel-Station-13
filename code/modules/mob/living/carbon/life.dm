@@ -11,19 +11,8 @@
 	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
 
-	. = ..()
-
-	if (QDELETED(src))
-		return
-
-	if(.) //not dead
+	if(..()) //not dead
 		handle_blood()
-
-	if(stat != DEAD)
-		var/bprv = handle_bodyparts()
-		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-			updatehealth()
-			update_stamina()
 
 	if(stat != DEAD)
 		handle_brain_damage()
@@ -33,7 +22,6 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		rot()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -64,7 +52,7 @@
 		return
 	if(ismob(loc))
 		return
-	if(isbelly(loc))
+	if(istype(loc, /obj/belly))
 		return
 
 	var/datum/gas_mixture/environment
@@ -77,7 +65,7 @@
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
-		else if(health <= crit_threshold)
+		else if(health <= HEALTH_THRESHOLD_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
 	//Suffocate
@@ -172,7 +160,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(health >= crit_threshold)
+		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
@@ -222,58 +210,14 @@
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
-
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
-
 	//NITRYL
-	if(breath_gases[/datum/gas/nitryl])
+	if (breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
-
-	//MIASMA
-	if(breath_gases[/datum/gas/miasma])
-		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
-
-		if(prob(1 * miasma_partialpressure))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
-			miasma_disease.name = "Unknown"
-			ForceContractDisease(miasma_disease, TRUE, TRUE)
-
-		//Miasma side effects
-		switch(miasma_partialpressure)
-			if(1 to 5)
-				// At lower pp, give out a little warning
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-				if(prob(5))
-					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-			if(5 to 20)
-				//At somewhat higher pp, warning becomes more obvious
-				if(prob(15))
-					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
-			if(15 to 30)
-				//Small chance to vomit. By now, people have internals on anyway
-				if(prob(5))
-					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-					vomit()
-			if(30 to INFINITY)
-				//Higher chance to vomit. Let the horror start
-				if(prob(25))
-					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
-					vomit()
-			else
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-	//Clear all moods if no miasma at all
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
 
 
 
@@ -302,45 +246,8 @@
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
 
-// Make corpses rot, emitting miasma
-/mob/living/carbon/proc/rot()
-	// Properly stored corpses shouldn't create miasma
-	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
-		return
-
-	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent("formaldehyde", 15) || has_trait(TRAIT_HUSK))
-		return
-
-	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
-		return
-
-	// Wait a bit before decaying
-	if(world.time - timeofdeath < 1200)
-		return
-
-	var/deceasedturf = get_turf(src)
-
-	// Closed turfs don't have any air in them, so no gas building up
-	if(!istype(deceasedturf,/turf/open))
-		return
-
-	var/turf/open/miasma_turf = deceasedturf
-
-	var/list/cached_gases = miasma_turf.air.gases
-
-	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
-	cached_gases[/datum/gas/miasma][MOLES] += 0.02
-
 /mob/living/carbon/proc/handle_blood()
 	return
-
-/mob/living/carbon/proc/handle_bodyparts()
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life()
 
 /mob/living/carbon/proc/handle_organs()
 	for(var/V in internal_organs)
@@ -530,7 +437,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(drunkenness)
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
@@ -551,12 +457,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					else
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
-						say(pick(GLOB.ballmer_good_msg), forced = "ballmer")
+						say(pick(GLOB.ballmer_good_msg))
 					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
 						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
-						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
+						say(pick(GLOB.ballmer_windows_me_msg))
 
 		if(drunkenness >= 41)
 			if(prob(25))
@@ -645,9 +551,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(4, TRUE,  TRUE)
+	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
 
 
 ////////////////
@@ -671,25 +577,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /////////////////////////////////////
 
 /mob/living/carbon/proc/can_heartattack()
-	if(!needs_heart())
+	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/needs_heart()
-	if(has_trait(TRAIT_STABLEHEART))
-		return FALSE
-	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
-		return FALSE
-	return TRUE
-
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
-		return FALSE
-	else if(!needs_heart())
 		return FALSE
 	return TRUE
 

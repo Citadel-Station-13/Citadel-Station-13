@@ -12,8 +12,6 @@
 	icon_state = "plating"
 	intact = FALSE
 	baseturfs = /turf/open/space
-	footstep = FOOTSTEP_PLATING
-
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)

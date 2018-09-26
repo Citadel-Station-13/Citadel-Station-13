@@ -374,4 +374,4 @@
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower
-		H.say("LIGHTNINGBOLT!!", forced = "spell")
+		H.say("LIGHTNINGBOLT!!")

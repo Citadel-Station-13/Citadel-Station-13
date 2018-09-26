@@ -303,7 +303,7 @@
 		if (mobhook && mobhook.parent != user)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
-			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/check_range)))
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/check_range))
 
 /obj/item/twohanded/shockpaddles/Moved()
 	. = ..()
@@ -455,6 +455,7 @@
 	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
 			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
 	busy = TRUE
+	update_icon()
 	if(do_after(user, 10, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
@@ -463,17 +464,18 @@
 		M.updatehealth() //forces health update before next life tick
 		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 		M.emote("gasp")
-		log_combat(user, M, "stunned", src)
-		busy = FALSE
+		add_logs(user, M, "stunned", src)
 		if(req_defib)
 			defib.deductcharge(revivecost)
 			cooldown = TRUE
+		busy = FALSE
+		update_icon()
+		if(!req_defib)
+			recharge(60)
+		if(req_defib && (defib.cooldowncheck(user)))
+			return
 	busy = FALSE
 	update_icon()
-	if(req_defib)
-		defib.cooldowncheck(user)
-	else
-		recharge(60)
 
 /obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(req_defib && defib.safety)
@@ -515,9 +517,10 @@
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
-			log_combat(user, H, "overloaded the heart of", defib)
+			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)
+			SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
 			if(req_defib)
 				defib.deductcharge(revivecost)
 				cooldown = TRUE
@@ -600,11 +603,11 @@
 					H.set_heartattack(FALSE)
 					H.revive()
 					H.emote("gasp")
-					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)
+					H.Jitter(100)
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
-					log_combat(user, H, "revived", defib)
+					add_logs(user, H, "revived", defib)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1

@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user) //User is the person being examined
+/mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -51,7 +51,7 @@
 	if(gloves && !(SLOT_GLOVES in obscured))
 		msg += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands.\n"
 	else if(FR && length(FR.blood_DNA))
-		var/hand_number = get_num_arms(FALSE)
+		var/hand_number = get_num_arms()
 		if(hand_number)
 			msg += "<span class='warning'>[t_He] [t_has] [hand_number > 1 ? "" : "a"] blood-stained hand[hand_number > 1 ? "s" : ""]!</span>\n"
 
@@ -80,11 +80,8 @@
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	//eyes
-	if(!(SLOT_GLASSES in obscured))
-		if(glasses)
-			msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
-		else if(eye_color == BLOODCULT_EYE && iscultist(src) && has_trait(CULT_EYES))
-			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
+	if(glasses && !(SLOT_GLASSES in obscured))
+		msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))
@@ -94,17 +91,16 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
-	//Status effects
-	msg += status_effect_examines()
-
-	//CIT CHANGES START HERE - adds genital details to examine text
+//CIT CHANGES START HERE - adds genital details to examine text
 	if(LAZYLEN(internal_organs))
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
 				msg += "[dicc.desc]\n"
-
+				
 	msg += attempt_vr(src,"examine_bellies",args) //vore Code
 //END OF CIT CHANGES
+	//Status effects
+	msg += status_effect_examines()
 
 	//Jitters
 	switch(jitteriness)
@@ -145,24 +141,11 @@
 	msg += "<span class='warning'>"
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/list/disabled = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.disabled)
-			disabled += BP
 		missing -= BP.body_zone
 		for(var/obj/item/I in BP.embedded_objects)
 			msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
-
-	for(var/X in disabled)
-		var/obj/item/bodypart/BP = X
-		var/damage_text
-		if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //Stamina is disabling the limb
-			damage_text = "limp and lifeless"
-		else
-			var/more_brute = BP.brute_dam >= BP.burn_dam
-			damage_text = more_brute ? "broken and mangled" : "burnt and blistered"
-		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
@@ -338,11 +321,13 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+
 	else if(isobserver(user) && traitstring)
 		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
 
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

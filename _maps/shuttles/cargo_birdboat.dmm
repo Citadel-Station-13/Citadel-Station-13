@@ -32,7 +32,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "i" = (
 /obj/machinery/conveyor{
@@ -40,7 +40,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{
@@ -48,7 +48,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "k" = (
 /obj/machinery/conveyor{
@@ -56,7 +56,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "l" = (
 /obj/machinery/door/poddoor{
@@ -69,6 +69,9 @@
 	name = "cargo shuttle conveyor belt"
 	},
 /turf/open/floor/plating,
+/area/shuttle/supply)
+"m" = (
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "n" = (
 /turf/open/floor/mineral/titanium,
@@ -162,31 +165,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"G" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"P" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"R" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 
 (1,1,1) = {"
@@ -204,11 +183,11 @@ w
 (2,1,1) = {"
 b
 e
-P
-R
-n
+g
+e
+m
 B
-n
+m
 g
 b
 x
@@ -216,11 +195,11 @@ x
 (3,1,1) = {"
 b
 f
-P
-G
-n
-n
-n
+g
+f
+m
+m
+m
 g
 u
 y
@@ -228,11 +207,11 @@ y
 (4,1,1) = {"
 b
 A
-P
-G
-n
-n
-n
+g
+f
+m
+m
+m
 g
 u
 y
@@ -242,9 +221,9 @@ b
 f
 h
 j
-n
-n
-n
+m
+m
+m
 g
 u
 y

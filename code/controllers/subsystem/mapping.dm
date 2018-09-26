@@ -33,18 +33,19 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
+	var/dmm_suite/loader
 
-//dlete dis once #39770 is resolved
-/datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
+/datum/controller/subsystem/mapping/PreInit()
 	if(!config)
 #ifdef FORCE_MAP
 		config = load_map_config(FORCE_MAP)
 #else
 		config = load_map_config(error_if_missing = FALSE)
 #endif
+	return ..()
+
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
-	HACK_LoadMapConfig()
 	if(initialized)
 		return
 	if(config.defaulted)
@@ -53,6 +54,7 @@ SUBSYSTEM_DEF(mapping)
 		if(!config || config.defaulted)
 			to_chat(world, "<span class='boldannounce'>Unable to load next or default map config, defaulting to Box Station</span>")
 			config = old_config
+	loader = new
 	loadWorld()
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
@@ -92,8 +94,9 @@ SUBSYSTEM_DEF(mapping)
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
+	QDEL_NULL(loader)
 	initialize_reserved_level()
-	return ..()
+	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
    Used by the AI doomsday and the self destruct nuke.
@@ -167,7 +170,6 @@ SUBSYSTEM_DEF(mapping)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
-	. = list()
 	var/start_time = REALTIMEOFDAY
 
 	if (!islist(files))  // handle single-level maps
@@ -175,15 +177,10 @@ SUBSYSTEM_DEF(mapping)
 
 	// check that the total z count of all maps matches the list of traits
 	var/total_z = 0
-	var/list/parsed_maps = list()
 	for (var/file in files)
 		var/full_path = "_maps/[path]/[file]"
-		var/datum/parsed_map/pm = new(file(full_path))
-		var/bounds = pm?.bounds
-		if (!bounds)
-			errorList |= full_path
-			continue
-		parsed_maps[pm] = total_z  // save the start Z of this file
+		var/bounds = loader.load_map(file(full_path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+		files[file] = total_z  // save the start Z of this file
 		total_z += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
 	if (!length(traits))  // null or empty - default
@@ -204,13 +201,12 @@ SUBSYSTEM_DEF(mapping)
 		++i
 
 	// load the maps
-	for (var/P in parsed_maps)
-		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
-			errorList |= pm.original_path
+	for (var/file in files)
+		var/full_path = "_maps/[path]/[file]"
+		if(!loader.load_map(file(full_path), 0, 0, start_z + files[file], no_changeturf = TRUE))
+			errorList |= full_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
-	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
@@ -460,13 +456,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 		var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,i))
 		var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,i))
-		var/block = block(A, B)
-		for(var/t in block)
-			// No need to empty() these, because it's world init and they're
-			// already /turf/open/space/basic.
-			var/turf/T = t
-			T.flags_1 |= UNUSED_RESERVATION_TURF_1
-		unused_turfs["[i]"] = block
+		reserve_turfs(block(A, B))
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)

@@ -8,7 +8,7 @@
 
 	var/scanning = FALSE
 	var/health_scan
-	var/alarm_health = HEALTH_THRESHOLD_CRIT
+	var/alarm_health = 0
 
 /obj/item/assembly/health/examine(mob/user)
 	..()
@@ -31,11 +31,11 @@
 	return secured
 
 /obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
-	if(alarm_health == HEALTH_THRESHOLD_CRIT)
-		alarm_health = HEALTH_THRESHOLD_DEAD
+	if(alarm_health == 0)
+		alarm_health = -90
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
-		alarm_health = HEALTH_THRESHOLD_CRIT
+		alarm_health = 0
 		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
 	return TRUE
 

@@ -1,6 +1,10 @@
+/obj/item/disk/surgery/reconstruction
+	name = "Reconstruction Surgery Disk"
+	desc = "The disk provides instructions on how to repair a body without the use of chemicals."
+	surgeries = list(/datum/surgery/advanced/reconstruction)
+
 /datum/surgery/advanced/reconstruction
-	name = "Reconstruction"
-	desc = "A surgical procedure that gradually repairs damage done to a body without the assistance of chemicals. Unlike classic medicine, it is effective on corpses."
+	name = "body reconstruction"
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,

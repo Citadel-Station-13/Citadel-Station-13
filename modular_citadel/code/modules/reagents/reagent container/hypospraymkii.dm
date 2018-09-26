@@ -185,7 +185,7 @@
 			return
 
 	var/contained = vial.reagents.log_list()
-	log_combat(user, L, "attemped to inject", src, addition="which had [contained]")
+	add_logs(user, L, "attemped to inject", src, addition="which had [contained]")
 //Always log attemped injections for admins
 	if(vial != null)
 		switch(mode)

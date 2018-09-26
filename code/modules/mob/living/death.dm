@@ -26,14 +26,14 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash, drop_items, force)
+/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
 	death(TRUE)
 
 	if(drop_items)
 		unequip_everything()
 
 	if(buckled)
-		buckled.unbuckle_mob(src, force = TRUE)
+		buckled.unbuckle_mob(src,force=1)
 
 	dust_animation()
 	spawn_dust(just_ash)
@@ -74,12 +74,9 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
-	if(!gibbed && !QDELETED(src))
-		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
+	addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
-
 	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
-
 	if (client)
 		client.move_delay = initial(client.move_delay)
 

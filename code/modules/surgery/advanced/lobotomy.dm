@@ -1,6 +1,10 @@
+/obj/item/disk/surgery/lobotomy
+	name = "Lobotomy Surgery Disk"
+	desc = "The disk provides instructions on how to perform a lobotomy, to cure the most resilient brain ailments."
+	surgeries = list(/datum/surgery/advanced/lobotomy)
+
 /datum/surgery/advanced/lobotomy
-	name = "Lobotomy"
-	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
+	name = "lobotomy"
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,

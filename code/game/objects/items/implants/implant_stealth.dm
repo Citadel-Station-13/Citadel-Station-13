@@ -25,7 +25,6 @@
 	qdel(src)
 
 /obj/structure/closet/cardboard/agent/process()
-	//alpha = max(0, alpha - 50) //Citadel edit
 	animate(src, , alpha = alpha - 50, time = 3)
 
 /obj/structure/closet/cardboard/agent/Move()
@@ -33,16 +32,7 @@
 	if(.)
 		alpha = min(alpha + 5, 255)
 
-/obj/structure/closet/cardboard/agent/proc/reveal()
-	alpha = 255
-	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
-
 /obj/structure/closet/cardboard/agent/Bump(atom/movable/A)
 	. = ..()
 	if(isliving(A))
-		reveal()
-
-/obj/structure/closet/cardboard/agent/Bumped(atom/movable/A)
-	. = ..()
-	if(isliving(A))
-		reveal()
+		alpha = 255

@@ -154,8 +154,6 @@
 	var/tile_count = width * height
 
 	//Generate per tile icons
-	var/icon/base_icon = get_base_icon()
-
 	for(var/id in 1 to tile_count)
 		var/y = width - round((id - 1) / width)
 		var/x = ((id - 1) % width) + 1
@@ -165,7 +163,7 @@
 		var/y_start = 1 + ((y - 1) * world.icon_size)
 		var/y_end = y_start + world.icon_size - 1
 
-		var/icon/T = new(base_icon)
+		var/icon/T = get_base_icon()
 		T.Crop(x_start,y_start,x_end,y_end)
 		puzzle_pieces["[id]"] = T
 		left_ids += id
@@ -292,10 +290,10 @@
 	prisoner.notransform = FALSE
 	prisoner = null
 
-//Some armor so it's harder to kill someone by mistake.
+//Some armor so it's harder to kill someone by mistake. EDITED - Hugboxed
 /obj/structure/puzzle_element/prison
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 50, "acid" = 50)
-
+	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF
+	
 /obj/structure/puzzle_element/prison/relaymove(mob/user)
 	return
 

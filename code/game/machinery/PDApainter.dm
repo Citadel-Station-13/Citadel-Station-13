@@ -130,7 +130,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat || usr.restrained())
+	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
 
 	if(storedpda)

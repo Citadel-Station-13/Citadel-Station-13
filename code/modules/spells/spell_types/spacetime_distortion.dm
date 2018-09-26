@@ -81,7 +81,8 @@
 
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	. = ..()
-	setDir(pick(GLOB.cardinals))
+	sound = "sound/guitar/[safepick(GLOB.guitar_notes)]"
+	dir = pick(GLOB.cardinals)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))

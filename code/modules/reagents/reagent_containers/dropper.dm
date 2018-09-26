@@ -9,7 +9,6 @@
 	container_type = TRANSPARENT
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
-	. = ..()
 	if(!proximity)
 		return
 	if(!target.reagents)
@@ -69,7 +68,7 @@
 				for(var/datum/reagent/A in src.reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
-			log_combat(user, M, "squirted", R)
+			add_logs(user, M, "squirted", R)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")

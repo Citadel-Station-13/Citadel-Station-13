@@ -116,6 +116,11 @@
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"ax" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/turf/open/space/basic,
+/area/ruin/unpowered/xenonest)
 "aA" = (
 /obj/structure/alien/weeds,
 /obj/item/flamethrower,
@@ -537,7 +542,13 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "pE" = (
-/obj/effect/mob_spawn/alien/corpse/humanoid/queen,
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/queen/large{
+	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
+	name = "alien queen";
+	pixel_x = -16;
+	plants_off = 1
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "yf" = (
@@ -553,7 +564,7 @@
 /area/ruin/unpowered/xenonest)
 "JM" = (
 /obj/structure/alien/weeds/node,
-/obj/effect/mob_spawn/alien/corpse/humanoid/drone,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Uh" = (
@@ -841,7 +852,7 @@ ac
 af
 ak
 ag
-lG
+al
 ac
 ac
 ag
@@ -893,7 +904,7 @@ ag
 ag
 ag
 ag
-aF
+ag
 ag
 ag
 ag
@@ -950,7 +961,7 @@ ac
 ac
 ac
 am
-aF
+ag
 ag
 ag
 ac
@@ -1252,7 +1263,7 @@ af
 ag
 af
 aw
-aF
+ag
 am
 ac
 an
@@ -1351,7 +1362,7 @@ ac
 af
 ag
 ar
-lG
+al
 ag
 ag
 ag
@@ -1558,7 +1569,7 @@ ac
 ah
 ag
 ac
-aF
+ag
 ag
 ag
 ag
@@ -1863,7 +1874,7 @@ af
 ai
 af
 ag
-aF
+ag
 ag
 ag
 aw
@@ -1914,7 +1925,7 @@ ac
 as
 at
 at
-ac
+ax
 ac
 ac
 ac

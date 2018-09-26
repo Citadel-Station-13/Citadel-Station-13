@@ -104,7 +104,7 @@ Difficulty: Medium
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
-		L.maxHealth = round(maxHealth * 0.6,DAMAGE_PRECISION)
+		L.maxHealth = maxHealth * 0.6
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth

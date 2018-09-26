@@ -23,10 +23,9 @@
 		add_overlay("securecrateg")
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
-	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
+	if(prob(tamperproof))
 		boom()
-	else
-		..()
+	..()
 
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)

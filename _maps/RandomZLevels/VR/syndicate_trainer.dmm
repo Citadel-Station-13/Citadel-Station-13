@@ -1940,13 +1940,9 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "lu" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lv" = (
 /obj/structure/rack,
@@ -1958,11 +1954,9 @@
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/centcomAway/thunderdome)
 "lz" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lA" = (
 /obj/machinery/door/poddoor{
@@ -2284,183 +2278,114 @@
 /area/awaymission/centcomAway/thunderdome)
 "mX" = (
 /obj/machinery/door/airlock/centcom,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/turf/open/floor/plasteel/redyellow{
+	dir = 5
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "mZ" = (
 /obj/machinery/door/airlock/centcom,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria{
+/turf/open/floor/plasteel/barber{
+	dir = 8;
 	heat_capacity = 1
 	},
 /area/awaymission/centcomAway/thunderdome)
 "na" = (
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nb" = (
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nc" = (
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/corner{
 	dir = 2
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nd" = (
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ne" = (
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nf" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "ng" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/red/side,
 /area/awaymission/centcomAway/thunderdome)
 "nh" = (
 /obj/machinery/door/airlock/centcom,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "nj" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
+/turf/open/floor/plasteel/green/side{
+	dir = 2
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nk" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
+/turf/open/floor/plasteel/green/side{
+	dir = 10
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nl" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
+/turf/open/floor/plasteel/red/side{
+	dir = 6
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nm" = (
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nn" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/turf/open/floor/plasteel/red/side{
+	dir = 5
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "no" = (
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "np" = (
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nq" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
+/turf/open/floor/plasteel/green/side{
+	dir = 9
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nr" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
+/turf/open/floor/plasteel/green/side{
+	dir = 5
 	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ns" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
+/turf/open/floor/plasteel/red/side{
+	dir = 9
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nt" = (
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/corner{
 	dir = 2
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nu" = (
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nv" = (
 /obj/machinery/door/airlock/centcom,
@@ -2471,20 +2396,14 @@
 /turf/open/floor/goonplaque,
 /area/awaymission/centcomAway/thunderdome)
 "nx" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "ny" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
+/turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "nz" = (
 /obj/structure/table,

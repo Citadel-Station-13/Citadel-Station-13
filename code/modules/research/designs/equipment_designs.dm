@@ -1,4 +1,3 @@
-/*
 /datum/design/flightsuit
 	name = "Flight Suit"
 	desc = "A specialized hardsuit that is able to attach a flightpack and accessories.."
@@ -30,7 +29,7 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)
 	construction_time = 100
 	category = list("Misc")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING */
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/constructionhardsuit
 	name = "Construction Hardsuit"

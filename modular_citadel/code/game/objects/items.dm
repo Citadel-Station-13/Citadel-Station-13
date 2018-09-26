@@ -12,6 +12,3 @@
 
 /obj/item/clothing/head/ushanka
 	alternate_screams = list('modular_citadel/sound/misc/cyka1.ogg', 'modular_citadel/sound/misc/cheekibreeki.ogg')
-
-/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
-	return

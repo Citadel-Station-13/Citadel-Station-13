@@ -28,7 +28,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-	active = TRUE
+	active = 1
 	locked = TRUE
 	state = 2
 

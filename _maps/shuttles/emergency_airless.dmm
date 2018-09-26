@@ -31,7 +31,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "g" = (
-/obj/docking_port/mobile/emergency/shuttle_build{
+/obj/docking_port/mobile/emergency{
 	dwidth = 11;
 	height = 18;
 	name = "Shuttle Under Construction";
@@ -39,6 +39,10 @@
 	preferred_direction = 2;
 	width = 30
 	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"h" = (
+/obj/effect/shuttle_build,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 
@@ -337,7 +341,7 @@ f
 f
 f
 f
-f
+h
 f
 f
 f

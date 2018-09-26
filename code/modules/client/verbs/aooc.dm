@@ -45,7 +45,8 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in AOOC: [msg]")
 			return
 
-	mob.log_talk(raw_msg,LOG_OOC, tag="(AOOC)")
+	log_talk(mob,"(AOOC) [key_name(src)] : [raw_msg]",LOGOOC)
+	mob.log_message("(AOOC) [key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
 	if(prefs.unlock_content)

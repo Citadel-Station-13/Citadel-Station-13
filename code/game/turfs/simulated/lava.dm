@@ -12,8 +12,6 @@
 	light_color = LIGHT_COLOR_LAVA
 	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
-	footstep = FOOTSTEP_LAVA
-
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 

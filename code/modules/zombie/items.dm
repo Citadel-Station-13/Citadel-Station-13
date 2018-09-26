@@ -31,11 +31,11 @@
 		return
 	else if(isliving(target))
 		if(ishuman(target))
-			try_to_zombie_infect(target)
+			check_infection(target, user)
 		else
 			check_feast(target, user)
 
-/proc/try_to_zombie_infect(mob/living/carbon/human/target)
+/obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
 	CHECK_DNA_AND_SPECIES(target)
 
 	if(NOZOMBIE in target.dna.species.species_traits)
@@ -48,7 +48,6 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
-
 
 
 /obj/item/zombie_hand/suicide_act(mob/user)
