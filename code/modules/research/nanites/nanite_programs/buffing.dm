@@ -12,12 +12,6 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 0.5
 
-/datum/nanite_program/nervous/active_effect()
-	. = ..()
-	if(iscarbon(host_mob))
-		var/mob/living/carbon/C = host_mob
-		C.adjustStaminaLoss(-2)
-
 /datum/nanite_program/nervous/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
@@ -38,7 +32,7 @@
 	host_mob.SetStun(0)
 	host_mob.SetKnockdown(0)
 	host_mob.SetUnconscious(0)
-	host_mob.adjustStaminaLoss(-75)
+	host_mob.adjustStaminaLoss(-10) //stimulants give stamina heal now
 	host_mob.lying = 0
 	host_mob.update_canmove()
 	host_mob.reagents.add_reagent("stimulants", 1.5)

@@ -21,6 +21,17 @@
 			if(M.digestable || !(digest_mode == DM_DIGEST)) // don't give digesty messages to indigestible people
 				to_chat(M,"<span class='notice'>[pick(EL)]</span>")
 
+///////////////////// Prey Loop Refresh/hack //////////////////////
+	for(var/mob/living/M in contents)
+		if(isbelly(M.loc))
+			if(world.time > M.next_preyloop)
+				if(!silent)
+					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
+					var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
+					M.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)
+					M.next_preyloop = world.time + 52 SECONDS
+
+
 /////////////////////////// Exit Early ////////////////////////////
 	var/list/touchable_items = contents - items_preserved
 	if(!length(touchable_items))
@@ -168,7 +179,7 @@
 //because dragons need snowflake guts
 	if(digest_mode == DM_DRAGON)
 		for (var/mob/living/M in contents)
-			if(prob(25))
+			if(prob(55)) //if you're hearing this, you're a vore ho anyway.
 				M.stop_sound_channel(CHANNEL_DIGEST)
 				for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
 					if(H.client && H.client.prefs.cit_toggles & DIGESTION_NOISES)

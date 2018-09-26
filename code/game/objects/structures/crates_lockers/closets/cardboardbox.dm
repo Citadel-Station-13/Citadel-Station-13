@@ -14,16 +14,16 @@
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	var/move_speed_multiplier = 1
-	var/use_mob_movespeed = FALSE
 	var/move_delay = FALSE
 	var/egged = 0
+	var/use_mob_movespeed = FALSE //Citadel adds snowflake box handling
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	if(step(src, direction))
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/walk_delay)) * move_speed_multiplier)
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), (use_mob_movespeed ? user.movement_delay() : CONFIG_GET(number/movedelay/walk_delay)) * move_speed_multiplier)
 	else
 		ResetMoveDelay()
 

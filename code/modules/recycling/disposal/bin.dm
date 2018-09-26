@@ -136,7 +136,7 @@
 			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
 		else
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
-			add_logs(user, target, "stuffed", addition="into [src]")
+			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
 
@@ -453,7 +453,7 @@
 		..()
 		flush()
 
-/obj/machinery/disposal/deliveryChute/CollidedWith(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
 	if(!AM.CanEnterDisposals())
 		return
 	switch(dir)

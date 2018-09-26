@@ -173,6 +173,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+#define BLOOD_AMOUNT_PER_DECAL		20
 
 //suit sensors: sensor_mode defines
 
@@ -448,6 +449,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
@@ -465,3 +468,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+#define AREASELECT_CORNERA "corner A"
+#define AREASELECT_CORNERB "corner B"

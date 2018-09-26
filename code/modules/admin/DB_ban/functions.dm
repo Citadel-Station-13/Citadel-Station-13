@@ -80,8 +80,8 @@
 	var/client/banned_client = banned_mob?.client
 	var/banned_mob_guest_key = had_banned_mob && IsGuestKey(banned_mob.key)
 	banned_mob = null
-
-	var/datum/DBQuery/query_add_ban_get_ckey = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/datum/DBQuery/query_add_ban_get_ckey = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_add_ban_get_ckey.warn_execute())
 		qdel(query_add_ban_get_ckey)
 		return
@@ -123,9 +123,9 @@
 			adminwho += ", [C]"
 
 	reason = sanitizeSQL(reason)
-
+	var/sql_a_ckey = sanitizeSQL(a_ckey)
 	if(maxadminbancheck)
-		var/datum/DBQuery/query_check_adminban_amt = SSdbcore.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/datum/DBQuery/query_check_adminban_amt = SSdbcore.NewQuery("SELECT count(id) AS num FROM [format_table_name("ban")] WHERE (a_ckey = '[sql_a_ckey]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_check_adminban_amt.warn_execute())
 			qdel(query_check_adminban_amt)
 			return
@@ -143,7 +143,12 @@
 		computerid = "0"
 	if(!ip)
 		ip = "0.0.0.0"
-	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', INET_ATON('[ip]'), '[a_ckey]', '[a_computerid]', INET_ATON('[a_ip]'), '[who]', '[adminwho]')"
+	var/sql_job = sanitizeSQL(job)
+	var/sql_computerid = sanitizeSQL(computerid)
+	var/sql_ip = sanitizeSQL(ip)
+	var/sql_a_computerid = sanitizeSQL(a_computerid)
+	var/sql_a_ip = sanitizeSQL(a_ip)
+	var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[sql_job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[sql_ckey]', '[sql_computerid]', INET_ATON('[sql_ip]'), '[sql_a_ckey]', '[sql_a_computerid]', INET_ATON('[sql_a_ip]'), '[who]', '[adminwho]')"
 	var/datum/DBQuery/query_add_ban = SSdbcore.NewQuery(sql)
 	if(!query_add_ban.warn_execute())
 		qdel(query_add_ban)
@@ -207,10 +212,11 @@
 		bantype_sql = "(bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now() ) )"
 	else
 		bantype_sql = "bantype = '[bantype_str]'"
-
-	var/sql = "SELECT id FROM [format_table_name("ban")] WHERE ckey = '[ckey]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/sql = "SELECT id FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
 	if(job)
-		sql += " AND job = '[job]'"
+		var/sql_job = sanitizeSQL(job)
+		sql += " AND job = '[sql_job]'"
 
 	if(!SSdbcore.Connect())
 		return
@@ -252,7 +258,7 @@
 		to_chat(usr, "Cancelled")
 		return
 
-	var/datum/DBQuery/query_edit_ban_get_details = SSdbcore.NewQuery("SELECT (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
+	var/datum/DBQuery/query_edit_ban_get_details = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
 	if(!query_edit_ban_get_details.warn_execute())
 		qdel(query_edit_ban_get_details)
 		return
@@ -319,7 +325,7 @@
 	if(!check_rights(R_BAN))
 		return
 
-	var/sql = "SELECT (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey) FROM [format_table_name("ban")] WHERE id = [id]"
+	var/sql = "SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey) FROM [format_table_name("ban")] WHERE id = [id]"
 
 	if(!SSdbcore.Connect())
 		return
@@ -406,6 +412,12 @@
 	output += "<tr><td><b>IP:</b> <input type='text' name='dbbanaddip'></td>"
 	output += "<td><b>Computer id:</b> <input type='text' name='dbbanaddcid'></td></tr>"
 	output += "<tr><td><b>Duration:</b> <input type='text' name='dbbaddduration'></td>"
+	output += "<tr><td><b>Severity:</b><select name='dbbanaddseverity'>"
+	output += "<option value=''>--</option>"
+	output += "<option value='High'>High Severity</option>"
+	output += "<option value='Medium'>Medium Severity</option>"
+	output += "<option value='Minor'>Minor Severity</option>"
+	output += "<option value='None'>No Severity</option>"
 	output += "<td><b>Job:</b><select name='dbbanaddjob'>"
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())
@@ -477,7 +489,7 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 		var/limit = " LIMIT [bansperpage * page], [bansperpage]"
-		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), unbanned, (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].unbanned_ckey), unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
+		var/datum/DBQuery/query_search_bans = SSdbcore.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey), unbanned, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].unbanned_ckey), unbanned_ckey), unbanned_datetime, edits, round_id FROM [format_table_name("ban")] WHERE [search] ORDER BY bantime DESC[limit]")
 		if(!query_search_bans.warn_execute())
 			qdel(query_search_bans)
 			return

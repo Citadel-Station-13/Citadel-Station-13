@@ -47,9 +47,8 @@
 	var/allow_persistence_save = TRUE
 
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
-
-	var/flipseclevel = FALSE //CIT CHANGE - adds a 10% chance for the alert level to be the opposite of what the gamemode is supposed to have
 	var/setup_error		//What stopepd setting up the mode.
+	var/flipseclevel = FALSE //CIT CHANGE - adds a 10% chance for the alert level to be the opposite of what the gamemode is supposed to have
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -87,7 +86,6 @@
 
 	if(prob(20)) //CIT CHANGE - adds a 20% chance for the security level to be the opposite of what it normally is
 		flipseclevel = TRUE
-
 	if(SSdbcore.Connect())
 		var/sql
 		if(SSticker.mode)
@@ -181,12 +179,13 @@
 		round_converted = 0
 		return
 	 //somewhere between 1 and 3 minutes from now
-	if(!CONFIG_GET(keyed_flag_list/midround_antag)[SSticker.mode.config_tag])
+	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
 		round_converted = 0
 		return 1
 	for(var/mob/living/carbon/human/H in antag_candidates)
 		if(H.client)
 			replacementmode.make_antag_chance(H)
+	replacementmode.gamemode_ready = TRUE //Awful but we're not doing standard setup here.
 	round_converted = 2
 	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
@@ -209,8 +208,8 @@
 		return TRUE
 	if(station_was_nuked)
 		return TRUE
-	var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
-	var/list/midround_antag = CONFIG_GET(keyed_flag_list/midround_antag)
+	var/list/continuous = CONFIG_GET(keyed_list/continuous)
+	var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
 	if(!round_converted && (!continuous[config_tag] || (continuous[config_tag] && midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in GLOB.mob_list)
@@ -226,7 +225,7 @@
 				return 0
 
 
-		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player))
+		if(living_antag_player && living_antag_player.mind && isliving(living_antag_player) && living_antag_player.stat != DEAD && !isnewplayer(living_antag_player) &&!isbrain(living_antag_player) && (living_antag_player.mind.special_role || LAZYLEN(living_antag_player.mind.antag_datums)))
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)

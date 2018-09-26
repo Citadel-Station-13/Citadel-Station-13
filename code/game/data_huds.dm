@@ -65,7 +65,7 @@
 
 /datum/atom_hud/sentient_disease
 	hud_icons = list(SENTIENT_DISEASE_HUD)
-/*
+
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
@@ -74,7 +74,7 @@
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
 			var/mob/camera/aiEye/E = V
-			E.update_ai_detect_hud()*/
+			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
 
