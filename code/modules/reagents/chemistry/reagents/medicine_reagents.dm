@@ -1143,7 +1143,7 @@
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(5, 0) //let's make this mildly more toxic because of the stamina buff
 	..()
 	return TRUE
 
