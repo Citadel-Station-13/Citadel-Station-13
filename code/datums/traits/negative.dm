@@ -254,3 +254,17 @@
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You've had a traumatic past, that has scared you for life while dealing with your greatest fear."
+	value = -2 // It can hardstun you. You can be a job that your phobia targets...
+	gain_text = "<span class='danger'>You feel your fears manifest themselfs.</span>"
+	lose_text = "<span class='notice'>You feel your fears fade away.</span>"
+	medical_record_text = "Patient has an extreme or irrational fear of or aversion to something."
+	var/datum/brain_trauma/mild/phobia/phobia
+	
+/datum/quirk/phobia/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	phobia = new
+	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
