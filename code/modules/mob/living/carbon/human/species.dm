@@ -1612,14 +1612,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage * hit_percent * brutemod * H.physiology.brute_mod, 0) : BP.heal_damage(!damage * hit_percent * brutemod * H.physiology.brute_mod, 0))
+				if(damage > 0 ? BP.receive_damage(damage * hit_percent * brutemod * H.physiology.brute_mod, 0) : BP.heal_damage(abs(damage * hit_percent * brutemod * H.physiology.brute_mod), 0))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod * H.physiology.brute_mod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage * hit_percent * burnmod * H.physiology.burn_mod) : BP.heal_damage(0, !damage * hit_percent * burnmod * H.physiology.burn_mod))
+				if(damage > 0 ? BP.receive_damage(0, damage * hit_percent * burnmod * H.physiology.burn_mod) : BP.heal_damage(0, abs(damage * hit_percent * burnmod * H.physiology.burn_mod)))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage * hit_percent * burnmod * H.physiology.burn_mod)
@@ -1631,7 +1631,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, !damage * hit_percent * H.physiology.stamina_mod))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod)))
 					H.update_stamina()
 			else
 				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
