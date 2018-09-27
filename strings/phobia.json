@@ -71,6 +71,17 @@
 		"slipping"
 	],
 
+	"mimes": [
+		"mime",
+		"silence",
+		"mimic",
+		"invisible",
+		"french",
+		"oui",
+		"pretending",
+		"nothing"
+	],
+
 	"greytide": [
 		"assistant",
 		"grey",
