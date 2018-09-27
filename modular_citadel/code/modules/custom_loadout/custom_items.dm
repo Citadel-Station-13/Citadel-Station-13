@@ -397,3 +397,9 @@
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
+	
+/obj/item/clothing/head/collectable/kevhat
+	name = "Mehki's Tophat"
+	icon_state = "tophat"
+	item_state = "that"
+	desc = "A normal looking top hat worn by Mehki Anderson. Little is known about it, some say it hides Cat-like ears while others believe that its a mind controlling parasite that is plotting our doom! No one really knows but Mehki himself..."
