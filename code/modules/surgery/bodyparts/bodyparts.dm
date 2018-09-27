@@ -31,7 +31,7 @@
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
 	var/max_damage = 0
-	var/stam_heal_tick = 3		//per Life().
+	var/stam_heal_tick = 0		//per Life(). Defaults to 0 due to citadel changes
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
@@ -135,7 +135,7 @@
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life()
-	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
+	if(stam_heal_tick && stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
 		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
 
@@ -441,7 +441,7 @@
 	px_x = 0
 	px_y = 0
 	stam_damage_coeff = 1
-	max_stamina_damage = 100
+	max_stamina_damage = 200
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/Destroy()
