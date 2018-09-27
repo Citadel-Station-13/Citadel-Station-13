@@ -18,13 +18,13 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage < 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(damage * hit_percent, 0))
+				if(damage > 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(!damage * hit_percent, 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage * hit_percent)
 		if(BURN)
 			if(BP)
-				if(damage < 0 ? BP.receive_damage(0, damage * hit_percent) : BP.heal_damage(0, damage * hit_percent))
+				if(damage > 0 ? BP.receive_damage(0, damage * hit_percent) : BP.heal_damage(0, !damage * hit_percent))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage * hit_percent)
@@ -36,7 +36,7 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			if(BP)
-				if(damage < 0 ? BP.receive_damage(0, 0, damage * hit_percent) : BP.heal_damage(0, 0, damage * hit_percent))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent) : BP.heal_damage(0, 0, !damage * hit_percent))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage * hit_percent)
