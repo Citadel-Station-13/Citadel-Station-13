@@ -345,6 +345,7 @@
 	C.hal_screwyhud = SCREWYHUD_HEALTHY
 	C.adjustBruteLoss(-0.25*REM, 0)
 	C.adjustFireLoss(-0.25*REM, 0)
+	C.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	return TRUE
 
@@ -883,7 +884,7 @@
 	M.AdjustStun(-60, 0)
 	M.AdjustKnockdown(-60, 0)
 	M.AdjustUnconscious(-60, 0)
-	M.adjustStaminaLoss(-5*REM, 0)
+	M.adjustStaminaLoss(-20*REM, 0)
 	..()
 	. = 1
 
@@ -1053,8 +1054,34 @@
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	M.adjustStaminaLoss(-20*REM,0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/neo_jelly
+    name = "Neo Jelly"
+    id = "neo_jelly"
+    description = "Gradually regenerates all types of damage, without harming slime anatomy.Can OD"
+    reagent_state = LIQUID
+    metabolization_rate = 1 * REAGENTS_METABOLISM
+    color = "#91D865"
+    overdose_threshold = 30
+    taste_description = "jelly"
+
+/datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
+    M.adjustBruteLoss(-1.5*REM, 0)
+    M.adjustFireLoss(-1.5*REM, 0)
+    M.adjustOxyLoss(-1.5*REM, 0)
+    M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
+    . = 1
+    ..()
+
+/datum/reagent/medicine/neo_jelly/overdose_process(mob/living/M)
+    M.adjustOxyLoss(2.6*REM, 0)
+    M.adjustBruteLoss(3.5*REM, 0)
+    M.adjustFireLoss(3.5*REM, 0)
+    ..()
+    . = 1
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1136,12 +1163,12 @@
 	M.AdjustUnconscious(-20, 0)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
-	M.adjustStaminaLoss(-1, 0)
+	M.adjustStaminaLoss(-30, 0)
 	..()
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(5, 0) //let's make this mildly more toxic because of the stamina buff
 	..()
 	return TRUE
 
@@ -1220,7 +1247,7 @@
 		M.AdjustStun(-5, 0)
 		M.AdjustKnockdown(-5, 0)
 		M.AdjustUnconscious(-5, 0)
-		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.adjustStaminaLoss(-1*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
 		. = TRUE

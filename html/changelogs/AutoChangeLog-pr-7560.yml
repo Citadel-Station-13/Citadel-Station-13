@@ -1,0 +1,4 @@
+author: "izzyinbox"
+delete-after: True
+changes: 
+  - tweak: "changes the admin-pm input box from single line to multi-line"
