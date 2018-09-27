@@ -153,6 +153,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/grown/bananapeel/mimanapeel, /obj/item/cartridge/virus/mime, /obj/item/clothing/shoes/sneakers/mime,
 						/obj/item/bedsheet/mime, /obj/item/reagent_containers/food/snacks/burger/mime, /obj/item/clothing/head/beret, /obj/item/clothing/mask/gas/sexymime,
 						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence))
+						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
