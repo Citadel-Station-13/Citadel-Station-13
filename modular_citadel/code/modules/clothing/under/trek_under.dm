@@ -15,6 +15,7 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 //TOS
 /obj/item/clothing/under/rank/trek/command

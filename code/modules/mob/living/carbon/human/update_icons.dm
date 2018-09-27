@@ -119,10 +119,17 @@ There are several things that need to be remembered:
 		var/t_color = U.item_color
 		if(!t_color)
 			t_color = U.icon_state
-		if(U.adjusted == ALT_STYLE)
-			t_color = "[t_color]_d"
-		else if(U.adjusted == DIGITIGRADE_STYLE)
-			t_color = "[t_color]_l"
+		if(U.suit_style == NORMAL_SUIT_STYLE)
+			if(U.adjusted == ALT_STYLE)
+				t_color = "[t_color]_d"
+
+		if(U.mutantrace_variation)
+			if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
+				U.alternate_worn_icon = 'icons/mob/uniform_digi.dmi'
+				if(U.adjusted == ALT_STYLE)
+					t_color = "[t_color]_d_l"
+				else if(U.adjusted == NORMAL_STYLE)
+					t_color = "[t_color]_l"
 
 		var/mutable_appearance/uniform_overlay
 
