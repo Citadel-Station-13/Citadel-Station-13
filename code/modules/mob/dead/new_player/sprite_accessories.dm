@@ -1531,8 +1531,3 @@
 	icon_state = "lunasune"
 	extra = TRUE
 	ckeys_allowed = list("invader4352")
-
-/datum/sprite_accessory/mam_tails_animated/lunasune
-	name = "lunasune"
-	icon_state = "lunasune"
-	extra = TRUE
