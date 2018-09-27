@@ -401,7 +401,7 @@
 /obj/item/clothing/under/lunasune
 	name = "Divine Robes"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
 	desc = "Heavenly robes of the kitsune Luna Pumpkin,you can feel radiance coming from them."
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
