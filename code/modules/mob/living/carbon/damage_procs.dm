@@ -18,7 +18,7 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(abs(damage * hit_percent, 0)))
+				if(damage > 0 ? BP.receive_damage(damage * hit_percent, 0) : BP.heal_damage(abs(damage * hit_percent), 0))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage * hit_percent)
