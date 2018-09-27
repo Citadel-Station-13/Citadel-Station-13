@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "Makes vore specific prefs call Rust_g else uses normal stuff."

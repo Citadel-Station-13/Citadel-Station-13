@@ -1,9 +1,0 @@
-author: "TGstation contributors"
-delete-after: True
-changes: 
-  - bugfix: "(tgstation/tgstation#40043) - Beam rifles no longer open lockers"
-  - bugfix: "(tgstation/tgstation#40061) - Mobs can no longer get stuck at min/max body temperature"
-  - bugfix: "(tgstation/tgstation#40041) - Pictures of asses are now properly sized"
-  - bugfix: "(tgstation/tgstation#40084) - The lastattacker var now includes unarmed attacks"
-  - bugfix: "(tgstation/tgstation#39968) - Plastic golems can no longer ventcrawl with items in their pockets"
-  - bugfix: "(tgstation/tgstation#39885) - You can no longer crash the server by overcharging energy guns."

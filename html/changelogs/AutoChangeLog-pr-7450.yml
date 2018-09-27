@@ -1,8 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "You can now prime the grenade on bombspears by using them in your hand. The wield hotkey is moved to combat mode rightclick while a spear has a grenade on it. This is explained in the examine text."
-  - balance: "Bombspears no longer instantly explode on impact when thrown. They now have to be primed to explode when thrown."
-  - balance: "Bombspears now have 90% embed chance."
-  - rscadd: "If an embedded item is normal sized or larger, you can take it out instantly by pressing resist."
-  - balance: "Embedded items are now much harder to pull out the smaller they are, rather than the other way around. It's much easier to rip out a sword from your chest than it is a shard of glass in your face."
