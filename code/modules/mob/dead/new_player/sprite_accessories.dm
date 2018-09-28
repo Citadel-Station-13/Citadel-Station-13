@@ -1516,3 +1516,18 @@
 /datum/sprite_accessory/moth_wings/snow
 	name = "Snow"
 	icon_state = "snow"
+
+//Lunasune
+/datum/sprite_accessory/mam_ears/lunasune
+	name = "lunasune"
+	icon_state = "lunasune"
+	hasinner = 1
+	extra = TRUE
+	extra_color_src = MUTCOLORS2
+	ckeys_allowed = list("invader4352")
+
+/datum/sprite_accessory/mam_tails/lunasune
+	name = "lunasune"
+	icon_state = "lunasune"
+	extra = TRUE
+	ckeys_allowed = list("invader4352")
