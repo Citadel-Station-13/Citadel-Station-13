@@ -28,7 +28,7 @@
 
 // This is so specific atoms can override these, and ignore certain ones
 /atom/proc/vars_to_save()
- 	return list("color","dir","icon","icon_state","name","pixel_x","pixel_y")
+ 	return list("slot")
 
 /atom/proc/map_important_vars()
 	// A list of important things to save in the map editor

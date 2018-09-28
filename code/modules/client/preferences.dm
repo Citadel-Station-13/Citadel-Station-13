@@ -10,9 +10,11 @@
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences
-	var/client/parent
 	//doohickeys for savefiles
 	var/path
+	var/slot
+	var/client/parent
+	var/client_ckey
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/max_save_slots = 8
 
@@ -32,8 +34,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
-
-
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
-
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -73,11 +72,77 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF",
-		"tail_lizard" = "Smooth", "tail_human" = "None",
-		"snout" = "Round", "horns" = "None", "ears" = "None",
-		"wings" = "None", "frills" = "None", "spines" = "None",
-		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+	var/list/features = list(
+		"tail_lizard" = "Smooth",
+		"tail_human" = "None",
+		"snout" = "Round",
+		"horns" = "None",
+		"ears" = "None",
+		"wings" = "None",
+		"frills" = "None",
+		"spines" = "None",
+		"body_markings" = "None",
+		"legs" = "Normal Legs",
+		"moth_wings" = "Plain",
+		"mcolor" = "FFF",
+		"mcolor2" = "FFF",
+		"mcolor3" = "FFF",
+		"mam_body_markings" = "None",
+		"mam_ears" = "None",
+		"mam_tail" = "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" = "Standard",
+		"xenohead" = "Standard",
+		"xenotail" = "Xenomorph Tail",
+		"taur" = "None",
+		"exhibitionist" = FALSE,
+		"genitals_use_skintone" = FALSE,
+		"has_cock" = FALSE,
+		"cock_shape" = "Human",
+		"cock_length" = 6,
+		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_color" = "fff",
+		"has_sheath" = FALSE,
+		"sheath_color" = "fff",
+		"has_balls" = FALSE,
+		"balls_internal" = FALSE,
+		"balls_color" = "fff",
+		"balls_amount" = 2,
+		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_size" = BALLS_SIZE_DEF,
+		"balls_cum_rate" = CUM_RATE,
+		"balls_cum_mult" = CUM_RATE_MULT,
+		"balls_efficiency" = CUM_EFFICIENCY,
+		"balls_fluid" = "semen",
+		"has_ovi" = FALSE,
+		"ovi_shape" = "knotted",
+		"ovi_length" = 6,
+		"ovi_color" = "fff",
+		"has_eggsack" = FALSE,
+		"eggsack_internal" = TRUE,
+		"eggsack_color" = "fff",
+		"eggsack_size" = BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" = EGG_GIRTH_DEF,
+		"has_breasts" = FALSE,
+		"breasts_color" = "fff",
+		"breasts_size" = "C",
+		"breasts_shape" = "Pair",
+		"breasts_fluid" = "milk",
+		"has_vag" = FALSE,
+		"vag_shape" = "Human",
+		"vag_color" = "fff",
+		"vag_clits" = 1,
+		"vag_clit_diam" = 0.25,
+		"has_womb" = FALSE,
+		"womb_cum_rate" = CUM_RATE,
+		"womb_cum_mult" = CUM_RATE_MULT,
+		"womb_efficiency" = CUM_EFFICIENCY,
+		"womb_fluid" = "femcum",
+		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
+		"flavor_text" = ""
+		)
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -137,6 +202,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
+		client_ckey = C.ckey
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
