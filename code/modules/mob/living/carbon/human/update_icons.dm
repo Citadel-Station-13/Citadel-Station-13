@@ -268,11 +268,17 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(shoes)
+		var/obj/item/clothing/shoes/S = shoes
 		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
+		if(S.adjusted == DIGITIGRADE_STYLE)
+			S.icon_override = 'modular_citadel/icons/mob/digishoes.dmi'
+		else if(S.adjusted == NORMAL_STYLE)
+			S.icon_override = null
+
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
@@ -280,7 +286,6 @@ There are several things that need to be remembered:
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 	apply_overlay(SHOES_LAYER)
-
 
 /mob/living/carbon/human/update_inv_s_store()
 	remove_overlay(SUIT_STORE_LAYER)
