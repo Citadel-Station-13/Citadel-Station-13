@@ -326,3 +326,9 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/gun/m41
 	ckeywhitelist = list("thalverscholen")
+
+/datum/gear/Divine_robes
+	name = "Divine robes"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/lunasune
+	ckeywhitelist = list("invader4352")

@@ -426,7 +426,7 @@
 
 /datum/sprite_accessory/mam_tails
 	icon = 'modular_citadel/icons/mob/mam_bodyparts.dmi'
-	
+
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
 
@@ -1432,7 +1432,27 @@ datum/sprite_accessory/mam_tails/tentacle
 	extra2 = FALSE
 	ckeys_allowed = list("poojawa")
 
-	
+
+//Lunasune
+/datum/sprite_accessory/mam_ears/lunasune
+	name = "lunasune"
+	icon_state = "lunasune"
+	hasinner = 1
+	extra = TRUE
+	extra_color_src = MUTCOLORS2
+	ckeys_allowed = list("invader4352")
+
+/datum/sprite_accessory/mam_tails/lunasune
+	name = "lunasune"
+	icon_state = "lunasune"
+	extra = TRUE
+	ckeys_allowed = list("invader4352")
+
+/datum/sprite_accessory/mam_tails_animated/lunasune
+	name = "lunasune"
+	icon_state = "lunasune"
+	extra = TRUE
+
 /*************** VIRGO PORTED HAIRS ****************************/
 #define VHAIR(_name, new_state) /datum/sprite_accessory/hair/##new_state/icon_state=#new_state;/datum/sprite_accessory/hair/##new_state/name = "Virgo - " + #_name
 //VIRGO PORTED HAIRS
@@ -1591,7 +1611,7 @@ VHAIR(Short Hair 4 alt, hair_shorthair4_s)
 VHAIR(Tressshoulder, hair_tressshoulder_s)
  //END
 #undef VHAIR
- 
+
 #define VFACE(_name, new_state) /datum/sprite_accessory/facial_hair/##new_state/icon_state=#new_state;;/datum/sprite_accessory/facial_hair/##new_state/name="Virgo" + #_name
 VFACE(Watson, facial_watson_s)
 VFACE(Chaplin, facial_chaplin_s)
