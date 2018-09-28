@@ -125,7 +125,7 @@ There are several things that need to be remembered:
 
 		if(U.mutantrace_variation)
 			if(U.suit_style == DIGITIGRADE_SUIT_STYLE)
-				U.alternate_worn_icon = 'icons/mob/uniform_digi.dmi'
+				U.alternate_worn_icon = 'modular_citadel/icons/mob/uniform_digi.dmi'
 				if(U.adjusted == ALT_STYLE)
 					t_color = "[t_color]_d_l"
 				else if(U.adjusted == NORMAL_STYLE)
@@ -281,12 +281,11 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-		if(S.adjusted == DIGITIGRADE_STYLE)
-			S.icon_override = 'modular_citadel/icons/mob/digishoes.dmi'
-		else if(S.adjusted == NORMAL_STYLE)
-			S.icon_override = null
+		if(S.mutantrace_variation)
+			if(S.adjusted == ALT_STYLE)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
 
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi'))
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]

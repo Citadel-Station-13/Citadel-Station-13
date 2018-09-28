@@ -303,5 +303,5 @@
 			if(swap_back)
 				S.adjusted = NORMAL_STYLE
 			else
-				S.adjusted = DIGITIGRADE_STYLE
+				S.adjusted = ALT_STYLE
 			H.update_inv_shoes()

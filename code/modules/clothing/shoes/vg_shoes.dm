@@ -6,6 +6,7 @@
 	item_color = "leather"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/magboots/deathsquad
 	desc = "Very expensive and advanced magnetic boots, used only by the elite during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -15,6 +16,7 @@
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/magboots/atmos
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. These are painted in the colors of an atmospheric technician."
@@ -24,6 +26,7 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	magboot_state = "atmosmagboots"
 	resistance_flags = FIRE_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/simonshoes
 	name = "Simon's Shoes"
@@ -31,6 +34,7 @@
 	icon_state = "simonshoes"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/kneesocks
 	name = "kneesocks"
@@ -38,6 +42,7 @@
 	icon_state = "kneesock"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/jestershoes
 	name = "Jester Shoes"
@@ -45,6 +50,7 @@
 	icon_state = "jestershoes"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/aviatorboots
 	name = "Aviator Boots"
@@ -52,6 +58,7 @@
 	icon_state = "aviator_boots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/libertyshoes
 	name = "Liberty Shoes"
@@ -59,6 +66,7 @@
 	icon_state = "libertyshoes"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/megaboots
 	name = "DRN-001 Boots"
@@ -66,6 +74,7 @@
 	icon_state = "megaboots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/protoboots
 	name = "Prototype Boots"
@@ -73,6 +82,7 @@
 	icon_state = "protoboots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/megaxboots
 	name = "Maverick Hunter boots"
@@ -80,6 +90,7 @@
 	icon_state = "megaxboots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/joeboots
 	name = "Sniper Boots"
@@ -87,6 +98,7 @@
 	icon_state = "joeboots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/doomguy
 	name = "Doomguy's boots"
@@ -94,6 +106,7 @@
 	icon_state = "doom"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/rottenshoes
 	name = "rotten shoes"
@@ -101,6 +114,7 @@
 	icon_state = "rottenshoes"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/sandal/slippers
 	name = "magic slippers"
@@ -108,6 +122,7 @@
 	desc = "For the wizard that puts comfort first. Who's going to laugh?"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
@@ -115,6 +130,7 @@
 	icon_state = "slippers_worn"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/neorussian
 	name = "neo-Russian boots"
@@ -122,3 +138,4 @@
 	icon_state = "nr_boots"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION

@@ -17,7 +17,7 @@
 
 	//CITADEL EDIT Enables digitigrade shoe styles
 	var/adjusted = NORMAL_STYLE
-	var/mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
@@ -62,9 +62,9 @@
 	if(mutantrace_variation && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(DIGITIGRADE in H.dna.species.species_traits)
-			adjusted = DIGITIGRADE_STYLE
+			adjusted = ALT_STYLE
 			H.update_inv_shoes()
-		else if(adjusted == DIGITIGRADE_STYLE)
+		else if(adjusted == ALT_STYLE)
 			adjusted = NORMAL_STYLE
 			H.update_inv_shoes()
 

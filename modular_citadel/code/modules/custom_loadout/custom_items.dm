@@ -1,6 +1,9 @@
 
 //For custom items.
 
+// Unless there's a digitigrade version make sure you add mutantrace_variation = NO_MUTANTRACE_VARIATION to all clothing/under and shoes - Pooj
+// Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in modular_citadel/icons/mob
+
 /obj/item/custom/ceb_soap
 	name = "Cebutris' Soap"
 	desc = "A generic bar of soap that doesn't really seem to work right."
@@ -231,12 +234,14 @@
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pink"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "pink"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/neck/tie/bloodred
 	name = "Blood Red Tie"
@@ -253,6 +258,7 @@
 	icon_state = "puffydress"
 	item_state = "puffydress"
 	body_parts_covered = CHEST|GROIN|LEGS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/vermillion
 	name = "vermillion clothing"
@@ -262,6 +268,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/bb_sweater/black/naomi
 	name = "worn black sweater"
@@ -397,11 +404,13 @@
 	desc = "Comfy Lucky Jackboots with the word Luck on them."
 	item_state = "luckyjack"
 	icon_state = "luckyjack"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/lunasune
 	name = "Divine Robes"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/mob/custom_w.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	desc = "Heavenly robes of the kitsune Luna Pumpkin,you can feel radiance coming from them."
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
