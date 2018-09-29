@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "Disablers have had their damage reduced from 36 stamloss to 24 stamloss, increasing their shots to stamcrit from 4 to 6."
-  - balance: "Tasers have had their damage increased from 55 stamloss total to 61 stamloss total. Shots required to stamcrit are unaffected."

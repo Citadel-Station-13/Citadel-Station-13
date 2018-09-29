@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - code_imp: "Ports tgstation/tgstation#39287 - You can now configure how fast a mob fires, and how many shots they fire in a single burst"

@@ -1,6 +1,0 @@
-author: "ElPresidentePoole"
-delete-after: True
-changes: 
-  - rscadd: "SFX for seppuku (on all katanas)"
-  - rscadd: "suicide message for energy katanas (\"cyber-seppuku\")"
-  - rscadd: "suicide message for replica katanas (\"seppuku\")"

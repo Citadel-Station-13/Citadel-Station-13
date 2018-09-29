@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - balance: "The stamina buffer now only takes 1 second to start regenerating."

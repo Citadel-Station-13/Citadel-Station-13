@@ -1,4 +1,0 @@
-author: "deathride58 (Original PR by Basilman/Militaires)"
-delete-after: True
-changes: 
-  - rscadd: "Ported TGstation's Agent Stealth Box! You can the implanter in the syndicate uplink for 8 TC. Credit goes to Basilman/Militaires. This port includes minor adjustments, see the GitHub for details."

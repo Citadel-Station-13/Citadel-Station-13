@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "The geargroupID var of loadout entries can now be a list rather than a string. GeargroupID changes are additive when multiple are defined in a single loadout entry."
