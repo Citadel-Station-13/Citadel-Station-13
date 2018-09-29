@@ -27,15 +27,14 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // The datum type bolted onto normal preferences datums for storing Vore stuff
 //
+
+#define VORE_VERSION 2
+#define rustg_vore_write(fname, text) call(RUST_G, "file_write")(fname, text)
+#define WRITE_VORE(fname, text) rustg_vore_write(fname, text)
+GLOBAL_LIST_EMPTY(vore_preferences_datums)
+
 /client
 	var/datum/vore_preferences/prefs_vr
-
-/hook/client_new/proc/add_prefs_vr(client/C)
-	C.prefs_vr = new/datum/vore_preferences(C)
-	if(C.prefs_vr)
-		return TRUE
-
-	return FALSE
 
 /datum/vore_preferences
 	//Actual preferences
@@ -80,31 +79,41 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 // Save/Load Vore Preferences
 //
 /datum/vore_preferences/proc/load_path(ckey,slot,filename="character",ext="json")
-	if(!ckey || !slot)	return
+	if(!ckey || !slot)
+		return
+	to_chat(world, "load_path fired for [ckey], [slot]")
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot].[ext]"
 
 
 /datum/vore_preferences/proc/load_vore()
 	if(!client || !client_ckey)
 		return FALSE //No client, how can we save?
+	to_chat(world, "[client], [client_ckey] detected for load_vore.")
 	if(!client.prefs || !client.prefs.default_slot)
+		to_chat(world, "[client] prefs weren't found.")
 		return FALSE //Need to know what character to load!
 
 	slot = client.prefs.default_slot
+	to_chat(world, "[slot] is current slot")
 
 	load_path(client_ckey,slot)
 
-	if(!path) return FALSE //Path couldn't be set?
+	if(!path)
+		return FALSE //Path couldn't be set?
+	to_chat(world, "[path] is path")
 	if(!fexists(path)) //Never saved before
+		to_chat(world, "[path] invalid or doesn't exist, attempting a save.")
 		save_vore() //Make the file first
 		return TRUE
 
 	var/list/json_from_file = json_decode(file2text(path))
 	if(!json_from_file)
+		to_chat(world, "[client] failed json_from_file check")
 		return FALSE //My concern grows
 
 	var/version = json_from_file["version"]
 	json_from_file = patch_version(json_from_file,version)
+	to_chat(world, "[version] detected for load_vore.")
 
 	digestable = json_from_file["digestable"]
 	devourable = json_from_file["devourable"]
@@ -133,36 +142,47 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		allowmobvore = FALSE */
 
 /datum/vore_preferences/proc/save_vore()
-	if(!path)				return FALSE
-
-	var/version = 1	//For "good times" use in the future
-	var/list/settings_list = list(
-			"version"				= version,
-			"digestable"			= digestable,
-			"devourable"			= devourable,
-			"vore_taste"			= vore_taste,
-			"belly_prefs"			= belly_prefs,
-		)
+	to_chat(world, "save_vore triggered")
+	var/json_file = path
+	if(!path)
+		return FALSE
+	to_chat(world, "[json_file] is path")
+	var/version = VORE_VERSION	//For "good times" use in the future
+	to_chat(world, "[version] is version")
+	var/list/settings_list = list()
+	settings_list["version"] = version
+	settings_list["digestable"] = digestable
+	settings_list["devourable"] = devourable
+	settings_list["vore_taste"] = vore_taste
+	settings_list["belly_prefs"] = belly_prefs
 
 	//List to JSON
 	var/json_to_file = json_encode(settings_list)
 	if(!json_to_file)
-		testing("Saving: [path] failed jsonencode")
+		to_chat(world, "Saving: json_to_file failed json_encode")
 		return FALSE
 
 	//Write it out
-#ifdef RUST_G
-	call(RUST_G, "file_write")(json_to_file, path)
-#else
+//#ifdef RUST_G
+//	fdel(json_file)
+//	WRITE_VORE(json_file, json_to_file)
+//#else
 	// Fall back to using old format if we are not using rust-g
-	if(fexists(path))
-		fdel(path) //Byond only supports APPENDING to files, not replacing.
-	text2file(json_to_file, path)
-#endif
-	if(!fexists(path))
-		testing("Saving: [path] failed file write")
+	to_chat(world, "Saving: RUST_G failed or was bypassed.")
+	var/list/json
+	if(fexists(json_file))
+		json = json_decode(file2text(json_file))
+		to_chat(world, "Saving: [json_file] being deleted and remade")
+		fdel(json_file) //Byond only supports APPENDING to files, not replacing.
+	else
+		json = list(json_to_file)
+	json = serialize_json()
+	WRITE_FILE(json_file, json_encode(json))
+//#endif
+	if(!fexists(json_file))
+		to_chat(world, "Saving: [json_file] failed file write")
 		return FALSE
-
+	to_chat(world, "Saving: returning complete and TRUE")
 	return TRUE
 
 /* commented out list things
@@ -171,5 +191,13 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	"can_be_drop_pred"		= can_be_drop_pred, */
 
 //Can do conversions here
+//datum/vore_preferences/proc/patch_version(var/list/json_from_file,var/version)
+//	return json_from_file
+
 /datum/vore_preferences/proc/patch_version(var/list/json_from_file,var/version)
+	var/savefile_version
+	json_from_file["version"] = savefile_version
+	if(savefile_version < VORE_VERSION)
+		return savefile_version
 	return json_from_file
+#undef VORE_VERSION

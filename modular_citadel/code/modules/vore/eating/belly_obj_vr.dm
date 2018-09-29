@@ -125,8 +125,12 @@
 		"can_taste",
 		"bulge_size",
 		"silent",
-		"transferchance",
 		"transferlocation",
+		"transferchance",
+		"autotransferchance",
+		"autotransferwait",
+		"swallow_time",
+		"vore_capacity",
 		"struggle_messages_outside",
 		"struggle_messages_inside",
 		"digest_messages_owner",
@@ -228,7 +232,7 @@
 		SEND_SIGNAL(ML, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		SEND_SIGNAL(OW, COMSIG_ADD_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
 		SEND_SIGNAL(ML, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
-			
+
 		if(ML.absorbed)
 			ML.absorbed = FALSE
 			if(ishuman(M) && ishuman(OW))
@@ -252,14 +256,14 @@
 		return
 	if (prey.buckled)
 		prey.buckled.unbuckle_mob(prey,TRUE)
-	
+
 	if(!isbelly(prey.loc))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "fedpred", /datum/mood_event/fedpred)
 		SEND_SIGNAL(prey, COMSIG_ADD_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 	else
 		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "emptypred", /datum/mood_event/emptypred)
 		SEND_SIGNAL(prey, COMSIG_CLEAR_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
-		
+
 	prey.forceMove(src)
 	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 	if(!silent)

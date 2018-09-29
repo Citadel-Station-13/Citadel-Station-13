@@ -354,31 +354,43 @@
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
+	to_chat(world, "Save_vore_prefs triggered")
 	if(!client)
+		to_chat(world, "No client detected, failed.")
 		return FALSE
 	if(client && !client.prefs_vr)
+		to_chat(world, "[client] client detected, but no prefs_vr confirmed")
 		return FALSE
 	if(!copy_to_prefs_vr())
+		to_chat(world, "copy_to_prefs_vr failed")
 		return FALSE
 	if(client && !client.prefs_vr.save_vore())
+		to_chat(world, "client detected, but client.prefs_vr.save_vore() failed.")
 		return FALSE
-
+	to_chat(world, "saving passed checks and returning TRUE")
 	return TRUE
 
 /mob/living/proc/apply_vore_prefs()
+	to_chat(world, "apply_vore_prefs triggered")
 	if(!client)
+		to_chat(world, "No client detected, failed.")
 		return FALSE
 	if(client && !client.prefs_vr)
+		to_chat(world, "Client detected, but no prefs_vr confirmed")
 		return FALSE
 	if(client && !client.prefs_vr.load_vore())
+		to_chat(world, "client detected, but client.prefs_vr.load_vore() failed.")
 		return FALSE
 	if(!copy_from_prefs_vr())
+		to_chat(world, "copy_to_prefs_vr failed")
 		return FALSE
-
+	to_chat(world, "apply passed checks and returning TRUE")
 	return TRUE
 
 /mob/living/proc/copy_to_prefs_vr()
+	to_chat(world, "copy_to_prefs_vr triggered")
 	if(!client)
+		to_chat(world, "No client detected, failed.")
 		return FALSE
 	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
@@ -403,7 +415,9 @@
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
+	to_chat(world, "copy_from_prefs_vr triggered")
 	if(!client)
+		to_chat(world, "No client detected, failed.")
 		return FALSE
 	if(client && !client.prefs_vr)
 		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
