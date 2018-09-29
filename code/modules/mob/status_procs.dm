@@ -205,7 +205,7 @@
 		var/old_eye_blurry = eye_blurry
 		eye_blurry = max(amount, eye_blurry)
 		if(!old_eye_blurry)
-			add_eyeblur()
+			add_eyeblur() //Citadel edit blurry eye memes entailed. syncs beware
 
 /mob/proc/adjust_blurriness(amount)
 	var/old_eye_blurry = eye_blurry

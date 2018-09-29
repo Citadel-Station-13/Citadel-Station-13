@@ -48,14 +48,14 @@
 
 /obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = 0)
 	if(..())
-		if(target.stat != DEAD && !silent)
-			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		if(isliving(target))
 			var/mob/living/L = target
 			L.remove_trait(TRAIT_MINDSHIELD, "implant")
 			L.sec_hud_set_implants()
-		return TRUE
-	return FALSE
+		if(target.stat != DEAD && !silent)
+			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
+		return 1
+	return 0
 
 /obj/item/implanter/mindshield
 	name = "implanter (mindshield)"

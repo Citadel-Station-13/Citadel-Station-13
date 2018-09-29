@@ -15,9 +15,13 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+	//CITADEL EDIT Enables digitigrade shoe styles
+	var/adjusted = NORMAL_STYLE
+	var/mutantrace_variation = MUTANTRACE_VARIATION
+
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
@@ -54,6 +58,16 @@
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.species_traits)
+			adjusted = DIGITIGRADE_STYLE
+			H.update_inv_shoes()
+		else if(adjusted == DIGITIGRADE_STYLE)
+			adjusted = NORMAL_STYLE
+			H.update_inv_shoes()
+
 	if(offset && slot_flags & slotdefine2slotbit(slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
@@ -76,7 +90,7 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/proc/clean_blood(strength)
+/obj/item/clothing/shoes/proc/clean_blood(datum/source, strength)
 	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)

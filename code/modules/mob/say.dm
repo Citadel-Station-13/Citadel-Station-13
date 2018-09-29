@@ -20,7 +20,7 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
-/mob/verb/me_verb(message as message) // CIT CHANGE - makes me command input box bigger
+/mob/verb/me_verb(message as message)
 	set name = "Me"
 	set category = "IC"
 
@@ -30,7 +30,7 @@
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message)
+	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
@@ -74,15 +74,15 @@
 	if(key)
 		K = src.key
 
-	message = src.say_quote(message, get_spans())
+	var/spanned = src.say_quote(message, get_spans())
 	message = emoji_parse(message)
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
-	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
+	log_talk(message, LOG_SAY, tag="DEAD")
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
 /mob/proc/check_emote(message)
 	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2))
+		emote(copytext(message, 2), intentional = TRUE)
 		return 1
 
 /mob/proc/hivecheck()

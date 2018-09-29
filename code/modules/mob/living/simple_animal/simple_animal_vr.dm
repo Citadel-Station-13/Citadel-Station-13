@@ -2,6 +2,7 @@
 	// List of targets excluded (for now) from being eaten by this mob.
 	var/list/prey_exclusions = list()
 	devourable = FALSE //insurance because who knows.
+	digestable = TRUE	//I mean, if it's devourable it should also be digestible
 	var/vore_active = FALSE				// If vore behavior is enabled for this mob
 
 	var/vore_default_mode = DM_DIGEST	// Default bellymode (DM_DIGEST, DM_HOLD, DM_ABSORB)
@@ -18,7 +19,7 @@
 
 // Release belly contents beforey being gc'd!
 /mob/living/simple_animal/Destroy()
-	release_vore_contents()
+	release_vore_contents(silent = TRUE)
 	prey_excludes.Cut()
 	. = ..()
 
@@ -54,7 +55,7 @@
 */
 
 /mob/living/simple_animal/death()
-	release_vore_contents()
+	release_vore_contents(silent = TRUE)
 	. = ..()
 
 // Simple animals have only one belly.  This creates it (if it isn't already set up)

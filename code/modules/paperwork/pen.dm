@@ -117,12 +117,13 @@
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
-		add_logs(user, M, "stabbed", src)
+		log_combat(user, M, "stabbed", src)
 
 	else
 		. = ..()
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
+	. = ..()
 	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")

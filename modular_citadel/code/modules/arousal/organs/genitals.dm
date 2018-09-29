@@ -19,6 +19,7 @@
 	var/obj/item/organ/genital/linked_organ
 	var/through_clothes = FALSE
 	var/internal 		= FALSE
+	var/hidden			= FALSE
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
@@ -47,18 +48,39 @@
 /obj/item/organ/genital/proc/is_exposed()
 	if(!owner)
 		return FALSE
+	if(hidden)
+		return FALSE
 	if(internal)
 		return FALSE
 	if(through_clothes)
 		return TRUE
 
-/obj/item/organ/genital/proc/toggle_through_clothes()
-	if(through_clothes)
-		through_clothes = FALSE
-		owner.exposed_genitals -= src
-	else
-		through_clothes = TRUE
-		owner.exposed_genitals += src
+	switch(zone) //update as more genitals are added
+		if("chest")
+			return owner.is_chest_exposed()
+		if("groin")
+			return owner.is_groin_exposed()
+
+	return FALSE
+
+/obj/item/organ/genital/proc/toggle_visibility(visibility)
+	switch(visibility)
+		if("Always visible")
+			through_clothes = TRUE
+			hidden = FALSE
+			if(!(src in owner.exposed_genitals))
+				owner.exposed_genitals += src
+		if("Hidden by clothes")
+			through_clothes = FALSE
+			hidden = FALSE
+			if(src in owner.exposed_genitals)
+				owner.exposed_genitals -= src
+		if("Always hidden")
+			through_clothes = FALSE
+			hidden = TRUE
+			if(src in owner.exposed_genitals)
+				owner.exposed_genitals -= src
+
 	if(ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
 		H.update_genitals()
@@ -78,9 +100,10 @@
 		return
 	//Full list of exposable genitals created
 	var/obj/item/organ/genital/picked_organ
-	picked_organ = input(src, "Expose/Hide genitals", "Choose which genitalia to expose/hide", null) in genital_list
+	picked_organ = input(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", null) in genital_list
 	if(picked_organ)
-		picked_organ.toggle_through_clothes()
+		var/picked_visibility = input(src, "Choose visibility setting", "Expose/Hide genitals", "Hidden by clothes") in list("Always visible", "Hidden by clothes", "Always hidden")
+		picked_organ.toggle_visibility(picked_visibility)
 	return
 
 
@@ -251,6 +274,8 @@
 		return
 	if(NOGENITALS in species_traits)//golems and such
 		return
+	if(H.has_trait(TRAIT_HUSK))
+		return
 
 	var/list/genitals_to_add = list()
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
@@ -260,8 +285,6 @@
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
 
-	if(H.has_trait(TRAIT_HUSK))
-		return
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
