@@ -10,7 +10,7 @@
 
 /datum/design/bomb_vest
 	name = "Bomb resitsent vest"
-	desc = "A heavy vest that can be attached to a jumpsuit to help proect againts a blast."
+	desc = "A heavy, padded lining designed to mitigate explosive pressure."
 	id = "bomb_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 10000, MAT_GOLD = 1750, MAT_TITANIUM = 1000)
@@ -19,8 +19,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/fire_vest
-	name = "Fire resistsent vest"
-	desc = "A vest over normale clothing to help protect againts fire."
+	name = "Flame Retardant vest"
+	desc = "A vest designed to improve the fire resistance of clothing."
 	id = "fire_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 700, MAT_GOLD = 1250)
@@ -31,7 +31,7 @@
 
 /datum/design/lava_land_vest
 	name = "Lava Land Vest"
-	desc = "A vest that was made to help protect miners form danger form all sorts of hazerds. There are countless lables saying not to wash the vest with any acids.."
+	desc = "A vest that was designed to protect miners from a variety of hazards. A label advises against acid based cleaning agents."
 	id = "lava_land_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_GOLD = 1250, MAT_TITANIUM = 5000)
@@ -41,7 +41,7 @@
 
 /datum/design/miner_vest
 	name = "Miner Vest"
-	desc = "A advanced vest that was made to help protect miners from danger from all sorts of hazards. This one is acid-proof"
+	desc = "An advanced protective vest designed for mining hazard mitigation."
 	id = "miner_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_GOLD = 1250, MAT_TITANIUM = 5000, MAT_DIAMOND = 7500, MAT_SILVER = 2500)
@@ -51,7 +51,7 @@
 
 /datum/design/ballistic_vest
 	name = "Ballistic vest"
-	desc = "A vest used to help protect againts bullets. Its better then nothing..."
+	desc = "A thin lining of Kevlar derivatives, designed to mitigate low power kinetic energy impacts."
 	id = "ballistic_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_GOLD = 2250, MAT_TITANIUM = 5500)
@@ -61,7 +61,7 @@
 
 /datum/design/melee_vest
 	name = "Close Quarter Combat Vest"
-	desc = "A vest used to help protect againts bullets. Its better then nothing..."
+	desc = "A thin lining of Kevlar derivatives, designed to mitigate low power brute force trauma."
 	id = "melee_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_SILVER = 2250, MAT_TITANIUM = 5500)
@@ -80,8 +80,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/sec_melee_vest
-	name = "Millitart grade physal armor vest"
-	desc = "A well made vest that helps protect againts phycal harm. NT still cuts corrners when they can and uses less then optimal matitarls."
+	name = "Surplus Military physical armor vest"
+	desc = "A surplus military armor lining mean for brute force mitigation."
 	id = "sec_melee_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_GOLD = 2250, MAT_TITANIUM = 5500, MAT_DIAMOND = 4000)
@@ -100,8 +100,8 @@
 	departmental_flags =  DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/sec_ballistic_vest
-	name = "Millitart grade physal armor vest"
-	desc = "A well made vest that helps protect againts bullets. In the space day its still as basic as it always was."
+	name = "Surplus Military flak vest"
+	desc = "A surplus military armor lining mean for brute force mitigation."
 	id = "sec_ballistic_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 5500, MAT_GOLD = 2250, MAT_TITANIUM = 5500, MAT_DIAMOND = 4000)
