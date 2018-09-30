@@ -393,13 +393,7 @@
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if(is_vore_predator(M))
-		for(var/belly in M.vore_organs)
-			var/obj/belly/B = belly
-			for(var/thing in B)
-				var/atom/movable/AM = thing
-				AM.forceMove(owner.loc)
-				if(isliving(AM))
-					to_chat(AM,"As [M] melts away around you, you find yourself in [owner]'s [lowertext(name)]")
+		M.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 
 	//Drop all items into the belly
 	for(var/obj/item/W in M)

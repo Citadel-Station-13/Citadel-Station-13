@@ -17,12 +17,11 @@
 	var/list/living_mobs = list()
 
 
-// Release belly contents beforey being gc'd!
+// Release belly contents before being gc'd!
 /mob/living/simple_animal/Destroy()
-	release_vore_contents(silent = TRUE)
+	release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 	prey_excludes.Cut()
 	. = ..()
-
 
 // Update fullness based on size & quantity of belly contents
 /mob/living/simple_animal/proc/update_fullness(var/atom/movable/M)
