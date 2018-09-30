@@ -29,8 +29,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 
 #define VORE_VERSION 2
-#define rustg_vore_write(fname, text) call(RUST_G, "file_write")(fname, text)
-#define WRITE_VORE(fname, text) rustg_vore_write(fname, text)
+
 GLOBAL_LIST_EMPTY(vore_preferences_datums)
 
 /client
