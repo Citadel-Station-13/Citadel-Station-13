@@ -9,7 +9,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bomb_vest
-	name = "Bomb resitsent vest"
+	name = "Bomb resistsent vest"
 	desc = "A heavy, padded lining designed to mitigate explosive pressure."
 	id = "bomb_vest"
 	build_type = PROTOLATHE
@@ -110,7 +110,7 @@
 	departmental_flags =  DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/power_vest
-	name = "Engery protection padding"
+	name = "Energy protection padding"
 	desc = "Padding used on suits to try to prevent shocks form being as lethal."
 	id = "power_vest"
 	build_type = PROTOLATHE
