@@ -196,19 +196,19 @@
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	wires = new /datum/wires/airalarm(src)
-	
+
 	if(ndir)
 		setDir(ndir)
-		
+
 	if(nbuild)
 		buildstage = 0
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
-		
+
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
-		
+
 	power_change()
 	set_frequency(frequency)
 
@@ -217,10 +217,10 @@
 	qdel(wires)
 	wires = null
 	return ..()
-		
+
 /obj/machinery/airalarm/on_construction()
 	..(dir,dir)
-	
+
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
@@ -626,6 +626,7 @@
 
 /obj/machinery/airalarm/update_icon()
 	set_light(0)
+	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
 		icon_state = "alarm0"
@@ -650,14 +651,17 @@
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
+			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
 			set_light(brightness_on)
 		if(1)
+			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
 			set_light(brightness_on)
 		if(2)
+			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
 			set_light(brightness_on)
