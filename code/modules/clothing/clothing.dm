@@ -248,9 +248,8 @@ BLIND     // can't see anything
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
-	if(adjusted == DIGITIGRADE_STYLE)
-		return
 	adjusted = !adjusted
+
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
@@ -260,6 +259,7 @@ BLIND     // can't see anything
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
+
 	return adjusted
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.

@@ -50,6 +50,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
+	//Citadel Edit for digitigrade stuff
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 	var/item_color = null //this needs deprecating, soonish
 
@@ -100,8 +102,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
 	var/tip_timer
-
-	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 

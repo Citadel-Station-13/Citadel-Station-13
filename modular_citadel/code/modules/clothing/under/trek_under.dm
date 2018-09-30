@@ -12,9 +12,10 @@
 	name = "Section 31 Uniform"
 	desc = "Oooh... right."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 //TOS
 /obj/item/clothing/under/rank/trek/command
@@ -92,7 +93,7 @@
 	desc = "The overcoat worn by all officers of the 2380s."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
 	icon_state = "trek_ds9_coat"
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	permeability_coefficient = 0.50
@@ -136,7 +137,7 @@
 	desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it. Set phasers to awesome."
 
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
 
@@ -204,7 +205,7 @@
 	name = "Modern Federation Uniform Jacket"
 	desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. Wearing this makes you feel like a competant commander."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -238,7 +239,7 @@
 	desc = "An officer's cap that demands discipline from the one who wears it."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
 	icon_state = "fedcapofficer"
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer_mob"
 
 	//Variants

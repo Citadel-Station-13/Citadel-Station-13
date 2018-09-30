@@ -628,8 +628,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!(DIGITIGRADE in species_traits)) //Someone cut off a digitigrade leg and tacked it on
 			species_traits += DIGITIGRADE
 		var/should_be_squished = FALSE
-		if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) || (H.wear_suit.body_parts_covered & LEGS)) || (H.w_uniform && (H.w_uniform.body_parts_covered & LEGS)))
-			should_be_squished = TRUE
+		if(H.wear_suit)
+			if((H.wear_suit.flags_inv & HIDEJUMPSUIT) || ((H.wear_suit.body_parts_covered & LEGS) && (H.wear_suit.body_parts_covered & FEET)))
+				should_be_squished = TRUE
+		if(H.w_uniform && !H.wear_suit)
+			if(H.w_uniform.mutantrace_variation == NO_MUTANTRACE_VARIATION)
+				should_be_squished = TRUE
 		if(O.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
 			O.use_digitigrade = SQUISHED_DIGITIGRADE
 			update_needed = TRUE

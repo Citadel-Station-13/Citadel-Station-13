@@ -709,6 +709,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/drfreeze
 	name = "doctor freeze's jumpsuit"
@@ -717,6 +718,7 @@
 	item_state = "drfreeze"
 	item_color = "drfreeze"
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/lobster
 	name = "foam lobster suit"
@@ -726,6 +728,7 @@
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/gondola
 	name = "gondola hide suit"

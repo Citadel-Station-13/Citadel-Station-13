@@ -75,6 +75,7 @@
 	item_color = "blueclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/rank/greenclown
 	name = "green clown suit"
@@ -84,6 +85,7 @@
 	item_color = "greenclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/rank/yellowclown
 	name = "yellow clown suit"
@@ -93,6 +95,7 @@
 	item_color = "yellowclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/rank/purpleclown
 	name = "purple clown suit"
@@ -102,7 +105,8 @@
 	item_color = "purpleclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
 /obj/item/clothing/under/rank/orangeclown
 	name = "orange clown suit"
 	desc = "<i>'ORANGE HONK!'</i>"
@@ -111,7 +115,8 @@
 	item_color = "orangeclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
 /obj/item/clothing/under/rank/rainbowclown
 	name = "rainbow clown suit"
 	desc = "<i>'R A I N B O W HONK!'</i>"
@@ -120,6 +125,7 @@
 	item_color = "rainbowclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/rank/clown/Initialize()
 	. = ..()
