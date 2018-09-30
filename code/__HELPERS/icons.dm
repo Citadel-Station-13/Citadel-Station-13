@@ -706,6 +706,26 @@ world
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
 
+// Converts a hexadecimal color (e.g. #FF0050) to a list of numbers for red, green, and blue (e.g. list(255,0,80) ).
+/proc/hex2rgb(hex)
+	// Strips the starting #, in case this is ever supplied without one, so everything doesn't break.
+	if(findtext(hex,"#",1,2))
+		hex = copytext(hex, 2)
+	return list(hex2rgb_r(hex), hex2rgb_g(hex), hex2rgb_b(hex))
+
+// The three procs below require that the '#' part of the hex be stripped, which hex2rgb() does automatically.
+/proc/hex2rgb_r(hex)
+	var/hex_to_work_on = copytext(hex,1,3)
+	return hex2num(hex_to_work_on)
+
+/proc/hex2rgb_g(hex)
+	var/hex_to_work_on = copytext(hex,3,5)
+	return hex2num(hex_to_work_on)
+
+/proc/hex2rgb_b(hex)
+	var/hex_to_work_on = copytext(hex,5,7)
+	return hex2num(hex_to_work_on)
+
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	//Define... defines.
