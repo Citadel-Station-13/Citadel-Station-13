@@ -218,9 +218,6 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/on_construction()
-	..(dir,dir)
-
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
@@ -671,7 +668,7 @@
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return FALSE
+		return
 
 	var/turf/location = get_turf(src)
 	if(!location)
@@ -708,7 +705,7 @@
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	return TRUE
+	return
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
@@ -839,7 +836,6 @@
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
-			updateUsrDialog()
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 	return
@@ -848,10 +844,7 @@
 	..()
 	if(stat & NOPOWER)
 		set_light(0)
-	else
-		set_light(brightness_on)
 	update_icon()
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -861,12 +854,9 @@
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/airalarm/obj_break(damage_flag)
-	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-			stat |= BROKEN
-			update_icon()
-			set_light(0)
+	..()
+	update_icon()
+	set_light(0)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
