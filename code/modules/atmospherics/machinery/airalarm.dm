@@ -835,6 +835,7 @@
 	else
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
+			updateUsrDialog()
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
