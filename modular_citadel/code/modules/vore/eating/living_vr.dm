@@ -281,14 +281,6 @@
 */
 
 //
-// Release everything in every vore organ
-//
-/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE)
-	for(var/belly in vore_organs)
-		var/obj/belly/B = belly
-		B.release_all_contents(include_absorbed)
-
-//
 // Custom resist catches for /mob/living
 //
 /mob/living/proc/vore_process_resist()
@@ -354,35 +346,29 @@
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		return FALSE
+	if(!client || !client.prefs_vr)
+		return 0
 	if(!copy_to_prefs_vr())
-		return FALSE
-	if(client && !client.prefs_vr.save_vore())
-		return FALSE
+		return 0
+	if(!client.prefs_vr.save_vore())
+		return 0
 
-	return TRUE
+	return 1
 
 /mob/living/proc/apply_vore_prefs()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		return FALSE
-	if(client && !client.prefs_vr.load_vore())
-		return FALSE
+	if(!client || !client.prefs_vr)
+		return 0
+	if(!client.prefs_vr.load_vore())
+		return 0
 	if(!copy_from_prefs_vr())
-		return FALSE
+		return 0
 
-	return TRUE
+	return 1
 
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
+	if(!client || !client.prefs_vr)
+		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+		return 0
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -397,17 +383,15 @@
 
 	P.belly_prefs = serialized
 
-	return TRUE
+	return 1
 
 //
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
+	if(!client || !client.prefs_vr)
+		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+		return 0
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -415,11 +399,20 @@
 	devourable = P.devourable
 	vore_taste = P.vore_taste
 
+	release_vore_contents(silent = TRUE)
 	vore_organs.Cut()
 	for(var/entry in P.belly_prefs)
 		list_to_object(entry,src)
 
-	return TRUE
+	return 1
+
+//
+// Release everything in every vore organ
+//
+/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE, var/silent = FALSE)
+	for(var/belly in vore_organs)
+		var/obj/belly/B = belly
+		B.release_all_contents(include_absorbed, silent)
 
 //
 // Returns examine messages for bellies

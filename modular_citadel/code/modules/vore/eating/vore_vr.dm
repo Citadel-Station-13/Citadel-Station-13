@@ -27,15 +27,13 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // The datum type bolted onto normal preferences datums for storing Vore stuff
 //
+
+#define VORE_VERSION 2
+
+GLOBAL_LIST_EMPTY(vore_preferences_datums)
+
 /client
 	var/datum/vore_preferences/prefs_vr
-
-/hook/client_new/proc/add_prefs_vr(client/C)
-	C.prefs_vr = new/datum/vore_preferences(C)
-	if(C.prefs_vr)
-		return TRUE
-
-	return FALSE
 
 /datum/vore_preferences
 	//Actual preferences
@@ -83,25 +81,24 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(!ckey || !slot)	return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/vore/[filename][slot].[ext]"
 
-
 /datum/vore_preferences/proc/load_vore()
 	if(!client || !client_ckey)
-		return FALSE //No client, how can we save?
+		return 0 //No client, how can we save?
 	if(!client.prefs || !client.prefs.default_slot)
-		return FALSE //Need to know what character to load!
+		return 0 //Need to know what character to load!
 
 	slot = client.prefs.default_slot
 
 	load_path(client_ckey,slot)
 
-	if(!path) return FALSE //Path couldn't be set?
+	if(!path) return 0 //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore() //Make the file first
-		return TRUE
+		return 1
 
 	var/list/json_from_file = json_decode(file2text(path))
 	if(!json_from_file)
-		return FALSE //My concern grows
+		return 0 //My concern grows
 
 	var/version = json_from_file["version"]
 	json_from_file = patch_version(json_from_file,version)
@@ -119,23 +116,13 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
-	return TRUE
-/*
-	allowmobvore = json_from_file["allowmobvore"]
-	can_be_drop_prey = json_from_file["can_be_drop_prey"]
-	can_be_drop_prey = json_from_file["can_be_drop_pred"]
-
-	if(isnull(allowmobvore))
-		allowmobvore = TRUE
-	if(isnull(can_be_drop_prey))
-		allowmobvore = FALSE
-	if(isnull(can_be_drop_pred))
-		allowmobvore = FALSE */
+	return 1
 
 /datum/vore_preferences/proc/save_vore()
-	if(!path)				return FALSE
+	if(!path)
+		return 0
 
-	var/version = 1	//For "good times" use in the future
+	var/version = VORE_VERSION	//For "good times" use in the future
 	var/list/settings_list = list(
 			"version"				= version,
 			"digestable"			= digestable,
@@ -148,22 +135,22 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/json_to_file = json_encode(settings_list)
 	if(!json_to_file)
 		testing("Saving: [path] failed jsonencode")
-		return FALSE
+		return 0
 
 	//Write it out
-#ifdef RUST_G
-	call(RUST_G, "file_write")(json_to_file, path)
-#else
+//#ifdef RUST_G
+//	call(RUST_G, "file_write")(json_to_file, path)
+//#else
 	// Fall back to using old format if we are not using rust-g
 	if(fexists(path))
 		fdel(path) //Byond only supports APPENDING to files, not replacing.
 	text2file(json_to_file, path)
-#endif
+//#endif
 	if(!fexists(path))
 		testing("Saving: [path] failed file write")
-		return FALSE
+		return 0
 
-	return TRUE
+	return 1
 
 /* commented out list things
 	"allowmobvore"			= allowmobvore,
@@ -171,5 +158,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	"can_be_drop_pred"		= can_be_drop_pred, */
 
 //Can do conversions here
-/datum/vore_preferences/proc/patch_version(var/list/json_from_file,var/version)
+datum/vore_preferences/proc/patch_version(var/list/json_from_file,var/version)
 	return json_from_file
+
+#undef VORE_VERSION
