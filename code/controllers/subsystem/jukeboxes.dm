@@ -18,14 +18,14 @@ SUBSYSTEM_DEF(jukeboxes)
 	song_beat = beat
 	song_associated_id = assocID
 
-/datum/controller/subsystem/jukeboxes/proc/addjukebox(obj/jukebox, datum/track/T)
+/datum/controller/subsystem/jukeboxes/proc/addjukebox(obj/jukebox, datum/track/T, jukefalloff = 1)
 	if(!istype(T))
 		CRASH("[src] tried to play a song with a nonexistant track")
 	var/channeltoreserve = CHANNEL_JUKEBOX_START + activejukeboxes.len - 1
 	if(channeltoreserve > CHANNEL_JUKEBOX)
 		return FALSE
 	activejukeboxes.len++
-	activejukeboxes[activejukeboxes.len] = list(T, channeltoreserve, jukebox)
+	activejukeboxes[activejukeboxes.len] = list(T, channeltoreserve, jukebox, jukefalloff)
 	return activejukeboxes.len
 
 /datum/controller/subsystem/jukeboxes/proc/removejukebox(IDtoremove)
@@ -77,6 +77,8 @@ SUBSYSTEM_DEF(jukeboxes)
 		var/area/currentarea = get_area(jukebox)
 		var/turf/currentturf = get_turf(jukebox)
 		var/list/hearerscache = hearers(7, jukebox)
+
+		song_played.falloff = jukeinfo[4]
 
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)

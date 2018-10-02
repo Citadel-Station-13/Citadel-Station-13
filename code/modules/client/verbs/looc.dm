@@ -46,8 +46,9 @@
 			to_chat(src, "<span class='danger'>You cannot use LOOC while ghosting.</span>")
 			return
 
-	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
-	mob.log_message("(LOCAL): [msg]", INDIVIDUAL_OOC_LOG)
+	msg = emoji_parse(msg)
+
+	mob.log_talk(msg,LOG_OOC, tag="(LOOC)")
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
 	for(var/mob/M in heard)

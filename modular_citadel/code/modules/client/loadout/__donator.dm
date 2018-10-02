@@ -10,7 +10,7 @@
 	name = "Donor item testing bikehorn"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bikehorn
-	geargroupID = "DONORTEST"
+	geargroupID = list("DONORTEST") //This is a list mainly for the sake of testing, but geargroupID works just fine with ordinary strings
 
 /datum/gear/kevhorn
 	name = "Airhorn"
@@ -42,10 +42,10 @@
 	path = /obj/item/clothing/accessory/medal/steele
 	ckeywhitelist = list("inferno707")
 
-/datum/gear/sexymimemask
-	name = "The hollow heart"
+/datum/gear/hheart
+	name = "The Hollow Heart"
 	category = SLOT_WEAR_MASK
-	path = /obj/item/clothing/mask/sexymime
+	path = /obj/item/clothing/mask/hheart
 	ckeywhitelist = list("inferno707")
 
 /datum/gear/engravedzippo
@@ -307,3 +307,28 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/custom/flagcape
 	ckeywhitelist = list("darnchacha")
+
+/datum/gear/luckyjack
+	name = "Lucky Jackboots"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/shoes/lucky
+	ckeywhitelist = list("donaldtrumpthecommunist")
+
+/datum/gear/raiqbawks
+	name = "Miami Boombox"
+	category = SLOT_HANDS
+	cost = 2
+	path = /obj/item/boombox/raiq
+	ckeywhitelist = list("chefferz")
+
+/datum/gear/m41
+	name = "Toy M41"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/gun/m41
+	ckeywhitelist = list("thalverscholen")
+
+/datum/gear/Divine_robes
+	name = "Divine robes"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/lunasune
+	ckeywhitelist = list("invader4352")

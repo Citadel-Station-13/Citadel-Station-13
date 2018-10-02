@@ -57,9 +57,3 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
-
-/obj/item/organ/genital/breasts/is_exposed()
-	. = ..()
-	if(.)
-		return TRUE
-	return owner.is_chest_exposed()

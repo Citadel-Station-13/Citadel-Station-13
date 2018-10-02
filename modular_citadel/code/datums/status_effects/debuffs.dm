@@ -3,7 +3,7 @@
 		new_owner.resting = TRUE
 		new_owner.adjustStaminaLoss(isnull(override_stam)? set_duration*0.25 : override_stam)
 		if(isnull(override_duration) && (set_duration > 80))
-			set_duration = set_duration*0.15
+			set_duration = set_duration*0.01
 			return ..()
 		else if(!isnull(override_duration))
 			set_duration = override_duration

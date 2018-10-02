@@ -12,6 +12,7 @@
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
+	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -23,7 +24,9 @@
 		if(cholder.dna == src)
 			cholder.dna = null
 	holder = null
-	QDEL_NULL(species)
+
+	if(delete_species)
+		QDEL_NULL(species)
 
 	mutations.Cut()					//This only references mutations, just dereference.
 	temporary_mutations.Cut()		//^
@@ -41,12 +44,12 @@
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
-	if(transfer_SE)
-		destination.dna.struc_enzymes = struc_enzymes
 	if(ishuman(destination))
 		var/mob/living/carbon/human/H = destination
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
 	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
+	if(transfer_SE)
+		destination.dna.struc_enzymes = struc_enzymes
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -209,10 +212,10 @@
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
-	features = random_features()
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
+	features = random_features()
 
 
 /datum/dna/stored //subtype used by brain mob's stored_dna
@@ -245,17 +248,21 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
-/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	if(mrace && has_dna())
-		dna.species.on_species_loss(src)
-		var/old_species = dna.species
+		var/datum/species/new_race
 		if(ispath(mrace))
-			dna.species = new mrace()
+			new_race = new mrace
+		else if(istype(mrace))
+			new_race = mrace
 		else
-			dna.species = mrace
-		dna.species.on_species_gain(src, old_species)
+			return
+		dna.species.on_species_loss(src, new_race, pref_load)
+		var/datum/species/old_species = dna.species
+		dna.species = new_race
+		dna.species.on_species_gain(src, old_species, pref_load)
 
-/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
+/mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
 	if(icon_update)
 		update_body()

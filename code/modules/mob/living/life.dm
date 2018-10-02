@@ -43,7 +43,10 @@
 		//Breathing, if applicable
 		handle_breathing(times_fired)
 
-	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+	if (QDELETED(src)) // diseases can qdel the mob via transformations
+		return
 
 	if(stat != DEAD)
 		//Random events (vomiting etc)
@@ -133,7 +136,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
-			clear_fullscreen("blurry")
+			remove_eyeblur()
 
 /mob/living/proc/update_damage_hud()
 	return
@@ -148,7 +151,7 @@
 
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
-		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
+		add_filter("gravity",1, GRAVITY_MOTION_BLUR)
 	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
 
 /mob/living/proc/gravity_pulse_animation()
