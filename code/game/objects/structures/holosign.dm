@@ -63,10 +63,8 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-
-/obj/structure/holosign/barrier/engineering/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
 	name = "holo firelock"
