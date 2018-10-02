@@ -126,7 +126,7 @@
 	icon_state = "seva"
 	item_state = "seva"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	hoodtype = /obj/item/clothing/head/hooded/seva
 	armor = list("melee" = 15, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
@@ -140,7 +140,7 @@
 	item_state = "seva"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
 
