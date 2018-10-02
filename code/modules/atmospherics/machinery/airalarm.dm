@@ -196,19 +196,19 @@
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	wires = new /datum/wires/airalarm(src)
-	
+
 	if(ndir)
 		setDir(ndir)
-		
+
 	if(nbuild)
 		buildstage = 0
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
-		
+
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
-		
+
 	power_change()
 	set_frequency(frequency)
 
@@ -217,10 +217,7 @@
 	qdel(wires)
 	wires = null
 	return ..()
-		
-/obj/machinery/airalarm/on_construction()
-	..(dir,dir)
-	
+
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
@@ -626,6 +623,7 @@
 
 /obj/machinery/airalarm/update_icon()
 	set_light(0)
+	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
 		icon_state = "alarm0"
@@ -650,14 +648,17 @@
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
+			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
 			set_light(brightness_on)
 		if(1)
+			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
 			set_light(brightness_on)
 		if(2)
+			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
 			set_light(brightness_on)
@@ -667,7 +668,7 @@
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return FALSE
+		return
 
 	var/turf/location = get_turf(src)
 	if(!location)
@@ -704,7 +705,7 @@
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	return TRUE
+	return
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
@@ -834,8 +835,8 @@
 	else
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 			updateUsrDialog()
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 	return
@@ -844,10 +845,7 @@
 	..()
 	if(stat & NOPOWER)
 		set_light(0)
-	else
-		set_light(brightness_on)
 	update_icon()
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -857,12 +855,9 @@
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/airalarm/obj_break(damage_flag)
-	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-			stat |= BROKEN
-			update_icon()
-			set_light(0)
+	..()
+	update_icon()
+	set_light(0)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
