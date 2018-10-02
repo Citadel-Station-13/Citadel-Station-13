@@ -925,8 +925,10 @@ datum/sprite_accessory/mam_tails/tentacle
 *******************************************/
 
 /datum/sprite_accessory/mam_body_markings
-	extra = TRUE
-	extra2 = TRUE
+	extra = FALSE
+	extra2 = FALSE
+	extra_color_src = MUTCOLORS
+	extra2_color_src = MUTCOLORS
 	icon = 'modular_citadel/icons/mob/mam_body_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
@@ -941,7 +943,6 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings/belly
 	name = "Bee"
 	icon_state = "bee"
-	color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/bee
@@ -952,15 +953,11 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings/corgi
 	name = "Corgi"
 	icon_state = "corgi"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/cow
 	name = "Cow"
 	icon_state = "cow"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/corvid
@@ -971,14 +968,11 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings/deer
 	name = "Deer"
 	icon_state = "deer"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/mam_body_markings/fennec
 	name = "Fennec"
@@ -994,7 +988,6 @@ datum/sprite_accessory/mam_tails/tentacle
 	name = "Frog"
 	icon_state = "frog"
 	gender_specific = 1
-	color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_body_markings/hawk
 	name = "Hawk"
@@ -1009,8 +1002,6 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings/moth
 	name = "Moth"
 	icon_state = "moth"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/otie
@@ -1021,22 +1012,16 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings/orca
 	name = "Orca"
 	icon_state = "orca"
-	color_src = MUTCOLORS2
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/pede
 	name = "Scolipede"
 	icon_state = "pede"
-	extra = TRUE
-	extra_color_src = MUTCOLORS3
-	color_src = MUTCOLORS2
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/shark
 	name = "Shark"
 	icon_state = "shark"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/shepherd
@@ -1046,28 +1031,21 @@ datum/sprite_accessory/mam_tails/tentacle
 
 /datum/sprite_accessory/mam_body_markings/tiger
 	name = "Tiger Stripes"
-	color_src = MUTCOLORS3
 	icon_state = "tiger"
 
 /datum/sprite_accessory/mam_body_markings/turian
 	name = "Turian"
-	extra = TRUE
-	color_src = MUTCOLORS
-	extra_color_src = MUTCOLORS2
 	icon_state = "turian"
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	color_src = MUTCOLORS2
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/xeno
 	name = "Xeno"
 	icon_state = "xeno"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 

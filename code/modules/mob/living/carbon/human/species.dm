@@ -718,19 +718,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
-								accessory_overlay.color = "#[fixed_mut_color]"
+								accessory_overlay.color = list(GetHexColors("#[fixed_mut_color]"),GetHexColors("#[fixed_mut_color2]"),GetHexColors("#[fixed_mut_color3]"),rgb(0,0,0))
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-						if(MUTCOLORS2)
+								accessory_overlay.color = list(GetHexColors("#[H.dna.features["mcolor"]]"),GetHexColors("#[H.dna.features["mcolor2"]]"),GetHexColors("#[H.dna.features["mcolor3"]]"), rgb(0,0,0))
+/*						if(MUTCOLORS2)
 							if(fixed_mut_color2)
-								accessory_overlay.color = "#[fixed_mut_color2]"
+								accessory_overlay.color = list(GetHexColors("#[fixed_mut_color]"),GetHexColors("#[fixed_mut_color2]"),GetHexColors("#[fixed_mut_color3]"),list(0, 0, 0))
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+								accessory_overlay.color = list(GetHexColors("#[H.dna.features["mcolor"]]"),GetHexColors("#[H.dna.features["mcolor2"]]"),GetHexColors("#[H.dna.features["mcolor3"]]"),list(0, 0, 0))
 						if(MUTCOLORS3)
 							if(fixed_mut_color3)
-								accessory_overlay.color = "#[fixed_mut_color3]"
+								accessory_overlay.color = list(GetHexColors("#[fixed_mut_color]"),GetHexColors("#[fixed_mut_color2]"),GetHexColors("#[fixed_mut_color3]"),list(0, 0, 0))
 							else
-								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+								accessory_overlay.color = list(GetHexColors("#[H.dna.features["mcolor"]]"),GetHexColors("#[H.dna.features["mcolor2"]]"),GetHexColors("#[H.dna.features["mcolor3"]]"),list(0, 0, 0))*/
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = "#[H.dna.features["mcolor"]]"

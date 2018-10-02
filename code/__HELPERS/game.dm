@@ -511,6 +511,14 @@
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
 
+
+/proc/GetHexColors(const/hexa)
+	return list(
+			GetRedPart(hexa),
+			GetGreenPart(hexa),
+			GetBluePart(hexa)
+		)
+
 /proc/GetRedPart(const/hexa)
 	return hex2num(copytext(hexa, 2, 4))
 
