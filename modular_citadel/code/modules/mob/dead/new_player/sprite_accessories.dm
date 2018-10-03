@@ -927,8 +927,7 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/mam_body_markings
 	extra = FALSE
 	extra2 = FALSE
-	extra_color_src = MUTCOLORS
-	extra2_color_src = MUTCOLORS
+	color_src = MUTCOLORS
 	icon = 'modular_citadel/icons/mob/mam_body_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
