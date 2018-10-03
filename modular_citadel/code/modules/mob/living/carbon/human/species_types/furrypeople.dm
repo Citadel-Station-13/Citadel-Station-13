@@ -47,10 +47,18 @@
 
 /datum/species/mammal/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
 /datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 //AVIAN//
@@ -101,10 +109,18 @@
 
 /datum/species/avian/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
 /datum/species/avian/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 //AQUATIC//
@@ -155,10 +171,18 @@
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 //INSECT//
@@ -208,10 +232,18 @@
 
 /datum/species/insect/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
 /datum/species/insect/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 //Alien//
