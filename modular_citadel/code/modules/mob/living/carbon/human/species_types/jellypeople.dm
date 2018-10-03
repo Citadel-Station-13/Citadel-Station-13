@@ -21,10 +21,18 @@
 
 /datum/species/jelly/roundstartslime/on_species_gain(mob/living/carbon/human/C)
 	C.draw_citadel_parts()
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
 	. = ..()
 
 /datum/species/jelly/roundstartslime/on_species_loss(mob/living/carbon/human/C)
 	C.draw_citadel_parts(TRUE)
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
+		species_traits -= DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(TRUE)
 	. = ..()
 
 /datum/action/innate/slime_change
