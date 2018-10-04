@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Footsteps now sound mostly the same as they did before the hard sync"
