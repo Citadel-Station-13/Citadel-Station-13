@@ -146,6 +146,9 @@
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
+	if(istype(I, /obj/item/suit_voucher))
+		RedeemSVoucher(I, user)
+		return
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
@@ -231,6 +234,13 @@
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/suit_voucher
+	name = "suit voucher"
+	desc = "A token to redeem a new suit. Use it on a mining equipment vendor."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_voucher"
+	w_class = WEIGHT_CLASS_TINY
+
 /**********************Mining Point Card**********************/
 
 /obj/item/card/mining_point_card
@@ -284,3 +294,22 @@
 	new /obj/item/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/mining_access_card(src)
+
+
+//CITADEL ADDITIONS BELOW
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
+	var/items = list("Exo-suit", "SEVA suit")
+
+	var/selection = input(redeemer, "Pick your suit.", "Suit Voucher Redemption") as null|anything in items
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Exo-suit")
+			new /obj/item/clothing/suit/hooded/exo(drop_location)
+		if("SEVA suit")
+			new /obj/item/clothing/suit/hooded/seva(drop_location)
+
+	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
+	qdel(voucher)
