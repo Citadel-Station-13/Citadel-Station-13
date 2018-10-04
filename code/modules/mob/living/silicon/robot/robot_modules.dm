@@ -525,6 +525,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
 		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/twohanded/required/kinetic_crusher,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
