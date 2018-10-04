@@ -31,12 +31,13 @@ Difficulty: Medium
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	speed = 2
+	speed = 1
+	move_to_delay = 2
 	ranged = 1
 	del_on_death = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 10
 	var/size = 5
 	var/charging = 0
 	medal_type = BOSS_MEDAL_LEGION
@@ -44,7 +45,7 @@ Difficulty: Medium
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
-	vision_range = 13
+	vision_range = 10
 	wander = FALSE
 	elimination = 1
 	appearance_flags = 0
@@ -87,6 +88,7 @@ Difficulty: Medium
 			retreat_distance = 0
 			minimum_distance = 0
 			speed = 0
+			move_to_delay = 1
 			charging = 1
 			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
@@ -94,7 +96,8 @@ Difficulty: Medium
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	speed = 2
+	speed = 1
+	move_to_delay = 2
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()

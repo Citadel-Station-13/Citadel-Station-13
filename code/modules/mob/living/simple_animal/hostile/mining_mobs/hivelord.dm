@@ -11,8 +11,8 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
 	ranged = 1
-	vision_range = 5
-	aggro_vision_range = 9
+	vision_range = 4
+	aggro_vision_range = 7
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 15
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
@@ -131,6 +131,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2 //faster!
+	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
 
@@ -377,7 +378,3 @@
 			id = /obj/item/card/id/knight //END OF CIT CHANGE
 			id_job = "Knight"
 	. = ..()
-
-
-
-
