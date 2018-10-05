@@ -125,6 +125,7 @@
 	desc = "A fire-proof suit for exploring hot environments."
 	icon_state = "seva"
 	item_state = "seva"
+	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -151,6 +152,7 @@
 	desc = "A robust suit for exploring dangerous environments."
 	icon_state = "exo"
 	item_state = "exo"
+	w-_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
