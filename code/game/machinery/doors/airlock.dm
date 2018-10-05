@@ -102,7 +102,7 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	wires = new /datum/wires/airlock(src)
+	wires = new wiretypepath(src) //CIT CHANGE - makes it possible for airlocks to have different wire datums
 	if(frequency)
 		set_frequency(frequency)
 
