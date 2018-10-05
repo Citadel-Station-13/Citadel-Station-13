@@ -496,7 +496,6 @@
 	item_color = "red_evening_gown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/maid
 	name = "maid costume"
