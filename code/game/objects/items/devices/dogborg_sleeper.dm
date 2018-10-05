@@ -13,7 +13,7 @@
 	var/cleaning = FALSE
 	var/cleaning_cycles = 10
 	var/patient_laststat = null
-	var/list/injection_chems = list("antitoxin", "epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane")
+	var/list/injection_chems = list("antitoxin", "epinephrine", "salbutamol", "bicaridine", "kelotane")
 	var/eject_port = "ingestion"
 	var/escape_in_progress = FALSE
 	var/message_cooldown
@@ -59,7 +59,7 @@
 		return
 	if(!iscarbon(target))
 		return
-	if(!(target.client && target.client.prefs && target.client.prefs.toggles && (target.client.prefs.toggles & MEDIHOUND_SLEEPER)))
+	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
 		return
 	if(target.buckled)
@@ -293,10 +293,19 @@
 					to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
 					to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
 					hound.cell.give(30000) //Fueeeeellll
-					T.stop_sound_channel(CHANNEL_PRED)
-					playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-					T.stop_sound_channel(CHANNEL_PRED)
-					T.playsound_local("death_prey",60)
+					if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+						var/turf/source = get_turf(owner)
+						LAZYCLEARLIST(hearing_mobs)
+							for(var/mob/H in get_hearers_in_view(3, source))
+								if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+									continue
+								LAZYADD(hearing_mobs, H)
+							last_hearcheck = world.time
+						for(var/mob/H in hearing_mobs)
+							if(!istype(H.loc, /obj/item/dogborg/sleeper))
+								H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
+							else
+								H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 					for(var/belly in T.vore_organs)
 						var/obj/belly/B = belly
 						for(var/atom/movable/thing in B)
@@ -333,10 +342,19 @@
 //sound effects
 	for(var/mob/living/M in contents)
 		if(prob(50))
-			M.stop_sound_channel(CHANNEL_PRED)
-			playsound(get_turf(hound),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED,ignore_walls = FALSE)
-			M.stop_sound_channel(CHANNEL_PRED)
-			M.playsound_local("digest_prey",60)
+			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+				var/turf/source = get_turf(owner)
+				LAZYCLEARLIST(hearing_mobs)
+					for(var/mob/H in get_hearers_in_view(3, source))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+							continue
+						LAZYADD(hearing_mobs, H)
+					last_hearcheck = world.time
+				for(var/mob/H in hearing_mobs)
+					if(!istype(H.loc, /obj/item/dogborg/sleeper))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 	if(cleaning)
 		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
