@@ -18,6 +18,8 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
+	var/tmp/last_hearcheck = 0
+	var/tmp/list/hearing_mobs
 	var/list/items_preserved = list()
 	var/static/list/important_items = typecacheof(list(
 		/obj/item/hand_tele,
@@ -45,10 +47,16 @@
 
 // Bags are prohibited from this due to the potential explotation of objects, same with brought
 
-/obj/item/dogborg/sleeper/New()
-	..()
+/obj/item/dogborg/sleeper/Initialize()
+	. = ..()
 	update_icon()
 	item_flags |= NOBLUDGEON //No more attack messages
+	START_PROCESSING(SSobj, src)
+
+/obj/item/dogborg/sleeper/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	go_out() //just... sanity I guess, edge case shit
+	return ..()
 
 /obj/item/dogborg/sleeper/Exit(atom/movable/O)
 	return 0
@@ -86,7 +94,6 @@
 			target.forceMove(src)
 			target.reset_perspective(src)
 			update_gut()
-			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up and expands as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)]")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
@@ -137,7 +144,8 @@
 	else //You clicked eject with nothing in you, let's just reset stuff to be sure.
 		items_preserved.Cut()
 		cleaning = FALSE
-		update_gut()
+	update_gut()
+
 
 /obj/item/dogborg/sleeper/attack_self(mob/user)
 	if(..())
@@ -265,7 +273,6 @@
 	patient_laststat = null
 	patient = null
 	hound.update_icons()
-	return
 
 //Gurgleborg process
 /obj/item/dogborg/sleeper/proc/clean_cycle()
@@ -274,6 +281,10 @@
 		if(!(I in contents))
 			items_preserved -= I
 	var/list/touchable_items = contents - items_preserved
+	var/sound/prey_digest = sound(get_sfx("digest_prey"))
+	var/sound/prey_death = sound(get_sfx("death_prey"))
+	var/sound/pred_digest = sound(get_sfx("digest_pred"))
+	var/sound/pred_death = sound(get_sfx("death_pred"))
 	if(cleaning_cycles)
 		cleaning_cycles--
 		cleaning = TRUE
@@ -294,7 +305,7 @@
 					to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
 					hound.cell.give(30000) //Fueeeeellll
 					if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
-						var/turf/source = get_turf(owner)
+						var/turf/source = get_turf(hound)
 						LAZYCLEARLIST(hearing_mobs)
 						for(var/mob/H in get_hearers_in_view(3, source))
 							if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
@@ -337,13 +348,12 @@
 		to_chat(hound, "<span class='notice'>Your [src] is now clean. Ending self-cleaning cycle.</span>")
 		cleaning = FALSE
 		update_gut()
-		return
 
 //sound effects
 	for(var/mob/living/M in contents)
 		if(prob(50))
 			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
-				var/turf/source = get_turf(owner)
+				var/turf/source = get_turf(hound)
 				LAZYCLEARLIST(hearing_mobs)
 				for(var/mob/H in get_hearers_in_view(3, source))
 					if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
@@ -425,7 +435,6 @@
 			brigman.forceMove(src)
 			brigman.reset_perspective(src)
 			update_gut()
-			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your mobile brig groans lightly as [brigman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
 		return
@@ -499,7 +508,6 @@
 			trashman.forceMove(src)
 			trashman.reset_perspective(src)
 			update_gut()
-			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
 		return
