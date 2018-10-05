@@ -47,6 +47,8 @@
 ////////////////////////// Sound vars /////////////////////////////
 	var/sound/prey_digest = sound(get_sfx("digest_prey"))
 	var/sound/prey_death = sound(get_sfx("death_prey"))
+	var/sound/pred_digest = sound(get_sfx("digest_pred"))
+	var/sound/pred_death = sound(get_sfx("death_pred"))
 	var/turf/source = get_turf(owner)
 
 
@@ -61,14 +63,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "digest_pred")
-				M.playsound_local(source, null, 45, falloff = 0, S = prey_digest)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 			//Pref protection!
 			if (!M.digestable || M.absorbed)
@@ -97,14 +100,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "death_pred")
-				M.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
 				digestion_death(M)
 				owner.update_icons()
@@ -131,14 +135,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "digest_pred")
-				M.playsound_local(source, null, 45, falloff = 0, S = prey_digest)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
@@ -155,14 +160,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "digest_pred")
-				M.playsound_local(source, null, 45, falloff = 0, S = prey_digest)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 
 //////////////////////////// DM_ABSORB ////////////////////////////
@@ -174,14 +180,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "digest_pred")
-				M.playsound_local(source, null, 45, falloff = 0, S = prey_digest)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 			if(M.absorbed)
 				continue
@@ -211,14 +218,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "digest_pred")
-				M.playsound_local(source, null, 45, falloff = 0, S = prey_digest)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 		//No digestion protection for megafauna.
 
@@ -243,14 +251,15 @@
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 					LAZYCLEARLIST(hearing_mobs)
 					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES) && !isbelly(H.loc))
+						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
 							continue
 						LAZYADD(hearing_mobs, H)
 					last_hearcheck = world.time
-				for(M in hearing_mobs)
-					var/mob/i = M
-					i.playsound_local(source, null, 45, falloff = 0, S = "death_pred")
-				M.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+				for(var/mob/H in hearing_mobs)
+					if(!isbelly(H.loc))
+						H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
+					else
+						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 				M.spill_organs(FALSE,TRUE,TRUE)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
 				digestion_death(M)
