@@ -296,11 +296,11 @@
 					if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 						var/turf/source = get_turf(owner)
 						LAZYCLEARLIST(hearing_mobs)
-							for(var/mob/H in get_hearers_in_view(3, source))
-								if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
-									continue
-								LAZYADD(hearing_mobs, H)
-							last_hearcheck = world.time
+						for(var/mob/H in get_hearers_in_view(3, source))
+							if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+								continue
+							LAZYADD(hearing_mobs, H)
+						last_hearcheck = world.time
 						for(var/mob/H in hearing_mobs)
 							if(!istype(H.loc, /obj/item/dogborg/sleeper))
 								H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
@@ -345,11 +345,11 @@
 			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
 				var/turf/source = get_turf(owner)
 				LAZYCLEARLIST(hearing_mobs)
-					for(var/mob/H in get_hearers_in_view(3, source))
-						if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
-							continue
-						LAZYADD(hearing_mobs, H)
-					last_hearcheck = world.time
+				for(var/mob/H in get_hearers_in_view(3, source))
+					if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+						continue
+					LAZYADD(hearing_mobs, H)
+				last_hearcheck = world.time
 				for(var/mob/H in hearing_mobs)
 					if(!istype(H.loc, /obj/item/dogborg/sleeper))
 						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
