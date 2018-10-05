@@ -159,24 +159,6 @@
 	path = /obj/item/clothing/under/polychromic/skirt
 	cost = 3
 
-/datum/gear/polypleatedskirt
-	name = "Polychromic Pleated Skirt"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/polychromic/pleat
-	cost = 3
-
-/datum/gear/polytanktop
-	name = "Polychromic Feminine Tank Top"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/polychromic/femtank
-	cost = 3
-
-/datum/gear/polypanties
-	name = "Polychromic Panties"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/polychromic/shortpants/pantsu
-	cost = 2
-
 // Trekie things
 //TOS
 /datum/gear/trekcmdtos
