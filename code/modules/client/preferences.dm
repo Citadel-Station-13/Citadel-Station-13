@@ -10,9 +10,11 @@
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences
-	var/client/parent
 	//doohickeys for savefiles
 	var/path
+	var/slot
+	var/client/parent
+	var/client_ckey
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/max_save_slots = 8
 
@@ -32,8 +34,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
-
-
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
-
 	var/uses_glasses_colour = 0
 
 	//character preferences
@@ -73,11 +72,77 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF",
-		"tail_lizard" = "Smooth", "tail_human" = "None",
-		"snout" = "Round", "horns" = "None", "ears" = "None",
-		"wings" = "None", "frills" = "None", "spines" = "None",
-		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+	var/list/features = list(
+		"tail_lizard" = "Smooth",
+		"tail_human" = "None",
+		"snout" = "Round",
+		"horns" = "None",
+		"ears" = "None",
+		"wings" = "None",
+		"frills" = "None",
+		"spines" = "None",
+		"body_markings" = "None",
+		"legs" = "Normal Legs",
+		"moth_wings" = "Plain",
+		"mcolor" = "FFF",
+		"mcolor2" = "FFF",
+		"mcolor3" = "FFF",
+		"mam_body_markings" = "None",
+		"mam_ears" = "None",
+		"mam_tail" = "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" = "Standard",
+		"xenohead" = "Standard",
+		"xenotail" = "Xenomorph Tail",
+		"taur" = "None",
+		"exhibitionist" = FALSE,
+		"genitals_use_skintone" = FALSE,
+		"has_cock" = FALSE,
+		"cock_shape" = "Human",
+		"cock_length" = 6,
+		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_color" = "fff",
+		"has_sheath" = FALSE,
+		"sheath_color" = "fff",
+		"has_balls" = FALSE,
+		"balls_internal" = FALSE,
+		"balls_color" = "fff",
+		"balls_amount" = 2,
+		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_size" = BALLS_SIZE_DEF,
+		"balls_cum_rate" = CUM_RATE,
+		"balls_cum_mult" = CUM_RATE_MULT,
+		"balls_efficiency" = CUM_EFFICIENCY,
+		"balls_fluid" = "semen",
+		"has_ovi" = FALSE,
+		"ovi_shape" = "knotted",
+		"ovi_length" = 6,
+		"ovi_color" = "fff",
+		"has_eggsack" = FALSE,
+		"eggsack_internal" = TRUE,
+		"eggsack_color" = "fff",
+		"eggsack_size" = BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" = EGG_GIRTH_DEF,
+		"has_breasts" = FALSE,
+		"breasts_color" = "fff",
+		"breasts_size" = "C",
+		"breasts_shape" = "Pair",
+		"breasts_fluid" = "milk",
+		"has_vag" = FALSE,
+		"vag_shape" = "Human",
+		"vag_color" = "fff",
+		"vag_clits" = 1,
+		"vag_clit_diam" = 0.25,
+		"has_womb" = FALSE,
+		"womb_cum_rate" = CUM_RATE,
+		"womb_cum_mult" = CUM_RATE_MULT,
+		"womb_efficiency" = CUM_EFFICIENCY,
+		"womb_fluid" = "femcum",
+		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
+		"flavor_text" = ""
+		)
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -137,6 +202,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
+		client_ckey = C.ckey
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
@@ -2002,6 +2068,108 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	ShowChoices(user)
 	return 1
+
+/datum/preferences/serialize_list(list/cfeatures)
+	. = list()
+	.["slot"] = slot
+	.["feature_tail_lizard"] = tail_lizard
+	.["feature_tail_human"] = tail_human
+	.["feature_snout"] = snout
+	.["feature_horns"] = horns
+	.["feature_ears"] = ears
+	.["feature_frills"] = frills
+	.["feature_spines"] = spines
+	.["feature_body_markings"] = body_markings
+	.["feature_legs"] = legs
+	.["feature_moth_wings"] = moth_wings
+	.["feature_ipc_screen"] = ipc_screen
+	.["feature_ipc_antenna"] = ipc_antenna
+	.["feature_genitals_use_skintone"] = genitals_use_skintone
+	.["feature_exhibitionist"] = exhibitionist
+	.["feature_mcolor"] = mcolor
+	.["feature_mcolor2"] = mcolor2
+	.["feature_mcolor3"] = mcolor3
+	.["feature_mam_body_markings"] = mam_body_markings
+	.["feature_mam_tail"] = mam_tail
+	.["feature_mam_ears"] = mam_ears
+	.["feature_mam_tail_animated"] = mam_tail_animated
+	.["feature_taur"] = taur
+	.["feature_xeno_tail"] = xeno_tail
+	.["feature_xeno_dors"] = xeno_dors
+	.["feature_xeno_head"] = xeno_head
+	.["feature_has_cock"] = has_cock
+	.["feature_cock_shape"] = cock_shape
+	.["feature_cock_color"] = cock_color
+	.["feature_cock_length"] = cock_length
+	.["feature_cock_girth"] = cock_girth
+	.["feature_has_sheath"] = has_sheath
+	.["feature_has_balls"] = has_balls
+	.["feature_balls_color"] = balls_color
+	.["feature_balls_size"] = balls_size
+	.["feature_balls_sack_size"] = balls_sack_size
+	.["feature_balls_fluid"] = balls_fluid
+	.["feature_has_breasts"] = has_breasts
+	.["feature_breasts_size"] = breasts_size
+	.["feature_breasts_shape"] = breasts_shape
+	.["feature_breasts_color"] = breasts_color
+	.["feature_breasts_fluid"] = breasts_fluid
+	.["feature_has_vag"] = has_vag
+	.["feature_vag_shape"] = vag_shape
+	.["feature_vag_color"] = vag_color
+	.["feature_has_womb"] = has_womb
+	.["feature_flavor_text"] = flavor_text
+
+/datum/preferences/deserialize_list(list/features, list/cfeatures)
+	if(!features["slot"])
+		return
+	slot				= slot
+	lizard_tail			= features["feature_tail_lizard"]
+	human_tail			= features["feature_tail_human"]
+	human_ears			= features["feature_ears"]
+	lizard_snout		= features["feature_snout"]
+	lizard_horns		= features["feature_horns"]
+	lizard_frills		= features["feature_frills"]
+	lizard_spines		= features["feature_spines"]
+	lizard_body_markings = features["feature_body_markings"]
+	lizard_legs			= features["feature_legs"]
+	moth_wings			= features["feature_moth_wings"]
+	ipc_screen			= features["feature_ipc_screen"]
+	ipc_antenna			= features["feature_ipc_antenna"]
+	genitals_use_skintone = features["feature_genitals_use_skintone"]
+	exhibitionist		= features["feature_exhibitionist"]
+	mcolor				= features["feature_mcolor"]
+	mcolor2				= features["feature_mcolor2"]
+	mcolor3				= features["feature_mcolor3"]
+	mam_body_markings	= features["feature_mam_body_markings"]
+	mam_tail			= features["feature_mam_tail"]
+	mam_ears			= features["feature_mam_ears"]
+	mam_tail_animated	= features["feature_mam_tail_animated"]
+	taur				= features["feature_taur"]
+	xeno_tail			= features["feature_xenotail"]
+	xeno_dors			= features["feature_xenodorsal"]
+	xeno_head			= features["feature_xenohead"]
+	has_cock			= features["feature_has_cock"]
+	cock_shape			= features["feature_cock_shape"]
+	cock_color			= features["feature_cock_color"]
+	cock_length			= features["feature_cock_length"]
+	cock_girth			= features["feature_cock_girth"]
+	has_sheath			= features["feature_sheath_color"]
+	has_balls			= features["feature_has_balls"]
+	balls_color			= features["feature_balls_color"]
+	balls_size			= features["feature_balls_size"]
+	balls_sack_size		= features["feature_balls_sack_size"]
+	balls_fluid			= features["feature_balls_fluid"]
+	has_breasts			= features["feature_has_breasts"]
+	breasts_size		= features["feature_breasts_size"]
+	breasts_shape		= features["feature_breasts_shape"]
+	breasts_color		= features["feature_breasts_color"]
+	breasts_fluid		= features["feature_breasts_fluid"]
+	has_vag				= features["feature_has_vag"]
+	vag_shape			= features["feature_vag_shape"]
+	vag_color			= features["feature_vag_color"]
+	has_womb			= features["feature_has_womb"]
+	flavor_text			= features["feature_flavor_text"]
+	return src
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
 	if(be_random_name)
