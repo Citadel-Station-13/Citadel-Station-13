@@ -54,6 +54,7 @@
 	req_access = null
 	max_integrity = 300
 	integrity_failure = 50
+	var/damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
@@ -742,6 +743,11 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		set_broken()
 
+/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(damage_flag == "melee" && damage_amount < damage_deflection)
+		return 0
+	. = ..()
+	
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
