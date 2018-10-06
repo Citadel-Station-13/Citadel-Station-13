@@ -60,7 +60,6 @@
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
-	new /obj/item/suit_voucher(src)
 	new /obj/item/assault_pod/mining(src)
 
 
