@@ -466,6 +466,7 @@
 	item_color = "black_tango"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
