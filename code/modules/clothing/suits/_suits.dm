@@ -9,6 +9,19 @@
 	var/togglename = null
 	var/suittoggled = FALSE
 
+	var/adjusted = NORMAL_STYLE
+	mutantrace_variation = MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/equipped(mob/user, slot)
+	..()
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.species_traits)
+			adjusted = ALT_STYLE
+			H.update_inv_wear_suit()
+		else if(adjusted == ALT_STYLE)
+			adjusted = NORMAL_STYLE
+			H.update_inv_wear_suit()
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()
