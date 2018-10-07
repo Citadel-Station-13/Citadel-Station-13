@@ -32,7 +32,7 @@
 /obj/item/projectile/bullet/c46x30mm/rubber
 	name = "4.6x30mm bullet"
 	damage = 5
-	stamina = 20
+	stamina = 30
 
 ///toy memes///
 

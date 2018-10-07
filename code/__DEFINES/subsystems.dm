@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 4
+#define DB_MINOR_VERSION 5
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -67,6 +67,7 @@
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
+#define INIT_ORDER_AIR_TURFS -2
 #define INIT_ORDER_MINIMAP -3
 #define INIT_ORDER_ASSETS -4
 #define INIT_ORDER_ICON_SMOOTHING -5
@@ -100,6 +101,7 @@
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
 #define FIRE_PRIOTITY_BURNING		40
+#define FIRE_PRIORITY_AIR_TURFS	40
 #define FIRE_PRIORITY_DEFAULT		50
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_FLIGHTPACKS	80

@@ -396,7 +396,7 @@
 	name = "lifeguard sleeper"
 	id_job = "Lifeguard"
 	uniform = /obj/item/clothing/under/shorts/red
-	
+
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -554,3 +554,17 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
+
+
+//Aliens for the alien nest space ruin.
+/obj/effect/mob_spawn/alien/corpse/humanoid/drone
+	mob_type = /mob/living/carbon/alien/humanoid/drone
+	death = TRUE
+	name = "alien drone"
+	mob_name = "alien drone"
+
+/obj/effect/mob_spawn/alien/corpse/humanoid/queen
+	mob_type = /mob/living/carbon/alien/humanoid/royal/queen
+	death = TRUE
+	name = "alien queen"
+	mob_name = "alien queen"

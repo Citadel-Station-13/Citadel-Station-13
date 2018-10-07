@@ -30,3 +30,25 @@
 	construction_time = 100
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/constructionhardsuit
+	name = "Construction Hardsuit"
+	desc = "A hardsuit, designed for EVA construction and hazardous material transportation"
+	id = "chardsuit"
+	build_type = PROTOLATHE
+	build_path = /obj/item/clothing/suit/space/hardsuit/engine
+	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 200, MAT_GOLD = 3000, MAT_SILVER = 3000, MAT_TITANIUM = 16000)
+	construction_time = 100
+	category = list("Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/integratedjpack
+	name = "Hardsuit Jetpack Upgrade"
+	desc = "A modular upgrade for any hardsuit, giving it an integrated jetpack."
+	id = "hardsuitjpack"
+	build_type = PROTOLATHE
+	build_path = /obj/item/tank/jetpack/suit
+	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_DIAMOND = 2000, MAT_GOLD = 6000, MAT_SILVER = 6000, MAT_URANIUM = 10000, MAT_PLASMA = 8000, MAT_TITANIUM = 16000)
+	construction_time = 100
+	category = list("Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

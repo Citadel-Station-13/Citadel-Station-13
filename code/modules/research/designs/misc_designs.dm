@@ -147,6 +147,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/night_vision_goggles_glasses
+	name = "Prescription Night Vision Goggles"
+	desc = "Goggles that let you see through darkness unhindered. Corrects vision."
+	id = "night_visision_goggles_glasses"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	build_path = /obj/item/clothing/glasses/night/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/magboots
 	name = "Magnetic Boots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."

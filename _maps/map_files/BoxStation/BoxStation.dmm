@@ -1129,7 +1129,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "acV" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -1333,7 +1333,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "ads" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -1912,7 +1912,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -2241,9 +2241,6 @@
 	dir = 5
 	},
 /area/security/main)
-"afn" = (
-/turf/open/floor/plating,
-/area/security/main)
 "afo" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
@@ -2252,7 +2249,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "afp" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -2516,7 +2513,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "agd" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
@@ -24924,6 +24921,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "bmA" = (
@@ -31432,12 +31430,12 @@
 /area/science/research)
 "bBF" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/item/storage/firstaid/toxin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -33417,12 +33415,13 @@
 	pixel_y = 10
 	},
 /obj/item/analyzer,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGA" = (
 /obj/machinery/holopad,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -33698,10 +33697,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"bHg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/white,
-/area/science/mixing)
 "bHh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -33816,11 +33811,7 @@
 /area/science/mixing)
 "bHv" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/machinery/computer/security/telescreen/toxins{
-	dir = 4;
-	pixel_x = 30
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -34509,9 +34500,7 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bIW" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bIX" = (
@@ -34971,6 +34960,7 @@
 	},
 /obj/item/assembly/timer,
 /obj/structure/table/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bKa" = (
@@ -35522,9 +35512,6 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bLj" = (
@@ -36016,7 +36003,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bMz" = (
@@ -36354,12 +36340,10 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bNu" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
 /area/science/mixing)
 "bNv" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -36373,7 +36357,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNy" = (
@@ -36823,7 +36806,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bOH" = (
@@ -36958,6 +36940,12 @@
 	location = "Atmospherics"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/northleft{
+	dir = 4;
+	icon_state = "left";
+	name = "Atmospherics Desk";
+	req_access_txt = "24"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOU" = (
@@ -37377,6 +37365,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bPM" = (
@@ -37821,6 +37810,7 @@
 /obj/machinery/computer/security/telescreen/circuitry{
 	pixel_y = 30
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bQZ" = (
@@ -39127,6 +39117,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "bUq" = (
@@ -49769,7 +49760,7 @@
 	name = "Escape Pod Three"
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "cxJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -53140,6 +53131,10 @@
 "cVb" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"cVK" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "dfh" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
@@ -53164,7 +53159,7 @@
 /area/maintenance/disposal/incinerator)
 "dvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+	dir = 10
 	},
 /turf/closed/wall,
 /area/science/circuit)
@@ -53366,6 +53361,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "iiW" = (
@@ -53493,12 +53489,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"jMF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/closed/wall,
-/area/science/circuit)
 "jMY" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -53568,14 +53558,8 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "kzT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/closed/wall/r_wall,
-/area/science/mixing)
-"kOw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
+/turf/closed/wall/r_wall,
 /area/science/mixing)
 "kPd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -53665,6 +53649,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -20
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "mPE" = (
@@ -53676,6 +53661,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "nfm" = (
@@ -53728,6 +53714,10 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/bar)
+"olr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "oDF" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
@@ -53752,6 +53742,15 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"poc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "pHl" = (
 /obj/structure/table,
 /obj/item/storage/box/beakers{
@@ -53846,6 +53845,20 @@
 /obj/effect/decal/cleanable/semen,
 /turf/open/floor/plating,
 /area/maintenance/bar)
+"rNc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/computer/security/telescreen/toxins{
+	dir = 1;
+	network = list("toxins");
+	pixel_y = -28
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "saK" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -53930,7 +53943,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/maintenance/fore/secondary)
 "sXA" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall,
@@ -53973,7 +53986,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "tOq" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -54129,6 +54141,7 @@
 	pixel_x = -24
 	},
 /obj/item/stock_parts/cell/high,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "vzO" = (
@@ -54145,6 +54158,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vHY" = (
+/turf/open/floor/plating,
+/area/science/mixing)
 "vPE" = (
 /obj/machinery/light{
 	dir = 4
@@ -54248,6 +54264,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ydD" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/rd,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 
 (1,1,1) = {"
 aaa
@@ -88765,7 +88786,7 @@ acU
 adr
 sXy
 aeC
-afn
+anF
 agc
 abp
 ahk
@@ -102457,7 +102478,7 @@ aGs
 bvK
 bBF
 bFU
-bFT
+oce
 bGz
 bJZ
 kzT
@@ -102717,7 +102738,7 @@ bFU
 bFT
 bFU
 bJY
-bEM
+bEC
 bMv
 bNv
 bMv
@@ -102971,9 +102992,9 @@ bzO
 bqe
 bEB
 bFW
-oce
+bFT
 tOq
-kOw
+bFU
 bLi
 bMz
 bNy
@@ -102985,9 +103006,9 @@ hRa
 bUp
 mNi
 mRe
-bXs
+olr
 bPL
-bQI
+cVK
 bTo
 eaI
 cbZ
@@ -103230,12 +103251,12 @@ bEA
 bFV
 bFT
 bGA
-bHg
-bHg
+bFU
+bFU
 bMy
 bNx
 bOG
-jMF
+wkN
 uoB
 bSk
 bXs
@@ -105540,11 +105561,11 @@ cNT
 bCm
 bDh
 bEs
-bGd
+ydD
 bHv
 bIW
 bKe
-bLm
+vHY
 bEs
 rmX
 xIa
@@ -105797,11 +105818,11 @@ brG
 brG
 bDg
 bEs
-bGc
-bGc
-bGc
+bGd
+poc
+rNc
 bEs
-bLl
+bLm
 bEs
 cOT
 cOT
@@ -106054,12 +106075,12 @@ byx
 brI
 bky
 bky
-aaf
-aaf
-aaf
-aaf
-aaa
-aaf
+bEs
+bGc
+bGc
+bEs
+bLl
+bEs
 aaf
 aaa
 aaa
@@ -106311,13 +106332,13 @@ bky
 bky
 bky
 aaf
-aaa
-aaa
-aaa
+gXs
+gXs
+gXs
 aaf
 aaa
 aaf
-aaa
+gXs
 aaa
 aaa
 aaf
@@ -111197,9 +111218,9 @@ aaa
 aaa
 aaa
 aaa
-aaf
+gXs
 aaa
-aaf
+gXs
 aaa
 aaa
 aaa
@@ -111453,6 +111474,263 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaf
+aaa
+aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(224,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaf
 aaf
 aaa
@@ -111560,7 +111838,7 @@ aaa
 aaa
 aaa
 "}
-(224,1,1) = {"
+(225,1,1) = {"
 aaa
 aaa
 aaa
@@ -111817,7 +112095,7 @@ aaa
 aaa
 aaa
 "}
-(225,1,1) = {"
+(226,1,1) = {"
 aaa
 aaa
 aaa
@@ -112074,7 +112352,7 @@ aaa
 aaa
 aaa
 "}
-(226,1,1) = {"
+(227,1,1) = {"
 aaa
 aaa
 aaa
@@ -112331,7 +112609,7 @@ aaa
 aaa
 aaa
 "}
-(227,1,1) = {"
+(228,1,1) = {"
 aaa
 aaa
 aaa
@@ -112588,7 +112866,7 @@ aaa
 aaa
 aaa
 "}
-(228,1,1) = {"
+(229,1,1) = {"
 aaa
 aaa
 aaa
@@ -112845,7 +113123,7 @@ aaa
 aaa
 aaa
 "}
-(229,1,1) = {"
+(230,1,1) = {"
 aaa
 aaa
 aaa
@@ -113102,7 +113380,7 @@ aaa
 aaa
 aaa
 "}
-(230,1,1) = {"
+(231,1,1) = {"
 aaa
 aaa
 aaa
@@ -113359,7 +113637,7 @@ aaa
 aaa
 aaa
 "}
-(231,1,1) = {"
+(232,1,1) = {"
 aaa
 aaa
 aaa
@@ -113616,7 +113894,7 @@ aaa
 aaa
 aaa
 "}
-(232,1,1) = {"
+(233,1,1) = {"
 aaa
 aaa
 aaa
@@ -113772,263 +114050,6 @@ bGe
 bGf
 aaf
 aaf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
-(233,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-aaf
-aaa
 aaa
 aaa
 aaa
@@ -114280,11 +114301,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaf
 aaf
 aaf
-aaa
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -114538,9 +114559,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaf
-aaa
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -115053,7 +115074,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa

@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
-			
+
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -525,7 +525,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
-			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe. 
+			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
@@ -939,7 +939,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, (SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey) FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
 		if(!query_get_jobban.warn_execute())
 			return
 		if(query_get_jobban.NextRow())
@@ -947,9 +947,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/bantime = query_get_jobban.item[2]
 			var/duration = query_get_jobban.item[3]
 			var/expiration_time = query_get_jobban.item[4]
-			var/a_ckey = query_get_jobban.item[5]
+			var/admin_key = query_get_jobban.item[5]
 			var/text
-			text = "<span class='redtext'>You, or another user of this computer, ([user.ckey]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [a_ckey] on [bantime]"
+			text = "<span class='redtext'>You, or another user of this computer, ([user.key]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [admin_key] on [bantime]"
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
@@ -1223,7 +1223,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_human
 					if(new_tail)
-						features["tail_human"] = new_tail 
+						features["tail_human"] = new_tail
 
 				if("snout")
 					var/new_snout
@@ -1413,9 +1413,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("balls_internal")
 					features["balls_internal"] = !features["balls_internal"]
 				if("eggsack_internal")
-					features["eggsack_internal"] = !features["eggsack_internal"]				
+					features["eggsack_internal"] = !features["eggsack_internal"]
 				if("has_breasts")
-					features["has_breasts"] = !features["has_breasts"]	
+					features["has_breasts"] = !features["has_breasts"]
 				if("has_vag")
 					features["has_vag"] = !features["has_vag"]
 				if("has_womb")

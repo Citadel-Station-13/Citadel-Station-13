@@ -87,6 +87,9 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.dropItemToGround(src)
+	else if(isitem(loc))
+		var/obj/item/I = loc
+		I.grenade_prime_react(src)
 
 
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)

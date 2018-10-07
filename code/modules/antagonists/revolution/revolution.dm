@@ -17,7 +17,7 @@
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
-		if(new_owner.current && new_owner.current.isloyal())
+		if(new_owner.current && new_owner.current.has_trait(TRAIT_MINDSHIELD))
 			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
@@ -281,7 +281,7 @@
 		var/list/datum/mind/heads = SSjob.get_all_heads()
 		var/list/sec = SSjob.get_all_sec()
 
-		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
+		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((3 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)

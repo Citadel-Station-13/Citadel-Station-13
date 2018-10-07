@@ -289,6 +289,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 //CITADEL EDIT
 	if(NOAROUSAL in species_traits)
@@ -305,6 +306,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
+	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -1378,6 +1380,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		target.visible_message("<span class='danger'>[user] has [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] has [atk_verb]ed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+
+		target.lastattacker = user.real_name
+		target.lastattackerckey = user.ckey
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)

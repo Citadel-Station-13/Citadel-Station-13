@@ -198,7 +198,10 @@
 				state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(authenticated)
-				SSshuttle.cancelEvac(usr)
+				if(world.time > SSshuttle.auto_call)
+					say("Warning: Emergency shuttle recalls have been blocked by Central Command due to ongoing crew transfer procedures.")
+				else
+					SSshuttle.cancelEvac(usr)
 			state = STATE_DEFAULT
 		if("messagelist")
 			currmsg = 0
@@ -421,6 +424,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	SSshuttle.shuttle_purchase_requirements_met |= "emagged"
 	if(authenticated == 1)
 		authenticated = 2
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")

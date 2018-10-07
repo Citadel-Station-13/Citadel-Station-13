@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
 	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
+	DATA_HUD_AI_DETECT = new/datum/atom_hud(),						//CIT - EMPTY PLACEHOLDER UNTIL SYNC
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(),
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(),
@@ -25,7 +26,7 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),
-	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden()
 	))
 
 /datum/atom_hud

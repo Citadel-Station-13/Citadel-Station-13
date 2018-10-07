@@ -482,11 +482,12 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_THROW, TT, spin)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, TT, spin)			//CITADEL - THIS IS BORKED. PENDING SYNC.
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_THROW, TT, spin)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

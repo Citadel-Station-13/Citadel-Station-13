@@ -207,6 +207,33 @@
 
 	spreadFire(AM)
 
+/mob/living/carbon/human/resist()
+	. = ..()
+	if(wear_suit && wear_suit.breakouttime)//added in human cuff breakout proc
+		return
+	if(.)
+		if(canmove && !on_fire)
+			for(var/obj/item/bodypart/L in bodyparts)
+				if(istype(L) && L.embedded_objects.len)
+					for(var/obj/item/I in L.embedded_objects)
+						if(istype(I) && I.w_class >= WEIGHT_CLASS_NORMAL)	//minimum weight class to insta-ripout via resist
+							remove_embedded_unsafe(L, I, src, 1.5)	//forcefully call the remove embedded unsafe proc but with extra pain multiplier. if you want to remove it less painfully, examine and remove it carefully.
+							return FALSE //Hands are occupied
+	return .
+
+/mob/living/carbon/human/proc/remove_embedded_unsafe(obj/item/bodypart/L, obj/item/I, mob/user, painmul = 1)
+	if(!I || !L || I.loc != src || !(I in L.embedded_objects))
+		return
+	L.embedded_objects -= I
+	L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class*painmul)//It hurts to rip it out, get surgery you dingus. And if you're ripping it out quickly via resist, it's gonna hurt even more
+	I.forceMove(get_turf(src))
+	user.put_in_hands(I)
+	user.emote("scream")
+	user.visible_message("[user] rips [I] out of [user.p_their()] [L.name]!","<span class='notice'>You remove [I] from your [L.name].</span>")
+	if(!has_embedded_objects())
+		clear_alert("embeddedobject")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	return
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
@@ -217,20 +244,10 @@
 			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
 			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
-			var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
+			var/time_taken = I.embedding.embedded_unsafe_removal_time/I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
-				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-					return
-				L.embedded_objects -= I
-				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
-				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
-				if(!has_embedded_objects())
-					clear_alert("embeddedobject")
-					SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+				remove_embedded_unsafe(L, I, usr)
 			return
 
 		if(href_list["item"])
@@ -602,7 +619,7 @@
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
-	if(isloyal())
+	if(has_trait(TRAIT_MINDSHIELD))
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.

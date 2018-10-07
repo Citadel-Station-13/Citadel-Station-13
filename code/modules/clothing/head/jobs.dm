@@ -60,11 +60,12 @@
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	var/candy_cooldown = 0
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
-/obj/item/clothing/head/fedora/Initialize()
+/obj/item/clothing/head/fedora/det_hat/Initialize()
 	. = ..()
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 

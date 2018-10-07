@@ -150,7 +150,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod")
+	"teleconsole",  "bluespace_crystal", "wormholeprojector")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	export_price = 5000
 
@@ -159,7 +159,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
+	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -172,7 +172,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-
+/datum/techweb_node/bluespace_holding //Bluespace-memery
+	id = "bluespace_holding"
+	display_name = "Bluespace Pockets"
+	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
+	prereq_ids = list("adv_power", "adv_bluespace", "anomaly_research", "adv_biotech")
+	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	export_price = 5000
 /////////////////////////plasma tech/////////////////////////
 /datum/techweb_node/basic_plasma
 	id = "basic_plasma"
@@ -207,7 +214,7 @@
 	display_name = "Advanced Robotics Research"
 	description = "It can even do the dishes!"
 	prereq_ids = list("robotics")
-	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
+	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_advancedmop")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -387,7 +394,7 @@
 	display_name = "Night Vision Technology"
 	description = "Allows seeing in the dark without actual light!"
 	prereq_ids = list("integrated_HUDs", "adv_engi", "emp_adv")
-	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "nvgmesons")
+	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "night_visision_goggles_glasses", "nvgmesons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -479,7 +486,7 @@
 	display_name = "Advanced Sanitation Technology"
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
-	design_ids = list("advmop", "buffer", "blutrash", "light_replacer")
+	design_ids = list("advmop", "buffer", "light_replacer")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -499,6 +506,15 @@
 	design_ids = list("exwelder", "jawsoflife", "handdrill")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/engine_hardsuit
+	id = "engi_hardsuit"
+	display_name = "EVA Construction Equipment"
+	description = "Production of EVA construction equipment."
+	design_ids = list("chardsuit", "hardsuitjpack")
+	prereq_ids = list("adv_engi", "exp_tools")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
 /////////////////////////weaponry tech/////////////////////////
@@ -822,6 +838,91 @@
 	design_ids = list("mech_diamond_drill")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+
+/////////////////////////Nanites/////////////////////////
+/datum/techweb_node/nanite_base
+	id = "nanite_base"
+	display_name = "Basic Nanite Programming"
+	description = "The basics of nanite construction and programming."
+	prereq_ids = list("datatheory","robotics")
+	design_ids = list("nanite_disk","nanite_remote","nanite_scanner",\
+						"nanite_chamber","public_nanite_chamber","nanite_chamber_control","nanite_programmer","nanite_program_hub","nanite_cloud_control",\
+						"relay_nanites", "monitoring_nanites", "access_nanites", "repairing_nanites","sensor_nanite_volume", "repeater_nanites", "relay_repeater_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_smart
+	id = "nanite_smart"
+	display_name = "Smart Nanite Programming"
+	description = "Nanite programs that require nanites to perform complex actions, act independently, roam or seek targets."
+	prereq_ids = list("nanite_base","adv_robotics")
+	design_ids = list("purging_nanites", "metabolic_nanites", "stealth_nanites", "memleak_nanites","sensor_voice_nanites", "voice_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 4000
+
+/datum/techweb_node/nanite_mesh
+	id = "nanite_mesh"
+	display_name = "Mesh Nanite Programming"
+	description = "Nanite programs that require static structures and membranes."
+	prereq_ids = list("nanite_base","engineering")
+	design_ids = list("hardening_nanites", "refractive_nanites", "cryo_nanites", "conductive_nanites", "shock_nanites", "emp_nanites", "temperature_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_bio
+	id = "nanite_bio"
+	display_name = "Biological Nanite Programming"
+	description = "Nanite programs that require complex biological interaction."
+	prereq_ids = list("nanite_base","biotech")
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "coagulating_nanites","poison_nanites","flesheating_nanites",\
+					"sensor_crit_nanites","sensor_death_nanites", "sensor_health_nanites", "sensor_damage_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_neural
+	id = "nanite_neural"
+	display_name = "Neural Nanite Programming"
+	description = "Nanite programs affecting nerves and brain matter."
+	prereq_ids = list("nanite_bio")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "paralyzing_nanites", "stun_nanites", "selfscan_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_synaptic
+	id = "nanite_synaptic"
+	display_name = "Synaptic Nanite Programming"
+	description = "Nanite programs affecting mind and thoughts."
+	prereq_ids = list("nanite_neural","neural_programming")
+	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "mute_nanites", "speech_nanites","hallucination_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_harmonic
+	id = "nanite_harmonic"
+	display_name = "Harmonic Nanite Programming"
+	description = "Nanite programs that require seamless integration between nanites and biology."
+	prereq_ids = list("nanite_bio","nanite_smart","nanite_mesh")
+	design_ids = list("fakedeath_nanites","aggressive_nanites","defib_nanites","regenerative_plus_nanites","brainheal_plus_nanites","purging_plus_nanites","adrenaline_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	export_price = 8000
+
+/datum/techweb_node/nanite_combat
+	id = "nanite_military"
+	display_name = "Military Nanite Programming"
+	description = "Nanite programs that perform military-grade functions."
+	prereq_ids = list("nanite_harmonic", "syndicate_basic")
+	design_ids = list("explosive_nanites","pyro_nanites","meltdown_nanites","viral_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	export_price = 12500
+
+/datum/techweb_node/nanite_hazard
+	id = "nanite_hazard"
+	display_name = "Hazard Nanite Programs"
+	description = "Extremely advanced Nanite programs with the potential of being extremely dangerous."
+	prereq_ids = list("nanite_harmonic", "alientech")
+	design_ids = list("spreading_nanites","mindcontrol_nanites","mitosis_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 15000
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech

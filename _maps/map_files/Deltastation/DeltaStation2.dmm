@@ -43117,7 +43117,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/riot,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/item/gun/ballistic/shotgun/riot,
@@ -43152,12 +43151,14 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/head/helmet{
-	layer = 3.00001
-	},
-/obj/item/clothing/head/helmet{
 	layer = 3.00001;
 	pixel_x = 3;
 	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet{
+	layer = 3.00001;
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -44015,7 +44016,6 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot{
 	pixel_x = 3;
 	pixel_y = -3
@@ -44038,7 +44038,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/laser,
 /obj/item/gun/energy/laser{
 	pixel_x = 3;
 	pixel_y = -3
@@ -44057,17 +44056,10 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/clothing/head/helmet/alt{
 	layer = 3.00001;
 	pixel_x = -3;
 	pixel_y = 3
-	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001
 	},
 /obj/item/clothing/head/helmet/alt{
 	layer = 3.00001;
@@ -45304,6 +45296,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/gun/energy/e_gun/advtaser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bVr" = (
@@ -45313,23 +45309,11 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/clothing/head/helmet/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/shield/riot,
 /obj/item/shield/riot{
 	pixel_x = 3;
@@ -46637,7 +46621,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun,
 /obj/item/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
@@ -50076,6 +50059,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/card/id/captains_spare,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "ceF" = (
@@ -82122,11 +82106,11 @@
 	},
 /area/science/explab)
 "duF" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm/unlocked{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "duG" = (
@@ -89452,6 +89436,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dJO" = (
@@ -99648,7 +99633,6 @@
 /area/crew_quarters/abandoned_gambling_den)
 "fpQ" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
 "fGq" = (
@@ -100179,7 +100163,6 @@
 /area/science/mixing)
 "oIE" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/engine,
 /area/science/mixing)
 "oMw" = (
@@ -100195,6 +100178,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},

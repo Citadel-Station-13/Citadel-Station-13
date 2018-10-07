@@ -121,7 +121,7 @@
 			updateUsrDialog()
 
 /obj/machinery/jukebox/proc/activate_music()
-	var/jukeboxslottotake = SSjukeboxes.addjukebox(src, selection)
+	var/jukeboxslottotake = SSjukeboxes.addjukebox(src, selection, 2)
 	if(jukeboxslottotake)
 		active = TRUE
 		update_icon()

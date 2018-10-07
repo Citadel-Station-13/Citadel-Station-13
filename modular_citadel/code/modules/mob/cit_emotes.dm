@@ -1,9 +1,26 @@
+#define INSULTS_FILE "insult.json"
+
 /mob
 	var/nextsoundemote = 1
 
 //Disables the custom emote blacklist from TG that normally applies to slimes.
 /datum/emote/living/custom
 	mob_type_blacklist_typecache = list(/mob/living/brain)
+
+/datum/emote/living/insult
+	key = "insult"
+	key_third_person = "insults"
+	message = "spews insults."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/insult/run_emote(mob/living/user, params)
+	var/insult_message = ""
+	if(!user.is_muzzled())
+		insult_message += pick_list_replacements(INSULTS_FILE, "insult_gen")
+		message = insult_message
+	else
+		message = "muffles something."
+	. = ..()
 
 /datum/emote/living/scream/run_emote(mob/living/user, params) //I can't not port this shit, come on.
 	if(user.nextsoundemote >= world.time || user.stat != CONSCIOUS)
@@ -100,4 +117,46 @@
 			return
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/awoo
+	key = "awoo"
+	key_third_person = "lets out an awoo"
+	message = "lets out an awoo!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/awoo/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/awoo.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/nya
+	key = "nya"
+	key_third_person = "lets out a nya"
+	message = "lets out a nya!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/nya/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/weh
+	key = "weh"
+	key_third_person = "lets out a weh"
+	message = "lets out a weh!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/weh/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/weh.ogg', 50, 1, -1)
 	. = ..()

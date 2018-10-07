@@ -106,7 +106,7 @@
 	..()
 	if(crit_fail)
 		return
-
+	owner.adjustStaminaLoss(-3.5)
 	if(owner.AmountStun() > STUN_SET_AMOUNT)
 		owner.SetStun(STUN_SET_AMOUNT)
 	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)

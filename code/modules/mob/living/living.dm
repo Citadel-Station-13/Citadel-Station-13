@@ -5,9 +5,10 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-
 
 /mob/living/prepare_huds()
 	..()
@@ -614,6 +615,10 @@
 			resist_fire() //stop, drop, and roll
 		else if(resting) //cit change - allows resisting out of resting
 			resist_a_rest() // ditto
+		else if(istype(src, /mob/living/carbon))
+			var/mob/living/carbon/C = src
+			if(!C.handcuffed && !C.legcuffed)
+				return TRUE
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 

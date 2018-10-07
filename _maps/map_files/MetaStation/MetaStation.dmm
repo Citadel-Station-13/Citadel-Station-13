@@ -2783,16 +2783,14 @@
 /area/ai_monitored/security/armory)
 "agb" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/gun/energy/e_gun/advtaser,
 /obj/item/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/e_gun/advtaser,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -3188,13 +3186,10 @@
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/ballistic/shotgun/riot,
 /obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -3206,7 +3201,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun,
 /obj/item/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
@@ -3448,8 +3442,6 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/machinery/firealarm{
@@ -3528,10 +3520,6 @@
 	pixel_y = 3
 	},
 /obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/button/door{
 	id = "armory";
 	name = "Armory Shutters";
@@ -12297,6 +12285,9 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aAr" = (
@@ -26780,6 +26771,7 @@
 	pixel_x = -30;
 	pixel_y = 1
 	},
+/obj/item/card/id/captains_spare,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bfz" = (
@@ -60457,6 +60449,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyE" = (
@@ -60480,12 +60473,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 24
+	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyG" = (
@@ -61482,9 +61476,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -61494,9 +61485,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/holopad,
 /obj/effect/landmark/start/scientist,
 /obj/structure/disposalpipe/segment{
@@ -61505,12 +61493,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAF" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cAG" = (
@@ -61901,7 +61887,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cBy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -61914,9 +61899,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cBA" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cBB" = (
@@ -62366,30 +62349,22 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cCA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cCB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cCC" = (
@@ -63763,7 +63738,6 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "cFo" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -63775,7 +63749,6 @@
 /turf/open/floor/engine,
 /area/science/mixing)
 "cFq" = (
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
 /area/science/mixing)
@@ -64255,10 +64228,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cGo" = (
