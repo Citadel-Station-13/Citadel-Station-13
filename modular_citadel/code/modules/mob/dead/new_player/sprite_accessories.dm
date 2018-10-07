@@ -1362,22 +1362,22 @@ datum/sprite_accessory/mam_tails/tentacle
 
 // *** Snooooow flaaaaake ***
 
-/datum/sprite_accessory/mam_body_markings/guilmon
+/datum/sprite_accessory/body_markings/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	gender_specific = 1
 
-/datum/sprite_accessory/mam_tails/guilmon
+/datum/sprite_accessory/tails/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	extra = TRUE
 
-/datum/sprite_accessory/mam_tails_animated/guilmon
+/datum/sprite_accessory/tails_animated/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	extra = TRUE
 
-/datum/sprite_accessory/mam_ears/guilmon
+/datum/sprite_accessory/horns/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 
