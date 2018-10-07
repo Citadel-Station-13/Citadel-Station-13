@@ -1,6 +1,6 @@
 /datum/design/bio_vest
-	name = "BioHazer resistent vest"
-	desc = "BioHazer resistent vest that is easly attached to a jumpsuit."
+	name = "BioHazerd resistent vest"
+	desc = "BioHazerd resistent vest that is easly attached to a jumpsuit."
 	id = "bio_vest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 1000, MAT_GOLD = 1750)
@@ -9,7 +9,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bomb_vest
-	name = "Bomb resistsent vest"
+	name = "Bomb resistantt vest"
 	desc = "A heavy, padded lining designed to mitigate explosive pressure."
 	id = "bomb_vest"
 	build_type = PROTOLATHE
