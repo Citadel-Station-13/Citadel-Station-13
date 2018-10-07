@@ -27,11 +27,11 @@
 			v /= 2
 			e -= 5
 	steps++
-	if(steps >= 6)
+	if(steps >= 3)
 		steps = 0
-	if(steps % 2)
+	else
 		return
-	if(!LM.has_gravity(T) && steps != 0) // don't need to step as often when you hop around
+	if(prob(80) && !LM.has_gravity(T)) // don't need to step as often when you hop around
 		return
 	playsound(T, pick(GLOB.footstep[T.footstep][1]),
 		GLOB.footstep[T.footstep][2] * v,

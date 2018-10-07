@@ -11,8 +11,8 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
 	ranged = 1
-	vision_range = 5
-	aggro_vision_range = 9
+	vision_range = 4
+	aggro_vision_range = 7
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -24,7 +24,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	ranged_cooldown = 0
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 15
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
@@ -131,6 +131,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2 //faster!
+	move_to_delay = 10 //actually faster!
 	crusher_drop_mod = 20
 	dwarf_mob = TRUE
 
@@ -289,7 +290,7 @@
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
-				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 6, /obj/item/clothing/suit/hooded/cloak/goliath = 2, /obj/item/clothing/suit/hooded/exo = 6, /obj/item/clothing/suit/hooded/seva = 6))
 			if(prob(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7, /obj/item/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))
@@ -377,7 +378,3 @@
 			id = /obj/item/card/id/knight //END OF CIT CHANGE
 			id_job = "Knight"
 	. = ..()
-
-
-
-

@@ -24,6 +24,8 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 	var/mineral = /obj/item/stack/sheet/metal
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
@@ -33,10 +35,6 @@
 /obj/structure/falsewall/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
-
-/obj/structure/falsewall/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/ratvar_act()
 	new /obj/structure/falsewall/brass(loc)

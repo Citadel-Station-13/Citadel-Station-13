@@ -15,8 +15,8 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	light_range = 5
-	light_power = 1
+	light_range = 7
+	light_power = 2
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -117,7 +117,7 @@
 				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
 
 			if(user && lavaland_equipment_pressure_check(get_turf(user))) //CIT CHANGE - makes sure below only happens in low pressure environments
-				user.adjustStaminaLoss(-13)//CIT CHANGE - makes crushers heal stamina
+				user.adjustStaminaLoss(-30)//CIT CHANGE - makes crushers heal stamina
 
 /obj/item/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)

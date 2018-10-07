@@ -10,24 +10,23 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 40
+	move_to_delay = 10
 	ranged = 1
-	ranged_cooldown_time = 120
+	ranged_cooldown_time = 60
 	friendly = "wails at"
 	speak_emote = list("bellows")
-	vision_range = 4
 	speed = 3
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
 	obj_damage = 100
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 18
+	melee_damage_upper = 18
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
-	vision_range = 5
-	aggro_vision_range = 9
+	vision_range = 4
+	aggro_vision_range = 7
 	anchored = TRUE //Stays anchored until death as to be unpullable
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
@@ -67,7 +66,7 @@
 		pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	ranged_cooldown -= 10
+	ranged_cooldown -= 5
 	handle_preattack()
 	. = ..()
 
@@ -111,6 +110,7 @@
 	maxHealth = 400
 	health = 400
 	speed = 4
+	ranged_cooldown_time = 80
 	pre_attack_icon = "Goliath_preattack"
 	throw_message = "does nothing to the rocky hide of the"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide) //A throwback to the asteroid days
@@ -184,7 +184,14 @@
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
-		L.Stun(100)
+		var/mob/living/carbon/C = L
+		var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
+		if(S && S.resistance_flags & GOLIATH_RESISTANCE)
+			L.Stun(75)
+		else if(S && S.resistance_flags & GOLIATH_WEAKNESS)
+			L.Stun(125)
+		else
+			L.Stun(100)
 		L.adjustBruteLoss(rand(10,15))
 		latched = TRUE
 	if(!latched)
