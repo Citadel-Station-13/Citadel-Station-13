@@ -28,7 +28,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 
 /obj/item/clothing/accessory/lava_land_vest
-	name = "Lava Land Vest"
+	name = "Lavaland Vest"
 	desc = "A vest that was designed to protect miners from a variety of hazards. A label advises against acid based cleaning agents."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
@@ -85,7 +85,7 @@
 
 /obj/item/clothing/accessory/power_vest
 	name = "Energy protection padding."
-	desc = "Padding used on suits to try to prevent shocks form being as lethal."
+	desc = "Padding used on suits to try to prevent shocks from being as lethal."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 5,"energy" = 25, "bomb" = 0, "bio" = 15, "rad" = 10, "fire" = 10, "acid" = 5)
