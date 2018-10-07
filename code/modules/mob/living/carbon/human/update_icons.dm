@@ -363,7 +363,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
 		inv.update_icon()
 
-	if(istype(wear_suit, /obj/item/clothing/suit))
+	if(wear_suit)
 		var/obj/item/clothing/suit/S = wear_suit
 		wear_suit.screen_loc = ui_oclothing
 		if(client && hud_used && hud_used.hud_shown)
@@ -374,9 +374,8 @@ There are several things that need to be remembered:
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-				S = "[S.icon_state]_l"
 
-		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = S.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((S.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
+		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
