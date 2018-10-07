@@ -605,7 +605,7 @@
 /datum/techweb_node/sec_vests
 	id = "sec_vests"
 	display_name = "Military Vests"
-	description = "High grade protection vests for Civ and Military presents.."
+	description = "High grade protection vests for Civ and Military presents."
 	prereq_ids = list("adv_weaponry", "ballistic_weapons", "adv_engi")
 	design_ids = list("ballistic_vest", "melee_vest", "sec_ballistic_vest", "sec_melee_vest", "energy_vest")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
