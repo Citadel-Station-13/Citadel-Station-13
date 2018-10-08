@@ -406,7 +406,7 @@
 
 /obj/item/stock_parts/cell/bluespace_emp
 	name = "EMP proof bluespace power cell"
-	desc = "A EMP proof rechargeable transdimensional power cell."
+	desc = "An EMP proof rechargeable transdimensional power cell."
 	icon_state = "bscell"
 	maxcharge = 25000
 	materials = list(MAT_GLASS=600)
