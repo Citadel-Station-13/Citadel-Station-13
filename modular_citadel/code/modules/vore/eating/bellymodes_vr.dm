@@ -108,7 +108,6 @@
 					else
 						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
-				M.playsound_local(get_turf(M), prey_death, 65)
 				digestion_death(M)
 				owner.update_icons()
 				continue
