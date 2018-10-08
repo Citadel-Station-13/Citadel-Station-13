@@ -98,3 +98,47 @@
 	id = "mrspacman"
 	build_path = /obj/item/circuitboard/machine/pacman/mrs
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/high_cell_emp
+	name = "EMP proof High-Capacity Power Cell"
+	desc = "A power cell that holds 7.5 MJ of energy. This one is EMP proof."
+	id = "high_cell_emp"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 700, MAT_GLASS = 60, MAT_PLASMA = 400)
+	construction_time=100
+	build_path = /obj/item/stock_parts/cell/high_emp/empty
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/super_cell
+	name = "EMP proof Super-Capacity Power Cell"
+	desc = "A power cell that holds 10 MJ of energy. This one is EMP proof."
+	id = "super_cell_emp"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 700, MAT_GLASS = 70, MAT_PLASMA = 400)
+	construction_time=100
+	build_path = /obj/item/stock_parts/cell/super_emp/empty
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/hyper_cell_emp
+	name = "EMP proof Hyper-Capacity Power Cell"
+	desc = "A power cell that holds 15 MJ of energy.This one is EMP proof"
+	id = "hyper_cell_emp"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 700, MAT_GOLD = 150, MAT_SILVER = 150, MAT_GLASS = 80, MAT_PLASMA = 400)
+	construction_time=100
+	build_path = /obj/item/stock_parts/cell/hyper_emp/empty
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/bluespace_cell_emp
+	name = "EMP proof Bluespace Power Cell"
+	desc = "A power cell that holds 20 MJ of energy. This one is EMP proof"
+	id = "bluespace_cell_emp"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1800, MAT_GOLD = 220, MAT_GLASS = 560, MAT_DIAMOND = 450, MAT_TITANIUM = 550, MAT_BLUESPACE = 200, MAT_PLASMA = 800)
+	construction_time=100
+	build_path = /obj/item/stock_parts/cell/bluespace_emp/empty
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
