@@ -15941,7 +15941,6 @@
 	id = "packageSort2"
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/machinery/status_display/supply,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "aMj" = (
@@ -18864,14 +18863,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"aTo" = (
-/obj/machinery/status_display/supply,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "QMLoad"
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "aTp" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -20325,7 +20316,6 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/office)
 "aWw" = (
-/obj/machinery/status_display/supply,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -24102,7 +24092,6 @@
 /turf/closed/wall,
 /area/science/robotics/mechbay)
 "beJ" = (
-/obj/machinery/status_display/ai,
 /obj/structure/filingcabinet,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -53594,6 +53583,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"dps" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall,
+/area/quartermaster/qm)
 "dqw" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0";
@@ -53860,13 +53853,10 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"eeF" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
+"eex" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/quartermaster/office)
 "eeQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -56110,6 +56100,10 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"klb" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/quartermaster/sorting)
 "klo" = (
 /obj/structure/dresser,
 /obj/structure/mirror{
@@ -56550,13 +56544,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
-"ltE" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "lzJ" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet,
@@ -59742,6 +59729,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
+"tLP" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 "tPm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -94189,13 +94180,13 @@ aGV
 blu
 aDZ
 aDZ
-eeF
+bjm
 mhn
-ltE
-ltE
-ltE
-ltE
-ltE
+cqi
+cqi
+cqi
+cqi
+cqi
 imE
 kYM
 bmC
@@ -99300,7 +99291,7 @@ aHn
 aIi
 aJi
 aKe
-lAs
+klb
 aMi
 aNJ
 fwl
@@ -100338,7 +100329,7 @@ lAs
 eeQ
 aUs
 aLf
-aLf
+eex
 aLf
 aLf
 aUl
@@ -100603,7 +100594,7 @@ aTm
 bbE
 bbE
 bbE
-bbE
+dps
 bbE
 bbE
 aEj
@@ -102133,8 +102124,8 @@ aNP
 aPb
 aNO
 aNP
-cDa
-aTo
+tLP
+aTq
 aSk
 aTm
 aTm

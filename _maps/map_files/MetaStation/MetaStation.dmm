@@ -13126,7 +13126,6 @@
 /area/quartermaster/miningoffice)
 "azl" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/status_display/supply,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -22865,7 +22864,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/status_display/supply,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -30386,7 +30384,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "bgL" = (
-/obj/machinery/status_display/supply,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -83777,6 +83774,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"omz" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/quartermaster/sorting)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -83963,6 +83964,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"rMS" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/quartermaster/miningoffice)
 "rQK" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84094,6 +84099,10 @@
 "urv" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/security/prison)
+"usx" = (
+/obj/machinery/status_display/supply,
+/turf/closed/wall,
+/area/security/checkpoint/supply)
 "uun" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
@@ -101132,7 +101141,7 @@ dne
 dne
 dne
 dne
-ayj
+rMS
 azl
 aAE
 aAE
@@ -102698,7 +102707,7 @@ aMv
 bar
 dmF
 bdi
-dmF
+omz
 bgL
 biI
 bkl
@@ -103975,7 +103984,7 @@ aNN
 aPg
 aQp
 aQp
-aSX
+usx
 aSX
 aVM
 aXm
