@@ -1,5 +1,3 @@
-
-
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 /obj/belly/proc/process_belly(var/times_fired,var/wait) //Passed by controller
 	if((times_fired < next_process) || !contents.len)
@@ -110,6 +108,7 @@
 					else
 						H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 				M.stop_sound_channel(CHANNEL_PREYLOOP)
+				M.playsound_local(get_turf(M), prey_death, 65)
 				digestion_death(M)
 				owner.update_icons()
 				continue

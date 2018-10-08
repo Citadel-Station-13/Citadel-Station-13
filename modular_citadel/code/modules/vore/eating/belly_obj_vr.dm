@@ -48,8 +48,6 @@
 	var/tmp/list/items_preserved = list()		// Stuff that wont digest so we shouldn't process it again.
 	var/tmp/next_emote = 0						// When we're supposed to print our next emote, as a belly controller tick #
 	var/tmp/recent_sound = FALSE				// Prevent audio spam
-	var/tmp/last_hearcheck = 0
-	var/tmp/list/hearing_mobs
 
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/list/struggle_messages_outside = list(
