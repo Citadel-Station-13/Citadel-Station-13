@@ -19,7 +19,8 @@
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
-	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
+	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it
+	var/empproof = FALSE
 	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
@@ -134,6 +135,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+	if(empproof)
+		return
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
@@ -161,6 +164,7 @@
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return rating * maxcharge
+
 
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty/Initialize()
@@ -356,3 +360,61 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+/obj/item/stock_parts/cell/high_emp
+	name = "EMP proof high-capacity power cell"
+	icon_state = "hcell"
+	maxcharge = 7500
+	materials = list(MAT_GLASS=60)
+	chargerate = 1000
+	empproof = TRUE
+
+/obj/item/stock_parts/cell/high_emp/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+
+
+/obj/item/stock_parts/cell/super_emp
+	name = "EMP proof super-capacity power cell"
+	icon_state = "scell"
+	maxcharge = 10000
+	materials = list(MAT_GLASS=300)
+	chargerate = 1500
+	empproof = TRUE
+
+/obj/item/stock_parts/cell/super_emp/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+
+/obj/item/stock_parts/cell/hyper_emp
+	name = "EMP proof hyper-capacity power cell"
+	icon_state = "hpcell"
+	maxcharge = 15000
+	materials = list(MAT_GLASS=400)
+	chargerate = 2500
+	empproof = TRUE
+
+/obj/item/stock_parts/cell/hyper_emp/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+
+/obj/item/stock_parts/cell/bluespace_emp
+	name = "EMP proof bluespace power cell"
+	desc = "A EMP proof rechargeable transdimensional power cell."
+	icon_state = "bscell"
+	maxcharge = 25000
+	materials = list(MAT_GLASS=600)
+	chargerate = 3500
+	empproof = TRUE
+
+/obj/item/stock_parts/cell/bluespace_emp/empty/Initialize()
+	. = ..()
+	charge = 0
+	update_icon()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
