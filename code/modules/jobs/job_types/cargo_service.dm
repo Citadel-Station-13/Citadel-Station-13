@@ -93,6 +93,7 @@ Shaft Miner
 		/obj/item/storage/bag/ore=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
+		/obj/item/suit_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/storage/backpack/explorer

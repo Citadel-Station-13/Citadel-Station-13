@@ -78,6 +78,7 @@
 	icon_state = "labred"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labred"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/toggle/labcoat/labredblack
 	name = "Black and Red Coat"
@@ -86,6 +87,7 @@
 	icon_state = "labredblack"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "labredblack"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/toy/plush/carrot
 	name = "carrot plushie"
@@ -191,6 +193,7 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/reagent_containers/food/drinks/flask/russian
 	name = "russian flask"
@@ -272,6 +275,7 @@
 
 /obj/item/clothing/under/bb_sweater/black/naomi
 	name = "worn black sweater"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	desc = "A well-loved sweater, showing signs of several cleanings and re-stitchings. And a few stains. Is that cat fur?"
 
 /obj/item/clothing/neck/petcollar/naomi
@@ -344,6 +348,7 @@
 	item_state = "darkcarapace"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 
@@ -370,6 +375,7 @@
 	icon_state = "rdcoat"
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	item_state = "rdcoat"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/custom/leechjar
 	name = "Jar of Leeches"
