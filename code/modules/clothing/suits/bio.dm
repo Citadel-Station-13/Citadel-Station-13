@@ -27,6 +27,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = ACID_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general

@@ -11,17 +11,34 @@
 
 	var/adjusted = NORMAL_STYLE
 	mutantrace_variation = MUTANTRACE_VARIATION
+	var/tauric = FALSE		//Citadel Add for tauric hardsuits
+	var/taurmode = NOT_TAURIC
 
 /obj/item/clothing/suit/equipped(mob/user, slot)
 	..()
-	if(mutantrace_variation && ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.species_traits)
-			adjusted = ALT_STYLE
-			H.update_inv_wear_suit()
-		else if(adjusted == ALT_STYLE)
-			adjusted = NORMAL_STYLE
-			H.update_inv_wear_suit()
+		var/datum/species/pref_species = H.dna.species
+
+		if(mutantrace_variation)
+			if(DIGITIGRADE in pref_species.species_traits)
+				adjusted = ALT_STYLE
+				H.update_inv_wear_suit()
+			else if(adjusted == ALT_STYLE)
+				adjusted = NORMAL_STYLE
+
+		if("taur" in pref_species.default_features)
+			var/datum/sprite_accessory/taur/S
+			if(S.taur_mode == SNEK_TAURIC)
+				taurmode = SNEK_TAURIC
+			if(S.taur_mode == PAW_TAURIC)
+				taurmode = PAW_TAURIC
+			if(S.taur_mode == HOOF_TAURIC)
+				taurmode = HOOF_TAURIC
+			else
+				taurmode = NOT_TAURIC
+		H.update_inv_wear_suit()
+
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
 	. = list()

@@ -1068,6 +1068,7 @@ datum/sprite_accessory/mam_tails/tentacle
 	extra2 = TRUE
 	center = TRUE
 	dimension_x = 64
+	var/taur_mode = NOT_TAURIC
 
 /datum/sprite_accessory/taur/none
 	name = "None"
@@ -1076,10 +1077,12 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/taur/cow
 	name = "Cow"
 	icon_state = "cow"
+	taur_mode = HOOF_TAURIC
 
 /datum/sprite_accessory/taur/drake
 	name = "Drake"
 	icon_state = "drake"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
@@ -1088,54 +1091,67 @@ datum/sprite_accessory/mam_tails/tentacle
 /datum/sprite_accessory/taur/eevee
 	name = "Eevee"
 	icon_state = "eevee"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/fox
 	name = "Fox"
 	icon_state = "fox"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/husky
 	name = "Husky"
 	icon_state = "husky"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/horse
 	name = "Horse"
 	icon_state = "horse"
+	taur_mode = HOOF_TAURIC
 
 /datum/sprite_accessory/taur/lab
 	name = "Lab"
 	icon_state = "lab"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/naga
 	name = "Naga"
 	icon_state = "naga"
+	taur_mode = SNEK_TAURIC
 
 /datum/sprite_accessory/taur/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
+	taur_mode = SNEK_TAURIC
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/pede
 	name = "Scolipede"
 	icon_state = "pede"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/panther
 	name = "Panther"
 	icon_state = "panther"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/tajaran
 	name = "Tajaran"
 	icon_state = "tajaran"
+	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+	taur_mode = PAW_TAURIC
 
 /******************************************
 *************** Ayyliums ******************

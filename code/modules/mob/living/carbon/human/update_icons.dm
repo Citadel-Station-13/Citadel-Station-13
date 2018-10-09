@@ -375,6 +375,14 @@ There are several things that need to be remembered:
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
 
+		if(S.tauric == TRUE)
+			if(SNEK_TAURIC)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
+			if(PAW_TAURIC)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
+			if(HOOF_TAURIC)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_hooved.dmi'
+
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)

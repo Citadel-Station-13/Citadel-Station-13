@@ -130,6 +130,11 @@
 #define NORMAL_SUIT_STYLE		0
 #define DIGITIGRADE_SUIT_STYLE 	1
 
+#define NOT_TAURIC			0
+#define SNEK_TAURIC			1
+#define PAW_TAURIC			2
+#define HOOF_TAURIC			3
+
 //flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
 #define NO_MUTANTRACE_VARIATION		0
 #define MUTANTRACE_VARIATION		1
