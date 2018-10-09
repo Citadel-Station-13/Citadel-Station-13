@@ -40,7 +40,30 @@ SUBSYSTEM_DEF(research)
 	/obj/item/slime_extract/adamantine =list (TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/oil = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
 	/obj/item/slime_extract/lightpink = list(TECHWEB_POINT_TYPE_GENERIC = 1500),
-	/obj/item/slime_extract/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	/obj/item/slime_extract/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 2500),
+	//  Burning -    Crossbreading Cores!    - (Orange Cores)
+	/obj/item/slimecross/burning/grey = list(TECHWEB_POINT_TYPE_GENERIC = 2000),
+	/obj/item/slimecross/burning/orange = list(TECHWEB_POINT_TYPE_GENERIC = 2500),
+	/obj/item/slimecross/burning/purple = list(TECHWEB_POINT_TYPE_GENERIC = 2500),
+	/obj/item/slimecross/burning/blue = list(TECHWEB_POINT_TYPE_GENERIC = 2500),
+	/obj/item/slimecross/burning/metal = list(TECHWEB_POINT_TYPE_GENERIC = 2500),
+	/obj/item/slimecross/burning/yellow = list(TECHWEB_POINT_TYPE_GENERIC = 2750),
+	/obj/item/slimecross/burning/darkpurple = list(TECHWEB_POINT_TYPE_GENERIC = 2750),
+	/obj/item/slimecross/burning/darkblue = list(TECHWEB_POINT_TYPE_GENERIC = 2750),
+	/obj/item/slimecross/burning/silver = list(TECHWEB_POINT_TYPE_GENERIC = 2750),
+	/obj/item/slimecross/burning/bluespace = list(TECHWEB_POINT_TYPE_GENERIC = 3000),
+	/obj/item/slimecross/burning/sepia = list(TECHWEB_POINT_TYPE_GENERIC = 3000),
+	/obj/item/slimecross/burning/cerulean = list(TECHWEB_POINT_TYPE_GENERIC = 3000),
+	/obj/item/slimecross/burning/pyrite = list(TECHWEB_POINT_TYPE_GENERIC = 3000),
+	/obj/item/slimecross/burning/red = list(TECHWEB_POINT_TYPE_GENERIC = 3250),
+	/obj/item/slimecross/burning/green = list(TECHWEB_POINT_TYPE_GENERIC = 3250),
+	/obj/item/slimecross/burning/pink = list(TECHWEB_POINT_TYPE_GENERIC = 3250),
+	/obj/item/slimecross/burning/gold = list(TECHWEB_POINT_TYPE_GENERIC = 3250),
+	/obj/item/slimecross/burning/oil = list(TECHWEB_POINT_TYPE_GENERIC = 3500),
+	/obj/item/slimecross/burning/black = list(TECHWEB_POINT_TYPE_GENERIC = 3500),
+	/obj/item/slimecross/burning/lightpink = list(TECHWEB_POINT_TYPE_GENERIC = 3500),
+	/obj/item/slimecross/burning/adamantine = list(TECHWEB_POINT_TYPE_GENERIC = 3500),
+	/obj/item/slimecross/burning/rainbow = list(TECHWEB_POINT_TYPE_GENERIC = 3750)
 	)      // End of Cit changes
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
