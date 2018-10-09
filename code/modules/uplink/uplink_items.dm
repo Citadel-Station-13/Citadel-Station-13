@@ -1487,7 +1487,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list("Clown")
-
+/*
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
@@ -1498,7 +1498,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 15
 	restricted_roles = list("Clown")
-
+*/
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
