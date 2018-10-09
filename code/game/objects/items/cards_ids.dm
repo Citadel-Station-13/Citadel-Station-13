@@ -95,7 +95,16 @@
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
-	A.emag_act(user)
+	if(isturf(A))
+		return
+	if(istype(A,/obj/item/storage/lockbox))
+		A.emag_act(user)
+	if(istype(A,/obj/item/storage))
+		return
+	if(!(isobj(A) || issilicon(A) || isbot(A) || isdrone(A)))
+		return
+	else
+		A.emag_act(user)
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
