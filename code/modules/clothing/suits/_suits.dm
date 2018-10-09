@@ -13,28 +13,35 @@
 	mutantrace_variation = MUTANTRACE_VARIATION
 	var/tauric = FALSE		//Citadel Add for tauric hardsuits
 	var/taurmode = NOT_TAURIC
+	var/dimension_x = 32
+	var/dimension_y = 32
+	var/center = FALSE	//Should we center the sprite?
 
 /obj/item/clothing/suit/equipped(mob/user, slot)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/species/pref_species = H.dna.species
 
 		if(mutantrace_variation)
-			if(DIGITIGRADE in pref_species.species_traits)
+			if(DIGITIGRADE in H.dna.species.species_traits)
 				adjusted = ALT_STYLE
 				H.update_inv_wear_suit()
 			else if(adjusted == ALT_STYLE)
 				adjusted = NORMAL_STYLE
 
-		if("taur" in pref_species.default_features)
-			var/datum/sprite_accessory/taur/S
-			if(S.taur_mode == SNEK_TAURIC)
+		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
+			if(H.dna.features["taur"] == "Naga" || "Tentacle")
 				taurmode = SNEK_TAURIC
-			if(S.taur_mode == PAW_TAURIC)
+				center = TRUE
+				dimension_x = 64
+			else if(H.dna.features["taur"] == "Fox" || "Wolf" || "Otie" || "Drake" || "Lab" || "Shepherd" || "Husky" || "Eevee" || "Panther" || "Tajaran")
 				taurmode = PAW_TAURIC
-			if(S.taur_mode == HOOF_TAURIC)
+				center = TRUE
+				dimension_x = 64
+			else if(H.dna.features["taur"] == "Horse" || "Cow")
 				taurmode = HOOF_TAURIC
+				center = TRUE
+				dimension_x = 64
 			else
 				taurmode = NOT_TAURIC
 		H.update_inv_wear_suit()

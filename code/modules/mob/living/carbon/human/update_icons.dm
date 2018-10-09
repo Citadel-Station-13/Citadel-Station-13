@@ -376,11 +376,11 @@ There are several things that need to be remembered:
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
 
 		if(S.tauric == TRUE)
-			if(SNEK_TAURIC)
+			if(S.taurmode == SNEK_TAURIC)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
-			if(PAW_TAURIC)
+			else if(S.taurmode == PAW_TAURIC)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
-			if(HOOF_TAURIC)
+			else if(S.taurmode == HOOF_TAURIC)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_hooved.dmi'
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
@@ -388,6 +388,8 @@ There are several things that need to be remembered:
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
+		if(S.center)
+			suit_overlay = center_image(suit_overlay, S.dimension_x, S.dimension_y)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
 	update_mutant_bodyparts()

@@ -1118,11 +1118,6 @@ datum/sprite_accessory/mam_tails/tentacle
 	icon_state = "naga"
 	taur_mode = SNEK_TAURIC
 
-/datum/sprite_accessory/taur/tentacle
-	name = "Tentacle"
-	icon_state = "tentacle"
-	taur_mode = SNEK_TAURIC
-
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
 	icon_state = "otie"
@@ -1147,6 +1142,11 @@ datum/sprite_accessory/mam_tails/tentacle
 	name = "Tajaran"
 	icon_state = "tajaran"
 	taur_mode = PAW_TAURIC
+
+/datum/sprite_accessory/taur/tentacle
+	name = "Tentacle"
+	icon_state = "tentacle"
+	taur_mode = SNEK_TAURIC
 
 /datum/sprite_accessory/taur/wolf
 	name = "Wolf"
