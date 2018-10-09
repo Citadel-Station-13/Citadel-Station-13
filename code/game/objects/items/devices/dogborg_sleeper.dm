@@ -315,7 +315,7 @@
 						for(var/mob/H in hearing_mobs)
 							if(!istype(H.loc, /obj/item/dogborg/sleeper))
 								H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
-							else
+							else if(H in contents)
 								H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
 					for(var/belly in T.vore_organs)
 						var/obj/belly/B = belly
@@ -350,21 +350,20 @@
 		update_gut()
 
 //sound effects
-	for(var/mob/living/M in contents)
-		if(prob(50))
-			if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
-				var/turf/source = get_turf(hound)
-				LAZYCLEARLIST(hearing_mobs)
-				for(var/mob/H in get_hearers_in_view(3, source))
-					if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
-						continue
-					LAZYADD(hearing_mobs, H)
-				last_hearcheck = world.time
-				for(var/mob/H in hearing_mobs)
-					if(!istype(H.loc, /obj/item/dogborg/sleeper))
-						H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
-					else
-						H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+	if(prob(50))
+		if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
+			var/turf/source = get_turf(hound)
+			LAZYCLEARLIST(hearing_mobs)
+			for(var/mob/H in get_hearers_in_view(3, source))
+				if(!H.client || !(H.client.prefs.cit_toggles & DIGESTION_NOISES))
+					continue
+				LAZYADD(hearing_mobs, H)
+			last_hearcheck = world.time
+			for(var/mob/H in hearing_mobs)
+				if(!istype(H.loc, /obj/item/dogborg/sleeper))
+					H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+				else if(H in contents)
+					H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
 
 	if(cleaning)
 		addtimer(CALLBACK(src, .proc/clean_cycle), 50)
