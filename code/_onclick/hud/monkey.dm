@@ -1,4 +1,4 @@
-/datum/hud/monkey/New(mob/living/carbon/monkey/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/monkey/New(mob/living/carbon/monkey/owner)
 	..()
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -24,7 +24,7 @@
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
@@ -149,7 +149,3 @@
 		for(var/obj/item/I in M.held_items)
 			I.screen_loc = null
 			M.client.screen -= I
-
-/mob/living/carbon/monkey/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/monkey(src, ui_style2icon(client.prefs.UI_style))

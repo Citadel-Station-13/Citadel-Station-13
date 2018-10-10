@@ -19,8 +19,8 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	vision_range = 5
-	aggro_vision_range = 18
+	vision_range = 4
+	aggro_vision_range = 15
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
@@ -68,8 +68,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/dust()
-	if(health > 0)
+/mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
+	if(!force && health > 0)
 		return
 	else
 		..()
@@ -83,10 +83,17 @@
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
+
 		else if(L.stat >= SOFT_CRIT)
 			if(vore_active == TRUE && L.devourable == TRUE)
-				dragon_feeding(src,L)
-			else if(L.stat == DEAD)
+				if(isliving(target) && !target.Adjacent(targets_from))
+					return
+				else
+					dragon_feeding(src,L)
+					if(L.loc == src.contents)
+						LoseTarget()
+						return 0
+			else
 				devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)

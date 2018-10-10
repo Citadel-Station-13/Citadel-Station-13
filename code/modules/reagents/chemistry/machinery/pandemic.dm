@@ -190,7 +190,7 @@
 		if("create_culture_bottle")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
-			if(!A.mutable)
+			if(!istype(A) || !A.mutable)
 				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
 				return
 			A = A.Copy()
@@ -228,7 +228,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return

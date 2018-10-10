@@ -33,14 +33,15 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
+	var/icon_welded = "welded"
 
 
 /obj/structure/closet/Initialize(mapload)
-	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	. = ..()
 	update_icon()
 	PopulateContents()
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
+		take_contents()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -59,7 +60,7 @@
 		else
 			add_overlay("[icon_state]_door")
 		if(welded)
-			add_overlay("welded")
+			add_overlay(icon_welded)
 		if(secure && !broken)
 			if(locked)
 				add_overlay("locked")
@@ -83,6 +84,10 @@
 		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
 	else if(secure && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_SKITTISH))
+			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -163,18 +168,20 @@
 	else if(istype(AM, /obj/structure/closet))
 		return
 	else if(isobj(AM))
-		if(!allow_objects && !istype(AM, /obj/item) && !istype(AM, /obj/effect/dummy/chameleon))
+		if (istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if (I.item_flags & NODROP)
+				return
+		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
+		if(AM.anchored || AM.has_buckled_mobs())
 			return
 	else
 		return
 
 	AM.forceMove(src)
-	if(AM.pulledby)
-		AM.pulledby.stop_pulling()
 
 	return 1
 
@@ -245,23 +252,27 @@
 			if(opened)
 				return
 			welded = !welded
-			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
+			after_weld(welded)
+			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unwelded"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
-		anchored = !anchored
+		setAnchored(!anchored)
 		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+	else if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 	else
 		return FALSE
+
+/obj/structure/closet/proc/after_weld(weld_state)
+	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))

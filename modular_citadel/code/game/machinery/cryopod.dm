@@ -165,18 +165,22 @@
 	)
 	// These items will NOT be preserved
 	var/list/do_not_preserve_items = list (
-		/obj/item/mmi/posibrain
+		/obj/item/mmi/posibrain,
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gun/energy/laser/cyborg
 	)
 
 /obj/machinery/cryopod/Initialize()
+	. = ..()
 	update_icon()
-	find_control_computer()
-	return ..()
+	find_control_computer(TRUE)
 
-/obj/machinery/cryopod/proc/find_control_computer(urgent = 0,area/A)
-	for(var/obj/machinery/computer/cryopod/C in A)
+/obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
+	for(var/obj/machinery/computer/cryopod/C in get_area(src))
 		control_computer = C
-		break
+		if(C)
+			return C
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
@@ -184,7 +188,7 @@
 		message_admins("Cryopod in [get_area(src)] could not find control computer!")
 		last_no_computer_message = world.time
 
-	return control_computer != null
+	return null
 
 /obj/machinery/cryopod/close_machine(mob/user)
 	if(!control_computer)

@@ -15,8 +15,8 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	light_range = 5
-	light_power = 1
+	light_range = 7
+	light_power = 2
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -72,6 +72,7 @@
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
 /obj/item/twohanded/required/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
+	. = ..()
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
@@ -116,7 +117,7 @@
 				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
 
 			if(user && lavaland_equipment_pressure_check(get_turf(user))) //CIT CHANGE - makes sure below only happens in low pressure environments
-				user.adjustStaminaLoss(-13)//CIT CHANGE - makes crushers heal stamina
+				user.adjustStaminaLoss(-30)//CIT CHANGE - makes crushers heal stamina
 
 /obj/item/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)
@@ -381,7 +382,7 @@
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE
-	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE

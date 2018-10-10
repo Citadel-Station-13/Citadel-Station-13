@@ -79,7 +79,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return cell.charge >= shot.e_cost
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)
@@ -130,10 +130,12 @@
 	return
 
 /obj/item/gun/energy/update_icon(force_update)
+	if(QDELETED(src))
+		return
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
+	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio

@@ -58,6 +58,7 @@ GLOBAL_PROTECT(mentor_href_token)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
 
 /proc/load_mentors()
+	usr = null
 	GLOB.mentor_datums.Cut()
 	for(var/client/C in GLOB.mentors)
 		C.remove_mentor_verbs()

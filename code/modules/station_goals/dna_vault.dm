@@ -67,7 +67,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	var/list/animals = list()
 	var/list/plants = list()
 	var/list/dna = list()
@@ -78,7 +78,7 @@
 	dna = list()
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
-	..()
+	. = ..()
 	if(!proximity || !target)
 		return
 	//tray plants
@@ -128,7 +128,9 @@
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
-	light_range = 1
+	light_range = 3
+	light_power = 1.5
+	light_color = LIGHT_COLOR_CYAN
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100

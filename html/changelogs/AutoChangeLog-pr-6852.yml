@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Chasms no longer drop mobs buckled to undroppable mobs or objects."

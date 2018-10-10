@@ -7,7 +7,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = null
-	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0
@@ -24,7 +24,8 @@
 	..()
 
 /obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
-	user.say(catchphrase)
+	. = ..()
+	user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound,50,1)
 	charges--
 	if(charges <= 0)
@@ -60,16 +61,12 @@
 			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
 		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
 		user.flash_act()
-		var/obj/item/bodypart/part
-		var/index = user.get_held_index_of_item(src)
-		if(index)
-			part = user.hand_bodyparts[index]
+		var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
 		if(part)
 			part.dismember()
-		..()
-		return
+		return ..()
 	M.gib()
-	..()
+	return ..()
 
 /obj/item/melee/touch_attack/fleshtostone
 	name = "\improper petrifying touch"
@@ -96,4 +93,4 @@
 		return
 	M.Stun(40)
 	M.petrify()
-	..()
+	return ..()

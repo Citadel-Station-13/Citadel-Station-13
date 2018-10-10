@@ -94,7 +94,7 @@
 				organ.forceMove(get_turf(H))
 				qdel(organ)
 				H.update_body()
-				
+
 	else if (select_alteration == "Ears")
 		var/list/snowflake_ears_list = list("Normal" = null)
 		for(var/path in GLOB.mam_ears_list)
@@ -108,7 +108,7 @@
 		if(new_ears)
 			H.dna.features["mam_ears"] = new_ears
 		H.update_body()
-		
+
 	else if (select_alteration == "Tail")
 		var/list/snowflake_tails_list = list("Normal" = null)
 		for(var/path in GLOB.mam_tails_list)
@@ -124,7 +124,7 @@
 			if(new_tail != "None")
 				H.dna.features["taur"] = "None"
 		H.update_body()
-		
+
 	else if (select_alteration == "Taur body")
 		var/list/snowflake_taur_list = list("Normal" = null)
 		for(var/path in GLOB.taur_list)

@@ -2,11 +2,11 @@
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
 	icon = 'modular_citadel/icons/obj/clothing/cit_neck.dmi'
-	icon_override = 'modular_citadel/icons/mob/citadel/neck.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/neck.dmi'
 	icon_state = "shockcollar"
 	item_state = "shockcollar"
 	body_parts_covered = NECK
-	slot_flags = SLOT_NECK
+	slot_flags = ITEM_SLOT_NECK | ITEM_SLOT_DENYPOCKET   //no more pocket shockers
 	w_class = WEIGHT_CLASS_SMALL
 	strip_delay = 60
 	equip_delay_other = 60
@@ -22,11 +22,9 @@
 	category = list("hacked", "Misc")
 
 /obj/item/electropack/shockcollar/attack_hand(mob/user)
-	if(loc == user)
-		if(slot_flags == SLOT_NECK)
-			if(user.get_item_by_slot(SLOT_NECK))
-				to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
-				return
+	if(loc == user && user.get_item_by_slot(SLOT_NECK))
+		to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
+		return
 	..()
 
 /obj/item/electropack/shockcollar/receive_signal(datum/signal/signal)
@@ -65,7 +63,7 @@
 		if("Change Frequency")
 			if(!ishuman(user))
 				return
-				user.set_machine(src)
+			user.set_machine(src)
 			var/dat = {"<SK><BR>
 		<B>Frequency/Code</B> for shock collar:<BR>
 		Frequency:

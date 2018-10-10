@@ -17,7 +17,11 @@
 /obj/item/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
-
+/*
+oranges says: This is a meme relating to the english translation of the ss13 russian wiki page on lurkmore.
+mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
+for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
+*/
 /obj/item/banhammer/attack(mob/M, mob/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
@@ -76,7 +80,8 @@
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1 | NODROP_1 | DROPDEL_1
+	flags_1 = CONDUCT_1
+	item_flags = NODROP | DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
@@ -223,6 +228,7 @@
 
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	return(BRUTELOSS)
 
 /obj/item/wirerod
@@ -248,7 +254,7 @@
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/assembly/igniter) && !(I.flags_1 & NODROP_1))
+	else if(istype(I, /obj/item/assembly/igniter) && !(I.item_flags & NODROP))
 		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -411,7 +417,7 @@
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
+	item_flags = NODROP | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 24
 	throwforce = 0
@@ -444,10 +450,6 @@
 	throw_range = 2
 	attack_verb = list("busted")
 
-/obj/item/statuebust/Initialize()
-	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
-
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
@@ -476,7 +478,7 @@
 	item_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 
 /obj/item/melee/skateboard/attack_self(mob/user)
@@ -575,6 +577,7 @@
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
@@ -591,7 +594,7 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/slapper
@@ -601,20 +604,21 @@
 	item_state = "nothing"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	item_flags = DROPDEL | ABSTRACT
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 
 /obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
-		L.endTailWag()
+		if(L && L.dna && L.dna.species)
+			L.dna.species.stop_wagging_tail(M)
 	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
- 		"<span class='notice'>You slap [M]!</span>",\
- 		"You hear a slap.")
+		"<span class='notice'>You slap [M]!</span>",\
+		"You hear a slap.")
 		return
 	else
 		..()

@@ -29,7 +29,6 @@
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)
 		return
-	Debug("Freeing role: [rank]")
 	var/datum/job/job = GetJob(rank)
 	if(!job)
 		return FALSE

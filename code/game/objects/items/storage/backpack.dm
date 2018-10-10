@@ -247,18 +247,18 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	w_class = WEIGHT_CLASS_BULKY //Can fit in backpacks itself.
 	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
-/obj/item/storage/backpack/stachel/flat/Initialize()
+/obj/item/storage/backpack/satchel/flat/Initialize()
 	. = ..()
 	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 15
+	STR.max_combined_w_class = 6
 	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)

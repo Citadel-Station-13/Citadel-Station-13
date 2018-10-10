@@ -59,7 +59,7 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -92,7 +92,7 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, SLOT_HEAD)
 
-	access_card.flags_1 |= NODROP_1
+	access_card.item_flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -168,15 +168,15 @@
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
+		if(!(I.item_flags & ABSTRACT))
 			msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
-	if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
 		msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
-	if(head && !(head.flags_1&ABSTRACT_1))
+	if(head && !(head.item_flags & ABSTRACT))
 		msg += "It is wearing [head.get_examine_string(user)] on its head.\n"
 
 	//Braindead

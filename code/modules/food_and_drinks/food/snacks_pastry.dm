@@ -33,7 +33,7 @@
 				H.adjust_disgust(-5 + -2.5 * fraction)
 				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 				if(mood)
-					mood.add_event("fav_food", /datum/mood_event/favorite_food)
+					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()
@@ -89,6 +89,13 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
+	
+/obj/item/reagent_containers/food/snacks/donut/meat
+	bonus_reagents = list("ketchup" = 1)
+	list_reagents = list("nutriment" = 3, "ketchup" = 2)
+	tastes = list("meat" = 1)
+	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
+	
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
@@ -406,8 +413,8 @@
 		name = "stack of pancakes"
 	else
 		name = initial(name)
-	if(contents.len < LAZYLEN(our_overlays))
-		cut_overlay(our_overlays[our_overlays.len])
+	if(contents.len < LAZYLEN(overlays))
+		overlays-=overlays[overlays.len]
 
 /obj/item/reagent_containers/food/snacks/pancakes/examine(mob/user)
 	var/ingredients_listed = ""

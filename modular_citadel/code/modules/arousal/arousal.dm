@@ -171,8 +171,9 @@
 				src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
 								"<span class='userdanger'>You start masturbating.</span>")
 				if(do_after(src, 30, target = src))
-					src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
+					src.visible_message("<span class='danger'>[src] relieves [p_them()]self!</span>", \
 								"<span class='userdanger'>You have relieved yourself.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 					setArousalLoss(min_arousal)
 					/*
 					switch(gender)
@@ -211,6 +212,7 @@
 		src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
 							"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
 							"<span class='green'>You have relieved yourself.</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
 
@@ -247,6 +249,7 @@
 			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
 								"<span class='green'>You climax using your [G.name].</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
 
@@ -277,6 +280,8 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
 								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
 	else //knots and other non-spilling orgasms
@@ -286,6 +291,8 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
 								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
 								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
 
@@ -315,6 +322,7 @@
 		src.visible_message("<span class='danger'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
 							"<span class='green'>You used your [G.name] to fill [container].</span>", \
 							"<span class='green'>You have relieved some pressure.</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
 
@@ -390,7 +398,7 @@
 /mob/living/carbon/human/mob_climax(forced_climax=FALSE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
-			to_chat(src, "<span class='warning'>You need to wait [round((mb_cd_timer - world.time)/(20))] seconds before you can do that again!</span>")
+			to_chat(src, "<span class='warning'>You need to wait [DisplayTimeText((mb_cd_timer - world.time), TRUE)] before you can do that again!</span>")
 		return
 	mb_cd_timer = (world.time + mb_cd_length)
 

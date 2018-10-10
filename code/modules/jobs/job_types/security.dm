@@ -51,7 +51,7 @@ Head of Security
 	suit_store = /obj/item/gun/energy/e_gun
 	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -61,6 +61,14 @@ Head of Security
 	implants = list(/obj/item/implant/mindshield)
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
+
+/datum/outfit/job/hos/hardsuit
+	name = "Head of Security (Hardsuit)"
+
+	mask = /obj/item/clothing/mask/gas/sechailer
+	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
+	suit_store = /obj/item/tank/internals/oxygen
+	backpack_contents = list(/obj/item/melee/baton/loaded=1, /obj/item/gun/energy/e_gun=1)
 
 /*
 Warden
@@ -162,7 +170,8 @@ Detective
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
-	cig.light("")
+	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
+		cig.light("")
 
 	if(visualsOnly)
 		return

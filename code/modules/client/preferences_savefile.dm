@@ -45,44 +45,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
-		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
-		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
-		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], GLOB.mam_tails_list)
-		features["taur"]				= sanitize_inlist(features["taur"], GLOB.taur_list)
-		//Xeno features
-		features["xenotail"] 			= sanitize_inlist(features["xenotail"], GLOB.xeno_tail_list)
-		features["xenohead"] 			= sanitize_inlist(features["xenohead"], GLOB.xeno_head_list)
-		features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], GLOB.xeno_dorsal_list)
-		//cock features
-		features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
-		features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, "Human")
-		features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
-		features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
-		//balls features
-		features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
-		features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
-		features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
-		features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], GLOB.cum_id_list, "semen")
-		//breasts features
-		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
-		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, "C")
-		features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, "Pair")
-		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], GLOB.milk_id_list, "milk")
-		//vagina features
-		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
-		features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, "Human")
-		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
-		//womb features
-		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
-
 	if(current_version < 19)
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
-
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -131,6 +97,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
 	S["ambientocclusion"]	>> ambientocclusion
+	S["auto_fit_viewport"]	>> auto_fit_viewport
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
@@ -140,9 +107,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
-	S["damagescreenshake"]		>> damagescreenshake
-	S["widescreenpref"]				>> widescreenpref
+	S["damagescreenshake"]	>> damagescreenshake
+	S["widescreenpref"]		>> widescreenpref
 	S["autostand"]			>> autostand
+	S["cit_toggles"]		>> cit_toggles
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -151,7 +119,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
@@ -162,6 +130,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -175,6 +144,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	widescreenpref			= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	autostand			= sanitize_integer(autostand, 0, 1, initial(autostand))
+	cit_toggles			= sanitize_integer(cit_toggles, 0, 65535, initial(cit_toggles))
+
 
 	return 1
 
@@ -213,6 +184,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["clientfps"], clientfps)
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
+	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
@@ -225,6 +197,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["widescreenpref"], widescreenpref)
 	WRITE_FILE(S["autostand"], autostand)
+	WRITE_FILE(S["cit_toggles"], cit_toggles)
 
 	return 1
 
@@ -254,13 +227,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["species"]			>> species_id
 	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
-		pref_species = new newtype()
+		if(newtype)
+			pref_species = new newtype
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
-	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
@@ -292,13 +265,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["feature_human_tail"]				>> features["tail_human"]
 		S["feature_human_ears"]				>> features["ears"]
-	S["human_name"]         >> custom_names["human"]
-	S["clown_name"]			>> custom_names["clown"]
-	S["mime_name"]			>> custom_names["mime"]
-	S["ai_name"]			>> custom_names["ai"]
-	S["cyborg_name"]		>> custom_names["cyborg"]
-	S["religion_name"]		>> custom_names["religion"]
-	S["deity_name"]			>> custom_names["deity"]
+
+	//Custom names
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
+		S[savefile_slot_name] >> custom_names[custom_name_id]
+
 	S["prefered_security_department"] >> prefered_security_department
 
 	//Jobs
@@ -369,20 +341,30 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	metadata		= sanitize_text(metadata, initial(metadata))
-	real_name		= reject_bad_name(real_name)
-	if(!features["mcolor"] || features["mcolor"] == "#000")
-		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+
+	real_name = reject_bad_name(real_name)
+	gender = sanitize_gender(gender)
 	if(!real_name)
 		real_name = random_unique_name(gender)
+
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/namedata = GLOB.preferences_custom_names[custom_name_id]
+		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
+		if(!custom_names[custom_name_id])
+			custom_names[custom_name_id] = get_default_name(custom_name_id)
+
+	if(!features["mcolor"] || features["mcolor"] == "#000")
+		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
-	gender			= sanitize_gender(gender)
+
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
@@ -444,7 +426,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["OOC_Notes"]			, metadata)
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
@@ -473,13 +454,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
 	WRITE_FILE(S["feature_moth_wings"]			, features["moth_wings"])
-	WRITE_FILE(S["human_name"]			, custom_names["human"])
-	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
-	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
-	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
-	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
-	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
-	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+
+	//Custom names
+	for(var/custom_name_id in GLOB.preferences_custom_names)
+		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
+		WRITE_FILE(S[savefile_slot_name],custom_names[custom_name_id])
+
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs

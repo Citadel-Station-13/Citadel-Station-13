@@ -138,14 +138,6 @@
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
 
-//Beauty levels of areas for carbons
-#define BEAUTY_LEVEL_HORRID -100
-#define BEAUTY_LEVEL_BAD -66
-#define BEAUTY_LEVEL_MEH -33
-#define BEAUTY_LEVEL_DECENT 33
-#define BEAUTY_LEVEL_GOOD 66
-#define BEAUTY_LEVEL_GREAT 100
-
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -244,7 +236,7 @@
 #define OFFSET_NECK "neck"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN				17	//youngest a character can be
+#define AGE_MIN				18	//youngest a character can be //CITADEL EDIT - 17 --> 18
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
@@ -263,3 +255,6 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
+
+// /obj/item/bodypart on_mob_life() retval flag
+#define BODYPART_LIFE_UPDATE_HEALTH (1<<0)

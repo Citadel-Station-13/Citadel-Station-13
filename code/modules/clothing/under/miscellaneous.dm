@@ -38,7 +38,7 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/roman
-	name = "roman armor"
+	name = "\improper Roman armor"
 	desc = "Ancient Roman armor. Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
@@ -263,7 +263,7 @@
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
-	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!."
+	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
 	icon_state = "white_suit"
 	item_state = "white_suit"
 	item_color = "white_suit"
@@ -382,13 +382,13 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	item_color = "kilt"
-	body_parts_covered = CHEST|GROIN|FEET
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	flags_1 = NODROP_1
+	item_flags = NODROP
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -466,6 +466,7 @@
 	item_color = "black_tango"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/stripeddress
 	name = "striped dress"
@@ -473,6 +474,7 @@
 	icon_state = "striped_dress"
 	item_state = "stripeddress"
 	item_color = "striped_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_FULL
 	can_adjust = FALSE
 
@@ -482,6 +484,7 @@
 	icon_state = "sailor_dress"
 	item_state = "sailordress"
 	item_color = "sailor_dress"
+	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
@@ -555,6 +558,7 @@
 	icon_state = "ysing"
 	item_state = "ysing"
 	item_color = "ysing"
+	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = FALSE
@@ -565,6 +569,7 @@
 	icon_state = "bsing"
 	item_state = "bsing"
 	item_color = "bsing"
+	body_parts_covered = CHEST|GROIN|ARMS
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
@@ -594,6 +599,7 @@
 	desc = "Cute space ninja senpai not included."
 	icon_state = "geisha"
 	item_color = "geisha"
+	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 
 /obj/item/clothing/under/villain
@@ -667,7 +673,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/clothing/under/rank/security/navyblue/russian
-	name = "russian officer's uniform"
+	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
@@ -704,6 +710,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/drfreeze
 	name = "doctor freeze's jumpsuit"
@@ -712,6 +719,7 @@
 	item_state = "drfreeze"
 	item_color = "drfreeze"
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/under/lobster
 	name = "foam lobster suit"
@@ -720,6 +728,15 @@
 	item_state = "lobster"
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/under/gondola
+	name = "gondola hide suit"
+	desc = "Now you're cooking."
+	icon_state = "gondola"
+	item_state = "lb_suit"
+	item_color = "gondola"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/skeleton
@@ -732,35 +749,3 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
-
-/obj/item/clothing/under/swimsuit
-	name = "black swimsuit"
-	desc = "Perfect for the beach episode."
-	icon_state = "swim_black"
-	item_state = "bl_suit"
-	item_color = "swim_black"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/swimsuit/blue
-	name = "blue swimsuit"
-	icon_state = "swim_blue"
-	item_state = "b_suit"
-	item_color = "swim_blue"
-
-/obj/item/clothing/under/swimsuit/green
-	name = "green swimsuit"
-	icon_state = "swim_green"
-	item_state = "g_suit"
-	item_color = "swim_green"
-
-/obj/item/clothing/under/swimsuit/purple
-	name = "purple swimsuit"
-	icon_state = "swim_purple"
-	item_state = "p_suit"
-	item_color = "swim_purple"
-
-/obj/item/clothing/under/swimsuit/red
-	name = "red swimsuit"
-	icon_state = "swim_red"
-	item_state = "r_suit"
-	item_color = "swim_red"

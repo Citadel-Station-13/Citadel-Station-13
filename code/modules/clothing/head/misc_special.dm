@@ -61,8 +61,8 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 1
-	throwforce = 1
+	force = 15
+	throwforce = 15
 	damtype = BURN
 	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)

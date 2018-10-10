@@ -80,18 +80,14 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
-/mob/living/carbon/human/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
-
-
-/datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/widescreenlayout = FALSE //CIT CHANGE - adds support for different hud layouts depending on widescreen pref
 	if(owner.client && owner.client.prefs && owner.client.prefs.widescreenpref) //CIT CHANGE - ditto
 		widescreenlayout = TRUE // CIT CHANGE - ditto
+
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
@@ -152,7 +148,7 @@
 	inv_box.screen_loc = ui_oclothing
 	toggleable_inventory += inv_box
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
@@ -308,7 +304,6 @@
 
 	healths = new /obj/screen/healths()
 	infodisplay += healths
-
 	//CIT CHANGE - adds arousal and stamina to hud
 	arousal = new /obj/screen/arousal()
 	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
@@ -320,13 +315,9 @@
 	staminabuffer = new /obj/screen/staminabuffer()
 	infodisplay += staminabuffer
 	//END OF CIT CHANGES
-	
+
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
-
-	if(!CONFIG_GET(flag/disable_human_mood))
-		mood = new /obj/screen/mood()
-		infodisplay += mood
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style

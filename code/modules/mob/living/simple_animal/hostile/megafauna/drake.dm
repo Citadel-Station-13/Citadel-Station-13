@@ -48,7 +48,7 @@ Difficulty: Medium
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
-	move_to_delay = 10
+	move_to_delay = 5
 	ranged = 1
 	pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
@@ -62,6 +62,8 @@ Difficulty: Medium
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
@@ -243,7 +245,7 @@ Difficulty: Medium
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message("<span class='warning'>[src] slams down on [L], crushing them!</span>")
+			visible_message("<span class='warning'>[src] slams down on [L], crushing [L.p_them()]!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)

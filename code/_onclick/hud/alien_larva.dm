@@ -1,3 +1,6 @@
+/datum/hud/larva
+	ui_style = 'icons/mob/screen_alien.dmi'
+
 /datum/hud/larva/New(mob/owner)
 	..()
 	var/obj/screen/using
@@ -25,7 +28,3 @@
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
-
-/mob/living/carbon/alien/larva/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/larva(src)

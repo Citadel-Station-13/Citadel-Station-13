@@ -136,7 +136,7 @@
 
 
 //To appropriately fluff things like "they are holding [I] in their [get_held_index_name(get_held_index_of_item(I))]"
-//Can be overriden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
+//Can be overridden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
 // with say "they are holding [I] in their Nanotrasen Brand Utility Arm - Right Edition" or w/e
 /mob/proc/get_held_index_name(i)
 	var/list/hand = list()
@@ -170,8 +170,10 @@
 		return FALSE
 	return !held_items[hand_index]
 
-/mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE)
+/mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
 	if(forced || can_put_in_hand(I, hand_index))
+		if(isturf(I.loc) && !ignore_anim)
+			I.do_pickup_animation(src)
 		if(hand_index == null)
 			return FALSE
 		if(get_item_for_held_index(hand_index) != null)
@@ -200,7 +202,7 @@
 
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(incapacitated() && !(I.flags_1&ABSTRACT_1)) //Cit change - Changes lying to incapacitated so that it's plausible to pick things up while on the ground
+	if(incapacitated() && !(I.item_flags&ABSTRACT)) //Cit change - Changes lying to incapacitated so that it's plausible to pick things up while on the ground
 		return FALSE
 	if(!istype(I))
 		return FALSE
@@ -208,8 +210,8 @@
 
 
 //Puts the item into our active hand if possible. returns TRUE on success.
-/mob/proc/put_in_active_hand(obj/item/I, forced = FALSE)
-	return put_in_hand(I, active_hand_index, forced)
+/mob/proc/put_in_active_hand(obj/item/I, forced = FALSE, ignore_animation = TRUE)
+	return put_in_hand(I, active_hand_index, forced, ignore_animation)
 
 
 //Puts the item into our inactive hand if possible, returns TRUE on success
@@ -272,7 +274,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.flags_1 & NODROP_1) && !force)
+	if((I.item_flags & NODROP) && !force)
 		return FALSE
 	return TRUE
 
@@ -312,7 +314,7 @@
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
 		return TRUE
 
-	if((I.flags_1 & NODROP_1) && !force)
+	if((I.item_flags & NODROP) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)
@@ -325,7 +327,7 @@
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
+		if(!no_move && !(I.item_flags & DROPDEL))	//item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))
 				I.moveToNullspace()
 			else
@@ -396,7 +398,7 @@
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage && M.active_storage.parent && M.active_storage.parent.SendSignal(COMSIG_TRY_STORAGE_INSERT, src,M))
+	if(M.active_storage && M.active_storage.parent && SEND_SIGNAL(M.active_storage.parent, COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
 	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
@@ -404,7 +406,7 @@
 		if(!i)
 			continue
 		var/obj/item/I = i
-		if(I.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, M))
+		if(SEND_SIGNAL(I, COMSIG_TRY_STORAGE_INSERT, src, M))
 			return TRUE
 
 	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
@@ -441,10 +443,7 @@
 	held_items.len = amt
 
 	if(hud_used)
-		var/style
-		if(client && client.prefs)
-			style = ui_style2icon(client.prefs.UI_style)
-		hud_used.build_hand_slots(style)
+		hud_used.build_hand_slots()
 
 
 /mob/living/carbon/human/change_number_of_hands(amt)

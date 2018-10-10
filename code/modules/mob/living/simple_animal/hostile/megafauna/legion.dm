@@ -31,12 +31,13 @@ Difficulty: Medium
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	speed = 2
+	speed = 1
+	move_to_delay = 2
 	ranged = 1
 	del_on_death = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 10
 	var/size = 5
 	var/charging = 0
 	medal_type = BOSS_MEDAL_LEGION
@@ -44,7 +45,7 @@ Difficulty: Medium
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
-	vision_range = 13
+	vision_range = 10
 	wander = FALSE
 	elimination = 1
 	appearance_flags = 0
@@ -87,6 +88,7 @@ Difficulty: Medium
 			retreat_distance = 0
 			minimum_distance = 0
 			speed = 0
+			move_to_delay = 1
 			charging = 1
 			addtimer(CALLBACK(src, .proc/reset_charge), 50)
 
@@ -94,7 +96,8 @@ Difficulty: Medium
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	speed = 2
+	speed = 1
+	move_to_delay = 2
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
@@ -104,7 +107,7 @@ Difficulty: Medium
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
-		L.maxHealth = maxHealth * 0.6
+		L.maxHealth = round(maxHealth * 0.6,DAMAGE_PRECISION)
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth
@@ -188,10 +191,14 @@ Difficulty: Medium
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
 			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 			A.wind_down()
+			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
 			return
 	else
 		A = new storm_type(list(user_turf.z))
 		A.name = "staff storm"
+		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
+		if (is_special_character(user))
+			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [user] ([key_name_admin(user)], a non-antagonist")
 		A.area_type = user_area.type
 		A.telegraph_duration = 100
 		A.end_duration = 100

@@ -79,14 +79,14 @@ Difficulty: Very Hard
 			INVOKE_ASYNC(src, .proc/spiral_shoot, pick(TRUE, FALSE))
 
 	else if(prob(20))
-		ranged_cooldown = world.time + 30
+		ranged_cooldown = world.time + 2
 		random_shots()
 	else
 		if(prob(70))
-			ranged_cooldown = world.time + 20
+			ranged_cooldown = world.time + 10
 			blast()
 		else
-			ranged_cooldown = world.time + 40
+			ranged_cooldown = world.time + 20
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
 
 
@@ -235,8 +235,6 @@ Difficulty: Very Hard
 	desc = "A completely indestructible chunk of crystal, rumoured to predate the start of this universe. It looks like you could store things inside it."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blackbox"
-	icon_on = "blackbox"
-	icon_off = "blackbox"
 	light_range = 8
 	max_n_of_items = INFINITY
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -414,7 +412,7 @@ Difficulty: Very Hard
 	playsound(user, activation_sound, 100, 1)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/CollidedWith(atom/movable/AM)
+/obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
@@ -672,7 +670,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.flags_1 & ABSTRACT_1))
+				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.item_flags & ABSTRACT))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)

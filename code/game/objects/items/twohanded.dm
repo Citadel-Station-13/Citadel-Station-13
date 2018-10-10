@@ -67,7 +67,7 @@
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	if(user.get_num_arms() < 2)
-		to_chat(user, "<span class='warning'>You don't have enough hands.</span>")
+		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
 		return
 	wielded = 1
 	if(force_wielded)
@@ -121,7 +121,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/twohanded/offhand/Destroy()
@@ -247,6 +247,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(wielded) //destroys windows and grilles in one hit
@@ -338,7 +339,7 @@
 		icon_state = "dualsaber[item_color][wielded]"
 	else
 		icon_state = "dualsaber0"
-	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /obj/item/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -463,7 +464,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
+	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -478,14 +479,27 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 
+/obj/item/twohanded/spear/attack_self(mob/user)
+	if(explosive)
+		explosive.attack_self(user)
+		return
+	. = ..()
+
+//Citadel additions : attack_self and rightclick_attack_self
+
+/obj/item/twohanded/rightclick_attack_self(mob/user)
+	if(wielded) //Trying to unwield it
+		unwield(user)
+	else //Trying to wield it
+		wield(user)
+	return TRUE
+
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive)
-		user.say("[war_cry]")
-		explosive.forceMove(user)
+	if(explosive) //Citadel Edit removes qdel and explosive.forcemove(AM)
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.prime()
 		user.gib()
-		qdel(src)
 		return BRUTELOSS
 	return BRUTELOSS
 
@@ -496,7 +510,7 @@
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
 	if(explosive)
-		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+		to_chat(user, "<span class='notice'>Use in your hands to activate the attached explosive.</span><br><span class='notice'>Alt-click to set your war cry.</span><br><span class='notice'>Right-click in combat mode to wield</span>")
 
 /obj/item/twohanded/spear/update_icon()
 	if(explosive)
@@ -505,23 +519,18 @@
 		icon_state = "spearglass[wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isopenturf(AM)) //So you can actually melee with it
 		return
-	if(explosive && wielded)
-		user.say("[war_cry]")
-		explosive.forceMove(AM)
+	if(explosive && wielded) //Citadel edit removes qdel and explosive.forcemove(AM)
+		user.say("[war_cry]", forced="spear warcry")
 		explosive.prime()
-		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/throw_impact(atom/target)
-	. = ..()
-	if(!.) //not caught
-		if(explosive)
-			explosive.prime()
-			qdel(src)
+/obj/item/twohanded/spear/grenade_prime_react(obj/item/grenade/nade) //Citadel edit, removes throw_impact because memes
+	nade.forceMove(get_turf(src))
+	qdel(src)
 
 /obj/item/twohanded/spear/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -635,7 +644,7 @@
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	user.faction |= "greytide([REF(user)])"
@@ -716,6 +725,7 @@
 	..()
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !wielded)
 		return
 	if(iswallturf(target))
@@ -725,7 +735,6 @@
 		W.break_wall()
 		W.ScrapeAway()
 		return
-	..()
 
 //HF blade
 
@@ -804,3 +813,58 @@
 
 /obj/item/twohanded/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
+
+/obj/item/twohanded/binoculars
+	name = "binoculars"
+	desc = "Used for long-distance surveillance."
+	item_state = "binoculars"
+	icon_state = "binoculars"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/datum/component/mobhook
+	var/zoom_out_amt = 6
+	var/zoom_amt = 10
+
+/obj/item/twohanded/binoculars/wield(mob/user)
+	. = ..()
+	if(!wielded)
+		return
+	if(QDELETED(mobhook))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
+	else
+		user.TakeComponent(mobhook)
+	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
+	item_state = "binoculars_wielded"
+	user.regenerate_icons()
+	if(!user?.client)
+		return
+	var/client/C = user.client
+	var/_x = 0
+	var/_y = 0
+	switch(user.dir)
+		if(NORTH)
+			_y = zoom_amt
+		if(EAST)
+			_x = zoom_amt
+		if(SOUTH)
+			_y = -zoom_amt
+		if(WEST)
+			_x = -zoom_amt
+	C.change_view(world.view + zoom_out_amt)
+	C.pixel_x = world.icon_size*_x
+	C.pixel_y = world.icon_size*_y
+
+/obj/item/twohanded/binoculars/unwield(mob/user)
+	. = ..()
+	mobhook.RemoveComponent()
+	user.visible_message("[user] lowers [src].","You lower [src].")
+	item_state = "binoculars"
+	user.regenerate_icons()
+	if(user && user.client)
+		user.regenerate_icons()
+		var/client/C = user.client
+		C.change_view(CONFIG_GET(string/default_view))
+		user.client.pixel_x = 0
+		user.client.pixel_y = 0

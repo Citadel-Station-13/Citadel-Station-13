@@ -71,6 +71,7 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	custom_spawn_text = "Remember, you are a miner, not a hunter. Hunting monsters is not a requirement of your job, the only requirement of your job is to provide materials for the station. Don't be afraid to run away if you're inexperienced with fighting the mining area's locals."
 
 	outfit = /datum/outfit/job/miner
 
@@ -92,6 +93,7 @@ Shaft Miner
 		/obj/item/storage/bag/ore=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
+		/obj/item/suit_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/storage/backpack/explorer
@@ -129,13 +131,10 @@ Shaft Miner
 		var/obj/item/clothing/suit/hooded/S = H.wear_suit
 		S.ToggleHood()
 
-/datum/outfit/job/miner/equipped/asteroid
-	name = "Shaft Miner (Asteroid + Equipment)"
-	uniform = /obj/item/clothing/under/rank/miner
-	shoes = /obj/item/clothing/shoes/workboots
+/datum/outfit/job/miner/equipped/hardsuit
+	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
-
 
 
 /*

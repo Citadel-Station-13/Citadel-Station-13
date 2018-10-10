@@ -112,6 +112,11 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/night/prescription
+	name = "prescription night vision goggles"
+	desc = "NVGs but for those with nearsightedness."
+	vision_correction = 1
+
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
@@ -367,7 +372,7 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = 1
-	flags_1 = NODROP_1
+	item_flags = NODROP
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 

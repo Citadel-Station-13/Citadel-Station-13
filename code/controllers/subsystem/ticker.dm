@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/timeLeft						//pregame timer
 	var/start_at
+
 	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
@@ -66,12 +67,6 @@ SUBSYSTEM_DEF(ticker)
 	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
-	var/tumpedbuckets = FALSE				//Have we tumped over buckets?
-
-	//Crew Objective/Miscreant stuff
-	var/list/crewobjlist = list()
-	var/list/crewobjjobs = list()
-	var/list/miscreantobjlist = list()
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
@@ -128,26 +123,19 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
-/*
-	crewobjlist = typesof(/datum/objective/crew)
-	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
-	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
-		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
-		var/list/availableto = splittext(initial(obj.jobs),",")
-		for(var/job in availableto)
-			crewobjjobs["[job]"] += list(obj) */
+
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
 
-	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
+	return ..()
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -165,10 +153,6 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
-			if(!tumpedbuckets)
-				SStimer.tump_buckets()
-			if(!modevoted)
-				send_gamemode_vote()
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -181,6 +165,8 @@ SUBSYSTEM_DEF(ticker)
 			if(start_immediately)
 				timeLeft = 0
 
+			if(!modevoted)
+				send_gamemode_vote()
 			//countdown
 			if(timeLeft < 0)
 				return
@@ -263,8 +249,8 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
-			qdel(mode)
-			mode = null
+			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return 0
@@ -325,13 +311,6 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
-/*	//assign crew objectives and generate miscreants
-	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
-		GLOB.miscreants_allowed = TRUE
-	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
-		GLOB.miscreants_allowed = TRUE
-	generate_crew_objectives() */
-
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
@@ -391,8 +370,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits))
-				SSquirks.AssignQuirks(player, N.client, TRUE)
+			if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+				SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -453,7 +432,7 @@ SUBSYSTEM_DEF(ticker)
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
 		if(25 to INFINITY)  //No response from the next in line when a vacancy exists, remove he
-			to_chat(next_in_line, "<span class='danger'>No response recieved. You have been removed from the line.</span>")
+			to_chat(next_in_line, "<span class='danger'>No response received. You have been removed from the line.</span>")
 			queued_players -= next_in_line
 			queue_delay = 0
 
@@ -661,6 +640,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
+	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
@@ -669,7 +649,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/roundend/disappointed.ogg',
+		'sound/roundend/gondolabridge.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

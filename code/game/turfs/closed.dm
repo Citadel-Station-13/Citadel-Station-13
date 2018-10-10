@@ -3,12 +3,10 @@
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 
-/turf/closed/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
-
-/turf/closed/ChangeTurf()
+/turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
 
@@ -30,6 +28,13 @@
 
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
 	return 0
+
+/turf/closed/indestructible/Melt()
+	to_be_destroyed = FALSE
+	return src
+
+/turf/closed/indestructible/singularity_act()
+	return
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"

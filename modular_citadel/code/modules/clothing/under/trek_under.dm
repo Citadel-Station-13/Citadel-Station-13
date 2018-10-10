@@ -12,9 +12,10 @@
 	name = "Section 31 Uniform"
 	desc = "Oooh... right."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 //TOS
 /obj/item/clothing/under/rank/trek/command
@@ -29,7 +30,6 @@
 	desc = "The uniform worn by operations officers of the mid 2260s. You feel strangely vulnerable just seeing this..."
 	icon_state = "trek_engsec"
 	item_state = "trek_engsec"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 10, "acid" = 0) // since they're shared between jobs and kinda moot.
 
 /obj/item/clothing/under/rank/trek/medsci
 	name = "MedSci Uniform"
@@ -37,7 +37,6 @@
 	icon_state = "trek_medsci"
 	item_state = "trek_medsci"
 	permeability_coefficient = 0.50
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 0, "acid" = 10) // basically a copy of vanilla sci/med
 
 //TNG
 /obj/item/clothing/under/rank/trek/command/next
@@ -94,7 +93,7 @@
 	desc = "The overcoat worn by all officers of the 2380s."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
 	icon_state = "trek_ds9_coat"
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "trek_ds9_coat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	permeability_coefficient = 0.50
@@ -138,7 +137,7 @@
 	desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it. Set phasers to awesome."
 
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedcoat"
 	item_state = "fedcoat"
 
@@ -206,7 +205,7 @@
 	name = "Modern Federation Uniform Jacket"
 	desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. Wearing this makes you feel like a competant commander."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -240,9 +239,8 @@
 	desc = "An officer's cap that demands discipline from the one who wears it."
 	icon = 'modular_citadel/icons/mob/clothing/trek_item_icon.dmi'
 	icon_state = "fedcapofficer"
-	icon_override = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = "fedcapofficer_mob"
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 0, "bio" = 10, "rad" = 10, "fire" = 0, "acid" = 0)
 
 	//Variants
 /obj/item/clothing/head/caphat/formal/fedcover/medsci

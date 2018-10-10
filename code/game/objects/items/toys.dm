@@ -51,6 +51,7 @@
 	return
 
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if (istype(A, /obj/structure/reagent_dispensers))
@@ -176,6 +177,7 @@
 		return ..()
 
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
+	. = ..()
 	if (flag)
 		return
 	if (!user.IsAdvancedToolUser())
@@ -247,8 +249,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.flags_1 & NODROP_1) || (flags_1 & NODROP_1))
-			to_chat(user, "<span class='warning'>\the [flags_1 & NODROP_1 ? src : W] is stuck to your hand, you can't attach it to \the [flags_1 & NODROP_1 ? W : src]!</span>")
+		if((W.item_flags & NODROP) || (item_flags & NODROP))
+			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -347,6 +349,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/toy/katana/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
+	return(BRUTELOSS)
 
 /*
  * Snap pops
@@ -942,6 +949,7 @@
 /obj/item/toy/cards/deck/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5
@@ -1033,6 +1041,7 @@
 	throwforce = 12 //pelt your enemies to death with lumps of snow
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
+	. = ..()
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
@@ -1052,6 +1061,7 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
+	. = ..()
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
@@ -1363,8 +1373,11 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+	var/mob/M = A
+	if (istype(M))
+		M.log_talk(message, LOG_SAY, tag="dummy toy")
+
 	say(message, language)
 	return NOPASS
 

@@ -23,6 +23,29 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+///////////////////////////////////
+//////////Nanite Devices///////////
+///////////////////////////////////
+/datum/design/nanite_remote
+	name = "Nanite Remote"
+	desc = "Allows for the construction of a nanite remote."
+	id = "nanite_remote"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_remote
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/nanite_scanner
+	name = "Nanite Scanner"
+	desc = "Allows for the construction of a nanite scanner."
+	id = "nanite_scanner"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_scanner
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////
@@ -56,9 +79,19 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/nanite_disk
+	name = "Nanite Program Disk"
+	desc = "Stores nanite programs."
+	id = "nanite_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/nanite_program
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/integrated_printer
 	name = "Integrated circuit printer"
-	desc = "This machine provides all neccesary things for circuitry."
+	desc = "This machine provides all necessary things for circuitry."
 	id = "icprinter"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 5000, MAT_METAL = 10000)
