@@ -25289,10 +25289,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bio" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/requests_console{
 	department = "Chemistry";
 	departmentType = 2;
@@ -25302,6 +25298,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bip" = (
@@ -27162,6 +27159,9 @@
 	},
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/reagent_containers/glass/bottle/epinephrine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bmG" = (
