@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(research)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 5000),   // Cit three more anomalys anomalys
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 7500),
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000),
-	//   -   Slime Extracts!   -
+	//   -   Slime Extracts!   - 
 	/obj/item/slime_extract/grey = list(TECHWEB_POINT_TYPE_GENERIC = 500),    // Adds in slime core deconing
 	/obj/item/slime_extract/metal = list(TECHWEB_POINT_TYPE_GENERIC = 750),
 	/obj/item/slime_extract/purple = list(TECHWEB_POINT_TYPE_GENERIC = 750),
