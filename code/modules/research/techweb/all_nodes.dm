@@ -126,7 +126,7 @@
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "cell_charger", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5750)
 	export_price = 5000
 
 /datum/techweb_node/adv_engi
@@ -135,7 +135,7 @@
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
 	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 5000
 
 /datum/techweb_node/anomaly
@@ -144,7 +144,7 @@
 	description = "Unlock the potential of the mysterious anomalies that appear on station."
 	prereq_ids = list("adv_engi", "practical_bluespace")
 	design_ids = list("reactive_armour", "anomaly_neutralizer")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 5000
 
 /datum/techweb_node/high_efficiency
@@ -153,7 +153,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list("pico_mani", "super_matter_bin")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5750)
 	export_price = 5000
 
 /datum/techweb_node/adv_power
@@ -499,7 +499,7 @@
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
 	design_ids = list("advmop", "buffer", "light_replacer")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500) // No longer has its bag
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1750) // No longer has its bag
 	export_price = 5000
 
 /datum/techweb_node/botany
@@ -508,7 +508,7 @@
 	description = "Botanical tools"
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
 	export_price = 5000
 
 /datum/techweb_node/exp_tools
@@ -581,7 +581,7 @@
 	description = "Various advanced beam weapons"
 	prereq_ids = list("beam_weapons")
 	design_ids = list("beamrifle")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5250) // Sniper
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3250) // Sniper
 	export_price = 5000
 
 /datum/techweb_node/explosive_weapons
