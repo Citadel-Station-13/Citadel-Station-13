@@ -20,7 +20,6 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it
-	var/empproof = FALSE
 	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
@@ -134,8 +133,6 @@
 /obj/item/stock_parts/cell/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
-		return
-	if(empproof)
 		return
 	charge -= 1000 / severity
 	if (charge < 0)
@@ -367,7 +364,6 @@
 	maxcharge = 7500
 	materials = list(MAT_GLASS=60)
 	chargerate = 1000
-	empproof = TRUE
 
 /obj/item/stock_parts/cell/high_emp/empty/Initialize()
 	. = ..()
@@ -382,7 +378,6 @@
 	maxcharge = 10000
 	materials = list(MAT_GLASS=300)
 	chargerate = 1500
-	empproof = TRUE
 
 /obj/item/stock_parts/cell/super_emp/empty/Initialize()
 	. = ..()
@@ -396,7 +391,6 @@
 	maxcharge = 15000
 	materials = list(MAT_GLASS=400)
 	chargerate = 2500
-	empproof = TRUE
 
 /obj/item/stock_parts/cell/hyper_emp/empty/Initialize()
 	. = ..()
@@ -411,7 +405,6 @@
 	maxcharge = 25000
 	materials = list(MAT_GLASS=600)
 	chargerate = 3500
-	empproof = TRUE
 
 /obj/item/stock_parts/cell/bluespace_emp/empty/Initialize()
 	. = ..()
