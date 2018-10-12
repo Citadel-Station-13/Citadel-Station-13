@@ -7,7 +7,8 @@
 				/datum/surgery_step/clamp_bleeders,
 				/datum/surgery_step/pacify,
 				/datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
@@ -37,4 +38,4 @@
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
 			"[user] completes the surgery on [target]'s brain.")
 	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-	return FALSE 
+	return FALSE
