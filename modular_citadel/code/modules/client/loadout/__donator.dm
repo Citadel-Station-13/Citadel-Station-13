@@ -332,3 +332,10 @@ datum/gear/darksabresheath
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/lunasune
 	ckeywhitelist = list("invader4352")
+	
+/datum/gear/gothcoat
+	name = "Goth Coat"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/suit/gothcoat
+	ckeywhitelist = list("norko")
+	
