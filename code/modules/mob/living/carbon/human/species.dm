@@ -615,6 +615,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit.flags_inv & HIDETAUR))
 			bodyparts_to_add -= "taur"
+
+	if("legs" in mutant_bodyparts)
+		if(!H.dna.features["legs"] || (!(H.dna.features["taur"] == "None")))
+			bodyparts_to_add -= "legs"
+
 //END EDIT
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
