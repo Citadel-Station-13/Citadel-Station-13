@@ -130,6 +130,8 @@ There are several things that need to be remembered:
 					t_color = "[t_color]_d_l"
 				else if(U.adjusted == NORMAL_STYLE)
 					t_color = "[t_color]_l"
+			else
+				U.alternate_worn_icon = null
 
 		var/mutable_appearance/uniform_overlay
 
@@ -284,6 +286,8 @@ There are several things that need to be remembered:
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
+			else
+				S.alternate_worn_icon = null
 
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
@@ -374,6 +378,8 @@ There are several things that need to be remembered:
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
+			else
+				S.alternate_worn_icon = null
 
 		if(S.tauric == TRUE)
 			if(S.taurmode == SNEK_TAURIC)

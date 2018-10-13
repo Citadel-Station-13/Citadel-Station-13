@@ -28,6 +28,7 @@
 				H.update_inv_wear_suit()
 			else if(adjusted == ALT_STYLE)
 				adjusted = NORMAL_STYLE
+				H.update_inv_wear_suit()
 
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
 			if(H.dna.features["taur"] == "Naga" || "Tentacle")
@@ -44,7 +45,7 @@
 				dimension_x = 64
 			else
 				taurmode = NOT_TAURIC
-		H.update_inv_wear_suit()
+			H.update_inv_wear_suit()
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
