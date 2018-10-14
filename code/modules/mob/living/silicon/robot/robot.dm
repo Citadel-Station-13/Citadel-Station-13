@@ -639,9 +639,9 @@
 		add_overlay("disabler")//ditto
 
 	if(sleeper_g && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_g")
+		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_r")
+		add_overlay("[module.sleeper_overlay]_r[sleeper_nv ? "_nv" : ""]")
 	if(module.dogborg == TRUE)
 		if(resting)
 			cut_overlays()
