@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -120,7 +121,7 @@ Class Procs:
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
-	
+
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit
 		circuit.apply_default_parts(src)

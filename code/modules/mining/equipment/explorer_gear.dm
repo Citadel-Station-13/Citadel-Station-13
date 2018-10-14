@@ -121,7 +121,7 @@
 /****************SEVA Suit and Mask****************/
 
 /obj/item/clothing/suit/hooded/seva
-	name = "SEVA suit"
+	name = "SEVA Suit"
 	desc = "A fire-proof suit for exploring hot environments."
 	icon_state = "seva"
 	item_state = "seva"
@@ -135,7 +135,7 @@
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
 
 /obj/item/clothing/head/hooded/seva
-	name = "SEVA hood"
+	name = "SEVA Hood"
 	desc = "A fire-proof hood for exploring hot environments."
 	icon_state = "seva"
 	item_state = "seva"
@@ -144,6 +144,19 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
+
+/obj/item/clothing/mask/gas/seva
+	name = "SEVA Mask"
+	desc = "A face-covering plate that can be connected to an air supply. Intended for use with the SEVA Suit."
+	icon_state = "seva"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "seva"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	resistance_flags = FIRE_PROOF
 
 /****************Exo-Suit and Mask****************/
 
