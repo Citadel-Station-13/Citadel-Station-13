@@ -426,7 +426,7 @@
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	desc = "Contains three Energy Guns, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to open."
-	cost = 2750
+	cost = 3500
 	contains = list(/obj/item/gun/energy/e_gun,
 					/obj/item/gun/energy/e_gun,
 					/obj/item/gun/energy/e_gun)
@@ -563,7 +563,7 @@
 /datum/supply_pack/security/armory/wt550ammo_special
 	name = "WT-550 Auto Rifle Special Ammo Crate"
 	desc = "Contains 2 20-round Armour Piercing and Incendiary magazines for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = 3000
+	cost = 4500
 	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtap,
 					/obj/item/ammo_box/magazine/wt550m9/wtap,
 					/obj/item/ammo_box/magazine/wt550m9/wtic,
@@ -1377,7 +1377,7 @@
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,
 					/obj/item/grenade/chem_grenade/cleaner,
-					/obj/item/soap/deluxe)
+					/obj/item/soap/nanotrasen)
 	crate_name = "janitorial supplies crate"
 
 /datum/supply_pack/service/janitor/janicart
@@ -1604,7 +1604,8 @@
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable)
+					/obj/item/pizzabox/vegetable,
+					/obj/item/pizzabox/pineapple)
 	crate_name = "pizza crate"
 	var/static/anomalous_box_provided = FALSE
 
