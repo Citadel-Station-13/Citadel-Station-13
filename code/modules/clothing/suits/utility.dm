@@ -29,6 +29,7 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -146,3 +147,4 @@
 	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS
+	tauric = TRUE		//Citadel Add for tauric hardsuits
