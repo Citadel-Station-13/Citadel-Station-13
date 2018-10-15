@@ -167,6 +167,10 @@
 		L.stop_pulling()
 	else if(istype(AM, /obj/structure/closet))
 		return
+
+	else if(istype(AM, /obj/effect))
+		return
+
 	else if(isobj(AM))
 		if (istype(AM, /obj/item))
 			var/obj/item/I = AM
