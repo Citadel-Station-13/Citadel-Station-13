@@ -128,3 +128,6 @@
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
+
+//belly sound pref things
+#define NORMIE_HEARCHECK 4
