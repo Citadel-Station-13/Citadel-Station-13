@@ -31,11 +31,11 @@
 				H.update_inv_wear_suit()
 
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
-			if(H.dna.features["taur"] == "Naga" || "Tentacle")
+			if(H.dna.features["taur"] in list("Naga", "Tentacle"))
 				taurmode = SNEK_TAURIC
 				center = TRUE
 				dimension_x = 64
-			else if(H.dna.features["taur"] == "Fox" || "Wolf" || "Otie" || "Drake" || "Lab" || "Shepherd" || "Husky" || "Eevee" || "Panther" || "Tajaran" || "Horse" || "Cow")
+			else if(H.dna.features["taur"] in list("Fox",  "Wolf",  "Otie",  "Drake",  "Lab",  "Shepherd",  "Husky",  "Eevee",  "Panther",  "Tajaran",  "Horse",  "Cow"))
 				taurmode = PAW_TAURIC
 				center = TRUE
 				dimension_x = 64

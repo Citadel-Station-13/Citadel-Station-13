@@ -384,9 +384,9 @@ There are several things that need to be remembered:
 		if(S.tauric == TRUE)
 			if(S.taurmode == SNEK_TAURIC)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
-			else if(S.taurmode == PAW_TAURIC)
+			if(S.taurmode == PAW_TAURIC)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
-		//	else if(S.taurmode == HOOF_TAURIC) //commenting out for eventual pede/spider/exotics
+		//	if(S.taurmode == HOOF_TAURIC) //commenting out for eventual pede/spider/exotics
 		//		S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_hooved.dmi'
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
