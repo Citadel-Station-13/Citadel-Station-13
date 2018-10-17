@@ -35,14 +35,14 @@
 				taurmode = SNEK_TAURIC
 				center = TRUE
 				dimension_x = 64
-			else if(H.dna.features["taur"] == "Fox" || "Wolf" || "Otie" || "Drake" || "Lab" || "Shepherd" || "Husky" || "Eevee" || "Panther" || "Tajaran")
+			else if(H.dna.features["taur"] == "Fox" || "Wolf" || "Otie" || "Drake" || "Lab" || "Shepherd" || "Husky" || "Eevee" || "Panther" || "Tajaran" || "Horse" || "Cow")
 				taurmode = PAW_TAURIC
 				center = TRUE
 				dimension_x = 64
-			else if(H.dna.features["taur"] == "Horse" || "Cow")
+	/*		else if(H.dna.features["taur"] == "Horse" || "Cow")
 				taurmode = HOOF_TAURIC
 				center = TRUE
-				dimension_x = 64
+				dimension_x = 64 */ //tweak this for when the exotics get their own suits, if ever.
 			else
 				taurmode = NOT_TAURIC
 			H.update_inv_wear_suit()

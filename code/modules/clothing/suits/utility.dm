@@ -93,6 +93,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 
 /obj/item/clothing/head/bomb_hood/security
