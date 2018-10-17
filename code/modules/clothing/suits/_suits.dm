@@ -39,10 +39,12 @@
 				taurmode = PAW_TAURIC
 				center = TRUE
 				dimension_x = 64
-	/*		else if(H.dna.features["taur"] == "Horse" || "Cow")
-				taurmode = HOOF_TAURIC
+			/*
+			else if(H.dna.features["taur"] == "Horse" || "Cow")
+				taurmode = HOOF_TAURIC //tweak this for when the exotics get their own suits, if ever.
 				center = TRUE
-				dimension_x = 64 */ //tweak this for when the exotics get their own suits, if ever.
+				dimension_x = 64
+			*/
 			else
 				taurmode = NOT_TAURIC
 			H.update_inv_wear_suit()
