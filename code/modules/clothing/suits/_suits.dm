@@ -33,12 +33,14 @@
 		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
 			if(H.dna.features["taur"] in list("Naga", "Tentacle"))
 				taurmode = SNEK_TAURIC
-				center = TRUE
-				dimension_x = 64
+				if(tauric == TRUE)
+					center = TRUE
+					dimension_x = 64
 			else if(H.dna.features["taur"] in list("Fox",  "Wolf",  "Otie",  "Drake",  "Lab",  "Shepherd",  "Husky",  "Eevee",  "Panther",  "Tajaran",  "Horse",  "Cow"))
 				taurmode = PAW_TAURIC
-				center = TRUE
-				dimension_x = 64
+				if(tauric == TRUE)
+					center = TRUE
+					dimension_x = 64
 			/*
 			else if(H.dna.features["taur"] == "Horse" || "Cow")
 				taurmode = HOOF_TAURIC //tweak this for when the exotics get their own suits, if ever.
