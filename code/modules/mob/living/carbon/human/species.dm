@@ -1432,9 +1432,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!target.combatmode) // CITADEL CHANGE
 			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(user.resting) //CITADEL CHANGE
-			randn += 60 //CITADEL CHANGE - No kosher disarming if you're resting
+			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
 		if(!user.combatmode) //CITADEL CHANGE
 			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
+		if(user.pulling == target)
+			randn += -20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
 
 		if(randn <= 35)//CIT CHANGE - changes this back to a 35% chance to accomodate for the above being commented out in favor of right-click pushing
 			var/obj/item/I = null
