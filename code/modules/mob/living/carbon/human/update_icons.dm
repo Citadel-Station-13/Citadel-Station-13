@@ -130,6 +130,8 @@ There are several things that need to be remembered:
 					t_color = "[t_color]_d_l"
 				else if(U.adjusted == NORMAL_STYLE)
 					t_color = "[t_color]_l"
+			else
+				U.alternate_worn_icon = null
 
 		var/mutable_appearance/uniform_overlay
 
@@ -284,6 +286,8 @@ There are several things that need to be remembered:
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/digishoes.dmi'
+			else
+				S.alternate_worn_icon = null
 
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
@@ -374,12 +378,24 @@ There are several things that need to be remembered:
 		if(S.mutantrace_variation)
 			if(S.adjusted == ALT_STYLE)
 				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
+			else
+				S.alternate_worn_icon = null
+
+		if(S.tauric == TRUE)
+			if(S.taurmode == SNEK_TAURIC)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
+			if(S.taurmode == PAW_TAURIC)
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
+		//	if(S.taurmode == HOOF_TAURIC) //commenting out for eventual pede/spider/exotics
+		//		S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_hooved.dmi'
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
+		if(S.center)
+			suit_overlay = center_image(suit_overlay, S.dimension_x, S.dimension_y)
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
 	update_mutant_bodyparts()

@@ -1475,7 +1475,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("tail_human")
-					var/list/snowflake_tails_list = list("None" = null)
+					var/list/snowflake_tails_list = list()
 					for(var/path in GLOB.tails_list_human)
 						var/datum/sprite_accessory/tails/human/instance = GLOB.tails_list_human[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1492,7 +1492,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("mam_tail")
-					var/list/snowflake_tails_list = list("None" = null)
+					var/list/snowflake_tails_list = list()
 					for(var/path in GLOB.mam_tails_list)
 						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1568,7 +1568,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						skin_tone = new_s_tone
 
 				if("taur")
-					var/list/snowflake_taur_list = list("Normal" = null)
+					var/list/snowflake_taur_list = list()
 					for(var/path in GLOB.taur_list)
 						var/datum/sprite_accessory/taur/instance = GLOB.taur_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1586,7 +1586,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["tail_lizard"] = "None"
 
 				if("ears")
-					var/list/snowflake_ears_list = list("Normal" = null)
+					var/list/snowflake_ears_list = list()
 					for(var/path in GLOB.ears_list)
 						var/datum/sprite_accessory/ears/instance = GLOB.ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1599,7 +1599,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["ears"] = new_ears
 
 				if("mam_ears")
-					var/list/snowflake_ears_list = list("Normal" = null)
+					var/list/snowflake_ears_list = list()
 					for(var/path in GLOB.mam_ears_list)
 						var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1612,7 +1612,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["mam_ears"] = new_ears
 
 				if("mam_body_markings")
-					var/list/snowflake_markings_list = list("Normal" = null)
+					var/list/snowflake_markings_list = list()
 					for(var/path in GLOB.mam_body_markings_list)
 						var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -2064,7 +2064,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(("legs" in pref_species.default_features) && character.dna.features["legs"] == "Digitigrade Legs")
 		pref_species.species_traits += DIGITIGRADE
+		character.Digitigrade_Leg_Swap(FALSE)
+	else
+		pref_species.species_traits -= DIGITIGRADE
 		character.Digitigrade_Leg_Swap(TRUE)
+
 	if(DIGITIGRADE in pref_species.species_traits)
 		character.Digitigrade_Leg_Swap(FALSE)
 
