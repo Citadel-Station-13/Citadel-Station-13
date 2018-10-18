@@ -258,7 +258,7 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
-	ckeywhitelist = list("johnnyvitrano")
+	ckeywhitelist = list("nik707")
 
 /datum/gear/paperhat
 	name = "Paper Hat"
