@@ -335,7 +335,7 @@ datum/gear/darksabresheath
 	
 /datum/gear/gothcoat
 	name = "Goth Coat"
-	category = SLOT_W_UNIFORM
+	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/gothcoat
 	ckeywhitelist = list("norko")
 	
