@@ -69,6 +69,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/healthanalyzer,
 		/obj/item/dogborg/sleeper/medihound,
+		/obj/item/roller/robo,
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
