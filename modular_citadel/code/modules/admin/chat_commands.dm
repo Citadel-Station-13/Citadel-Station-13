@@ -11,7 +11,7 @@
 
 /datum/tgs_chat_command/despacito
 	name = "play despacito"			//someone please high effort this sometime and make it a full on ytdl search
-	help_text "This is so sad."
+	help_text = "This is so sad."
 
 /datum/tgs_chat_command/despacito/Run()
 	return "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
