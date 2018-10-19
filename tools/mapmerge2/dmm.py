@@ -478,9 +478,9 @@ def _parse(map_raw_text):
 
     # grid block
     for char in it:
-		if char == "\r":
+        if char == "\r":
             continue
-			
+
         if in_coord_block:
             if char == ",":
                 if reading_coord == "x":
