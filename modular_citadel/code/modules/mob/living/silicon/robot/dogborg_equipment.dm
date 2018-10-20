@@ -56,29 +56,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
 	update_icon()
 
-
-//Cuffs
-
-/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 60, 1, -2)
-		C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-							"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-		if(!do_mob(user, C, 60))
-			to_chat(user,"<span class='warning'>You fail to handcuff [C]!</span>")
-			return
-
-		if(!C.handcuffed)
-			C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
-			C.update_inv_handcuffed(0)
-			to_chat(user,"<span class='notice'>You handcuff [C].</span>")
-			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			log_combat(user, C, "handcuffed")
-
-
 //Boop
 
 /obj/item/analyzer/nose
