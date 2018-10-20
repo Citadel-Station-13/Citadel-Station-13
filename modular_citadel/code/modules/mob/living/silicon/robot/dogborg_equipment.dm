@@ -16,14 +16,14 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
-	desc = "The jaws of the law."
+	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
 	force = 12
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
 
 /obj/item/dogborg/jaws/small
 	name = "puppy jaws"
-	desc = "Rubberized teeth ."
+	desc = "Rubberized teeth designed to protect accidental harm. Sharp enough for specialized tasks however."
 	icon_state = "smalljaws"
 	force = 6
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
