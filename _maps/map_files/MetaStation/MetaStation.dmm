@@ -911,6 +911,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acy" = (

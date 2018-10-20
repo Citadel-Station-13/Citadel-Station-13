@@ -250,6 +250,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaH" = (
