@@ -2062,10 +2062,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else if("xenotail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "xenotail"
 
-	if(("legs" in pref_species.default_features) && character.dna.features["legs"] == "Digitigrade Legs")
-		pref_species.species_traits += DIGITIGRADE
-		character.Digitigrade_Leg_Swap(FALSE)
-	else
+	if("legs" in pref_species.default_features)
+		if(character.dna.features["legs"] == "Digitigrade Legs")
+			pref_species.species_traits += DIGITIGRADE
+			character.Digitigrade_Leg_Swap(FALSE)
+
+		if(character.dna.features["legs"] == "Normal Legs" && DIGITIGRADE in pref_species.species_traits)
+			pref_species.species_traits -= DIGITIGRADE
+			character.Digitigrade_Leg_Swap(TRUE)
+
+	else if((!"legs" in pref_species.default_features) && DIGITIGRADE in pref_species.species_traits)
 		pref_species.species_traits -= DIGITIGRADE
 		character.Digitigrade_Leg_Swap(TRUE)
 
