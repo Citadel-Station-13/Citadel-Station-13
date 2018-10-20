@@ -43,6 +43,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			desc = "The jaws of the law."
 			force = 12
 			attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+			status = 1
 			to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
 		else
 			name = "puppy jaws"
@@ -50,6 +51,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			desc = "The jaws of a small dog."
 			force = 5
 			attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
+			status = 0
 			if(R.emagged)
 				to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
 	update_icon()
