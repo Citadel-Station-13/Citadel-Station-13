@@ -187,3 +187,16 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
+
+/obj/item/clothing/mask/gas/exo
+	name = "Exosuit Mask"
+	desc = "A face-covering mask that can be connected to an air supply. Intended for use with the Exosuit."
+	icon_state = "exo"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "exo"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	resistance_flags = FIRE_PROOF
