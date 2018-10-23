@@ -8,3 +8,10 @@
 	var/saltsecondarysubject = "[pick("rework","changes","r34","ban","removal","addition","leak","proposal","fanart","introduction","tabling","ERP","bikeshedding","sprites","semen keg","argument")]"
 	saltresult += "[saltprimarysubject] [saltsecondarysubject]"
 	return "[saltresult]!"
+
+/datum/tgs_chat_command/despacito
+	name = "play despacito"			//someone please high effort this sometime and make it a full on ytdl search
+	help_text = "This is so sad."
+
+/datum/tgs_chat_command/despacito/Run()
+	return "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
