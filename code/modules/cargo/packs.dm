@@ -130,7 +130,7 @@
 /datum/supply_pack/emergency/metalfoam
 	name = "Metal Foam Grenade Crate"
 	desc = "Seal up those pesky hull breaches with 14 Metal Foam Grenades."
-	cost = 1000
+	cost = 2000
 	contains = list(/obj/item/storage/box/metalfoam,
 					/obj/item/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
@@ -396,11 +396,17 @@
 	cost = 1500
 	contains = list(/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/suit/armor/bulletproof)
+	crate_name = "bulletproof armor crate"
+
+/datum/supply_pack/security/armory/bulletarmor
+	name = "Bulletproof Helmet Crate"
+	desc = "Contains three sets of bulletproof helmets. Guaranteed to reduce a bullet's stopping power by over half. Requires Armory access to open."
+	cost = 1500
+	contains = list(/obj/item/clothing/head/helmet/alt
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt)
-	crate_name = "bulletproof armor crate"
+	crate_name = "bulletproof helmet crate"
 
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
@@ -463,7 +469,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, an atmos fire suit and a flamethrower. Requires Armory access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -1071,68 +1077,6 @@
 					/obj/item/storage/firstaid/fire)
 	crate_name = "burn treatment kit crate"
 
-/datum/supply_pack/medical/firstaid
-	name = "First Aid Kit Crate"
-	desc = "Contains four first aid kits for healing most types of wounds."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "first aid kit crate"
-
-/datum/supply_pack/medical/firstaidoxygen
-	name = "Oxygen Deprivation Kit Crate"
-	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2)
-	crate_name = "oxygen deprivation kit crate"
-
-/datum/supply_pack/medical/firstaidtoxins
-	name = "Toxin Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin)
-	crate_name = "toxin treatment kit crate"
-
-/datum/supply_pack/medical/firstaidmixed
-	name = "Mixed Medical Kits"
-	desc = "Contains one of each medical kits for dealing with a variety of injured crewmembers."
-	cost = 1500
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "medical supplies crate"
-
-/datum/supply_pack/medical/sprays
-	name = "Medical Sprays"
-	desc = "Contains two cans of Styptic Spray, Silver Sulfadiazine Spray, Synthflesh Spray and Sterilizer Compound Spray."
-	cost = 2500
-	contains = list(/obj/item/reagent_containers/medspray/styptic,
-					/obj/item/reagent_containers/medspray/styptic,
-					/obj/item/reagent_containers/medspray/silver_sulf,
-					/obj/item/reagent_containers/medspray/silver_sulf,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/synthflesh,
-					/obj/item/reagent_containers/medspray/sterilizine,
-					/obj/item/reagent_containers/medspray/sterilizine)
-	crate_name = "medical supplies crate"
-
-/datum/supply_pack/medical/surgery
-	name = "Surgical Supplies Crate"
-	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
-	cost = 1000
-	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
-					/obj/item/reagent_containers/medspray/sterilizine,
-					/obj/item/roller)
-	crate_name = "surgical supplies crate"
-
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
 	desc = "Contains eight different blood packs for reintroducing blood to patients."
@@ -1156,6 +1100,16 @@
 	contains = list(/obj/item/defibrillator/loaded,
 					/obj/item/defibrillator/loaded)
 	crate_name = "defibrillator crate"
+
+/datum/supply_pack/medical/firstaid
+	name = "First Aid Kit Crate"
+	desc = "Contains four first aid kits for healing most types of wounds."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular,
+					/obj/item/storage/firstaid/regular)
+	crate_name = "first aid kit crate"
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
@@ -1198,6 +1152,59 @@
 	contains = list(/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/wallmed)
 	crate_name = "medical vending crate"
+
+/datum/supply_pack/medical/sprays
+	name = "Medical Sprays"
+	desc = "Contains two cans of Styptic Spray, Silver Sulfadiazine Spray, Synthflesh Spray and Sterilizer Compound Spray."
+	cost = 2500
+	contains = list(/obj/item/reagent_containers/medspray/styptic,
+					/obj/item/reagent_containers/medspray/styptic,
+					/obj/item/reagent_containers/medspray/silver_sulf,
+					/obj/item/reagent_containers/medspray/silver_sulf,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/medspray/sterilizine,
+					/obj/item/reagent_containers/medspray/sterilizine)
+	crate_name = "medical supplies crate"
+
+/datum/supply_pack/medical/firstaidmixed
+	name = "Mixed Medical Kits"
+	desc = "Contains one of each medical kits for dealing with a variety of injured crewmembers."
+	cost = 1500
+	contains = list(/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/brute,
+					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/firstaid/regular)
+	crate_name = "medical supplies crate"
+
+/datum/supply_pack/medical/firstaidoxygen
+	name = "Oxygen Deprivation Kit Crate"
+	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/o2,
+					/obj/item/storage/firstaid/o2)
+	crate_name = "oxygen deprivation kit crate"
+
+
+/datum/supply_pack/medical/surgery
+	name = "Surgical Supplies Crate"
+	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
+	cost = 1000
+	contains = list(/obj/item/storage/backpack/duffelbag/med/surgery,
+					/obj/item/reagent_containers/medspray/sterilizine,
+					/obj/item/roller)
+	crate_name = "surgical supplies crate"
+
+/datum/supply_pack/medical/firstaidtoxins
+	name = "Toxin Treatment Kit Crate"
+	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
+	cost = 1000
+	contains = list(/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/toxin,
+					/obj/item/storage/firstaid/toxin)
+	crate_name = "toxin treatment kit crate"
 
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
@@ -1360,7 +1367,7 @@
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
-	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, deluxe soap and a trash bag."
+	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
 	cost = 1000
 	contains = list(/obj/item/reagent_containers/glass/bucket,
 					/obj/item/reagent_containers/glass/bucket,
