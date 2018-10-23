@@ -403,7 +403,7 @@
 	name = "Bulletproof Helmet Crate"
 	desc = "Contains three sets of bulletproof helmets. Guaranteed to reduce a bullet's stopping power by over half. Requires Armory access to open."
 	cost = 1500
-	contains = list(/obj/item/clothing/head/helmet/alt
+	contains = list(/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt)
 	crate_name = "bulletproof helmet crate"
