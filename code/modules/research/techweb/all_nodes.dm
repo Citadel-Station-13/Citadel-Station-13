@@ -114,7 +114,7 @@
 	description = "Better insight into programming and data."
 	prereq_ids = list("datatheory")
 	design_ids = list("icprinter", "icupgadv", "icupgclo")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
 /////////////////////////engineering tech/////////////////////////
@@ -126,7 +126,7 @@
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "cell_charger", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5750)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6000)
 	export_price = 5000
 
 /datum/techweb_node/adv_engi
@@ -135,7 +135,7 @@
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
 	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	export_price = 5000
 
 /datum/techweb_node/anomaly
@@ -153,7 +153,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list("pico_mani", "super_matter_bin")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5750)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
 /datum/techweb_node/adv_power
@@ -192,7 +192,7 @@
 	prereq_ids = list("bluespace_basic", "engineering")
 	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
+	export_price = 7500
 
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
@@ -227,7 +227,7 @@
 	description = "Research on how to fully exploit the power of plasma."
 	prereq_ids = list("basic_plasma")
 	design_ids = list("mech_plasma_cutter")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
 /////////////////////////robotics tech/////////////////////////
@@ -272,7 +272,7 @@
 	description = "Utility upgrades for cyborgs."
 	prereq_ids = list("engineering", "robotics")
 	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_rped")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1750)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
 /datum/techweb_node/cyborg_upg_med
