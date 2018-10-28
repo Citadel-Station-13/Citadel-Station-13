@@ -66,6 +66,7 @@
 	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
+	hit_reaction_chance = 50 //Blue space magic!
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
