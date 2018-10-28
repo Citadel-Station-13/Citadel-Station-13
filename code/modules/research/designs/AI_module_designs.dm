@@ -19,12 +19,12 @@
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/onecrew_module
+/datum/design/board/onehuman_module
 	name = "Module Design (OneCrew)"
 	desc = "Allows for the construction of a OneCrew AI Module."
 	id = "onehuman_module"
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 6000)
-	build_path = /obj/item/aiModule/zeroth/oneCrew
+	build_path = /obj/item/aiModule/zeroth/oneHuman
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
