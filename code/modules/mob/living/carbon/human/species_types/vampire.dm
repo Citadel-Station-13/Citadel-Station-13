@@ -128,3 +128,18 @@
 	charge_max = 50
 	cooldown_min = 50
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
+	var/ventcrawl_nude_only = TRUE
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bat/Shapeshift()			//cit change
+	var/obj/shapeshift_holder/H = locate() in caster
+	if(H)
+		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
+		return
+
+	var/mob/living/shape = new shapeshift_type(caster.loc)
+	H = new(shape,src,caster)
+	if(ventcrawl_nude_only && length(get_equipped_items(include_pockets = TRUE)))
+		H.ventcrawler = FALSE
+
+	clothes_req = 0
+	human_req = 0
