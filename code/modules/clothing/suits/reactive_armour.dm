@@ -36,7 +36,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	hit_reaction_chance = 50
+	hit_reaction_chance = 35 // Only on the chest yet blocks all attacks?
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
