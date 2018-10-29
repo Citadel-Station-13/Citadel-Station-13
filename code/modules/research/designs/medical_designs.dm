@@ -154,7 +154,7 @@
 
 /datum/design/healthanalyzer_advanced
 	name = "Empty Blood Bag"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	desc = "A small sterilized plastic bag for blood."
 	id = "blood_bag"
 	build_path = /obj/item/reagent_containers/blood
 	build_type = PROTOLATHE
