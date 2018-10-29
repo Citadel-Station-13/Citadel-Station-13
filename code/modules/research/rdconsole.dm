@@ -635,6 +635,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb()
 	var/list/l = list()
+	if(islist(stored_research.research_logs) && stored_research.research_logs.len)
+		l += "Last action: [stored_research.research_logs[stored_research.research_logs.len]]"
 	if(ui_mode != RDCONSOLE_UI_MODE_LIST)
 		var/list/columns = list()
 		var/max_tier = 0
