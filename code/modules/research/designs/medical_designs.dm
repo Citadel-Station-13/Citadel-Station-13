@@ -152,7 +152,7 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/healthanalyzer_advanced
+/datum/design/blood_bag
 	name = "Empty Blood Bag"
 	desc = "A small sterilized plastic bag for blood."
 	id = "blood_bag"
