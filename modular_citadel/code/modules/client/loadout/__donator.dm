@@ -258,7 +258,7 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
-	ckeywhitelist = list("johnnyvitrano")
+	ckeywhitelist = list("nik707")
 
 /datum/gear/paperhat
 	name = "Paper Hat"
@@ -332,3 +332,10 @@ datum/gear/darksabresheath
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/lunasune
 	ckeywhitelist = list("invader4352")
+	
+/datum/gear/gothcoat
+	name = "Goth Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/gothcoat
+	ckeywhitelist = list("norko")
+	

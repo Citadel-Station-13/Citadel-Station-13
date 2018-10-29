@@ -81,16 +81,3 @@
 			to_chat(user, "<span class='warning'>[ER] has no charges left.</span>")
 		return
 	. = ..()
-
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	if(!uses)
-		user.visible_message("<span class='warning'>[src] emits a weak spark. It's burnt out!</span>")
-		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-		return
-	. = ..()
-	uses = max(uses - 1, 0)
-	if(!uses)
-		user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
-		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
-	else if(uses <= 3)
-		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead

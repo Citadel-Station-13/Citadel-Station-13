@@ -30,7 +30,7 @@
 /obj/item/robot_module/k9
 	name = "Security K-9 Unit"
 	basic_modules = list(
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/storage/bag/borgdelivery,
 		/obj/item/dogborg/jaws/big,
 		/obj/item/dogborg/pounce,
@@ -69,6 +69,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/healthanalyzer,
 		/obj/item/dogborg/sleeper/medihound,
+		/obj/item/roller/robo,
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,

@@ -185,6 +185,7 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+
 /////////////////////////////////////////
 //////////Alien Surgery Tools////////////
 /////////////////////////////////////////
@@ -605,3 +606,95 @@
 	id = "surgery_zombie"
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
+
+/////////////////////////////////////////
+////////////Medical Prosthetics//////////
+/////////////////////////////////////////
+
+/datum/design/basic_l_arm
+	name = "Surplus prosthetic left arm"
+	desc = "Basic outdated and fragile prosthetic left arm."
+	id = "basic_l_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/l_arm/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_r_arm
+	name = "Surplus prosthetic right arm"
+	desc = "Basic outdated and fragile prosthetic left arm."
+	id = "basic_r_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/r_arm/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_l_leg
+	name = "Surplus prosthetic left leg"
+	desc = "Basic outdated and fragile prosthetic left leg."
+	id = "basic_l_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/l_leg/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_r_leg
+	name = "Surplus prosthetic right leg"
+	desc = "Basic outdated and fragile prosthetic right leg."
+	id = "basic_r_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/r_leg/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_r_leg
+	name = "Advanced prosthetic right leg"
+	desc = "A renforced prosthetic right leg."
+	id = "adv_r_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/r_leg/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_l_leg
+	name = "Advanced prosthetic left leg"
+	desc = "A renforced prosthetic left leg."
+	id = "adv_l_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/l_leg/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_l_arm
+	name = "Advanced prosthetic left arm"
+	desc = "A renforced prosthetic left arm."
+	id = "adv_l_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/l_arm/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_r_arm
+	name = "Advanced prosthetic right arm"
+	desc = "A renforced prosthetic right arm."
+	id = "adv_r_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/r_arm/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

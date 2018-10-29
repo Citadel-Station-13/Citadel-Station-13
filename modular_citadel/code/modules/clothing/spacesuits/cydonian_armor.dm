@@ -18,6 +18,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator)
 	var/energy_color = "#35FFF0"
 	var/obj/item/clothing/suit/space/hardsuit/lavaknight/linkedsuit = null
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/New()
 	..()

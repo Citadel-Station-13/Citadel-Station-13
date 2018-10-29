@@ -10,6 +10,10 @@
 //Comment this out once you've filled in the below
 #error TGS API unconfigured
 
+//Uncomment this if you wish to allow the game to interact with TGS 3
+//This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
+//#define TGS_V3_API
+
 //Required interfaces (fill in with your codebase equivalent):
 
 //create a global variable named `Name` and set it to `Value`
@@ -47,7 +51,21 @@
 #define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
 #define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
 
-//TODO
+//See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
+#define TGS_EVENT_REPO_RESET_ORIGIN 0
+#define TGS_EVENT_REPO_CHECKOUT 1
+#define TGS_EVENT_REPO_FETCH 2
+#define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
+#define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
+#define TGS_EVENT_BYOND_INSTALL_START 5
+#define TGS_EVENT_BYOND_INSTALL_FAIL 6
+#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+#define TGS_EVENT_COMPILE_START 8
+#define TGS_EVENT_COMPILE_CANCELLED 9
+#define TGS_EVENT_COMPILE_FAILURE 10
+#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
+#define TGS_EVENT_REPO_MERGE_CONFLICT 13
 
 //OTHER ENUMS
 
@@ -74,8 +92,8 @@
 /world/proc/TgsInitializationComplete()
 	return
 
-//Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
-#define TGS_TOPIC var/tgs_topic_return = TgsTopic(T); if(tgs_topic_return) return tgs_topic_return
+//Put this at the start of /world/Topic()
+#define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 //Call this at the beginning of world/Reboot(reason)
 /world/proc/TgsReboot()
@@ -177,7 +195,7 @@
 //Gets a list of connected tgs_chat_channel
 /world/proc/TgsChatChannelInfo()
 	return
-	
+
 //Sends a message to connected game chats
 //message: The message to send
 //channels: optional channels to limit the broadcast to
@@ -201,24 +219,24 @@ The MIT License
 
 Copyright (c) 2017 Jordan Brown
 
-Permission is hereby granted, free of charge, 
-to any person obtaining a copy of this software and 
-associated documentation files (the "Software"), to 
-deal in the Software without restriction, including 
-without limitation the rights to use, copy, modify, 
-merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom 
-the Software is furnished to do so, 
+Permission is hereby granted, free of charge,
+to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to
+deal in the Software without restriction, including
+without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom
+the Software is furnished to do so,
 subject to the following conditions:
 
-The above copyright notice and this permission notice 
+The above copyright notice and this permission notice
 shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */

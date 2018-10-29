@@ -18861,6 +18861,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/cryopod,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aMl" = (

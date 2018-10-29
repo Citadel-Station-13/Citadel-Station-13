@@ -308,8 +308,10 @@
 	switch(selection)
 		if("Exo-suit")
 			new /obj/item/clothing/suit/hooded/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
 		if("SEVA suit")
 			new /obj/item/clothing/suit/hooded/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
 
 	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
 	qdel(voucher)
