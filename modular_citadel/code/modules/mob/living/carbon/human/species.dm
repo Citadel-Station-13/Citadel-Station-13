@@ -38,7 +38,7 @@
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 
-		if(!target.combatmode && user.combatmode || prob(target.getStaminaLoss()*(user.resting ? 0.25 : 1)*(user.combatmode ? 1 : 0.05))) //probability depends on staminaloss. it's plausible, but unlikely that you'll be able to push someone over while resting, and pretty rare to successfully push someone outside of combat mode. The few people that even know how to right-click outside of combat mode are a rarity but let's take that into account regardless.
+		if((!target.combatmode && user.combatmode || prob(target.getStaminaLoss()*(user.resting ? 0.25 : 1)*(user.combatmode ? 1 : 0.05))) && !target.resting) //probability depends on staminaloss. it's plausible, but unlikely that you'll be able to push someone over while resting, and pretty rare to successfully push someone outside of combat mode. The few people that even know how to right-click outside of combat mode are a rarity but let's take that into account regardless.
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] [user.combatmode ? "has" : "gently"] pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
