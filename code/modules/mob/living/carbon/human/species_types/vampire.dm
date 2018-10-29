@@ -131,7 +131,7 @@
 	var/ventcrawl_nude_only = TRUE
 	var/transfer_name = TRUE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/bat/Shapeshift()			//cit change
+/obj/effect/proc_holder/spell/targeted/shapeshift/bat/Shapeshift(mob/living/caster)			//cit change
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
 		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
@@ -139,8 +139,10 @@
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	H = new(shape,src,caster)
-	if(ventcrawl_nude_only && length(get_equipped_items(include_pockets = TRUE)))
-		H.ventcrawler = FALSE
+	if(istype(H, /mob/living/simple_animal))
+		var/mob/living/simple_animal/SA = H
+		if(ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE)))
+			SA.ventcrawler = FALSE
 	if(transfer_name)
 		H.name = caster.name
 
