@@ -13,6 +13,15 @@
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
+/turf/open/MouseDrop_T(atom/dropping, mob/user)
+	. = ..()
+	if(dropping == user && isliving(user))
+		var/mob/living/L = user
+		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), 0, src))
+			if(Adjacent(L, src))
+				L.forceMove(src)
+				playsound(L, "rustle", 25, 1)
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
