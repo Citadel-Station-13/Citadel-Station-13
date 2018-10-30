@@ -399,7 +399,7 @@
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
 
-/datum/supply_pack/security/armory/bulletarmor
+/datum/supply_pack/security/armory/bullethelmets
 	name = "Bulletproof Helmet Crate"
 	desc = "Contains three sets of bulletproof helmets. Guaranteed to reduce a bullet's stopping power by over half. Requires Armory access to open."
 	cost = 1500
