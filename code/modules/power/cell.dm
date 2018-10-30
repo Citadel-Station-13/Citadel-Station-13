@@ -365,7 +365,7 @@
 	materials = list(MAT_GLASS=60)
 	chargerate = 1000
 
-/obj/item/stock_parts/cell/high_emp/empty/Initialize()
+/obj/item/stock_parts/cell/high_emp/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -379,7 +379,7 @@
 	materials = list(MAT_GLASS=300)
 	chargerate = 1500
 
-/obj/item/stock_parts/cell/super_emp/empty/Initialize()
+/obj/item/stock_parts/cell/super_emp/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -392,7 +392,7 @@
 	materials = list(MAT_GLASS=400)
 	chargerate = 2500
 
-/obj/item/stock_parts/cell/hyper_emp/empty/Initialize()
+/obj/item/stock_parts/cell/hyper_emp/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -406,7 +406,7 @@
 	materials = list(MAT_GLASS=600)
 	chargerate = 3500
 
-/obj/item/stock_parts/cell/bluespace_emp/empty/Initialize()
+/obj/item/stock_parts/cell/bluespace_emp/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
