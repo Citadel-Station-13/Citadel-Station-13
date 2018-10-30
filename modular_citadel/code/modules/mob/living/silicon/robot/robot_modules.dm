@@ -223,7 +223,7 @@
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Handy")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Loader","Handy")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -234,7 +234,7 @@
 			special_light_key = "engineer"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Loader")
-			cyborg_base_icon = "loader"
+			cyborg_base_icon = "loaderborg"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 			has_snowflake_deadsprite = TRUE
 		if("Handy")
