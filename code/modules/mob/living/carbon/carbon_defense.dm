@@ -311,7 +311,7 @@
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)
 		AdjustSleeping(-100)
-		if(resting)
+		if(resting && !recoveringstam)
 			resting = 0
 			update_canmove()
 
