@@ -28,7 +28,7 @@
 /obj/item/ammo_casing/energy/disabler_borg
 	projectile_type = /obj/item/projectile/beam/disabler_borg
 	select_name  = "disable"
-	e_cost = 150
+	e_cost = 150 
 	fire_sound = 'sound/weapons/taser2.ogg'
 
 /obj/item/ammo_casing/energy/electrode_borg
