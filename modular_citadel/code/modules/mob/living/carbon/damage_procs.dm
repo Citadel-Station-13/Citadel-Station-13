@@ -12,5 +12,7 @@
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE, affected_zone = BODY_ZONE_CHEST)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	apply_damage(amount, STAMINA, affected_zone)
+	apply_damage(amount > 0 ? amount*incomingstammult : amount, STAMINA, affected_zone)
+	if(recoveringstam && amount > 20)
+		incomingstammult = max(0.01, incomingstammult/(amount*0.05))
 	return amount

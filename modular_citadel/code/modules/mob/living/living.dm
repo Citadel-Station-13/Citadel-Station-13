@@ -1,5 +1,6 @@
 /mob/living
 	var/recoveringstam = FALSE
+	var/incomingstammult = 1
 	var/bufferedstam = 0
 	var/stambuffer = 20
 	var/stambufferregentime

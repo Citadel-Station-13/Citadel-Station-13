@@ -454,6 +454,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(getStaminaLoss() && !combatmode)//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
+	if(!recoveringstam && incomingstammult != 1)
+		incomingstammult = min(1, incomingstammult*2)
+
 	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
 	if(bufferedstam && world.time > stambufferregentime)
 		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
