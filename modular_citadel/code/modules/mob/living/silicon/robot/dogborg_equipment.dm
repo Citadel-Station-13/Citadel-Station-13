@@ -12,7 +12,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	throwforce = 0
 	w_class = 3
 	hitsound = 'sound/weapons/bite.ogg'
-	sharpness = IS_SHARP
 
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
