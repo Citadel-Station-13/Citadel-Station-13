@@ -87,7 +87,7 @@
 /obj/item/projectile/beam/disabler_borg
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 36 
+	damage = 30 
 	damage_type = STAMINA
 	eyeblur = 1
 
