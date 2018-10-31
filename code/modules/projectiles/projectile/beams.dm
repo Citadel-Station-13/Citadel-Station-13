@@ -39,6 +39,10 @@
 /obj/item/projectile/beam/weak
 	damage = 15
 
+/obj/item/projectile/beam/laser_borg
+	damage = 15
+	eyeblur = 1
+
 /obj/item/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
@@ -79,6 +83,13 @@
 	tracer_type = /obj/effect/projectile/tracer/disabler
 	muzzle_type = /obj/effect/projectile/muzzle/disabler
 	impact_type = /obj/effect/projectile/impact/disabler
+
+/obj/item/projectile/beam/disabler_borg
+	name = "disabler beam"
+	icon_state = "omnilaser"
+	damage = 36 
+	damage_type = STAMINA
+	eyeblur = 1
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
