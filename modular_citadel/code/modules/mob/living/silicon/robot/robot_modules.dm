@@ -40,7 +40,8 @@
 		/obj/item/dogborg/sleeper/K9,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
+	emag_modules = list(/obj/item/gun/energy/laser/cyborg,
+		/obj/item/melee/baton/loaded) // Got to make the normale borg not 100% useless
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
