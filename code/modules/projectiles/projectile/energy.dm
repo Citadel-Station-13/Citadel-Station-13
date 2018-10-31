@@ -38,17 +38,6 @@
 	do_sparks(1, TRUE, src)
 	..()
 
-/obj/item/projectile/energy/electrode_borg
-	name = "electrode"
-	icon_state = "spark"
-	color = "#FFFF00"
-	nodamage = 1
-	knockdown = 100
-	stutter = 10
-	jitter = 25
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 9
-
 /obj/item/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
