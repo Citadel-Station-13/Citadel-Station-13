@@ -274,7 +274,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				L.adjust_fire_stacks(-10)
 			return
 		else
-			if(R.cell.charge <= 200)
+			if(R.cell.charge <= 600)
 				to_chat(R, "Insufficent Power!")
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
@@ -283,7 +283,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			L.visible_message("<span class='danger'>[R] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[R] has shocked you with its tongue!</span>")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-			R.cell.use(666)
+			R.cell.use(200)
 			log_combat(R, L, "tongue stunned")
 
 	else if(istype(target, /obj/structure/window))
