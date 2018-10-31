@@ -7,6 +7,11 @@
 	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/lasergun_borg
+	projectile_type = /obj/item/projectile/beam/laser_borg
+	e_cost = 300
+	select_name = "kill"
+
 /obj/item/ammo_casing/energy/lasergun/old
 	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 200
