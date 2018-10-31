@@ -274,7 +274,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 				L.adjust_fire_stacks(-10)
 			return
 		else
-			if(R.cell.charge <= 800)
+			if(R.cell.charge <= 200)
 				to_chat(R, "Insufficent Power!")
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
