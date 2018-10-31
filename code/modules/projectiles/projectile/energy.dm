@@ -38,7 +38,7 @@
 	do_sparks(1, TRUE, src)
 	..()
 
-/obj/item/projectile/energy/electrode/borg
+/obj/item/projectile/energy/electrode_borg
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
