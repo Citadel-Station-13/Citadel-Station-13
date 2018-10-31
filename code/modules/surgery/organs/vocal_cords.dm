@@ -251,6 +251,7 @@
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
+	var/static/regex/cum_words = regex("cum|climax|orgasm")
 
 	var/i = 0
 	//STUN
@@ -564,6 +565,14 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.SpinAnimation(speed = 10, loops = 5)
+
+	//INSTANT ORGASM -- CITADEL CHANGE
+	else if((findtext(message, cum_words)))
+		cooldown = COOLDOWN_MEME
+		for(var/mob/living/carbon/pervert in listeners)
+			if(pervert.canbearoused)
+				pervert.adjustArousalLoss(100)
+				pervert.mob_climax(forced_climax=TRUE)
 
 	else
 		cooldown = COOLDOWN_NONE
