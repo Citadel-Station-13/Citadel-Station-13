@@ -31,8 +31,8 @@
 	e_cost = 150
 	fire_sound = 'sound/weapons/taser2.ogg'
 
-/obj/item/ammo_casing/energy/electrode/borg
-	projectile_type = /obj/item/projectile/energy/electrode/borg
+/obj/item/ammo_casing/energy/electrode_borg
+	projectile_type = /obj/item/projectile/energy/electrode_borg
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 250
