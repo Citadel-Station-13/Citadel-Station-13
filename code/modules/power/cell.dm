@@ -19,7 +19,7 @@
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
-	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it
+	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
@@ -365,7 +365,7 @@
 	materials = list(MAT_GLASS=60)
 	chargerate = 1000
 
-/obj/item/stock_parts/cell/high_emp/Initialize()
+/obj/item/stock_parts/cell/high_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -379,7 +379,7 @@
 	materials = list(MAT_GLASS=300)
 	chargerate = 1500
 
-/obj/item/stock_parts/cell/super_emp/Initialize()
+/obj/item/stock_parts/cell/super_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -392,7 +392,7 @@
 	materials = list(MAT_GLASS=400)
 	chargerate = 2500
 
-/obj/item/stock_parts/cell/hyper_emp/Initialize()
+/obj/item/stock_parts/cell/hyper_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
@@ -406,7 +406,7 @@
 	materials = list(MAT_GLASS=600)
 	chargerate = 3500
 
-/obj/item/stock_parts/cell/bluespace_emp/Initialize()
+/obj/item/stock_parts/cell/bluespace_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
