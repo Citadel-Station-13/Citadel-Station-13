@@ -67,9 +67,9 @@
 		return
 	if(!iscarbon(target))
 		return
-	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
-		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
-		return
+	var/voracious = TRUE
+	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+		voracious = FALSE
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src].</span>")
 		return
@@ -95,7 +95,8 @@
 			target.reset_perspective(src)
 			target.ExtinguishMob() //The tongue already puts out fire stacks but being put into the sleeper shouldn't allow you to keep burning.
 			update_gut()
-			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up and expands as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
+			user.visible_message("<span class='warning'>[voracious ? "[hound]'s [src.name] lights up and expands as [target] slips inside into their [src.name]." : "[hound]'s sleeper indicator lights up as [target] is scooped up into [hound.p_their()] [src]."]</span>", \
+				"<span class='notice'>Your [voracious ? "[src.name] lights up as [target] slips into" : "sleeper indicator light shines brightly as [target] is scooped inside"] your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has sleeper'd [key_name(patient)] as a dogborg. [ADMIN_JMP(src)]")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
@@ -105,9 +106,12 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	if(user.a_intent == INTENT_HELP)
 		return
-	user.visible_message("<span class='notice'>You see [user] kicking against the expanded material of [hound.name]'s gut!</span>", \
-		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [hound.name].</span>")
+	var/voracious = TRUE
+	if(!user.client || !(user.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+		voracious = FALSE
+	user.visible_message("<span class='notice'>You see [voracious ? "[user] struggling against the expanded material of [hound]'s gut!" : "and hear [user] pounding against something inside of [hound]'s [src.name]!"]</span>", \
+		"<span class='notice'>[voracious ? "You start struggling inside of [src]'s tight, flexible confines," : "You start pounding against the metallic walls of [src],"] trying to trigger the release... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a [voracious ? "couple of thumps" : "loud banging noise"] coming from within [hound].</span>")
 	if(do_after(user, breakout_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -118,8 +122,16 @@
 /obj/item/dogborg/sleeper/proc/go_out(var/target)
 	hound = loc
 	hound.setClickCooldown(50)
+	var/voracious = TRUE
+	if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+		voracious = FALSE
+	else
+		for(var/mob/M in contents)
+			if(!M.client || !(M.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+				voracious = FALSE
 	if(length(contents) > 0)
-		hound.visible_message("<span class='warning'>[hound.name] empties out their contents via their release port.</span>", "<span class='notice'>You empty your contents via your release port.</span>")
+		hound.visible_message("<span class='warning'>[voracious ? "[hound] empties out [hound.p_their()] contents via [hound.p_their()] release port." : "[hound]'s underside slides open with an audible clunk before [hound.p_their()] [src] flips over, carelessly dumping its contents onto the ground below [hound.p_them()] before closing right back up again."]</span>", \
+			"<span class='notice'>[voracious ? "You empty your contents via your release port." : "You open your sleeper hatch, quickly releasing all of the contents within before closing it again."]</span>")
 		if(target)
 			if(iscarbon(target))
 				var/mob/living/carbon/person = target
@@ -140,7 +152,7 @@
 		items_preserved.Cut()
 		update_gut()
 		cleaning = FALSE
-		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(loc, voracious ? 'sound/effects/splat.ogg' : 'sound/effects/bin_close.ogg', 50, 1)
 
 	else //You clicked eject with nothing in you, let's just reset stuff to be sure.
 		items_preserved.Cut()
@@ -232,6 +244,9 @@
 
 /obj/item/dogborg/sleeper/proc/update_gut()
 	//Well, we HAD one, what happened to them?
+	var/prociconupdate = FALSE
+	var/currentenvy = hound.sleeper_nv
+	hound.sleeper_nv = FALSE
 	if(patient in contents)
 		if(patient_laststat != patient.stat)
 			if(patient.stat & DEAD)
@@ -242,7 +257,17 @@
 				hound.sleeper_r = 0
 				hound.sleeper_g = 1
 				patient_laststat = patient.stat
-			//Update icon
+			prociconupdate = TRUE
+
+		if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+			hound.sleeper_nv = TRUE
+		else
+			hound.sleeper_nv = FALSE
+		if(hound.sleeper_nv != currentenvy)
+			prociconupdate = TRUE
+
+		//Update icon
+		if(prociconupdate)
 			hound.update_icons()
 		//Return original patient
 		return(patient)
@@ -258,6 +283,12 @@
 				hound.sleeper_r = 0
 				hound.sleeper_g = 1
 				patient_laststat = patient.stat
+
+			if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+				hound.sleeper_nv = TRUE
+			else
+				hound.sleeper_nv = FALSE
+
 			//Update icon and return new patient
 			hound.update_icons()
 			return(C)

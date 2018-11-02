@@ -315,6 +315,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	var/laser
 	var/sleeper_g
 	var/sleeper_r
+	var/sleeper_nv
 
 #define MAX_K9_LEAP_DIST 4 //because something's definitely borked the pounce functioning from a distance.
 

@@ -124,7 +124,7 @@
 #define EATING_NOISES	2
 #define DIGESTION_NOISES 4
 
-#define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)
+#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
