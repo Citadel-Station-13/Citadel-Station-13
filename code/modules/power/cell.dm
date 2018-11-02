@@ -375,7 +375,6 @@
 	maxcharge = 10000
 	materials = list(MAT_GLASS=300)
 	chargerate = 1500
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/super_emp/Initialize()
 	. = ..()
@@ -392,7 +391,6 @@
 	maxcharge = 15000
 	materials = list(MAT_GLASS=400)
 	chargerate = 2500
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/hyper_emp/Initialize()
 	. = ..()
@@ -410,7 +408,6 @@
 	maxcharge = 25000
 	materials = list(MAT_GLASS=600)
 	chargerate = 3500
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/bluespace_emp/Initialize()
 	. = ..()
