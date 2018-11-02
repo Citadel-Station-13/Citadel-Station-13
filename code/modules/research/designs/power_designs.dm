@@ -110,7 +110,7 @@
 	category = list("Misc","Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/super_cell
+/datum/design/super_cell_emp
 	name = "EMP proof Super-Capacity Power Cell"
 	desc = "A power cell that holds 10 MJ of energy. This one is EMP proof."
 	id = "super_cell_emp"
