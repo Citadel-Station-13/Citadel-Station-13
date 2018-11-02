@@ -317,15 +317,12 @@
 	desc = "An EMP-proof cell."
 	maxcharge = 500
 	rating = 3
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-
-/obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
@@ -364,13 +361,12 @@
 	maxcharge = 7500
 	materials = list(MAT_GLASS=60)
 	chargerate = 1000
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/high_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
-
 
 /obj/item/stock_parts/cell/super_emp
 	name = "EMP proof super-capacity power cell"
@@ -378,12 +374,12 @@
 	maxcharge = 10000
 	materials = list(MAT_GLASS=300)
 	chargerate = 1500
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/super_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/hyper_emp
 	name = "EMP proof hyper-capacity power cell"
@@ -391,12 +387,12 @@
 	maxcharge = 15000
 	materials = list(MAT_GLASS=400)
 	chargerate = 2500
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/hyper_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/bluespace_emp
 	name = "EMP proof bluespace power cell"
@@ -405,9 +401,9 @@
 	maxcharge = 25000
 	materials = list(MAT_GLASS=600)
 	chargerate = 3500
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/bluespace_emp/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
