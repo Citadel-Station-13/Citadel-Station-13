@@ -38,6 +38,7 @@
 			new item(C)
 
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
+//A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z <-- For quick and easy references
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Emergency ///////////////////////////////////////
@@ -408,6 +409,13 @@
 					/obj/item/clothing/head/helmet/alt)
 	crate_name = "bulletproof helmet crate"
 
+/datum/supply_pack/security/armory/chemimp
+	name = "Chemical Implants Crate"
+	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
+	cost = 2000
+	contains = list(/obj/item/storage/box/chemimp)
+	crate_name = "chemical implant crate"
+
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
 	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
@@ -438,13 +446,6 @@
 					/obj/item/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-
-/datum/supply_pack/security/armory/chemimp
-	name = "Chemical Implants Crate"
-	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
-	cost = 2000
-	contains = list(/obj/item/storage/box/chemimp)
-	crate_name = "chemical implant crate"
 
 /datum/supply_pack/security/armory/exileimp // Theres boxes in 2 lockers as well as gateway never realy being used sad
 	name = "Exile Implants Crate"
@@ -518,6 +519,15 @@
 					/obj/item/shield/riot,
 					/obj/item/shield/riot)
 	crate_name = "riot shields crate"
+
+/datum/supply_pack/security/armory/riotshotguns
+	name = "Riot Shotgun Crate"
+	desc = "For when the greytide gets really uppity. Contains three riot Shotguns. Requires Armory access to open."
+	cost = 6000
+	contains = list(/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/gun/ballistic/shotgun/riot)
+	crate_name = "riot shotgun crate"
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
@@ -2182,6 +2192,55 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/captain_pen
+	name = "Captain Pen"
+	desc = "A spare Captaun fountain pen."
+	access = ACCESS_CAPTAIN
+	cost = 25000
+	contains = list(/obj/item/pen/fountain/captain)
+	crate_name = "captain pen"
+	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
+
+/datum/supply_pack/misc/captain_headset
+	name = "Captain Headset Key"
+	desc = "A spare Captain headset key, just in case The Captain ''lost'' it again." 
+	access = ACCESS_CAPTAIN
+	cost = 20000
+	contains = list(/obj/item/encryptionkey/heads/captain)
+	crate_name = "captain headset key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/misc/cargo_headsets
+	name = "Cargo Headset Keys"
+	desc = "Five Headset Keys for Cargo Techs. To help yell at miners for more plasma to sell."
+	access = ACCESS_CARGO
+	cost = 2500
+	contains = list(/obj/item/encryptionkey/headset_cargo,
+					/obj/item/encryptionkey/headset_cargo,
+					/obj/item/encryptionkey/headset_cargo,
+					/obj/item/encryptionkey/headset_cargo,
+					/obj/item/encryptionkey/headset_cargo)
+	crate_name = "cargo headset keys"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/misc/ce_headset
+	name = "Chief Engineer Headset Key"
+	desc = "A spare CE headset key. For when the CE throws there key into the SM again."
+	access = ACCESS_CE
+	cost = 10000
+	contains = list(/obj/item/encryptionkey/heads/ce)
+	crate_name = "chief engineer headset key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/misc/cmo_headset
+	name = "Chief Medical Officer Headset Key"
+	desc = "A spare CMO headset key, For when the CMO's headset gets stollen well they do Genetics."
+	access = ACCESS_CMO
+	cost = 10000
+	contains = list(/obj/item/encryptionkey/heads/cmo)
+	crate_name = "chief medical officer headset key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2251,6 +2310,19 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
 
+/datum/supply_pack/misc/eng_headsets
+	name = "Engineering Headset Keys"
+	desc = "Five Headset Keys for Station Engineer. For the SM Alarm to yell into well people lick it."
+	access = ACCESS_ENGINE_EQUIP
+	cost = 2500
+	contains = list(/obj/item/encryptionkey/headset_eng,
+					/obj/item/encryptionkey/headset_eng,
+					/obj/item/encryptionkey/headset_eng,
+					/obj/item/encryptionkey/headset_eng,
+					/obj/item/encryptionkey/headset_eng)
+	crate_name = "engineering headset keys"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+
 /datum/supply_pack/misc/wrapping_paper
 	name = "Festive Wrapping Paper Crate"
 	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, the Clown's severed head? You can do all that, with this crate full of wrapping paper."
@@ -2271,6 +2343,72 @@
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
+/datum/supply_pack/misc/hos_headset
+	name = "Head Of Security Headset Key"
+	desc = "A spare HOS headset key, For when the HOS's headset is being used by a Changling."
+	access = ACCESS_HOS
+	cost = 10000
+	contains = list(/obj/item/encryptionkey/heads/hos)
+	crate_name = "head of security headset key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/misc/hop_headset
+	name = "Head Of Personnel Headset Key"
+	desc = "A spare HOP headset key, For when the HOP's headset is being used by a Traitor."
+	access = ACCESS_HOP
+	cost = 10000
+	contains = list(/obj/item/encryptionkey/heads/hop)
+	crate_name = "head of personnel headset key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/misc/medical_headsets
+	name = "Medical Headset Keys"
+	desc = "Five Headset Keys for Medical. To hear Medibot save dieing people or to yell at genetics to clone some one."
+	access = ACCESS_MEDICAL
+	cost = 2500
+	contains = list(/obj/item/encryptionkey/headset_med,
+					/obj/item/encryptionkey/headset_med,
+					/obj/item/encryptionkey/headset_med,
+					/obj/item/encryptionkey/headset_med,
+					/obj/item/encryptionkey/headset_med)
+	crate_name = "medical headset keys"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/misc/medsci_headsets
+	name = "Med Sci Headset Keys"
+	desc = "Three Headset Keys for ''Genetics''. To be yelled at for not cloning somone just to be yelled at for cloning them! Also get yelled at for being in sci, well having access."
+	access =  ACCESS_GENETICS
+	cost = 7500
+	contains = list(
+					/obj/item/encryptionkey/headset_medsci,
+					/obj/item/encryptionkey/headset_medsci,
+					/obj/item/encryptionkey/headset_medsci)
+	crate_name = "med sci headset keys"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/misc/miner_headsets
+	name = "Miner Headset Keys"
+	desc = "Three Headset Keys for Miners. To hear Cargo and Sci yell at you for mats."
+	access = ACCESS_MINING
+	cost = 5000 //You can buy three miner starter kits and get this +  all those goodies
+	contains = list(
+					/obj/item/encryptionkey/headset_mining,
+					/obj/item/encryptionkey/headset_mining,
+					/obj/item/encryptionkey/headset_mining)
+	crate_name = "miner headset keys"
+	crate_type = /obj/structure/closet/crate/secure
+
+/*Todo Add in a QM headset
+/datum/supply_pack/misc/qm_headser
+	name = "QM, Headset Key"
+	desc = "A spare QM headset key, To yell at Miners and Command for things to sell."
+	access = ACCESS_QM
+	cost = 10000
+	contains = list()
+	crate_name = "QM Headset Key"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+*/
+
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
@@ -2283,6 +2421,31 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/sci_headsets
+	name = "Sci Headset Keys"
+	desc = "Five Headset Keys for Sci. To yell at miners to get mats, then to yell at genetics for powers."
+	access = ACCESS_TOX //So no robotics open it
+	cost = 2500
+	contains = list(/obj/item/encryptionkey/headset_sci,
+					/obj/item/encryptionkey/headset_sci,
+					/obj/item/encryptionkey/headset_sci,
+					/obj/item/encryptionkey/headset_sci,
+					/obj/item/encryptionkey/headset_sci)
+	crate_name = "sci headset keys"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/misc/service_headsets
+	name = "Service Headset Keys"
+	desc = "Five Headset Keys for Service crewmembers to never use"
+	cost = 700 // No one uses them
+	contains = list(/obj/item/encryptionkey/headset_service,
+					/obj/item/encryptionkey/headset_service,
+					/obj/item/encryptionkey/headset_service,
+					/obj/item/encryptionkey/headset_service,
+					/obj/item/encryptionkey/headset_service)
+	crate_name = "never used headset keys" // There basically surpluses
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
