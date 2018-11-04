@@ -1639,7 +1639,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod, only_robotic = FALSE, only_organic = FALSE) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod), only_robotic = FALSE, only_organic = FALSE))
 					H.update_stamina()
 			else
 				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
