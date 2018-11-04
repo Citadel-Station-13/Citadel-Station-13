@@ -1572,7 +1572,7 @@
 					/obj/item/trash/plate,
 					/obj/item/reagent_containers/food/drinks/drinkingglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass.
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
@@ -2479,8 +2479,8 @@ datum/supply_pack/misc/lewd
 	desc = "Psss want to have a good time with your sluts? Well I got what you want maid clothing, dildos, collars and more!"
 	cost = 5000
 	contraband = TRUE
-	contains = list(obj/item/dildo,
-					obj/item/dildo,
+	contains = list(/obj/item/dildo/custom,
+					/obj/item/dildo/custom,
 					/obj/item/vending_refill/kink,
 					/obj/item/vending_refill/kink,
 					/obj/item/clothing/under/maid,
@@ -2489,6 +2489,8 @@ datum/supply_pack/misc/lewd
 					/obj/item/electropack/shockcollar,
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/restraints/handcuffs/fake/kinky,
+					/obj/item/clothing/head/kitty/genuine, // Why its illegal
+					/obj/item/clothing/head/kitty/genuine,
 					/obj/structure/reagent_dispensers/keg/aphro)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
