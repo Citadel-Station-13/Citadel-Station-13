@@ -1551,6 +1551,33 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! Form a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 25000
+	contraband = TRUE 
+	contains = list(/obj/item/sharpener,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin, //Deluxe for a reason
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass.
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
+	dangerous = TRUE //We want Admins to know of this
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, a enzyme and sugar bottle, and three slabs of monkeymeat."
@@ -2452,8 +2479,8 @@ datum/supply_pack/misc/lewd
 	desc = "Psss want to have a good time with your sluts? Well I got what you want maid clothing, dildos, collars and more!"
 	cost = 5000
 	contraband = TRUE
-	contains = list(obj/item/dildo/custom,
-					obj/item/dildo/custom,
+	contains = list(obj/item/dildo,
+					obj/item/dildo,
 					/obj/item/vending_refill/kink,
 					/obj/item/vending_refill/kink,
 					/obj/item/clothing/under/maid,
