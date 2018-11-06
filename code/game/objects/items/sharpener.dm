@@ -24,6 +24,9 @@
 	if(istype(I, /obj/item/melee/transforming/energy))
 		to_chat(user, "<span class='warning'>You don't think \the [I] will be the thing getting modified if you use it on \the [src]!</span>")
 		return
+	if(istype(I, /obj/item/dogborg/jaws)) // Should not work on Combat Jaws!
+		to_chat(user, "<span class='warning'>Your teeth cant be sharpened with the whetstone!</span>")
+		return
 	if(istype(I, /obj/item/twohanded))//some twohanded items should still be sharpenable, but handle force differently. therefore i need this stuff
 		var/obj/item/twohanded/TH = I
 		if(TH.force_wielded >= max)
