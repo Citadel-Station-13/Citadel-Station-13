@@ -2890,7 +2890,6 @@
 #include "modular_citadel\code\modules\food_and_drinks\snacks\meat.dm"
 #include "modular_citadel\code\modules\integrated_electronics\subtypes\manipulation.dm"
 #include "modular_citadel\code\modules\jobs\dresscode_values.dm"
-#include "modular_citadel\code\modules\jobs\jobs.dm"
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
 #include "modular_citadel\code\modules\jobs\job_types\cargo_service.dm"
 #include "modular_citadel\code\modules\jobs\job_types\engineering.dm"
