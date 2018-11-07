@@ -414,6 +414,7 @@
 
 /datum/sprite_accessory/mam_ears/none
 	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/mam_tails
 	extra = TRUE
@@ -424,6 +425,7 @@
 
 /datum/sprite_accessory/mam_tails/none
 	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/mam_tails_animated
 	extra = TRUE
@@ -434,6 +436,7 @@
 
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/snouts
 
