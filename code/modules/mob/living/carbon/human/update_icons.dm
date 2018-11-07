@@ -374,20 +374,22 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
-
-		if(S.mutantrace_variation)
-			if(S.adjusted == ALT_STYLE)
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
-			else
+				
+		if(S.mutantrace_variation) //All suits unless otherwise noted are snowflake'd, so let's ensure they're getting the override. 
+			if(S.tauric) //Are we a suit with tauric mode possible?
+				if(S.taurmode == SNEK_TAURIC)
+					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
+				if(S.taurmode == PAW_TAURIC)
+					S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
+				if(S.taurmode == NOT_TAURIC)
+					S.alternate_worn_icon = null
+			else //let's clear the icon override just in case.
 				S.alternate_worn_icon = null
-
-		if(S.tauric == TRUE)
-			if(S.taurmode == SNEK_TAURIC)
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_naga.dmi'
-			if(S.taurmode == PAW_TAURIC)
-				S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_canine.dmi'
-		//	if(S.taurmode == HOOF_TAURIC) //commenting out for eventual pede/spider/exotics
-		//		S.alternate_worn_icon = 'modular_citadel/icons/mob/taur_hooved.dmi'
+				
+			if(S.adjusted == ALT_STYLE) //Do we have Digitigrade legs?
+				S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'	
+			else //We don't have anything special, but let's clear the icon again just in case.
+				S.alternate_worn_icon = null
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
