@@ -2237,19 +2237,6 @@
 	crate_name = "captain headset key"
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-/datum/supply_pack/misc/cargo_headsets
-	name = "Cargo Headset Keys"
-	desc = "Five Headset Keys for Cargo Techs. To help yell at miners for more plasma to sell."
-	access = ACCESS_CARGO
-	cost = 2500
-	contains = list(/obj/item/encryptionkey/headset_cargo,
-					/obj/item/encryptionkey/headset_cargo,
-					/obj/item/encryptionkey/headset_cargo,
-					/obj/item/encryptionkey/headset_cargo,
-					/obj/item/encryptionkey/headset_cargo)
-	crate_name = "cargo headset keys"
-	crate_type = /obj/structure/closet/crate/secure
-
 /datum/supply_pack/misc/ce_headset
 	name = "Chief Engineer Headset Key"
 	desc = "A spare CE headset key. For when the CE throws there key into the SM again."
@@ -2337,19 +2324,6 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
 
-/datum/supply_pack/misc/eng_headsets
-	name = "Engineering Headset Keys"
-	desc = "Five Headset Keys for Station Engineer. For the SM Alarm to yell into well people lick it."
-	access = ACCESS_ENGINE_EQUIP
-	cost = 2500
-	contains = list(/obj/item/encryptionkey/headset_eng,
-					/obj/item/encryptionkey/headset_eng,
-					/obj/item/encryptionkey/headset_eng,
-					/obj/item/encryptionkey/headset_eng,
-					/obj/item/encryptionkey/headset_eng)
-	crate_name = "engineering headset keys"
-	crate_type = /obj/structure/closet/crate/secure/engineering
-
 /datum/supply_pack/misc/wrapping_paper
 	name = "Festive Wrapping Paper Crate"
 	desc = "Want to mail your loved ones gift-wrapped chocolates, stuffed animals, the Clown's severed head? You can do all that, with this crate full of wrapping paper."
@@ -2388,19 +2362,6 @@
 	crate_name = "head of personnel headset key"
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-/datum/supply_pack/misc/medical_headsets
-	name = "Medical Headset Keys"
-	desc = "Five Headset Keys for Medical. To hear Medibot save dieing people or to yell at genetics to clone some one."
-	access = ACCESS_MEDICAL
-	cost = 2500
-	contains = list(/obj/item/encryptionkey/headset_med,
-					/obj/item/encryptionkey/headset_med,
-					/obj/item/encryptionkey/headset_med,
-					/obj/item/encryptionkey/headset_med,
-					/obj/item/encryptionkey/headset_med)
-	crate_name = "medical headset keys"
-	crate_type = /obj/structure/closet/crate/secure
-
 /datum/supply_pack/misc/medsci_headsets
 	name = "Med Sci Headset Keys"
 	desc = "Three Headset Keys for ''Genetics''. To be yelled at for not cloning somone just to be yelled at for cloning them! Also get yelled at for being in sci, well having access."
@@ -2411,18 +2372,6 @@
 					/obj/item/encryptionkey/headset_medsci,
 					/obj/item/encryptionkey/headset_medsci)
 	crate_name = "med sci headset keys"
-	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/misc/miner_headsets
-	name = "Miner Headset Keys"
-	desc = "Three Headset Keys for Miners. To hear Cargo and Sci yell at you for mats."
-	access = ACCESS_MINING
-	cost = 5000 //You can buy three miner starter kits and get this +  all those goodies
-	contains = list(
-					/obj/item/encryptionkey/headset_mining,
-					/obj/item/encryptionkey/headset_mining,
-					/obj/item/encryptionkey/headset_mining)
-	crate_name = "miner headset keys"
 	crate_type = /obj/structure/closet/crate/secure
 
 /*Todo Add in a QM headset
@@ -2448,31 +2397,6 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
-
-/datum/supply_pack/misc/sci_headsets
-	name = "Sci Headset Keys"
-	desc = "Five Headset Keys for Sci. To yell at miners to get mats, then to yell at genetics for powers."
-	access = ACCESS_TOX //So no robotics open it
-	cost = 2500
-	contains = list(/obj/item/encryptionkey/headset_sci,
-					/obj/item/encryptionkey/headset_sci,
-					/obj/item/encryptionkey/headset_sci,
-					/obj/item/encryptionkey/headset_sci,
-					/obj/item/encryptionkey/headset_sci)
-	crate_name = "sci headset keys"
-	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/misc/service_headsets
-	name = "Service Headset Keys"
-	desc = "Five Headset Keys for Service crewmembers to never use"
-	cost = 700 // No one uses them
-	contains = list(/obj/item/encryptionkey/headset_service,
-					/obj/item/encryptionkey/headset_service,
-					/obj/item/encryptionkey/headset_service,
-					/obj/item/encryptionkey/headset_service,
-					/obj/item/encryptionkey/headset_service)
-	crate_name = "never used headset keys" // There basically surpluses
-	crate_type = /obj/structure/closet/crate
 
 datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
