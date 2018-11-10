@@ -312,8 +312,9 @@
 	staminas = new /obj/screen/staminas()
 	infodisplay += staminas
 
-	staminabuffer = new /obj/screen/staminabuffer()
-	infodisplay += staminabuffer
+	if(!CONFIG_GET(flag/disable_stambuffer))
+		staminabuffer = new /obj/screen/staminabuffer()
+		infodisplay += staminabuffer
 	//END OF CIT CHANGES
 
 	healthdoll = new /obj/screen/healthdoll()

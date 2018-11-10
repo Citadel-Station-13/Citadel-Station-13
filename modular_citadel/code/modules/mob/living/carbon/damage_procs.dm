@@ -1,6 +1,8 @@
 /mob/living/carbon/adjustStaminaLossBuffered(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
+	if(CONFIG_GET(flag/disable_stambuffer))
+		return
 	var/directstamloss = (bufferedstam + amount) - stambuffer
 	if(directstamloss > 0)
 		adjustStaminaLoss(directstamloss)
