@@ -335,7 +335,7 @@
 /datum/techweb_node/emp_proof
 	id = "emp_proof"
 	display_name = "EMP Proof Cells"
-	description = "Highly advanced cells that are not as affected by EMP, tho can't store as much power as their unprotected counter parts."
+	description = "Highly advanced cells that are not by EMP. Do to this can't store as much power as their unprotected counter parts."
 	prereq_ids = list("emp_adv, adv_plasma, bluespace_power")
 	design_ids = list("high_cell_emp", "super_cell_emp", "hyper_cell_emp", "bluespace_cell_emp")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
