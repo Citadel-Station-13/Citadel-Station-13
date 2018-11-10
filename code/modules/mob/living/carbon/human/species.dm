@@ -1419,6 +1419,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		//var/randomized_zone = ran_zone(user.zone_selected) CIT CHANGE - comments out to prevent compiling errors
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		if(target.pulling == user)
+			target.visible_message("<span class='warning'>[user] wrestles out of [target]'s grip!</span>")
+			target.stop_pulling()
+			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			log_combat(user, target, "disarmed out of grab from")
+			return
 		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone) CIT CHANGE - comments this out to prevent compile errors due to the below commented out bit
 		var/randn = rand(1, 100)
 		/*if(randn <= 25) CITADEL CHANGE - moves disarm push attempts to right click
