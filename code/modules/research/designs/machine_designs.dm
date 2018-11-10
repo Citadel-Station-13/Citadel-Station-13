@@ -159,7 +159,7 @@
 	desc = "The circuit board for a portable chem dispenser."
 	id = "chem_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SERVICE
 	category = list ("Medical Machinery")
 
 /datum/design/board/chem_master
