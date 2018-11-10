@@ -129,7 +129,7 @@ Contains:
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "royal tricorne"
-	desc = "A tricorne form the Space Queen herself, that is space proof as well as made with padded armor."
+	desc = "A tricorne form the Honorable Space Queen herself, that is space proof as well as made with padded armor."
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
