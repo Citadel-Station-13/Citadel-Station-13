@@ -2235,24 +2235,6 @@
 	crate_name = "captain headset key"
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-/datum/supply_pack/misc/ce_headset
-	name = "Chief Engineer Headset Key"
-	desc = "A spare CE headset key. For when the CE throws there key into the SM again."
-	access = ACCESS_CE
-	cost = 7500
-	contains = list(/obj/item/encryptionkey/heads/ce)
-	crate_name = "chief engineer headset key"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
-/datum/supply_pack/misc/cmo_headset
-	name = "Chief Medical Officer Headset Key"
-	desc = "A spare CMO headset key, For when the CMO's headset gets stollen well they do Genetics."
-	access = ACCESS_CMO
-	cost = 7500
-	contains = list(/obj/item/encryptionkey/heads/cmo)
-	crate_name = "chief medical officer headset key"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2342,24 +2324,6 @@
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
-/datum/supply_pack/misc/hos_headset
-	name = "Head Of Security Headset Key"
-	desc = "A spare HOS headset key, For when the HOS's headset is being used by a Changling."
-	access = ACCESS_HOS
-	cost = 7500
-	contains = list(/obj/item/encryptionkey/heads/hos)
-	crate_name = "head of security headset key"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
-/datum/supply_pack/misc/hop_headset
-	name = "Head Of Personnel Headset Key"
-	desc = "A spare HOP headset key, For when the HOP's headset is being used by a Traitor."
-	access = ACCESS_HOP
-	cost = 7500
-	contains = list(/obj/item/encryptionkey/heads/hop)
-	crate_name = "head of personnel headset key"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
 /datum/supply_pack/misc/medsci_headsets
 	name = "Med Sci Headset Keys"
 	desc = "Three Headset Keys for ''Genetics''. To be yelled at for not cloning somone just to be yelled at for cloning them! Also get yelled at for being in sci, well having access."
@@ -2414,6 +2378,18 @@
 	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/misc/head_keys
+	name = "Head Of Staft Headset Keys"
+	desc = "A spare set of keys for heads of staft."
+	access = ACCESS_CAPTAIN
+	cost = 15000
+	contains = list(/obj/item/encryptionkey/heads/hos,
+					/obj/item/encryptionkey/heads/hop,
+					/obj/item/encryptionkey/heads/cmo,
+					/obj/item/encryptionkey/heads/ce)
+	crate_name = "Headset Keys"
+	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
