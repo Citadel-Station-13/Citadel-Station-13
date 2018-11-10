@@ -47,9 +47,12 @@
 				center = TRUE
 				dimension_x = 64
 			*/
-			else
-				taurmode = NOT_TAURIC
-			H.update_inv_wear_suit()
+		else
+			taurmode = NOT_TAURIC
+			if(tauric == TRUE)
+				center = FALSE
+				dimension_x = 32
+		H.update_inv_wear_suit()
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
