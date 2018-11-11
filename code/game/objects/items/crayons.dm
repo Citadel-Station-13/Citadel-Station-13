@@ -426,7 +426,7 @@
 	icon_state = "crayonblack"
 	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
 	item_color = "black"
-	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1)
+	reagent_contents = list("nutriment" = 1, "blackcrayonpowder" = 1, "pwrgame" = 50)
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
