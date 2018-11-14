@@ -197,6 +197,8 @@
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola
+		/obj/item/assembly/flash/flash
+		/obj/item/assembly/flash
 		))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -343,7 +345,7 @@
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/drinks
 		))
-	
+
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
