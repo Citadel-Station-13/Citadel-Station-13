@@ -461,7 +461,7 @@
 				dat += " [a.title]. </div>"
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
-	dat += "<small>(G) - Off-station Ghost Role</small><br>"
+	dat += "<small>(G) - Ghost Role</small><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
