@@ -18,11 +18,10 @@
 	var/y_offset = 0
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = -1 //to make default parts have the base value
+	var/E = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
-	range = initial(range)
-	range += E
+		E += M.rating*15
+	range = E
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
@@ -148,7 +147,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	teleport_speed = 20
-	range = 8
+	range = 20
 	stationary = FALSE
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
