@@ -29,7 +29,7 @@
 		return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
+	usr:adjustStaminaLoss(length(message)/10)
 	usr.emote("me",1,message,TRUE)
 
 /mob/proc/say_dead(var/message)
