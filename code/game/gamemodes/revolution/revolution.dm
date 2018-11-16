@@ -62,7 +62,7 @@
 		setup_error = "Not enough headrev candidates"
 		return FALSE
 
-	completioncheckstart = world.time + 20 MINUTES
+	completioncheckstart = world.time + 10 MINUTES
 
 	return TRUE
 
