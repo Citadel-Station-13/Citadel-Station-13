@@ -16,6 +16,7 @@
 
 	mob_type = /mob/living/simple_animal/hostile/swarmer
 	mob_name = "a swarmer"
+	job_description = "Swarmer"
 	death = FALSE
 	roundstart = FALSE
 	flavour_text = {"
