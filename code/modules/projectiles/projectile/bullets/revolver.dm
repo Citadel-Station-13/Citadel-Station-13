@@ -13,8 +13,8 @@
 // .38 (Detective's Gun)
 
 /obj/item/projectile/bullet/c38
-	name = ".38 bullet" 
-	stamina = 35 //Rubber shot. If Dect wants to lethal he can rifle his barrle for .a357
+	name = ".38 bullet"
+	stamina = 35 //Rubber shot. If Dect wants to lethal he can rifle his barrel for .a357
 
 // .357 (Syndie Revolver)
 
