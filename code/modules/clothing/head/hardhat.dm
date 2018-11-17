@@ -4,6 +4,8 @@
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 	var/brightness_on = 4 //luminosity when on
+	light_color = "#FFCC66"
+	var/power_on = 0.8
 	var/on = FALSE
 	item_color = "yellow" //Determines used sprites: hardhat[on]_[item_color] and hardhat[on]_[item_color]2 (lying down sprite)
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 20,"energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
@@ -29,7 +31,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
-	set_light(brightness_on)
+	set_light(brightness_on, power_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
 	set_light(0)
