@@ -160,8 +160,14 @@ SUBSYSTEM_DEF(vote)
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
 				voted += usr.ckey
+				voted[usr.ckey] = vote
 				choices[choices[vote]]++	//check this
 				return vote
+		else if(vote && 1<=vote && vote<=choices.len)
+			choices[choices[voted[usr.ckey]]]--
+			voted[usr.ckey] = vote
+			choices[choices[vote]]++
+			return vote
 	return 0
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
@@ -241,9 +247,10 @@ SUBSYSTEM_DEF(vote)
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
+			var/ivotedforthis = ((C.ckey in voted) && (voted[C.ckey] == i) ? TRUE : FALSE)
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)</li>" // CIT CHANGE - adds obfuscated votes
+			. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
