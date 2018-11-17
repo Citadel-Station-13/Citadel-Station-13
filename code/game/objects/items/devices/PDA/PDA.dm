@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/Initialize()
 	. = ..()
 	if(fon)
-		set_light(f_lum, f_pow, flash_color)
+		set_light(f_lum, f_pow, f_col)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
@@ -741,7 +741,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		set_light(0)
 	else if(f_lum)
 		fon = TRUE
-		set_light(f_lum, f_pow, f_color)
+		set_light(f_lum, f_pow, f_col)
 	update_icon()
 
 /obj/item/pda/proc/remove_pen()
