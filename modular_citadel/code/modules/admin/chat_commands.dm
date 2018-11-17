@@ -10,7 +10,7 @@
 	return "[saltresult]!"
 
 /datum/tgs_chat_command/despacito
-	name = "play despacito"			//someone please high effort this sometime and make it a full on ytdl search
+	name = "despacito"			//someone please high effort this sometime and make it a full on ytdl search
 	help_text = "This is so sad."
 
 /datum/tgs_chat_command/despacito/Run()
