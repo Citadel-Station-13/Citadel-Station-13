@@ -1,5 +1,5 @@
 /obj/item/projectile/hivebotbullet
-	damage = 10
+	damage = 15
 	damage_type = BRUTE
 
 /mob/living/simple_animal/hostile/hivebot
@@ -11,11 +11,11 @@
 	icon_dead = "basic"
 	gender = NEUTER
 	mob_biotypes = list(MOB_ROBOTIC)
-	health = 40
-	maxHealth = 40
+	health = 50
+	maxHealth = 50
 	healable = 0
-	melee_damage_lower = 8
-	melee_damage_upper = 8
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "saw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	projectilesound = 'sound/weapons/gunshot.ogg'
@@ -61,8 +61,8 @@
 	icon_living = "EngBot"
 	icon_dead = "EngBot"
 	desc = "A strange engineering robot that does not seem pleased to meet you."
-	health = 60
-	maxHealth = 60
+	health = 75
+	maxHealth = 75
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "elite hivebot"
@@ -70,8 +70,8 @@
 	icon_living = "strong"
 	icon_dead = "strong"
 	desc = "A heavily armed and armored robot that does not seem pleased to meet you."
-	health = 95
-	maxHealth = 95
+	health = 100
+	maxHealth = 100
 	ranged = 1
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
