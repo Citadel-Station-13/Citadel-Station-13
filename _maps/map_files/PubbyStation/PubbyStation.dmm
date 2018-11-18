@@ -40048,7 +40048,7 @@
 	dir = 6
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/science/mixing)
 "bNr" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -40485,7 +40485,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/science/mixing)
 "bOv" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -53404,7 +53404,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/engine/engineering)
 "dSr" = (
 /obj/item/chair,
 /turf/open/floor/wood,
@@ -58146,7 +58146,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/engine/engineering)
 "pbm" = (
 /obj/machinery/door/airlock/external{
 	name = "Pod Docking Bay"
