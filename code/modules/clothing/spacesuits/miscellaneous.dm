@@ -129,7 +129,7 @@ Contains:
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
 	name = "royal tricorne"
-	desc = "A tricorne form the Honorable Space Queen herself, that is space proof as well as made with padded armor."
+	desc = "A thick, space-proof tricorne from the royal Space Queen. It's lined with a layer of reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
@@ -140,13 +140,13 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	name = "royal bandana"
-	desc = "A special bandana that is space proof as well as made with padded armor."
+	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
 
 /obj/item/clothing/suit/space/pirate
 	name = "royal waistcoat "
-	desc = "A royal waistcoat made to be spaceproof as well as padded with armor."
+	desc = "A royal, space-proof waistcoat. The inside of it is lined with reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = WEIGHT_CLASS_NORMAL
