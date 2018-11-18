@@ -128,8 +128,8 @@ Contains:
 
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
+	name = "royal tricorne"
+	desc = "A thick, space-proof tricorne from the royal Space Queen. It's lined with a layer of reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
@@ -139,13 +139,14 @@ Contains:
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	name = "pirate bandana"
+	name = "royal bandana"
+	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
 
 /obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
+	name = "royal waistcoat "
+	desc = "A royal, space-proof waistcoat. The inside of it is lined with reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = WEIGHT_CLASS_NORMAL
