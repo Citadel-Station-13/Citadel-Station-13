@@ -2219,7 +2219,7 @@
 
 /datum/supply_pack/misc/captain_pen
 	name = "Captain Pen"
-	desc = "A spare Captaun fountain pen."
+	desc = "A spare Captain fountain pen."
 	access = ACCESS_CAPTAIN
 	cost = 10000
 	contains = list(/obj/item/pen/fountain/captain)
