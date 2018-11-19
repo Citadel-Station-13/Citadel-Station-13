@@ -69,13 +69,13 @@
 		/obj/item/clothing/head/stalhelm = 20,
 		/obj/item/clothing/head/panzer = 20,
 		/obj/item/clothing/suit/soldiercoat = 20,
-		/obj/item/clothing/under/soldieruniform = 20,
+	//	/obj/item/clothing/under/soldieruniform = 20,
 		/obj/item/clothing/shoes/jackboots = 20
 		)
 	contraband = list(
 		/obj/item/clothing/head/naziofficer = 10,
-		/obj/item/clothing/suit/officercoat = 10,
-		/obj/item/clothing/under/officeruniform = 10,
+	//	/obj/item/clothing/suit/officercoat = 10,
+	//	/obj/item/clothing/under/officeruniform = 10,
 		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
 		/obj/item/gun/energy/plasma/MP40k = 4
 		)
