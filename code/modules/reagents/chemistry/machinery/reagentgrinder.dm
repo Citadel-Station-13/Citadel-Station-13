@@ -301,7 +301,7 @@
 	operate_for(50, juicing = TRUE)
 	addtimer(CALLBACK(src, /obj/machinery/reagentgrinder/proc/mix_complete), 50)
 
-/obj/machinery/reagentgrinder/proc/mix_complete() //what the fuck. why the fuck are mixed recipes hardcoded. seriously what in the actual shit. i mean its out of scope for my pr but hot damn
+/obj/machinery/reagentgrinder/proc/mix_complete()
 	if(beaker && beaker.reagents.total_volume)
 		//Recipe to make Butter
 		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
