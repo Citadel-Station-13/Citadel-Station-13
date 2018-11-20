@@ -574,6 +574,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(NOGENITALS in pref_species.species_traits)
 				dat += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
 			else
+				if(pref_species.use_skintones)
+					dat += "<b>Genitals use skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_cock"] == TRUE)
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
