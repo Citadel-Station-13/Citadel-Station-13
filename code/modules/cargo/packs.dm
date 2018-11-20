@@ -1552,7 +1552,7 @@
 
 /datum/supply_pack/organic/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! Form a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
 	contraband = TRUE 
 	contains = list(/obj/item/sharpener,
@@ -2326,7 +2326,7 @@
 
 /datum/supply_pack/misc/medsci_headsets
 	name = "Med Sci Headset Keys"
-	desc = "Three Headset Keys for ''Genetics''. To be yelled at for not cloning somone just to be yelled at for cloning them! Also get yelled at for being in sci, well having access."
+	desc = "Three Headset Keys for 'Genetics'. To be yelled at for not cloning someone, only to be yelled at again for cloning them! Also get yelled at for being in sci, or at least having access."
 	access =  ACCESS_GENETICS
 	cost = 5000
 	contains = list(
@@ -2380,8 +2380,8 @@
 	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/misc/head_keys
-	name = "Head Of Staft Headset Keys"
-	desc = "A spare set of keys for heads of staft."
+	name = "Head Of Staff Headset Keys"
+	desc = "A spare set of keys for heads of staff."
 	access = ACCESS_CAPTAIN
 	cost = 15000
 	contains = list(/obj/item/encryptionkey/heads/hos,
