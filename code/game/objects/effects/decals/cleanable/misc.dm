@@ -77,7 +77,7 @@
 
 /obj/effect/decal/cleanable/greenglow/Initialize(mapload)
 	. = ..()
-	set_light(1)
+	set_light(2, 0.8, "#22FFAA")
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
