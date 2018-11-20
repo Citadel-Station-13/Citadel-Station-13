@@ -139,6 +139,12 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("map")
+				var/datum/map_config/VM = config.maplist[.]
+				message_admins("The map has been voted for and will change to: [VM.map_name]")
+				log_admin("The map has been voted for and will change to: [VM.map_name]")
+				if(SSmapping.changemap(config.maplist[.]))
+					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -194,6 +200,10 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("map")
+				choices.Add(config.maplist)
+				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
+					choices[i] = 0
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("custom")
