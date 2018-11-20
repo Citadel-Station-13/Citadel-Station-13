@@ -158,7 +158,7 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
-			else if(isrobot(user))
+			else if(iscyborg(user))
 				logname = "Cyborg: [user.name]"
 			else if(isliving(user))
 				var/mob/living/L = user
