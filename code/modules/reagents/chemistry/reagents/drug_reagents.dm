@@ -355,3 +355,75 @@
 		M.adjustOxyLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/drug/skooma
+	name = "Skooma"
+	id = "skooma"
+	description = "An ancient, highly-addictive drug of long-forgotten times. It greatly improves the user's speed and strength, but heavily impedes their intelligence and agility."
+	reagent_state = LIQUID
+	color = "#F3E0F9"
+	taste_description = "ancient, unfulfilled prophecies"
+	addiction_threshold = 1
+	addiction_stage3_end = 40
+	addiction_stage4_end = 240
+
+/datum/reagent/drug/skooma/on_mob_add(mob/living/L)
+	. = ..()
+	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.next_move_modifier *= 2
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.physiology)
+			H.physiology.stamina_mod *= 0.5
+		if(H.dna && H.dna.species)
+			H.dna.species.punchdamagehigh *= 5
+
+/datum/reagent/drug/skooma/on_mob_delete(mob/living/L)
+	. = ..()
+	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.next_move_modifier *= 0.5
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.physiology)
+			H.physiology.stamina_mod *= 2
+		if(H.dna && H.dna.species)
+			H.dna.species.punchdamagehigh *= 0.2
+
+/datum/reagent/drug/skooma/on_mob_life(mob/living/carbon/M)
+	M.adjustBrainLoss(1*REM)
+	M.adjustToxLoss(1*REM)
+	if(prob(10))
+		M.adjust_blurriness(2)
+	..()
+	. = 1
+
+/datum/reagent/drug/skooma/addiction_act_stage1(mob/living/M)
+	M.Jitter(10)
+	if(prob(50))
+		M.adjust_blurriness(2)
+	..()
+
+/datum/reagent/drug/skooma/addiction_act_stage2(mob/living/M)
+	M.Jitter(20)
+	M.Dizzy(10)
+	M.adjust_blurriness(2)
+	..()
+
+/datum/reagent/drug/skooma/addiction_act_stage3(mob/living/M)
+	M.Jitter(50)
+	M.Dizzy(20)
+	M.adjust_blurriness(4)
+	if(prob(20))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+
+/datum/reagent/drug/skooma/addiction_act_stage4(mob/living/M)
+	M.Jitter(50)
+	M.Dizzy(50)
+	M.adjust_blurriness(10)
+	if(prob(50)) //This proc will be called about 200 times and the adjustbrainloss() below only has to be called 40 times to kill. This will make surviving skooma addiction pretty rare without mannitol usage.
+		M.adjustBrainLoss(5)
+	if(prob(40))
+		M.emote(pick("twitch","drool","moan"))
+	..()
+
