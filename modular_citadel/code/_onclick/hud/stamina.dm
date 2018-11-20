@@ -11,7 +11,7 @@
 /obj/screen/staminas/Click(location,control,params)
 	if(isliving(usr))
 		var/mob/living/L = usr
-		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss]</b> stamina loss.<br>Your stamina buffer can take <b>[stambuffer]</b> stamina loss, and will use <b>50%</b> of that stamina loss when recharging.<br>Your stamina buffer is <b>[(100/stambuffer)-(bufferedstam*(100/stambuffer))]%</b> full.</span>")
+		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and will use <b>50%</b> of that stamina loss when recharging.<br>Your stamina buffer is <b>[(100/L.stambuffer)-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
 
 /mob/living/carbon/human/proc/staminahudamount()
 	if(stat == DEAD || recoveringstam)
