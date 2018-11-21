@@ -35,7 +35,7 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun
 	name = "\improper Kitchen Gun (TM)"
 	desc = "Say goodbye to dirt with Kitchen Gun (TM)! Laser sight and night vision accessories sold separately."
-	icon_state = "kitchengun"
+	icon_state = "m1911"
 	mag_type = /obj/item/ammo_box/magazine/m45/kitchengun
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
