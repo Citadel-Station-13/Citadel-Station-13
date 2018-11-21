@@ -408,6 +408,13 @@
 					/obj/item/clothing/head/helmet/alt)
 	crate_name = "bulletproof helmet crate"
 
+/datum/supply_pack/security/armory/chemimp
+	name = "Chemical Implants Crate"
+	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
+	cost = 2000
+	contains = list(/obj/item/storage/box/chemimp)
+	crate_name = "chemical implant crate"
+
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
 	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
@@ -438,13 +445,6 @@
 					/obj/item/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-
-/datum/supply_pack/security/armory/chemimp
-	name = "Chemical Implants Crate"
-	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
-	cost = 2000
-	contains = list(/obj/item/storage/box/chemimp)
-	crate_name = "chemical implant crate"
 
 /datum/supply_pack/security/armory/exileimp // Theres boxes in 2 lockers as well as gateway never realy being used sad
 	name = "Exile Implants Crate"
@@ -518,6 +518,15 @@
 					/obj/item/shield/riot,
 					/obj/item/shield/riot)
 	crate_name = "riot shields crate"
+
+/datum/supply_pack/security/armory/riotshotguns
+	name = "Riot Shotgun Crate"
+	desc = "For when the greytide gets really uppity. Contains three riot Shotguns. Requires Armory access to open."
+	cost = 6000
+	contains = list(/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/gun/ballistic/shotgun/riot)
+	crate_name = "riot shotgun crate"
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
@@ -1541,6 +1550,32 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/cutlery
+	name = "Kitchen Cutlery Deluxe Set"
+	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	cost = 10000
+	contraband = TRUE 
+	contains = list(/obj/item/sharpener,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/knife/butcher,
+					/obj/item/kitchen/rollingpin, //Deluxe for a reason
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/trash/plate,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
+	crate_name = "kitchen cutlery deluxe set"
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	desc = "Get things cooking with this crate full of useful ingredients! Contains a two dozen eggs, three bananas, and two bags of flour and rice, two cartons of milk, soymilk, as well as salt and pepper shakers, a enzyme and sugar bottle, and three slabs of monkeymeat."
@@ -2182,6 +2217,15 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/captain_pen
+	name = "Captain Pen"
+	desc = "A spare Captain fountain pen."
+	access = ACCESS_CAPTAIN
+	cost = 10000
+	contains = list(/obj/item/pen/fountain/captain)
+	crate_name = "captain pen"
+	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2283,6 +2327,36 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/lewd
+	name = "Lewd Crate" // OwO
+	desc = "Psss want to have a good time with your sluts? Well I got what you want maid clothing, dildos, collars and more!"
+	cost = 5000
+	contraband = TRUE
+	contains = list(/obj/item/dildo/custom,
+					/obj/item/dildo/custom,
+					/obj/item/vending_refill/kink,
+					/obj/item/vending_refill/kink,
+					/obj/item/clothing/under/maid,
+					/obj/item/clothing/under/maid,
+					/obj/item/electropack/shockcollar,
+					/obj/item/electropack/shockcollar,
+					/obj/item/restraints/handcuffs/fake/kinky,
+					/obj/item/restraints/handcuffs/fake/kinky,
+					/obj/item/clothing/head/kitty/genuine, // Why its illegal
+					/obj/item/clothing/head/kitty/genuine,
+					/obj/structure/reagent_dispensers/keg/aphro)
+	crate_name = "lewd kit"
+	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/misc/lewdkeg
+	name = "Lewd Deluxe Keg" 
+	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
+	cost = 7000 //It can be a weapon
+	contraband = TRUE
+	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
+	crate_name = "deluxe keg"
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
