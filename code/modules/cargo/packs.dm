@@ -2226,15 +2226,6 @@
 	crate_name = "captain pen"
 	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
 
-/datum/supply_pack/misc/captain_headset
-	name = "Captain Headset Key"
-	desc = "A spare Captain headset key, just in case The Captain ''lost'' it again." 
-	access = ACCESS_CAPTAIN
-	cost = 10000
-	contains = list(/obj/item/encryptionkey/heads/captain)
-	crate_name = "captain headset key"
-	crate_type = /obj/structure/closet/crate/secure/weapon
-
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2324,18 +2315,6 @@
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
-/datum/supply_pack/misc/medsci_headsets
-	name = "Med Sci Headset Keys"
-	desc = "Three Headset Keys for 'Genetics'. To be yelled at for not cloning someone, only to be yelled at again for cloning them! Also get yelled at for being in sci, or at least having access."
-	access =  ACCESS_GENETICS
-	cost = 5000
-	contains = list(
-					/obj/item/encryptionkey/headset_medsci,
-					/obj/item/encryptionkey/headset_medsci,
-					/obj/item/encryptionkey/headset_medsci)
-	crate_name = "med sci headset keys"
-	crate_type = /obj/structure/closet/crate/secure
-
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
@@ -2378,18 +2357,6 @@
 	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
-
-/datum/supply_pack/misc/head_keys
-	name = "Head Of Staff Headset Keys"
-	desc = "A spare set of keys for heads of staff."
-	access = ACCESS_CAPTAIN
-	cost = 15000
-	contains = list(/obj/item/encryptionkey/heads/hos,
-					/obj/item/encryptionkey/heads/hop,
-					/obj/item/encryptionkey/heads/cmo,
-					/obj/item/encryptionkey/heads/ce)
-	crate_name = "Headset Keys"
-	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
