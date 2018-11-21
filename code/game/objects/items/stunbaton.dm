@@ -172,8 +172,8 @@
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has whacked [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has whacked you with [src]!</span>")
+		L.visible_message("<span class='danger'>[user] has bapped [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has bapped you with [src]!</span>")
 		log_combat(user, L, "whacked")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
