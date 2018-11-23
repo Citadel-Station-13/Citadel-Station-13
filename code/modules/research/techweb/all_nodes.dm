@@ -140,7 +140,7 @@
 	display_name = "PDA Tech"
 	description = "Data chips to place in PDAs for more functions."
 	prereq_ids = list("datatheory", "telecomms")
-	design_ids = list("cart_eng", "cart_med", "cart_cargo", "cart_sci", "cart_sec", "cart_jan", "cart_cura", "cart_law", "cart_basic")
+	design_ids = list("cart_eng", "cart_med", "cart_sci", "cart_sec", "cart_jan", "cart_cura", "cart_law", "cart_basic")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/adv_pda
@@ -164,7 +164,7 @@
 	display_name = "Headset Keys"
 	description = "Privet channles for people to talk to eacher."
 	prereq_ids = list("adv_engi", "telecomms")
-	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service")
+	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/multy_keys
