@@ -162,7 +162,7 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(L.getStaminaLoss()*stunforce*0.015)
+	L.Knockdown(L.getStaminaLoss()*stunforce*0.015+1)
 	L.adjustStaminaLoss(stunforce*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
