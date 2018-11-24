@@ -1965,6 +1965,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "aes" = (
@@ -3062,7 +3063,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/gun/energy/e_gun/advtaser,
-/obj/item/gun/energy/e_gun/advtaser,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3086,8 +3086,8 @@
 	},
 /obj/item/gun/energy/laser,
 /obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3518,8 +3518,6 @@
 /obj/item/clothing/head/helmet/alt,
 /obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3598,8 +3596,8 @@
 	pixel_y = 3
 	},
 /obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

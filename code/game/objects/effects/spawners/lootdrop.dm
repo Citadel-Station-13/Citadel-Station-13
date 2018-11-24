@@ -33,20 +33,32 @@
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
 	lootdoubles = FALSE
-
+	lootcount = 2
 	loot = list(
-				/obj/item/gun/ballistic/automatic/pistol = 8,
-				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle
+				/obj/item/gun/ballistic/automatic/pistol = 2,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 1,
+				/obj/item/gun/ballistic/automatic/pistol/APS = 1,
+				/obj/item/gun/ballistic/revolver/mateba = 2,
+				/obj/item/gun/ballistic/automatic/pistol/deagle = 4,
+				/obj/item/gun/ballistic/shotgun/boltaction = 4,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 5,
+				/obj/item/gun/ballistic/automatic/toy/pistol/riot = 6,
+				/obj/item/soap/syndie = 8,
+				/obj/item/storage/box/syndie_kit/space = 2,
+				/obj/item/grenade/plastic/c4 = 8,
+				/obj/item/toy/cards/deck/syndicate = 8,
+				/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 8,
+				/obj/item/toy/syndicateballoon = 6
 				)
 
-/obj/effect/spawner/lootdrop/armory_contraband/metastation
-	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
-				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+/obj/effect/spawner/lootdrop/armory
+	name = "armory equipment spawner"
+	loot = list(
+				/obj/item/gun/energy/e_gun/mini = 2,
+				/obj/item/gun/energy/taser = 2,
+				/obj/item/gun/energy/disabler = 2,
+				/obj/item/gun/ballistic/automatic/pistol/m1911 = 1
+				)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"

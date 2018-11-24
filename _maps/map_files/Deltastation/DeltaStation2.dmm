@@ -54796,6 +54796,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "bPB" = (
@@ -55937,10 +55942,6 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/suit/armor/vest{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/clothing/head/helmet{
 	layer = 3.00001;
 	pixel_x = -3;
@@ -55950,11 +55951,6 @@
 	layer = 3.00001;
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet{
-	layer = 3.00001;
-	pixel_x = -3;
-	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -56968,10 +56964,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -56995,13 +56987,17 @@
 	pixel_y = 3
 	},
 /obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
@@ -58551,10 +58547,6 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/obj/item/gun/energy/e_gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
@@ -60471,8 +60463,8 @@
 	pixel_y = 3
 	},
 /obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -60511,6 +60503,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "bXS" = (

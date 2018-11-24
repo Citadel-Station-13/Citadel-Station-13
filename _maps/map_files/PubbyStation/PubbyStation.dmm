@@ -2610,9 +2610,12 @@
 /area/security/armory)
 "aij" = (
 /obj/structure/closet/secure_closet/contraband/armory,
-/obj/item/poster/random_contraband,
 /obj/item/clothing/suit/security/officer/russian,
-/obj/item/grenade/plastic/c4,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "aik" = (
@@ -3012,6 +3015,7 @@
 	dir = 4;
 	pixel_x = -23
 	},
+/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "ajh" = (
@@ -3054,10 +3058,6 @@
 	},
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#e8eaff"
@@ -3395,6 +3395,10 @@
 /obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 3
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/item/gun/energy/laser{
 	pixel_x = 3;
@@ -3860,7 +3864,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/gun/energy/e_gun/advtaser,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "akM" = (

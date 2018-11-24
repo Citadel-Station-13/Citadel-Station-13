@@ -5185,6 +5185,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aiU" = (
@@ -5741,7 +5742,6 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun,
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -5749,6 +5749,11 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
+	pixel_x = 3;
+	pixel_y = -3
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)

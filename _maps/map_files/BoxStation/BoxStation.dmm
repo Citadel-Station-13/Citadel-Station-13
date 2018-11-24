@@ -643,10 +643,6 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -655,19 +651,11 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/shield/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -687,15 +675,6 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001;
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/clothing/head/helmet/alt{
 	layer = 3.00001
 	},
@@ -788,6 +767,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "abR" = (
@@ -1018,6 +998,11 @@
 /area/crew_quarters/heads/hos)
 "acv" = (
 /obj/structure/closet/secure_closet/contraband/armory,
+/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "acw" = (
@@ -1183,10 +1168,6 @@
 	pixel_y = 3
 	},
 /obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/bot{
 	dir = 2
@@ -1408,10 +1389,6 @@
 	pixel_y = 3
 	},
 /obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
@@ -50089,8 +50066,8 @@
 	},
 /obj/item/gun/energy/laser,
 /obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/effect/turf_decal/bot{
 	dir = 2
@@ -50707,14 +50684,6 @@
 	},
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
