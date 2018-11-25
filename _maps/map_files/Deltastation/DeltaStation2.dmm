@@ -56986,10 +56986,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/laser{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/gun/energy/laser,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced{
@@ -60462,10 +60459,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/gun/energy/e_gun{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/gun/energy/e_gun,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
