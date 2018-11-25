@@ -158,18 +158,12 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
-			if(iscarbon(user))
-				var/obj/item/card/id/idcard = user.get_active_held_item()
-				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				var/obj/item/I = H.wear_id
-				if(istype(I))
-					var/obj/item/card/id/ID = I.GetID()
-					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			stored_research.research_logs += "[logname] researched node id [id] with cost [json_encode(price)]."
+			else if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
+			else if(isliving(user))
+				var/mob/living/L = user
+				logname = L.get_visible_name()
+			stored_research.research_logs += "[logname] researched node id [id] with cost [json_encode(price)] at [COORD(src)]."
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
