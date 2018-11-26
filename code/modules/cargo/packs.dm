@@ -95,7 +95,7 @@
 					/obj/item/clothing/head/helmet/space/fragile)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
-	var/DropPodOnly = TRUE
+	DropPodOnly = TRUE
 
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
@@ -304,7 +304,7 @@
 					/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas)
 	crate_name = "sec hardsuit crate"
-	var/DropPodOnly = TRUE
+	DropPodOnly = TRUE
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
@@ -667,7 +667,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
-	var/DropPodOnly = TRUE
+	DropPodOnly = TRUE
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
@@ -1164,7 +1164,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
-	var/DropPodOnly = TRUE
+	DropPodOnly = TRUE
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
