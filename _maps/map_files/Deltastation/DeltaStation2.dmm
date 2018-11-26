@@ -29156,6 +29156,7 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
+/obj/item/reagent_containers/glass/bottle/mutagen,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bbZ" = (
@@ -78869,7 +78870,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cCb" = (
-/obj/structure/closet/wardrobe/green,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -78880,6 +78880,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cCc" = (
@@ -81677,7 +81678,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "cGL" = (
-/obj/machinery/vending/clothing,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81688,6 +81688,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/green,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGM" = (
@@ -81719,6 +81720,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGO" = (
