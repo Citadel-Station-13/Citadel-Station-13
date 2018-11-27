@@ -69,7 +69,7 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 24 // Citadel change for balance from 36
+	damage = 30 // Was 24, and in practice was way too low.
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
