@@ -23,7 +23,7 @@
 		var/bprv = handle_bodyparts()
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			updatehealth()
-			update_stamina()
+	update_stamina()
 
 	if(stat != DEAD)
 		handle_brain_damage()
