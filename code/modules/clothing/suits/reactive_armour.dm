@@ -126,7 +126,7 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
-	reactivearmor_cooldown_duration = 300
+	reactivearmor_cooldown_duration = 75
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -153,7 +153,7 @@
 	name = "reactive tesla armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
 	siemens_coefficient = -1
-	reactivearmor_cooldown_duration = 150
+	reactivearmor_cooldown_duration = 25
 	var/tesla_power = 25000
 	var/tesla_range = 20
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
@@ -187,7 +187,7 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse
 	name = "reactive repulse armor"
-	reactivearmor_cooldown_duration = 200
+	reactivearmor_cooldown_duration = 50
 	desc = "An experimental suit of armor that violently throws back attackers."
 
 /obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -213,7 +213,7 @@
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
-	reactivearmor_cooldown_duration = 500
+	reactivearmor_cooldown_duration = 0
 	desc = "If you can't beat the memes, embrace them."
 	var/tele_range = 10
 
