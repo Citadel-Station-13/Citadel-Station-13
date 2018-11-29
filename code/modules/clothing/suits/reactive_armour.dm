@@ -187,7 +187,7 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse
 	name = "reactive repulse armor"
-	reactivearmor_cooldown_duration = 35
+	reactivearmor_cooldown_duration = 20
 	desc = "An experimental suit of armor that violently throws back attackers."
 
 /obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
