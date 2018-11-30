@@ -84,7 +84,7 @@
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
 	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
-	cost = 2000 
+	cost = 1000 
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
@@ -95,7 +95,6 @@
 					/obj/item/clothing/head/helmet/space/fragile)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
-	DropPodOnly = TRUE
 
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
@@ -299,12 +298,11 @@
 /datum/supply_pack/security/sechardsuit
 	name = "Sec Hardsuit"
 	desc = "One Sec Hardsuit with a small air tank and mask."
-	cost = 1500 // half of SWAT gear for have the armor and half the gear
+	cost = 3000 // half of SWAT gear for have the armor and half the gear
 	contains = list(/obj/item/clothing/suit/space/hardsuit/security,
 					/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas)
 	crate_name = "sec hardsuit crate"
-	DropPodOnly = TRUE
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
@@ -662,12 +660,11 @@
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
 	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and maks!"
-	cost = 1250
+	cost = 2500
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
-	DropPodOnly = TRUE
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
@@ -1159,12 +1156,11 @@
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
 	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers."
-	cost = 1250
+	cost = 2500
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
-	DropPodOnly = TRUE
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
