@@ -36,7 +36,7 @@ icon/MaxColors(icon)
     The icon is blended with a second icon where the maximum of each RGB pixel is the result.
     Opacity may increase, as if the icons were blended with ICON_OR. You may supply a color in place of an icon.
 icon/Opaque(background = "#000000")
-    All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background color you specify.
+    All alpha values are set to 255 throughout the icon. Transparen pixels become black, or whatever background color you specify.
 icon/BecomeAlphaMask()
     You can convert a simple grayscale icon into an alpha mask to use with other icons very easily with this proc.
     The black parts become transparent, the white parts stay white, and anything in between becomes a translucent shade of white.
