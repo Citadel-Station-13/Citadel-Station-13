@@ -1448,6 +1448,8 @@
 	cost = 1000
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
+					/obj/item/stack/tile/carpet/red/fifty,
 					/obj/item/stack/tile/carpet/black/fifty,
 					/obj/item/stack/tile/carpet/black/fifty)
 	crate_name = "premium carpet crate"
