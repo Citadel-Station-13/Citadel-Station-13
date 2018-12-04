@@ -174,7 +174,6 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/clothing/head/welding,
 /obj/structure/closet/crate,
 /obj/item/weldingtool/experimental,
 /obj/item/clothing/head/welding,
@@ -264,7 +263,6 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/obj/item/stack/sheet/leather,
 /obj/item/stack/sheet/leather,
 /obj/item/stack/sheet/leather,
 /obj/item/stack/sheet/leather,
@@ -1406,23 +1404,7 @@
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ge" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"hM" = (
-/obj/structure/stone_tile{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/no_lava,
-/obj/item/hatchet,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"iS" = (
+"iM" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
@@ -1430,15 +1412,21 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ox" = (
+"nf" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"rk" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/effect/mapping_helpers/no_lava,
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"va" = (
+"vr" = (
 /obj/structure/stone_tile{
 	dir = 1
 	},
@@ -1446,10 +1434,20 @@
 /obj/item/cultivator,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Sb" = (
-/obj/structure/stone_tile/block/cracked,
+"Cn" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
 /obj/effect/mapping_helpers/no_lava,
 /obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"He" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/obj/item/hatchet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 
@@ -1559,7 +1557,7 @@ cm
 cr
 bY
 bL
-ge
+nf
 ah
 ah
 "}
@@ -1596,7 +1594,7 @@ aZ
 bm
 by
 ak
-Sb
+rk
 cb
 ci
 bA
@@ -1618,7 +1616,7 @@ ba
 bn
 bz
 ak
-ox
+Cn
 df
 bX
 co
@@ -1640,8 +1638,8 @@ as
 as
 ak
 ak
-iS
-va
+iM
+vr
 cg
 cn
 bL
@@ -1688,7 +1686,7 @@ bE
 cb
 bL
 co
-hM
+He
 dt
 dy
 dB
