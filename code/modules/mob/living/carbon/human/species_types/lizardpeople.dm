@@ -92,8 +92,7 @@
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_NOGUNS,TRAIT_NOBREATH)
-	armor = 5
-	brutemod = 0.95
+	brutemod = 0.9
 	burnmod = 0.9
 
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species)
