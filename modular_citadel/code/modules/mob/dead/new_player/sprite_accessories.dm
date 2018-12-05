@@ -197,6 +197,12 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/ears/human/elf
+	name = "Elf"
+	icon_state = "elf"
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
+
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
@@ -291,7 +297,7 @@
 	icon_state = "wah"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
@@ -315,7 +321,7 @@
 	icon_state = "bee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -327,7 +333,7 @@
 	icon_state = "cat"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = HAIR
-	
+
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -339,7 +345,7 @@
 	icon_state = "catbig"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -359,7 +365,7 @@
 /datum/sprite_accessory/tails_animated/human/corvid
 	name = "Corvid"
 	icon_state = "crow"
-	
+
 /datum/sprite_accessory/tails/human/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -371,7 +377,7 @@
 	icon_state = "eevee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/fennec
 	name = "Fennec"
 	icon_state = "fennec"
@@ -383,7 +389,7 @@
 	icon_state = "fennec"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/fish
 	name = "Fish"
 	icon_state = "fish"
@@ -395,7 +401,7 @@
 	icon_state = "fish"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
 	icon_state = "fox"
@@ -443,7 +449,7 @@
 	icon_state = "insect"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
-	
+
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
@@ -455,7 +461,7 @@
 	icon_state = "kitsune"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/murid
 	name = "Murid"
 	icon_state = "murid"
@@ -467,7 +473,7 @@
 	icon_state = "murid"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/otie
 	name = "Otusian"
 	icon_state = "otie"
@@ -491,7 +497,7 @@
 	icon_state = "orca"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
@@ -503,7 +509,7 @@
 	icon_state = "pede"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
@@ -515,7 +521,7 @@
 	icon_state = "rabbit"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
@@ -527,7 +533,7 @@
 	icon_state = "sergal"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
@@ -571,7 +577,7 @@
 /datum/sprite_accessory/tails_animated/human/straighttail
 	name = "Straight Tail"
 	icon_state = "straighttail"
-	
+
 /datum/sprite_accessory/tails/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
@@ -595,7 +601,7 @@
 	icon_state = "tentacle"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/tiger
 	name = "Tiger"
 	icon_state = "tiger"
@@ -607,7 +613,7 @@
 	icon_state = "tiger"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
@@ -619,7 +625,7 @@
 	icon_state = "wolf"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	
+
 /******************************************
 *********** Mammal Body Parts *************
 *******************************************/
