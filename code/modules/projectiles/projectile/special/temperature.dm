@@ -5,7 +5,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	flag = "energy"
-	var/temperature = 100
+	var/temperature = 50
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -15,4 +15,4 @@
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
-	temperature = 400
+	temperature = 450
