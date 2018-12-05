@@ -12,7 +12,9 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
+	var/stunforce = 40		//CITADEL EDIT							-- How much stamina damage is applied on hit.
+	var/stamina_paralysis_threshold = 65		//CITADEL EDIT		-- This is how much stamina they have to have after applying stunforce for the baton to force drop their items and knock them down.
+
 	var/status = 0
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
@@ -162,8 +164,14 @@
 		if(!deductcharge(hitcost))
 			return 0
 
+	/* CITADEL EDIT
 	L.Knockdown(stunforce)
 	L.adjustStaminaLoss(stunforce*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	*/
+	L.adjustStaminaLoss(stunforce)
+	if(L.getStaminaLoss() > stamina_paralysis_threshold)
+		L.Knockdown(1, TRUE, 1, 0)
+
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
