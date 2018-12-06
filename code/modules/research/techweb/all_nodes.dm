@@ -162,7 +162,7 @@
 /datum/techweb_node/headset_keys
 	id = "headset_keys"
 	display_name = "Headset Keys"
-	description = "Privet channles for people to talk to eacher."
+	description = "Privet channles that people use."
 	prereq_ids = list("adv_engi", "telecomms")
 	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
