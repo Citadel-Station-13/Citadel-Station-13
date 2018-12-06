@@ -82,7 +82,7 @@
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
 								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting)
+					if(M.resting && !M.recoveringstam)
 						M.resting = FALSE
 						M.update_canmove()
 				else
@@ -102,7 +102,7 @@
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(M.resting)
+					if(M.resting && !M.recoveringstam)
 						M.resting = FALSE
 						M.update_canmove()
 				else

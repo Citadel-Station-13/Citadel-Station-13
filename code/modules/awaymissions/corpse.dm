@@ -6,6 +6,7 @@
 	name = "Unknown"
 	density = TRUE
 	anchored = TRUE
+	var/job_description = null
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -29,7 +30,7 @@
 	var/ghost_usable = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/mob_spawn/attack_ghost(mob/user)
+/obj/effect/mob_spawn/attack_ghost(mob/user, latejoinercalling)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!uses)
@@ -40,11 +41,19 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
+	if(QDELETED(src) || QDELETED(user))
+		return
+	if(latejoinercalling)
+		var/mob/dead/new_player/NP = user
+		if(istype(NP))
+			NP.close_spawn_windows()
+			NP.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)
+	return TRUE
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -52,14 +61,13 @@
 		create()
 	else if(ghost_usable)
 		GLOB.poi_list |= src
-		LAZYADD(GLOB.mob_spawners[name], src)
+		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
-	var/list/spawners = GLOB.mob_spawners[name]
-	LAZYREMOVE(spawners, src)
-	if(!LAZYLEN(spawners))
-		GLOB.mob_spawners -= name
+	LAZYREMOVE(GLOB.mob_spawners[job_description ? job_description : name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[job_description ? job_description : name]))
+		GLOB.mob_spawners -= job_description ? job_description : name
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -262,6 +270,7 @@
 	mob_type = 	/mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
+	job_description = "Mouse"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
@@ -270,6 +279,7 @@
 	mob_type = 	/mob/living/simple_animal/cow
 	death = FALSE
 	roundstart = FALSE
+	job_description = "Cow"
 	mob_gender = FEMALE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -314,6 +324,7 @@
 	icon_state = "sleeper"
 	flavour_text = "<span class='big bold'>You are a space doctor!</span>"
 	assignedrole = "Space Doctor"
+	job_description = "Off-station Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
@@ -364,6 +375,7 @@
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
+	job_description = "Off-station Bartender"
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -387,6 +399,7 @@
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
+	job_description = "Beach Biodome Bum"
 	mob_name = "Beach Bum"
 	name = "beach bum sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -399,6 +412,7 @@
 	mob_gender = "female"
 	name = "lifeguard sleeper"
 	id_job = "Lifeguard"
+	job_description = "Beach Biodome Lifeguard"
 	uniform = /obj/item/clothing/under/shorts/red
 
 /datum/outfit/beachbum
@@ -474,6 +488,7 @@
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
 	roundstart = FALSE
+	job_description = "Nanotrasen Commander"
 	mob_name = "Nanotrasen Commander"
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -484,6 +499,7 @@
 	death = FALSE
 	roundstart = FALSE
 	mob_name = "Private Security Officer"
+	job_description = "Nanotrasen Security"
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -502,6 +518,7 @@
 /obj/effect/mob_spawn/human/skeleton/alive
 	death = FALSE
 	roundstart = FALSE
+	job_description = "Skeleton"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "<span class='big bold'>By unknown powers, your skeletal remains have been reanimated!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
@@ -516,6 +533,7 @@
 /obj/effect/mob_spawn/human/zombie/alive
 	death = FALSE
 	roundstart = FALSE
+	job_description = "Zombie"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
 	flavour_text = "<span class='big bold'>By unknown powers, your rotting remains have been resurrected!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
@@ -542,6 +560,7 @@
 	uses = -1
 	outfit = /datum/outfit/spacebartender
 	assignedrole = "Space Bar Patron"
+	job_description = "Space Bar Patron"
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)

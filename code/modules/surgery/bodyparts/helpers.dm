@@ -305,3 +305,10 @@
 			else
 				S.adjusted = ALT_STYLE
 			H.update_inv_shoes()
+		if(H.wear_suit)
+			var/obj/item/clothing/suit/S = H.wear_suit
+			if(swap_back)
+				S.adjusted = NORMAL_STYLE
+			else
+				S.adjusted = ALT_STYLE
+			H.update_inv_wear_suit()

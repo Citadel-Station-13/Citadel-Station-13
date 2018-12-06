@@ -25,7 +25,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	layer = LOW_OBJ_LAYER
 	color = RUNE_COLOR_RED
 
-	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
+	var/invocation = "Aiy ele-mayo." //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
@@ -163,7 +163,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/malformed
 	cultist_name = "malformed rune"
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
-	invocation = "Ra'sha yoka!"
+	invocation = "Ra'sha yoka."
 	invoke_damage = 30
 
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
@@ -180,7 +180,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_name = "Offer"
 	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
-	invocation = "Mah'weyh pleggh at e'ntrath!"
+	invocation = "Mah'weyh pleggh at e'ntrath."
 	icon_state = "3"
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
@@ -213,7 +213,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
-		invocation = "Mah'weyh pleggh at e'ntrath!"
+		invocation = "Mah'weyh pleggh at e'ntrath."
 		..()
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
@@ -223,7 +223,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
-		invocation = "Barhah hra zar'garis!"
+		invocation = "Barhah hra zar'garis."
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
@@ -318,7 +318,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/empower
 	cultist_name = "Empower"
 	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
-	invocation = "H'drak v'loso, mir'kanas verbot!"
+	invocation = "H'drak v'loso, mir'kanas verbot."
 	icon_state = "3"
 	color = RUNE_COLOR_TALISMAN
 	construct_invoke = FALSE
@@ -332,7 +332,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
-	invocation = "Sas'so c'arta forbici!"
+	invocation = "Sas'so c'arta forbici."
 	icon_state = "2"
 	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
@@ -509,7 +509,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/raise_dead
 	cultist_name = "Revive"
 	cultist_desc = "requires a dead, mindless, or inactive cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be given a new life."
-	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
+	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat." //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
 	var/static/revives_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
@@ -544,7 +544,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	if(user.name == "Herbert West")
-		invocation = "To life, to life, I bring them!"
+		invocation = "To life, to life, I bring them."
 	else
 		invocation = initial(invocation)
 	..()
@@ -600,7 +600,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/wall
 	cultist_name = "Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
-	invocation = "Khari'd! Eske'te tannin!"
+	invocation = "Khari'd. Eske'te tannin."
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -682,7 +682,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/summon
 	cultist_name = "Summon Cultist"
 	cultist_desc = "summons a single cultist to the rune. Requires 2 invokers."
-	invocation = "N'ath reth sh'yro eth d'rekkathnor!"
+	invocation = "N'ath reth sh'yro eth d'rekkathnor."
 	req_cultists = 2
 	invoke_damage = 10
 	icon_state = "3"
@@ -733,7 +733,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/blood_boil
 	cultist_name = "Boil Blood"
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
-	invocation = "Dedo ol'btoh!"
+	invocation = "Dedo ol'btoh."
 	icon_state = "4"
 	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
@@ -797,7 +797,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
 	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
-	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
+	invocation = "Gal'h'rfikk harfrandid mud'gib." //how the fuck do you pronounce this
 	icon_state = "7"
 	invoke_damage = 10
 	construct_invoke = FALSE
@@ -924,7 +924,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/apocalypse
 	cultist_name = "Apocalypse"
 	cultist_desc = "a harbinger of the end times. Grows in strength with the cult's desperation - but at the risk of... side effects."
-	invocation = "Ta'gh fara'qha fel d'amar det!"
+	invocation = "Ta'gh fara'qha fel d'amar det."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
 	pixel_x = -32

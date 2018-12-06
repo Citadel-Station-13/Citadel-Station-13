@@ -30,7 +30,7 @@
 /obj/item/robot_module/k9
 	name = "Security K-9 Unit"
 	basic_modules = list(
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/storage/bag/borgdelivery,
 		/obj/item/dogborg/jaws/big,
 		/obj/item/dogborg/pounce,
@@ -69,6 +69,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/healthanalyzer,
 		/obj/item/dogborg/sleeper/medihound,
+		/obj/item/roller/robo,
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
@@ -222,7 +223,7 @@
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Handy")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Loader","Handy")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -233,7 +234,7 @@
 			special_light_key = "engineer"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Loader")
-			cyborg_base_icon = "loader"
+			cyborg_base_icon = "loaderborg"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 			has_snowflake_deadsprite = TRUE
 		if("Handy")

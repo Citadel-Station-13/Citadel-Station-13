@@ -27,7 +27,7 @@
 	var/my_message
 	if(!message)
 		return
-	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
+	user.whisper("O bidai nabora se[pick("'","`")]sma.", language = /datum/language/common)
 	user.whisper(html_decode(message))
 	var/title = "Acolyte"
 	var/span = "cult italic"

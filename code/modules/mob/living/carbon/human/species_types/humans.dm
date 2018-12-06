@@ -3,8 +3,8 @@
 	id = "human"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY)
-	mutant_bodyparts = list("ears", "tail_human", "wings", "taur") // CITADEL EDIT gives humans snowflake parts
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None", "taur" = "None")
+	mutant_bodyparts = list("mam_ears", "mam_tail", "wings", "taur") // CITADEL EDIT gives humans snowflake parts
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "wings" = "None", "taur" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW

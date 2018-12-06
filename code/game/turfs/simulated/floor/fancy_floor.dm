@@ -182,6 +182,11 @@
 	floor_tile = /obj/item/stack/tile/carpet/black
 	canSmoothWith = list(/turf/open/floor/carpet/black)
 
+/turf/open/floor/carpet/red
+	icon = 'icons/turf/floors/carpet_red.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/red
+	icon_state ="tile-carpet-red"
+	canSmoothWith = list(/turf/open/floor/carpet/red)
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

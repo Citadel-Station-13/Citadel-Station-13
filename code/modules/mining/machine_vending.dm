@@ -59,7 +59,8 @@
 		new /datum/data/mining_equipment("KA Range Increase",			/obj/item/borg/upgrade/modkit/range,								1000),
 		new /datum/data/mining_equipment("KA Damage Increase",			/obj/item/borg/upgrade/modkit/damage,								1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease",		/obj/item/borg/upgrade/modkit/cooldown,								1000),
-		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000)
+		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000),
+		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000)
 		)
 
 /datum/data/mining_equipment
@@ -308,8 +309,10 @@
 	switch(selection)
 		if("Exo-suit")
 			new /obj/item/clothing/suit/hooded/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
 		if("SEVA suit")
 			new /obj/item/clothing/suit/hooded/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
 
 	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
 	qdel(voucher)

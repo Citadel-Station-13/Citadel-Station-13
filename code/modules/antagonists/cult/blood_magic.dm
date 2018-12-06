@@ -277,7 +277,7 @@
 /datum/action/innate/cult/blood_spell/veiling
 	name = "Conceal Presence"
 	desc = "A multi-function spell that alternates between hiding and revealing nearby cult runes, structures, turf, and airlocks."
-	invocation = "Kla'atu barada nikt'o!"
+	invocation = "Kla'atu barada nikt'o."
 	button_icon_state = "gone"
 	charges = 10
 	var/revealing = FALSE //if it reveals or not
@@ -326,7 +326,7 @@
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
 	desc = "A complex spell that allows you to gather blood and use it for healing or other powerful spells."
-	invocation = "Fel'th Dol Ab'orod!"
+	invocation = "Fel'th Dol Ab'orod."
 	button_icon_state = "manip"
 	charges = 5
 	magic_path = "/obj/item/melee/blood_magic/manipulator"
@@ -402,7 +402,7 @@
 /obj/item/melee/blood_magic/stun
 	name = "Stunning Aura"
 	color = RUNE_COLOR_RED
-	invocation = "Fuu ma'jin!"
+	invocation = "Fuu ma'jin."
 
 /obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
@@ -434,6 +434,7 @@
 		else
 			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
 			L.Knockdown(160)
+			L.adjustStaminaLoss(140) //Ensures hard stamcrit
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
@@ -498,7 +499,7 @@
 /obj/item/melee/blood_magic/shackles
 	name = "Binding Aura"
 	desc = "Allows you to bind a victim and temporarily silence them."
-	invocation = "In'totum Lig'abis!"
+	invocation = "In'totum Lig'abis."
 	color = "#000000" // black
 
 /obj/item/melee/blood_magic/shackles/afterattack(atom/target, mob/living/carbon/user, proximity)
@@ -548,7 +549,7 @@
 /obj/item/melee/blood_magic/construction
 	name = "Corrupting Aura"
 	desc = "Corrupts metal and plasteel into more sinister forms."
-	invocation = "Ethra p'ni dedol!"
+	invocation = "Ethra p'ni dedol."
 	color = "#000000" // black
 
 /obj/item/melee/blood_magic/construction/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

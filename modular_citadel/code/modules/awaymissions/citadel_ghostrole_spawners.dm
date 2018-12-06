@@ -5,6 +5,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
+	job_description = "Cydonian Knight"
 	death = FALSE
 	random = TRUE
 	outfit = /datum/outfit/lavaknight

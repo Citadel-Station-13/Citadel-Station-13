@@ -29,36 +29,38 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	//Cit changes: beam rifle stats.
+	slowdown = 1
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 12
+	var/aiming_time = 14
 	var/aiming_time_fire_threshold = 5
-	var/aiming_time_left = 12
-	var/aiming_time_increase_user_movement = 3
-	var/scoped_slow = 1
-	var/aiming_time_increase_angle_multiplier = 0.3
+	var/aiming_time_left = 14
+	var/aiming_time_increase_user_movement = 7
+	var/aiming_time_increase_angle_multiplier = 0.30
 	var/last_process = 0
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
-
-	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
+	
+	var/structure_piercing = 1
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 50
-	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 40
+	var/aoe_structure_damage = 35
+	var/aoe_fire_range = 1
+	var/aoe_fire_chance = 100
 	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 30
-	var/impact_structure_damage = 60
-	var/projectile_damage = 30
+	var/aoe_mob_damage = 20
+	var/impact_structure_damage = 75
+	var/projectile_damage = 40
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 25
+	var/delay = 30
 	var/lastfire = 0
 
 	//ZOOMING
@@ -120,14 +122,14 @@
 /obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
-	current_user.client.change_view(world.view + zoom_target_view_increase)
-	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
 
 /obj/item/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
 		return
 	zooming = TRUE
+	current_user.client.change_view(world.view + zoom_target_view_increase)
+	zoom_current_view_increase = zoom_target_view_increase
 
 /obj/item/gun/energy/beam_rifle/proc/stop_zooming(mob/user)
 	if(zooming)
@@ -158,12 +160,6 @@
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
-
-/obj/item/gun/energy/beam_rifle/proc/update_slowdown()
-	if(aiming)
-		slowdown = scoped_slow
-	else
-		slowdown = initial(slowdown)
 
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
@@ -487,6 +483,8 @@
 		return 0.4
 	if(istype(target, /obj/structure/window))
 		return 0.5
+	if(istype(target, /obj/structure/blob))
+		return 0.65			//CIT CHANGE.
 	return 1
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)

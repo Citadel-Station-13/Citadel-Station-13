@@ -133,6 +133,9 @@
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		H.remove_trait(CULT_EYES)
 		H.update_body()
+		H.cut_overlays()
+		H.regenerate_icons()
+
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
@@ -206,6 +209,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
+
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current

@@ -15,6 +15,7 @@
 	friendly = "harmlessly rolls into"
 	maxHealth = 45
 	health = 45
+	gold_core_spawnable = HOSTILE_SPAWN
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
@@ -27,7 +28,7 @@
 	status_flags = CANPUSH
 	search_objects = 1
 	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
-						  /obj/item/stack/ore/uranium)
+						  /obj/item/stack/ore/uranium, /obj/item/stack/ore/titanium)
 
 	var/chase_time = 100
 	var/will_burrow = TRUE

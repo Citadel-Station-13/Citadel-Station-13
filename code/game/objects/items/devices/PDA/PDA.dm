@@ -49,6 +49,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/scanmode = PDA_SCANNER_NONE
 	var/fon = FALSE //Is the flashlight function on?
 	var/f_lum = 2.3 //Luminosity for the flashlight function
+	var/f_pow = 0.6 //Power for the flashlight function
+	var/f_col = "#FFCC66" //Color for the flashlight function
 	var/silent = FALSE //To beep or not to beep, that is the question
 	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote = null //Current Texts
@@ -59,7 +61,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
+	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft." //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = FALSE // True if what is in the notekeeper was from a paper.
 	var/detonatable = TRUE // Can the PDA be blown up?
@@ -102,7 +104,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/Initialize()
 	. = ..()
 	if(fon)
-		set_light(f_lum)
+		set_light(f_lum, f_pow, f_col)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
@@ -739,7 +741,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		set_light(0)
 	else if(f_lum)
 		fon = TRUE
-		set_light(f_lum)
+		set_light(f_lum, f_pow, f_col)
 	update_icon()
 
 /obj/item/pda/proc/remove_pen()

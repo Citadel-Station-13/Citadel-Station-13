@@ -13,6 +13,7 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
@@ -63,6 +64,7 @@
 	clothing_flags = THICKMATERIAL //not spaceproof
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 	slowdown = 0
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 10, "energy" = 10, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
@@ -121,7 +123,7 @@
 /****************SEVA Suit and Mask****************/
 
 /obj/item/clothing/suit/hooded/seva
-	name = "SEVA suit"
+	name = "SEVA Suit"
 	desc = "A fire-proof suit for exploring hot environments."
 	icon_state = "seva"
 	item_state = "seva"
@@ -133,9 +135,10 @@
 	armor = list("melee" = 15, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/hooded/seva
-	name = "SEVA hood"
+	name = "SEVA Hood"
 	desc = "A fire-proof hood for exploring hot environments."
 	icon_state = "seva"
 	item_state = "seva"
@@ -144,6 +147,19 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
+
+/obj/item/clothing/mask/gas/seva
+	name = "SEVA Mask"
+	desc = "A face-covering plate that can be connected to an air supply. Intended for use with the SEVA Suit."
+	icon_state = "seva"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "seva"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	resistance_flags = FIRE_PROOF
 
 /****************Exo-Suit and Mask****************/
 
@@ -162,6 +178,7 @@
 	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/hooded/exo
 	name = "Exo-hood"
@@ -174,3 +191,16 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list("melee" = 65, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 60, "bio" = 25, "rad" = 10, "fire" = 0, "acid" = 0)
 	resistance_flags = FIRE_PROOF | GOLIATH_RESISTANCE
+
+/obj/item/clothing/mask/gas/exo
+	name = "Exosuit Mask"
+	desc = "A face-covering mask that can be connected to an air supply. Intended for use with the Exosuit."
+	icon_state = "exo"
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "exo"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	resistance_flags = FIRE_PROOF
