@@ -159,6 +159,13 @@
 	design_ids = list("cart_head", "cart_hos", "cart_cmo", "cart_hop", "cart_ce", "cart_qm", "cart_rd)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
+/datum/techweb_node/headset_keys
+	id = "headset_keys"
+	display_name = "Headset Keys"
+	description = "Privet channles that people use."
+	prereq_ids = list("adv_engi", "telecomms")
+	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/multy_keys
 	id = "multy_keys"
