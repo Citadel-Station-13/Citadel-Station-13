@@ -135,6 +135,46 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
+/datum/techweb_node/pda
+	id = "pda"
+	display_name = "PDA Tech"
+	description = "Data chips to place in PDAs for more functions."
+	prereq_ids = list("datatheory", "telecomms")
+	design_ids = list("cart_eng", "cart_med", "cart_sci", "cart_sec", "cart_jan", "cart_cura", "cart_law", "cart_basic")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
+/datum/techweb_node/adv_pda
+	id = "adv_pda"
+	display_name = "Advanced PDA Tech"
+	description = "Data chips to place in PDAs for more functions. These have even more fuctions then before!"
+	prereq_ids = list("adv_engi", "pda")
+	design_ids = list("cart_chem", "cart_atmos", "cart_dect", "cart_robo")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/deluxe_pda
+	id = "deluxe_pda"
+	display_name = "DELUXE PDA Tech"
+	description = "DELUXE Data chips to place in PDAs for more functions. Ment for Heads and higher ranking crew."
+	prereq_ids = list("emp_adv", "adv_pda")
+	design_ids = list("cart_head", "cart_hos", "cart_cmo", "cart_hop", "cart_ce", "cart_qm", "cart_rd)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+
+/datum/techweb_node/headset_keys
+	id = "headset_keys"
+	display_name = "Headset Keys"
+	description = "Privet channles for people to talk to eacher."
+	prereq_ids = list("adv_engi", "telecomms")
+	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/multy_keys
+	id = "multy_keys"
+	display_name = "Advanced Headset Keys"
+	description = "Headset keys that incrip more then one channle."
+	prereq_ids = list("adv_datatheory", "headset_keys")
+	design_ids = list("headset_medsci", "headset_mining", "headset_rob")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+
 /////////////////////////engineering tech/////////////////////////
 /datum/techweb_node/engineering
 	id = "engineering"
@@ -357,7 +397,7 @@
 	description = "Honk?!"
 	prereq_ids = list("base")
 	design_ids = list("air_horn", "honker_main", "honker_peri", "honker_targ", "honk_chassis", "honk_head", "honk_torso", "honk_left_arm", "honk_right_arm",
-	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown")
+	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown", "cart_clown", "cart_mime") // Silent gasps!
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -1015,3 +1055,4 @@
 		var/datum/techweb_node/TN = i
 		TW.add_point_list(TN.research_costs)
 	return TW.printout_points()
+
