@@ -1,7 +1,7 @@
 
-////////////////////////////////////////
-/////////////////HUDs///////////////////
-////////////////////////////////////////
+/////////////////////////////////////////
+/////////////////HUDs////////////////////
+/////////////////////////////////////////
 
 /datum/design/health_hud
 	name = "Health Scanner HUD"
@@ -463,10 +463,10 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/headset_sec
+/datum/design/sec_headset
 	name = "Sec cription Key"
 	desc = "A headset key for Sec channle."
-	id = "headset_sec"
+	id = "sec_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_sec
