@@ -44,7 +44,7 @@
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife
 		if("Medical Doctor")
-			heirloom_type = /obj/item/reagent_containers/hypospray
+			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
@@ -54,7 +54,7 @@
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
-			heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			heirloom_type = /obj/item/clothing/accessory/medal/silver/valor
 		if("Scientist")
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
