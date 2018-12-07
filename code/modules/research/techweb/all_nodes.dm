@@ -164,7 +164,7 @@
 	display_name = "Headset Keys"
 	description = "Privet channles that people use."
 	prereq_ids = list("adv_engi", "telecomms")
-	design_ids = list("headset_sec", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo")
+	design_ids = list("sec_headset", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/multy_keys
