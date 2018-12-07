@@ -683,7 +683,7 @@
 	id = "cart_robo"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
-	build_path = /obj/item/cartridge/roboticists
+	build_path = /obj/item/cartridge/roboticist
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
