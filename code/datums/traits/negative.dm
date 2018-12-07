@@ -39,16 +39,18 @@
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
 			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
 			heirloom_type = /obj/item/toy/dummy
+			heirloom_type = /obj/item/paint/anycolor
 		if("Cook")
-			heirloom_type = /obj/item/kitchen/knife
+			heirloom_type = /obj/item/kitchen/knife/scimitar
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Station Engineer")
 			heirloom_type = /obj/item/wirecutters/brass
 		if("Atmospheric Technician")
-			heirloom_type = /obj/item/extinguisher/mini
+			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
 			heirloom_type = /obj/item/gavelhammer
 		if("Janitor")
