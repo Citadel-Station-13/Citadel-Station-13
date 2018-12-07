@@ -58,7 +58,6 @@
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "diagnostic_hud_night"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_PLASMA = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -553,7 +552,7 @@
 	id = "cart_basic"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 500)
-	build_path /obj/item/cartridge/signal
+	build_path = /obj/item/cartridge/signal
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
@@ -645,7 +644,7 @@
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/engineering
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERINGL
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/cart_atmos
 	name = "Engineering PDA Cartridge"
@@ -655,7 +654,7 @@
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/atmos
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERINGL
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/cart_ce
 	name = "CE PDA Cartridge"
@@ -665,7 +664,7 @@
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/ce
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERINGL
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/cart_sci
 	name = "Sci PDA Cartridge"
