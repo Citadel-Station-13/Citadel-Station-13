@@ -238,6 +238,27 @@
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
+/datum/supply_pack/medical/anitvirus
+	name = "Virus Containment Crate"
+	desc = "Viro let out a death plage Mk II again? Someone didnt wash there hands? Old plages born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, three spaceacillin needles, a medibot and a few BVAK autoinjectors!"
+	cost = 7500 
+	access = ACCESS_MEDICAL
+	contains = list(/mob/living/simple_animal/bot/medbot,
+					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
+					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
+					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/storage/box/syringes,
+					/obj/item/storage/box/beakers)
+	crate_name = "virus containment unit crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -358,6 +379,47 @@
 					/obj/item/melee/baton/loaded,
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
+
+/datum/supply_pack/security/russianclothing
+	name = "Russian Surplus Clothing"
+	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
+	hidden = TRUE
+	cost = 5000 // Its basicly sec suits, good boots/gloves
+	contains = list(/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas)
+	crate_name = "surplus russian clothing"
+	crate_type = /obj/structure/closet/crate/internals
+
+/datum/supply_pack/security/russianweapons
+	name = "Russian Surplus Weapons"
+	desc = "An old russian crate full of surplus weapons we use! Has two APS pistals, two russian revolvers two mosens and two old huntting shotguns!"
+	hidden = TRUE
+	cost = 25000 
+	contains = list(/obj/item/gun/ballistic/revolver/nagant,
+					/obj/item/gun/ballistic/revolver/nagant,
+					/obj/item/gun/ballistic/shotgun/boltaction,
+					/obj/item/gun/ballistic/shotgun/boltaction,
+					/obj/item/gun/ballistic/automatic/pistol/APS,
+					/obj/item/gun/ballistic/automatic/pistol/APS,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/gun/ballistic/shotgun/lethal,
+					/obj/item/gun/ballistic/shotgun/lethal)
+	dangerous = TRUE // Mega dangerous
+	crate_name = "surplus russian weapons"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
@@ -1174,6 +1236,7 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1511,6 +1574,22 @@
 	contraband = TRUE
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/hunting
+	name = "Huntting gear"
+	desc = "Even in space, we can fine prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a huntting shotgun. "
+	cost = 3500
+	contraband = TRUE
+	contains = list(/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/suit/hooded/wintercoat/captain,
+					/obj/item/reagent_containers/food/drinks/bottle/cognac,
+					/obj/item/storage/fancy/cigarettes/cigars/havana,
+					/obj/item/clothing/gloves/color/white,
+					/obj/item/clothing/under/rank/curator,
+					/obj/item/gun/ballistic/shotgun/lethal)
+	access = ACCESS_ARMORY
+	crate_name = "sporting crate"
+	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
