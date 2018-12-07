@@ -240,13 +240,10 @@
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, three spaceacillin needles, a medibot and a few BVAK autoinjectors!"
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, three spaceacillin needles, and a medibot."
 	cost = 7500 
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,
-					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
-					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
-					/obj/item/reagent_containers/hypospray/medipen/tuberculosiscure,
 					/obj/item/clothing/head/bio_hood,
 					/obj/item/clothing/head/bio_hood,
 					/obj/item/clothing/suit/bio_suit,
@@ -384,6 +381,7 @@
 	name = "Russian Surplus Clothing"
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
 	hidden = TRUE
+	contraband = TRUE
 	cost = 5000 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/security/officer/russian,
 					/obj/item/clothing/suit/security/officer/russian,
@@ -406,7 +404,8 @@
 	name = "Russian Surplus Weapons"
 	desc = "An old russian crate full of surplus weapons we use! Has two APS pistals, two russian revolvers two mosens and two old huntting shotguns!"
 	hidden = TRUE
-	cost = 25000 
+	contraband = TRUE
+	cost = 50000 // Half a mill for powerfull weapons
 	contains = list(/obj/item/gun/ballistic/revolver/nagant,
 					/obj/item/gun/ballistic/revolver/nagant,
 					/obj/item/gun/ballistic/shotgun/boltaction,
