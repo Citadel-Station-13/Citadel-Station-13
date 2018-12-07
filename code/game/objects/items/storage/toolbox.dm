@@ -87,8 +87,10 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom/afterattack(atom/A, mob/user, proximity) //Citadel Adds massive buff to machinery destruction
 	. = ..()
 	if(proximity)
-		if(isobj(A))
+		if(isobj(A) && !isitem(A))
 			var/obj/O = A
+			if(O.damage_deflection >= 18)		//Eh fine.
+				return
 			O.take_damage(20)
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
