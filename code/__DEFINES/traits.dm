@@ -122,6 +122,9 @@
 #define	TRAIT_STRONG_GRABBER	"strong_grabber"
 #define	TRAIT_CALCIUM_HEALER	"calcium_healer"
 #define TRAIT_CAPTAIN_METABOLISM "captain-metabolism"
+#define TRAIT_ABDUCTOR_TRAINING "abductor-training"
+#define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
+#define TRAIT_SURGEON           "surgeon"
 
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -187,6 +190,7 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+<<<<<<< HEAD
 #define CULT_TRAIT "cult"
 #define CLOWN_NUKE_TRAIT "clown-nuke"
 #define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
@@ -208,3 +212,4 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define ABDUCTOR_ANTAGONIST "abductor-antagonist"
