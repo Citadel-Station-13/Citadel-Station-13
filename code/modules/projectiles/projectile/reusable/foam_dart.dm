@@ -9,7 +9,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	range = 10
 	var/modified = FALSE
-	var/obj/item/pen/pen = null
+	var/obj/item/stack/rods/rod
 
 /obj/item/projectile/bullet/reusable/foam_dart/handle_drop()
 	if(dropped)
@@ -23,15 +23,15 @@
 	newdart.damage = damage
 	newdart.nodamage = nodamage
 	newdart.damage_type = damage_type
-	if(pen)
-		newdart.pen = pen
-		pen.forceMove(newdart)
-		pen = null
+	if(rod)
+		newdart.rod = rod
+		rod.forceMove(rod)
+		rod = null
 	newdart.update_icon()
 
 
 /obj/item/projectile/bullet/reusable/foam_dart/Destroy()
-	pen = null
+	rod = null
 	return ..()
 
 /obj/item/projectile/bullet/reusable/foam_dart/riot
