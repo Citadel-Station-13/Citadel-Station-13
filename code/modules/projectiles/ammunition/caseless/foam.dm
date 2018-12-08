@@ -31,16 +31,16 @@
 		FD.damage_type = BRUTE
 		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
 		update_icon()
-	else if (istype(A, /obj/item/pen))
+	else if (istype(A, /obj/item/stack/rods))
 		if(modified)
-			if(!FD.pen)
+			if(!FD.rod)
 				harmful = TRUE
-				if(!user.transferItemToLoc(A, FD))
-					return
-				FD.pen = A
-				FD.damage = 5
-				FD.nodamage = FALSE
-				to_chat(user, "<span class='notice'>You insert [A] into [src].</span>")
+				var/obj/item/stack/rods/R = A
+				if(A.use(1))
+					FD.rod = new
+					FD.damage = 5
+					FD.nodamage = FALSE
+					to_chat(user, "<span class='notice'>You insert some [A] into [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>There's already something in [src].</span>")
 		else
@@ -50,12 +50,12 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
-	if(FD.pen)
+	if(FD.rod)
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)
-		user.put_in_hands(FD.pen)
-		to_chat(user, "<span class='notice'>You remove [FD.pen] from [src].</span>")
-		FD.pen = null
+		FD.rod.forceMove(drop_location())
+		to_chat(user, "<span class='notice'>You remove [FD.rod] from [src].</span>")
+		FD.rod = null
 
 /obj/item/ammo_casing/caseless/foam_dart/riot
 	name = "riot foam dart"
