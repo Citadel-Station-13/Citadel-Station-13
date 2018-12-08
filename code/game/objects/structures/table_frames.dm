@@ -68,6 +68,22 @@
 		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
 		if(do_after(user, 20, target = src) && C.use(1))
 			make_new_table(/obj/structure/table/wood/fancy/black)
+	else if(istype(I, /obj/item/stack/tile/carpet/blackred))
+		var/obj/item/stack/tile/carpet/blackred/C = I
+		if(C.get_amount() < 1)
+			to_chat(user, "<span class='warning'>You need one  red carpet sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
+		if(do_after(user, 20, target = src) && C.use(1))
+			make_new_table(/obj/structure/table/wood/fancy/blackred)
+	else if(istype(I, /obj/item/stack/tile/carpet/monochrome))
+		var/obj/item/stack/tile/carpet/monochrome/C = I
+		if(C.get_amount() < 1)
+			to_chat(user, "<span class='warning'>You need one  monochrome carpet sheet to do this!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
+		if(do_after(user, 20, target = src) && C.use(1))
+			make_new_table(/obj/structure/table/wood/fancy/monochrome)
 	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
 		if(C.get_amount() < 1)
