@@ -115,6 +115,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	total_mass = 1.25
 	var/swiping = FALSE
 
 /obj/item/scythe/Initialize()
