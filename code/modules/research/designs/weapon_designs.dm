@@ -43,6 +43,31 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/a357
+	name = "Speed Loader (.357)"
+	id = "a357"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 60000)
+	build_path = /obj/item/ammo_box/a357
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/50ae
+	name = "50ae mag"
+	id = "50ae"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 600000, MAT_TITANIUM = 100000)
+	build_path = /obj/item/ammo_box/magazine/m50
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/n762
+	name = "Speed Loader (7.62x38mmR)"
+	id = "n762"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 60000) // Same as .357
+	build_path = /obj/item/ammo_box/n762
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
