@@ -622,7 +622,7 @@
 
 /datum/techweb_node/advanced_ballistics
 	id = "advanced_ballistics"
-	display_name = "Advanced NT Ballistics
+	display_name = "Advanced NT Ballistics"
 	description = "Advanced Ballisticfirepower for NanoTrasen weaponds."
 	design_ids = list("m45", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx", "50ae")
 	prereq_ids = list("ballistic_weapons", "explosive_weapons")
