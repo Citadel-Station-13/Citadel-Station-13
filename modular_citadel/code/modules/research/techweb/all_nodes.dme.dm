@@ -31,4 +31,3 @@
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns form traitors or space.
 	export_price = 7000
-
