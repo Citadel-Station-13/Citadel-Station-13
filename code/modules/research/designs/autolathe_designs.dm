@@ -462,7 +462,7 @@
 	category = list("initial", "Security")
 
 /datum/design/c38
-	name = "Speed Loader (.38)"
+	name = "Speed Loader (.38 rubber)"
 	id = "c38"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 20000)
@@ -716,14 +716,6 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50000) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
-	category = list("hacked", "Security")
-
-/datum/design/a357
-	name = "Speed Loader (.357)"
-	id = "a357"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/a357
 	category = list("hacked", "Security")
 
 /datum/design/c10mm

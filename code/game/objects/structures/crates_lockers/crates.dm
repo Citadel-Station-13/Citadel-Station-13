@@ -96,6 +96,7 @@
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
+	icon_state = "surgery"
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()

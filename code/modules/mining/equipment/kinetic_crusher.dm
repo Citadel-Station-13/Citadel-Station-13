@@ -73,6 +73,9 @@
 
 /obj/item/twohanded/required/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
 	. = ..()
+	if(istype(target, /obj/item/crusher_trophy))
+		var/obj/item/crusher_trophy/T = target
+		T.add_to(src, user)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))

@@ -741,6 +741,14 @@
 	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
 
+/obj/machinery/porta_turret/centcom_shuttle/ballistic
+	stun_projectile = /obj/item/projectile/bullet
+	lethal_projectile = /obj/item/projectile/bullet
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
+	desc = "A ballistic machine gun auto-turret."
+
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////

@@ -54,7 +54,10 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			if(adjusted == NORMAL_STYLE)
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			else
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()

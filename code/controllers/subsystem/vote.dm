@@ -139,6 +139,12 @@ SUBSYSTEM_DEF(vote)
 						restart = 1
 					else
 						GLOB.master_mode = .
+			if("map")
+				var/datum/map_config/VM = config.maplist[.]
+				message_admins("The map has been voted for and will change to: [VM.map_name]")
+				log_admin("The map has been voted for and will change to: [VM.map_name]")
+				if(SSmapping.changemap(config.maplist[.]))
+					to_chat(world, "<span class='boldannounce'>The map vote has chosen [VM.map_name] for next round!</span>")
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -160,8 +166,14 @@ SUBSYSTEM_DEF(vote)
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
 				voted += usr.ckey
+				voted[usr.ckey] = vote
 				choices[choices[vote]]++	//check this
 				return vote
+		else if(vote && 1<=vote && vote<=choices.len)
+			choices[choices[voted[usr.ckey]]]--
+			voted[usr.ckey] = vote
+			choices[choices[vote]]++
+			return vote
 	return 0
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, hideresults)//CIT CHANGE - adds hideresults argument to votes to allow for obfuscated votes
@@ -188,6 +200,10 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("map")
+				choices.Add(config.maplist)
+				for(var/i in choices)//this is necessary because otherwise we'll end up with a bunch of /datum/map_config's as the default vote value instead of 0 as intended
+					choices[i] = 0
 			if("roundtype") //CIT CHANGE - adds the roundstart secret/extended vote
 				choices.Add("secret", "extended")
 			if("custom")
@@ -241,9 +257,10 @@ SUBSYSTEM_DEF(vote)
 		. += "Time Left: [time_remaining] s<hr><ul>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
+			var/ivotedforthis = ((C.ckey in voted) && (voted[C.ckey] == i) ? TRUE : FALSE)
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)</li>" // CIT CHANGE - adds obfuscated votes
+			. += "<li>[ivotedforthis ? "<b>" : ""]<a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([obfuscated ? (admin ? "??? ([votes])" : "???") : votes] votes)[ivotedforthis ? "</b>" : ""]</li>" // CIT CHANGE - adds obfuscated votes
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "

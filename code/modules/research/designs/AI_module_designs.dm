@@ -20,8 +20,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/onehuman_module
-	name = "Module Design (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
+	name = "Module Design (OneCrew)"
+	desc = "Allows for the construction of a OneCrew AI Module."
 	id = "onehuman_module"
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 6000)
 	build_path = /obj/item/aiModule/zeroth/oneHuman
