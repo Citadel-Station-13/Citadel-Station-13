@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/ambientocclusion = TRUE
-	var/auto_fit_viewport = FALSE
+	var/auto_fit_viewport = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
-			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			dat += "<h2>Body</h2>"
-			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Species:</b><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
 			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><BR>"
@@ -574,6 +574,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(NOGENITALS in pref_species.species_traits)
 				dat += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
 			else
+				if(pref_species.use_skintones)
+					dat += "<b>Genitals use skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_cock"] == TRUE)
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
@@ -685,7 +687,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
 
-			if (CONFIG_GET(flag/maprotation))
+			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"
@@ -732,7 +734,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
-			dat += "<b>Allow MediHound sleeper:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
@@ -1475,7 +1477,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("tail_human")
-					var/list/snowflake_tails_list = list("None" = null)
+					var/list/snowflake_tails_list = list()
 					for(var/path in GLOB.tails_list_human)
 						var/datum/sprite_accessory/tails/human/instance = GLOB.tails_list_human[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1492,7 +1494,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 
 				if("mam_tail")
-					var/list/snowflake_tails_list = list("None" = null)
+					var/list/snowflake_tails_list = list()
 					for(var/path in GLOB.mam_tails_list)
 						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1568,7 +1570,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						skin_tone = new_s_tone
 
 				if("taur")
-					var/list/snowflake_taur_list = list("Normal" = null)
+					var/list/snowflake_taur_list = list()
 					for(var/path in GLOB.taur_list)
 						var/datum/sprite_accessory/taur/instance = GLOB.taur_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1586,7 +1588,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["tail_lizard"] = "None"
 
 				if("ears")
-					var/list/snowflake_ears_list = list("Normal" = null)
+					var/list/snowflake_ears_list = list()
 					for(var/path in GLOB.ears_list)
 						var/datum/sprite_accessory/ears/instance = GLOB.ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1599,7 +1601,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["ears"] = new_ears
 
 				if("mam_ears")
-					var/list/snowflake_ears_list = list("Normal" = null)
+					var/list/snowflake_ears_list = list()
 					for(var/path in GLOB.mam_ears_list)
 						var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1612,7 +1614,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["mam_ears"] = new_ears
 
 				if("mam_body_markings")
-					var/list/snowflake_markings_list = list("Normal" = null)
+					var/list/snowflake_markings_list = list()
 					for(var/path in GLOB.mam_body_markings_list)
 						var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
 						if(istype(instance, /datum/sprite_accessory))
@@ -1844,13 +1846,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					if(gender == MALE)
-						gender = FEMALE
-					else
-						gender = MALE
-					underwear = random_underwear(gender)
-					undershirt = random_undershirt(gender)
-					socks = random_socks()
+					var/chosengender = input(user, "Select your character's gender.", "Gender Selection", gender) in list(MALE,FEMALE,"nonbinary","object")
+					switch(chosengender)
+						if("nonbinary")
+							chosengender = PLURAL
+						if("object")
+							chosengender = NEUTER
+					gender = chosengender
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
@@ -2062,9 +2064,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else if("xenotail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "xenotail"
 
-	if(("legs" in pref_species.default_features) && character.dna.features["legs"] == "Digitigrade Legs")
-		pref_species.species_traits += DIGITIGRADE
+	if("legs" in pref_species.default_features)
+		if(character.dna.features["legs"] == "Digitigrade Legs")
+			pref_species.species_traits += DIGITIGRADE
+			character.Digitigrade_Leg_Swap(FALSE)
+
+		if(character.dna.features["legs"] == "Normal Legs" && DIGITIGRADE in pref_species.species_traits)
+			pref_species.species_traits -= DIGITIGRADE
+			character.Digitigrade_Leg_Swap(TRUE)
+
+	else if((!"legs" in pref_species.default_features) && DIGITIGRADE in pref_species.species_traits)
+		pref_species.species_traits -= DIGITIGRADE
 		character.Digitigrade_Leg_Swap(TRUE)
+
 	if(DIGITIGRADE in pref_species.species_traits)
 		character.Digitigrade_Leg_Swap(FALSE)
 

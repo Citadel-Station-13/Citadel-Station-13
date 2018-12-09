@@ -71,6 +71,8 @@
 
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
+	light_color = "#FFCC66"
+	light_power = 0.8
 	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
@@ -639,9 +641,9 @@
 		add_overlay("disabler")//ditto
 
 	if(sleeper_g && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_g")
+		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_r")
+		add_overlay("[module.sleeper_overlay]_r[sleeper_nv ? "_nv" : ""]")
 	if(module.dogborg == TRUE)
 		if(resting)
 			cut_overlays()

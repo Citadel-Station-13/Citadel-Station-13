@@ -189,7 +189,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	name = "cactus fruit"
-	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
+	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 6)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus

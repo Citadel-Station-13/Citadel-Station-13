@@ -5,6 +5,7 @@
 	name = "preserved terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. The glass is obstructed by a mat of vines."
 	mob_name = "a lifebringer"
+	job_description = "Lifebringer"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "terrarium"
 	density = TRUE
@@ -35,6 +36,7 @@
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
 	mob_name = "an ash walker"
+	job_description = "Ashwalker"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
@@ -77,6 +79,7 @@
 	name = "timeless prison"
 	desc = "Although this stasis pod looks medicinal, it seems as though it's meant to preserve something for a very long time."
 	mob_name = "a penitent exile"
+	job_description = "Exiled Prisoner"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
@@ -108,6 +111,7 @@
 	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
+	job_description = "Free Golem"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	mob_species = /datum/species/golem
@@ -180,6 +184,7 @@
 /obj/effect/mob_spawn/human/golem/servant
 	has_owner = TRUE
 	name = "inert servant golem shell"
+	job_description = "Servant Golem"
 
 
 /obj/effect/mob_spawn/human/golem/adamantine
@@ -194,6 +199,7 @@
 	name = "malfunctioning cryostasis sleeper"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	mob_name = "a stranded hermit"
+	job_description = "Lavaland Hermit"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	roundstart = FALSE
@@ -246,6 +252,7 @@
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
 	name = "broken rejuvenation pod"
 	desc = "A small sleeper typically used to instantly restore minor wounds. This one seems broken, and its occupant is comatose."
+	job_description = "Lavaland Veterinarian"
 	mob_name = "a translocated vet"
 	flavour_text = "<span class='big bold'>What...?</span><b> Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
@@ -262,6 +269,7 @@
 	name = "prisoner containment sleeper"
 	desc = "A sleeper designed to put its occupant into a deep coma, unbreakable until the sleeper turns off. This one's glass is cracked and you can see a pale, sleeping face staring out."
 	mob_name = "an escaped prisoner"
+	job_description = "Escaped Prisoner"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/lavalandprisoner
@@ -299,6 +307,7 @@
 	name = "staff sleeper"
 	desc = "A sleeper designed for long-term stasis between guest visits."
 	mob_name = "hotel staff member"
+	job_description = "Hotel Staff"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
@@ -321,6 +330,7 @@
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
 	mob_name = "hotel security member"
+	job_description = "Hotel Security"
 	outfit = /datum/outfit/hotelstaff/security
 	flavour_text = "<span class='big bold'>You are a peacekeeper</span><b> assigned to this hotel to protect the interests of the company while keeping the peace between \
 		guests and the staff. Do <font size=6>NOT</font> leave the hotel, as that is grounds for contract termination.</b>"
@@ -343,6 +353,7 @@
 	name = "Essence of friendship"
 	desc = "Oh boy! Oh boy! A friend!"
 	mob_name = "Demonic friend"
+	job_description = "Demonic Friend"
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	outfit = /datum/outfit/demonic_friend
@@ -484,6 +495,7 @@
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
 	l_pocket = /obj/item/assembly/flash/handheld
+	job_description = "Oldstation Crew"
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
@@ -496,6 +508,7 @@
 	mob_name = "an engineer"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+	job_description = "Oldstation Crew"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
@@ -534,6 +547,7 @@
 	id = /obj/item/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
 	assignedrole = "Ancient Crew"
+	job_description = "Oldstation Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
@@ -542,11 +556,12 @@
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
+	job_description = "Space Pirate"
 	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton
+	mob_species = /datum/species/skeleton/pirate
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE

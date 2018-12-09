@@ -111,6 +111,14 @@
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/red
+    name = "red carpet"
+    icon_state = "tile-carpet-red"
+    turf_type = /turf/open/floor/carpet/red
+
+/obj/item/stack/tile/carpet/red/fifty
+    amount = 50
+
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
 	singular_name = "astral carpet"

@@ -3,31 +3,31 @@ DOG BORG EQUIPMENT HERE
 SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 */
 
+/obj/item/dogborg/jaws
+	name = "Dogborg jaws"
+	desc = "The jaws of the debug errors oh god."
+	icon = 'icons/mob/dogborg.dmi'
+	flags_1 = CONDUCT_1
+	force = 1
+	throwforce = 0
+	w_class = 3
+	hitsound = 'sound/weapons/bite.ogg'
+	sharpness = IS_SHARP
+
 /obj/item/dogborg/jaws/big
 	name = "combat jaws"
-	icon = 'icons/mob/dogborg.dmi'
+	desc = "The jaws of the law. Very sharp."
 	icon_state = "jaws"
-	desc = "The jaws of the law."
-	flags_1 = CONDUCT_1
 	force = 12
-	throwforce = 0
-	hitsound = 'sound/weapons/bite.ogg'
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
-	w_class = 3
-	sharpness = IS_SHARP
 
 /obj/item/dogborg/jaws/small
 	name = "puppy jaws"
-	icon = 'icons/mob/dogborg.dmi'
+	desc = "Rubberized teeth designed to protect accidental harm. Sharp enough for specialized tasks however."
 	icon_state = "smalljaws"
-	desc = "The jaws of a small dog."
-	flags_1 = CONDUCT_1
 	force = 6
-	throwforce = 0
-	hitsound = 'sound/weapons/bite.ogg'
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
-	w_class = 3
-	sharpness = IS_SHARP
+	var/status = 0
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
@@ -36,50 +36,25 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 
 /obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
-	if(R.emagged)
-		name = "combat jaws"
-		icon = 'icons/mob/dogborg.dmi'
-		icon_state = "jaws"
-		desc = "The jaws of the law."
-		flags_1 = CONDUCT_1
-		force = 12
-		throwforce = 0
-		hitsound = 'sound/weapons/bite.ogg'
-		attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
-		w_class = 3
-		sharpness = IS_SHARP
-	else
-		name = "puppy jaws"
-		icon = 'icons/mob/dogborg.dmi'
-		icon_state = "smalljaws"
-		desc = "The jaws of a small dog."
-		flags_1 = CONDUCT_1
-		force = 5
-		throwforce = 0
-		hitsound = 'sound/weapons/bite.ogg'
-		attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
-		w_class = 3
-		sharpness = IS_SHARP
-	update_icon()
-
-
-//Cuffs
-
-/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user)
-	if(!C.handcuffed)
-		playsound(loc, 'sound/weapons/cablecuff.ogg', 60, 1, -2)
-		C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-							"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-		if(do_mob(user, C, 60))
-			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
-				C.update_inv_handcuffed(0)
-				to_chat(user,"<span class='notice'>You handcuff [C].</span>")
-				playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-				log_combat(user, C, "handcuffed")
+	if(R.cell && R.cell.charge > 100)
+		if(R.emagged && status == 0)
+			name = "combat jaws"
+			icon_state = "jaws"
+			desc = "The jaws of the law."
+			force = 12
+			attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
+			status = 1
+			to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
 		else
-			to_chat(user,"<span class='warning'>You fail to handcuff [C]!</span>")
-
+			name = "puppy jaws"
+			icon_state = "smalljaws"
+			desc = "The jaws of a small dog."
+			force = 5
+			attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
+			status = 0
+			if(R.emagged)
+				to_chat(user, "<span class='notice'>Your jaws are now [status ? "Combat" : "Pup'd"].</span>")
+	update_icon()
 
 //Boop
 
@@ -152,8 +127,10 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 
-/obj/item/analyzer/nose/afterattack(atom/target, mob/user)
+/obj/item/analyzer/nose/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	do_attack_animation(target, null, src)
 	user.visible_message("<span class='notice'>[user] [pick(attack_verb)] \the [target.name] with their nose!</span>")
 
@@ -172,8 +149,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	STR.max_combined_w_class = 5
 	STR.max_items = 1
 	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear, /obj/item/radio/intercom))
-//Tongue stuff
 
+//Tongue stuff
 /obj/item/soap/tongue
 	name = "synthetic tongue"
 	desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
@@ -189,12 +166,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 /obj/item/soap/tongue/New()
 	..()
 	item_flags |= NOBLUDGEON //No more attack messages
-
-/obj/item/trash/rkibble
-	name = "robo kibble"
-	desc = "A novelty bowl of assorted mech fabricator byproducts. Mockingly feed this to the sec-dog to help it recharge."
-	icon = 'icons/mob/dogborg.dmi'
-	icon_state= "kibble"
 
 /obj/item/soap/tongue/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
@@ -303,6 +274,13 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 			target.wash_cream()
 	return
 
+//Dogfood
+
+/obj/item/trash/rkibble
+	name = "robo kibble"
+	desc = "A novelty bowl of assorted mech fabricator byproducts. Mockingly feed this to the sec-dog to help it recharge."
+	icon = 'icons/mob/dogborg.dmi'
+	icon_state= "kibble"
 
 //Defibs
 
@@ -337,6 +315,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	var/laser
 	var/sleeper_g
 	var/sleeper_r
+	var/sleeper_nv
 
 #define MAX_K9_LEAP_DIST 4 //because something's definitely borked the pounce functioning from a distance.
 

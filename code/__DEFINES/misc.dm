@@ -66,8 +66,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define SHOES_LAYER				19
 #define GLOVES_LAYER			18
 #define EARS_LAYER				17
-#define SUIT_LAYER				16
-#define BODY_TAUR_LAYER			15
+#define BODY_TAUR_LAYER			16
+#define SUIT_LAYER				15
 #define GENITALS_FRONT_LAYER	14		//Draws some genitalia above clothes and the TAUR body if need be.
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
@@ -459,7 +459,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Filters
 #define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"border"=4,"color"="#04080FAA")
-#define EYE_BLUR list("type"="blur", "size"=3)
+#define EYE_BLUR(size) list("type"="blur", "size"=size)
 #define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav

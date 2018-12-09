@@ -132,6 +132,40 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/holobarrier_med
+	name = "PENLITE holobarrier projector"
+	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
+	build_type = PROTOLATHE
+	build_path = /obj/item/holosign_creator/medical
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
+	id = "holobarrier_med"
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/healthanalyzer_advanced
+	name = "Advanced Health Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
+	id = "healthanalyzer_advanced"
+	build_path = /obj/item/healthanalyzer/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/blood_bag
+	name = "Empty Blood Bag"
+	desc = "A small sterilized plastic bag for blood."
+	id = "blood_bag"
+	build_path = /obj/item/reagent_containers/blood
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 1500, MAT_PLASTIC = 3500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+////////////////////////////////////////
+//////////Defibrillator Tech////////////
+////////////////////////////////////////
+
 /datum/design/defibrillator
 	name = "Defibrillator"
 	id = "defibrillator"
@@ -150,6 +184,11 @@
 	build_path = /obj/item/wallframe/defib_mount
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
+/////////////////////////////////////////
+//////////Alien Surgery Tools////////////
+/////////////////////////////////////////
 
 /datum/design/alienscalpel
 	name = "Alien Scalpel"
@@ -211,15 +250,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/healthanalyzer_advanced
-	name = "advanced health analyzer"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
-	id = "healthanalyzer_advanced"
-	build_path = /obj/item/healthanalyzer/advanced
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500, MAT_SILVER = 2000, MAT_GOLD = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -577,12 +607,94 @@
 	surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
 
-/datum/design/holobarrier_med
-	name = "PENLITE holobarrier projector"
-	desc = "PENLITE holobarriers, a device that halts individuals with malicious diseases."
+/////////////////////////////////////////
+////////////Medical Prosthetics//////////
+/////////////////////////////////////////
+
+/datum/design/basic_l_arm
+	name = "Surplus prosthetic left arm"
+	desc = "Basic outdated and fragile prosthetic left arm."
+	id = "basic_l_arm"
 	build_type = PROTOLATHE
-	build_path = /obj/item/holosign_creator/medical
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 100) //a hint of silver since it can troll 2 antags (bad viros and sentient disease)
-	id = "holobarrier_med"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/l_arm/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_r_arm
+	name = "Surplus prosthetic right arm"
+	desc = "Basic outdated and fragile prosthetic left arm."
+	id = "basic_r_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/r_arm/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_l_leg
+	name = "Surplus prosthetic left leg"
+	desc = "Basic outdated and fragile prosthetic left leg."
+	id = "basic_l_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/l_leg/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/basic_r_leg
+	name = "Surplus prosthetic right leg"
+	desc = "Basic outdated and fragile prosthetic right leg."
+	id = "basic_r_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	construction_time = 20
+	build_path = /obj/item/bodypart/r_leg/robot/surplus
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_r_leg
+	name = "Advanced prosthetic right leg"
+	desc = "A renforced prosthetic right leg."
+	id = "adv_r_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/r_leg/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_l_leg
+	name = "Advanced prosthetic left leg"
+	desc = "A renforced prosthetic left leg."
+	id = "adv_l_leg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/l_leg/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_l_arm
+	name = "Advanced prosthetic left arm"
+	desc = "A renforced prosthetic left arm."
+	id = "adv_l_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/l_arm/robot/surplus_upgraded
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_r_arm
+	name = "Advanced prosthetic right arm"
+	desc = "A renforced prosthetic right arm."
+	id = "adv_r_arm"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3500, MAT_GOLD = 500, MAT_TITANIUM = 800)
+	construction_time = 40
+	build_path = /obj/item/bodypart/r_arm/robot/surplus_upgraded
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

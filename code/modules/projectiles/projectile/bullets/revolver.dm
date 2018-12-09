@@ -13,6 +13,11 @@
 // .38 (Detective's Gun)
 
 /obj/item/projectile/bullet/c38
+	name = ".38 rubber bullet"
+	damage = 15
+	stamina = 48
+
+/obj/item/projectile/bullet/c38lethal
 	name = ".38 bullet"
 	damage = 25
 
