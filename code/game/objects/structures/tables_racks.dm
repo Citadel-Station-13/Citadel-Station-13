@@ -298,7 +298,7 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
+	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black,	/obj/structure/table/wood/fancy/blackred,	/obj/structure/table/wood/fancy/monochrome)
 
 /obj/structure/table/wood/fancy/New()
 	// New() is used so that the /black subtype can override `icon` easily and
@@ -314,11 +314,28 @@
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
 
+/obj/structure/table/wood/fancy/blackred
+	icon =	'icons/obj/structures.dmi'
+	icon_state =	"fancy_table_blackred"
+	buildstack =	/obj/item/stack/tile/carpet/blackred
+
+/obj/structure/table/wood/fancy/blackred/New()
+	. = ..()
+	icon	=	'icons/obj/smooth_structures/fancy_table_blackred.dmi'
+
+/obj/structure/table/wood/fancy/monochrome
+	icon =	'icons/obj/structures.dmi'
+	icon_state	=	"fancy_table_monochrome"
+	buildstack	=	/obj/item/stack/tile/carpet/monochrome
+
+/obj/structure/table/wood/fancy/monochrome/New()
+	. = ..()
+	icon	=	'icons/obj/smooth_structures/fancy_table_monochrome.dmi'
+
 /obj/structure/table/wood/fancy/black/New()
 	. = ..()
 	// Ditto above.
 	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
-
 /*
  * Reinforced tables
  */
