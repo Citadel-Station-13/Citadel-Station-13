@@ -142,7 +142,6 @@
 			foam.start()
 		CHECK_TICK
 
-
 /datum/round_event/vent_clog/plasma_decon/announce()
 	priority_announce("We are deploying an experimental plasma decontamination system. Please stand away from the vents and do not breathe the smoke that comes out.", "Central Command Update")
 
