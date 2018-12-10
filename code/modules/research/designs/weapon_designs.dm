@@ -67,7 +67,6 @@
 	build_path = /obj/item/ammo_box/n762
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
