@@ -179,7 +179,7 @@
 
 /obj/item/kitchen/knife/scimitar
 	name = "Scimitar knife"
-	desc = "A knife used to cleanly butcher, its been modifed to be able to cut more meat then a normale knife. Do to the years of use its blade isnt as strong as it once was weaking!"
+	desc = "A knife used to cleanly butcher, its been modifed to be able to cut more meat then a normale knife. Do to the years of use its blade isnt as strong as it once was!"
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/kitchen/knife/scimiar/Initialize()
