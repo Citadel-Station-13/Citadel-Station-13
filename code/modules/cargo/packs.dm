@@ -1486,15 +1486,23 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
 	cost = 1000
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
 					/obj/item/stack/tile/carpet/black/fifty,
 					/obj/item/stack/tile/carpet/black/fifty)
 	crate_name = "premium carpet crate"
+
+/datum/supply_pack/service/carpet2
+	name = "Premium Carpet Crate #2"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "premium carpet crate #2"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -2257,7 +2265,9 @@
 					/obj/item/canvas/twentythreeXtwentythree,
 					/obj/item/storage/crayons,
 					/obj/item/storage/crayons,
-					/obj/item/toy/crayon/rainbow)
+					/obj/item/toy/crayon/rainbow,
+					/obj/item/toy/crayon/white,
+					/obj/item/toy/crayon/white)
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 

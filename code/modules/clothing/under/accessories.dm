@@ -139,7 +139,7 @@
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
-							desc += "<br>The inscription reads: [input] - [user.real_name]" 
+							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 
@@ -157,6 +157,16 @@
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
+/obj/item/clothing/accessory/medal/engineer
+	name	=	"\"Shift's Best Electrician\" award"
+	desc	=	"An award bestowed upon engineers who have excelled at keeping the station running in the best possible condition against all odds."
+	icon_state	=	"engineer"
+
+/obj/item/clothing/accessory/medal/greytide
+	name	=	"\"Greytider of the shift\" award"
+	desc	=	"An award for only the most annoying of assistants.  Locked doors mean nothing to you and behaving is not in your vocabulary"
+	icon_state	=	"greytide"
+
 /obj/item/clothing/accessory/medal/ribbon
 	name = "ribbon"
 	desc = "A ribbon"
@@ -166,6 +176,11 @@
 /obj/item/clothing/accessory/medal/ribbon/cargo
 	name = "\"cargo tech of the shift\" award"
 	desc = "An award bestowed only upon those cargotechs who have exhibited devotion to their duty in keeping with the highest traditions of Cargonia."
+
+/obj/item/clothing/accessory/medal/ribbon/medical_doctor
+	name	=	"\"doctor of the shift\" award"
+	desc	=	"An award bestowed only upon the most capable doctors who have upheld the Hippocratic Oath to the best of their ability"
+	icon_state	=	"medical_doctor"
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
@@ -280,7 +295,7 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
-	
+
 /obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
