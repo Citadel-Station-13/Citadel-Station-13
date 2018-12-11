@@ -38,7 +38,7 @@
 		return
 	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
 	awakening = 1
-
+	
 	spawn(30)
 		if(!QDELETED(src))
 			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
@@ -67,7 +67,7 @@
 	response_harm   = "splats"
 	speak_emote = list("chitters")
 	mouse_opacity = 2
-	density = FALSE
+	density = TRUE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
@@ -75,8 +75,8 @@
 	verb_exclaim = "chitters loudly"
 	verb_yell = "chitters loudly"
 	var/squish_chance = 50
+	var/projectile_density = TRUE		//griffons get shot
 	del_on_death = 1
-
 
 /mob/living/simple_animal/banana_spider/Initialize()
 	. = ..()
@@ -85,9 +85,8 @@
 		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	GLOB.poi_list |= src
 
-
 /mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
-	if(src.key)
+	if(key)			//please stop using src. without a good reason.
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age))
@@ -104,11 +103,13 @@
 
 /mob/living/simple_animal/banana_spider/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 40)
 
-
-/mob/living/simple_animal/banana_spider/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/banana_spider/Crossed(atom/movable/AM)		//no /var in proc headers
 	. = ..()
+	if(istype(AM, /obj/item/projectile) && projectile_density)		//forced projectile density
+		var/obj/item/projectile/P = AM
+		P.Bump(src)
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
@@ -147,4 +148,4 @@
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 20)
