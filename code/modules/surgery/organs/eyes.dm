@@ -28,6 +28,7 @@
 			eye_color = HMN.eye_color
 		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+			see_in_dark = 8
 	M.update_tint()
 	owner.update_sight()
 

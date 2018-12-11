@@ -128,8 +128,8 @@ Contains:
 
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
+	name = "royal tricorne"
+	desc = "A thick, space-proof tricorne from the royal Space Queen. It's lined with a layer of reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
@@ -139,13 +139,14 @@ Contains:
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	name = "pirate bandana"
+	name = "royal bandana"
+	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
 
 /obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
+	name = "royal waistcoat "
+	desc = "A royal, space-proof waistcoat. The inside of it is lined with reflective kevlar."
 	icon_state = "pirate"
 	item_state = "pirate"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -191,6 +192,7 @@ Contains:
 	icon_state = "ert_security"
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
@@ -204,6 +206,7 @@ Contains:
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
@@ -218,6 +221,7 @@ Contains:
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -225,6 +229,7 @@ Contains:
 	item_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
@@ -343,6 +348,7 @@ Contains:
 	slowdown = 2
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 0, "acid" = 0)
 	strip_delay = 65
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))

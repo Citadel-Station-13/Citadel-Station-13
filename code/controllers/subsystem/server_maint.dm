@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(server_maint)
 	if(!resumed)
 		if(listclearnulls(GLOB.clients))
 			log_world("Found a null in clients list!")
+		if(listclearnulls(GLOB.player_list))
+			log_world("Found a null in player list!")
 		src.currentrun = GLOB.clients.Copy()
 
 	var/list/currentrun = src.currentrun

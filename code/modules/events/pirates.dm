@@ -148,6 +148,7 @@
 		new /obj/item/stack/spacecash/c200(drop_location())
 		credits_stored -= 200
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+	credits_stored = 0
 
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()

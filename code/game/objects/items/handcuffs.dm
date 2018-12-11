@@ -94,6 +94,8 @@
 	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
+	if(iscyborg(user))
+		playsound(user, "law", 50, 0)
 	return
 
 /obj/item/restraints/handcuffs/sinew

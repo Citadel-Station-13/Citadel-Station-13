@@ -20,7 +20,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/extinguisher, /obj/item/crowbar)
 	slowdown = 1
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -29,6 +30,7 @@
 	strip_delay = 60
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
@@ -83,7 +85,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 20,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -91,6 +93,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 
 /obj/item/clothing/head/bomb_hood/security
@@ -143,6 +146,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 60, "rad" = 100, "fire" = 30, "acid" = 30)
 	strip_delay = 60
 	equip_delay_other = 60
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAUR
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS
+	tauric = TRUE		//Citadel Add for tauric hardsuits

@@ -54,7 +54,7 @@
 	user.update_inv_head() //So the mob overlay updates
 
 	if(on)
-		set_light(brightness_on)
+		set_light(brightness_on, 0.8, "#FFCC66")
 	else
 		set_light(0)
 

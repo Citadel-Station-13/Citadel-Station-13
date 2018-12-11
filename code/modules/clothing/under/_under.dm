@@ -65,6 +65,8 @@
 		var/mob/living/carbon/human/H = user
 		if(DIGITIGRADE in H.dna.species.species_traits)
 			suit_style = DIGITIGRADE_SUIT_STYLE
+		else
+			suit_style = NORMAL_SUIT_STYLE
 		H.update_inv_w_uniform()
 
 	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))

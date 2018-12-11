@@ -250,6 +250,8 @@ SUBSYSTEM_DEF(ticker)
 	if(!GLOB.Debug2)
 		if(!can_continue)
 			log_game("[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			send2irc("SSticker", "[mode.name] failed pre_setup, cause: [mode.setup_error]")
+			message_admins("<span class='notice'>[mode.name] failed pre_setup, cause: [mode.setup_error]</span>")
 			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up [GLOB.master_mode].</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
@@ -447,9 +449,12 @@ SUBSYSTEM_DEF(ticker)
 	maprotatechecked = 1
 
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
-	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)))
+	if (!prob((world.time/600)*CONFIG_GET(number/maprotatechancedelta)) && CONFIG_GET(flag/tgstyle_maprotation))
 		return
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	if(CONFIG_GET(flag/tgstyle_maprotation))
+		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	else
+		SSvote.initiate_vote("map","server",TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING

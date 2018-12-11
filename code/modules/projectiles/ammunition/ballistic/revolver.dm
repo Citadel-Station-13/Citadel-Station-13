@@ -17,7 +17,12 @@
 // .38 (Detective's Gun)
 
 /obj/item/ammo_casing/c38
-	name = ".38 bullet casing"
-	desc = "A .38 bullet casing."
+	name = ".38 rubber bullet casing"
+	desc = "A .38 rubber bullet casing."
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/c38
+
+/obj/item/ammo_casing/c38/lethal
+	name = ".38 bullet casing"
+	desc = "A .38 bullet casing"
+	projectile_type = /obj/item/projectile/bullet/c38lethal

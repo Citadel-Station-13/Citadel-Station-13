@@ -5,7 +5,7 @@
 	click_gather = TRUE
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 100
-	max_items = 50
+	max_items = 75
 	display_numerical_stacking = TRUE
 
 /datum/component/storage/concrete/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
@@ -22,7 +22,7 @@
 	click_gather = TRUE
 	max_w_class = WEIGHT_CLASS_BULKY  // can fit vending refills
 	max_combined_w_class = 800
-	max_items = 400
+	max_items = 325
 	display_numerical_stacking = TRUE
 
 /datum/component/storage/concrete/bluespace/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)

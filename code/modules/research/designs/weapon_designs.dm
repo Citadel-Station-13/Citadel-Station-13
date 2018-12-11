@@ -8,6 +8,11 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/c38/sec/lethal
+	name = "Speed Loader (.38)"
+	id = "sec_38lethal"
+	build_path = /obj/item/ammo_box/c38/lethal
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE
