@@ -642,9 +642,9 @@
 	id = "oldguns"
 	display_name = "Russian Ballistics"
 	description = "Old russian ballistics."
-	design_ids = list("pistolm9mm", "bolt_clip", "n762sl")
-	prereq_ids = list("ballistic_weapons", "explosive_weapons")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000) //Just russian fireaims
+	design_ids = list("pistolm9mm", "bolt_clip")
+	prereq_ids = list("ballistic_weapons", "syndicate_basic", "explosive_weapons")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500) //Just russian fireaims
 	export_price = 7000
 
 /datum/techweb_node/tech_shell
