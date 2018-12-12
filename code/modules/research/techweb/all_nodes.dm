@@ -156,7 +156,7 @@
 	display_name = "DELUXE PDA Tech"
 	description = "DELUXE Data chips to place in PDAs for more functions. Meant for Heads and higher ranking crew."
 	prereq_ids = list("emp_adv", "adv_pda")
-	design_ids = list("head_cart", "hos_cart", "cmo_cart", "hop_cart", "ce_cart", "qm_cart", "rd_cart")
+	design_ids = list("head_cart", "hos_cart", "cmo_cart", "ce_cart", "qm_cart", "rd_cart")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/headset_keys
@@ -172,7 +172,7 @@
 	display_name = "Advanced Headset Keys"
 	description = "Encrypt more than one channel!"
 	prereq_ids = list("adv_datatheory", "headset_keys")
-	design_ids = list("medsci_headset", "mining_headset", "robo_headset")
+	design_ids = list("medsci_headset", "mining_headset", "rob_headset")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////engineering tech/////////////////////////
