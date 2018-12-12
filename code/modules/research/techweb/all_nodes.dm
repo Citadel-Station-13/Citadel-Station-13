@@ -624,7 +624,7 @@
 	id = "advanced_ballistics"
 	display_name = "Advanced NT Ballistics"
 	description = "Advanced Ballisticfirepower for NanoTrasen weaponds."
-	design_ids = list("m45", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx", "50aem")
+	design_ids = list("m45", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx", "deagle")
 	prereq_ids = list("ballistic_weapons", "explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000) // Only has NT ammo
 	export_price = 7000
