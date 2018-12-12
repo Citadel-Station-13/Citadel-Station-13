@@ -624,7 +624,7 @@
 	id = "advanced_ballistics"
 	display_name = "Advanced NT Ballistics"
 	description = "Advanced Ballisticfirepower for NanoTrasen weaponds."
-	design_ids = list("m45", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx", "50ae")
+	design_ids = list("m45", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx", "50aem")
 	prereq_ids = list("ballistic_weapons", "explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000) // Only has NT ammo
 	export_price = 7000
@@ -633,7 +633,7 @@
 	id = "advanced_illegal_ballistics"
 	display_name = "Advanced Illegal Ballistics"
 	description = "Advanced Ballistic for Illegal weaponds."
-	design_ids = list("10mm","10mmap","10mminc","10mmhp", "a357")
+	design_ids = list("10mm","10mmap","10mminc","10mmhp", "a357sl")
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000) //Just Synda fireaims
 	export_price = 7000
@@ -642,7 +642,7 @@
 	id = "oldguns"
 	display_name = "Russian Ballistics"
 	description = "Old russian ballistics."
-	design_ids = list("pistolm9mm", "bolt_clip", "n762")
+	design_ids = list("pistolm9mm", "bolt_clip", "n762sl")
 	prereq_ids = list("ballistic_weapons", "explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000) //Just russian fireaims
 	export_price = 7000
