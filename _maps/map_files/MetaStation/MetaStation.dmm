@@ -1965,7 +1965,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "aes" = (
@@ -3549,6 +3548,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/armory,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "agS" = (

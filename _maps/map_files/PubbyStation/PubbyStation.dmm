@@ -2846,6 +2846,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "aiP" = (
@@ -3015,7 +3016,6 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "ajh" = (
