@@ -413,50 +413,50 @@
 ////////////Headset Keys/////////////////
 /////////////////////////////////////////
 
-/datum/design/headset_sci
-	name = "Sci cription Key"
-	desc = "A headset key for sci channle."
-	id = "headset_sec"
+/datum/design/sci_headset
+	name = "Sci encryption Key"
+	desc = "A headset key for sci channel."
+	id = "sci_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_sci
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/headset_eng
-	name = "Engineering cription Key"
-	desc = "A headset key for Engineering channle."
-	id = "headset_eng"
+/datum/design/eng_headset
+	name = "Engineering encryption Key"
+	desc = "A headset key for Engineering channel."
+	id = "eng_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_eng
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/headset_med
+/datum/design/med_headset
 	name = "Medical cription Key"
-	desc = "A headset key for Medical channle."
-	id = "headset_med"
+	desc = "A headset key for Medical channel."
+	id = "med_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_med
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/headset_cargo
-	name = "Cargo cription Key"
-	desc = "A headset key for Cargo channle."
-	id = "headset_cargo"
+/datum/design/cargo_headset
+	name = "Cargo encryption Key"
+	desc = "A headset key for Cargo channel."
+	id = "cargo_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_cargo
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/headset_service
+/datum/design/useless_headset
 	name = "Service cription Key"
-	desc = "A headset key for Service channle."
-	id = "headset_service"
+	desc = "A headset key for Service channel."
+	id = "useless_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/encryptionkey/headset_service
@@ -464,8 +464,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/sec_headset
-	name = "Sec cription Key"
-	desc = "A headset key for Sec channle."
+	name = "Sec encryption Key"
+	desc = "A headset key for Sec channel."
 	id = "sec_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
@@ -473,30 +473,30 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/headset_mining
-	name = "Mine cription Key"
-	desc = "A headset key that has both Sci and Cargo channles."
-	id = "headset_mining"
+/datum/design/mining_headset
+	name = "Miner encryption Key"
+	desc = "A headset key that has both Sci and Cargo channels."
+	id = "mining_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/encryptionkey/headset_mining
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/headset_rob
-	name = "Robotic cription Key"
-	desc = "A headset key that has both Sci and Engi channles."
-	id = "headset_rob"
+/datum/design/rob_headset
+	name = "Robotic encryption Key"
+	desc = "A headset key that has both Sci and Engi channels."
+	id = "rob_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/encryptionkey/headset_rob
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/headset_medsci
-	name = "MedSci cription Key"
-	desc = "A headset key that has both Sci and Medical channles."
-	id = "headset_medsci"
+/datum/design/medsci_headset
+	name = "MedSci encryption Key"
+	desc = "A headset key that has both Sci and Medical channels."
+	id = "Mmedsci_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/encryptionkey/headset_medsci
@@ -507,200 +507,200 @@
 ////////////PDA Cartrige/////////////////
 /////////////////////////////////////////
 
-/datum/design/cart_clown
+/datum/design/clown_cart
 	name = "Clown PDA Cartridge"
 	desc = "HONK."
-	id = "cart_clown"
+	id = "clown_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 500, MAT_GOLD = 500, MAT_BANANIUM = 160)
 	build_path = /obj/item/cartridge/virus/clown
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/cart_mime
+/datum/design/mime_cart
 	name = "Mime PDA Cartridge"
 	desc = "..."
-	id = "cart_mime"
+	id = "mime_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500, MAT_BANANIUM = 1) //There form the Clown Planit
 	build_path = /obj/item/cartridge/virus/mime
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/cart_jan
+/datum/design/jan_cart
 	name = "Janitor PDA Cartridge"
 	desc = "Rather clean looking PDA Cartridge."
-	id = "cart_jan"
+	id = "jan_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path =/obj/item/cartridge/janitor
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/cart_cura
+/datum/design/cura_cart
 	name = "Curator PDA Cartridge"
 	desc = "A rather dull and dusty PDA Cartridge blueprint."
-	id = "cart_cura"
+	id = "cura_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path =/obj/item/cartridge/curator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/cart_basic
+/datum/design/basic_cart
 	name = "Basic PDA Cartridge"
 	desc = "A basic PDA cartidge. It only has a signal function."
-	id = "cart_basic"
+	id = "basic_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 500)
 	build_path = /obj/item/cartridge/signal
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
-/datum/design/cart_law
+/datum/design/law_cart
 	name = "Lawyer PDA Cartridge"
 	desc = "PDA Cartridge for Lawyers."
-	id = "cart_law"
+	id = "law_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/cartridge/lawyer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cart_sec
+/datum/design/sec_cart
 	name = "Sec PDA Cartridge"
 	desc = "Basic PDA Cartridge for Sec."
-	id = "cart_sec"
+	id = "sec_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/cartridge/security
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cart_dect
+/datum/design/dect_cart
 	name = "Detective PDA Cartridge"
 	desc = "PDA cartridge that smells of smokes and whisky."
-	id = "cart_dect"
+	id = "dect_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_PLASTIC = 500, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/cartridge/detective
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cart_hos
+/datum/design/hos_cart
 	name = "HOS PDA Cartridge"
 	desc = "R.O.B.U.S.T. DELUXE cartridge. For HOS and righer ranking officer."
-	id = "cart_hos"
+	id = "hos_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/hos
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cart_head
+/datum/design/head_cart
 	name = "Head PDA Cartridge"
 	desc = "PDA cartridge for Heads of Staff and righer ranking officer."
-	id = "cart_head"
+	id = "head_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/head
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
-/datum/design/cart_med
+/datum/design/med_cart
 	name = "Medical PDA Cartridge"
 	desc = "PDA cartridge for Medical. Has a built in health scanner."
-	id = "cart_med"
+	id = "med_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/medical
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cart_chem
+/datum/design/chem_cart
 	name = "Chemist PDA Cartridge"
 	desc = "PDA cartridge for Chimists. There's a plastic cover on it to help protect it form acid or other chemicals"
-	id = "cart_chem"
+	id = "chem_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/chemistry
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cart_cmo
+/datum/design/cmo_cart
 	name = "CMO PDA Cartridge"
 	desc = "PDA cartridge for the CMO, theres cat hair all over it."
-	id = "cart_cmo"
+	id = "cmo_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/cmo
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cart_eng
+/datum/design/eng_cart
 	name = "Engineering PDA Cartridge"
 	desc = "PDA cartridge for Engineerings."
-	id = "cart_eng"
+	id = "eng_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/engineering
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/cart_atmos
+/datum/design/atmos_cart
 	name = "Engineering PDA Cartridge"
 	desc = "PDA cartridge for Atmos Techs."
-	id = "cart_atmos"
+	id = "atmos_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/atmos
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/cart_ce
+/datum/design/ce_cart
 	name = "CE PDA Cartridge"
 	desc = "PDA cartridge for the CE. It was never made to withstand a SME or a Tesla..."
-	id = "cart_ce"
+	id = "ce_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/ce
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/cart_sci
+/datum/design/sci_cart
 	name = "Sci PDA Cartridge"
 	desc = "PDA cartridge for the Sci."
-	id = "cart_sci"
+	id = "sci_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/signal/toxins
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/cart_robo
+/datum/design/robo_cart
 	name = "Robotic PDA Cartridge"
 	desc = "PDA cartridge for roboticist. Theres a layer of oil on it."
-	id = "cart_robo"
+	id = "robo_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/roboticist
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/cart_rd
+/datum/design/rd_cart
 	name = "RD PDA Cartridge"
 	desc = "PDA cartridge for the RD and other nerds of higher rank."
-	id = "cart_rd"
+	id = "rd_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/cartridge/rd
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/cart_qm
+/datum/design/qm_cart
 	name = "QM PDA Cartridge"
 	desc = "PDA cartridge for the QM and others of higher rank in Cargonia."
-	id = "cart_qm"
+	id = "qm_cart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/cartridge/quartermaster
