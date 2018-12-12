@@ -40,7 +40,7 @@
 	var/string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
-	desc = "You see a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long."
+	desc = "You see a [lowershape] penis. You estimate it's about [round(length/98.425, 0.0001)] stor[length > 1 ? "ies" : "y"] tall."
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
