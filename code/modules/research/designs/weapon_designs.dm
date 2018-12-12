@@ -51,11 +51,11 @@
 	build_path = /obj/item/ammo_box/a357
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/deagle
+/datum/design/deagle //The mag not the gun
 	name = "50ae mag"
 	id = "deagle"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 600000, MAT_TITANIUM = 100000)
+	materials = list(MAT_METAL = 60000, MAT_TITANIUM = 10000)
 	build_path = /obj/item/ammo_box/magazine/m50
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
