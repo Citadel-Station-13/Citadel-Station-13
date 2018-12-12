@@ -496,7 +496,7 @@
 /datum/design/medsci_headset
 	name = "MedSci encryption Key"
 	desc = "A headset key that has both Sci and Medical channels."
-	id = "Mmedsci_headset"
+	id = "medsci_headset"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_PLASTIC = 1500, MAT_SILVER = 2500, MAT_GOLD = 2500)
 	build_path = /obj/item/encryptionkey/headset_medsci
