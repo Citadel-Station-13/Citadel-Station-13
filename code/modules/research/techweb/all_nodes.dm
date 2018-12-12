@@ -135,44 +135,44 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
-/datum/techweb_node/pda
-	id = "pda"
+/datum/techweb_node/normale_pda
+	id = "normale_pda"
 	display_name = "PDA Tech"
 	description = "Data chips to place in PDAs for more functions."
 	prereq_ids = list("datatheory", "telecomms")
-	design_ids = list("cart_eng", "cart_med", "cart_sci", "cart_sec", "cart_jan", "cart_cura", "cart_law", "cart_basic")
+	design_ids = list("eng_cart", "med_cart", "sci_cart", "sec_cart", "jan_cart", "cura_cart", "law_cart", "basic_cart")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/adv_pda
 	id = "adv_pda"
 	display_name = "Advanced PDA Tech"
-	description = "Data chips to place in PDAs for more functions. These have even more fuctions then before!"
-	prereq_ids = list("adv_engi", "pda")
-	design_ids = list("cart_chem", "cart_atmos", "cart_dect", "cart_robo")
+	description = "Data chips to place in PDAs for more functions. These have even more fuctions than before!"
+	prereq_ids = list("adv_engi", "normale_pda")
+	design_ids = list("chem_cart", "atmos_cart", "dect_cart", "robo_cart")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/deluxe_pda
-	id = "deluxe_pda"
+/datum/techweb_node/pda_deluxe
+	id = "pda_deluxe"
 	display_name = "DELUXE PDA Tech"
-	description = "DELUXE Data chips to place in PDAs for more functions. Ment for Heads and higher ranking crew."
+	description = "DELUXE Data chips to place in PDAs for more functions. Meant for Heads and higher ranking crew."
 	prereq_ids = list("emp_adv", "adv_pda")
-	design_ids = list("cart_head", "cart_hos", "cart_cmo", "cart_hop", "cart_ce", "cart_qm", "cart_rd")
+	design_ids = list("head_cart", "hos_cart", "cmo_cart", "hop_cart", "ce_cart", "qm_cart", "rd_cart")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 
 /datum/techweb_node/headset_keys
 	id = "headset_keys"
 	display_name = "Headset Keys"
-	description = "Privet channles that people use."
+	description = "Privet channels that people use."
 	prereq_ids = list("adv_engi", "telecomms")
-	design_ids = list("sec_headset", "headset_eng", "headset_med", "headset_sci", "headset_service", "headset_cargo")
+	design_ids = list("sec_headset", "eng_headset", "med_headset", "sci_headset", "useless_headset", "cargo_headset")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/multy_keys
 	id = "multy_keys"
 	display_name = "Advanced Headset Keys"
-	description = "Headset keys that incrip more then one channle."
+	description = "Encrypt more than one channel!"
 	prereq_ids = list("adv_datatheory", "headset_keys")
-	design_ids = list("headset_medsci", "headset_mining", "headset_rob")
+	design_ids = list("medsci_headset", "mining_headset", "robo_headset")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////engineering tech/////////////////////////
@@ -397,7 +397,7 @@
 	description = "Honk?!"
 	prereq_ids = list("base")
 	design_ids = list("air_horn", "honker_main", "honker_peri", "honker_targ", "honk_chassis", "honk_head", "honk_torso", "honk_left_arm", "honk_right_arm",
-	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown", "cart_clown", "cart_mime") // Silent gasps!
+	"honk_left_leg", "honk_right_leg", "mech_banana_mortar", "mech_mousetrap_mortar", "mech_honker", "mech_punching_face", "implant_trombone", "borg_transform_clown", "clown_cart", "mime_cart") // Silent gasps!
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
