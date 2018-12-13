@@ -38,15 +38,25 @@
 	var/obj/item/heirloom_type
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
+			heirloom_type = /obj/item/paint/anycolor
 			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
-			heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+			heirloom_type = /obj/item/toy/dummy
+			heirloom_type = /obj/item/paint/anycolor
+		if("Cook")
+			heirloom_type = /obj/item/kitchen/knife/scimitar
+		if("Medical Doctor")
+			heirloom_type = /obj/item/healthanalyzer/advanced
+		if("Station Engineer")
+			heirloom_type = /obj/item/wirecutters/brass
+		if("Atmospheric Technician")
+			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
 			heirloom_type = /obj/item/gavelhammer
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
-			heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			heirloom_type = /obj/item/clothing/accessory/medal/silver/valor
 		if("Scientist")
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
