@@ -162,6 +162,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/drapes
+	name = "Plastic Drapes"
+	desc = "Some plastic drapes for surgery"
+	id = "drapes"
+	build_path = /obj/item/surgical_drapes
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_PLASTIC = 3500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 ////////////////////////////////////////
 //////////Defibrillator Tech////////////
 ////////////////////////////////////////
