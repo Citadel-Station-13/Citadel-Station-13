@@ -321,7 +321,7 @@
 /obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		if(F.on)
-			set_light(F.brightness_on)
+			set_light(F.brightness_on, F.flashlight_power, F.light_color)
 		else
 			set_light(0)
 		update_icon()

@@ -137,6 +137,7 @@
 	else
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(A))
+		var/stam_gain = 0
 		swiping = TRUE
 		var/static/list/scythe_slash_angles = list(0, 45, 90, -45, -90)
 		for(var/i in scythe_slash_angles)
@@ -144,7 +145,10 @@
 			for(var/obj/structure/spacevine/V in T)
 				if(user.Adjacent(V))
 					melee_attack_chain(user, V)
+					stam_gain += 5					//should be hitcost
 		swiping = FALSE
+		stam_gain += 2								//Initial hitcost
+		user.adjustStaminaLoss(-stam_gain)
 
 // *************************************
 // Nutrient defines for hydroponics

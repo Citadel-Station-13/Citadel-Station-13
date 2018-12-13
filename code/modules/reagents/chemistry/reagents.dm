@@ -27,6 +27,10 @@
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
+	var/addiction_stage1_end = 10
+	var/addiction_stage2_end = 20
+	var/addiction_stage3_end = 30
+	var/addiction_stage4_end = 40
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 
@@ -88,29 +92,29 @@
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_light, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_medium, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_severe, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_critical, name)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return

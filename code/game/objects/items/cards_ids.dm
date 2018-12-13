@@ -91,10 +91,37 @@
 	return
 
 /obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
-	A.emag_act(user)
+	//Citadel changes: modular code misfiring, so we're bypassing into main code.
+	if(!uses)
+		user.visible_message("<span class='warning'>[src] emits a weak spark. It's burnt out!</span>")
+		playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+		return
+	else if(uses <= 3)
+		playsound(src, 'sound/effects/light_flicker.ogg', 30, 1)	//Tiiiiiiny warning sound to let ya know your emag's almost dead
+
+	if(isturf(A))
+		return
+	if(istype(A,/obj/item/storage/lockbox))
+		A.emag_act(user)
+		uses = max(uses - 1, 0)
+		if(!uses)
+			user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
+			playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+	if(istype(A,/obj/item/storage))
+		return
+	if(!(isobj(A) || issilicon(A) || isbot(A) || isdrone(A)))
+		return
+	else
+		A.emag_act(user)
+		uses = max(uses - 1, 0)
+		if(!uses)
+			user.visible_message("<span class='warning'>[src] fizzles and sparks. It seems like it's out of charges.</span>")
+			playsound(src, 'sound/effects/light_flicker.ogg', 100, 1)
+
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
@@ -364,7 +391,7 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/mining
 	name = "mining ID"
-	access = list(ACCESS_MINERAL_STOREROOM) // CITADEL CHANGE removes golem's ability to get on the station willy nilly.
+	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"
@@ -383,25 +410,27 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/away/old
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(ACCESS_AWAY_GENERAL)
+	icon_state = "centcom"
 
 /obj/item/card/id/away/old/sec
-	name = "Security Officer ID"
-	desc = "Security officers ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Security Officer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
+	assignment = "Charlie Station Security Officer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old/sci
-	name = "Scientist ID"
-	desc = "Scientists ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Scientist's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	assignment = "Charlie Station Scientist"
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away/old/eng
-	name = "Engineer ID"
-	desc = "Engineers ID card."
-	icon_state = "centcom"
+	name = "Charlie Station Engineer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	assignment = "Charlie Station Engineer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
-	desc = "Special ID card to allow access to APCs."
-	icon_state = "centcom"
+	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)

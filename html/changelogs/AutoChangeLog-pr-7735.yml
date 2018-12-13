@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Airlock light overlays are now on the above lighting layer. This means airlock lights can actually be seen in the dark now."

@@ -25,12 +25,16 @@
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
 		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
+		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			750),
 		new /datum/data/mining_equipment("Stabilizing Serum",			/obj/item/hivelordstabilizer,										750),
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
 		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/twohanded/required/kinetic_crusher,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",			/obj/item/gun/energy/kinetic_accelerator,							750),
+		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									800),
+		new /datum/data/mining_equipment("Burn First-Aid Kit",			/obj/item/storage/firstaid/fire,									800),
+		new /datum/data/mining_equipment("First-Aid Kit",				/obj/item/storage/firstaid/regular,											800),
 		new /datum/data/mining_equipment("Advanced Scanner",			/obj/item/t_scanner/adv_mining_scanner,								800),
 		new /datum/data/mining_equipment("Resonator",					/obj/item/resonator,												800),
 		new /datum/data/mining_equipment("Mini Extinguisher",			/obj/item/extinguisher/mini,										1000),
@@ -146,6 +150,9 @@
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
+	if(istype(I, /obj/item/suit_voucher))
+		RedeemSVoucher(I, user)
+		return
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
@@ -231,12 +238,19 @@
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/suit_voucher
+	name = "suit voucher"
+	desc = "A token to redeem a new suit. Use it on a mining equipment vendor."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_voucher"
+	w_class = WEIGHT_CLASS_TINY
+
 /**********************Mining Point Card**********************/
 
 /obj/item/card/mining_point_card
 	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
-	icon_state = "data"
+	icon_state = "data_1"
 	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
@@ -258,9 +272,10 @@
 /obj/item/card/mining_access_card
 	name = "mining access card"
 	desc = "A small card, that when used on any ID, will add mining access."
-	icon_state = "data"
+	icon_state = "data_1"
 
 /obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
 	if(istype(AM, /obj/item/card/id) && proximity)
 		var/obj/item/card/id/I = AM
 		I.access |=	ACCESS_MINING
@@ -269,7 +284,6 @@
 		I.access |= ACCESS_CARGO
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
-	..()
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
@@ -284,3 +298,24 @@
 	new /obj/item/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/mining_access_card(src)
+
+
+//CITADEL ADDITIONS BELOW
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
+	var/items = list("Exo-suit", "SEVA suit")
+
+	var/selection = input(redeemer, "Pick your suit.", "Suit Voucher Redemption") as null|anything in items
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Exo-suit")
+			new /obj/item/clothing/suit/hooded/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
+		if("SEVA suit")
+			new /obj/item/clothing/suit/hooded/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
+
+	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)
+	qdel(voucher)

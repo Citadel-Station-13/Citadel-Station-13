@@ -178,3 +178,21 @@
 /obj/item/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+
+/obj/item/storage/lockbox/medal/engineering
+	name	=	"engineering medal box"
+	desc	=	"A locked box used to store medals to be given to the members of the engineering department."
+	req_access	=	list(ACCESS_CE)
+
+/obj/item/storage/lockbox/medal/engineering/PopulateContents()
+	for(var/i	in	1	to	3)
+		new	/obj/item/clothing/accessory/medal/engineer(src)
+
+/obj/item/storage/lockbox/medal/medical
+	name	=	"medical medal box"
+	desc	=	"A locked box used to store medals to be given to the members of the medical department."
+	req_access	=	list(ACCESS_CMO)
+
+/obj/item/storage/lockbox/medal/medical/PopulateContents()
+	for(var/i	in	1	to	3)
+		new	/obj/item/clothing/accessory/medal/ribbon/medical_doctor(src)

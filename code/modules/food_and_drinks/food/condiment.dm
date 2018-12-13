@@ -49,7 +49,7 @@
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
 		user.visible_message("<span class='warning'>[user] feeds [M] from [src].</span>")
-		add_logs(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(10/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
@@ -58,6 +58,7 @@
 	return 1
 
 /obj/item/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
@@ -146,6 +147,7 @@
 	return (TOXLOSS)
 
 /obj/item/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(isturf(target))
@@ -156,7 +158,6 @@
 		reagents.remove_reagent("sodiumchloride", 2)
 		new/obj/effect/decal/cleanable/salt(target)
 		return
-	..()
 
 /obj/item/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -241,6 +242,7 @@
 	return
 
 /obj/item/reagent_containers/food/condiment/pack/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 

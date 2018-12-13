@@ -1,6 +1,8 @@
 /mob/living/carbon/adjustStaminaLossBuffered(amount, updating_stamina = 1)
 	if(status_flags & GODMODE)
 		return 0
+	if(CONFIG_GET(flag/disable_stambuffer))
+		return
 	var/directstamloss = (bufferedstam + amount) - stambuffer
 	if(directstamloss > 0)
 		adjustStaminaLoss(directstamloss)
@@ -9,12 +11,10 @@
 	if(updating_stamina)
 		update_health_hud()
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE, affected_zone = BODY_ZONE_CHEST)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(amount > 0)
-		amount = CLAMP(amount, 0, 200 - getStaminaLoss())
-		take_overall_damage(0, 0, amount, updating_health)
-	else
-		heal_overall_damage(0, 0, abs(amount), FALSE, FALSE, updating_health)
+	apply_damage(amount > 0 ? amount*incomingstammult : amount, STAMINA, affected_zone)
+	if(recoveringstam && amount > 20)
+		incomingstammult = max(0.01, incomingstammult/(amount*0.05))
 	return amount

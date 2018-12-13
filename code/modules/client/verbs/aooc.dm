@@ -45,8 +45,7 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in AOOC: [msg]")
 			return
 
-	log_talk(mob,"(AOOC) [key_name(src)] : [raw_msg]",LOGOOC)
-	mob.log_message("(AOOC) [key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
+	mob.log_talk(raw_msg,LOG_OOC, tag="(AOOC)")
 
 	var/keyname = key
 	if(prefs.unlock_content)
@@ -57,7 +56,7 @@
 	var/antaglisting = list()
 
 	for(var/datum/mind/M in get_antag_minds(/datum/antagonist))
-		if(!M.current || !M.current.client)
+		if(!M.current || !M.current.client || isnewplayer(M.current))
 			continue
 		antaglisting |= M.current.client
 
@@ -105,7 +104,7 @@ GLOBAL_VAR_INIT(antag_ooc_colour, AOOC_COLOR)
 	var/antaglisting = list()	//Only those who have access to AOOC need to know if it's enabled or not.
 
 	for(var/datum/mind/M in get_antag_minds(/datum/antagonist))
-		if(!M.current || !M.current.client)
+		if(!M.current || !M.current.client || isnewplayer(M.current))
 			continue
 		antaglisting |= M.current.client
 

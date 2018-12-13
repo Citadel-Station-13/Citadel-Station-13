@@ -40,3 +40,18 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
+
+/datum/chemical_reaction/skooma
+	name = "skooma"
+	id = "skooma"
+	results = list("skooma" = 2, "moonshine" = 4, "sugar" = 4)
+	required_temp = 280
+	is_cold_recipe = TRUE
+	required_reagents = list("moonsugar" = 10, "morphine" = 5)
+
+/datum/chemical_reaction/skoomarevert
+	name = "skoomarevert"
+	id = "skoomarevert"
+	results = list("moonsugar" = 1, "morphine" = 2.5)
+	required_temp = 315 //a little above normal body temperature
+	required_reagents = list("skooma" = 1)

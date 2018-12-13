@@ -9,13 +9,13 @@
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30		// three seconds
-
-/obj/item/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
-	return // thanks inheritance again
+	dissolvable = FALSE
 
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
+		if(!L.can_inject(user, 1, affecting)) //like monkey code, thickmaterial stops patches
+			return
 		if(!affecting)
 			to_chat(user, "<span class='warning'>The limb is missing!</span>")
 			return

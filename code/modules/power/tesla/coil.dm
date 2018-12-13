@@ -25,7 +25,7 @@
 
 /obj/machinery/power/tesla_coil/Initialize()
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src) //CITADEL EDIT, Kevinz you cheaty fuccboi.
+	wires = new /datum/wires/tesla_coil(src)
 	linked_techweb = SSresearch.science_tech
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -67,11 +67,6 @@
 		return
 
 	return ..()
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/power/tesla_coil/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return ..()
 
 /obj/machinery/power/tesla_coil/tesla_act(power, tesla_flags, shocked_targets)
 	if(anchored && !panel_open)
@@ -173,12 +168,6 @@
 		return
 
 	return ..()
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/power/grounding_rod/attack_hand(mob/user)
-	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
-		return
-	. = ..()
 
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)

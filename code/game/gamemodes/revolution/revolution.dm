@@ -26,6 +26,7 @@
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
+	var/completioncheckstart
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 	var/end_when_heads_dead = TRUE
@@ -60,6 +61,8 @@
 	if(headrev_candidates.len < required_enemies)
 		setup_error = "Not enough headrev candidates"
 		return FALSE
+
+	completioncheckstart = world.time + 10 MINUTES
 
 	return TRUE
 
@@ -114,7 +117,7 @@
 /datum/game_mode/revolution/process()
 	check_counter++
 	if(check_counter >= 5)
-		if(!finished)
+		if(!finished && world.time >= completioncheckstart)
 			SSticker.mode.check_win()
 		check_counter = 0
 	return FALSE
@@ -133,7 +136,7 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
-	if(CONFIG_GET(keyed_flag_list/continuous)["revolution"])
+	if(CONFIG_GET(keyed_list/continuous)["revolution"])
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()

@@ -25,7 +25,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	layer = LOW_OBJ_LAYER
 	color = RUNE_COLOR_RED
 
-	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
+	var/invocation = "Aiy ele-mayo." //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
 	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
@@ -62,7 +62,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 			to_chat(user, "<span class='notice'>You carefully erase the [lowertext(cultist_name)] rune.</span>")
 			qdel(src)
 	else if(istype(I, /obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!")
+		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
@@ -136,7 +136,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(isliving(M))
 			var/mob/living/L = M
 			if(invocation)
-				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
+				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE, forced = "cult invocation")
 			if(invoke_damage)
 				L.apply_damage(invoke_damage, BRUTE)
 				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
@@ -147,10 +147,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/do_invoke_glow()
 	set waitfor = FALSE
-	var/oldtransform = transform
 	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
 	sleep(5)
-	animate(src, transform = oldtransform, alpha = 255, time = 0, flags = ANIMATION_END_NOW)
+	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
@@ -164,7 +163,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/malformed
 	cultist_name = "malformed rune"
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
-	invocation = "Ra'sha yoka!"
+	invocation = "Ra'sha yoka."
 	invoke_damage = 30
 
 /obj/effect/rune/malformed/Initialize(mapload, set_keyword)
@@ -179,9 +178,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
 	cultist_name = "Offer"
-	cultist_desc = "offers a noncultist above it to Nar-Sie, either converting them or sacrificing them."
+	cultist_desc = "offers a noncultist above it to Nar'Sie, either converting them or sacrificing them."
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
-	invocation = "Mah'weyh pleggh at e'ntrath!"
+	invocation = "Mah'weyh pleggh at e'ntrath."
 	icon_state = "3"
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
@@ -211,10 +210,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-
+	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
-		invocation = "Mah'weyh pleggh at e'ntrath!"
+		invocation = "Mah'weyh pleggh at e'ntrath."
 		..()
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
@@ -224,13 +223,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
-		invocation = "Barhah hra zar'garis!"
+		invocation = "Barhah hra zar'garis."
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
+	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 	rune_in_use = FALSE
-
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
@@ -315,10 +314,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return TRUE
 
 
+
 /obj/effect/rune/empower
 	cultist_name = "Empower"
 	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
-	invocation = "H'drak v'loso, mir'kanas verbot!"
+	invocation = "H'drak v'loso, mir'kanas verbot."
 	icon_state = "3"
 	color = RUNE_COLOR_TALISMAN
 	construct_invoke = FALSE
@@ -332,7 +332,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
-	invocation = "Sas'so c'arta forbici!"
+	invocation = "Sas'so c'arta forbici."
 	icon_state = "2"
 	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
@@ -439,9 +439,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	light_range = 0
 	update_light()
 
-//Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
+//Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
-	cultist_name = "Nar-Sie"
+	cultist_name = "Nar'Sie"
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
@@ -479,8 +479,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
-		log_game("Nar-Sie rune failed - already summoned")
+			to_chat(M, "<span class='warning'>Nar'Sie is already on this plane!</span>")
+		log_game("Nar'Sie rune failed - already summoned")
 		return
 	//BEGIN THE SUMMONING
 	used = TRUE
@@ -490,7 +490,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	sleep(40)
 	if(src)
 		color = RUNE_COLOR_RED
-	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar'Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/melee/cultblade/dagger) && iscultist(user)))
@@ -509,10 +509,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/raise_dead
 	cultist_name = "Revive"
 	cultist_desc = "requires a dead, mindless, or inactive cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be given a new life."
-	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
+	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat." //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/revives_used = 0
+	var/static/revives_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	..()
@@ -544,16 +544,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	if(user.name == "Herbert West")
-		invocation = "To life, to life, I bring them!"
+		invocation = "To life, to life, I bring them."
 	else
 		invocation = initial(invocation)
 	..()
 	if(mob_to_revive.stat == DEAD)
-		if(LAZYLEN(GLOB.sacrificed) <= revives_used)
-			to_chat(user, "<span class='warning'>Your cult must carry out another sacrifice before it can revive a cultist!</span>")
+		var/diff = LAZYLEN(GLOB.sacrificed) - revives_used - SOULS_TO_REVIVE
+		if(diff < 0)
+			to_chat(user, "<span class='warning'>Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!</span>")
 			fail_invoke()
 			return
-		revives_used++
+		revives_used += SOULS_TO_REVIVE
 		mob_to_revive.revive(1, 1) //This does remove traits and such, but the rune might actually see some use because of it!
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
@@ -599,7 +600,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/wall
 	cultist_name = "Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
-	invocation = "Khari'd! Eske'te tannin!"
+	invocation = "Khari'd. Eske'te tannin."
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -618,9 +619,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(user, "<span class='cultitalic'>The air above this rune has hardened into a barrier that will last [DisplayTimeText(TMR.timeToRun - world.time)].</span>")
 
 /obj/effect/rune/wall/Destroy()
-	density = FALSE
 	GLOB.wall_runes -= src
-	air_update_turf(1)
 	return ..()
 
 /obj/effect/rune/wall/BlockSuperconductivity()
@@ -683,7 +682,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/summon
 	cultist_name = "Summon Cultist"
 	cultist_desc = "summons a single cultist to the rune. Requires 2 invokers."
-	invocation = "N'ath reth sh'yro eth d'rekkathnor!"
+	invocation = "N'ath reth sh'yro eth d'rekkathnor."
 	req_cultists = 2
 	invoke_damage = 10
 	icon_state = "3"
@@ -734,7 +733,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/blood_boil
 	cultist_name = "Boil Blood"
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
-	invocation = "Dedo ol'btoh!"
+	invocation = "Dedo ol'btoh."
 	icon_state = "4"
 	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
@@ -798,7 +797,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
 	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
-	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
+	invocation = "Gal'h'rfikk harfrandid mud'gib." //how the fuck do you pronounce this
 	icon_state = "7"
 	invoke_damage = 10
 	construct_invoke = FALSE
@@ -863,7 +862,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/obj/structure/emergency_shield/invoker/N = new(T)
 		new_human.key = ghost_to_spawn.key
 		SSticker.mode.add_cultist(new_human.mind, 0)
-		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
+		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
 			if(user.stat || new_human.InCritical())
@@ -925,7 +924,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/apocalypse
 	cultist_name = "Apocalypse"
 	cultist_desc = "a harbinger of the end times. Grows in strength with the cult's desperation - but at the risk of... side effects."
-	invocation = "Ta'gh fara'qha fel d'amar det!"
+	invocation = "Ta'gh fara'qha fel d'amar det."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "apoc"
 	pixel_x = -32
@@ -946,7 +945,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
 		return
 	if(!(place in summon_objective.summon_spots))
-		to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar-sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+		to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site, where Nar'Sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 		return
 	summon_objective.summon_spots -= place
 	rune_in_use = TRUE

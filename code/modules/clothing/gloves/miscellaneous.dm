@@ -69,8 +69,9 @@
 
 	if(M.a_intent == INTENT_HARM)
 		M.changeNext_move(CLICK_CD_RAPID)
+		M.adjustStaminaLoss(-2) //Restore 2/3 of the stamina used assuming empty stam buffer. With proper stamina buffer management, this results in a net gain of +.5 stamina per click.
 		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE)
+			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
 	.= FALSE
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)

@@ -6,6 +6,7 @@
 	nodamage = 0
 	knockdown = 100
 	stutter = 5
+	drowsy = 50
 
 /obj/item/projectile/energy/bolt/halloween
 	name = "candy corn"

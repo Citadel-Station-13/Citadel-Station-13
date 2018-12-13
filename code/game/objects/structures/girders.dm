@@ -9,10 +9,8 @@
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
-
-/obj/structure/girder/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -210,6 +208,9 @@
 
 // Screwdriver behavior for girders
 /obj/structure/girder/screwdriver_act(mob/user, obj/item/tool)
+	if(..())
+		return TRUE
+
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",

@@ -50,6 +50,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
+	//Citadel Edit for digitigrade stuff
+	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 	var/item_color = null //this needs deprecating, soonish
 
@@ -101,8 +103,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/last_force_string_check = 0
 	var/tip_timer
 
-	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
-
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
 	//Grinder vars
@@ -110,8 +110,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
-	if (!materials)
-		materials = list()
+
+	materials =	typelist("materials", materials)
+
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
@@ -297,7 +301,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
@@ -319,7 +323,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src))
+	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
 /obj/item/attack_alien(mob/user)
@@ -348,6 +352,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -483,7 +488,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
 
-	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
+	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
@@ -586,8 +591,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= 3)
-			. = force*(w_class-1)
+		if((sharpness || damtype == BURN) && w_class >= WEIGHT_CLASS_NORMAL && force >= 10)
+			. = force * (affecting.get_damage() / affecting.max_damage)
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
@@ -794,6 +799,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (item_flags & NODROP)
 		return
 	return ..()
-
-/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
-	return

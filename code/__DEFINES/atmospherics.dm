@@ -62,7 +62,9 @@
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
+#define MOLES_GAS_VISIBLE					0.25	//Moles in a standard cell after which gases are visible
+#define FACTOR_GAS_VISIBLE_MAX				20 //moles_visible * FACTOR_GAS_VISIBLE_MAX = Moles after which gas is at maximum visibility
+#define MOLES_GAS_VISIBLE_STEP				0.25 //Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -100,8 +102,7 @@
 #define FIRE_HELM_MIN_TEMP_PROTECT			60		//Cold protection for fire helmets
 #define FIRE_HELM_MAX_TEMP_PROTECT			30000	//for fire helmet quality items (red and white hardhats)
 
-#define FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT	35000	//what max_heat_protection_temperature is set to for firesuit quality suits. MUST NOT BE 0.
-#define FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT	35000	//for fire helmet quality items (red and white hardhats)
+#define FIRE_IMMUNITY_MAX_TEMP_PROTECT	35000		//what max_heat_protection_temperature is set to for firesuit quality suits and helmets. MUST NOT BE 0.
 
 #define HELMET_MIN_TEMP_PROTECT				160		//For normal helmets
 #define HELMET_MAX_TEMP_PROTECT				600		//For normal helmets
@@ -246,6 +247,15 @@
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+
+
+//prefer this to gas_mixture/total_moles in performance critical areas
+#define TOTAL_MOLES(cached_gases, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		out_var += cached_gases[total_moles_id][MOLES];\
+	}
+
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

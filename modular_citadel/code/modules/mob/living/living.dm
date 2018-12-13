@@ -1,5 +1,6 @@
 /mob/living
 	var/recoveringstam = FALSE
+	var/incomingstammult = 1
 	var/bufferedstam = 0
 	var/stambuffer = 20
 	var/stambufferregentime
@@ -34,8 +35,6 @@
 /mob/living/Move(atom/newloc, direct)
 	. = ..()
 	if(.)
-		if(makesfootstepsounds)
-			CitFootstep(newloc)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
 

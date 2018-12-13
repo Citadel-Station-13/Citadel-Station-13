@@ -65,7 +65,7 @@
 
 /datum/atom_hud/sentient_disease
 	hud_icons = list(SENTIENT_DISEASE_HUD)
-/*
+
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
@@ -74,7 +74,7 @@
 	if(M && (hudusers.len == 1))
 		for(var/V in GLOB.aiEyes)
 			var/mob/camera/aiEye/E = V
-			E.update_ai_detect_hud()*/
+			E.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -222,7 +222,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
-	if(wear_id)
+	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
 

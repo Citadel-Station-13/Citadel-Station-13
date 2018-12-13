@@ -1,6 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'modular_citadel/icons/mob/pai.dmi' // CITADEL EDIT
+	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	density = FALSE
@@ -58,7 +58,7 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "borgi" = FALSE , "parrot" = FALSE, "bear" = FALSE , "mushroom" = FALSE, "crow" = FALSE , "fairy" = FALSE , "spiderbot" = FALSE )		//assoc value is whether it can be picked up.-- borgi and on = // CITADEL EDIT
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -75,13 +75,7 @@
 	var/overload_maxhealth = 0
 	canmove = FALSE
 	var/silent = FALSE
-	var/hit_slowdown = 0
 	var/brightness_power = 5
-	var/slowdown = 0
-
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += slowdown
 
 /mob/living/silicon/pai/can_unbuckle()
 	return FALSE
@@ -266,9 +260,9 @@
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(!.)
-		slowdown = 2
+		add_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE, 100, multiplicative_slowdown = 2)
 		return TRUE
-	slowdown = initial(slowdown)
+	remove_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE)
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
@@ -293,7 +287,5 @@
 	health = maxHealth - getBruteLoss() - getFireLoss()
 	update_stat()
 
-
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)

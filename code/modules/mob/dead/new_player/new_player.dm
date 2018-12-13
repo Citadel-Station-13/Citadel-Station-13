@@ -53,7 +53,7 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
 			var/rs = REF(src)
 			if(query_get_new_polls.Execute())
 				var/newpoll = 0
@@ -152,6 +152,21 @@
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
+
+	if(href_list["JoinAsGhostRole"])
+		if(!GLOB.enter_allowed)
+			to_chat(usr, "<span class='notice'> There is an administrative lock on entering the game!</span>")
+
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				return
+
+		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
+		if(istype(MS) && MS.attack_ghost(src, latejoinercalling = TRUE))
+			SSticker.queued_players -= src
+			SSticker.queue_delay = 4
+			qdel(src)
 
 	if(!ready && href_list["preference"])
 		if(client)
@@ -427,6 +442,8 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++;
+	for(var/spawner in GLOB.mob_spawners)
+		available_job_count++
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -444,6 +461,7 @@
 				dat += " [a.title]. </div>"
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
+	dat += "<small>(G) - Ghost Role</small><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
@@ -461,6 +479,10 @@
 				continue
 			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break
+	for(var/spawner in GLOB.mob_spawners)
+		job_count++
+		if(job_count > round(available_job_count / 2))
+			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner] (G)</a><br>"
 	dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference

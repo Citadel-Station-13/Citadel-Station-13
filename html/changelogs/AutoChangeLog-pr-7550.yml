@@ -1,0 +1,13 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Most of Lavaland's mobs are now on crack."
+  - balance: "Blood drunk miners now move once every two ticks, rather than once every three ticks."
+  - balance: "Bubblegum now has a maximum movement speed of once every three ticks. Buffed from the original value of once per 5 ticks."
+  - balance: "The minimum time for the Colossus to attack again after firing a random shot is two deciseconds, Sped up from the original value of three seconds. The minimum time for the Colossus to attack again after performing a blast is now one second, with the original value being two seconds. The minimum time for it to attack again after performing its alternating shot pattern is now two seconds, original value being four seconds."
+  - balance: "Ashdrakes now move once every five ticks, rather than once every ten ticks."
+  - balance: "Heirophant chasers now move once every two ticks rather than three ticks by default, and the chaser cooldown has been reduced from 10 seconds to 5 seconds. The cooldown for the Heirophant's major attacks has also been sped up to 4 seconds from the original value of 6 seconds."
+  - balance: "The Legion (megafauna) now moves at two ticks per second rather than three ticks. It additionally now actually moves faster while charging. The cooldown timer for it's special attacks has been reduced from 2 seconds to 1 second. Additionally, The Legion's view range has been decreased from 13 tiles to 10 tiles."
+  - balance: "All megafauna now have a default view range of 4 tiles, decreased from the original of 5 tiles, and an aggro'd view range of 15 tiles, decreased from the original of 18"
+  - balance: "Goliaths now move once every ten ticks, sped up from the original value of 40(!!!) ticks. Additionally, their cooldown for their tentacles has been reduced from 12 seconds to 6 seconds. To compensate, their cooldown now only decreases by 5 deciseconds every time they're attacked, rather than 10 deciseconds, their melee damage has been reduced to 18 per hit from 25 per hit, and their vision range has been decreased from 5 tiles unaggroed, 9 tiles when aggroed, to 4 tiles and 7 tiles respectively. Ancient goliaths have a default attack cooldown of 8 seconds, sped up from the original value of 12 seconds."
+  - balance: "Legion (the common mob) now has a cooldown of 1.5 seconds on their skull attack, sped up from the original value of 2 seconds. Additionally, their view range has been decreased from 5 tiles, 9 tiles when aggroed, to 4 tiles, 7 tiles when aggroed."

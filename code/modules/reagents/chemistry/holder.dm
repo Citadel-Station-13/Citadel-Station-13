@@ -292,19 +292,18 @@
 				var/datum/reagent/R = addiction
 				if(C && R)
 					R.addiction_stage++
-					switch(R.addiction_stage)
-						if(1 to 10)
-							need_mob_update += R.addiction_act_stage1(C)
-						if(10 to 20)
-							need_mob_update += R.addiction_act_stage2(C)
-						if(20 to 30)
-							need_mob_update += R.addiction_act_stage3(C)
-						if(30 to 40)
-							need_mob_update += R.addiction_act_stage4(C)
-						if(40 to INFINITY)
-							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
-							cached_addictions.Remove(R)
+					if(1 <= R.addiction_stage && R.addiction_stage <= R.addiction_stage1_end)
+						need_mob_update += R.addiction_act_stage1(C)
+					else if(R.addiction_stage1_end <= R.addiction_stage && R.addiction_stage <= R.addiction_stage2_end)
+						need_mob_update += R.addiction_act_stage2(C)
+					else if(R.addiction_stage2_end <= R.addiction_stage && R.addiction_stage <= R.addiction_stage3_end)
+						need_mob_update += R.addiction_act_stage3(C)
+					else if(R.addiction_stage3_end <= R.addiction_stage && R.addiction_stage <= R.addiction_stage4_end)
+						need_mob_update += R.addiction_act_stage4(C)
+					else if(R.addiction_stage4_end <= R.addiction_stage)
+						to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
+						cached_addictions.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
@@ -550,8 +549,8 @@
 	if(!D)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
-
- 	update_total()
+	
+	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -594,14 +593,14 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-
+	
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
-	if(isliving(my_atom))
-		R.on_mob_add(my_atom)
 	return TRUE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)

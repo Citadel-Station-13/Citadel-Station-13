@@ -411,7 +411,7 @@
 		for(var/mob/M in get_hearers_in_view(7,src))
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
-		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -569,7 +569,7 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Collide(var/atom/obstacle)
+/obj/mecha/Bump(var/atom/obstacle)
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
@@ -1015,9 +1015,10 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/proc/log_message(message as text,red=null)
+/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
 	log.len++
-	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
+	..()
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)

@@ -184,7 +184,6 @@
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
-	use_rate = -0.5 //generates nanites
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/metabolic_synthesis/check_conditions()
@@ -197,6 +196,7 @@
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.nutrition -= 0.5
+	nanites.adjust_nanites(0.5)
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"

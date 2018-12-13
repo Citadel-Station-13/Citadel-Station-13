@@ -7,6 +7,7 @@
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera"
+	light_color = "#CDDDFF"
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
@@ -83,6 +84,7 @@
 		if(bug.current == src)
 			bug.current = null
 		bug = null
+	cancelCameraAlarm()
 	return ..()
 
 /obj/machinery/camera/emp_act(severity)
@@ -139,6 +141,8 @@
 
 // Construction/Deconstruction
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 	I.play_tool_sound(src)
@@ -393,7 +397,7 @@
 			if(cam == src)
 				return
 	if(on)
-		set_light(AI_CAMERA_LUMINOSITY)
+		set_light(AI_CAMERA_LUMINOSITY, 0.8)
 	else
 		set_light(0)
 

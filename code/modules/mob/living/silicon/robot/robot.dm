@@ -8,6 +8,7 @@
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
+	hud_type = /datum/hud/robot
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -70,6 +71,8 @@
 
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
+	light_color = "#FFCC66"
+	light_power = 0.8
 	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
@@ -211,10 +214,6 @@
 	cell = null
 	return ..()
 
-/mob/living/silicon/robot/can_interact_with(atom/A)
-	. = ..()
-	return . || in_view_range(src, A)
-
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)
 		return
@@ -297,12 +296,12 @@
 	if(!ionpulse_on)
 		return
 
-	if(cell.charge <= 50)
+	if(cell.charge <= 10)
 		toggle_ionpulse()
 		return
 
-	cell.charge -= 50 // 500 steps on a default cell.
-	return 1
+	cell.charge -= 10
+	return TRUE
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
 	if(!ionpulse)
@@ -381,7 +380,13 @@
 	return !cleared
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
-	return !low_power_mode && ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)
+	if (low_power_mode)
+		return FALSE
+	var/turf/T0 = get_turf(src)
+	var/turf/T1 = get_turf(A)
+	if (!T0 || ! T1)
+		return FALSE
+	return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
@@ -395,8 +400,12 @@
 			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 			if(!W.use_tool(src, user, 50))
 				return
-
-		adjustBruteLoss(-30)
+			adjustBruteLoss(-10)
+		else
+			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+			if(!do_after(user, 30, target = src))
+				return
+			adjustBruteLoss(-30)
 		updatehealth()
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
@@ -406,11 +415,16 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user)
+			if(src == user && coil.use(1))
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
+				adjustFireLoss(-10)
+				adjustToxLoss(-10)
 			if (coil.use(1))
+				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+				if(!do_after(user, 30, target = src))
+					return
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
@@ -627,9 +641,9 @@
 		add_overlay("disabler")//ditto
 
 	if(sleeper_g && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_g")
+		add_overlay("[module.sleeper_overlay]_g[sleeper_nv ? "_nv" : ""]")
 	if(sleeper_r && module.sleeper_overlay)
-		add_overlay("[module.sleeper_overlay]_r")
+		add_overlay("[module.sleeper_overlay]_r[sleeper_nv ? "_nv" : ""]")
 	if(module.dogborg == TRUE)
 		if(resting)
 			cut_overlays()
@@ -1022,7 +1036,8 @@
 	module.transform_to(/obj/item/robot_module)
 
 	// Remove upgrades.
-	for(var/obj/item/I in upgrades)
+	for(var/obj/item/borg/upgrade/I in upgrades)
+		I.deactivate(src)
 		I.forceMove(get_turf(src))
 
 	upgrades.Cut()
@@ -1118,10 +1133,10 @@
 	undeployment_action.Grant(src)
 
 /datum/action/innate/undeployment
- 	name = "Disconnect from shell"
- 	desc = "Stop controlling your shell and resume normal core operations."
- 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
- 	button_icon_state = "ai_core"
+	name = "Disconnect from shell"
+	desc = "Stop controlling your shell and resume normal core operations."
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "ai_core"
 
 /datum/action/innate/undeployment/Trigger()
 	if(!..())

@@ -406,6 +406,8 @@
 	lying_prev = 0
 
 /obj/machinery/jukebox/proc/dance_over()
+	SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
+	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in rangers)
 		if(!L || !L.client)
 			continue
@@ -420,8 +422,6 @@
 /obj/machinery/jukebox/process()
 	if(active && world.time >= stop)
 		active = FALSE
-		SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
-		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,1)
 		update_icon()

@@ -56,6 +56,22 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
+/obj/item/reagent_containers/food/snacks/clothing
+	name = "oops"
+	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
+	list_reagents = list("nutriment" = 1)
+	tastes = list("dust" = 1, "lint" = 1)
+
+/obj/item/clothing/attack(mob/M, mob/user, def_zone)
+	if(user.a_intent != INTENT_HARM && ismoth(M))
+		var/obj/item/reagent_containers/food/snacks/clothing/clothing_as_food = new
+		clothing_as_food.name = name
+		if(clothing_as_food.attack(M, user, def_zone))
+			take_damage(15, sound_effect=FALSE)
+		qdel(clothing_as_food)
+	else
+		return ..()
+
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(damaged_clothes && istype(W, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/C = W
@@ -232,9 +248,8 @@ BLIND     // can't see anything
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
-	if(adjusted == DIGITIGRADE_STYLE)
-		return
 	adjusted = !adjusted
+
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
@@ -244,6 +259,7 @@ BLIND     // can't see anything
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
+
 	return adjusted
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.

@@ -6,13 +6,16 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "electropack"
+	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_NECK
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
 	var/pictures_max = 10
@@ -24,21 +27,12 @@
 	var/obj/item/disk/holodisk/disk
 	var/sound/custom_sound
 	var/silent = FALSE
-	var/picture_size_x = 1
-	var/picture_size_y = 1
-	var/picture_size_x_min = 0
-	var/picture_size_y_min = 0
-	var/picture_size_x_max = 3
-	var/picture_size_y_max = 3
-
-/obj/item/camera/CheckParts(list/parts_list)
-	..()
-	var/obj/item/camera/C = locate(/obj/item/camera) in contents
-	if(C)
-		pictures_max = C.pictures_max
-		pictures_left = C.pictures_left
-		visible_message("[C] has been imbued with godlike power!")
-		qdel(C)
+	var/picture_size_x = 2
+	var/picture_size_y = 2
+	var/picture_size_x_min = 1
+	var/picture_size_y_min = 1
+	var/picture_size_x_max = 4
+	var/picture_size_y_max = 4
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -47,14 +41,18 @@
 	user.put_in_hands(disk)
 	disk = null
 
+/obj/item/camera/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+
 /obj/item/camera/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
-	desired_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	desired_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	if(user.canUseTopic(src))
-		picture_size_x = desired_x
-		picture_size_y = desired_y
+	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -86,9 +84,23 @@
 	..()
 	to_chat(user, "It has [pictures_left] photos left.")
 
+//user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user, prox_flag)
-	if(!on || blending || !pictures_left || (!isturf(target) && !isturf(target.loc)) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))))
+	if(!on || blending || !pictures_left)
 		return FALSE
+	var/turf/T = get_turf(target)
+	if(!T)
+		return FALSE
+	if(istype(user))
+		if(isAI(user) && !GLOB.cameranet.checkTurfVis(T))
+			return FALSE
+		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
+			return FALSE
+		else if(!(get_turf(target) in get_hear(world.view, user)))
+			return FALSE
+	else					//user is an atom
+		if(!(get_turf(target) in view(world.view, user)))
+			return FALSE
 	return TRUE
 
 /obj/item/camera/afterattack(atom/target, mob/user, flag)
@@ -109,10 +121,16 @@
 		return
 
 	on = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
+
+	var/realcooldown = cooldown
+	var/mob/living/carbon/human/H = user
+	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+
 	icon_state = state_off
 
-	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x, picture_size_y)
+	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)
 
 
 /obj/item/camera/proc/cooldown()
@@ -127,6 +145,8 @@
 	qdel(P)
 
 /obj/item/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+	if(flash_enabled)
+		flash_lighting_fx(8, light_power, light_color)
 	blending = TRUE
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
@@ -134,7 +154,7 @@
 		return FALSE
 	size_x = CLAMP(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	size_y = CLAMP(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	var/list/desc = list()
+	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/ai_user = isAI(user)
 	var/list/seen
 	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
@@ -146,15 +166,15 @@
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
-		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
+		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || (T in seen))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
-			CHECK_TICK
 	for(var/i in mobs)
-		desc += camera_get_mobdesc(i)
+		var/mob/M = i
+		desc += M.get_photo_description(src)
 
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
@@ -165,33 +185,9 @@
 	temp.Scale(psize_x, psize_y)
 	temp.Blend(get_icon, ICON_OVERLAY)
 
-	var/datum/picture/P = new("picture", desc.Join(""), temp, null, psize_x, psize_y, blueprints)
+	var/datum/picture/P = new("picture", desc.Join(" "), temp, null, psize_x, psize_y, blueprints)
 	after_picture(user, P, flag)
 	blending = FALSE
-
-/obj/item/camera/proc/camera_get_mobdesc(mob/M)
-	var/list/mob_details = list()
-	if(M.invisibility)
-		if(see_ghosts && isobserver(M))
-			mob_details += "You can also see a g-g-g-g-ghooooost! "
-		else
-			return mob_details
-	var/list/holding = list()
-	if(isliving(M))
-		var/mob/living/L = M
-		var/len = length(L.held_items)
-		if(len)
-			for(var/obj/item/I in L.held_items)
-				if(!holding.len)
-					holding += "They are holding \a [I]"
-				else if(L.held_items.Find(I) == len)
-					holding += ", and \a [I]."
-				else
-					holding += ", \a [I]"
-		holding += "."
-		holding = holding.Join("")
-		mob_details += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? ", looking a bit hurt":""][holding ? ". [holding]":"."]."
-	return mob_details.Join("")
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	printpicture(user, picture)
@@ -204,15 +200,15 @@
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
 		if(customize == "Yes")
-			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32) as text|null
-			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128) as text|null
-			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256) as text|null
+			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
+			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
+			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
 			if(name1)
 				picture.picture_name = name1
 			if(desc1)
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
 				picture.caption = caption
-		p.set_picture(picture)
+		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))
 			picture.log_to_file()

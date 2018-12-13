@@ -30,7 +30,7 @@
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
-	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
+	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
@@ -82,7 +82,7 @@
 					else
 						user.visible_message("<span class='notice'>[user] hugs [M] to make [M.p_them()] feel better!</span>", \
 								"<span class='notice'>You hug [M] to make [M.p_them()] feel better!</span>")
-					if(M.resting)
+					if(M.resting && !M.recoveringstam)
 						M.resting = FALSE
 						M.update_canmove()
 				else
@@ -102,7 +102,7 @@
 					else
 						user.visible_message("<span class='warning'>[user] hugs [M] in a firm bear-hug! [M] looks uncomfortable...</span>", \
 								"<span class='warning'>You hug [M] firmly to make [M.p_them()] feel better! [M] looks uncomfortable...</span>")
-					if(M.resting)
+					if(M.resting && !M.recoveringstam)
 						M.resting = FALSE
 						M.update_canmove()
 				else
@@ -172,6 +172,7 @@
 	update_icon()
 
 /obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
+	. = ..()
 	if(!proximity_flag || !iscyborg(user))
 		return
 	if(mode == "draw")
@@ -448,6 +449,7 @@
 	check_amount()
 
 /obj/item/borg/lollipop/afterattack(atom/target, mob/living/user, proximity, click_params)
+	. = ..()
 	check_amount()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user

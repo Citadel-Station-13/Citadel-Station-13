@@ -120,6 +120,7 @@
 
 
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())
@@ -146,7 +147,7 @@
 		explode()
 	switched_on(user)
 	if(welding)
-		set_light(light_intensity)
+		set_light(light_intensity, 0.75, LIGHT_COLOR_FIRE)
 
 	update_icon()
 

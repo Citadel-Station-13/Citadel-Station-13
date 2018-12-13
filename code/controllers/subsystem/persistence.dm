@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
-	..()
+	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
 	var/placed_satchel = 0
@@ -206,6 +206,16 @@ SUBSYSTEM_DEF(persistence)
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
+
+/datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
+	var/album_path = file("data/photo_albums.json")
+	if(fexists(album_path))
+		return json_decode(file2text(album_path))
+
+/datum/controller/subsystem/persistence/proc/GetPhotoFrames()
+	var/frame_path = file("data/photo_frames.json")
+	if(fexists(frame_path))
+		return json_decode(file2text(frame_path))
 
 /datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
 	var/album_path = file("data/photo_albums.json")

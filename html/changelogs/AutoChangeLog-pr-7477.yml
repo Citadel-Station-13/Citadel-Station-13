@@ -1,5 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - rscadd: "Added antag OOC. This is disabled by default, but you can access it with the \"AOOC\" verb as an antagonist when an administrator enables it."
-  - tweak: "LOOC now supports emojis"

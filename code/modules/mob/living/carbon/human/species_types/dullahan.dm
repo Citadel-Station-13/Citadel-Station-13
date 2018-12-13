@@ -1,5 +1,5 @@
 /datum/species/dullahan
-	name = "dullahan"
+	name = "Dullahan"
 	id = "dullahan"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
@@ -128,6 +128,7 @@
 		to_chat(owner,message)
 	else
 		qdel(src)
+
 
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))

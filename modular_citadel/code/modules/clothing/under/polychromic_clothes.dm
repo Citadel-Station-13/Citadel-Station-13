@@ -27,6 +27,8 @@
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#808080"
 	can_adjust = FALSE
+	mutantrace_variation = NO_MUTANTRACE_VARIATION // because I'm too lazy to port these to digi-compatible and to prove a point from /tg/ whining - Pooj
+	suit_style = NORMAL_SUIT_STYLE
 
 /obj/item/clothing/under/polychromic/worn_overlays(isinhands, icon_file)	//this is where the main magic happens. Also mandates that ALL polychromic stuff MUST USE alternate_worn_icon
 	. = ..()
@@ -63,7 +65,8 @@
 	item_state = "kilt"
 	primary_color = "#FFFFFF" //RGB in hexcode
 	secondary_color = "#F08080"
-	tertiary_color = "#808080"
+	hastertiary = FALSE // so it doesn't futz with digilegs
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/polychromic/skirt
 	name = "polychromic skirt"
@@ -74,6 +77,7 @@
 	primary_color = "#FFFFFF" //RGB in hexcode
 	secondary_color = "#F08080"
 	tertiary_color = "#808080"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/polychromic/shorts
 	name = "polychromic shorts"
@@ -84,6 +88,7 @@
 	primary_color = "#353535" //RGB in hexcode
 	secondary_color = "#808080"
 	tertiary_color = "#808080"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/polychromic/jumpsuit
 	name = "polychromic tri-tone jumpsuit"
@@ -116,6 +121,7 @@
 	primary_color = "#8CC6FF" //RGB in hexcode
 	secondary_color = "#808080"
 	tertiary_color = "#FF3535"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/polychromic/femtank
 	name = "polychromic feminine tank top"
@@ -126,6 +132,7 @@
 	hastertiary = FALSE
 	primary_color = "#808080" //RGB in hexcode
 	secondary_color = "#FF3535"
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/under/polychromic/shortpants/pantsu
 	name = "polychromic panties"
@@ -136,6 +143,7 @@
 	hastertiary = FALSE
 	primary_color = "#FFFFFF" //RGB in hexcode
 	secondary_color = "#8CC6FF"
+	body_parts_covered = GROIN
 
 /obj/item/clothing/under/polychromic/bottomless
 	name = "polychromic bottomless shirt"
@@ -146,7 +154,7 @@
 	hastertiary = FALSE
 	primary_color = "#808080" //RGB in hexcode
 	secondary_color = "#FF3535"
-	body_parts_covered = CHEST	//Because there's no bottom included
+	body_parts_covered = CHEST|ARMS	//Because there's no bottom included
 
 /obj/item/clothing/under/polychromic/shimatank
 	name = "polychromic tank top"
@@ -157,3 +165,4 @@
 	primary_color = "#808080" //RGB in hexcode
 	secondary_color = "#FFFFFF"
 	tertiary_color = "#8CC6FF"
+	body_parts_covered = CHEST|GROIN
