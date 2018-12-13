@@ -309,10 +309,11 @@
 /datum/design/shot_glass
 	name = "Shot Glass"
 	id = "shot_glass"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	category = list("initial", "Dinnerware", "Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/shaker
 	name = "Shaker"
