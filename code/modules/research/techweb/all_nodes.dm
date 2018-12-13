@@ -28,6 +28,20 @@
 	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
 	"cyborgrecharger", "borg_upgrade_restart", "borg_upgrade_rename")
 
+/datum/techweb_node/surgery_tools
+	id = "surgery_tools"
+	starting_node = TRUE
+	display_name = "Basic Surgery Tools"
+	description = "Has easly printable surgery tools and drapes, thanks to Med-Co!"
+	design_ids = list("scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "drapes", "hemostat", "large_beaker", "pillbottle", "syringe", "large_hypovial", "hypovial")
+
+/datum/techweb_node/basic_service
+	id = "basic_service"
+	starting_node = TRUE
+	display_name = "Stander tools for Service jobs."
+	description = "All objects needed for the Service department to easlly do there work."
+	design_ids = list("kitchen_knife", "bucket", "fork", "tray", "bowl", "drinking_glass", "shot_glass", "shaker", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "light_tube", "light_bulb", "packagewrap")
+
 /datum/techweb_node/mech
 	id = "mecha"
 	starting_node = TRUE
