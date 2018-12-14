@@ -32,14 +32,14 @@
 	id = "surgery_tools"
 	starting_node = TRUE
 	display_name = "Basic Surgery Tools"
-	description = "Has easly printable surgery tools and drapes, thanks to Med-Co!"
+	description = "Basic surgical tools, along with spare drapes in the event those get lost somewhere."
 	design_ids = list("scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "drapes", "hemostat", "large_beaker", "pillbottle", "syringe", "large_hypovial", "hypovial")
 
 /datum/techweb_node/basic_service
 	id = "basic_service"
 	starting_node = TRUE
-	display_name = "Stander tools for Service jobs."
-	description = "All objects needed for the Service department to easlly do there work."
+	display_name = "Basic Service Tools"
+	description = "Most of, if not all, the objects needed for the Service department for their work."
 	design_ids = list("kitchen_knife", "bucket", "fork", "tray", "bowl", "drinking_glass", "shot_glass", "shaker", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "light_tube", "light_bulb", "packagewrap")
 
 /datum/techweb_node/mech
