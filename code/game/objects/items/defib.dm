@@ -304,6 +304,10 @@
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
 	var/datum/component/mobhook
+	
+	var/stamina_damage = 25
+	var/knockdown = 100
+	var/recharge_delay = 60
 
 /obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
 	. = ..()
@@ -462,8 +466,8 @@
 		return
 	M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
-	M.adjustStaminaLoss(25)
-	M.Knockdown(100)
+	M.adjustStaminaLoss(stamina_damage)
+	M.Knockdown(knockdown)
 	M.updatehealth() //forces health update before next life tick
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
@@ -474,7 +478,7 @@
 		defib.deductcharge(revivecost)
 		defib.cooldowncheck(user)
 	else
-		recharge(60)
+		recharge(recharge_delay_stun)
 
 /obj/item/twohanded/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(req_defib && defib.safety)
@@ -525,7 +529,7 @@
 			busy = FALSE
 			update_icon()
 			if(!req_defib)
-				recharge(60)
+				recharge(recharge_delay)
 			if(req_defib && (defib.cooldowncheck(user)))
 				return
 	busy = FALSE
@@ -613,7 +617,7 @@
 				if(req_defib)
 					defib.cooldowncheck(user)
 				else
-					recharge(60)
+					recharge(recharge_delay)
 			else if (!H.getorgan(/obj/item/organ/heart))
 				user.visible_message("<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted.</span>")
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
