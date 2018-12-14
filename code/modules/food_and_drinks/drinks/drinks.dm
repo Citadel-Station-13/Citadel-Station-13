@@ -328,9 +328,9 @@
 				desc = "Milk for cool kids!"
 				foodtype = SUGAR
 			if("eggnog")
-				icon_state = "nog2"
-				name = "carton of eggnog"
-				desc = "For enjoying the most wonderful time of the year."
+				icon_state = "nog3"
+				name = "glass of eggnog"
+				desc = "The traditional way to get hammered at a Christmas party."
 				foodtype = MEAT
 	else
 		icon_state = "juicebox"
