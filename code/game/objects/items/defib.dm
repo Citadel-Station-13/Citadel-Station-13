@@ -23,6 +23,7 @@
 	var/obj/item/stock_parts/cell/high/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
+	var/check_standing = TRUE	//only can be drawn while standing
 
 /obj/item/defibrillator/get_cell()
 	return cell
@@ -167,6 +168,13 @@
 	var/mob/living/carbon/user = usr
 	if(on)
 		//Detach the paddles into the user's hands
+		//CITADEL EDIT BEGIN
+		if(check_standing && usr.resting)
+			on = FALSE
+			to_chat(user, "<span class='warning'>[src] can only be drawn from while standing!</span>")
+			update_icon()
+			return
+		//CITADEL EDIT END
 		if(!usr.put_in_hands(paddles))
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
@@ -452,25 +460,18 @@
 		return
 	if(!req_defib && !combat)
 		return
-	M.visible_message("<span class='danger'>[user] hastily places [src] on [M]'s chest!</span>", \
-			"<span class='userdanger'>[user] hastily places [src] on [M]'s chest!</span>")
-	busy = TRUE
-	if(do_after(user, 10, target = M))
-		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
-				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
-		M.adjustStaminaLoss(50)
-		M.Knockdown(100)
-		M.updatehealth() //forces health update before next life tick
-		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
-		M.emote("gasp")
-		log_combat(user, M, "stunned", src)
-		busy = FALSE
-		if(req_defib)
-			defib.deductcharge(revivecost)
-			cooldown = TRUE
+	M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
+			"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
+	M.adjustStaminaLoss(25)
+	M.Knockdown(100)
+	M.updatehealth() //forces health update before next life tick
+	playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
+	M.emote("gasp")
+	log_combat(user, M, "stunned", src)
 	busy = FALSE
 	update_icon()
 	if(req_defib)
+		defib.deductcharge(revivecost)
 		defib.cooldowncheck(user)
 	else
 		recharge(60)
