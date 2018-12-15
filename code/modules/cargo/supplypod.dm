@@ -41,7 +41,7 @@
 /obj/structure/closet/supplypod/bluespacepod
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
-	explosionSize = list(0,0,0,0)
+	explosionSize = list(0,0,0,0) //So we dont kill mobs or brake bombs
 	landingDelay = 15 //Slightly quicker than the supplypod
 
 /obj/structure/closet/supplypod/centcompod
