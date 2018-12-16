@@ -465,7 +465,7 @@
 	name = "Speed Loader (.38 rubber)"
 	id = "c38"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000)
+	materials = list(MAT_METAL = 40000)
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
@@ -722,7 +722,7 @@
 	name = "Speed Loader (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(MAT_METAL = 60000)
 	build_path = /obj/item/ammo_box/a357
 	category = list("hacked", "Security")
 
