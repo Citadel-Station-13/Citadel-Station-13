@@ -217,7 +217,7 @@
 	materials.max_amount = T
 	T = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		T += M.rating
+		T += M.rating * 2
 	prod_coeff = round(1/T, 0.01)
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
