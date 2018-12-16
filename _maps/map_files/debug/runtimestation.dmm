@@ -1134,7 +1134,7 @@
 "dA" = (
 /obj/effect/landmark/observer_start,
 /turf/open/indestructible/cobble,
-/area/space)
+/area/awaymission/snowdin/outside)
 "dB" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1345,10 +1345,10 @@
 /area/awaymission/snowdin/outside)
 "ec" = (
 /turf/closed/wall/mineral/gold,
-/area/space)
+/area/awaymission/snowdin/outside)
 "ed" = (
 /turf/open/floor/mineral/gold,
-/area/space)
+/area/awaymission/snowdin/outside)
 "ee" = (
 /turf/open/floor/plasteel/dark,
 /area/space)
@@ -1449,7 +1449,7 @@
 "et" = (
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/mineral/gold,
-/area/space)
+/area/awaymission/snowdin/outside)
 "eu" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "wheredahoodat"
@@ -1492,7 +1492,7 @@
 	name = "secret Kreb"
 	},
 /turf/open/floor/mineral/gold,
-/area/space)
+/area/awaymission/snowdin/outside)
 "eD" = (
 /obj/machinery/light{
 	dir = 8
@@ -2160,6 +2160,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/base)
 "gH" = (
@@ -2295,6 +2296,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/base)
 "gX" = (
@@ -2460,10 +2462,6 @@
 	dir = 8
 	},
 /area/awaymission/snowdin/outside)
-"ho" = (
-/obj/effect/spawner/structure/window/ice,
-/turf/open/space/basic,
-/area/awaymission/snowdin/base)
 "hp" = (
 /obj/machinery/vending/medical{
 	pixel_x = -2
@@ -2998,6 +2996,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/base)
 "iJ" = (
+/obj/effect/landmark/start/bartender,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/base)
 "iK" = (
@@ -3247,15 +3246,8 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "jr" = (
-/obj/structure/sign/directions/cafe{
-	dir = 8;
-	pixel_y = 11
-	},
-/obj/structure/sign/directions/bar{
-	dir = 8;
-	pixel_y = 3
-	},
-/turf/closed/indestructible/wood,
+/obj/effect/landmark/start/lawyer,
+/turf/open/indestructible/cobble,
 /area/awaymission/snowdin/outside)
 "js" = (
 /obj/structure/fluff/lightpost,
@@ -3405,6 +3397,7 @@
 /area/awaymission/snowdin/base)
 "jQ" = (
 /obj/structure/bed,
+/obj/item/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "jR" = (
@@ -4144,17 +4137,9 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/base)
-"lJ" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
-/turf/open/floor/holofloor/snow,
-/turf/open/indestructible/cobble/side{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
 "lK" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -4215,6 +4200,7 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = 32
 	},
+/obj/item/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "lQ" = (
@@ -4829,6 +4815,7 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = -32
 	},
+/obj/item/bedsheet,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ng" = (
@@ -4911,7 +4898,6 @@
 	pixel_x = 12;
 	pixel_y = 12
 	},
-/turf/open/indestructible/cobble,
 /turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
 "nt" = (
@@ -4984,58 +4970,6 @@
 /obj/item/clothing/suit/hooded/wintercoat/cargo,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
-"nz" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 1
-	},
-/area/awaymission/snowdin/outside)
-"nA" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 1
-	},
-/area/awaymission/snowdin/outside)
-"nB" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
-"nC" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
-"nD" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 8
-	},
-/area/awaymission/snowdin/outside)
-"nE" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
 "nF" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -5043,11 +4977,204 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/indestructible/cobble,
 /turf/open/indestructible/cobble/corner{
 	dir = 1
 	},
 /area/awaymission/snowdin/outside)
+"oU" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/fluff/lightpost,
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"ph" = (
+/obj/effect/landmark/start/virologist,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"qz" = (
+/obj/effect/landmark/start/detective,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"rT" = (
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"sz" = (
+/obj/effect/landmark/start/warden,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"ud" = (
+/obj/effect/landmark/start/clown,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"uL" = (
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/snowdin/base)
+"xt" = (
+/obj/effect/landmark/start/librarian,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"xw" = (
+/obj/structure/chair/wood/normal,
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
+"zG" = (
+/obj/effect/landmark/start/chief_engineer,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
+"Au" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/landmark/start/security_officer,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"Cj" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"Dj" = (
+/obj/effect/landmark/start/quartermaster,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"DW" = (
+/obj/effect/landmark/start/research_director,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/base)
+"Gu" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"Hi" = (
+/obj/effect/landmark/start/janitor,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"Hr" = (
+/obj/effect/landmark/start/chaplain,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"HT" = (
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/effect/landmark/start/roboticist,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
+"Ip" = (
+/obj/structure/chair/wood/normal,
+/obj/effect/landmark/start/atmospheric_technician,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
+"Jb" = (
+/obj/effect/landmark/start/chemist,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"KC" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"LI" = (
+/obj/effect/landmark/start/captain,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
+"Mc" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/indestructible/cobble/side,
+/area/awaymission/snowdin/outside)
+"MA" = (
+/obj/effect/landmark/start/cyborg,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
+"MK" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/indestructible/cobble/side{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"NZ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"PK" = (
+/obj/effect/landmark/start/shaft_miner,
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"Rq" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"Sq" = (
+/obj/structure/chair/wood/normal{
+	dir = 1
+	},
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
+"SI" = (
+/obj/effect/landmark/start/cook,
+/turf/open/floor/plasteel/cafeteria,
+/area/awaymission/snowdin/base)
+"TD" = (
+/obj/effect/landmark/start/mime,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"Vk" = (
+/obj/effect/landmark/start/geneticist,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"Xk" = (
+/obj/effect/landmark/start/roboticist,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
+"Zg" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/landmark/start/head_of_security,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"ZY" = (
+/obj/effect/landmark/start/head_of_personnel,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
 
 (1,1,1) = {"
 aa
@@ -8134,11 +8261,11 @@ aa
 ab
 ab
 ab
-ee
+eg
 ed
 ed
 ed
-ee
+eg
 ab
 ab
 ab
@@ -17195,7 +17322,7 @@ aG
 aG
 aG
 aG
-aG
+DW
 aG
 aG
 aG
@@ -18483,12 +18610,12 @@ gP
 gP
 gP
 ca
-hM
+xw
 hV
 ii
 is
 ca
-hM
+Ip
 ii
 hV
 is
@@ -18685,12 +18812,12 @@ gP
 gP
 aJ
 hD
-hM
+xw
 hW
 gB
 is
 ca
-hM
+Ip
 iT
 hZ
 is
@@ -18741,7 +18868,7 @@ aJ
 ah
 ae
 ae
-nB
+gd
 er
 er
 fc
@@ -19085,7 +19212,7 @@ ae
 ag
 aJ
 gL
-gP
+SI
 gP
 hs
 hE
@@ -19295,7 +19422,7 @@ ca
 ca
 ca
 ca
-ca
+zG
 ca
 ca
 ca
@@ -19323,10 +19450,10 @@ at
 at
 eK
 eK
-nA
+dZ
 er
 er
-nE
+fA
 dw
 aA
 aA
@@ -19489,14 +19616,14 @@ ae
 ae
 aJ
 gN
-gP
+SI
 gP
 hs
 ca
-hM
+xw
 hY
 hV
-is
+Sq
 ca
 hM
 hZ
@@ -19695,10 +19822,10 @@ gP
 gP
 hs
 ca
-hM
+xw
 hZ
 ii
-is
+Sq
 ca
 hM
 hW
@@ -21328,7 +21455,7 @@ er
 fz
 aW
 mk
-aU
+ud
 jE
 cZ
 jM
@@ -21532,7 +21659,7 @@ aW
 mk
 aU
 jF
-cZ
+TD
 cZ
 aJ
 dx
@@ -21544,10 +21671,10 @@ ae
 ae
 ae
 ae
-nz
+fo
 er
 er
-nC
+gs
 dx
 ah
 ae
@@ -23279,7 +23406,7 @@ aW
 cZ
 dp
 cZ
-cZ
+Hr
 cZ
 cZ
 cZ
@@ -24153,7 +24280,7 @@ eq
 eq
 er
 er
-eq
+fs
 eq
 eq
 eq
@@ -24539,12 +24666,12 @@ ea
 er
 er
 eZ
-lJ
-lJ
-lJ
-lJ
-lJ
-lJ
+es
+es
+es
+es
+es
+es
 es
 eZ
 es
@@ -24557,7 +24684,7 @@ es
 eZ
 er
 er
-eZ
+oU
 es
 es
 es
@@ -25571,7 +25698,7 @@ fd
 ae
 aJ
 mv
-mz
+Zg
 mz
 mI
 aJ
@@ -25774,7 +25901,7 @@ ae
 aJ
 mv
 mz
-mz
+Au
 mJ
 aJ
 ae
@@ -25976,7 +26103,7 @@ aJ
 aJ
 mw
 mz
-mz
+Au
 mJ
 aJ
 ae
@@ -26178,7 +26305,7 @@ aJ
 mn
 mx
 mz
-mz
+Au
 mJ
 aJ
 ae
@@ -26380,7 +26507,7 @@ mj
 mo
 mz
 mz
-mz
+Au
 mJ
 aJ
 ah
@@ -26582,7 +26709,7 @@ mj
 mo
 mz
 mz
-mz
+Au
 mJ
 aJ
 ah
@@ -26784,7 +26911,7 @@ mj
 mo
 mz
 mz
-mz
+Au
 mJ
 aJ
 ah
@@ -26968,11 +27095,11 @@ aJ
 hz
 ca
 ca
-hQ
+uL
 hR
 hQ
 hR
-hQ
+uL
 ca
 ca
 hL
@@ -26986,7 +27113,7 @@ mj
 mo
 mz
 mz
-mz
+Au
 mK
 aJ
 ae
@@ -27203,7 +27330,7 @@ ae
 gd
 er
 er
-nD
+fc
 ae
 ae
 ae
@@ -27552,13 +27679,13 @@ ae
 ae
 ae
 aJ
-ho
-ho
+aW
+aW
 aJ
 lt
 aJ
-ho
-ho
+aW
+aW
 aJ
 ae
 ae
@@ -27753,15 +27880,15 @@ ae
 ae
 ae
 ae
-ho
+aW
 hB
 kA
 kA
-kA
+Rq
 lB
 lK
 mV
-ho
+aW
 ae
 ae
 fp
@@ -27832,7 +27959,7 @@ aJ
 ae
 ah
 ae
-nz
+fo
 er
 er
 gs
@@ -27955,15 +28082,15 @@ ae
 ae
 ae
 ae
-ho
+aW
 hT
-ld
+Vk
 lr
 lz
 aJ
-ld
+rT
 mW
-ho
+aW
 ae
 ae
 fp
@@ -28180,11 +28307,11 @@ aJ
 hz
 ca
 ca
-hQ
+uL
 hR
 hQ
 hR
-hQ
+uL
 ca
 ca
 hL
@@ -28196,7 +28323,7 @@ er
 fz
 aJ
 mt
-fE
+qz
 fE
 fE
 mN
@@ -28563,9 +28690,9 @@ ah
 aJ
 aJ
 jX
-ld
+rT
 ls
-ld
+ph
 lC
 lH
 lL
@@ -28763,15 +28890,15 @@ ae
 ah
 ah
 ae
-ho
+aW
 jX
 ld
-ld
+Jb
 ld
 lD
 lI
 lM
-ho
+aW
 ae
 dY
 fp
@@ -28965,15 +29092,15 @@ ae
 ae
 ae
 ae
-ho
+aW
 kk
 lq
 lq
-lA
+NZ
 lE
 lA
 lN
-ho
+aW
 ae
 ae
 fp
@@ -29168,13 +29295,13 @@ ae
 ae
 ae
 aJ
-ho
-ho
+aW
+aW
 aJ
 hp
 aJ
-ho
-ho
+aW
+aW
 aJ
 ae
 ah
@@ -29333,7 +29460,7 @@ aJ
 cl
 ca
 ca
-ca
+ZY
 ca
 ca
 df
@@ -29423,10 +29550,10 @@ ae
 ae
 ae
 ah
-nB
+gd
 er
 er
-nD
+fc
 ae
 ae
 ae
@@ -29595,7 +29722,7 @@ lQ
 aJ
 lR
 aJ
-hw
+MA
 nb
 aJ
 ae
@@ -29609,7 +29736,7 @@ gd
 es
 fA
 aJ
-fE
+sz
 mj
 mG
 mG
@@ -29797,7 +29924,7 @@ hw
 hw
 hw
 hw
-hw
+Xk
 nb
 aJ
 ae
@@ -29935,7 +30062,7 @@ aU
 aJ
 aJ
 aJ
-aU
+Hi
 cm
 aU
 cD
@@ -30000,7 +30127,7 @@ hx
 hP
 ih
 ir
-ir
+HT
 aJ
 ae
 ae
@@ -30570,29 +30697,29 @@ eq
 er
 er
 eZ
-lJ
-lJ
-lJ
-lJ
-lJ
-lJ
+es
+es
+es
+es
+es
+es
 fC
 fC
-lJ
-lJ
-lJ
+es
+es
+es
 er
 er
-er
+Gu
 es
 es
 eZ
-lJ
-lJ
-lJ
-lJ
-lJ
-lJ
+es
+es
+es
+es
+es
+es
 es
 gq
 ae
@@ -30744,7 +30871,7 @@ bE
 aU
 ca
 ca
-ca
+LI
 ca
 cE
 aU
@@ -31385,7 +31512,7 @@ ae
 aJ
 bT
 fD
-fE
+Cj
 fK
 aJ
 fO
@@ -31749,7 +31876,7 @@ ae
 ah
 aW
 aU
-aU
+xt
 bu
 bu
 aJ
@@ -32197,7 +32324,7 @@ fE
 fL
 aJ
 aU
-aU
+KC
 fS
 aU
 fZ
@@ -32597,7 +32724,7 @@ ag
 aJ
 bT
 fD
-fE
+Dj
 fM
 aJ
 fR
@@ -33371,7 +33498,7 @@ ab
 ae
 aJ
 gi
-aU
+Hi
 bv
 aA
 aA
@@ -33597,9 +33724,9 @@ ae
 ae
 ae
 ae
-fp
+MK
 er
-fd
+Mc
 ae
 ae
 ae
@@ -33800,7 +33927,7 @@ ae
 ae
 ae
 fp
-er
+PK
 fd
 ae
 ae
