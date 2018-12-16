@@ -161,9 +161,6 @@
 	baseturfs = /turf/open/floor/holofloor/ice
 	slowdown = 1
 	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/holofloor/ice/smooth
 	icon_state = "smooth"
