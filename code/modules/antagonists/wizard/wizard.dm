@@ -60,7 +60,7 @@
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
-	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieveing this, the better!")
+	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better!")
 	new_objective.owner = owner
 	objectives += new_objective
 
