@@ -18,42 +18,6 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/cloak/david
 	cost = 3
-	
-/datum/gear/creamsweater
-	name = "Cream Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater
-	cost = 1	
-	
-/datum/gear/blacksweater
-	name = "Black Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater/black
-	cost = 1
-	
-/datum/gear/purpsweater
-	name = "Purple Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater/purple
-	cost = 1
-	
-/datum/gear/greensweater
-	name = "Green Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater/green
-	cost = 1
-	
-/datum/gear/redsweater
-	name = "Red Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater/red
-	cost = 1
-
-/datum/gear/bluesweater
-	name =  "Navy Commando Sweater"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/under/bb_sweater/blue
-	cost = 1
 
 /datum/gear/jacketbomber
 	name = "Bomber jacket"
