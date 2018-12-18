@@ -383,7 +383,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/scalpel
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/circular_saw
@@ -392,7 +392,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 6000)
 	build_path = /obj/item/circular_saw
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill
@@ -401,7 +401,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 6000)
 	build_path = /obj/item/surgicaldrill
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/retractor
@@ -410,7 +410,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 3000)
 	build_path = /obj/item/retractor
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/cautery
@@ -419,7 +419,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 750)
 	build_path = /obj/item/cautery
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/hemostat
@@ -428,7 +428,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
 	build_path = /obj/item/hemostat
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/beaker
@@ -437,7 +437,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 500)
 	build_path = /obj/item/reagent_containers/glass/beaker
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_ALL	
 
 /datum/design/large_beaker
@@ -446,7 +446,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 2500)
 	build_path = /obj/item/reagent_containers/glass/beaker/large
-	category = list("initial","Medical","Tool Designs")
+	category = list("initial","Medical","Medical Designs")
  	departmental_flags = DEPARTMENTAL_FLAG_ALL	
 
 /datum/design/healthanalyzer
