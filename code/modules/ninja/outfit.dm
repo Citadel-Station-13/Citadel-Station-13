@@ -1,6 +1,6 @@
 /datum/outfit/ninja
 	name = "Space Ninja"
-	uniform = /obj/item/clothing/under/color/black
+	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/space_ninja
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/space_ninja
@@ -10,7 +10,7 @@
 	gloves = /obj/item/clothing/gloves/space_ninja
 	back = /obj/item/tank/jetpack/carbondioxide
 	l_pocket = /obj/item/grenade/plastic/x4
-	r_pocket = /obj/item/tank/internals/emergency_oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	internals_slot = SLOT_R_STORE
 	belt = /obj/item/energy_katana
 	implants = list(/obj/item/implant/explosive)
