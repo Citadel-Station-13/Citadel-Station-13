@@ -83,13 +83,9 @@
 
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
-	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds and four ammo packets for ya to be able to easily fix up any problem you may have!"
-	cost = 4750 
-	contains = list(/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/rcd_ammo,
-					/obj/item/construction/rcd,
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
+	cost = 1500 
+	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
 	crate_name = "emergency rcds"
 	crate_type = /obj/structure/closet/crate/internals
@@ -682,7 +678,7 @@
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
 	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
-	cost = 7500	
+	cost = 4500	
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/combat)
 	crate_name = "industrial rcd"
@@ -1035,9 +1031,15 @@
 
 /datum/supply_pack/materials/rcdammo
 	name = "Spare RDC ammo"
-	desc = "This crate contains ten RCD ammo packs, to help with any holes or projects people mite be working on."
-	cost = 3750 //Math mite be a bit off...
+	desc = "This crate contains sixteen RCD ammo packs, to help with any holes or projects people mite be working on."
+	cost = 3750
 	contains = list(/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
 					/obj/item/rcd_ammo,
 					/obj/item/rcd_ammo,
 					/obj/item/rcd_ammo,
@@ -1736,16 +1738,16 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/organic/mothcrate
-	name = "Moth Attractor Crate"
-	desc = "Thanks to adv lighting tech we here at the Lamp Factor have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+/datum/supply_pack/organic/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factor have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
 	cost = 2500 //Fair
 	contains = list(/obj/item/construction/rld,
 					/obj/item/flashlight/lamp,
 					/obj/item/flashlight/lamp,
 					/obj/item/flashlight/lamp/green,
 					/obj/item/storage/box/lights/mixed)
-	crate_name = "moth attractor crate"
+	crate_name = "advanced lighting crate"
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/pizza
