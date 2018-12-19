@@ -1328,16 +1328,6 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
-/datum/supply_pack/science/arcd
-	name = "Advanced Rapid-Construction-Device"
-	desc = "The newest RCD still on the market! This Advanced modle takes ofter the ones used in big mechs and makes it compacted into a small handheld version. Requires RD access to open and this crate has no spare ammo for the RCD."
-	cost = 15000
-	access = ACCESS_RD
-	contains = list(/obj/item/construction/rcd/arcd)
-	crate_name = "advanced rcd"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	desc = "Ever wanted to build your own giant medical robot? Well, now you can! Contains the Odysseus main control board and Odysseus peripherals board. Requires Robotics access to open."
