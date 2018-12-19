@@ -81,6 +81,19 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/rcds
+	name = "Emergency RCDs"
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds and four ammo packets for ya to be able to easily fix up any problem you may have!"
+	cost = 4750 
+	contains = list(/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/construction/rcd,
+					/obj/item/construction/rcd)
+	crate_name = "emergency rcds"
+	crate_type = /obj/structure/closet/crate/internals
+
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
 	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
@@ -667,6 +680,15 @@
 	crate_name = "engineering hardsuit"
 
 /datum/supply_pack/engineering/powergamermitts
+	name = "Industrial RCD"
+	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
+	cost = 7500	
+	access = ACCESS_CE
+	contains = list(/obj/item/construction/rcd/combat)
+	crate_name = "industrial rcd"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+
+/datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
 	cost = 2000	//Made of pure-grade bullshittinium
@@ -1011,6 +1033,22 @@
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
+/datum/supply_pack/materials/rcdammo
+	name = "Spare RDC ammo"
+	desc = "This crate contains ten RCD ammo packs, to help with any holes or projects people mite be working on."
+	cost = 3750 //Math mite be a bit off...
+	contains = list(/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo)
+	crate_name = "rcd ammo"
+
 /datum/supply_pack/materials/bz
 	name = "BZ Canister Crate"
 	desc = "Contains a canister of BZ. Requires Toxins access to open."
@@ -1287,6 +1325,16 @@
 /datum/supply_pack/science
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
+
+/datum/supply_pack/science/arcd
+	name = "Advanced Rapid-Construction-Device"
+	desc = "The newest RCD still on the market! This Advanced modle takes ofter the ones used in big mechs and makes it compacted into a small handheld version. Requires RD access to open and this crate has no spare ammo for the RCD."
+	cost = 15000
+	access = ACCESS_RD
+	contains = list(/obj/item/construction/rcd/arcd)
+	crate_name = "advanced rcd"
+	crate_type = /obj/structure/closet/crate/secure/science
+	dangerous = TRUE
 
 /datum/supply_pack/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
@@ -1686,6 +1734,18 @@
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/watertank)
 	crate_name = "hydroponics backpack crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/mothcrate
+	name = "Moth Attractor Crate"
+	desc = "Thanks to adv lighting tech we here at the Lamp Factor have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2500 //Fair
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "moth attractor crate"
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/pizza
