@@ -41,7 +41,7 @@
 		Lines += sortList(assembled)
 	assembled.len = 0
 	if(length(GLOB.mentors))
-		Lines += "<b>Mentors:</b>"https://github.com/Citadel-Station-13/Citadel-Station-13
+		Lines += "<b>Mentors:</b>"
 		for(var/X in GLOB.mentors)
 			var/client/C = X
 			if(C && (!C.holder || (C.holder && !C.holder.fakekey)))			//>using stuff this complex instead of just using if/else lmao
