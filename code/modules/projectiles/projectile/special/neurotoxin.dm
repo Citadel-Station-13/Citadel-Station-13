@@ -10,5 +10,5 @@
 		nodamage = TRUE
 	else if(isliving(target))
 		var/mob/living/L = target
-		L.Knockdown(100, override_duration = 30, override_stam = 25)
+		L.Knockdown(100, override_hardstun = 30, override_stamdmg = 25)
 	return ..()
