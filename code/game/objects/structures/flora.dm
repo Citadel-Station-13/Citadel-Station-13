@@ -62,6 +62,7 @@
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
 	desc = "A wondrous decorated Christmas tree. It has presents!"
+	resistance_flags = INDESTRUCTIBLE
 	var/gift_type = /obj/item/a_gift/anything
 	var/list/ckeys_that_took = list()
 
