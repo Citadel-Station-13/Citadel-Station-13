@@ -32,5 +32,5 @@
 			to_chat(M, "<span class='warning'>[parent] only accepts machine parts!</span>")
 		return FALSE
 
-/obj/item/storage/part_replacer/cyborg
+/datum/component/storage/concrete/cyborg/rped
 	max_items = 150
