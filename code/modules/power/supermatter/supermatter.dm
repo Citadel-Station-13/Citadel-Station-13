@@ -54,7 +54,7 @@
 #define SUPERMATTER_DANGER_PERCENT 50
 #define SUPERMATTER_WARNING_PERCENT 100
 
-#define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
+#define SUPERMATTER_COUNTDOWN_TIME 60 SECONDS
 
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
