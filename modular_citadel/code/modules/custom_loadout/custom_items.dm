@@ -420,3 +420,13 @@
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/under/leoskimpy
+	name = "Leon's Skimpy Outfit"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom_w.dmi'
+	desc =  "A rather skimpy outfit."
+	item_state = "shark_cloth"
+	icon_state = "shark_cloth"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
