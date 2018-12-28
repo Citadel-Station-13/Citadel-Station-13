@@ -400,26 +400,6 @@
 	crate_name = "surplus russian clothing"
 	crate_type = /obj/structure/closet/crate/internals
 
-/datum/supply_pack/security/russianweapons
-	name = "Russian Surplus Weapons"
-	desc = "An old russian crate full of surplus weapons we use! Has two APS pistals, two russian revolvers two mosens and two old huntting shotguns!"
-	hidden = TRUE
-	contraband = TRUE
-	cost = 50000 // Half a mill for powerfull weapons
-	contains = list(/obj/item/gun/ballistic/revolver/nagant,
-					/obj/item/gun/ballistic/revolver/nagant,
-					/obj/item/gun/ballistic/shotgun/boltaction,
-					/obj/item/gun/ballistic/shotgun/boltaction,
-					/obj/item/gun/ballistic/automatic/pistol/APS,
-					/obj/item/gun/ballistic/automatic/pistol/APS,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/gun/ballistic/shotgun/lethal,
-					/obj/item/gun/ballistic/shotgun/lethal)
-	dangerous = TRUE // Mega dangerous
-	crate_name = "surplus russian weapons"
-	crate_type = /obj/structure/closet/crate/internals
-
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
 	desc = "From the depths of stunbased combat, this order rises above, supreme. Contains three hybrid tasers, capable of firing both electrodes and disabling shots. Requires Security access to open."
