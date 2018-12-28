@@ -683,6 +683,7 @@
 	contains = list(/obj/item/construction/rcd/combat)
 	crate_name = "industrial rcd"
 	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
