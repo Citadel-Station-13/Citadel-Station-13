@@ -102,8 +102,8 @@
 			return FALSE
 
 /mob/living/carbon/update_stamina()
-	var/total_health = (min(health*2,100) - getStaminaLoss())
-	if(getStaminaLoss())
+	var/total_health = getStaminaLoss()
+	if(total_health)
 		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
