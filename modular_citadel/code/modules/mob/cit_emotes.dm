@@ -163,8 +163,8 @@
 
 /datum/emote/living/peep
 	key = "peep"
-	key_third_person = "peeps like a bird"
-	message = "peeps like a bird!"
+	key_third_person = "peeps like a birb"
+	message = "peeps like a birb!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/peep/run_emote(mob/living/user, params)
