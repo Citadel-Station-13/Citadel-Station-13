@@ -506,6 +506,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/shotgun/scatter
+	name = "12g Scatter shot Slugs"
+	desc = "An alternative 8-round Scatter Shot magazine for use in the Bulldog shotgun.."
+	item = /obj/item/ammo_box/magazine/m12g/scatter
+	cost = 3
+
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
