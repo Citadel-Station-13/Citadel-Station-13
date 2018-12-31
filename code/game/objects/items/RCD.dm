@@ -445,12 +445,22 @@ RLD
 	matter = 160
 
 /obj/item/construction/rcd/combat
-	name = "industrial RCD"
+	name = "Combat RCD"
+	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges. This RCD has been upgraded to be able to remove Rwalls!"
 	icon_state = "ircd"
 	item_state = "ircd"
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
+
+/obj/item/construction/rcd/industrial
+	name = "industrial RCD"
+	icon_state = "ircd"
+	item_state = "ircd"
+	max_matter = 500
+	matter = 500
+	delay_mod = 0.6
+	sheetmultiplier	= 8
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
