@@ -507,8 +507,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/scatter
-	name = "12g Scatter shot Slugs"
-	desc = "An alternative 8-round Scatter Shot magazine for use in the Bulldog shotgun.."
+	name = "12g Scatter Laser shot Slugs"
+	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
 	cost = 3
 
