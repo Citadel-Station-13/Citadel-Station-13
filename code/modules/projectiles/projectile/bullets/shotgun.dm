@@ -96,4 +96,4 @@
 
 /obj/item/projectile/bullet/seed
 	damage = 4
-	stamina = 65
+	stamina = 1
