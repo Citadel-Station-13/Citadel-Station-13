@@ -7,6 +7,15 @@
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/retractor/adv
+	name = "Advanced retractor"
+	desc = "Retracts stuff. This one has been made of silver and gold, clearly making it better at retracting!"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "retractor"
+	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	toolspeed = 0.65
 
 /obj/item/retractor/augment
 	name = "retractor"
@@ -18,7 +27,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 
-
 /obj/item/hemostat
 	name = "hemostat"
 	desc = "You think you have seen this before."
@@ -29,6 +37,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "pinched")
 
+/obj/item/hemostat/adv
+	name = "advanced hemostat"
+	desc = "You think you have seen this before. But not as golden or lustrous as this one..."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hemostat"
+	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	toolspeed = 0.65
+	attack_verb = list("attacked", "pinched")
 
 /obj/item/hemostat/augment
 	name = "hemostat"
@@ -52,6 +70,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("burnt")
 
+/obj/item/cautery/adv
+	name = "advanced cautery"
+	desc = "This stops bleeding. This cautery has a exstended nose with a golden tip at the end."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery"
+	materials = list(MAT_METAL=2500, MAT_GLASS=750)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	toolspeed = 0.5
+	attack_verb = list("burnt")
 
 /obj/item/cautery/augment
 	name = "cautery"
@@ -79,6 +107,21 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
 
+/obj/item/surgicaldrill/adv
+	name = "advanced surgical drill"
+	desc = "You can drill using this item. It has a damion tip at the end of its' golden drill."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "drill"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	flags_1 = CONDUCT_1
+	force = 13 //Damions are not ment for flesh cutting!
+	w_class = WEIGHT_CLASS_NORMAL
+	toolspeed = 0.65
+	attack_verb = list("drilled")
+	sharpness = IS_SHARP_ACCURATE // Were making them use a damion for this...
 
 /obj/item/surgicaldrill/augment
 	name = "surgical drill"
@@ -115,6 +158,25 @@
 /obj/item/scalpel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+
+/obj/item/scalpel/adv
+	name = "advanced scalpel"
+	desc = "Cut, cut, and once more cut now with a golden eage. Clearly made of mostly silver yet as you pick it up it feels lighter then normal"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "scalpel"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 8
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 7
+	throw_speed = 3
+	throw_range = 6
+	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	toolspeed = 0.65
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP_ACCURATE
 
 /obj/item/scalpel/augment
 	name = "scalpel"
@@ -160,6 +222,26 @@
 /obj/item/circular_saw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
+
+/obj/item/circular_saw/adv
+	name = "advanced circular saw"
+	desc = "For heavy duty cutting now with a damion eage saw!"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
+	flags_1 = CONDUCT_1
+	force = 13
+	w_class = WEIGHT_CLASS_NORMAL
+	throwforce = 6
+	throw_speed = 1
+	throw_range = 3
+	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
+	attack_verb = list("attacked", "slashed", "sawed", "cut")
+	toolspeed = 0.65
+	sharpness = IS_SHARP
 
 /obj/item/circular_saw/augment
 	name = "circular saw"
