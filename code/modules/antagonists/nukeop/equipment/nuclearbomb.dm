@@ -590,6 +590,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 				loneop.weight += 1
 				if(loneop.weight % 5 == 0)
  					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 	else
 		lastlocation = newturf
 		last_disk_move = world.time
@@ -598,6 +599,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 			loneop.weight = max(loneop.weight - 1, 0)
 			if(loneop.weight % 5 == 0)
  				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
