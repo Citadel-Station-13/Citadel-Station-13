@@ -19,7 +19,6 @@
 /area/shuttle/abandoned/crew)
 "ad" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
@@ -440,7 +439,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/fans,
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -626,7 +624,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/fans,
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -2531,7 +2528,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/fans,
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -2556,7 +2552,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/fans,
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
@@ -2787,7 +2782,6 @@
 /area/shuttle/abandoned/medbay)
 "dI" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -3109,7 +3103,6 @@
 /area/shuttle/abandoned/cargo)
 "eb" = (
 /obj/machinery/door/airlock/external,
-/obj/structure/fans,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

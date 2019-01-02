@@ -15,7 +15,6 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/obj/structure/fans,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
@@ -97,7 +96,6 @@
 	preferred_direction = 1;
 	width = 9
 	},
-/obj/structure/fans,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
