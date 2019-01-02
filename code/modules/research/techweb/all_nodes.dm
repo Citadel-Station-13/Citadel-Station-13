@@ -49,7 +49,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag")
+	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -86,6 +86,15 @@
 	description = "Reinforced prosthetics for the impaired."
 	prereq_ids = list("adv_biotech", "surplus_lims")
 	design_ids = list("adv_l_arm", "adv_r_arm", "adv_r_leg", "adv_l_leg")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/advance_surgerytools
+	id = "advance_surgerytools"
+	display_name = "Advanced Surgery Tools"
+	description = "New faster and lighter surgical tools made of rare metals and gems."
+	prereq_ids = list("adv_biotech", "adv_surgery")
+	design_ids = list("drapes", "retractor_adv", "hemostat_adv", "cautery_adv", "surgicaldrill_adv", "scalpel_adv", "circular_saw_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
