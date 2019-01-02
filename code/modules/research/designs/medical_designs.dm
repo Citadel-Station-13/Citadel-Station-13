@@ -583,7 +583,7 @@
 /datum/design/surgicaldrill_adv
 	name = "advanced surgicaldrill"
 	desc = "You can drill using this item. It has a damion tip at the end of its' golden drill."
-	id = "surgicaldrilly_adv"
+	id = "surgicaldrill_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
 	build_path = /obj/item/surgicaldrill/adv
