@@ -605,7 +605,7 @@
 	desc = "For heavy duty cutting now with a damion eage saw!"
 	id = "circular_saw_adv"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 7500, MAT_GLASS = 4500, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 6000, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
 	build_path = /obj/item/scalpel/adv
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
