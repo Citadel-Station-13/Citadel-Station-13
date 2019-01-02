@@ -244,10 +244,10 @@
 	// Makes plant glow. Makes plant in tray glow too.
 	// Adds 1 + potency*rate light range and potency*(rate + 0.01) light_power to products.
 	name = "Bioluminescence"
-	rate = 0.03
+	rate = 0.02
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_id = "glow"
-	var/glow_color = "#C3E381"
+	var/glow_color = "#d2e5ac"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
 	return 1.4 + S.potency*rate
@@ -263,7 +263,7 @@
 	//makes plant emit slightly purple shadows
 	//adds -potency*(rate*0.2) light power to products
 	name = "Shadow Emission"
-	rate = 0.04
+	rate = 0.02
 	glow_color = "#AAD84B"
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
@@ -275,7 +275,7 @@
 
 /datum/plant_gene/trait/glow/berry
 	name = "Strong Bioluminescence"
-	rate = 0.05
+	rate = 0.03
 	glow_color = null
 
 
