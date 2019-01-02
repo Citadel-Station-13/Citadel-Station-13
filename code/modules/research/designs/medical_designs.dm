@@ -44,6 +44,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medicalkit
+	name = "Medical Kit"
+	desc = "A plastic medical kit for storging medical items."
+	id = "medicalkit"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASTIC = 5000)
+	build_path = /obj/item/storage/firstaid //So we dont spawn medical items in it
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/xlarge_beaker
 	name = "X-large Beaker"
 	id = "xlarge_beaker"
@@ -525,6 +535,80 @@
 	build_path = /obj/item/organ/lungs/cybernetic/upgraded
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/////////////////////
+//Adv Surgery Tools//
+/////////////////////
+
+/datum/design/drapes
+	name = "Plastic Drapes"
+	desc = "A large surgery drape made of plastic."
+	id = "drapes"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASTIC = 2500)
+	build_path = /obj/item/surgical_drapes
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/retractor_adv
+	name = "Advanced retractor"
+	desc = "Retracts stuff. This one has been made of silver and gold, clearly making it better at retracting!"
+	id = "retractor_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_GOLD = 1000)
+	build_path = /obj/item/retractor/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/hemostat_adv
+	name = "advanced hemostat"
+	desc = "You think you have seen this before. But not as golden or lustrous as this one..."
+	id = "hemostat_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
+	build_path = /obj/item/hemostat/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/cautery_adv
+	name = "advanced cautery"
+	desc = "This stops bleeding. This cautery has a exstended nose with a golden tip at the end."
+	id = "cautery_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
+	build_path = /obj/item/cautery/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgicaldrill_adv
+	name = "advanced surgicaldrill"
+	desc = "You can drill using this item. It has a damion tip at the end of its' golden drill."
+	id = "surgicaldrilly_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
+	build_path = /obj/item/surgicaldrill/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/scalpel_adv
+	name = "advanced scalpel"
+	desc = "Cut, cut, and once more cut now with a golden eage. Clearly made of mostly silver yet as you pick it up it feels lighter then normal."
+	id = "scalpel_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 4000, MAT_GOLD = 2500)
+	build_path = /obj/item/scalpel/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/circular_saw_adv
+	name = "advanced circular saw"
+	desc = "For heavy duty cutting now with a damion eage saw!"
+	id = "circular_saw_adv"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 4500, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
+	build_path = /obj/item/scalpel/adv
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////
 ///Surgery Designs///
