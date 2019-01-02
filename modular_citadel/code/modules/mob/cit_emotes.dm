@@ -199,8 +199,8 @@
 
 /datum/emote/living/mothsqueak
 	key = "msqueak"
-		key_third_person = "lets out a tiny squeak"
-		message = "lets out a tiny squeak!"
+	key_third_person = "lets out a tiny squeak"
+	message = "lets out a tiny squeak!"
 	emote_type = EMOTE_AUDIBLE
 	mob_type_allowed_typecache = list(/mob/living/carbon/)
 
