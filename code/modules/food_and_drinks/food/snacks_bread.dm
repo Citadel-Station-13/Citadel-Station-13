@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
 			if(GLOB.frying_bad_chem_add_volume)
 				reagents.maximum_volume += bad_chem_amount
-			add_reagent(bad_chem, bad_chem_amount)
+			reagents.add_reagent(bad_chem, bad_chem_amount)
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
