@@ -8,8 +8,8 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/retractor/adv
-	name = "Advanced retractor"
-	desc = "Retracts stuff. This one has been made of silver and gold, clearly making it better at retracting!"
+	name = "Advanced Retractor"
+	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
 	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
@@ -38,8 +38,8 @@
 	attack_verb = list("attacked", "pinched")
 
 /obj/item/hemostat/adv
-	name = "advanced hemostat"
-	desc = "You think you have seen this before. But not as golden or lustrous as this one..."
+	name = "Advanced Hemostat"
+	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
@@ -71,8 +71,8 @@
 	attack_verb = list("burnt")
 
 /obj/item/cautery/adv
-	name = "advanced cautery"
-	desc = "This stops bleeding. This cautery has a exstended nose with a golden tip at the end."
+	name = "Electrocautery"
+	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
@@ -108,8 +108,8 @@
 	attack_verb = list("drilled")
 
 /obj/item/surgicaldrill/adv
-	name = "advanced surgical drill"
-	desc = "You can drill using this item. It has a damion tip at the end of its' golden drill."
+	name = "Surgical Autodrill"
+	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -160,8 +160,8 @@
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
 
 /obj/item/scalpel/adv
-	name = "advanced scalpel"
-	desc = "Cut, cut, and once more cut now with a golden eage. Clearly made of mostly silver yet as you pick it up it feels lighter then normal"
+	name = "Precision Scalpel"
+desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -224,8 +224,8 @@
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/adv
-	name = "advanced circular saw"
-	desc = "For heavy duty cutting now with a damion eage saw!"
+	name = "Diamond-Grit Circular Saw"
+	desc = "For those Assistants with REALLY thick skulls."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
