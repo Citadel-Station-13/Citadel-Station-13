@@ -724,6 +724,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/datum/techweb_node/mech_seedscatter
+	id = "mech_seedscatter"
+	display_name = "Exosuit Weapon (Melon Seed \"Scattershot\")"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("ballistic_weapons")
+	design_ids = list("mech_seedscatter")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 /datum/techweb_node/mech_carbine
 	id = "mech_carbine"
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
