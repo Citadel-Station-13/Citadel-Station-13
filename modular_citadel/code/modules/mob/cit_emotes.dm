@@ -198,16 +198,16 @@
 
 
 /datum/emote/living/mothsqueak
-    key = "msqueak"
-    key_third_person = "emits a tiny squeak"
-    message = "emits a tiny squeak!"
-    emote_type = EMOTE_AUDIBLE
-    mob_type_allowed_typecache = list(/mob/living/carbon/)
+	key = "msqueak"
+	key_third_person = "lets out a tiny squeak"
+	message = "lets out a tiny squeak!"
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = list(/mob/living/carbon/)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
-    if(ishuman(user))
-        if(user.nextsoundemote >= world.time)
-            return
-        user.nextsoundemote = world.time + 7
-        playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
-. = ..()
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
+	. = ..()
