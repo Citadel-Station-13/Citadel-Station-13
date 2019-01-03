@@ -272,7 +272,7 @@
 /datum/quirk/mute
 	name = "Mute"
 	desc = "Do to some accident caused you or by choice you have no voice to be heard!"
-	value = -3 //HALP MAINTS
+	value = -2 //HALP MAINTS
 	gain_text = "<span class='danger'>I rather not say...</span>"
 	lose_text = "<span class='notice'>I can speak once more.</span>"
 	medical_record_text = "Patient has an been unable to talk or use there voice."
