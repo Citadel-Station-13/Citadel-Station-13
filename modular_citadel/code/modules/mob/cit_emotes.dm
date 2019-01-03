@@ -202,10 +202,9 @@
 	key_third_person = "lets out a tiny squeak"
 	message = "lets out a tiny squeak!"
 	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = list(/mob/living/carbon/)
+	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
-	if(ishuman(user))
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
