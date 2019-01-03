@@ -43,6 +43,17 @@
 	description = "Various tools fit for basic mech units"
 	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
 
+
+/datum/techweb_node/surplus_lims
+	id = "surplus_lims"
+	display_name = "Basic Prosthetics"
+	description = "Basic fragile lims for the impaired."
+	starting_node = TRUE
+	prereq_ids = list("biotech")
+	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
+	export_price = 5000
+
+
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
 	id = "biotech"
@@ -71,22 +82,13 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/surplus_lims
-	id = "surplus_lims"
-	display_name = "Basic Prosthetics"
-	description = "Basic fragile lims for the impaired."
-	prereq_ids = list("biotech")
-	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000) // You can knock them off with a glass shard...
-	export_price = 5000
-
 /datum/techweb_node/advance_lims
 	id = "advance_lims"
 	display_name = "Upgraded Prosthetics"
 	description = "Reinforced prosthetics for the impaired."
 	prereq_ids = list("adv_biotech", "surplus_lims")
 	design_ids = list("adv_l_arm", "adv_r_arm", "adv_r_leg", "adv_l_leg")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
 	export_price = 5000
 
 /////////////////////////Advanced Surgery/////////////////////////
