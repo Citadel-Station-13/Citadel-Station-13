@@ -161,7 +161,7 @@
 
 /obj/item/scalpel/adv
 	name = "Precision Scalpel"
-desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
+	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
