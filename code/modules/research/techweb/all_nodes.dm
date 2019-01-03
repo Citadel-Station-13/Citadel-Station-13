@@ -92,7 +92,7 @@
 /datum/techweb_node/advance_surgerytools
 	id = "advance_surgerytools"
 	display_name = "Advanced Surgery Tools"
-	description = "New faster and lighter surgical tools made of rare metals and gems."
+	description = "Refined and improved redesigns for the run-of-the-mill medical utensils."
 	prereq_ids = list("adv_biotech", "adv_surgery")
 	design_ids = list("drapes", "retractor_adv", "hemostat_adv", "cautery_adv", "surgicaldrill_adv", "scalpel_adv", "circular_saw_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)

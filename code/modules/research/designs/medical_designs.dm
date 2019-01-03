@@ -45,7 +45,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/medicalkit
-	name = "Medical Kit"
+	name = "Empty Medkit"
 	desc = "A plastic medical kit for storging medical items."
 	id = "medicalkit"
 	build_type = PROTOLATHE
@@ -551,8 +551,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/retractor_adv
-	name = "Advanced retractor"
-	desc = "Retracts stuff. This one has been made of silver and gold, clearly making it better at retracting!"
+	name = "Advanced Retractor"
+	desc = "A high-class, premium retractor, featuring precision crafted, silver-plated hook-ends and an electrum handle."
 	id = "retractor_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1500, MAT_GOLD = 1000)
@@ -561,8 +561,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/hemostat_adv
-	name = "advanced hemostat"
-	desc = "You think you have seen this before. But not as golden or lustrous as this one..."
+	name = "Advanced Hemostat"
+	desc = "An exceptionally fine pair of arterial forceps. These appear to be plated in electrum and feel soft to the touch."
 	id = "hemostat_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
@@ -571,8 +571,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/cautery_adv
-	name = "advanced cautery"
-	desc = "This stops bleeding. This cautery has a exstended nose with a golden tip at the end."
+	name = "Electrocautery" //This is based on real-life science.
+	desc = "A high-tech unipolar Electrocauter. This tiny device contains an extremely powerful microbattery that uses arcs of electricity to painlessly sear wounds shut. It seems to recharge with the user's body-heat. Wow!"
 	id = "cautery_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 1000, MAT_GOLD = 1500)
@@ -581,8 +581,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill_adv
-	name = "advanced surgicaldrill"
-	desc = "You can drill using this item. It has a damion tip at the end of its' golden drill."
+	name = "Surgical Autodrill"
+	desc = "With a diamond tip and built-in depth and safety sensors, this drill alerts the user before overpenetrating a patient's skull or tooth. There also appears to be a disable switch."
 	id = "surgicaldrill_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 2500, MAT_SILVER = 6000, MAT_GOLD = 5500, MAT_DIAMOND = 3500)
@@ -591,8 +591,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/scalpel_adv
-	name = "advanced scalpel"
-	desc = "Cut, cut, and once more cut now with a golden eage. Clearly made of mostly silver yet as you pick it up it feels lighter then normal."
+	name = "Precision Scalpel"
+	desc = "A perfectly balanced electrum scalpel with a silicon-coated edge to eliminate wear and tear."
 	id = "scalpel_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 4000, MAT_GOLD = 2500)
@@ -601,8 +601,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/circular_saw_adv
-	name = "advanced circular saw"
-	desc = "For heavy duty cutting now with a damion eage saw!"
+	name = "Diamond-Grit Circular Saw"
+	desc = "For those Assistants with REALLY thick skulls."
 	id = "circular_saw_adv"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 6000, MAT_SILVER = 6500, MAT_GOLD = 7500, MAT_DIAMOND = 4500)
