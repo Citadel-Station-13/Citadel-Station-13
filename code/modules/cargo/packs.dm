@@ -240,14 +240,16 @@
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
-	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, three spaceacillin needles, and a medibot."
-	cost = 5000 
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	cost = 3000 
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,
 					/obj/item/clothing/head/bio_hood,
 					/obj/item/clothing/head/bio_hood,
 					/obj/item/clothing/suit/bio_suit,
 					/obj/item/clothing/suit/bio_suit,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
 					/obj/item/reagent_containers/syringe/antiviral,
 					/obj/item/reagent_containers/syringe/antiviral,
 					/obj/item/reagent_containers/syringe/antiviral,
