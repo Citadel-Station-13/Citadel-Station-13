@@ -294,7 +294,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/cryostatis_shotgun_dart
-	name = "Cryostatis Shotgun Dart"
+	name = "Cryostasis Shotgun Dart"
 	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
 	id = "shotgundartcryostatis"
 	build_type = PROTOLATHE
