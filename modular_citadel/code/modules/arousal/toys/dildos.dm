@@ -133,38 +133,32 @@ obj/item/dildo/custom
 
 //Suicide acts, by request
 
-obj/item/dildo/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
-	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
-	return (OXYLOSS)
-
-obj/item/dildo/knotted/suicide_act(mob/user)
+/obj/item/dildo/knotted/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! They swallowed the knot! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-obj/item/dildo/human/suicide_act(mob/user)
+/obj/item/dildo/human/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-obj/item/dildo/plain/suicide_act(mob/user)
+/obj/item/dildo/plain/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-obj/item/dildo/flared/suicide_act(mob/user)
+/obj/item/dildo/flared/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-obj/item/dildo/flared/huge/suicide_act(mob/user)
+/obj/item/dildo/flared/huge/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! WHY WOULD THEY DO THAT? It looks like [user.p_theyre()] trying to commit suicide!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-
-obj/item/dildo/flared/huge/suicide_act(mob/user)
+/obj/item/dildo/flared/huge/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! It looks like they wanted a custom death message!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	return (OXYLOSS)
