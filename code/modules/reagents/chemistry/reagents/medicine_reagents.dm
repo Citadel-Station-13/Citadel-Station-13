@@ -551,7 +551,7 @@
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-4.5*REM, 0)
-	M.jitter = max(M.jitter + 2, 15)
+	M.Jitter(10)
 	if(prob(50))
 		M.Confuse(1)
 	..()
