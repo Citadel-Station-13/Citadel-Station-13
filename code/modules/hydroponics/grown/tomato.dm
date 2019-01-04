@@ -136,7 +136,7 @@
 
 	spawn(30)
 		if(!QDELETED(src))
-			investigate_log(INVESTIGATE_BOTANY, "[key_name(user)] released a killer tomato at [COORD(src)]")
+			investigate_log("[key_name(user)] released a killer tomato at [COORD(src)]", INVESTIGATE_BOTANY)
 			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
 			K.maxHealth += round(seed.endurance / 3)
 			K.melee_damage_lower += round(seed.potency / 10)
