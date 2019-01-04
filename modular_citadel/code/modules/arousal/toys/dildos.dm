@@ -189,5 +189,3 @@ obj/item/dildo/custom
 	user.adjust_eye_damage(10)
 	sleep(15)
 	return (OXYLOSS)
-
-
