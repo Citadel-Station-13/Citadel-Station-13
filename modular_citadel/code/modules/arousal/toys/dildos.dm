@@ -1,7 +1,7 @@
 //////////
 //DILDOS//
 //////////
-obj/item/dildo
+/obj/item/dildo
 	name 				= "dildo"
 	desc 				= "Floppy!"
 	icon 				= 'modular_citadel/icons/obj/genitals/dildo.dmi'
@@ -20,7 +20,7 @@ obj/item/dildo
 	var/random_shape 	= FALSE
 	//Lists moved to _cit_helpers.dm as globals so they're not instanced individually
 
-obj/item/dildo/proc/update_appearance()
+/obj/item/dildo/proc/update_appearance()
 	icon_state = "[dildo_type]_[dildo_shape]_[dildo_size]"
 	var/sizeword = ""
 	switch(dildo_size)
@@ -35,7 +35,7 @@ obj/item/dildo/proc/update_appearance()
 
 	name = "[sizeword][dildo_shape] [can_customize ? "custom " : ""][dildo_type]"
 
-obj/item/dildo/AltClick(mob/living/user)
+/obj/item/dildo/AltClick(mob/living/user)
 	if(QDELETED(src))
 		return
 	if(!isliving(user))
@@ -46,7 +46,7 @@ obj/item/dildo/AltClick(mob/living/user)
 		return
 	customize(user)
 
-obj/item/dildo/proc/customize(mob/living/user)
+/obj/item/dildo/proc/customize(mob/living/user)
 	if(!can_customize)
 		return FALSE
 	if(src && !user.incapacitated() && in_range(user,src))
@@ -75,7 +75,7 @@ obj/item/dildo/proc/customize(mob/living/user)
 	update_appearance()
 	return TRUE
 
-obj/item/dildo/Initialize()
+/obj/item/dildo/Initialize()
 	. = ..()
 	if(random_color == TRUE)
 		var/randcolor = pick(GLOB.dildo_colors)
@@ -91,32 +91,36 @@ obj/item/dildo/Initialize()
 	pixel_y 	= rand(-7,7)
 	pixel_x 	= rand(-7,7)
 
-obj/item/dildo/examine(mob/user)
+/obj/item/dildo/examine(mob/user)
 	..()
 	if(can_customize)
 		user << "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
 
-obj/item/dildo/random//totally random
+/obj/item/dildo/random//totally random
 	name 				= "random dildo"//this name will show up in vendors and shit so you know what you're vending(or don't, i guess :^))
 	random_color 		= TRUE
 	random_shape 		= TRUE
 	random_size 		= TRUE
 
-obj/item/dildo/knotted
+/obj/item/dildo/knotted
 	dildo_shape 		= "knotted"
 	name 				= "knotted dildo"
+	attack_verb = list("penetrated", "knotted", "slapped")
 
 obj/item/dildo/human
 	dildo_shape 		= "human"
 	name 				= "human dildo"
+	attack_verb = list("penetrated", "slapped")
 
 obj/item/dildo/plain
 	dildo_shape 		= "plain"
 	name 				= "plain dildo"
+	attack_verb = list("penetrated", "slapped")
 
 obj/item/dildo/flared
 	dildo_shape 		= "flared"
 	name 				= "flared dildo"
+	attack_verb = list("penetrated", "slapped", "neighed", "gaped", "prolapsed")
 
 obj/item/dildo/flared/huge
 	name = "literal horse cock"
@@ -133,34 +137,57 @@ obj/item/dildo/custom
 
 //Suicide acts, by request
 
-/obj/item/dildo/knotted/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! They swallowed the knot! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
+/obj/item/dildo/knotted/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they shove [src] down their throat! They swallowed the knot! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	sleep(15)
 	return (OXYLOSS)
 
-/obj/item/dildo/human/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
+/obj/item/dildo/human/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	sleep(15)
 	return (OXYLOSS)
 
-/obj/item/dildo/plain/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
+/obj/item/dildo/plain/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	sleep(15)
 	return (OXYLOSS)
 
-/obj/item/dildo/flared/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!!</span>")
+/obj/item/dildo/flared/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	sleep(15)
 	return (OXYLOSS)
 
-/obj/item/dildo/flared/huge/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! WHY WOULD THEY DO THAT? It looks like [user.p_theyre()] trying to commit suicide!!</span>")
-	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+/obj/item/dildo/flared/huge/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they try to deepthroat the [src]! WHY WOULD THEY DO THAT? [user.p_theyre()] trying to commit suicide!!</span>")
+	playsound(loc, 'sound/weapons/gagging.ogg', 50, 2, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
 	return (OXYLOSS)
 
-/obj/item/dildo/flared/huge/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'[user] gags as they shove [src] down their throat! It looks like they wanted a custom death message!!</span>")
+/obj/item/dildo/flared/custom/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] gags as they shove [src] down their throat! It looks like they wanted a custom death message!!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	sleep(15)
 	return (OXYLOSS)
 
 
