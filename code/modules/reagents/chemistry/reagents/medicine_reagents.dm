@@ -553,7 +553,7 @@
 	M.adjustStaminaLoss(-4.5*REM, 0)
 	M.Jitter(10)
 	if(prob(50))
-		M.Confuse(1)
+		M.confused = max(M.confused, 1)
 	..()
 	return TRUE
 
