@@ -356,3 +356,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_MASK
 	path = /obj/item/clothing/mask/gas/mime
 	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/mimeoveralls
+	name = "Mime's Overalls"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/mimeoveralls
+	ckeywhitelist = list("pireamaineach")
