@@ -84,6 +84,7 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
+	explosion_block = INFINITY
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
