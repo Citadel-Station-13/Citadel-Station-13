@@ -363,6 +363,9 @@
 	. = ..()
 	if(ishuman(target) && proximity_flag)
 		var/mob/living/carbon/human/H = target
+		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
+			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
+			return
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 
