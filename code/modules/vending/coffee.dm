@@ -8,6 +8,12 @@
 		            /obj/item/reagent_containers/food/drinks/mug/tea = 25,
 		            /obj/item/reagent_containers/food/drinks/mug/coco = 25)
 	contraband = list(/obj/item/reagent_containers/food/drinks/ice = 12)
+	premium = list(/obj/item/reagent_containers/food/snacks/chocolatebar = 3,
+				   /obj/item/reagent_containers/food/condiment/milk = 2,
+				   /obj/item/reagent_containers/food/drinks/bottle/cream = 2,
+				   /obj/item/reagent_containers/food/condiment/sugar)
+				   
+				   
 	refill_canister = /obj/item/vending_refill/coffee
 
 /obj/item/vending_refill/coffee
