@@ -430,3 +430,12 @@
 	icon_state = "shark_cloth"
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
+/obj/item/clothing/under/mimeoveralls
+	name = "Mime's Overalls"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	desc = "A less-than-traditional mime's attire, completed by a set of dorky-looking overalls."
+	item_state = "moveralls"
+	icon_state = "moveralls"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
