@@ -1493,6 +1493,18 @@
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2500 //Fair
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "advanced lighting crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
 	desc = "Pink-haired Quartermaster not doing her job? Replace her with this tireless worker, today!"
@@ -1726,18 +1738,6 @@
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/watertank)
 	crate_name = "hydroponics backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/organic/advlighting
-	name = "Advanced Lighting crate"
-	desc = "Thanks to advanced lighting tech we here at the Lamp Factor have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
-	cost = 2500 //Fair
-	contains = list(/obj/item/construction/rld,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp/green,
-					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/pizza
