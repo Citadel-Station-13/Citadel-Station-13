@@ -36,7 +36,7 @@
 	if(!istype(user))
 		return
 	if(!combattoggle_redir)
-		combattoggle_redir = user.AddComponent(/datum/component/redirect,list(COMSIG_COMBAT_TOGGLED),CALLBACK(src,.proc/injectadrenaline))
+		combattoggle_redir = user.AddComponent(/datum/component/redirect, list(COMSIG_COMBAT_TOGGLED = CALLBACK(src, .proc/injectadrenaline)))
 
 /obj/item/clothing/glasses/phantomthief/syndicate/dropped(mob/user)
 	. = ..()
