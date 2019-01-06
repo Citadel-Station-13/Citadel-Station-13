@@ -13,7 +13,6 @@
 				   /obj/item/reagent_containers/food/drinks/bottle/cream = 2,
 				   /obj/item/reagent_containers/food/condiment/sugar)
 				   
-				   
 	refill_canister = /obj/item/vending_refill/coffee
 
 /obj/item/vending_refill/coffee
