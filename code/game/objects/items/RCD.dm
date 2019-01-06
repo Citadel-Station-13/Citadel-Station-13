@@ -522,7 +522,7 @@ RLD
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 500
 	max_matter = 500
-	sheet_multiplier = 16
+	sheetmultiplier = 16
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
 
