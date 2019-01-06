@@ -82,7 +82,7 @@
 			item_color = "800080"
 		if("white")
 			item_color = "FFFFFF"
-		if("gray"
+		if("gray")
 			item_color = "808080"
 		if("black")
 			item_color = "333333"
