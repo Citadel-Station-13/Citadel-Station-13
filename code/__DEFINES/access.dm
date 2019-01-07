@@ -70,7 +70,7 @@
 	Mostly for admin fun times.*/
 #define ACCESS_CENT_GENERAL 101//General facilities. CentCom ferry.
 #define ACCESS_CENT_THUNDER 102//Thunderdome.
-#define ACCESS_CENT_SPECOPS 103//Special Ops. Captain's display case, Marauder and Seraph mechs.
+#define ACCESS_CENT_SPECOPS 103//Special Ops. Marauder and Seraph mechs.
 #define ACCESS_CENT_MEDICAL 104//Medical/Research
 #define ACCESS_CENT_LIVING 105//Living quarters.
 #define ACCESS_CENT_STORAGE 106//Generic storage areas.
