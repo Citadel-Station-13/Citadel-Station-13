@@ -56,22 +56,34 @@
 	icon_state = "paint_neutral"
 
 /obj/item/paint/anycolor/attack_self(mob/user)
-	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
+	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "pink", "blue", "cyan", "green", "lime", "yellow", "orange", "violet", "purple", "black", "gray", "white")
 	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
 		return
 	switch(t1)
 		if("red")
 			item_color = "C73232"
+		if("pink")
+			item_color = "FFC0CD"
 		if("blue")
 			item_color = "5998FF"
+		if("cyan")
+			item_color = "00FFFF"
 		if("green")
 			item_color = "2A9C3B"
+		if("lime")
+			item_color = "00FF00"
 		if("yellow")
 			item_color = "CFB52B"
+		if("orange")
+			item_color = "fFA700"
 		if("violet")
 			item_color = "AE4CCD"
+		if("purple")
+			item_color = "800080"
 		if("white")
 			item_color = "FFFFFF"
+		if("gray")
+			item_color = "808080"
 		if("black")
 			item_color = "333333"
 	icon_state = "paint_[t1]"
