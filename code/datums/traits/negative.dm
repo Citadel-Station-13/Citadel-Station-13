@@ -278,3 +278,21 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "Do to some accident caused you or by choice you have no voice to be heard!"
+	value = -2 //HALP MAINTS
+	gain_text = "<span class='danger'>I rather not say...</span>"
+	lose_text = "<span class='notice'>I can speak once more.</span>"
+	medical_record_text = "Patient has an been unable to talk or use there voice."
+	var/datum/brain_trauma/severe/mute
+
+/datum/quirk/mute/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
+		qdel(src)
