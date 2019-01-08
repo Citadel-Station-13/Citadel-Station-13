@@ -1493,7 +1493,7 @@
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/organic/advlighting
+/datum/supply_pack/service/advlighting
 	name = "Advanced Lighting crate"
 	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
 	cost = 2500 //Fair
