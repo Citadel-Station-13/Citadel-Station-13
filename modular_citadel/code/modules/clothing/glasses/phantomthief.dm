@@ -1,8 +1,6 @@
 /obj/item/clothing/glasses/phantomthief
 	name = "suspicious paper mask"
-	desc = "A cheap, Syndicate-branded paper face mask with vision correction lens and flash proof! They'll never see it coming. This mask goes over your eyes."
-	flash_protect = 1
-	vision_correction = 1
+	desc = "A cheap, Syndicate-branded paper face mask. They'll never see it coming."
 	alternate_worn_icon = 'icons/mob/mask.dmi'
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "s-ninja"
@@ -14,7 +12,7 @@
 
 /obj/item/clothing/glasses/phantomthief/syndicate
 	name = "suspicious plastic mask"
-	desc = "A cheap, bulky, Syndicate-branded plastic face mask with vision correction lens and flash proof. You have to break in to break out. This mask goes over your eyes."
+	desc = "A cheap, bulky, Syndicate-branded plastic face mask. You have to break in to break out."
 	var/nextadrenalinepop
 	var/datum/component/redirect/combattoggle_redir
 
