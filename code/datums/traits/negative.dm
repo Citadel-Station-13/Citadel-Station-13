@@ -270,7 +270,7 @@
 	desc = "You've had a traumatic past, one that has scarred you for life, and cripples you when dealing with your greatest fears."
 	value = -2 // It can hardstun you. You can be a job that your phobia targets...
 	gain_text = "<span class='danger'>You begin to tremble as an immeasurable fear grips your mind.</span>"
-	lose_text = "<span class='notice'>Your confidence wipes away the fear that had been plagueing you.</span>"
+	lose_text = "<span class='notice'>Your confidence wipes away the fear that had been plaguing you.</span>"
 	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
 
