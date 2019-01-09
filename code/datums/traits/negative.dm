@@ -278,7 +278,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
-  
+
 /datum/quirk/mute
 	name = "Mute"
 	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
