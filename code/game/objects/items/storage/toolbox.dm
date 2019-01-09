@@ -88,8 +88,10 @@
 	. = ..()
 	if(proximity)
 		if(isobj(A))
-			var/obj/O = A
-			O.take_damage(20)
+			var/obj/machinery/door/O = A
+			if(istype(O) && (O.damage_deflection >= 10))		//Eh fine.		//This is a meme cast do not do what I did!
+				return
+			O.take_damage(13)
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return

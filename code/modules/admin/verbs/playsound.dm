@@ -4,10 +4,12 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	var/freq = 1
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
+	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
+	if(!freq)
+		freq = 1
 	vol = CLAMP(vol, 1, 100)
 
 	var/sound/admin_sound = new()
@@ -96,13 +98,17 @@
 					if (data["webpage_url"])
 						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
 
+					var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
+					if(!freq)
+						freq = 1
+					pitch = freq
+
 					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
 					switch(res)
 						if("Yes")
 							to_chat(world, "<span class='boldannounce'>An admin played: [webpage_url]</span>")
 						if("Cancel")
 							return
-
 					SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
 					log_admin("[key_name(src)] played web sound: [web_sound_input]")
 					message_admins("[key_name(src)] played web sound: [web_sound_input]")

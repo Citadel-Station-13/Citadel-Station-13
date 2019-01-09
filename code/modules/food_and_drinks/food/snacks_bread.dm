@@ -185,6 +185,17 @@
 	icon_state = ""
 	bitesize = 2
 
+GLOBAL_VAR_INIT(frying_hardmode, TRUE)
+GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
+GLOBAL_LIST_INIT(frying_bad_chems, list(
+"bad_food" = 10,
+"clf3" = 2,
+"aranesp" = 2,
+"blackpowder" = 10,
+"phlogiston" = 3,
+"cyanide" = 3,
+))
+
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
@@ -210,6 +221,13 @@
 	else
 		fried.forceMove(src)
 		trash = fried
+		if(!istype(fried, /obj/item/reagent_containers/food) && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
+			var/R = rand(1, GLOB.frying_bad_chems.len)
+			var/bad_chem = GLOB.frying_bad_chems[R]
+			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
+			if(GLOB.frying_bad_chem_add_volume)
+				reagents.maximum_volume += bad_chem_amount
+			reagents.add_reagent(bad_chem, bad_chem_amount)
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)

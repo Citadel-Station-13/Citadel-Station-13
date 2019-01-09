@@ -1,6 +1,8 @@
 /obj/item/clothing/glasses/phantomthief
 	name = "suspicious paper mask"
-	desc = "A cheap, Syndicate-branded paper face mask. They'll never see it coming."
+	desc = "A cheap, Syndicate-branded paper face mask with vision correction lens and flash proof! They'll never see it coming. This mask goes over your eyes."
+	flash_protect = 1
+	vision_correction = 1
 	alternate_worn_icon = 'icons/mob/mask.dmi'
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "s-ninja"
@@ -12,7 +14,7 @@
 
 /obj/item/clothing/glasses/phantomthief/syndicate
 	name = "suspicious plastic mask"
-	desc = "A cheap, bulky, Syndicate-branded plastic face mask. You have to break in to break out."
+	desc = "A cheap, bulky, Syndicate-branded plastic face mask with vision correction lens and flash proof. You have to break in to break out. This mask goes over your eyes."
 	var/nextadrenalinepop
 	var/datum/component/redirect/combattoggle_redir
 
@@ -36,7 +38,7 @@
 	if(!istype(user))
 		return
 	if(!combattoggle_redir)
-		combattoggle_redir = user.AddComponent(/datum/component/redirect,list(COMSIG_COMBAT_TOGGLED),CALLBACK(src,.proc/injectadrenaline))
+		combattoggle_redir = user.AddComponent(/datum/component/redirect, list(COMSIG_COMBAT_TOGGLED = CALLBACK(src, .proc/injectadrenaline)))
 
 /obj/item/clothing/glasses/phantomthief/syndicate/dropped(mob/user)
 	. = ..()

@@ -88,8 +88,12 @@
 	do_sparks(1, TRUE, src)
 	..()
 
-// Mech Scattershot
+// Mech Scattershots
 
 /obj/item/projectile/bullet/scattershot
 	damage = 20
 	stamina = 65
+
+/obj/item/projectile/bullet/seed
+	damage = 4
+	stamina = 1

@@ -122,7 +122,7 @@
 /turf/open/floor/holofloor/wood
 	icon_state = "wood"
 	tiled_dirt = FALSE
-	
+
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"
@@ -133,6 +133,15 @@
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
+	baseturfs = /turf/open/floor/holofloor/snow
+
+/turf/open/floor/holofloor/snow/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	user.visible_message("<span class='notice'>[user] scroops up some snow from [src].</span>", "<span class='notice'>You scoop up some snow from [src].</span>")
+	var/obj/item/toy/snowball/S = new(get_turf(src))
+	user.put_in_hands(S)
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
@@ -143,3 +152,22 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "unsmooth"
+	baseturfs = /turf/open/floor/holofloor/ice
+	slowdown = 1
+	footstep = FOOTSTEP_FLOOR
+
+/turf/open/floor/holofloor/ice/smooth
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/holofloor/ice)
+	baseturfs = /turf/open/floor/holofloor/ice/smooth
+
+/turf/open/floor/holofloor/ice/Initialize()
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
