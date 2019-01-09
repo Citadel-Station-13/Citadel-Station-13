@@ -294,4 +294,4 @@
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to return.</span>")
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to return.</span>")		qdel(src)
