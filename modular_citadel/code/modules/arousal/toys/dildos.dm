@@ -142,35 +142,17 @@ obj/item/dildo/custom
 	user.adjustOxyLoss(200)
 	user.death(0)
 
+/obj/item/dildo/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] tears-up and gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
+	user.Stun(150)
+	user.adjust_blurriness(8)
+	user.adjust_eye_damage(10)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), 15)
+	return MANUAL_SUICIDE
+
 /obj/item/dildo/knotted/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] tears-up and gags as they shove [src] down their throat! They swallowed the knot! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
-	user.Stun(150)
-	user.adjust_blurriness(8)
-	user.adjust_eye_damage(10)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 15)
-	return MANUAL_SUICIDE
-
-/obj/item/dildo/human/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] tears-up and gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
-	user.Stun(150)
-	user.adjust_blurriness(8)
-	user.adjust_eye_damage(10)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 15)
-	return MANUAL_SUICIDE
-
-/obj/item/dildo/plain/suicide_act(mob/living/user, delay = 150)
-	user.visible_message("<span class='suicide'>[user] tears-up and gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
-	user.Stun(150)
-	user.adjust_blurriness(8)
-	user.adjust_eye_damage(10)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 15)
-	return MANUAL_SUICIDE
-
-/obj/item/dildo/flared/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] tears-up and gags as they shove [src] down their throat! Their face is turning blue! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/gagging.ogg', 50, 1, -1)
 	user.Stun(150)
 	user.adjust_blurriness(8)
