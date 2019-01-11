@@ -2412,6 +2412,22 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 
+/datum/supply_pack/misc/paper_work
+	name = "Freelance Paper work"
+	desc = "Need a little more credits for that bike for little Timmy? Well I'm willing to pay ya for some accounting that needs to get done. I'll send ya umm ten copies of some paper work and a fountain pens. I want my pens back, send them with the papers or don't get paid! There is two more pens in the box then you will need just in case, keep em or don't."
+	cost = 400 // Net of 0 credits
+	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/storage/box/fountainpens) // Two spare pens just in case
+	crate_name = "paper work"
+
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
 	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"
