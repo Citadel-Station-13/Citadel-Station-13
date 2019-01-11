@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(traumas)
 						"birds" = strings(PHOBIA_FILE, "birds"),
 						"falling" = strings(PHOBIA_FILE, "falling"),
 						"anime" = strings(PHOBIA_FILE, "anime"),
-						"mimes" = strings(PHOBIA_FILE, "mimes")
+						"mimes" = strings(PHOBIA_FILE, "mimes"),
 						"ailurophobia" = strings(PHOBIA_FILE, "ailurophobia")
             )
 
