@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/bedsheet/mime, /obj/item/reagent_containers/food/snacks/burger/mime, /obj/item/clothing/head/beret, /obj/item/clothing/mask/gas/sexymime,
 						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
 						
-					"ailurophobia" = typecacheof(list(obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/head/kitty,
+					"ailurophobia" = typecacheof(list(/obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat))
 						)
 
