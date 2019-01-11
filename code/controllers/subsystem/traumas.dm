@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(traumas)
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
 					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-					   "ailurophobia"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten, /mob/living/simple_animal/pet/cat/space, 
+					   "cats"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten, /mob/living/simple_animal/pet/cat/space, 
 					   /mob/living/simple_animal/pet/cat/cak, /mob/living/simple_animal/pet/cat/Runtime, /mob/living/simple_animal/hostile/cat_butcherer)) //Not Batsy do to not being a real cat
 					   )
 
