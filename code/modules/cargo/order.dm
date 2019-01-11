@@ -95,3 +95,14 @@
 			while(--lost >= 0)
 				qdel(pick(C.contents))
 	return C
+
+//Paperwork for NT
+/obj/item/paper/fluff/jobs/cargo/manifest/paperwork
+	name = "Undone Paper work"
+	desc = "Undone paper work that has been left undone for freelancers to complete."
+	icon = 'icons/obj/bureaucracy.dmi'
+
+/obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
+	name = "Done Paper work"
+	desc = "Paper work that has been completed, has a nice pen attached to the papers making sure they don't become messy well in travel."
+	icon = 'icons/obj/bureaucracy.dmi'
