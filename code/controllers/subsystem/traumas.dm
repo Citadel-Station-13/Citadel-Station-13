@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "mimes"
+						"aliens", "strangers", "birds", "falling", "anime", "mimes", "ailurophobia"
 						)
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(traumas)
 						"falling" = strings(PHOBIA_FILE, "falling"),
 						"anime" = strings(PHOBIA_FILE, "anime"),
 						"mimes" = strings(PHOBIA_FILE, "mimes")
+						"ailurophobia" = strings(PHOBIA_FILE, "ailurophobia")
             )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -54,7 +55,9 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/pet/penguin)),
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
-					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian))
+					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
+					   "ailurophobia"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten, /mob/living/simple_animal/pet/cat/space, 
+					   /mob/living/simple_animal/pet/cat/cak, /mob/living/simple_animal/pet/cat/Runtime, /mob/living/simple_animal/hostile/cat_butcherer)) //Not Batsy do to not being a real cat
 					   )
 
 
@@ -152,7 +155,10 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/storage/backpack/mime, /obj/item/reagent_containers/food/snacks/grown/banana/mime,
 						/obj/item/grown/bananapeel/mimanapeel, /obj/item/cartridge/virus/mime, /obj/item/clothing/shoes/sneakers/mime,
 						/obj/item/bedsheet/mime, /obj/item/reagent_containers/food/snacks/burger/mime, /obj/item/clothing/head/beret, /obj/item/clothing/mask/gas/sexymime,
-						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence))
+						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
+						
+					"ailurophobia" = typecacheof(list(obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/head/kitty
+						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
@@ -170,7 +176,8 @@ SUBSYSTEM_DEF(traumas)
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
 						  /datum/species/shadow)),
-						  "anime" = typecacheof(list(/datum/species/human/felinid))
+						  "anime" = typecacheof(list(/datum/species/human/felinid)),
+						  "ailurophobia" = typecacheof(list(/datum/species/human/felinid))
 						 )				 
 
 	return ..()
