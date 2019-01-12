@@ -86,7 +86,7 @@
 
 // Paper work retruned
 
-/datum/export/paperwork_correct
+/datum/export/paperwork_incorrect
 	cost = 500 // Failed to meet NT standers
-	unit_name = "retruned late paperwork"
+	unit_name = "returned incorrect paperwork"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork)

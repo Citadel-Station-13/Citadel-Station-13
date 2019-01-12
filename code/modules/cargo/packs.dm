@@ -2414,7 +2414,7 @@
 
 /datum/supply_pack/misc/paper_work
 	name = "Freelance Paper work"
-	desc = "Need a little more credits for that bike for little Timmy? Well I'm willing to pay ya for some accounting that needs to get done. I'll send ya umm ten copies of some paper work and a fountain pens. I want my pens back, send them with the papers or don't get paid! There is two more pens in the box then you will need just in case, keep em or don't."
+	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
 	cost = 400 // Net of 0 credits
 	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
@@ -2426,7 +2426,7 @@
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/storage/box/fountainpens) // Two spare pens just in case
-	crate_name = "paper work"
+	crate_name = "Paperwork"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
