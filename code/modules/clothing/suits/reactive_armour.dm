@@ -66,8 +66,8 @@
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 8
-	var/rad_amount = 30
-	var/rad_amount_before = 90
+	var/rad_amount = 60
+	var/rad_amount_before = 120
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
