@@ -161,6 +161,8 @@
 	var/tesla_power = 25000
 	var/tesla_range = 20
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
+	var/legacy = FALSE
+	var/legacy_dmg = 30
 
 /obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()
@@ -183,7 +185,15 @@
 			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</span>")
 			return
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out arcs of lightning!</span>")
-		tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		if(!legacy)
+			tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		else
+			for(var/mob/living/M in view(7, owner))
+				if(M == owner)
+					continue
+				owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+				M.adjustFireLoss(legacy_dmg)
+				playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 
