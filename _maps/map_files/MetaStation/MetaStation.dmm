@@ -2,10 +2,40 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space)
+"aad" = (
+/obj/machinery/light_switch{
+	pixel_x = -23
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plasteel,
+/area/science/storage)
+"aae" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "aaf" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -48146,23 +48176,6 @@
 /obj/machinery/atmospherics/components/trinary/filter,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"bPo" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "bPp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -63826,14 +63839,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
-"ctf" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
-/obj/machinery/light_switch{
-	pixel_x = -23
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "ctg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -63869,11 +63874,6 @@
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/science/storage)
-"ctj" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "ctl" = (
@@ -117657,7 +117657,7 @@ ccd
 cpv
 cqN
 crS
-ctf
+aad
 ctW
 cuS
 cvV
@@ -118685,7 +118685,7 @@ col
 cpz
 cqR
 cgq
-ctj
+aae
 cua
 cuW
 cvY
@@ -125601,8 +125601,8 @@ bIN
 bxg
 bMa
 bMa
-bPo
-bPo
+aab
+aab
 bxc
 bTi
 bUz

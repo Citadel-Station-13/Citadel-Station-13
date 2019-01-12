@@ -41,6 +41,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"aad" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "aae" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -568,6 +572,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/security/execution/transfer)
+"abz" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "abA" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -36292,10 +36300,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bGY" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "bGZ" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/blue{
@@ -46606,10 +46610,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cfN" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "cfO" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/portable_atmospherics/pump,
@@ -57026,6 +57026,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"lhJ" = (
+/obj/machinery/portable_atmospherics/scrubber/huge,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "lnu" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -89746,8 +89750,8 @@ ccv
 cdw
 cex
 bOd
-cfN
-cfN
+abz
+abz
 bLK
 aaf
 bOh
@@ -103087,8 +103091,8 @@ bDc
 bEo
 bDf
 bEb
-bGY
-bGY
+aad
+lhJ
 bJN
 bMp
 bNp
