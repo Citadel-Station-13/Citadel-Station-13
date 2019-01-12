@@ -139,7 +139,6 @@ obj/item/dildo/custom
 // Suicide acts, by request
 
 var/is_knotted = (dildo_shape == knotted) ? "They swallowed the knot" : "Their face is turning blue"
-var/is_horse = (dildo_shape == horse ) ? "
 
 /obj/item/dildo/proc/manual_suicide(mob/living/user)
 		user.visible_message("<span class='suicide'>[user] finally finishes deepthroating the [src], and their life.</span>")
