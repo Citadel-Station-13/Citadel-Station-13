@@ -65,8 +65,9 @@
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
-	var/tele_range = 6
-	var/rad_amount= 120
+	var/tele_range = 8
+	var/rad_amount = 30
+	var/rad_amount_before = 90
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -80,6 +81,7 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, 1)
 		var/list/turfs = new/list()
+		var/turf/old = get_turf(src)
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
 				continue
@@ -94,6 +96,7 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
+		radiation_pulse(old, rad_amount_before)
 		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
