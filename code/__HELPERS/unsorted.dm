@@ -1246,7 +1246,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	animate(src, transform = M, time = 10, easing = ELASTIC_EASING)
 	animate(src, transform = OM, time = 10, easing = ELASTIC_EASING)
 
-/atom/proc/do_squish(squishx = -1, squishy = 2)
+/atom/proc/do_squish(squishx = 1.2, squishy = 0.6)
 	var/matrix/OM = matrix(transform)
 	var/matrix/M = matrix(transform)
 	M.Scale(squishx, squishy)
