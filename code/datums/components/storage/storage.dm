@@ -191,7 +191,7 @@
 		stoplag(1)
 	qdel(progress)
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
-	A.do_squish(-1, 3)
+	A.do_squish(1.4, 0.4)
 
 /datum/component/storage/proc/handle_mass_item_insertion(list/things, datum/component/storage/src_object, mob/user, datum/progressbar/progress)
 	var/atom/source_real_location = src_object.real_location()
@@ -249,7 +249,7 @@
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
 	qdel(progress)
-	A.do_squish(2, 0)
+	A.do_squish(0.8, 1.2)
 
 /datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
@@ -459,7 +459,7 @@
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
 			playsound(A, "rustle", 50, 1, -5)
-			A.do_squish(2, 0)
+			A.do_squish(0.8, 1.2)
 			return TRUE
 	return FALSE
 
