@@ -18,7 +18,14 @@
 									 "Your money can buy happiness!", \
 									 "Engage direct marketing!", \
 									 "Advertising is legalized lying! But don't let that put you off our great deals!", \
-									 "You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
+									 "You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.",
+									 "Gamers, rise up!",
+									 "Ok, now, this is epic.",
+									 "HUMAN FUNNY.",
+									 "But I'm already tracer!",
+									 "How do I vore people?",
+									 "ERP?",
+									 "Not epic bros...")
 
 
 /datum/round_event/brand_intelligence/announce(fake)
