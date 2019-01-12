@@ -37,6 +37,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50 // Only on the chest yet blocks all attacks?
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
@@ -65,7 +66,7 @@
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 6
-	var/rad_amount= 15
+	var/rad_amount= 120
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -93,7 +94,7 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 	return 0
