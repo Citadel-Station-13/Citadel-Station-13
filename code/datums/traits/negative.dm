@@ -150,7 +150,6 @@
 	value = -1
 
 /datum/quirk/lightless/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
 	var/turf/T = get_turf(quirk_holder)
 	var/lums = T.get_lumcount()
 	if(lums >= 0.8)
