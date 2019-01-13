@@ -39,7 +39,7 @@
 	if(!istype(user))
 		return
 	if(!combattoggle_redir)
-		combattoggle_redir = user.AddComponent(/datum/component/redirect,list(COMSIG_COMBAT_TOGGLED),CALLBACK(src,.proc/handlefilterstuff))
+		combattoggle_redir = user.AddComponent(/datum/component/redirect, list(COMSIG_COMBAT_TOGGLED = CALLBACK(src, .proc/handlefilterstuff)))
 
 /datum/component/phantomthief/proc/OnDropped(mob/user)
 	if(!istype(user))

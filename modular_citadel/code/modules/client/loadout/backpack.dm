@@ -57,3 +57,13 @@
 	name = "Customizable dildo"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/dildo/custom
+
+/datum/gear/paperbin
+	name = "Paper Bin"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/paper_bin
+
+/datum/gear/crayons
+	name = "Box of crayons"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/crayons
