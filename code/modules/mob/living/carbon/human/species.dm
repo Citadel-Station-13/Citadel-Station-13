@@ -1221,11 +1221,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. += speedmod
 		. += H.physiology.speed_mod
 
-	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
-		ignoreslow = 1
-
 	if(H.Has_trait(TRAIT_SPEEDY_STEP))
 		. -= .5
+
+	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
+		ignoreslow = 1
 
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back
