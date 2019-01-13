@@ -1224,6 +1224,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
 
+	if(H.Has_trait(TRAIT_SPEEDY_STEP))
+		. -= .5
+
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
