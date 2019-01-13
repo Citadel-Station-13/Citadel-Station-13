@@ -144,6 +144,20 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
+/datum/quirk/lightless
+	name = "Light Sensitivity"
+	desc = "Any type of light just makes you feel uneasy, it's hard to keep in a good mood when your sink itches and eyes burn from light!"
+	value = -1
+
+/datum/quirk/lightless/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums >= 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "brightlight", /datum/mood_event/brightlight)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
+
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
