@@ -445,6 +445,9 @@ SUBSYSTEM_DEF(job)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
+	if(M.ckey == "kevinz000")
+		purrbation_apply(M)
+
 	return H
 
 
