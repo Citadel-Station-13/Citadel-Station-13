@@ -19,7 +19,6 @@
 					/obj/item/rcd_ammo = 3
 					)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3,
-					  /obj/item/stock_parts/cell/emproof = 5,
 					  /obj/item/rcd_ammo = 2
 					  )
 	premium = list(/obj/item/storage/belt/utility = 3,
