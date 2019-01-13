@@ -1222,7 +1222,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. += H.physiology.speed_mod
 
 	if(H.Has_trait(TRAIT_SPEEDY_STEP))
-		. -= .5
+		. -= 0.5
 
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
