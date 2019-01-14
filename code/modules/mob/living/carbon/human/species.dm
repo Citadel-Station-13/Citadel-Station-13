@@ -1221,7 +1221,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. += speedmod
 		. += H.physiology.speed_mod
 
-	if (H.m_intent == MOVEMENT_INTENT_WALK && H.has_trait(TRAIT_SPEEDY_STEP))
+	if (H.m_intent == MOVE_INTENT_WALK && H.has_trait(TRAIT_SPEEDY_STEP))
 		. -= 1
 
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
