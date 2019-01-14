@@ -25,7 +25,6 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-
 /obj/item/tank/internals/oxygen/yellow
 	desc = "A tank of oxygen, this one is yellow."
 	icon_state = "oxygen_f"
@@ -36,6 +35,8 @@
 	icon_state = "oxygen_fr"
 	dog_fashion = null
 
+/obj/item/tank/internals/oxygen/empty/New()
+	return
 
 /*
  * Anesthetic
@@ -170,6 +171,9 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
+/obj/item/tank/internals/emergency_oxygen/empty/New()
+	return
+
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
@@ -179,3 +183,6 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 10
+
+/obj/item/tank/internals/emergency_oxygen/double/empty/New()
+	return

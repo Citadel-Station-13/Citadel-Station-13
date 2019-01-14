@@ -146,12 +146,15 @@
 	if(!mapload)
 		log_world("### MAP WARNING, [src] spawned outside of mapload!")
 		return
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock)
 	if(airlock)
 		airlock.unres_sides ^= dir
 	else
 		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
 
+/obj/effect/mapping_helpers/airlock/abandoned
+	name = "airlock abandoned helper"
+	icon_state = "airlock_abandoned"
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)

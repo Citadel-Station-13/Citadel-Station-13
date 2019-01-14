@@ -151,6 +151,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Maintenance"
 	icon_state = "medbay_maint"
 
+/area/maintenance/department/medical/central
+	name = "Central Medbay Maintenance"
+	icon_state = "medbay_maint_central"
+
 /area/maintenance/department/medical/morgue
 	name = "Morgue Maintenance"
 	icon_state = "morgue_maint"
@@ -158,6 +162,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/department/science
 	name = "Science Maintenance"
 	icon_state = "maint_sci"
+
+/area/maintenance/department/science/central
+	name = "Central Science Maintenance"
+	icon_state = "maint_sci_central"
 
 /area/maintenance/department/cargo
 	name = "Cargo Maintenance"
@@ -219,9 +227,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Central Starboard Maintenance"
 	icon_state = "smaint"
 
+/area/maintenance/starboard/secondary
+	name = "Secondary Starboard Maintenance"
+	icon_state = "smaint_2"
+
 /area/maintenance/starboard/aft
 	name = "Starboard Quarter Maintenance"
 	icon_state = "asmaint"
+
+/area/maintenance/starboard/aft/secondary
+	name = "Secondary Starboard Quarter Maintenance"
+	icon_state = "asmaint_2"
 
 /area/maintenance/starboard/fore
 	name = "Starboard Bow Maintenance"
@@ -451,6 +467,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Fitness Room"
 	icon_state = "fitness"
 
+/area/crew_quarters/fitness/locker_room
+	name = "Unisex Locker Room"
+	icon_state = "fitness"
+
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"
@@ -466,6 +486,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+
+/area/crew_quarters/kitchen/coldroom
+	name = "Kitchen Cold Room"
+	icon_state = "kitchen_cold"
 
 /area/crew_quarters/kitchen/backroom
 	name = "Kitchen Coldroom"
@@ -1159,7 +1183,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Test Room"
 	icon_state = "storage"
 
-
 //Construction
 
 /area/construction
@@ -1203,6 +1226,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Solar Panel Control"
 	icon_state = "yellow"
 
+/area/construction/storage_wing
+	name = "Storage Wing"
+	icon_state = "storage_wing"
+
 /area/construction/storage
 	name = "Construction Site Storage"
 	icon_state = "yellow"
@@ -1211,6 +1238,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Storage Wing"
 	icon_state = "storage_wing"
 
+//Vacant Rooms
+/area/vacant_room
+	name = "Vacant Room"
+	icon_state = "yellow"
+	ambientsounds = MAINTENANCE
+	icon_state = "vacant_room"
+
+/area/vacant_room/office
+	name = "Vacant Office"
+	icon_state = "vacant_office"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
+	icon_state = "vacant_commissary"
 
 //AI
 
