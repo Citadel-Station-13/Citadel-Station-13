@@ -155,22 +155,60 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/bb_sweater/blue
 
+// Polychromic Stuff
+
 /datum/gear/polykilt
 	name = "Polychromic Kilt"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/polychromic/kilt
 	cost = 3
 
-/datum/gear/polyshorts
-	name = "Polychromic Shorts"
+/datum/gear/polyshirtandskirt
+	name = "Polychromic Shirt + Skirt"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/polychromic/shorts
+	path = /obj/item/clothing/under/polychromic/skirt
 	cost = 3
 
-/datum/gear/polyshortpants
-	name = "Polychromic Athletic Shorts"
+/datum/gear/polyshortsandshirt
+	name = "Polychromic Shirt + Shorts"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/polychromic/shortpants
+	path = /obj/item/clothing/under/polychromic/shorts
+	cost = 2
+
+/datum/gear/polyjumpsuit
+	name = "Polychromic Jumpsuit"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/jumpsuit
+	cost = 2
+
+/datum/gear/polyswimsuit
+	name = "Polychromic Swimsuit Bottoms"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/shortpants/pantsu
+	cost = 2
+
+/datum/gear/polyshortsnoshirt
+	name = "Polychromic Shorts (no shirt)"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/shortpants
+	cost = 2
+
+/datum/gear/polyskirthood
+	name = "Polychromic Skirt Hoodie"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/pleat
+	cost = 2
+
+/datum/gear/polytankbot
+	name = "Polychromic Tanktop + Bottoms"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/femtank
+	cost = 2
+
+/datum/gear/polyshima
+	name = "Polychromic Shima-Pantsu"
+	category = SLOT_W_UNIFORM
+	path= /obj/item/clothing/under/polychromic/shimatank
 	cost = 2
 
 // Trekie things
