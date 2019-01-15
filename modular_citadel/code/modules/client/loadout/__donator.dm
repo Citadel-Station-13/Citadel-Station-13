@@ -365,6 +365,6 @@ datum/gear/darksabresheath
 
 /datum/gear/soulneck
 	name = "Soul Necklace"
-	category = SLOT_IN_BACKPACK
+	category = SLOT_NECK
 	path = /obj/item/clothing/neck/undertale
 	ckeywhitelist = list("twilightic")
