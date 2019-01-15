@@ -362,3 +362,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/under/mimeoveralls
 	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/soulneck
+	name = "Soul Necklace"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/neck/undertale
+	ckeywhitelist = list("twilightic")
