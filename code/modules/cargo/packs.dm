@@ -81,6 +81,30 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/rcds
+	name = "Emergency RCDs"
+	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
+	cost = 1500 
+	contains = list(/obj/item/construction/rcd,
+					/obj/item/construction/rcd)
+	crate_name = "emergency rcds"
+	crate_type = /obj/structure/closet/crate/internals
+
+/datum/supply_pack/emergency/soft_suit
+	name = "Emergency Space Suit "
+	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
+	cost = 1000 
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/suit/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile,
+					/obj/item/clothing/head/helmet/space/fragile)
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
+
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
 	desc = "Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!"
@@ -241,6 +265,26 @@
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
+/datum/supply_pack/medical/anitvirus
+	name = "Virus Containment Crate"
+	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
+	cost = 3000 
+	access = ACCESS_MEDICAL
+	contains = list(/mob/living/simple_animal/bot/medbot,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/head/bio_hood,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/clothing/suit/bio_suit,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/reagent_containers/syringe/antiviral,
+					/obj/item/storage/box/syringes,
+					/obj/item/storage/box/beakers)
+	crate_name = "virus containment unit crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -279,6 +323,15 @@
 	                /obj/item/toy/crayon/white,
 	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
+
+/datum/supply_pack/security/sechardsuit
+	name = "Sec Hardsuit"
+	desc = "One Sec Hardsuit with a small air tank and mask."
+	cost = 3000 // half of SWAT gear for have the armor and half the gear
+	contains = list(/obj/item/clothing/suit/space/hardsuit/security,
+					/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas)
+	crate_name = "sec hardsuit crate"
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
@@ -361,6 +414,29 @@
 					/obj/item/melee/baton/loaded,
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
+
+/datum/supply_pack/security/russianclothing
+	name = "Russian Surplus Clothing"
+	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
+	hidden = TRUE
+	contraband = TRUE
+	cost = 5000 // Its basicly sec suits, good boots/gloves
+	contains = list(/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/suit/security/officer/russian,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/shoes/combat,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/head/helmet/alt,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/gloves/combat,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas)
+	crate_name = "surplus russian clothing"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
@@ -632,6 +708,24 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
+
+/datum/supply_pack/engineering/engihardsuit
+	name = "Engineering Hardsuit"
+	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and maks!"
+	cost = 2500
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/hardsuit/engine)
+	crate_name = "engineering hardsuit"
+
+/datum/supply_pack/engineering/industrialrcd
+	name = "Industrial RCD"
+	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
+	cost = 4500	
+	access = ACCESS_CE
+	contains = list(/obj/item/construction/rcd/industrial)
+	crate_name = "industrial rcd"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
@@ -978,6 +1072,28 @@
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
+/datum/supply_pack/materials/rcdammo
+	name = "Spare RDC ammo"
+	desc = "This crate contains sixteen RCD ammo packs, to help with any holes or projects people mite be working on."
+	cost = 3750
+	contains = list(/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo,
+					/obj/item/rcd_ammo)
+	crate_name = "rcd ammo"
+
 /datum/supply_pack/materials/bz
 	name = "BZ Canister Crate"
 	desc = "Contains a canister of BZ. Requires Toxins access to open."
@@ -1120,6 +1236,15 @@
 					/obj/item/storage/firstaid/regular)
 	crate_name = "first aid kit crate"
 
+/datum/supply_pack/medical/medicalhardsuit
+	name = "Medical Hardsuit"
+	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers."
+	cost = 2500
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/hardsuit/medical)
+	crate_name = "medical hardsuit"
+
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
 	desc = "Contains a single IV drip for administering blood to patients."
@@ -1237,6 +1362,7 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
@@ -1411,6 +1537,18 @@
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/service/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2500 //Fair
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "advanced lighting crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
 	desc = "Pink-haired Quartermaster not doing her job? Replace her with this tireless worker, today!"
@@ -1444,13 +1582,23 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains the classics."
 	cost = 1000
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/black/fifty,
 					/obj/item/stack/tile/carpet/black/fifty)
 	crate_name = "premium carpet crate"
+
+/datum/supply_pack/service/carpet2
+	name = "Premium Carpet Crate #2"
+	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together.  Contains red, and monochrome"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/blackred/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty,
+					/obj/item/stack/tile/carpet/monochrome/fifty)
+	crate_name = "premium carpet crate #2"
 
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
@@ -1610,6 +1758,22 @@
 	contraband = TRUE
 	access = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/hunting
+	name = "Huntting gear"
+	desc = "Even in space, we can fine prey to hunt, this crate contains everthing a fine hunter needs to have a sporting time. This crate needs armory access to open. A true huntter only needs a fine bottle of cognac, a nice coat, some good o' cigars, and of cource a huntting shotgun. "
+	cost = 3500
+	contraband = TRUE
+	contains = list(/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/suit/hooded/wintercoat/captain,
+					/obj/item/reagent_containers/food/drinks/bottle/cognac,
+					/obj/item/storage/fancy/cigarettes/cigars/havana,
+					/obj/item/clothing/gloves/color/white,
+					/obj/item/clothing/under/rank/curator,
+					/obj/item/gun/ballistic/shotgun/lethal)
+	access = ACCESS_ARMORY
+	crate_name = "sporting crate"
+	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
@@ -2213,7 +2377,9 @@
 					/obj/item/canvas/twentythreeXtwentythree,
 					/obj/item/storage/crayons,
 					/obj/item/storage/crayons,
-					/obj/item/toy/crayon/rainbow)
+					/obj/item/toy/crayon/rainbow,
+					/obj/item/toy/crayon/white,
+					/obj/item/toy/crayon/white)
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 

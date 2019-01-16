@@ -170,6 +170,8 @@
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/toolbox/drone,
 /obj/item/storage/toolbox/drone,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,

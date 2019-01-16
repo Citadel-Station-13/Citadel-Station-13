@@ -161,6 +161,20 @@
 		playsound(user, 'modular_citadel/sound/voice/weh.ogg', 50, 1, -1)
 	. = ..()
 
+/datum/emote/living/peep
+	key = "peep"
+	key_third_person = "peeps like a bird"
+	message = "peeps like a bird!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/peep/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/peep.ogg', 50, 1, -1)
+	. = ..()
+
 /datum/emote/living/dab
 	key = "dab"
 	key_third_person = "suddenly hits a dab"
@@ -180,4 +194,19 @@
 			user.apply_damage(20, BRUTE, def_zone)
 		if(luck >= 95)
 			user.adjustBrainLoss(100)
+	. = ..()
+
+
+/datum/emote/living/mothsqueak
+	key = "msqueak"
+	key_third_person = "lets out a tiny squeak"
+	message = "lets out a tiny squeak!"
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = list(/mob/living/carbon)
+
+/datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
 	. = ..()

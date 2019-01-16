@@ -60,50 +60,13 @@
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
-	switch(rand(1,100))
-		if(1 to 30)
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			objectives += kill_objective
+	var/datum/objective/new_objective = new("Cause as much creative mayhem as you can aboard the station! The more outlandish your methods of achieving this, the better! Make sure there's a decent amount of crew alive to tell of your tale.")
+	new_objective.owner = owner
+	objectives += new_objective
 
-			if (!(locate(/datum/objective/escape) in owner.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = owner
-				objectives += escape_objective
-
-		if(31 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = owner
-			steal_objective.find_target()
-			objectives += steal_objective
-
-			if (!(locate(/datum/objective/escape) in owner.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = owner
-				objectives += escape_objective
-
-		if(61 to 85)
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			objectives += kill_objective
-
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = owner
-			steal_objective.find_target()
-			objectives += steal_objective
-
-			if (!(locate(/datum/objective/survive) in owner.objectives))
-				var/datum/objective/survive/survive_objective = new
-				survive_objective.owner = owner
-				objectives += survive_objective
-
-		else
-			if (!(locate(/datum/objective/hijack) in owner.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = owner
-				objectives += hijack_objective
+	var/datum/objective/escape/escape_objective = new
+	escape_objective.owner = owner
+	objectives += escape_objective
 
 	for(var/datum/objective/O in objectives)
 		owner.objectives += O

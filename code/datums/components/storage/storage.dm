@@ -169,10 +169,12 @@
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
+	var/atom/A = parent
 	var/obj/item/I = O
 	if(collection_mode == COLLECT_ONE)
 		if(can_be_inserted(I, null, M))
 			handle_item_insertion(I, null, M)
+			A.do_squish()
 		return
 	if(!isturf(I.loc))
 		return
@@ -189,6 +191,7 @@
 		stoplag(1)
 	qdel(progress)
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
+	A.do_squish(1.4, 0.4)
 
 /datum/component/storage/proc/handle_mass_item_insertion(list/things, datum/component/storage/src_object, mob/user, datum/progressbar/progress)
 	var/atom/source_real_location = src_object.real_location()
@@ -246,6 +249,7 @@
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
 	qdel(progress)
+	A.do_squish(0.8, 1.2)
 
 /datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
@@ -455,6 +459,7 @@
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
 			playsound(A, "rustle", 50, 1, -5)
+			A.do_squish(0.8, 1.2)
 			return TRUE
 	return FALSE
 
@@ -473,6 +478,8 @@
 			return TRUE
 		return FALSE
 	handle_item_insertion(I, FALSE, M)
+	var/atom/A = parent
+	A.do_squish()
 
 /datum/component/storage/proc/return_inv(recursive)
 	var/list/ret = list()
@@ -514,6 +521,7 @@
 			if(A.loc != M)
 				return
 			playsound(A, "rustle", 50, 1, -5)
+			A.do_jiggle()
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
 				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
@@ -539,6 +547,8 @@
 			if(!L.incapacitated() && I == L.get_active_held_item())
 				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
 					handle_item_insertion(I, FALSE, L)
+					var/atom/A = parent
+					A.do_squish()
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
@@ -712,6 +722,7 @@
 			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		else
 			show_to(user)
+			A.do_jiggle()
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
 	var/atom/A = parent
@@ -732,16 +743,30 @@
 	return hide_from(target)
 
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
-	if(!isliving(user) || user.incapacitated() || !quickdraw || locked || !user.CanReach(parent))
+	if(!isliving(user) || !user.CanReach(parent))
 		return
-	var/obj/item/I = locate() in real_location()
-	if(!I)
+	if(locked)
+		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 		return
-	remove_from_storage(I, get_turf(user))
-	if(!user.put_in_hands(I))
-		to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
+
+	var/atom/A = parent
+	if(!quickdraw)
+		A.add_fingerprint(user)
+		user_show_to_mob(user)
+		playsound(A, "rustle", 50, 1, -5)
 		return
-	user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
+
+	if(!user.incapacitated())
+		var/obj/item/I = locate() in real_location()
+		if(!I)
+			return
+		A.add_fingerprint(user)
+		remove_from_storage(I, get_turf(user))
+		if(!user.put_in_hands(I))
+			to_chat(user, "<span class='notice'>You fumble for [I] and it falls on the floor.</span>")
+			return
+		user.visible_message("<span class='warning'>[user] draws [I] from [parent]!</span>", "<span class='notice'>You draw [I] from [parent].</span>")
+		return
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	gather_mode_switch(source.owner)

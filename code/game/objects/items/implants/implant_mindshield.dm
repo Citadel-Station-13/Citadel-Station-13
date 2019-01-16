@@ -29,8 +29,12 @@
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
+			var/obj/item/implanter/I = loc
 			removed(target, 1)
 			qdel(src)
+			if(istype(I))
+				I.imp = null
+				I.update_icon()
 			return FALSE
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)

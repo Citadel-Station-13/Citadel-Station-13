@@ -1398,15 +1398,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/eggnog
 	name = "Eggnog"
 	id = "eggnog"
-	description = "For enjoying the most wonderful time of the year."
+	description = "The traditional way to get absolutely hammered at a Christmas party."
 	color = "#fcfdc6" // rgb: 252, 253, 198
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	boozepwr = 1
 	quality = DRINK_VERYGOOD
 	taste_description = "custard and alcohol"
-	glass_icon_state = "glass_yellow"
+	glass_icon_state = "nog3"
 	glass_name = "eggnog"
-	glass_desc = "For enjoying the most wonderful time of the year."
+	glass_desc = "The traditional way to get absolutely hammered at a Christmas party."
 
 
 /datum/reagent/consumable/ethanol/narsour

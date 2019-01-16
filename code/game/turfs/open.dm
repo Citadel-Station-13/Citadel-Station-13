@@ -19,7 +19,7 @@
 		var/mob/living/L = user
 		if(L.resting && do_after(L, max(10, L.getStaminaLoss()*0.5), 0, src))
 			if(Adjacent(L, src))
-				L.forceMove(src)
+				step(L, get_dir(L, src))
 				playsound(L, "rustle", 25, 1)
 
 /turf/open/indestructible
@@ -48,6 +48,20 @@
 	..()
 	if(istype(AM))
 		playsound(src,sound,50,1)
+
+/turf/open/indestructible/cobble/side
+	icon_state = "cobble_side"
+
+/turf/open/indestructible/cobble/corner
+	icon_state = "cobble_corner"
+
+/turf/open/indestructible/cobble
+	name = "cobblestone path"
+	desc = "A simple but beautiful path made of various sized stones."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cobble"
+	baseturfs = /turf/open/indestructible/cobble
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"

@@ -454,7 +454,7 @@ SUBSYSTEM_DEF(ticker)
 	if(CONFIG_GET(flag/tgstyle_maprotation))
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
-		SSvote.initiate_vote("map","server")
+		SSvote.initiate_vote("map","server",TRUE)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
