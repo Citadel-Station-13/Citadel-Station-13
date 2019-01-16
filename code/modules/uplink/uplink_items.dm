@@ -982,6 +982,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
+/datum/uplink_item/device_tools/surgerybag_adv
+	name = "Syndicate Surgery Duffel Bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
+			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+	cost = 15 //Mite be to cheap
+
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
