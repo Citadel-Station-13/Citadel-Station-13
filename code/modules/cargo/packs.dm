@@ -1153,6 +1153,24 @@
 					/obj/item/storage/firstaid/regular)
 	crate_name = "first aid kit crate"
 
+/datum/supply_pack/medical/iv_drip
+	name = "IV Drip Crate"
+	desc = "Contains a single IV drip for administering blood to patients."
+	cost = 700
+	contains = list(/obj/machinery/iv_drip)
+	crate_name = "iv drip crate"
+
+/datum/supply_pack/science/adv_surgery_tools
+	name = "Med-Co Advanced surgery tools"
+	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
+	cost = 5000
+	access = ACCESS_SURGERY
+	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/medspray/sterilizine)
+	crate_name = "medco newest surgery tools"
+	crate_type = /obj/structure/closet/crate/medical
+
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
 	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers."
@@ -1161,13 +1179,6 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
-
-/datum/supply_pack/medical/iv_drip
-	name = "IV Drip Crate"
-	desc = "Contains a single IV drip for administering blood to patients."
-	cost = 700
-	contains = list(/obj/machinery/iv_drip)
-	crate_name = "iv drip crate"
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
