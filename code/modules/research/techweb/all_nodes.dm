@@ -419,13 +419,31 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 5000
 
+/datum/techweb_node/integrated_HUDs_glasses
+	id = "glasses_integrated_HUDs"
+	display_name = "Prescription Integrated HUDs"
+	description = "The usefulness of computerized records, projected straight onto your eyepiece! These were helped made by NerdCo and MedCo"
+	prereq_ids = list("integrated_HUDs", "biotech")
+	design_ids = list("health_hud_prescription", "security_hud_prescription", "diagnostic_hud_prescription")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 5000
+
 /datum/techweb_node/NVGtech
 	id = "NVGtech"
 	display_name = "Night Vision Technology"
 	description = "Allows seeing in the dark without actual light!"
 	prereq_ids = list("integrated_HUDs", "adv_engi", "emp_adv")
-	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "night_visision_goggles_glasses", "nvgmesons")
+	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "nvgmesons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+/datum/techweb_node/adv_goggles
+	id = "adv_goggles"
+	display_name = "Advanced Prescription goggles"
+	description = "Wounders when NerdCo and MedCo work another."
+	prereq_ids = list("glasses_integrated_HUDs", "NVGtech", "adv_biotech")
+	design_ids = list("tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription", "night_visision_goggles_glasses")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
 	export_price = 5000
 
 ////////////////////////Medical////////////////////////
