@@ -322,6 +322,15 @@
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
 
+/datum/supply_pack/security/prescription_sec_sung
+	name = "Prescription security HUDSunglasse Crate"
+	desc = "Contains two sunglasses, with a sec prescription HUD built into them. Requires Security access to open."
+	cost = 2500
+	contains = list(/obj/item/clothing/glasses/hud/security/sunglasses/prescription,
+					/obj/item/clothing/glasses/hud/security/sunglasses/prescription)
+	crate_name = "sec prescription"
+
+
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
 	desc = "Stem the tide with four Security Barrier grenades. Requires Security access to open."
