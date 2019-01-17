@@ -144,7 +144,7 @@
 	id = "mesons_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
-	build_path = /obj/item/clothing/glasses/meson_prescription
+	build_path = /obj/item/clothing/glasses/meson/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -164,7 +164,7 @@
 	id = "engine_goggles_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 100, MAT_SILVER = 350)
-	build_path = /obj/item/clothing/glasses/meson/engine_prescription
+	build_path = /obj/item/clothing/glasses/meson/engine/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -184,7 +184,7 @@
 	id = "tray_goggles_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 150)
-	build_path = /obj/item/clothing/glasses/meson/engine/tray_prescription
+	build_path = /obj/item/clothing/glasses/meson/engine/tray/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
