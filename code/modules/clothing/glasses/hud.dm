@@ -140,16 +140,6 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
-/obj/item/clothing/glasses/hud/security/sunglasses/prescription
-	name = "security prescription HUDSunglasses"
-	desc = "Sunglasses with a prescription security HUD."
-	icon_state = "sunhudsec"
-	darkness_view = 1
-	flash_protect = 1
-	tint = 1
-	vision_correction = 1
-	glass_colour_type = /datum/client_colour/glass_colour/darkred
-
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
