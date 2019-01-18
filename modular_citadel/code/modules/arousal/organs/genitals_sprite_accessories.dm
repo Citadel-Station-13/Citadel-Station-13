@@ -1,4 +1,4 @@
-/datum/
+/datum/sprite_accessory
 	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
 
 
