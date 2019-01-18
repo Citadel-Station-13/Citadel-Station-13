@@ -777,7 +777,7 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	special = TRUE
 
-/datum/supply_pack/engineering/pacman
+/datum/supply_pack/engineering/superpacman
 	name = "S.U.P.E.R.P.A.C.M.A.N. Generator Crate"
 	desc = "Engineers can't set up the engine? Do you want to use the power of that ATOM? Well this S.U.P.E.R.P.A.C.M.A.N. Generator is for you! Takes in uranium."
 	cost = 5000
