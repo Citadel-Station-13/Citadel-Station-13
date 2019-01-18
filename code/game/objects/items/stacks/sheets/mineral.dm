@@ -121,6 +121,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	recipes = GLOB.diamond_recipes
 	. = ..()
 
+/obj/item/stack/sheet/diamond/twenty
+	amount = 20
+
 /*
  * Uranium
  */
@@ -147,6 +150,8 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 	recipes = GLOB.uranium_recipes
 	. = ..()
 
+/obj/item/stack/sheet/uranium/twenty
+	amount = 20
 /*
  * Plasma
  */
@@ -219,6 +224,9 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	recipes = GLOB.gold_recipes
 	. = ..()
 
+/obj/item/stack/sheet/gold/twenty
+	amount = 20
+
 /*
  * Silver
  */
@@ -246,6 +254,9 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 /obj/item/stack/sheet/mineral/silver/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.silver_recipes
 	. = ..()
+
+/obj/item/stack/sheet/silver/twenty
+	amount = 20
 
 /*
  * Clown
@@ -300,6 +311,8 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50
 
+/obj/item/stack/sheet/mineral/titanium/twenty
+	amount = 20
 
 /*
  * Plastitanium
