@@ -546,19 +546,14 @@
 	overdose_threshold = 45
 	addiction_threshold = 30
 
-/datum/reagent/medicine/ephedrine/on_mob_add(mob/living/L)
-	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
-
-/datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
-	..()
-
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.adjustStaminaLoss(-4.5*REM, 0)
+	M.Jitter(10)
+	if(prob(50))
+		M.confused = max(M.confused, 1)
 	..()
 	return TRUE
 
