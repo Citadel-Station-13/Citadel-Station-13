@@ -1,4 +1,4 @@
-/datum/sprite_accessory
+/datum/
 	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
 
 
@@ -100,6 +100,7 @@
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
 	name = "Pair"
+	alt_aroused = TRUE
 
 
 //OVIPOSITORS BE HERE
