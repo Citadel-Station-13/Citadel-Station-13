@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	recipes = GLOB.silver_recipes
 	. = ..()
 
-/obj/item/stack/sheet/silver/twenty
+/obj/item/stack/sheet/silver/mineral/twenty
 	amount = 20
 
 /*
