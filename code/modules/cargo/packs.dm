@@ -1042,7 +1042,7 @@
 	name = "20 Plasteel Sheets"
 	desc = "Reinforce the station's integrity with twenty plasteel sheets!"
 	cost = 7500
-	contains = list(/obj/item/stack/sheet/mineral/plasteel/twenty)
+	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/material/silver20
