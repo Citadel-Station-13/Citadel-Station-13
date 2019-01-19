@@ -44697,10 +44697,10 @@
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bIY" = (
-/obj/structure/table/glass,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bIZ" = (
@@ -55631,19 +55631,7 @@
 	dir = 1
 	},
 /area/science/xenobiology)
-"clG" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"czY" = (
+"ctr" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -55652,12 +55640,16 @@
 "cIZ" = (
 /turf/closed/wall,
 /area/crew_quarters/fitness/locker_room)
-"cMy" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
+"ddH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "dns" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55669,6 +55661,20 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen/coldroom)
+"dMX" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cabin6";
+	name = "Cabin 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "ezL" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -55691,26 +55697,18 @@
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
-"fwV" = (
-/obj/item/seeds/apple,
-/obj/item/seeds/banana,
-/obj/item/seeds/cocoapod,
-/obj/item/seeds/grape,
-/obj/item/seeds/orange,
-/obj/item/seeds/sugarcane,
-/obj/item/seeds/wheat,
-/obj/item/seeds/watermelon,
-/obj/structure/table,
-/obj/item/seeds/tower,
-/turf/open/floor/grass,
-/area/hydroponics/garden)
-"fQu" = (
-/obj/machinery/door/airlock{
-	id_tag = "Cabin7";
-	name = "Cabin 1"
+"eNz" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
+/area/crew_quarters/fitness/recreation)
 "gst" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55750,6 +55748,19 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
+"hEn" = (
+/obj/item/seeds/apple,
+/obj/item/seeds/banana,
+/obj/item/seeds/cocoapod,
+/obj/item/seeds/grape,
+/obj/item/seeds/orange,
+/obj/item/seeds/sugarcane,
+/obj/item/seeds/wheat,
+/obj/item/seeds/watermelon,
+/obj/structure/table,
+/obj/item/seeds/tower,
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "hGn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -55770,13 +55781,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"isM" = (
-/obj/machinery/door/airlock{
-	id_tag = "Cabin2";
-	name = "Cabin 4"
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "jro" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light/small{
@@ -55784,6 +55788,18 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
+"juO" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Civilian - Dorm Fitness 1";
+	dir = 8;
+	network = list("ss13")
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "jzE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -55806,45 +55822,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"jDo" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Civilian - Dorm Fitness 1";
-	dir = 8;
-	network = list("ss13")
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
-"kkC" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "intact";
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"kqW" = (
-/obj/machinery/door/airlock{
-	id_tag = "Cabin5";
-	name = "Cabin 3"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4;
-	icon_state = "intact"
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 "kLE" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/fitness/locker_room";
@@ -55872,31 +55849,7 @@
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen/coldroom)
-"lQu" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "intact";
-	dir = 6
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
-"mjC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/shower{
-	pixel_y = 24
-	},
-/obj/structure/curtain,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness/locker_room)
-"mtv" = (
+"lOY" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -55911,14 +55864,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"nuq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+"mjC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/shower{
+	pixel_y = 24
+	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/kitchen/coldroom)
-"nVJ" = (
+/area/crew_quarters/fitness/locker_room)
+"mFq" = (
 /obj/machinery/door/airlock{
-	id_tag = "Cabin6";
-	name = "Cabin 2"
+	id_tag = "Cabin5";
+	name = "Cabin 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -55929,7 +55888,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"oqh" = (
+"npZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -55942,9 +55901,40 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"nuq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen/coldroom)
+"ogO" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	icon_state = "intact";
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "pBI" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen/coldroom)
+"pDW" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	icon_state = "intact";
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "qxZ" = (
 /obj/structure/sign/warning/pods{
 	pixel_y = 32
@@ -55962,6 +55952,35 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
+"riD" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	icon_state = "manifold";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"sUl" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cabin2";
+	name = "Cabin 4"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"tzS" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"tGE" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
 "tQN" = (
 /obj/machinery/shower{
 	dir = 1
@@ -56042,35 +56061,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"xco" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+"vYm" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cabin7";
+	name = "Cabin 1"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
+/area/crew_quarters/dorms)
 "xhI" = (
 /turf/closed/wall,
 /area/crew_quarters/kitchen/coldroom)
-"xvW" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
-	icon_state = "manifold";
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"xEH" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "xOq" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light/small{
@@ -83418,10 +83418,10 @@ adO
 akM
 aIE
 beq
-xco
+ddH
 ber
 ber
-jDo
+juO
 bsF
 aes
 bkV
@@ -83676,10 +83676,10 @@ adO
 aIW
 asG
 asG
-isM
+sUl
 asG
 asG
-kqW
+mFq
 asG
 asG
 bNc
@@ -83935,11 +83935,11 @@ asG
 bqQ
 aoT
 bRJ
-cMy
-xEH
+tGE
+tzS
 afs
 asG
-clG
+eNz
 bro
 bOm
 acy
@@ -84193,7 +84193,7 @@ afr
 asm
 aCh
 afr
-kkC
+pDW
 avn
 asG
 aKV
@@ -84707,7 +84707,7 @@ afr
 aqr
 aKI
 afr
-lQu
+ogO
 bra
 asG
 aKW
@@ -84963,8 +84963,8 @@ asG
 bqQ
 aum
 bqR
-cMy
-xEH
+tGE
+tzS
 afv
 asG
 aKX
@@ -85218,10 +85218,10 @@ bRE
 bep
 asG
 asG
-fQu
+vYm
 asG
 asG
-nVJ
+dMX
 asG
 asG
 acf
@@ -85478,7 +85478,7 @@ aih
 aih
 bge
 aCi
-oqh
+npZ
 aih
 aih
 aih
@@ -85509,7 +85509,7 @@ bmO
 cex
 bnw
 bnw
-mtv
+lOY
 bEs
 bBP
 axM
@@ -85735,7 +85735,7 @@ aih
 asP
 aqE
 aKO
-xvW
+riD
 aLb
 aLb
 aLb
@@ -86755,7 +86755,7 @@ aaT
 bQs
 aaA
 atr
-czY
+ctr
 auq
 bgd
 asb
@@ -97564,7 +97564,7 @@ bsN
 axe
 aMw
 aMv
-fwV
+hEn
 aMu
 aMy
 aMu
