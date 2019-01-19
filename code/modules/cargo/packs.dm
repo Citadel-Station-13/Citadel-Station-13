@@ -1028,42 +1028,42 @@
 	name = "20 Diamond Sheets"
 	desc = "Create with 20 sheets of diamonds. Usefull for M.R.S.P.A.C.M.A.N.-type portable generators."
 	cost = 15000 // 15000 worth of diamonds
-	contains = list(/obj/item/stack/sheet/diamond/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/diamond/twenty)
 	crate_name = "diamond sheets crate"
 
 /datum/supply_pack/materials/gold20
 	name = "20 Gold Ingot"
 	desc = "Create with 20 ingot of gold. For when people want that golden cargonia."
 	cost = 5000 // 3750 worth of gold
-	contains = list(/obj/item/stack/sheet/gold/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/gold/twenty)
 	crate_name = "gold ingot crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
 	desc = "Reinforce the station's integrity with twenty plasteel sheets!"
 	cost = 7500
-	contains = list(/obj/item/stack/sheet/plasteel/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/material/silver20
 	name = "20 Silver Ingot"
 	desc = "Create with 20 silver ingot."
 	cost = 3000 // 2,250 worth of silver
-	contains = list(/obj/item/stack/sheet/silver/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/silver/twenty)
 	crate_name = "silver ingot crate"
 
 /datum/supply_pack/materials/titanium20
 	name = "20 Titanium Sheets"
 	desc = "Create with 20 titanium sheets."
 	cost = 4500 // 3750 worth of titanium
-	contains = list(/obj/item/stack/sheet/titanium/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/titanium/twenty)
 	crate_name = "titanium sheets crate"
 
 /datum/supply_pack/materials/uranium20
 	name = "20 Uranium Sheets"
 	desc = "Create with 20 uranium sheets. Usefull for S.U.P.E.R.P.A.C.M.A.N.-type portable generators."
 	cost = 4000 // 3000 worth of uranium
-	contains = list(/obj/item/stack/sheet/uranium/twenty)
+	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
 	crate_name = "uranium sheets crate"
 
 /datum/supply_pack/materials/sandstone30
