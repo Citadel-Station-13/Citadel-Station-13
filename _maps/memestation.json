@@ -1,0 +1,11 @@
+{
+    "map_name": "MemeStation",
+    "map_path": "map_files/RobinStation",
+    "map_file": "memestation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    }
+}
