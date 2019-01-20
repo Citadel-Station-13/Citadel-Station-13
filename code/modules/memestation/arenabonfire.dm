@@ -116,3 +116,17 @@
 /obj/structure/arenabonfire/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(..())
 		buckled_mob.pixel_y -= 13
+
+
+/obj/item/firing_pin/arena_pin
+	name = "arena firing pin"
+	desc = "This safety firing pin allows weapons to be fired within 9 meters of an arena bonfire."
+	fail_message = "<span class='warning'>TOO FAR FROM BONFIRE!.</span>"
+	pin_removeable = FALSE
+
+/obj/item/firing_pin/arena_pin/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	for(var/obj/structure/arenabonfire/M in range(user, 9))
+		return TRUE
+	return FALSE
