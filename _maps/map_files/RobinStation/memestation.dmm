@@ -603,7 +603,7 @@
 "alE" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plasteel,/area/lawoffice)
 "alF" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/quartermaster/storage)
 "alG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/quartermaster/storage)
-"alH" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/mob/living/simple_animal/bot/mulebot{desc = "Caked in blood and beaten to hell, this mulebot seems to literally emit salt"; emagged = 1; limb_destroyer = 1; name = "A.M.I.G.O.'s Chariot"},/turf/open/floor/plasteel,/area/quartermaster/storage)
+"alH" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown{dir = 4},/mob/living/simple_animal/bot/mulebot{desc = "Caked in blood and beaten to hell, this mulebot seems to literally emit salt"; emagged = 1; limb_destroyer = 1; name = "Murderboner's Chariot"},/turf/open/floor/plasteel,/area/quartermaster/storage)
 "alI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/closed/wall,/area/quartermaster/storage)
 "alJ" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/structure/cable/white{icon_state = "1-2"},/turf/open/floor/plasteel,/area/security/brig)
 "alK" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/structure/cable/white{icon_state = "1-2"},/turf/open/floor/plasteel,/area/quartermaster/storage)
