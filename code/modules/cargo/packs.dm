@@ -1155,7 +1155,7 @@
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
-	desc = "Contains a single IV drip for administering blood to patients."
+	desc = "Contains a single IV drip stand for intravenous delivery."
 	cost = 700
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
