@@ -3987,7 +3987,7 @@
 "byI" = (/obj/structure/disposaloutlet{dir = 4},/obj/structure/disposalpipe/trunk{dir = 1},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plating,/area/maintenance/disposal)
 "byJ" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/turf/open/floor/plating,/area/maintenance/disposal)
 "byK" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/light/small{dir = 1},/turf/open/floor/plating,/area/maintenance/disposal)
-"byL" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/recycler,/obj/structure/sign/warning/securearea{name = "\improper STAY CLEAR HEAVY MACHINERY"; pixel_y = 32},/turf/open/floor/plating,/area/maintenance/disposal)
+"byL" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/recycler{blood = 1},/obj/structure/sign/warning/securearea{name = "\improper STAY CLEAR HEAVY MACHINERY"; pixel_y = 32},/turf/open/floor/plating,/area/maintenance/disposal)
 "byM" = (/obj/machinery/shieldwallgen,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "byN" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
 "byO" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
