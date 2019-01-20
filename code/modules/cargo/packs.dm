@@ -2425,6 +2425,7 @@
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/storage/box/fountainpens) // Two spare pens just in case
 	crate_name = "Paperwork"
 
