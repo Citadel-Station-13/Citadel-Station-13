@@ -19,7 +19,7 @@
 	id = "health_hud_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
-	build_path = /obj/item/clothing/glasses/hud/health_prescription
+	build_path = /obj/item/clothing/glasses/hud/health/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -49,7 +49,7 @@
 	id = "security_hud_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
-	build_path = /obj/item/clothing/glasses/hud/security_prescription
+	build_path = /obj/item/clothing/glasses/hud/security/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -80,7 +80,7 @@
 	id = "diagnostic_hud_prescription"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 350)
-	build_path = /obj/item/clothing/glasses/hud/diagnostic_prescription
+	build_path = /obj/item/clothing/glasses/hud/diagnostic/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
