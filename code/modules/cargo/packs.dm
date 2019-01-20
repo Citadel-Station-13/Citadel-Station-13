@@ -779,7 +779,7 @@
 
 /datum/supply_pack/engineering/superpacman
 	name = "S.U.P.E.R.P.A.C.M.A.N. Generator Crate"
-	desc = "Engineers can't set up the engine? Do you want to use the power of that ATOM? Well this S.U.P.E.R.P.A.C.M.A.N. Generator is for you! Takes in uranium."
+	desc = "Solars? Supermatter? Singulo? Pfffft. Harness the power of dangerous and highly radioactive isotopes with the S.U.P.E.R.P.A.C.M.A.N. Runs off Uranium sheets and the Quartermaster's tears."
 	cost = 5000
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "PACMAN generator crate"
@@ -1033,7 +1033,7 @@
 
 /datum/supply_pack/materials/gold20
 	name = "20 Gold Ingot"
-	desc = "Create with 20 ingot of gold. For when people want that golden cargonia."
+	desc = "Crate with 20 ingot of gold. For the Captain who has everything."
 	cost = 5000 // 3750 worth of gold
 	contains = list(/obj/item/stack/sheet/mineral/gold/twenty)
 	crate_name = "gold ingot crate"
@@ -1047,7 +1047,7 @@
 
 /datum/supply_pack/material/silver20
 	name = "20 Silver Ingot"
-	desc = "Create with 20 silver ingot."
+	desc = "Crate with 20 silver ingot. For when robotics steals the Surgery table for a Durand."
 	cost = 3000 // 2,250 worth of silver
 	contains = list(/obj/item/stack/sheet/mineral/silver/twenty)
 	crate_name = "silver ingot crate"
@@ -1061,7 +1061,7 @@
 
 /datum/supply_pack/materials/uranium20
 	name = "20 Uranium Sheets"
-	desc = "Create with 20 uranium sheets. Usefull for S.U.P.E.R.P.A.C.M.A.N.-type portable generators."
+	desc = "Crate with 20 uranium sheets. For when the miners are cultists or dead."
 	cost = 4000 // 3000 worth of uranium
 	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
 	crate_name = "uranium sheets crate"
