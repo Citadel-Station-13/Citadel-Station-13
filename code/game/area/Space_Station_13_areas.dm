@@ -179,6 +179,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Maintenance - Generic
 
+/area/maintenance/armory
+	name = "Public Armory"
+	icon_state = "maint_brig"
+
 /area/maintenance/arrivals/north
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
