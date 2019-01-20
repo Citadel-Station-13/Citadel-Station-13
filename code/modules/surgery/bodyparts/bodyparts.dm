@@ -397,7 +397,7 @@
 				limb.icon_state = "[species_id]_[body_zone]"
 
 		// Citadel Start
-		if(should_draw_citadel)
+		if(should_draw_citadel && !use_digitigrade)
 			limb.icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
