@@ -31,6 +31,8 @@
 	icon_state = "qm"
 	item_state = "lb_suit"
 	item_color = "qm"
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -138,6 +140,8 @@
 	item_state = "b_suit"
 	item_color = "hop"
 	can_adjust = FALSE
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
