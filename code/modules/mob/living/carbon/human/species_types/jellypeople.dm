@@ -86,6 +86,7 @@
 		if(limbs_to_heal.len < 1)
 			return 0
 		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+		H.update_body()
 			return 1
 		return 0
 
