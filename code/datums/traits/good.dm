@@ -60,11 +60,11 @@
 
 /datum/quirk/quick_step
 	name = "Quick Step"
-	desc = "You walk with a bounce in you'r step; Making you slightly faster then most other crewmembers."
+	desc = "You walk with determined strides, and out-pace most people when walking."
 	value = 2
 	mob_trait = TRAIT_SPEEDY_STEP
-	gain_text = "<span class='notice'>You feel quick on your feet.</span>"
-	lose_text = "<span class='danger'>You feel a little more slow.</span>"
+	gain_text = "<span class='notice'>You feel determined. No time to lose.</span>"
+	lose_text = "<span class='danger'>You feel less determined. What's the rush, man?</span>"
 
 /datum/quirk/musician
 	name = "Musician"
