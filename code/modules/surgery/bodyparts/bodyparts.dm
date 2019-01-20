@@ -295,6 +295,7 @@
 
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
+		should_draw_citadel = S.should_draw_citadel // Citadel Addition
 		species_flags_list = H.dna.species.species_traits
 
 		if(S.use_skintones)
