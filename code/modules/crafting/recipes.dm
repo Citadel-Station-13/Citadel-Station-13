@@ -698,7 +698,7 @@
 	name = "Filed Paper Work"
 	result =  /obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
 	time = 90 //Takes time for people to file and complete paper work!
-	reqs = list(/obj/item/pen/fountain = 1,
+	reqs = list(/obj/item/pen = 1,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork = 2)
 	category = CAT_MISC
 
