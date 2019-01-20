@@ -1027,14 +1027,14 @@
 /datum/supply_pack/materials/diamond20
 	name = "20 Diamond Sheets"
 	desc = "Create with 20 sheets of diamonds. Usefull for M.R.S.P.A.C.M.A.N.-type portable generators."
-	cost = 15000 // 15000 worth of diamonds
+	cost = 17500 // 10000 worth of diamonds
 	contains = list(/obj/item/stack/sheet/mineral/diamond/twenty)
 	crate_name = "diamond sheets crate"
 
 /datum/supply_pack/materials/gold20
 	name = "20 Gold Ingot"
 	desc = "Crate with 20 ingot of gold. For the Captain who has everything."
-	cost = 5000 // 3750 worth of gold
+	cost = 7500 // 3750 worth of gold
 	contains = list(/obj/item/stack/sheet/mineral/gold/twenty)
 	crate_name = "gold ingot crate"
 
@@ -1048,21 +1048,21 @@
 /datum/supply_pack/material/silver20
 	name = "20 Silver Ingot"
 	desc = "Crate with 20 silver ingot. For when robotics steals the Surgery table for a Durand."
-	cost = 3000 // 2,250 worth of silver
+	cost = 5000 // 2,250 worth of silver
 	contains = list(/obj/item/stack/sheet/mineral/silver/twenty)
 	crate_name = "silver ingot crate"
 
 /datum/supply_pack/materials/titanium20
 	name = "20 Titanium Sheets"
 	desc = "Create with 20 titanium sheets."
-	cost = 4500 // 3750 worth of titanium
+	cost = 5000 // 3750 worth of titanium
 	contains = list(/obj/item/stack/sheet/mineral/titanium/twenty)
 	crate_name = "titanium sheets crate"
 
 /datum/supply_pack/materials/uranium20
 	name = "20 Uranium Sheets"
 	desc = "Crate with 20 uranium sheets. For when the miners are cultists or dead."
-	cost = 4000 // 3000 worth of uranium
+	cost = 7500 // 3000 worth of uranium
 	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
 	crate_name = "uranium sheets crate"
 
@@ -1132,22 +1132,6 @@
 	crate_name = "carbon dioxide canister crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/materials/foamtank
-	name = "Firefighting Foam Tank Crate"
-	desc = "Contains a tank of firefighting foam. Also known as \"plasmaman's bane\"."
-	cost = 1500
-	contains = list(/obj/structure/reagent_dispensers/foamtank)
-	crate_name = "foam tank crate"
-	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/materials/fueltank
-	name = "Fuel Tank Crate"
-	desc = "Contains a welding fuel tank. Caution, highly flammable."
-	cost = 800
-	contains = list(/obj/structure/reagent_dispensers/fueltank)
-	crate_name = "fuel tank crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/materials/nitrogen
 	name = "Nitrogen Canister"
 	desc = "Contains a canister of Nitrogen."
@@ -1164,14 +1148,6 @@
 	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
 	crate_name = "nitrous oxide canister crate"
 	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/materials/hightank
-	name = "Large Water Tank Crate"
-	desc = "Contains a high-capacity water tank. Useful for botany or other service jobs."
-	cost = 1200
-	contains = list(/obj/structure/reagent_dispensers/watertank/high)
-	crate_name = "high-capacity water tank crate"
-	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/materials/oxygen
 	name = "Oxygen Canister"
@@ -1195,6 +1171,30 @@
 	cost = 600
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_name = "water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/hightank
+	name = "Large Water Tank Crate"
+	desc = "Contains a high-capacity water tank. Useful for botany or other service jobs."
+	cost = 1200
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/foamtank
+	name = "Firefighting Foam Tank Crate"
+	desc = "Contains a tank of firefighting foam. Also known as \"plasmaman's bane\"."
+	cost = 1500
+	contains = list(/obj/structure/reagent_dispensers/foamtank)
+	crate_name = "foam tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/fueltank
+	name = "Fuel Tank Crate"
+	desc = "Contains a welding fuel tank. Caution, highly flammable."
+	cost = 800
+	contains = list(/obj/structure/reagent_dispensers/fueltank)
+	crate_name = "fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/materials/rcdammo
