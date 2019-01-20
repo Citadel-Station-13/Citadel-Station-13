@@ -5,6 +5,8 @@
 	icon_state = "chiefengineer"
 	item_state = "gy_suit"
 	item_color = "chief"
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 80, "acid" = 40)
 	resistance_flags = NONE
 
