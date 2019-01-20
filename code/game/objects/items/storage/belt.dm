@@ -170,8 +170,8 @@
 
 
 /obj/item/storage/belt/medical/surgery_belt_adv
-	name = "Surgery belt"
-	desc = "A normal medical belt that has been preloaded with advance surgery tools. Their is a tag on it that reminds people to place back the tools in there original pockets."
+	name = "surgical supply belt"
+	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
 
 /obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
 	new /obj/item/hemostat/adv(src)

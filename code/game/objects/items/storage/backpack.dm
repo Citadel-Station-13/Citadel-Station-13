@@ -443,7 +443,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	name = "advanced surgery duffel bag"
-	desc = "A large duffel bag, this one is for holding Med-Co latest surgery tools."
+	desc = "A large duffel bag for holding surgical tools. Bears the logo of an advanced med-tech firm."
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv/PopulateContents()
 	new /obj/item/hemostat/adv(src)
