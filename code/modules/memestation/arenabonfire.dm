@@ -3,7 +3,7 @@
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
 	icon = 'icons/obj/memestation.dmi'
 	icon_state = "arenabonfire"
-	light_color = #ff00ff
+	light_color = LIGHT_COLOR_PURPLE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
@@ -27,25 +27,6 @@
 	return ..()
 
 /obj/structure/arenabonfire/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
-		var/obj/item/stack/rods/R = W
-		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
-		switch(choice)
-			if("Stake")
-				R.use(1)
-				can_buckle = TRUE
-				buckle_requires_restraints = TRUE
-				to_chat(user, "<span class='italics'>You add a rod to \the [src].")
-				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
-				rod_underlay.pixel_y = 16
-				underlays += rod_underlay
-			if("Grill")
-				R.use(1)
-				grill = TRUE
-				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
-				add_overlay("bonfire_grill")
-			else
-				return ..()
 	if(W.is_hot())
 		StartBurning()
 	if(grill)
@@ -81,7 +62,7 @@
 		return
 
 /obj/structure/arenabonfire/proc/StartBurning()
-	if(!burning && CheckOxygen())
+	if(!burning)
 		icon_state = burn_icon
 		burning = TRUE
 		set_light(6)
@@ -127,13 +108,6 @@
 		Burn()
 	else
 		Cook()
-
-/obj/structure/arenabonfire/extinguish()
-	if(burning)
-		icon_state = "bonfire"
-		burning = 0
-		set_light(0)
-		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/arenabonfire/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(..())
