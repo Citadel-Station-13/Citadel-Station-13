@@ -84,7 +84,7 @@
 	description = "A sister station is dealing with um problem, they need a medibot to help treat their wounded..."
 	reward = 3000
 	wanted_types = list(/mob/living/simple_animal/bot/medbot)
-/*
+*/
 
 /datum/bounty/item/medical/surgery
 	name = "Surgery tool implants"
