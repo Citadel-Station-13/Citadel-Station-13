@@ -204,5 +204,7 @@
 				soundin = pick('sound/effects/clang1.ogg', 'sound/effects/clang2.ogg')
 			if("clangsmall")
 				soundin = pick('sound/effects/clangsmall1.ogg', 'sound/effects/clangsmall2.ogg')
+			if("slosh")
+				soundin = pick('sound/effects/slosh1.ogg', 'sound/effects/slosh2.ogg')
 			//END OF CIT CHANGES
 	return soundin

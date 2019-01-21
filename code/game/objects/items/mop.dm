@@ -15,7 +15,6 @@
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
-	var/mopspeed = 30
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -49,11 +48,11 @@
 		return
 
 	if(T)
-		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-
-		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
+		clean(T)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(T, used_item = src)
+		playsound(T, "slosh", 50, 1)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
@@ -86,7 +85,6 @@
 	force = 6
 	throwforce = 8
 	throw_range = 4
-	mopspeed = 20
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
 	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
