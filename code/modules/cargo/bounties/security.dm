@@ -11,3 +11,17 @@
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/machinery/recharger)
+
+/datum/bounty/item/security/seclocker
+	name = "Sec Lockers"
+	description = "Nanotrasen military academy has been over crowded by new sec officers, please send us some lockers to place their gear in."
+	reward = 6000
+	required_count = 3
+	wanted_types = list(/obj/structure/closet/secure_closet/security)
+
+/datum/bounty/item/security/practice
+	name = "Practice Laser Gun"
+	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that practice laser guns to be shipped."
+	reward = 3000
+	required_count = 3
+	wanted_types = list(/obj/item/gun/energy/laser/practice)
