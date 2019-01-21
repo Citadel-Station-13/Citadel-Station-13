@@ -506,6 +506,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/shotgun/chemdarts
+	name = "12g Dart Shells"
+	desc = "Two 8-round dart magazine for use in the Bulldog shotgun. \
+            Great for mixing up a plethora of death. Dosn't come with a toxin kit, needs to be filled by hand..."
+	item = /obj/item/storage/box/syndicate/chemdarts
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
