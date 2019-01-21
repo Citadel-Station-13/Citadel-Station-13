@@ -480,7 +480,7 @@ RLD
 
 /obj/item/rcd_ammo/large
 	name = "large compressed matter cartridge"
-	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge"
+	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 
