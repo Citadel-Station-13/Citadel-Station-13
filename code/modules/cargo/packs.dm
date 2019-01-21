@@ -781,8 +781,8 @@
 	name = "S.U.P.E.R.P.A.C.M.A.N. Generator Crate"
 	desc = "Solars? Supermatter? Singulo? Pfffft. Harness the power of dangerous and highly radioactive isotopes with the S.U.P.E.R.P.A.C.M.A.N. Runs off Uranium sheets and the Quartermaster's tears."
 	cost = 5000
-	contains = list(/obj/machinery/power/port_gen/pacman)
-	crate_name = "PACMAN generator crate"
+	contains = list(/obj/machinery/power/port_gen/pacman/super)
+	crate_name = "S.U.P.E.R.P.A.C.M.A.N. generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/tools
