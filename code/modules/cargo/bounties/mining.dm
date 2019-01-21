@@ -49,3 +49,17 @@
 	reward = 5000
 	required_count = 3
 	wanted_types = list(/obj/item/kitchen/knife/combat/bone)
+
+/datum/bounty/item/mining/basalt
+	name = "Lava Land flooring"
+	description = "Central Command's Ash Walker exhibit needs to be expanded again, we just need some more basalt flooring."
+	reward = 5000
+	required_count = 60
+	wanted_types = list(/obj/item/stack/tile/basalt)
+
+/datum/bounty/item/mining/fruit
+	name = "Lava Land Fruit"
+	description = "Central Command's Ash Walker habitat needs more fauna, send us some local fruit seeds!"
+	reward = 7500
+	required_count = 5
+	wanted_types = list(/obj/item/seeds/lavaland/cactus)
