@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "12g Dart Shells"
 	desc = "Two 8-round dart magazine for use in the Bulldog shotgun. \
             Great for mixing up a plethora of death. Dosn't come with a toxin kit, needs to be filled by hand..."
-	item = /obj/item/storage/box/syndicate/chemdarts
+	item = /obj/item/storage/box/syndie_kit/chemdarts
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
