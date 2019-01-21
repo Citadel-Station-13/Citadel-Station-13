@@ -46,12 +46,6 @@
 /datum/species/mammal/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/mammal/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-
-/datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
-	. = ..()
-
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
@@ -98,12 +92,6 @@
 
 /datum/species/avian/qualifies_for_rank(rank, list/features)
 	return TRUE
-
-/datum/species/avian/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-
-/datum/species/avian/on_species_loss(mob/living/carbon/human/C)
-	. = ..()
 
 //AQUATIC//
 /datum/species/aquatic
@@ -152,12 +140,6 @@
 /datum/species/aquatic/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/aquatic/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-
-/datum/species/aquatic/on_species_loss(mob/living/carbon/human/C)
-	. = ..()
-
 //INSECT//
 /datum/species/insect
 	name = "Insect"
@@ -203,12 +185,6 @@
 
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
-
-/datum/species/insect/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-
-/datum/species/insect/on_species_loss(mob/living/carbon/human/C)
-	. = ..()
 
 //Alien//
 /datum/species/xeno
