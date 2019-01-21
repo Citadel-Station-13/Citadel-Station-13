@@ -61,7 +61,7 @@
 /datum/bounty/item/medical/bloodl
 	name = "Lizzard blood bag"
 	description = "After a small scuffle with Sec, a few of are lizzard friends need a transfusion again..."
-	reward = 5000
+	reward = 4000
 	wanted_types = list(/obj/item/reagent_containers/blood/lizard)
 
 /datum/bounty/item/medical/bloodu
@@ -78,10 +78,23 @@
 	wanted_types = list(/obj/item/reagent_containers/blood)
 	exclude_types = list(/obj/item/reagent_containers/blood/lizard)
 
-*/
+/*
 /datum/bounty/item/medical/medibot // Mob so this dosn't work yet*
 	name = "Medibot"
 	description = "A sister station is dealing with um problem, they need a medibot to help treat their wounded..."
 	reward = 3000
 	wanted_types = list(/mob/living/simple_animal/bot/medbot)
 /*
+
+/datum/bounty/item/medical/surgery
+	name = "Surgery tool implants"
+	description = "A few people in the medical field want the lastest surgeric tools and fame. Please send us some Surgery arm implants."
+	reward = 10000
+	required_count = 3
+	wanted_types = list(/obj/item/organ/cyberimp/arm/surgery)
+
+/datum/bounty/item/medical/chemmaker
+	name = "Portable Chem Dispenser"
+	description = "After a new chemist mixed up some water and potassium, we lost are only chem dispenser. Please send us a new one."
+	reward = 7000
+	wanted_types = list(/obj/machinery/chem_dispenser)
