@@ -57,3 +57,31 @@
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/cat)
+
+/datum/bounty/item/medical/bloodl
+	name = "Lizzard blood bag"
+	description = "After a small scuffle with Sec, a few of are lizzard friends need a transfusion again..."
+	reward = 5000
+	wanted_types = list(/obj/item/reagent_containers/blood/lizard)
+
+/datum/bounty/item/medical/bloodu
+	name = "Universal blood bag"
+	description = "Central Command, after dealing with a small revolt is need of some new blood for the CMO. Sadly the spare blood bags were destroyed and we need a new one."
+	reward = 5500 // Rarer blood
+	wanted_types = list(/obj/item/reagent_containers/blood/universal)
+
+/datum/bounty/item/medical/blood
+	name = "Any type of blood bag"
+	description = "Blood dontions are needed for are new medical wing here at Central command. Were taking any type of blood you send us."
+	reward = 3500
+	required_count = 3
+	wanted_types = list(/obj/item/reagent_containers/blood)
+	exclude_types = list(/obj/item/reagent_containers/blood/lizard)
+
+*/
+/datum/bounty/item/medical/medibot // Mob so this dosn't work yet*
+	name = "Medibot"
+	description = "A sister station is dealing with um problem, they need a medibot to help treat their wounded..."
+	reward = 3000
+	wanted_types = list(/mob/living/simple_animal/bot/medbot)
+/*
