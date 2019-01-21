@@ -35,5 +35,10 @@
 	icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/meteorslug
 
+/obj/item/ammo_box/magazine/m12g/scatter
+	name = "shotgun magazine (12g scatter laser shot slugs)"
+	icon_state = "m12gb"
+	ammo_type = /obj/item/ammo_casing/shotgun/laserslug
+
 /obj/item/ammo_box/magazine/m12g/nothing
 	ammo_type = null

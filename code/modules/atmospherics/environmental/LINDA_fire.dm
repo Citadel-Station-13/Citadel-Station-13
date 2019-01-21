@@ -20,8 +20,8 @@
 	if(active_hotspot)
 		if(soh)
 			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
-				if(active_hotspot.temperature < exposed_temperature)
-					active_hotspot.temperature = exposed_temperature
+				if(active_hotspot.temperature < exposed_temperature*50)
+					active_hotspot.temperature = exposed_temperature*50
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return 1
@@ -36,7 +36,7 @@
 			return 0
 
 		active_hotspot = new /obj/effect/hotspot(src)
-		active_hotspot.temperature = exposed_temperature
+		active_hotspot.temperature = exposed_temperature*50
 		active_hotspot.volume = exposed_volume*25
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
@@ -47,6 +47,7 @@
 		heating.temperature = exposed_temperature
 		heating.react()
 		assume_air(heating)
+		air_update_turf()
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile

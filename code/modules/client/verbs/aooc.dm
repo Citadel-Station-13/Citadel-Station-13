@@ -61,7 +61,7 @@
 		antaglisting |= M.current.client
 
 	for(var/mob/M in GLOB.player_list)
-		if(M.client && (M.stat == DEAD || M.client.holder))
+		if(M.client && (M.stat == DEAD || M.client.holder) && !istype(M, /mob/dead/new_player))
 			antaglisting |= M.client
 
 	for(var/client/C in antaglisting)

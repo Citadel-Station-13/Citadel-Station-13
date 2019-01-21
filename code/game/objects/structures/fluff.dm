@@ -70,6 +70,13 @@
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
 	icon_state = "drake_statue_falling"
 
+/obj/structure/fluff/lightpost
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "lightpost"
+	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/bus
 	name = "bus"
@@ -167,3 +174,11 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/snowlegion
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "snowlegion"
+	anchored = TRUE
+	deconstructible = FALSE

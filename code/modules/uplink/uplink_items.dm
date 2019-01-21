@@ -506,8 +506,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/shotgun/scatter
+	name = "12g Scatter Laser shot Slugs"
+	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
+	item = /obj/item/ammo_box/magazine/m12g/scatter
+	cost = 5 // most armor has less laser protection then bullet
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/shotgun/chemdarts
-	name = "12g Dart Shells"
+	name = "12g Dart Shotgun Shells"
 	desc = "Two 8-round dart magazine for use in the Bulldog shotgun. \
             Great for mixing up a plethora of death. Dosn't come with a toxin kit, needs to be filled by hand..."
 	item = /obj/item/storage/box/syndie_kit/chemdarts

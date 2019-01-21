@@ -15,7 +15,6 @@
 		OB.brainmob = src
 		forceMove(OB)
 
-
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
@@ -28,6 +27,7 @@
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 		if(mind)	//You aren't allowed to return to brains that don't exist
 			mind.current = null
+			mind.active = FALSE		//No one's using it anymore.
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
 	container = null
 	return ..()
