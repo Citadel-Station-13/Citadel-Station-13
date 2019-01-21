@@ -34,3 +34,6 @@
 	name = "shotgun magazine (12g meteor slugs)"
 	icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/meteorslug
+
+/obj/item/ammo_box/magazine/m12g/nothing
+	ammo_type = null
