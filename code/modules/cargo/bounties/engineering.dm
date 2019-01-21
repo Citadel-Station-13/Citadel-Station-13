@@ -24,6 +24,19 @@
 	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium."
 	gas_type = /datum/gas/tritium
 
+/datum/bounty/item/engineering/pacman
+	name = "P.A.C.M.A.N.-type portable generator"
+	description = "A sister station had a problem with the SME, and now need something to power there console to call their shuttle. Can you send them a pacman to fix this for us?"
+	reward = 3500 //2500 for the cargo one
+	wanted_types = list(/obj/machinery/power/port_gen/pacman)
+
+/datum/bounty/item/engineering/canisters
+	name = "Atmospheric Canisters"
+	description = "Full or not we just need some canisters for a new construction in a local sector of space by you."
+	reward = 5000
+	required_count = 10 //easy to make
+	wanted_types = list(/obj/machinery/portable_atmospherics/canister)
+
 /datum/bounty/item/engineering/energy_ball
 	name = "Contained Tesla Ball"
 	description = "Station 24 is being overrun by hordes of angry Mothpeople. They are requesting the ultimate bug zapper."
