@@ -64,3 +64,55 @@
 	description = "With the price of rechargers on the rise, upper management is interested in purchasing guns that are self-powered. If you ship one, they'll pay."
 	reward = 10000
 	wanted_types = list(/obj/item/gun/energy/e_gun/nuclear)
+
+/datum/bounty/item/science/bscells
+	name = "Blue Space power cells"
+	description = "Nanotrasen would make good use of those high-capacity 'blue space' cells you have. If you have any, please ship them."
+	reward = 7000
+	required_count = 10 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/cell/bluespace)
+
+/datum/bounty/item/science/t4manp
+	name = "Femto-Manipulators"
+	description = "We would love to use some of those fancy 'femto-manipilators' you guys seem to have. Can you send us some for are own projects?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/manipulator/femto)
+
+/datum/bounty/item/science/t4bins
+	name = "Blue Space Matter Bins"
+	description = "We would love to use some of those fancy 'Blue space matter bins' you guys seem to have. Can you send us some for are own projects?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/matter_bin/bluespace)
+
+/datum/bounty/item/science/t4capaitor
+	name = "Quadratic Capacitor"
+	description = "We would love to use some of those fancy 'quadratic capacitor' you guys seem to have. Can you send us some for are own projects?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/capacitor/quadratic)
+
+/datum/bounty/item/science/t4triphasic
+	name = "Triphasic Scanning Module"
+	description = "We would love to use some of those fancy 'triphasic scanning module' you guys seem to have. Can you send us some for are own projects?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/scanning_module/triphasic)
+
+/datum/bounty/item/science/t4triphasic
+	name = "Quad-Ultra Micro-Laser"
+	description = "We would love to use some of those fancy 'quad-ultra micro-laser' you guys seem to have. Can you send us some for are own projects?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/micro_laser/quadultra)
+
+/datum/bounty/item/science/fakecrystals
+	name = "Blue space artificial crystals"
+	description = "No way, no way! You guys got to be joking over there, you can MAKE blue space crystals? Send us some proof, not just one fake copy, but 5 of them."
+	reward = 10000
+	required_count = 5
+	wanted_types = list(/obj/item/stack/ore/bluespace_crystal/artificial)
+	exclude_types = list(/obj/item/stack/ore/bluespace_crystal,
+						 /obj/item/stack/sheet/bluespace_crystal,
+						 /obj/item/stack/ore/bluespace_crystal/refined)
