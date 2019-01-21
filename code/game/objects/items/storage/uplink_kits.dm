@@ -355,3 +355,27 @@
 	new /obj/item/gun/ballistic/automatic/pistol/m1911/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
 	new /obj/item/ammo_box/magazine/m45/kitchengun(src)
+
+/obj/item/storage/box/syndie_kit/chemdarts
+	name = "Chemdart Storge box"
+
+/obj/item/storage/box/syndie_kit/chemdarts/PopulateContents()
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_casing/shotgun/dart(src)
+		new /obj/item/ammo_box/magazine/m12g/nothing(src)
+		new /obj/item/ammo_box/magazine/m12g/nothing(src)
+		
