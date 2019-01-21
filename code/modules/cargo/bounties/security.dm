@@ -25,3 +25,9 @@
 	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/gun/energy/laser/practice)
+
+/datum/bounty/item/security/flashsheild
+	name = "Strobe Shield"
+	description = "Nanotrasen military research and development wants one of those makeshift flash shields, to make a better prototype for field use."
+	reward = 7000
+	wanted_types = list(/obj/item/assembly/flash/shield)
