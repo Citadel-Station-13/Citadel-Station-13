@@ -39,7 +39,9 @@
 	if(!proximity)
 		return
 
-	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	var/mob/living/L = user
+
+	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return
 
@@ -57,7 +59,8 @@
 		clean(T)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(T, used_item = src)
-		user.adjustStaminaLossBuffered(stamusage)
+		if(istype(L))
+			L.adjustStaminaLossBuffered(stamusage)
 		playsound(T, "slosh", 50, 1)
 
 
