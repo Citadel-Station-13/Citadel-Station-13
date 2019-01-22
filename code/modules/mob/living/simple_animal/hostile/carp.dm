@@ -101,7 +101,7 @@
 
 	harm_intent_damage = 12
 	obj_damage = 70
-	melee_damage_lower = 18
-	melee_damage_upper = 15
+	melee_damage_lower = 15
+	melee_damage_upper = 18
 
 #undef REGENERATION_DELAY
