@@ -1427,7 +1427,7 @@
 					/obj/item/caution,
 					/obj/item/caution,
 					/obj/item/storage/bag/trash,
-					/obj/item/reagent_containers/spray/drying_agent
+					/obj/item/reagent_containers/spray/drying_agent,
 					/obj/item/reagent_containers/spray/cleaner,
 					/obj/item/reagent_containers/glass/rag,
 					/obj/item/grenade/chem_grenade/cleaner,
