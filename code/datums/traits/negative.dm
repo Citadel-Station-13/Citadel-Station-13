@@ -290,7 +290,7 @@
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
