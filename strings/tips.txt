@@ -22,9 +22,12 @@ On all maps, you can use a machine in the vault to deposit space cash for cargo 
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
+As the Captain, you have a fancy pen that can be used as a holdout dagger or even as a scalpel in surgery!
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require credits, while others give you credits in exchange. Keep in mind that purchasing dangerous shuttles will incur the ire of your crew.
 As the Chief Medical Officer, your hypospray is like a refillable instant injection syringe that can hold 30 units as opposed to the standard 15.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
+As a Medical Doctor, you can print better surgical tools with the help of RnD, these tools are faster and some can be used as lethal weapons!
+As a Medical Doctor, your belt can hold a full set of surgical tools, and using a spray of stailizer before each step will make you more likely to successfully complete the step!
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
 As a Medical Doctor, while both heal toxin damage, the difference between charcoal and antitoxin is that charcoal will actively remove all other reagents from one's body, while antitoxin only removes various toxins - but can overdose.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
@@ -97,20 +100,31 @@ As an Atmospheric Technician, your backpack firefighter tank can launch resin. T
 As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches. Or, use it to seal a plasmaman cloning room.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium and water vapor.
 As an Atmospheric Technician, you can change the layer of a pipe by clicking with it on a wrenched pipe or other atmos component of the desired layer.
-As an Atmospheric Technician, you can take a few cans worth of N2/N20 and cool it down at local freezers. This is a good idea when dealing with a SME meltdown. 
+As an Atmospheric Technician, you can take a few cans worth of N2/N2O and cool it down at local freezers. This is a good idea when dealing with a SME meltdown. 
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
 As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
 As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
 As the Warden, if a prisoner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
+As the Warden, never underestimate the power of tech slugs! Scattershot fires a cone of weaker lasers, Ion slugs fires EMPs that only effect the tiles they hit, and Pulse slugs fire a singular laser that can one-hit almost any wall!
+As the Warden, you can use a surgery saw on riot shotguns to shorten the barrel, making them able to fit in bags!
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
+As the Warden, tracker implants can be used on sec officers. Doing this will let you track their corpse even without suits, though the implant will biodegrade after 5 minutes.
+As the Warden, cryostasis shotgun dart hold 10u of mix of chems, like a 10u of meth bomb!
+As the Warden, chemical implants can be loaded with a cocktail of healing or combat chems, perfect for the Hos or other sec officers to use. Be sure to keep a eye on them though, it will not auto inject! EMPs or starvation mite lead to the chemical implant to go off as well.
+As the Warden, tracker implants can be used on sec officers. Doing this will let you be able to message them when telecoms are out, or when you suspect coms are breached! This is also good against rogue AIs as the prisoner tracker doesn't leave logs or alarms for the AI!
+As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
+As a Security Officer, remember that your belt can hold more then one stun baton. 
+As a Security Officer, remember harm battoning someone in the head can deconvert them form a being a rev! This sadly doesn't work against the cult, nor does this protect them form getting reconverted.
+As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!
 As a Security Officer, communicate and coordinate with your fellow officers using the security channel (:s) to avoid confusion.
 As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
 As a Security Officer, you can take out the power cell on your baton to replace it with a better or fully charged one. Just use a screwdriver on your baton to remove the old cell
+As a Security Officer, you can place riot shotguns on your armor, this even works with winter sec coats!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance.
 As the Detective, your revolver can be loaded with .357 ammunition obtained from a hacked autolathe. Firing it has a decent chance to blow up your revolver.
@@ -126,6 +140,8 @@ As the Clown, eating bananas heals you slightly. Honk!
 As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
 As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
 As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and is a very powerful weapon to boot!
+The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
+The Chaplain's holy weapon will kill clockwork marauders in two hits.
 As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
@@ -136,8 +152,8 @@ As a Cook, you can load your food into snack vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
 As a Cook, being in the kitchen will make you remember the basics of Close Quarters Cooking. It is highly effective at removing Assistants from your workplace.
-As a Cook, you can vent out trays that fit on your blet slot! These trays hold a plethora of different objects!
-As a Cook, the adv roasting stick is used to cook food at a distends, and can be used on SME, singularity, and other objects that cook food normally!
+As a Cook, you can vend out trays that fit on your blet slot! These trays hold a plethora of different objects!
+As a Cook, the advanced roasting stick is used to cook food at a distends, and can be used on SME, singularity, and other objects that cook food normally!
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
 As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer, exact bloody revenge or order another from Cargo.
@@ -173,6 +189,9 @@ As a Monkey, you can still wear a few human items, such as backpacks, gas masks 
 As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This disables your doomsday device if it is active.
 As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
 As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
+Xeno invasion? Bug science to give you some tech shells so you can craft Pulse slugs and Scattershot!
+When fighting aliens, it can be a good idea to turn off the gravity due to the alien's lack of zero-gravity control.
+When fighting aliens, grab a shield! You can block their pounces, though be careful of the neurotoxin!
 As an Alien, your melee prowess is unmatched, but your ranged abilities are sorely lacking. Make use of corners to force a melee confrontation!
 As an Alien, you take double damage from all burn attacks, such as lasers, welding tools, and fires. Furthermore, fire can destroy your resin and eggs. Expose areas to space to starve away any flamethrower fires before they can do damage!
 As an Alien, resin floors not only regenerate your plasma supply, but also passively heal you. Fight on resin floors to gain a home turf advantage!
@@ -192,6 +211,7 @@ As the Blob, talking will send a message to all other overminds and all Blobbern
 As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
 As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
 As a Revolutionary, you cannot convert a head of staff or someone who has a mindshield implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
+As a Revolutionary, you cannot convert someone with brain damage, making a un-upgraded cloner a getto deconverter.
 As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of mindshield implants to turn your fellow revolutionaries against you.
 As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
@@ -211,8 +231,6 @@ As a Servant, converting or sabotaging Science and Genetics can make defending t
 As a Servant, the Clockwork Armaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
 Tiles sprayed with holy water will permanently block Servants of Ratvar from teleporting onto them.
-The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
-The Chaplain's holy weapon will kill clockwork marauders in two hits.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.
 As a Wizard, summoning guns will turn a large portion of the crew against themselves, but will also give everyone anything from a pea shooter to a BFG 9000. Use at your own risk!
@@ -229,21 +247,19 @@ As a Revenant, your Malfunction ability in general damages machinery and mechani
 As a Revenant, the illness inflicted on humans by Blight can be easily cured by lying down or with holy water, making it best used on targets that have no time to lie down, such as humans in combat.
 As a Swarmer, you can deconstruct more things than you think. Try deconstructing light switches, buttons, air alarms and more. Experiment!
 As a Swarmer, you can teleport fellow swarmers away if you think they are in danger.
-As a Swarmer, you are weak to EMP and lasers, and if you die, you drop a blue space crystal.
+As a Swarmer, you are weak to EMP and lasers; and if you die, you drop a blue space crystal.
 As a Swarmer, you can eat almost all guns and weapons be sure to disarm the crew to keep your numbers high!
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
-As a Drone, you can heal yourself by using a screwdriver on yourself and standind still!
+As a Drone, you can heal yourself by using a screwdriver on yourself and standing still!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Devil, you gain power for every three souls you control, however you also become more obvious.
 As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
 At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
-As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
-As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
 When hacking doors, cutting and mending the "test light wire" will restore power to the door.
 When crafting most items, you can either manually combine parts or use the crafting menu.
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
-Laser pointers can be upgraded by replacing its mico laser with a better one form Rnd! Just use a screwdriver on it to remove the old laser. Upgrading the laser pointer gives you better odds of stunning a borg, and even blinding people with sunglasses!
+Laser pointers can be upgraded by replacing its micro laser with a better one form RnD! Just use a screwdriver on it to remove the old laser. Upgrading the laser pointer gives you better odds of stunning a borg, and even blinding people with sunglasses!
