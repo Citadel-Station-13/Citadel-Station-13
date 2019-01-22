@@ -18,7 +18,7 @@ You can recolor certain items like jumpsuits and gloves in washing machines by a
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
-On all maps, you can use a machine in the vault to deposit space cash for cargo points or rob carg, but if you print out money it blares a alarm to the crew!
+On all maps, you can use a machine in the vault to deposit space cash for cargo points or rob cargo, but if you print out money it blares a alarm to the crew!
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
@@ -48,11 +48,11 @@ As the Research Director, you can upgrade your modular console with better compu
 As the Research Director, your console's NTnet monitoring tool can be used to retrieve airlock passkeys, provided that someone used a door remote.
 As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
-As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which can be used to construct a Phazon mech! Or be used in the deconstructive analyzer, for a 10,000 point boost for points!
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which can be used to construct a Phazon mech, or be used in the destructive analyzer for a 10,000 point bonus!
 As a Scientist, researchable stock parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
 As a Scientist, you can generate research points by letting the tachyon-doppler array record increasingly large explosions.
 As a Scientist, getting drunk just enough will speed up research. Skol!
-As a Scientist, you can get points by placing slime cores into the deconstructive analyzer! This eve works with crossbread slime cores. 
+As a Scientist, you can get points by placing slime cores into the deconstructive analyzer! This even works with crossbreed slime cores. 
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
 As a Roboticist, you can reset a cyborg's module by cutting and mending the reset wire with a wire cutter.
@@ -70,7 +70,7 @@ As a Service Cyborg, your spray can knocks people down. However, it is blocked b
 As an Engineering Cyborg, you can attach air alarm/fire alarm/APC frames to walls by placing them on the floor and using a screwdriver on them.
 As a Medical Cyborg, you can fully perform surgery and even augment people. Better yet you can't fail to perform surgery, even in the worst of conditions!
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
-As a Janitor Cyborg, you get a fancy bottle of drying angent! If you want to be nice spray the janitor boots with them to magicly upgrade them to absorbent galoshes.
+As a Janitor Cyborg, you get a fancy bottle of drying agent! If you want to be nice, spray the janitor boots with them to magically upgrade them to absorbent galoshes.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
 As the Chief Engineer, your hardsuit is significantly better than everybody else's. It has the best features of both engineering and atmospherics hardsuits - boasting nigh-invulnerability to radiation and all atmospheric conditions.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
@@ -110,7 +110,7 @@ As a Security Officer, communicate and coordinate with your fellow officers usin
 As a Security Officer, your sechuds or HUDsunglasses can not only see crewmates' job assignments and criminal status, but also if they are mindshield implanted. Use this to your advantage in a revolution to definitively tell who is on your side!
 As a Security Officer, mindshield implants can only prevent someone from being turned into a cultist: unlike revolutionaries, it will not de-cult them if they have already been converted.
 As a Security Officer, examining someone while wearing sechuds or HUDsunglasses will let you set their arrest level, which will cause Beepsky and other security bots to chase after them.
-As a Security Officer, you can take out the power cell to replace it with a better one or a fully charged one, just use a screwdriver on your baton to remove the old cell.
+As a Security Officer, you can take out the power cell on your baton to replace it with a better or fully charged one. Just use a screwdriver on your baton to remove the old cell
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance.
 As the Detective, your revolver can be loaded with .357 ammunition obtained from a hacked autolathe. Firing it has a decent chance to blow up your revolver.
