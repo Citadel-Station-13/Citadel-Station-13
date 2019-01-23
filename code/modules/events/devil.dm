@@ -39,6 +39,7 @@
 	var/datum/job/jobdatum = SSjob.GetJob("Assistant")
 	devil.job = jobdatum.title
 	jobdatum.equip(devil)
+	success_spawn = TRUE
 	return SUCCESSFUL_SPAWN
 
 

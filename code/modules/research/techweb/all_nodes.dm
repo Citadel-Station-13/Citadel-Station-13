@@ -43,13 +43,24 @@
 	description = "Various tools fit for basic mech units"
 	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
 
+
+/datum/techweb_node/surplus_lims
+	id = "surplus_lims"
+	display_name = "Basic Prosthetics"
+	description = "Basic fragile lims for the impaired."
+	starting_node = TRUE
+	prereq_ids = list("biotech")
+	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
+	export_price = 5000
+
+
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
 	id = "biotech"
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag")
+	design_ids = list("medicalkit", "chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "blood_bag")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -71,21 +82,21 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/surplus_lims
-	id = "surplus_lims"
-	display_name = "Basic Prosthetics"
-	description = "Basic fragile lims for the impaired."
-	prereq_ids = list("biotech")
-	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000) // You can knock them off with a glass shard...
-	export_price = 5000
-
 /datum/techweb_node/advance_lims
 	id = "advance_lims"
 	display_name = "Upgraded Prosthetics"
 	description = "Reinforced prosthetics for the impaired."
 	prereq_ids = list("adv_biotech", "surplus_lims")
 	design_ids = list("adv_l_arm", "adv_r_arm", "adv_r_leg", "adv_l_leg")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
+	export_price = 5000
+
+/datum/techweb_node/advance_surgerytools
+	id = "advance_surgerytools"
+	display_name = "Advanced Surgery Tools"
+	description = "Refined and improved redesigns for the run-of-the-mill medical utensils."
+	prereq_ids = list("adv_biotech", "adv_surgery")
+	design_ids = list("drapes", "retractor_adv", "hemostat_adv", "cautery_adv", "surgicaldrill_adv", "scalpel_adv", "circular_saw_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -254,7 +265,7 @@
 	display_name = "Basic Robotics Research"
 	description = "Programmable machines that make our lives lazier."
 	prereq_ids = list("base")
-	design_ids = list("paicard")
+	design_ids = list("paicard", "drone_shell")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
@@ -721,6 +732,15 @@
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("ballistic_weapons")
 	design_ids = list("mech_scattershot")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_seedscatter
+	id = "mech_seedscatter"
+	display_name = "Exosuit Weapon (Melon Seed \"Scattershot\")"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("ballistic_weapons")
+	design_ids = list("mech_seedscatter")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

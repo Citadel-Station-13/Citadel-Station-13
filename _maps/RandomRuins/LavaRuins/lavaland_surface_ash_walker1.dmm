@@ -173,6 +173,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/item/t_scanner/adv_mining_scanner/lesser,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aC" = (
@@ -186,6 +187,7 @@
 	},
 /obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/ancient,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/lizard,
 /obj/item/reagent_containers/blood/lizard,
@@ -269,6 +271,7 @@
 /area/ruin/unpowered/ash_walkers)
 "aP" = (
 /obj/structure/stone_tile,
+/obj/item/shard,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aQ" = (
@@ -574,6 +577,7 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
+/obj/item/seeds/tower,
 /obj/item/seeds/tower,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1086,7 +1090,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/kitchen/knife/combat/bone,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cN" = (
@@ -1142,6 +1146,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
+/obj/item/surgical_drapes,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cX" = (
@@ -1301,6 +1306,7 @@
 	},
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
+/obj/item/hatchet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "du" = (
@@ -1392,6 +1398,18 @@
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"nS" = (
+/obj/item/toy/cards/deck/syndicate,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Bv" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/no_lava,
+/obj/item/cultivator,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -1407,7 +1425,7 @@ ah
 ah
 aa
 aa
-ah
+nS
 ah
 ah
 ah
@@ -1558,7 +1576,7 @@ ba
 bn
 bz
 ak
-cb
+Bv
 df
 bX
 co
