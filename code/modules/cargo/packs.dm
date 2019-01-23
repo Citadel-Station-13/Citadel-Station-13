@@ -1417,7 +1417,7 @@
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
-	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, drying agent spray, rag, NT soap and a trash bag."
+	desc = "Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, spray cleaner, rag, NT soap and a trash bag."
 	cost = 1000
 	contains = list(/obj/item/reagent_containers/glass/bucket,
 					/obj/item/reagent_containers/glass/bucket,
@@ -1427,7 +1427,6 @@
 					/obj/item/caution,
 					/obj/item/caution,
 					/obj/item/storage/bag/trash,
-					/obj/item/reagent_containers/spray/drying_agent,
 					/obj/item/reagent_containers/spray/cleaner,
 					/obj/item/reagent_containers/glass/rag,
 					/obj/item/grenade/chem_grenade/cleaner,
@@ -1451,6 +1450,21 @@
 	cost = 1000
 	access = ACCESS_JANITOR
 	contains = list(/obj/item/watertank/janitor)
+	crate_name = "janitor backpack crate"
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/janitor/janpremium
+	name = "Janitor Premium Supplies"
+	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/reagent_containers/glass/rag,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/spray/drying_agent)
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
