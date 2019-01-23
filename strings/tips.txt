@@ -112,7 +112,7 @@ As the Warden, you can use a surgical saw on riot shotguns to shorten the barrel
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
 As the Warden, tracker implants can be used on sec officers. Doing this will let you track their corpse even without suits, though the implant will biodegrade after 5 minutes.
-As the Warden, cryostasis shotgun dart hold 10u of mix of chems, like a 10u of meth bomb!
+As the Warden, cryostasis shotgun darts hold 10u of chemicals that will not react untill it hits someone.
 As the Warden, chemical implants can be loaded with a cocktail of healing or combat chems, perfect for the Hos or other sec officers to use. Be sure to keep a eye on them though, it will not auto inject! EMPs or starvation mite lead to the chemical implant to go off as well.
 As the Warden, tracker implants can be used on sec officers. Doing this will let you be able to message them when telecoms are out, or when you suspect coms are compromised. This is also good against rogue AIs as the prisoner tracker doesn't leave logs or alarms for the AI.
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
@@ -189,7 +189,7 @@ As a Monkey, you can still wear a few human items, such as backpacks, gas masks 
 As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This disables your doomsday device if it is active.
 As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
 As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
-Xeno invasion? Bug science to give you some tech shells so you can craft Pulse slugs and Scattershot!
+Xenomorphs? Science can craft deadly tech shells like pulse slugs and laser scatter shot that are highly effective against any alien threat.
 When fighting aliens, it can be a good idea to turn off the gravity due to the alien's lack of zero-gravity control.
 When fighting xenomorph aliens, consider a shield. Shields can block their pounces and be worn on the back, but beware of neurotoxin.
 As an Alien, your melee prowess is unmatched, but your ranged abilities are sorely lacking. Make use of corners to force a melee confrontation!
@@ -251,7 +251,7 @@ As a Swarmer, you are weak to EMP and lasers. Upon death, you will drop a bluesp
 As a Swarmer, use your ability to consume guns and other weapons to disarm the crew to keep your numbers high!
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
-As a Drone, you can heal yourself by using a screwdriver on yourself and standing still!
+As a Drone, you can repair yourself by using a screwdriver on yourself and standing still!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Devil, you gain power for every three souls you control, however you also become more obvious.
