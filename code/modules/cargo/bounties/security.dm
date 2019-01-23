@@ -14,20 +14,20 @@
 
 /datum/bounty/item/security/seclocker
 	name = "Sec Lockers"
-	description = "Nanotrasen military academy has been over crowded by new sec officers, please send us some lockers to place their gear in."
+	description = "Nanotrasen Military Academy has been overcrowded by new security cadets, please send us some lockers to place their gear in."
 	reward = 6000
 	required_count = 3
 	wanted_types = list(/obj/structure/closet/secure_closet/security)
 
 /datum/bounty/item/security/practice
 	name = "Practice Laser Gun"
-	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that practice laser guns to be shipped."
+	description = "Nanotrasen Military Academy is conducting routine marksmanship exercises. The clown hid all the practice lasers, and we're not using live weapons after last time."
 	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/gun/energy/laser/practice)
 
 /datum/bounty/item/security/flashsheild
 	name = "Strobe Shield"
-	description = "Nanotrasen military research and development wants one of those makeshift flash shields, to make a better prototype for field use."
+	description = "One of our Emergency Response Agents thinks there's vampires in a local station. Send him something to help with his fear of the dark and protect him, too."
 	reward = 7000
 	wanted_types = list(/obj/item/assembly/flash/shield)

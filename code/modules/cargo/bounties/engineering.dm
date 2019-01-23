@@ -26,13 +26,13 @@
 
 /datum/bounty/item/engineering/pacman
 	name = "P.A.C.M.A.N.-type portable generator"
-	description = "A sister station had a problem with the SME, and now need something to power there console to call their shuttle. Can you send them a pacman to fix this for us?"
+	description = "A neighboring station had a problem with their SMES, and now need something to power their communications console. Can you send them a P.AC.M.A.N.?"
 	reward = 3500 //2500 for the cargo one
 	wanted_types = list(/obj/machinery/power/port_gen/pacman)
 
 /datum/bounty/item/engineering/canisters
-	name = "Atmospheric Canisters"
-	description = "Full or not we just need some canisters for a new construction in a local sector of space by you."
+	name = "Gas Canisters"
+	description = "After a recent debacle in a nearby sector, 10 gas canisters are needed for containing an experimental aerosol before it kills all the local fauna."
 	reward = 5000
 	required_count = 10 //easy to make
 	wanted_types = list(/obj/machinery/portable_atmospherics/canister)

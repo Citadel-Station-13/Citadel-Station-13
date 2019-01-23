@@ -60,19 +60,19 @@
 
 /datum/bounty/item/medical/bloodl
 	name = "Lizzard blood bag"
-	description = "After a small scuffle with Sec, a few of are lizzard friends need a transfusion again..."
+	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
 	wanted_types = list(/obj/item/reagent_containers/blood/lizard)
 
 /datum/bounty/item/medical/bloodu
-	name = "Universal blood bag"
-	description = "Central Command, after dealing with a small revolt is need of some new blood for the CMO. Sadly the spare blood bags were destroyed and we need a new one."
+	name = "universal blood bag"
+	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
 	wanted_types = list(/obj/item/reagent_containers/blood/universal)
 
 /datum/bounty/item/medical/blood
 	name = "Any type of blood bag"
-	description = "Blood dontions are needed for are new medical wing here at Central command. Were taking any type of blood you send us."
+	description = "Nanotrasen's annual blood drive is back up to full speed, following the garlic incident. Good blood in good volumes accepted for Credit returns."
 	reward = 3500
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/blood)
@@ -88,13 +88,13 @@
 
 /datum/bounty/item/medical/surgery
 	name = "Surgery tool implants"
-	description = "A few people in the medical field want the lastest surgeric tools and fame. Please send us some Surgery arm implants."
+	description = "Our medical interns keep dropping their Shambler's Juice while they're performing open heart surgery. One of them even had the audacity to say he only had two hands!"
 	reward = 10000
 	required_count = 3
 	wanted_types = list(/obj/item/organ/cyberimp/arm/surgery)
 
 /datum/bounty/item/medical/chemmaker
 	name = "Portable Chem Dispenser"
-	description = "After a new chemist mixed up some water and potassium, we lost are only chem dispenser. Please send us a new one."
+	description = "After a new chemist mixed up some water and a banana, we lost our only chem dispenser. Please send us a replacement and you will be compensated."
 	reward = 7000
 	wanted_types = list(/obj/machinery/chem_dispenser)
