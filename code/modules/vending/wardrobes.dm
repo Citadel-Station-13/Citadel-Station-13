@@ -250,7 +250,6 @@
 					/obj/item/holosign_creator = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap = 1,
-					/obj/item/reagent_containers/spray/drying_agent = 1,
 					/obj/item/storage/bag/trash = 1,
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
