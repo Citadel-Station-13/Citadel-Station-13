@@ -100,7 +100,7 @@
 	required_count = 20 //Easy to make
 	wanted_types = list(/obj/item/stock_parts/scanning_module/triphasic)
 
-/datum/bounty/item/science/t4triphasic
+/datum/bounty/item/science/t4microlaser
 	name = "Quad-Ultra Micro-Laser"
 	description = "The cats on Vega 9 are breeding out of control. We need something to corral them into one area so we can saturation bomb it."
 	reward = 7000
