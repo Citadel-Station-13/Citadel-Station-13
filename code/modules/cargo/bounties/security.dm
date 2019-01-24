@@ -13,7 +13,7 @@
 	wanted_types = list(/obj/machinery/recharger)
 
 /datum/bounty/item/security/seclocker
-	name = "Sec Lockers"
+	name = "Security Officer Lockers"
 	description = "Nanotrasen Military Academy has been overcrowded by new security cadets, please send us some lockers to place their gear in."
 	reward = 6000
 	required_count = 3
@@ -26,7 +26,7 @@
 	required_count = 3
 	wanted_types = list(/obj/item/gun/energy/laser/practice)
 
-/datum/bounty/item/security/flashsheild
+/datum/bounty/item/security/flashshield
 	name = "Strobe Shield"
 	description = "One of our Emergency Response Agents thinks there's vampires in a local station. Send him something to help with his fear of the dark and protect him, too."
 	reward = 7000

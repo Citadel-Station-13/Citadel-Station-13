@@ -72,7 +72,7 @@
 	required_count = 10 //Easy to make
 	wanted_types = list(/obj/item/stock_parts/cell/bluespace)
 
-/datum/bounty/item/science/t4manp
+/datum/bounty/item/science/t4manip
 	name = "Femto-Manipulators"
 	description = "One of our Chief Engineers has OCD. Can you send us some femto-manipulators so he stops complaining that his ID doesn't fit perfectly in the PDA slot?"
 	reward = 7000
@@ -86,7 +86,7 @@
 	required_count = 20 //Easy to make
 	wanted_types = list(/obj/item/stock_parts/matter_bin/bluespace)
 
-/datum/bounty/item/science/t4capaitor
+/datum/bounty/item/science/t4capacitor
 	name = "Quadratic Capacitor"
 	description = "One of our linguists doesn't understand why they're called Quadratic capacitors. Can you give him a few so he leaves us alone about it?"
 	reward = 7000

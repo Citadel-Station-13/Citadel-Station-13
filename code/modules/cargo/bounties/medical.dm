@@ -59,19 +59,19 @@
 	wanted_types = list(/obj/item/organ/tail/cat)
 
 /datum/bounty/item/medical/bloodl
-	name = "Lizzard blood bag"
+	name = "L-type Blood"
 	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
 	wanted_types = list(/obj/item/reagent_containers/blood/lizard)
 
 /datum/bounty/item/medical/bloodu
-	name = "universal blood bag"
+	name = "U-Type Blood"
 	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
 	wanted_types = list(/obj/item/reagent_containers/blood/universal)
 
 /datum/bounty/item/medical/blood
-	name = "Any type of blood bag"
+	name = "Generic Blood"
 	description = "Nanotrasen's annual blood drive is back up to full speed, following the garlic incident. Good blood in good volumes accepted for Credit returns."
 	reward = 3500
 	required_count = 3
