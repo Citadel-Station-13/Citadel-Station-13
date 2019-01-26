@@ -133,6 +133,20 @@
 		playsound(user, 'modular_citadel/sound/voice/awoo.ogg', 50, 1, -1)
 	. = ..()
 
+/datum/emote/living/bruh
+	key = "bruh"
+	key_third_person = "lets out a bruh moment"
+	message = "is in a bruh moment!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/bruh/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/bruh.ogg', 50, 1, -1)
+	. = ..()
+
 /datum/emote/living/nya
 	key = "nya"
 	key_third_person = "lets out a nya"
