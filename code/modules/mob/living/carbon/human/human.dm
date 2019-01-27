@@ -19,7 +19,11 @@
 
 	if(dna.species)
 		set_species(dna.species.type)
-
+	if(age <= 16)
+		if(age <= 13)
+			resize = 0.9
+		else
+			resize = 0.95
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 	physiology = new()
