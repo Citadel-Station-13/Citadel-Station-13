@@ -231,8 +231,9 @@
 		var/obj/item/bodypart/BP = X
 		BP.update_limb()
 	
-	LAZYINITLIST(limb_icon_cache)
-	
+	if(!islist(limb_icon_cache))
+		limb_icon_cache = list()
+
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
 		load_limb_from_cache()
