@@ -125,7 +125,9 @@
 				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 			else
 				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Knockdown(rand(80,120))
+			var/toblur = 20 - M.eye_blurry
+			if(toblur > 0)
+				M.blur_eyes(toblur)
 		else if(user)
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
@@ -141,7 +143,7 @@
 	if(!try_use_flash(user))
 		return FALSE
 	if(iscarbon(M))
-		flash_carbon(M, user, 5, 1)
+		flash_carbon(M, user, 20, 1)
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
