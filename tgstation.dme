@@ -718,6 +718,7 @@
 #include "code\game\objects\effects\landmarks.dm"
 #include "code\game\objects\effects\mines.dm"
 #include "code\game\objects\effects\misc.dm"
+#include "code\game\objects\effects\noose.dm"
 #include "code\game\objects\effects\overlays.dm"
 #include "code\game\objects\effects\portals.dm"
 #include "code\game\objects\effects\proximity.dm"

@@ -6,6 +6,14 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
 /mob/living/carbon/human/Initialize()
+	if(age <= 17)
+		if(age <= 14)
+			resize = 0.9
+			alternate_screams = list('sound/voice/human/child_pain1.ogg','sound/voice/human/child_pain2.ogg','sound/voice/human/child_moan1.ogg')
+		else
+			resize = 0.95
+
+/mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -19,11 +27,7 @@
 
 	if(dna.species)
 		set_species(dna.species.type)
-	if(age <= 16)
-		if(age <= 13)
-			resize = 0.9
-		else
-			resize = 0.95
+
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
 	physiology = new()
@@ -42,6 +46,12 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
+	if(age <= 17)
+		if(age <= 14)
+			resize = 0.9
+			alternate_screams = list('sound/voice/human/child_pain1.ogg','sound/voice/human/child_pain2.ogg','sound/voice/human/child_moan1.ogg')
+		else
+			resize = 0.95
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
