@@ -15,7 +15,7 @@
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
-	var/mopspeed = 30
+	var/stamusage = 5
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -39,6 +39,12 @@
 	if(!proximity)
 		return
 
+	var/mob/living/L = user
+
+	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		return
+
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>Your mop is dry!</span>")
 		return
@@ -49,11 +55,13 @@
 		return
 
 	if(T)
-		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-
-		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
+		clean(T)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(T, used_item = src)
+		if(istype(L))
+			L.adjustStaminaLossBuffered(stamusage)
+		playsound(T, "slosh", 50, 1)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
@@ -86,7 +94,7 @@
 	force = 6
 	throwforce = 8
 	throw_range = 4
-	mopspeed = 20
+	stamusage = 2
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
 	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING

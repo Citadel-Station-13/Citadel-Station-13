@@ -2524,6 +2524,23 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 
+/datum/supply_pack/misc/paper_work
+	name = "Freelance Paper work"
+	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
+	cost = 400 // Net of 0 credits
+	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/storage/box/fountainpens) // Two spare pens just in case
+	crate_name = "Paperwork"
+
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
 	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"

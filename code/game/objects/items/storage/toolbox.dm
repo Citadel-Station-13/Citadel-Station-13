@@ -84,15 +84,6 @@
 	//Citadel change buffed to base levels
 	total_mass = 2
 
-/obj/item/storage/toolbox/mechanical/old/heirloom/afterattack(atom/A, mob/user, proximity) //Citadel Adds massive buff to machinery destruction
-	. = ..()
-	if(proximity)
-		if(isobj(A))
-			var/obj/machinery/door/O = A
-			if(istype(O) && (O.damage_deflection >= 10))		//Eh fine.		//This is a meme cast do not do what I did!
-				return
-			O.take_damage(13)
-
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
 

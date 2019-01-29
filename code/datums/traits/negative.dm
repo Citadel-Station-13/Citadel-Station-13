@@ -283,16 +283,16 @@
 	name = "Mute"
 	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
 	value = -2 //HALP MAINTS
+	mob_trait = TRAIT_MUTE
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
-	var/datum/brain_trauma/severe/mute
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.gain_trauma(mute, TRAUMA_RESILIENCE_SURGERY)
+	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
 
 /datum/quirk/mute/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to return.</span>")
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
 		qdel(src)
