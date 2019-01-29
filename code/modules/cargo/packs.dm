@@ -2538,7 +2538,11 @@
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
 					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/storage/box/fountainpens) // Two spare pens just in case
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain)
 	crate_name = "Paperwork"
 
 /datum/supply_pack/misc/toner
