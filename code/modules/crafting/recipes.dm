@@ -383,9 +383,6 @@
 	result = /obj/item/storage/box/papersack
 	time = 10
 	reqs = list(/obj/item/paper = 5)
-	blacklist = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct,
-					 /obj/item/paper/fluff/jobs/cargo/manifest/paperwork
-	)
 	category = CAT_MISC
 
 
