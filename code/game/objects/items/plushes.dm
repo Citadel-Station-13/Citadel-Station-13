@@ -618,7 +618,7 @@
 	squeak_override = list('sound/weapons/magout.ogg' = 1)
 
 /obj/item/toy/plush/borgplushie
-	name = "borg plushie"
+	name = "robot plushie"
 	desc = "An adorable stuffed toy of a robot."
 	icon_state = "securityk9"
 	item_state = "securityk9"
