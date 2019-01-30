@@ -2295,7 +2295,7 @@
 					/obj/item/toy/plush/lampplushie,
 					/obj/item/toy/plush/borgplushie,
 					/obj/item/toy/plush/borgplushie/medihound,
-					/obj/item/toy/plush/borgplushie/scruppuppy,
+					/obj/item/toy/plush/borgplushie/scrubpuppy,
 					/obj/item/toy/plush/borgplushie/seeking,
 					/obj/item/toy/plush/borgplushie/neeb,
 					/obj/item/toy/plush/bird,

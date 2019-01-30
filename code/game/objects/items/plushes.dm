@@ -629,9 +629,9 @@
 	icon_state = "medihound"
 	item_state = "medihound"
 
-/obj/item/toy/plush/borgplushie/scruppuppy
-	icon_state = "scruppuppy"
-	item_state = "scruppuppy"
+/obj/item/toy/plush/borgplushie/scrubpuppy
+	icon_state = "scrubpuppy"
+	item_state = "scrubpuppy"
 
 /obj/item/toy/plush/borgplushie/seeking
 	icon_state = "seeking"

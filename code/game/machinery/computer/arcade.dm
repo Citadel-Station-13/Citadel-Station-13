@@ -78,7 +78,7 @@
 		/obj/item/toy/plush/lampplushie							= 2,
 		/obj/item/toy/plush/borgplushie							= 2,
 		/obj/item/toy/plush/borgplushie/medihound				= 2,
-		/obj/item/toy/plush/borgplushie/scruppuppy				= 2,
+		/obj/item/toy/plush/borgplushie/scrubpuppy				= 2,
 		/obj/item/toy/plush/borgplushie/seeking					= 2,
 		/obj/item/toy/plush/borgplushie/neeb					= 2,
 		/obj/item/toy/plush/bird								= 2,
