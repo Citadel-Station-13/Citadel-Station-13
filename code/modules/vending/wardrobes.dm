@@ -19,6 +19,8 @@
 					/obj/item/clothing/under/rank/security/skirt = 3,
 					/obj/item/clothing/under/rank/security/grey = 3,
 					/obj/item/clothing/under/pants/khaki = 3)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
+		              /obj/item/restraints/handcuffs/fake = 2)
 	premium = list(/obj/item/clothing/under/rank/security/navyblue = 3,
 					/obj/item/clothing/suit/security/officer = 3,
 					/obj/item/clothing/head/beret/sec/navyofficer = 3)
@@ -50,6 +52,13 @@
 					/obj/item/clothing/head/soft/emt = 3,
 					/obj/item/clothing/suit/apron/surgical = 1,
 					/obj/item/clothing/mask/surgical = 1)
+	contraband = list(/obj/item/storage/box/rxglasses = 1,
+		              /obj/item/storage/box/pillbottles = 1,
+					  /obj/item/storage/box/hug = 1)
+	premium = list(/obj/item/storage/box/rxglasses = 1,
+					/obj/item/clothing/glasses/hud/health, = 3,
+					/obj/item/storage/box/gloves = 1,
+					/obj/item/storage/box/masks = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -70,6 +79,10 @@
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
 					/obj/item/clothing/head/hardhat = 3)
+	contraband = list(/obj/item/storage/toolbox/mechanical = 1,
+					  /obj/item/storage/toolbox/electrical = 2,
+					  /obj/item/storage/toolbox/artistic = 1)
+	premium = list(/obj/item/storage/box/stockparts/basic = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 
 /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -88,6 +101,9 @@
 					/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 					/obj/item/clothing/under/rank/atmospheric_technician = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3)
+	contraband = list(/obj/item/extinguisher = 1,
+					  /obj/item/extinguisher/mini = 2)
+	premium = list(/obj/item/extinguisher/advanced = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 
 /obj/item/vending_refill/wardrobe/atmos_wardrobe
@@ -105,6 +121,9 @@
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft = 3,
 					/obj/item/radio/headset/headset_cargo = 1)
+	contraband = list(/obj/item/clothing/head/mailman = 1,
+					  /obj/item/clothing/under/rank/mailman = 1)
+	premium = list(/obj/item/export_scanner = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 
 /obj/item/vending_refill/wardrobe/cargo_wardrobe
@@ -123,7 +142,8 @@
 					/obj/item/clothing/gloves/fingerless = 2,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/mask/bandana/skull = 1)
-	premium = list(/obj/item/radio/headset/headset_rob = 2) //Cit change
+	contraband = list(/obj/item/storage/box/stockparts/basic = 1)
+	premium = list(/obj/item/radio/headset/headset_rob = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 
 /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -144,6 +164,8 @@
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/radio/headset/headset_sci = 2,
 					/obj/item/clothing/mask/gas = 3)
+	contraband = list(/obj/item/storage/bag/bio = 2)
+	premium = list(/obj/item/storage/box/stockparts/basic = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 
 /obj/item/vending_refill/wardrobe/science_wardrobe
@@ -162,6 +184,8 @@
 					/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/under/rank/hydroponics = 3,
 					/obj/item/clothing/mask/bandana = 3)
+	contraband = list(/obj/item/stack/sheet/mineral/sandstone/thirty = 1) // For growing beds
+	premium = list(/obj/item/reagent_containers/glass/bottle/mutagen = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
@@ -179,6 +203,8 @@
 					/obj/item/clothing/shoes/workboots/mining = 1,
 					/obj/item/storage/backpack/satchel/explorer = 1,
 					/obj/item/storage/bag/books = 1)
+	contraband = list(/obj/item/stack/ore/glass = 1)
+	premium = list(/obj/item/clothing/head/crown/fancy = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 
 /obj/item/vending_refill/wardrobe/curator_wardrobe
@@ -206,6 +232,9 @@
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
 					/obj/item/clothing/neck/petcollar = 1,
 					/obj/item/storage/belt/bandolier = 1)
+	contraband = list(/obj/item/electropack/shockcollar = 3,
+						/obj/item/clothing/under/maid = 3)
+	premium = list(/obj/item/storage/box/lights/mixed = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 
 /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -228,6 +257,10 @@
 					/obj/item/clothing/under/rank/chef = 1,
 					/obj/item/clothing/head/chefhat = 1,
 					/obj/item/reagent_containers/glass/rag = 1)
+	contraband = list(/obj/item/storage/box/condimentbottles = 3,
+						/obj/item/reagent_containers/food/snacks/monkeycube = 3)
+	premium = list(/obj/item/storage/box/lights/mixed = 2,
+					/obj/item/reagent_containers/spray/cleaner = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -254,6 +287,11 @@
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
 					/obj/item/storage/belt/janitor = 1)
+	contraband = list(/obj/item/storage/box/lights/tubes = 3,
+						/obj/item/storage/box/lights/bulbs = 3,
+						/obj/item/clothing/under/maid = 1)
+	premium = list(/obj/item/storage/box/lights/mixed = 2,
+					/obj/item/reagent_containers/spray/cleaner = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 
 /obj/item/vending_refill/wardrobe/jani_wardrobe
@@ -276,6 +314,10 @@
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
+	contraband = list(/obj/item/storage/crayons = 2,
+						/obj/item/storage/briefcase = 3)
+	premium = list(/obj/item/pen/fourcolor = 5,
+					/obj/item/pen/fountain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 
 /obj/item/vending_refill/wardrobe/law_wardrobe
@@ -296,6 +338,11 @@
 					/obj/item/clothing/head/nun_hood = 1,
 					/obj/item/clothing/suit/holidaypriest = 1,
 					/obj/item/storage/fancy/candle_box = 2)
+	contraband = list(/obj/item/storage/crayons = 2,
+						/obj/item/toy/crayon/spraycan = 2,
+						/obj/item/storage/fancy/candle_box = 2)
+	premium = list(/obj/item/seeds/watermelon/holy = 1,
+					/obj/item/reagent_containers/food/drinks/bottle/holywater = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe
@@ -313,6 +360,11 @@
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
 					/obj/item/storage/bag/chemistry = 2)
+	contraband = list(/obj/item/reagent_containers/dropper = 2)
+	premium = list(/obj/item/storage/box/syringes = 1,
+					/obj/item/storage/box/gloves = 1,
+					/obj/item/storage/box/masks = 1,
+					/obj/item/clothing/glasses/hud/health = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe
@@ -329,6 +381,10 @@
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,
 					/obj/item/storage/backpack/satchel/gen = 2)
+	contraband = list(/obj/item/clothing/glasses/sunglasses/blindfold = 1,
+					  /obj/item/clothing/mask/muzzle = 1)
+	premium = list(/obj/item/storage/box/monkeycubes = 1,
+					/obj/item/storage/box/disks = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -346,6 +402,13 @@
 					/obj/item/clothing/mask/surgical = 2,
 					/obj/item/storage/backpack/virology = 2,
 					/obj/item/storage/backpack/satchel/vir = 2)
+	contraband = list(/obj/item/reagent_containers/dropper = 2,
+		              /obj/item/clothing/glasses/sunglasses/blindfold = 1,
+					  /obj/item/clothing/mask/muzzle = 1)
+	premium = list(/obj/item/storage/box/syringes = 1,
+					/obj/item/storage/box/gloves = 1,
+					/obj/item/storage/box/masks = 1,
+					/obj/item/clothing/glasses/hud/health = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 
 /obj/item/vending_refill/wardrobe/viro_wardrobe
