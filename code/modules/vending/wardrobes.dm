@@ -56,7 +56,7 @@
 		              /obj/item/storage/box/pillbottles = 1,
 					  /obj/item/storage/box/hug = 1)
 	premium = list(/obj/item/storage/box/rxglasses = 1,
-					/obj/item/clothing/glasses/hud/health, = 3,
+					/obj/item/clothing/glasses/hud/health = 3,
 					/obj/item/storage/box/gloves = 1,
 					/obj/item/storage/box/masks = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
