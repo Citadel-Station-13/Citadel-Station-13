@@ -206,7 +206,9 @@
 			if(SEC_LEVEL_GREEN)
 				set_coefficient = 2
 			if(SEC_LEVEL_BLUE)
-				set_coefficient = 1
+				set_coefficient = 1.2
+			if(SEC_LEVEL_AMBER)
+				set_coefficient = 0.8
 			else
 				set_coefficient = 0.5
 	var/call_time = SSshuttle.emergencyCallTime * set_coefficient * engine_coeff
