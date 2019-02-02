@@ -108,9 +108,8 @@
 						tmp_alertlevel = SEC_LEVEL_GREEN
 					if(tmp_alertlevel < SEC_LEVEL_GREEN)
 						tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel == SEC_LEVEL_BLUE){
+					if(tmp_alertlevel == SEC_LEVEL_BLUE)
 						tmp_alertlevel = SEC_LEVEL_BLUE
-						}
 					if(tmp_alertlevel > SEC_LEVEL_AMBER)
 						tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
@@ -393,9 +392,8 @@
 				tmp_alertlevel = SEC_LEVEL_GREEN
 			if(tmp_alertlevel < SEC_LEVEL_GREEN)
 				tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel == SEC_LEVEL_BLUE){
+			if(tmp_alertlevel == SEC_LEVEL_BLUE)
 				tmp_alertlevel = SEC_LEVEL_BLUE
-				}
 			if(tmp_alertlevel > SEC_LEVEL_AMBER)
 				tmp_alertlevel = SEC_LEVEL_AMBER //Cannot engage delta with this
 			set_security_level(tmp_alertlevel)
