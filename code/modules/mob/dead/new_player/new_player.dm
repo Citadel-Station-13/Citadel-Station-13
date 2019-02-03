@@ -509,7 +509,7 @@
 				categorizedJobs[jobcat]["jobs"] -= job
 
 			for(var/spawner in categorizedJobs[jobcat]["jobs"])
-				dat += "<a class='otherPosition' style='display:block;width:170px' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a><br>"
+				dat += "<a class='otherPosition' style='display:block;width:170px' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a>"
 
 			dat += "</fieldset><br>"
 		dat += "</td></tr></table></center>"
