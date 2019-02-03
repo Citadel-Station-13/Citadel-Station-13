@@ -442,7 +442,7 @@
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			available_job_count++;
+			available_job_count++
 	for(var/spawner in GLOB.mob_spawners)
 		available_job_count++
 		break
@@ -464,6 +464,9 @@
 			"Science" = list(jobs = list(), titles = GLOB.science_positions, color = "#e6b3e6"),
 			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
 		)
+		for(var/spawner in GLOB.mob_spawners)
+			categorizedJobs["Ghost Role"]["jobs"] += spawner
+
 		for(var/datum/job/job in SSjob.occupations)
 			if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 				var/categorized = FALSE
@@ -482,8 +485,6 @@
 								jobs.Insert(1, job)
 							else
 								jobs += job
-					for(var/spawner in GLOB.mob_spawners)
-						categorizedJobs["Ghost Role"]["jobs"] += spawner
 				if(!categorized)
 					categorizedJobs["Miscellaneous"]["jobs"] += job
 
@@ -505,22 +506,14 @@
 					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job.title]'><font color='lime'><b>[job.title] ([job.current_positions])</b></font></a>"
 				else
 					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+				categorizedJobs[jobcat]["jobs"] -= job
 
-			for(var/spawner in GLOB.mob_spawners)
-				dat += "<a class='otherPosition' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner] (G)</a><br>"
+			for(var/spawner in categorizedJobs[jobcat]["jobs"])
+				dat += "<a class='otherPosition' style='display:block;width:170px' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a><br>"
 
 			dat += "</fieldset><br>"
 		dat += "</td></tr></table></center>"
 		dat += "</div></div>"
-/*
-	dat += "<div class='clearBoth'>Ghost Roles present and open:</div><br>"
-	dat += "<div class='jobs'><div class='jobsColumn'>"
-	var/job_count = 0
-	for(var/spawner in GLOB.mob_spawners)
-		job_count++;
-		if (job_count > round(available_job_count / 2))
-			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a><br>"
-	dat += "</div></div>"*/
 
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
