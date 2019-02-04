@@ -1,7 +1,7 @@
 // CHAPLAIN CUSTOM ARMORS //
 
 /obj/item/clothing/head/helmet/chaplain
-	name = "templar crusader helmet" // CITADEL CHANGE
+	name = "crusader helmet"
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
@@ -13,7 +13,6 @@
 
 // CITADEL CHANGES: More variants
 /obj/item/clothing/head/helmet/chaplain/bland
-	name = "crusader helmet"
 	icon_state = "knight_generic"
 	item_state = "knight_generic"
 
@@ -31,14 +30,13 @@
 // CITADEL CHANGES ENDS HERE
 
 /obj/item/clothing/suit/armor/riot/chaplain
-	name = "templar crusader armour" // CITADEL CHANGE
+	name = "crusader armour"
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 
 // CITADEL CHANGES: More variants
 /obj/item/clothing/suit/armor/riot/chaplain/teutonic
-	name = "teutonic crusader armour"
 	desc = "Help, Defend, Heal!"
 	icon_state = "knight_teutonic"
 	item_state = "knight_teutonic"
@@ -48,7 +46,6 @@
 	item_state = "knight_teutonic_alt"
 
 /obj/item/clothing/suit/armor/riot/chaplain/hospitaller
-	name = "hospitaller crusader armour"
 	icon_state = "knight_hospitaller"
 	item_state = "knight_hospitaller"
 // CITADEL CHANGES ENDS HERE
