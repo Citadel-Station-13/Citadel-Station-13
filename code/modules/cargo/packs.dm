@@ -84,7 +84,7 @@
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
 	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
-	cost = 1500 
+	cost = 1500
 	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
 	crate_name = "emergency rcds"
@@ -93,7 +93,7 @@
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
 	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
-	cost = 1000 
+	cost = 1000
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
@@ -268,7 +268,7 @@
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
 	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
-	cost = 3000 
+	cost = 3000
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,
 					/obj/item/clothing/head/bio_hood,
@@ -721,7 +721,7 @@
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
 	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
-	cost = 4500	
+	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
 	crate_name = "industrial rcd"
@@ -1702,7 +1702,7 @@
 	name = "Kitchen Cutlery Deluxe Set"
 	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
-	contraband = TRUE 
+	contraband = TRUE
 	contains = list(/obj/item/sharpener,
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/fork,
@@ -2218,7 +2218,7 @@
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
-	cost = 5000 // or play the arcade machines ya lazy bum
+	cost = 1500 // or play the arcade machines ya lazy bum
 	// TODID make this actually just use the arcade machine loot list
 	num_contained = 5
 	contains = list(/obj/item/storage/box/snappops,
@@ -2269,7 +2269,70 @@
 					/obj/item/clothing/shoes/kindleKicks,
 					/obj/item/storage/belt/military/snack,
 					/obj/item/toy/eightball,
-					/obj/item/vending_refill/donksoft)
+					/obj/item/vending_refill/donksoft,
+					/obj/item/toy/plush/lizardplushie,
+					/obj/item/toy/plush/lizardplushie/durgit,
+					/obj/item/toy/plush/lizardplushie/rio,
+					/obj/item/toy/plush/lizardplushie/urinsu,
+					/obj/item/toy/plush/lizardplushie/arfrehn,
+					/obj/item/toy/plush/lizardplushie/soars,
+					/obj/item/toy/plush/lizardplushie/ghostie,
+					/obj/item/toy/plush/lizardplushie/amber,
+					/obj/item/toy/plush/lizardplushie/cyan,
+					/obj/item/toy/plush/lizardplushie/meena,
+					/obj/item/toy/plush/lizardplushie/stalks,
+					/obj/item/toy/plush/lizardplushie/kobold,
+					/obj/item/toy/plush/lizardplushie/gorgi,
+					/obj/item/toy/plush/lizardplushie/almaz,
+					/obj/item/toy/plush/snakeplushie/sasha,
+					/obj/item/toy/plush/snakeplushie/shay,
+					/obj/item/toy/plush/snakeplushie/vulken,
+					/obj/item/toy/plush/mothplushie,
+					/obj/item/toy/plush/mothplushie/bumble,
+					/obj/item/toy/plush/mothplushie/nameko,
+					/obj/item/toy/plush/mothplushie/suru,
+					/obj/item/toy/plush/xeno,
+					/obj/item/toy/plush/lampplushie,
+					/obj/item/toy/plush/borgplushie,
+					/obj/item/toy/plush/borgplushie/medihound,
+					/obj/item/toy/plush/borgplushie/scrubpuppy,
+					/obj/item/toy/plush/borgplushie/seeking,
+					/obj/item/toy/plush/borgplushie/neeb,
+					/obj/item/toy/plush/bird,
+					/obj/item/toy/plush/bird/esela,
+					/obj/item/toy/plush/bird/jahonna,
+					/obj/item/toy/plush/bird/krick,
+					/obj/item/toy/plush/bird/birddi,
+					/obj/item/toy/plush/bird/jewel,
+					/obj/item/toy/plush/mammal,
+					/obj/item/toy/plush/mammal/dubious,
+					/obj/item/toy/plush/mammal/gladwyn,
+					/obj/item/toy/plush/mammal/gavin,
+					/obj/item/toy/plush/mammal/blep,
+					/obj/item/toy/plush/mammal/circe,
+					/obj/item/toy/plush/mammal/pavel,
+					/obj/item/toy/plush/mammal/oten,
+					/obj/item/toy/plush/mammal/ray,
+					/obj/item/toy/plush/mammal/dawud,
+					/obj/item/toy/plush/mammal/edgar,
+					/obj/item/toy/plush/mammal/frank,
+					/obj/item/toy/plush/mammal/poojawa,
+					/obj/item/toy/plush/mammal/hazel,
+					/obj/item/toy/plush/mammal/jermaine,
+					/obj/item/toy/plush/mammal/gunther,
+					/obj/item/toy/plush/mammal/fox,
+					/obj/item/toy/plush/mammal/zed,
+					/obj/item/toy/plush/mammal/dog,
+					/obj/item/toy/plush/mammal/dog/frost,
+					/obj/item/toy/plush/mammal/dog/atticus,
+					/obj/item/toy/plush/mammal/dog/fletch,
+					/obj/item/toy/plush/mammal/dog/vincent,
+					/obj/item/toy/plush/mammal/dog/zigfried,
+					/obj/item/toy/plush/mammal/dog/nikolai,
+					/obj/item/toy/plush/catgirl,
+					/obj/item/toy/plush/catgirl/skylar,
+					/obj/item/toy/plush/catgirl/mikeel,
+					/obj/item/toy/plush/catgirl/robin)
 	crate_name = "toy crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
@@ -2516,7 +2579,7 @@
 	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/misc/lewdkeg
-	name = "Lewd Deluxe Keg" 
+	name = "Lewd Deluxe Keg"
 	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
 	cost = 7000 //It can be a weapon
 	contraband = TRUE
