@@ -18,6 +18,11 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/plush/slimeplushie
 
+/datum/gear/plushlamp
+	name = "Lamp plushie"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/lampplushie
+
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
 	category = SLOT_IN_BACKPACK

@@ -517,6 +517,14 @@
 	icon_state = "plushie_awake"
 	item_state = "plushie_awake"
 
+/obj/item/toy/plush/lampplushie
+	name = "lamp plushie"
+	desc = "A toy lamp plushie, doesn't actually make light, but it still toggles on and off. Click clack!"
+	icon_state = "plushie_lamp"
+	item_state = "plushie_lamp"
+	attack_verb = list("lit", "flickered", "flashed")
+	squeak_override = list('sound/weapons/magout.ogg' = 1)
+
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
