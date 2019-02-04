@@ -146,13 +146,13 @@ LOG_MANIFEST
 PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
-INACTIVITY_PERIOD 300
+# INACTIVITY_PERIOD 300
 
 ## period of time in seconds for players to be considered afk and kickable
-AFK_PERIOD 600
+# AFK_PERIOD 600
 
 ## disconnect players who are considered afk
-KICK_INACTIVE
+# KICK_INACTIVE
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
@@ -161,7 +161,7 @@ ALLOW_ADMIN_OOCCOLOR
 ID_CONSOLE_JOBSLOT_DELAY 30
 
 ## allow players to initiate a restart vote
-ALLOW_VOTE_RESTART
+#ALLOW_VOTE_RESTART
 
 ## allow players to initate a mode-change start
 #ALLOW_VOTE_MODE
@@ -185,7 +185,7 @@ NORESPAWN
 # DONT_DEL_NEWMOB
 
 ## set a hosted by name for unix platforms
-HOSTEDBY ShiroOvo
+HOSTEDBY Yournamehere
 
 ## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
@@ -235,7 +235,7 @@ CHECK_RANDOMIZER
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
 ## Github address
-GITHUBURL https://github.com/BobJoga/Rato-Station
+# GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
@@ -273,7 +273,7 @@ GITHUBURL https://github.com/BobJoga/Rato-Station
 
 ## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-POPUP_ADMIN_PM
+#POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS

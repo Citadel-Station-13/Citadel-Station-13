@@ -9,4 +9,7 @@
 ###############################################################################################
 
 ShiroOvo = Host
-BobJoga = Game Master
+
+Bob Joga = GameMaster
+
+ThuxTK= Coder
