@@ -112,7 +112,7 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
-//Vanguard: Provides twenty seconds of infinite stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
+//Vanguard: Provides twenty seconds of infinite stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
