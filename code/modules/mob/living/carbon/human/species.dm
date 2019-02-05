@@ -699,8 +699,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "xenotail")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
+			else if(bodypart == "waggingtail_lizard")
 				bodypart = "waggingtail"
+			if(bodypart == "mam_waggingtail" || bodypart == "waggingtail_human")
+				bodypart = "tailwag"
 			if(bodypart == "mam_ears" || bodypart == "ears")
 				bodypart = "ears"
 			if(bodypart == "xenohead")
