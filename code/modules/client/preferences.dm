@@ -161,10 +161,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	if(current_tab == 2) //CITADEL EDIT, for muh nudies
-		update_preview_icon(nude=TRUE)
-	else
-		update_preview_icon(nude=FALSE) //EDIT END
+	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/list/dat = list("<center>")
 
@@ -241,7 +238,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		//Character Appearance
 		if(2)
-			update_preview_icon(nude=TRUE)
+			update_preview_icon()
 			user << browse_rsc(preview_icon, "previewicon.png")
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"

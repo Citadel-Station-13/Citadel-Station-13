@@ -714,6 +714,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
+			var/list/colorlist = list()
+			colorlist += ReadRGB(H.dna.features["mcolor"])
+			colorlist += ReadRGB(H.dna.features["mcolor2"])
+			colorlist += ReadRGB(H.dna.features["mcolor3"])
+			colorlist += list(0,0,0)
+			for(var/index=1, index<=colorlist.len, index++)
+				colorlist[index] = colorlist[index]/255
+
 			if(!(H.has_trait(TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
@@ -732,6 +740,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
 								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+
+						if(BODYMARKINGS)
+							accessory_overlay.color = list(colorlist)
+
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
