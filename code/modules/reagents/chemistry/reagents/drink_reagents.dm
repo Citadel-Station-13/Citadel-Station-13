@@ -379,6 +379,49 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
+/datum/reagent/consumable/pepsi
+	name = "Pepsi"
+	id = "pepsi"
+	description = "The second most refreshing beverage, only topped by Pepsi Deluxe(TM)"
+	color = "#100800" // rgb: 16, 8, 0
+	taste_description = "cola"
+	glass_icon_state  = "glass_brown"
+	glass_name = "glass of Space Pepsi"
+	glass_desc = "A glass of good ol' Pepsi."
+	quality = DRINK_NICE
+	taste_description = "diabetes."
+
+/datum/reagent/consumable/pepsi/on_mob_life(mob/living/carbon/M)
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	M.nutrition -= 0.5
+	..()
+	. = 1
+
+/datum/reagent/consumable/pepsideluxe
+	name = "Pepsi Deluxe"
+	id = "pepsideluxe"
+	description = "The most refreshing of beverages."
+	color = "#100800" // rgb: 16, 8, 0
+	taste_description = "cola"
+	glass_icon_state  = "glass_brown"
+	glass_name = "glass of Space Pepsi"
+	glass_desc = "A glass of good ol' Pepsi. But fancy Pepsi,"
+	quality = DRINK_VERYGOOD
+	taste_description = "pure happiness. And diabetes."
+
+/datum/reagent/consumable/pepsideluxe/on_mob_life(mob/living/carbon/M)
+	M.Jitter(100)
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	M.adjustBruteLoss(-0.5, 0)
+	M.adjustFireLoss(-1, 0)
+	M.nutrition -= 2
+	..()
+	. = 1
+
 /datum/reagent/consumable/nuka_cola
 	name = "Nuka Cola"
 	id = "nuka_cola"

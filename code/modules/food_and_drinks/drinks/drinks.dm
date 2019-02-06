@@ -424,18 +424,18 @@
 	list_reagents = list("cola" = 30)
 	foodtype = SUGAR
 
-/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/deluxe
-	name = "Space Pepsi Deluxe"
-	desc = "We are still not sponsored by Pepsi, not even in space."
-	icon_state = "pepsideluxe"
-	list_reagents = list("cola" = 80)
-	foodtype = SUGAR
-
 /obj/item/reagent_containers/food/drinks/soda_cans/pepsi
 	name = "Space Pepsi"
 	desc = "We are not sponsored by Pepsi, not even in space."
 	icon_state = "pepsi"
-	list_reagents = list("cola" = 30)
+	list_reagents = list("pepsi" = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/deluxe
+	name = "Space Pepsi Deluxe"
+	desc = "We are still not sponsored by Pepsi. This is some good as fuck soda, though."
+	icon_state = "pepsideluxe"
+	list_reagents = list("pepsideluxe" = 100)
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
