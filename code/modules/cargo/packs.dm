@@ -2219,7 +2219,6 @@
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
 	cost = 1500 // or play the arcade machines ya lazy bum
-	// TODID make this actually just use the arcade machine loot list
 	num_contained = 5
 	contains = list(/obj/item/storage/box/snappops,
 					/obj/item/toy/talking/AI,
@@ -2269,8 +2268,16 @@
 					/obj/item/clothing/shoes/kindleKicks,
 					/obj/item/storage/belt/military/snack,
 					/obj/item/toy/eightball,
-					/obj/item/vending_refill/donksoft,
-					/obj/item/toy/plush/lizardplushie,
+					/obj/item/vending_refill/donksoft)
+	crate_name = "toy crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/randomised/plush
+	name = "Plush Crate"
+	desc = "Plush tide station wide. Contains 5 random plushies for you to love. Warranty void if your love violates the terms of use."
+	cost = 1500 // or play the arcade machines ya lazy bum
+	num_contained = 5
+	contains = list(/obj/item/toy/plush/lizardplushie,
 					/obj/item/toy/plush/lizardplushie/durgit,
 					/obj/item/toy/plush/lizardplushie/rio,
 					/obj/item/toy/plush/lizardplushie/urinsu,
@@ -2333,7 +2340,7 @@
 					/obj/item/toy/plush/catgirl/skylar,
 					/obj/item/toy/plush/catgirl/mikeel,
 					/obj/item/toy/plush/catgirl/robin)
-	crate_name = "toy crate"
+	crate_name = "plushie crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/wizard
