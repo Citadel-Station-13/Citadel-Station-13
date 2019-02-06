@@ -57,11 +57,11 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	obj_flags = UNIQUE_RENAME
-	force = 18
-	throwforce = 15
+	force = 28
+	throwforce = 24
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
-	armour_penetration = 75
+	block_chance = 60
+	armour_penetration = 80
 	sharpness = IS_SHARP
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
