@@ -1,3 +1,6 @@
+/datum/species
+	var/should_draw_citadel = FALSE
+
 /datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	if(!istype(M))
 		return TRUE
@@ -78,17 +81,8 @@
 ////////////////////
 
 
-/obj/item/bodypart/var/should_draw_citadel = FALSE
-
-/mob/living/carbon/proc/draw_citadel_parts(undo = FALSE)
-	if(!undo)
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_citadel = TRUE
-	else
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_citadel = FALSE
+/obj/item/bodypart
+	var/should_draw_citadel = FALSE
 
 /datum/species/proc/citadel_mutant_bodyparts(bodypart, mob/living/carbon/human/H)
 	switch(bodypart)
