@@ -3,6 +3,11 @@
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/tie/blue
 
+/datum/gear/cwcmedal
+	name = "Sonichu Medallion"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/cwcmedal
+
 /datum/gear/redtie
 	name = "Red tie"
 	category = SLOT_NECK
