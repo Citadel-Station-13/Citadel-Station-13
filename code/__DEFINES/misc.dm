@@ -98,8 +98,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_RED	2
-#define SEC_LEVEL_DELTA	3
+#define SEC_LEVEL_AMBER 2
+#define SEC_LEVEL_RED	3
+#define SEC_LEVEL_DELTA	4
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
