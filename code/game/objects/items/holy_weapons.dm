@@ -11,11 +11,44 @@
 	strip_delay = 80
 	dog_fashion = null
 
+// CITADEL CHANGES: More variants
+/obj/item/clothing/head/helmet/chaplain/bland
+	icon_state = "knight_generic"
+	item_state = "knight_generic"
+
+/obj/item/clothing/head/helmet/chaplain/bland/horned
+	name = "horned crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_horned"
+	item_state = "knight_horned"
+
+/obj/item/clothing/head/helmet/chaplain/bland/winged
+	name = "winged crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_winged"
+	item_state = "knight_winged"
+// CITADEL CHANGES ENDS HERE
+
 /obj/item/clothing/suit/armor/riot/chaplain
 	name = "crusader armour"
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+// CITADEL CHANGES: More variants
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic
+	desc = "Help, Defend, Heal!"
+	icon_state = "knight_teutonic"
+	item_state = "knight_teutonic"
+
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt
+	icon_state = "knight_teutonic_alt"
+	item_state = "knight_teutonic_alt"
+
+/obj/item/clothing/suit/armor/riot/chaplain/hospitaller
+	icon_state = "knight_hospitaller"
+	item_state = "knight_hospitaller"
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/holybeacon
 	name = "armaments beacon"
@@ -59,6 +92,22 @@
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
 	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+
+// CITADEL CHANGES: More Variants
+/obj/item/storage/box/holy/teutonic
+	name = "Teutonic Kit"
+
+/obj/item/storage/box/holy/teutonic/PopulateContents() // It just works
+	pick(new /obj/item/clothing/head/helmet/chaplain/bland/horned(src), new /obj/item/clothing/head/helmet/chaplain/bland/winged(src))
+	pick(new /obj/item/clothing/suit/armor/riot/chaplain/teutonic(src), new /obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt(src))
+
+/obj/item/storage/box/holy/hospitaller
+	name = "Hospitaller Kit"
+
+/obj/item/storage/box/holy/hospitaller/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/bland(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/hospitaller(src)
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
@@ -210,7 +259,7 @@
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 		return
 
-	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new 
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
 	SSreligion.holy_weapon_type = holy_weapon.type
