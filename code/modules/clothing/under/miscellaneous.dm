@@ -22,6 +22,14 @@
 	item_color = "ek"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/theclassic
+	name = "The Classic"
+	desc = "It feels weak without a medallion."
+	icon_state = "the_classic"
+	item_state = "the_classic"
+	item_color = "the_classic"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."
