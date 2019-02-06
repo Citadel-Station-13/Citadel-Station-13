@@ -76,6 +76,10 @@ RLD
 		loaded = loadwithsheets(W, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
 	else if(istype(W, /obj/item/stack/sheet/rglass))
 		loaded = loadwithsheets(W, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
+	else if(istype(W, /obj/item/stack/rods))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
+	else if(istype(W, /obj/item/stack/tile/plasteel))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else
@@ -475,6 +479,8 @@ RLD
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
+	name = "large compressed matter cartridge"
+	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 
