@@ -6,14 +6,6 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
 /mob/living/carbon/human/Initialize()
-	if(age <= 17)
-		if(age <= 14)
-			resize = 0.9
-			alternate_screams = list('sound/voice/human/child_pain1.ogg','sound/voice/human/child_pain2.ogg','sound/voice/human/child_moan1.ogg')
-		else
-			resize = 0.95
-
-/mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 

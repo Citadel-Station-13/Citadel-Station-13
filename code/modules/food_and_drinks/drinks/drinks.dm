@@ -424,6 +424,20 @@
 	list_reagents = list("cola" = 30)
 	foodtype = SUGAR
 
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/deluxe
+	name = "Space Pepsi Deluxe"
+	desc = "We are still not sponsored by Pepsi, not even in space."
+	icon_state = "pepsideluxe"
+	list_reagents = list("cola" = 80)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi
+	name = "Space Pepsi"
+	desc = "We are not sponsored by Pepsi, not even in space."
+	icon_state = "pepsi"
+	list_reagents = list("cola" = 30)
+	foodtype = SUGAR
+
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
