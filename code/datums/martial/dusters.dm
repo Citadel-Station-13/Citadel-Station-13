@@ -23,7 +23,7 @@
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
-	D.apply_damage(13, STAMINA, affecting)
+	D.apply_damage(13, STAMINA, affecting, armor_block)
 	if(D.IsKnockdown() || D.resting || D.lying)
 		D.apply_damage(5, BRUTE, affecting)
 	log_combat(A, D, "punched (knuckledusters) ")
