@@ -64,6 +64,18 @@
 	transfer_prints = TRUE
 	var/warcry = "AT"
 
+/obj/item/clothing/gloves/knuckledusters
+	name = "knuckle dusters"
+	desc = "A pair of brass knuckles. Generally used to enhance the user's punches."
+	icon_state = "knuckledusters"
+	attack_verb = list("punched", "beaten", "struck")
+	siemens_coefficient = 1
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	force = 5
+	transfer_prints = TRUE
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/gloves/rapid/Touch(mob/living/target,proximity = TRUE)
 	var/mob/living/M = loc
 
