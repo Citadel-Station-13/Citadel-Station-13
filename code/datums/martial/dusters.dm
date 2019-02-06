@@ -6,7 +6,7 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
 	var/atk_verb = pick("pummel", "smash")
-	var/damage = rand(12, 15)
+	var/damage = 10
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
@@ -23,7 +23,7 @@
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
-	D.apply_damage(5, STAMINA, affecting)
+	D.apply_damage(13, STAMINA, affecting)
 	if(D.IsKnockdown() || D.resting || D.lying)
 		D.apply_damage(5, BRUTE, affecting)
 	log_combat(A, D, "punched (knuckledusters) ")
