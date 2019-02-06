@@ -6,15 +6,13 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 
 	var/atk_verb = pick("pummel", "smash")
-
-	var/damage = 15
+	var/damage = rand(12, 15)
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
 		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
 			"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(A, D, "attempted to hit", atk_verb)
 		return 0
-
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, "melee")
@@ -24,7 +22,10 @@
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, BRUTE, affecting, armor_block)
+	D.apply_damage(5, STAMINA, affecting)
+	if(D.IsKnockdown() || D.resting || D.lying)
+		D.apply_damage(5, BRUTE, affecting)
 	log_combat(A, D, "punched (knuckledusters) ")
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = (D.getStaminaLoss() + rand(-15,15))*0.75
