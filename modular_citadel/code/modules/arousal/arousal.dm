@@ -3,10 +3,10 @@
 	var/arousalloss = 0			//How aroused the mob is.
 	var/min_arousal = 0			//The lowest this mobs arousal will get. default = 0
 	var/max_arousal = 100		//The highest this mobs arousal will get. default = 100
-	var/arousal_rate = 1		//The base rate that arousal will increase in this mob.
+	var/arousal_rate = 5		//The base rate that arousal will increase in this mob.
 	var/arousal_loss_rate = 1	//How easily arousal can be relieved for this mob.
 	var/canbearoused = FALSE	//Mob-level disabler for arousal. Starts off and can be enabled as features are added for different mob types.
-	var/mb_cd_length = 100		//5 second cooldown for masturbating because fuck spam.
+	var/mb_cd_length = 150		//5 second cooldown for masturbating because fuck spam.
 	var/mb_cd_timer = 0			//The timer itself
 
 /mob/living/carbon/human
@@ -22,7 +22,7 @@
 
 //Species vars
 /datum/species
-	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
+	var/arousal_gain_rate = 4 //Rate at which this species becomes aroused
 	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relieved
 	var/list/cum_fluids = list("semen")
 	var/list/milk_fluids = list("milk")
