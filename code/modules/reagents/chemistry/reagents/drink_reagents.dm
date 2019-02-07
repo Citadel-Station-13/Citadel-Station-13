@@ -394,8 +394,7 @@
 /datum/reagent/consumable/pepsi/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
-	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	M.nutrition -= 0.5
+	M.adjust_bodytemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 	. = 1
 
@@ -415,10 +414,11 @@
 	M.Jitter(100)
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
-	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(-100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	M.adjustBruteLoss(-0.5, 0)
+	M.adjustToxLoss(-0.5, 0)
 	M.adjustFireLoss(-1, 0)
-	M.nutrition -= 2
+	M.nutrition -= 1.5
 	..()
 	. = 1
 
