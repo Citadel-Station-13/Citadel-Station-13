@@ -37,6 +37,9 @@ Credit where due:
 4. PJB3005 from /vg/ for the failed continuation PR
 5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
 6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
+7.
+
+Clockwork cult code as of now, at least the one being pulled from Citadel Station's master branch, is being, or already is, fixed by Coolgat3 and Avunia.
 
 */
 
@@ -148,7 +151,7 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	var/list/errorList = list()
-	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAIT_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
 		message_admins("Reebe failed to load!")
 		log_game("Reebe failed to load!")

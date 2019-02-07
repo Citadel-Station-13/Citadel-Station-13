@@ -75,7 +75,7 @@
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0)
-	owner.SetStaminaLoss(0)
+	owner.adjustStaminaLoss(-20)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
