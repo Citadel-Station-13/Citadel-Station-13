@@ -2,7 +2,8 @@
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,MARKINGS)
+	should_draw_citadel = TRUE
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "snout" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
@@ -45,21 +46,6 @@
 /datum/species/mammal/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/mammal/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	. = ..()
-
-/datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-	. = ..()
 
 //AVIAN//
 /datum/species/avian
@@ -67,7 +53,8 @@
 	id = "avian"
 	say_mod = "chirps"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,MARKINGS)
+	should_draw_citadel = TRUE
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "snout" = "Beak", "mam_body_markings" = "Hawk", "wings" = "None", "taur" = "None", "mam_tail" = "Hawk")
@@ -107,28 +94,13 @@
 /datum/species/avian/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/avian/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	. = ..()
-
-/datum/species/avian/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-	. = ..()
-
 //AQUATIC//
 /datum/species/aquatic
 	name = "Aquatic"
 	id = "aquatic"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,MARKINGS)
+	should_draw_citadel = TRUE
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_ears","mam_body_markings", "taur", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "Shark", "mam_ears" = "None", "mam_body_markings" = "Shark", "snout" = "Round", "taur" = "None", "legs" = "Normal Legs")
@@ -169,28 +141,13 @@
 /datum/species/aquatic/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/aquatic/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	. = ..()
-
-/datum/species/aquatic/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-	. = ..()
-
 //INSECT//
 /datum/species/insect
 	name = "Insect"
 	id = "insect"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,MARKINGS)
+	should_draw_citadel = TRUE
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutant_bodyparts = list("mam_ears", "mam_body_markings", "mam_tail", "taur", "moth_wings")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "moth_wings" = "Plain", "snout" = "None", "mam_body_markings" = "Moth", "taur" = "None")
@@ -230,22 +187,6 @@
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/insect/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
-	. = ..()
-
-/datum/species/insect/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
-		species_traits -= DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
-	. = ..()
-
 //Alien//
 /datum/species/xeno
 	// A cloning mistake, crossing human and xenomorph DNA
@@ -253,7 +194,8 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,MARKINGS)
+	should_draw_citadel = TRUE
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "mam_body_markings", "taur")
 	default_features = list("xenotail"="Xenomorph Tail","xenohead"="Standard","xenodorsal"="Standard", "mam_body_markings" = "Xeno","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None")
@@ -267,7 +209,6 @@
 	liked_food = MEAT
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	C.draw_citadel_parts()
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
@@ -275,7 +216,6 @@
 	. = ..()
 
 /datum/species/xeno/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	C.draw_citadel_parts(TRUE)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
 		species_traits -= DIGITIGRADE
 	if(DIGITIGRADE in species_traits)

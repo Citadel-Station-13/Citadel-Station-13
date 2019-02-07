@@ -298,6 +298,7 @@
 
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
+		should_draw_citadel = S.should_draw_citadel // Citadel Addition
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
@@ -427,7 +428,7 @@
 				limb.icon_state = "[species_id]_[body_zone]"
 
 		// Citadel Start
-		if(should_draw_citadel)
+		if(should_draw_citadel && !use_digitigrade)
 			limb.icon = 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 			if(should_draw_gender)
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
