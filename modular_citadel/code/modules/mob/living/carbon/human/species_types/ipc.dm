@@ -3,6 +3,7 @@
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"
+	should_draw_citadel = TRUE
 	blacklisted = 0
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
@@ -16,14 +17,12 @@
 	var/datum/action/innate/monitor_change/screen
 
 /datum/species/ipc/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
 	if(isipcperson(C) && !screen)
 		screen = new
 		screen.Grant(C)
 	..()
 
 /datum/species/ipc/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
 	if(screen)
 		screen.Remove(C)
 	..()
