@@ -30,6 +30,14 @@
 	item_color = "the_classic"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/theliquidclassic
+	name = "The false Classic"
+	desc = "Which one is the real one?"
+	icon_state = "the_liquid"
+	item_state = "the_liquid"
+	item_color = "the_liquid"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/scratch
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."
