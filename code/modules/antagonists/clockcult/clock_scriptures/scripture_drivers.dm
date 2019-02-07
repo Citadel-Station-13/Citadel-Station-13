@@ -112,15 +112,15 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
-//Vanguard: Provides twenty seconds of infinite stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
+//Vanguard: Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity and incredible stamina. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
-	power_cost = 125 //let's face it, stun combat is our meta, being immune to any sort of stuns and stamina loss is pretty op, so this should cost a lot more than it usually does
+	power_cost = 75
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
