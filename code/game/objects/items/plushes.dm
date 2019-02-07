@@ -486,6 +486,13 @@
 	attack_verb = list("clawed", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
+/obj/item/toy/plush/sonictotem
+	name = "sonic totem"
+	desc = "Low effort totem, it looks like a blue hedgehog."
+	icon_state = "sonic_totem"
+	item_state = "sonic_totem"
+	squeak_override = list('sound/effects/curseattack.ogg' = 1)
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
