@@ -197,7 +197,7 @@
 	name = "Dave's sunglasses"
 	desc = "Wearing them renders you outrageously cool."
 	icon_state = "dave"
-	item_state = "daveglasses"
+	item_state = "davesglasses"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
