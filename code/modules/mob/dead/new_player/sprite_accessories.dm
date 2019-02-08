@@ -1531,3 +1531,14 @@
 	icon_state = "lunasune"
 	extra = TRUE
 	ckeys_allowed = list("invader4352")
+
+/********************
+******ALTERNIANS******
+*********************/
+/datum/sprite_accessory/alternian_horns
+	icon = 'icons/mob/alternian_horns.dmi'
+	color_src = null
+
+/datum/sprite_accessory/alternian_horns/simple
+	name = "Simple"
+	icon_state = "simple"

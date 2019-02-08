@@ -73,6 +73,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 	if(!GLOB.moth_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
+	if(!GLOB.alternian_horns_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/alternian_horns, GLOB.alternian_horns_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -179,7 +181,8 @@
 		"womb_fluid" 		= "femcum",
 		"ipc_screen" = "Sunburst",
 		"ipc_antenna" = "None",
-		"flavor_text"		= ""))
+		"flavor_text"		= "",
+		"alternian_horns" = pick(GLOB.alternian_horns_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
