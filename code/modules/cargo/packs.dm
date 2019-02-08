@@ -1479,6 +1479,19 @@
 /datum/supply_pack/service
 	group = "Service"
 
+
+/datum/supply_pack/service/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2500 //Fair
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "advanced lighting crate"  
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
 	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
@@ -1537,17 +1550,19 @@
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/service/advlighting
-	name = "Advanced Lighting crate"
-	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
-	cost = 2500 //Fair
-	contains = list(/obj/item/construction/rld,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp/green,
-					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"
-	crate_type = /obj/structure/closet/crate/secure
+/datum/supply_pack/service/janitor/janpremium
+	name = "Janitor Premium Supplies"
+	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/reagent_containers/glass/rag,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/spray/drying_agent)
+	crate_name = "janitor backpack crate"
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
