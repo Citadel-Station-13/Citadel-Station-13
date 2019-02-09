@@ -19,8 +19,8 @@
 	sexes = TRUE
 	default_color = "#663399"
 	var/last_blast
-	var/blast_cooldown = 10
-	var/thanos_prob = 80
+	var/blast_cooldown = 20
+	var/thanos_prob = 50
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 
 /datum/species/thanos/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -36,10 +36,8 @@
 
 /datum/species/thanos/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	if(world.time > last_blast + blast_cooldown && prob(thanos_prob))
-		return FALSE
-	..()
-	if(world.time > last_blast + blast_cooldown)
 		thane(H)
+	..()
 
 /datum/species/thanos/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
@@ -47,8 +45,6 @@
 		thane(H)
 
 /datum/species/thanos/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
-	if(world.time > last_blast + blast_cooldown && prob(thanos_prob))
-		return FALSE
 	..()
 	if(world.time > last_blast + blast_cooldown &&  H.a_intent != INTENT_HELP)
 		thane(H)
