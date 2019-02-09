@@ -166,7 +166,7 @@
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
 
-/obj/item/reagent_containers/pill/anitrad
+/obj/item/reagent_containers/pill/antirad
 	name = "potassium iodide pill"
 	desc = "Used to treat radition used to counter radiation poisoning."
 	icon_state = "pill18"
