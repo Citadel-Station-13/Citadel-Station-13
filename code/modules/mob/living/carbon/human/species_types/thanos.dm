@@ -27,7 +27,6 @@
 	if(ishuman(C))
 		unstable_teleport = new
 		unstable_teleport.Grant(C)
-		last_teleport = world.time
 
 /datum/species/thanos/on_species_loss(mob/living/carbon/C)
 	if(unstable_teleport)
