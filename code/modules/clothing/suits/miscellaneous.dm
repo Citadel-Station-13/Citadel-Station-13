@@ -59,6 +59,13 @@
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
 
+/obj/item/clothing/suit/cool/shirt //oh god oh fuck
+	name = "cool shirt"
+	desc = "be careful to not spill some apple juice"
+	icon_state = "coolshirt"
+	item_state = "coolshirt"
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
