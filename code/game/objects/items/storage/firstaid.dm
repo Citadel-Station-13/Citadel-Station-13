@@ -115,7 +115,7 @@
 	new /obj/item/reagent_containers/syringe/charcoal(src)
 	new /obj/item/storage/pill_bottle/charcoal(src)
 	new /obj/item/reagent_containers/pill/mutadone(src)
-	new /obj/item/reagent_containers/pill/anitrad(src)
+	new /obj/item/reagent_containers/pill/antirad(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka(src)
 	new /obj/item/healthanalyzer(src)
 
@@ -211,13 +211,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/charcoal(src)
 
-/obj/item/storage/pill_bottle/anitrad
+/obj/item/storage/pill_bottle/antirad
 	name = "bottle of charcoal pills"
 	desc = "Contains pills used to counter radiation poisoning."
 
 /obj/item/storage/pill_bottle/anitrad/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/anitrad(src)
+		new /obj/item/reagent_containers/pill/antirad(src)
 
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
