@@ -9,6 +9,22 @@
 	fire_delay = 0
 	actions_types = list()
 
+/obj/item/gun/ballistic/automatic/pistol/universalgun
+	name = "universal pistol"
+	desc = "A gun that can, somehow, for some reason, fit in any damn type of magazine. Can also attach a flashlight. And is also somehow, tiny. And automatic."
+	icon_state = "pistol"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine
+	can_suppress = TRUE
+	can_flashlight = 1
+	flight_x_offset = 15
+	flight_y_offset = 10
+	burst_size = 1
+	fire_delay = 0
+	actions_types = list()
+	w_class = WEIGHT_CLASS_TINY
+	magazine = /obj/item/ammo_box/magazine/m45/ugun
+
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 

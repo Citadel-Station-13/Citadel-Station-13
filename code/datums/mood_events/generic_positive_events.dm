@@ -70,3 +70,8 @@
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
 	timeout = 600
+
+/datum/mood_event/thaned
+	description = "<span class='nicegreen'>Thanos is so cool, fuck!</span>\n"
+	mood_change = -10
+	timeout = 3000

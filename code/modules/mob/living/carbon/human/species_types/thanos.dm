@@ -1,15 +1,15 @@
 /datum/species/thanos
 	name = "Thanos"
 	id = "thanos"
-	say_mod = "thanes"
+	say_mod = "perfectly balances"
 	speedmod = -2
 	brutemod = 0.01
 	burnmod = 0.01
-	coldmod = 0.01
-	heatmod = 0.01
+	coldmod = -0.5
+	heatmod = 0.5
 	punchdamagelow = 50
 	punchdamagehigh = 80
-	punchstunthreshold = 60
+	punchstunthreshold = 50
 	attack_verb = "smash"
 	attack_sound = 'sound/weapons/resonator_blast.ogg'
 	blacklisted = FALSE
@@ -17,6 +17,7 @@
 	species_traits = list(NOBLOOD,EYECOLOR)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	sexes = TRUE
+	default_color = "#663399"
 	var/last_blast
 	var/blast_cooldown = 10
 	var/thanos_prob = 80
@@ -57,10 +58,12 @@
 	last_blast = world.time
 	for(var/mob/living/M in get_hearers_in_view(7,H))
 		if(M.stat == DEAD)
+			M.gib()
 			return
 		if(M == H)
-			H.show_message("<span class='narsiesmall'>THANUSED</span>", 2)
+			H.knockdown(80)
+			H.show_message("<span class='narsiesmall'>SNAP!</span>", 2)
 			H.playsound_local(H, 'sound/effects/Explosion1.ogg', 100, TRUE)
 			H.soundbang_act(2, 0, 100, 1)
-			H.jitteriness += 7
+			H.jitteriness += 10
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)

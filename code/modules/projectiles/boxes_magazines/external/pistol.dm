@@ -32,6 +32,20 @@
 	caliber = ".45"
 	max_ammo = 8
 
+/obj/item/ammo_box/magazine/m45/ugun
+	name = "universal gun magazine (.45)"
+	icon_state = "45-8"
+	ammo_type = /obj/item/ammo_casing/c45
+	caliber = ".45"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m45/ugun/update_icon()
+	..()
+	if(ammo_count() > 8)
+		icon_state = "45-8"
+	else
+		icon_state = "45-[ammo_count() ? "8" : "0"]"
+
 /obj/item/ammo_box/magazine/m45/update_icon()
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
