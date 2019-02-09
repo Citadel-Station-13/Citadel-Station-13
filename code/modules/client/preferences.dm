@@ -77,7 +77,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"tail_lizard" = "Smooth", "tail_human" = "None",
 		"snout" = "Round", "horns" = "None", "ears" = "None",
 		"wings" = "None", "frills" = "None", "spines" = "None",
-		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain",
+		"alternian_horns" = "simple")
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -331,6 +332,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>Tail</h3>"
 
 				dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+			if("alternian_horns" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Alternian Horns</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=alternian_horns;task=input'>[features["alternian_horns"]]</a><BR>"
 
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
@@ -1563,7 +1576,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
 					if(new_moth_wings)
 						features["moth_wings"] = new_moth_wings
-
+				if("alternian_horns")
+					var/new_alternian_horns
+					new_alternian_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in GLOB.alternian_horns_list
+					if(new_alternian_horns)
+						features["alternian_horns"] = new_alternian_horns
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)

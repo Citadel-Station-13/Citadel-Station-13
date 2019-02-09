@@ -10,6 +10,18 @@
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 
+/datum/crafting_recipe/knuckles
+	name = "Knuckle Dusters"
+	reqs = list(/obj/item/stack/cable_coil = 5, /obj/item/stack/rods = 5, /obj/item/stack/sheet/plasteel = 1)
+	result = /obj/item/clothing/gloves/knuckledusters
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+datum/crafting_recipe/sonichumedallion
+	name = "Sonichu Medallion"
+	reqs = list(/obj/item/stack/cable_coil = 5, /obj/item/stack/sheet/plastic = 2, /obj/item/toy/crayon/yellow = 1, /obj/item/toy/crayon/green = 1)
+	result = /obj/item/clothing/neck/cwcmedal
+	category = CAT_MISC
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"

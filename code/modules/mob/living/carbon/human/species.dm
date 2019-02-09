@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-
+	var/has_cast = FALSE
 
 ///////////
 // PROCS //
@@ -687,6 +687,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
+				if("alternian_horns")
+					S = GLOB.alternian_horns_list[H.dna.features["alternian_horns"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
 				else
@@ -850,7 +852,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(BODY_TAUR_LAYER)
 			return "TAUR"
 	//END EDIT
-
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOBREATH))
