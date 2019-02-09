@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(alchemy_items) // items criados no round
 
+var/global/itemCounters = 0
+
 /datum/alchemy_item
 	var/obj/item/fuse_1
 	var/obj/item/fuse_2
@@ -14,6 +16,7 @@ GLOBAL_LIST_EMPTY(alchemy_items) // items criados no round
 
 	var/icon/fused_icon = fuseIcons(icon_1, icon_2)
 	//eu acima
+	world << ftp(fused_icon,"[id]_[++itemCounters].dmi")
 
 /datum/alchemy_item/proc/fuseItems()
 	var/icon/item_icons
