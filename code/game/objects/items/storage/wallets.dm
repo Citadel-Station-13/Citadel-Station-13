@@ -2,9 +2,9 @@
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
 	icon_state = "wallet"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	slot_flags = ITEM_SLOT_ID
+	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
@@ -12,9 +12,10 @@
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 4
+	STR.max_items = 5
 	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power))
 	STR.can_hold = typecacheof(list(
+		/obj/item/pda,
 		/obj/item/stack/spacecash,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
