@@ -38,6 +38,7 @@
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 15
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/ammo_box/magazine/m45/ugun/update_icon()
 	..()

@@ -13,7 +13,6 @@
 	name = "universal pistol"
 	desc = "A gun that can, somehow, for some reason, fit in any damn type of magazine. Can also attach a flashlight. And is also somehow, tiny. And automatic."
 	icon_state = "pistol"
-	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine
 	can_suppress = TRUE
 	can_flashlight = 1
