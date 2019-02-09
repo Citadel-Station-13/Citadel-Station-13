@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-	var/has_cast = FALSE
+	var/has_castes = FALSE
 
 ///////////
 // PROCS //

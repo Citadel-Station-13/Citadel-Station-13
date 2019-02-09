@@ -21,6 +21,8 @@
 	//Troll Shit
 	var/sign = ""
 
+	has_castes = TRUE
+
 /datum/species/alternian/on_species_gain(mob/living/carbon/C)
 	. = ..()
 	if(ishuman(C))
