@@ -50,7 +50,7 @@
 	if(world.time > last_blast + blast_cooldown && prob(thanos_prob))
 		return FALSE
 	..()
-	if(world.time > last_blast + blast_cooldown &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_blast + blast_cooldown &&  H.a_intent != INTENT_HELP)
 		thane(H)
 
 
@@ -61,7 +61,7 @@
 			M.gib()
 			return
 		if(M == H)
-			H.knockdown(80)
+			H.Knockdown(80)
 			H.show_message("<span class='narsiesmall'>SNAP!</span>", 2)
 			H.playsound_local(H, 'sound/effects/Explosion1.ogg', 100, TRUE)
 			H.soundbang_act(2, 0, 100, 1)
