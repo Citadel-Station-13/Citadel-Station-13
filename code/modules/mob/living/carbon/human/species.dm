@@ -853,7 +853,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return "TAUR"
 	//END EDIT
 
-
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOBREATH))
 		H.setOxyLoss(0)

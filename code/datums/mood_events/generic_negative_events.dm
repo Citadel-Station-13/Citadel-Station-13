@@ -121,3 +121,7 @@
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
+
+/datum/mood_event/thaned
+	description = "<span class='boldwarning'>Thanos is so cool, fuck!</span>\n"
+	mood_change = -10
