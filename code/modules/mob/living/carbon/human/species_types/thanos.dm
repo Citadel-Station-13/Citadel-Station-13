@@ -56,14 +56,18 @@
 
 /datum/species/thanos/proc/thane(mob/living/carbon/human/H)
 	last_blast = world.time
-	for(var/mob/living/M in get_hearers_in_view(7,H))
+	for(var/mob/living/M in get_hearers_in_view(7,usr))
+		M.show_message("<span class='narsiesmall'>SNAP!</span>", 2)
+		if(M == usr)
+			M.playsound_local(H, 'modular_citadel/sound/misc/thanos.ogg', 100, TRUE)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)
+			return
 		if(M.stat == DEAD)
 			M.gib()
 			return
-		if(M == H)
-			H.Knockdown(80)
-			H.show_message("<span class='narsiesmall'>SNAP!</span>", 2)
-			H.playsound_local(H, 'sound/effects/Explosion1.ogg', 100, TRUE)
-			H.soundbang_act(2, 0, 100, 1)
-			H.jitteriness += 10
+		else
+			M.Knockdown(80)
+			M.playsound_local(M, 'sound/effects/Explosion1.ogg', 100, TRUE)
+			M.soundbang_act(2, 0, 100, 1)
+			M.jitteriness += 10
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)
