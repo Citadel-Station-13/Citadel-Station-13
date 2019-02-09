@@ -27,6 +27,6 @@ var/global/itemCounters = 0
 
 proc/fuseIcons(icon/i1,icon/i2, var/flags = ICON_NORMAL_FUSE)
 	var/icon/j = new(i1)
-	for(var/s in icon_states(i2))
-		j.Insert(icon(i2,s),s)
+	//ok, nao era pra juntar os states, dumbd umbdubmdubmdubmdubdmbudmb dbum dumbd umdbd ubmd
+	j.Blend(i2, pick(ICON_OR,ICON_UNDERLAY,ICON_OVERLAY, rand(-32,32), rand(-32,32))
 	return j
