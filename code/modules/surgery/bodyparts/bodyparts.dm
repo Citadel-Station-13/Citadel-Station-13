@@ -329,7 +329,7 @@
 			species_color = ""
 
 		if(H.dna.features.["mam_body_markings"] != "None")
-			body_markings = H.dna.features.["mam_body_markings"]
+			body_markings = lowertext(H.dna.features.["mam_body_markings"])
 			if(BODYMARKINGS)
 				markings_color = list(colorlist)
 			else
@@ -383,9 +383,9 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 		if(body_markings)
 			if(use_digitigrade == NOT_DIGITIGRADE)
-				. += image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+				. += image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				. += image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				. += image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
@@ -438,9 +438,9 @@
 		// Body markings
 		if(body_markings)
 			if(use_digitigrade == NOT_DIGITIGRADE)
-				marking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				marking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 			. += marking
 
 		// Citadel End
@@ -449,7 +449,7 @@
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 //			if(body_markings)
 //				if(use_digitigrade == NOT_DIGITIGRADE)
-//					auxmarking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
+//					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
 			. += aux
 //			. += auxmarking
 
@@ -463,15 +463,15 @@
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
 //			if(body_markings)
 //				if(use_digitigrade == NOT_DIGITIGRADE)
-//					auxmarking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
+//					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
 			. += aux
 //			. += auxmarking
 
 		if(body_markings)
 			if(use_digitigrade == NOT_DIGITIGRADE)
-				marking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				marking = image('modular_citadel/icons/mob/testsprites.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 			. += marking
 		return
 

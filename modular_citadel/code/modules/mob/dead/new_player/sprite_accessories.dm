@@ -27,11 +27,13 @@
 /datum/sprite_accessory/tails/lizard/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/lizard/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /******************************************
@@ -224,15 +226,13 @@
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = TRUE
-	extra_color_src = MUTCOLORS2
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = TRUE
-	extra_color_src = MUTCOLORS2
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/lab
@@ -250,13 +250,13 @@
 /datum/sprite_accessory/tails/human/murid
 	name = "Murid"
 	icon_state = "murid"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/murid
 	name = "Murid"
 	icon_state = "murid"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/otie
@@ -268,23 +268,25 @@
 /datum/sprite_accessory/tails/human/otie
 	name = "Otusian"
 	icon_state = "otie"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/otie
 	name = "Otusian"
 	icon_state = "otie"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/orca
 	name = "Orca"
 	icon_state = "orca"
-	extra = TRUE
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/orca
 	name = "Orca"
 	icon_state = "orca"
-	extra = TRUE
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/pede
@@ -296,11 +298,13 @@
 /datum/sprite_accessory/tails/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/pede
 	name = "Scolipede"
 	icon_state = "pede"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
@@ -312,13 +316,13 @@
 /datum/sprite_accessory/tails/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/sergal
@@ -330,11 +334,13 @@
 /datum/sprite_accessory/tails/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/sergal
 	name = "Sergal"
 	icon_state = "sergal"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/skunk
@@ -346,52 +352,55 @@
 /datum/sprite_accessory/tails/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
 	icon_state = "shark"
-	color_src = MUTCOLORS
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/shark/datashark
 	name = "datashark"
 	icon_state = "datashark"
-	color_src = 0
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
-	hasinner= 1
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = BODYMARKINGS
 
 /datum/sprite_accessory/tails/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails/human/yentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/wolf
@@ -403,11 +412,13 @@
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/tails_animated/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+	color_src = BODYMARKINGS
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /******************************************
@@ -437,6 +448,7 @@
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
 	icon_state = "none"
+	color_src = BODYMARKINGS
 
 /datum/sprite_accessory/snouts
 
@@ -900,9 +912,8 @@ datum/sprite_accessory/mam_tails/insect
 	extra = FALSE
 	extra2 = FALSE
 	color_src = BODYMARKINGS
-//	gender_specific = 1
-//	icon = 'modular_citadel/icons/mob/mam_body_markings.dmi'
-	icon = 'modular_citadel/icons/mob/testsprites.dmi'
+	gender_specific = 0
+	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -910,15 +921,19 @@ datum/sprite_accessory/mam_tails/insect
 
 /datum/sprite_accessory/mam_body_markings/ailurus
 	name = "Red Panda"
-	icon_state = "ailurus"
+	icon_state = "wah"
 
-/datum/sprite_accessory/mam_body_markings/belly
+/datum/sprite_accessory/mam_body_markings/bee
 	name = "Bee"
 	icon_state = "bee"
 
-/datum/sprite_accessory/mam_body_markings/bee
+/datum/sprite_accessory/mam_body_markings/belly
 	name = "Belly"
 	icon_state = "belly"
+	
+/datum/sprite_accessory/mam_body_markings/bellyslim
+	name = "Slim Belly"
+	icon_state = "bellyslim"
 
 /datum/sprite_accessory/mam_body_markings/corgi
 	name = "Corgi"
@@ -952,6 +967,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Frog"
 	icon_state = "frog"
 
+/datum/sprite_accessory/mam_body_markings/handsfeet
+	name = "Hands and Feet"
+	icon_state = "handsfeet"
+	
 /datum/sprite_accessory/mam_body_markings/hawk
 	name = "Hawk"
 	icon_state = "hawk"
@@ -1306,17 +1325,15 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/body_markings/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	gender_specific = 1
+	color_src = BODYMARKINGS
 
 /datum/sprite_accessory/tails/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra = TRUE
 
 /datum/sprite_accessory/tails_animated/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra = TRUE
 
 /datum/sprite_accessory/horns/guilmon
 	name = "Guilmon"
@@ -1326,50 +1343,41 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/snout/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
+	color_src = BODYMARKINGS
 
 /datum/sprite_accessory/mam_tails/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
-	color_src = 0
 	ckeys_allowed = list("rubyflamewing")
 
 /datum/sprite_accessory/mam_tails_animated/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
-	color_src = 0
 
 /datum/sprite_accessory/mam_body_markings/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
-	color_src = MUTCOLORS2
 	ckeys_allowed = list("rubyflamewing")
-
 
 //Sabresune
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	color_src = BODYMARKINGS
 	ckeys_allowed = list("poojawa")
 
 /datum/sprite_accessory/mam_tails/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	extra = TRUE
 	ckeys_allowed = list("poojawa")
 
 
 /datum/sprite_accessory/mam_tails_animated/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	extra = TRUE
 
 /datum/sprite_accessory/mam_body_markings/sabresune
 	name = "Sabresune"
 	icon_state = "sabresune"
-	color_src = BODYMARKINGS
-	extra = FALSE
-	extra2 = FALSE
 	ckeys_allowed = list("poojawa")
 
 
@@ -1377,19 +1385,16 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_ears/lunasune
 	name = "lunasune"
 	icon_state = "lunasune"
-	color_src = BODYMARKINGS
 	ckeys_allowed = list("invader4352")
 
 /datum/sprite_accessory/mam_tails/lunasune
 	name = "lunasune"
 	icon_state = "lunasune"
-	extra = TRUE
 	ckeys_allowed = list("invader4352")
 
 /datum/sprite_accessory/mam_tails_animated/lunasune
 	name = "lunasune"
 	icon_state = "lunasune"
-	extra = TRUE
 
 /*************** VIRGO PORTED HAIRS ****************************/
 #define VHAIR(_name, new_state) /datum/sprite_accessory/hair/##new_state/icon_state=#new_state;/datum/sprite_accessory/hair/##new_state/name = "Virgo - " + #_name

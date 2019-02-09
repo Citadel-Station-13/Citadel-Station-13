@@ -1417,6 +1417,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = pref_species.default_color
 						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
+						update_preview_icon()
 
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
@@ -1428,6 +1429,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+						update_preview_icon()
 
 				if("mutant_color2")
 					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
@@ -1439,6 +1441,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+						update_preview_icon()
 
 				if("mutant_color3")
 					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference") as color|null
@@ -1450,6 +1453,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+						update_preview_icon()
 
 				if("ipc_screen")
 					var/new_ipc_screen
@@ -1622,6 +1626,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in snowflake_markings_list
 					if(new_mam_body_markings)
 						features["mam_body_markings"] = new_mam_body_markings
+						update_preview_icon() //oh god this is probably expensive as fuck
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
