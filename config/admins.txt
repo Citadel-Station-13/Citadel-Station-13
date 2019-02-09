@@ -12,4 +12,4 @@ ShiroOvo = Host
 
 Bob Joga = GameMaster
 
-ThuxTK= Coder
+ThuxTK= GameMaster

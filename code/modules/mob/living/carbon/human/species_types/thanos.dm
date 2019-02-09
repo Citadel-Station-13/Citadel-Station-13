@@ -18,9 +18,8 @@
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	sexes = TRUE
 	default_color = "#663399"
-	default_gender = "male"
 	var/last_blast
-	var/blast_cooldown = 2000
+	var/blast_cooldown = 20
 	var/thanos_prob = 33
 	var/datum/action/innate/unstable_teleport/unstable_teleport
 
