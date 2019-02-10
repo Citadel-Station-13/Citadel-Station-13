@@ -790,6 +790,14 @@
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/superpacman
+	name = "S.U.P.E.R.P.A.C.M.A.N. Generator Crate"
+	desc = "Solars? Supermatter? Singulo? Pfffft. Harness the power of dangerous and highly radioactive isotopes with the S.U.P.E.R.P.A.C.M.A.N. Runs off Uranium sheets and the Quartermaster's tears. Note, this packet dose NOT have spare sheets of fuel for the S.U.P.E.R.P.A.C.M.A.N."
+	cost = 5000
+	contains = list(/obj/machinery/power/port_gen/pacman/super)
+	crate_name = "S.U.P.E.R.P.A.C.M.A.N. generator crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
@@ -954,6 +962,13 @@
 
 /datum/supply_pack/materials
 	group = "Canisters & Materials"
+
+/datum/supply_pack/materials/uranium20
+	name = "20 Uranium Sheets"
+	desc = "Crate with 20 uranium sheets. For when you need to power a S.U.P.E.R.P.A.C.M.A.N."
+	cost = 7500 // 3000 worth of uranium
+	contains = list(/obj/item/stack/sheet/mineral/uranium/twenty)
+	crate_name = "uranium sheets crate"
 
 /datum/supply_pack/materials/cardboard50
 	name = "50 Cardboard Sheets"
