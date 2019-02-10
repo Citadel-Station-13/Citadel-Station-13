@@ -479,7 +479,7 @@
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/lcanid
+/datum/sprite_accessory/snouts/lcanidalt
 	name = "Mammal, Long ALT"
 	icon_state = "lcanidalt"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
@@ -491,7 +491,7 @@
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/scanid
+/datum/sprite_accessory/snouts/scanidalt
 	name = "Mammal, Short ALT"
 	icon_state = "scanidalt"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
@@ -661,6 +661,14 @@
 	name = "Wolf"
 	icon_state = "wolf"
 
+/datum/sprite_accessory/mam_ears/bigwolf
+	name = "Big Wolf"
+	icon_state = "bigwolf"
+
+/datum/sprite_accessory/mam_ears/bigwolfinner
+	name = "Big Wolf (White Inner)"
+	icon_state = "bigwolfinner"
+	hasinner = 1
 
 /******************************************
 *********** Tails and Things **************
