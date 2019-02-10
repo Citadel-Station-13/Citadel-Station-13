@@ -696,6 +696,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 
+			accessory_overlay.color = null //just because. reee.
+
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "xenotail")
 				bodypart = "tail"
@@ -717,6 +719,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
 			var/list/colorlist = list()
+			colorlist.Cut()
 			colorlist += ReadRGB(H.dna.features["mcolor"])
 			colorlist += ReadRGB(H.dna.features["mcolor2"])
 			colorlist += ReadRGB(H.dna.features["mcolor3"])

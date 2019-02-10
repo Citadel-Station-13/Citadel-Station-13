@@ -292,6 +292,8 @@
 	if(no_update)
 		return
 
+	markings_color.Cut()
+
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
 		should_draw_greyscale = FALSE
@@ -303,6 +305,7 @@
 
 		//body marking memes
 		var/list/colorlist = list()
+		colorlist.Cut()
 		colorlist += ReadRGB(H.dna.features["mcolor"])
 		colorlist += ReadRGB(H.dna.features["mcolor2"])
 		colorlist += ReadRGB(H.dna.features["mcolor3"])
@@ -331,6 +334,7 @@
 		if(H.dna.features.["mam_body_markings"] != "None")
 			body_markings = lowertext(H.dna.features.["mam_body_markings"])
 			if(MATRIXED)
+
 				markings_color = list(colorlist)
 			else
 				markings_color = (H.dna.features.["mcolor"])
@@ -477,6 +481,7 @@
 
 
 	if(should_draw_greyscale)
+		marking.color = null
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
