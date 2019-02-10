@@ -22,21 +22,17 @@
 
 /datum/preferences/proc/update_preview_icon()
 	// Silicons only need a very basic preview since there is no customization for them.
-	var/wide_icon = FALSE //CITDEL THINGS
-	var/stamp_x = 0
-	var/stamp_y = 1
-	if(features["taur"] != "None")
-		wide_icon = TRUE
+//	var/wide_icon = FALSE //CITDEL THINGS
+//	if(features["taur"] != "None")
+//		wide_icon = TRUE
 
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
-				preview_icon.Scale(64, 64)
+				parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = "AI", dir = SOUTH))
 				return
 			if(CYBORG)
-				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
-				preview_icon.Scale(64, 64)
+				parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
 				return
 
 	// Set up the dummy for its photoshoot
@@ -69,41 +65,5 @@
 			previewJob.equip(mannequin, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
-	CHECK_TICK
-	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale((112), (32))
-	CHECK_TICK
-	mannequin.setDir(NORTH)
-
-	var/icon/stamp = getFlatIcon(mannequin)
-	if(wide_icon)
-		stamp_x = 16
-	else
-		stamp_x = 32
-
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
-	CHECK_TICK
-	mannequin.setDir(WEST)
-	stamp = getFlatIcon(mannequin)
-	if(wide_icon)
-		stamp_x = 48
-	else
-		stamp_x = 64
-
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
-	CHECK_TICK
-	mannequin.setDir(SOUTH)
-	stamp = getFlatIcon(mannequin)
-	if(wide_icon)
-		stamp_x = -15
-	else
-		stamp_x = 1
-
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
-	CHECK_TICK
-	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
-	CHECK_TICK
+	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
