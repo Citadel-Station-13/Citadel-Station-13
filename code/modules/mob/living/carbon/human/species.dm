@@ -743,7 +743,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							else
 								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
 
-						if(BODYMARKINGS)
+						if(MATRIXED)
 							accessory_overlay.color = list(colorlist)
 
 						if(HAIR)
