@@ -193,16 +193,14 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/glasses/sunglasses/davestrider
-	name = "Dave's sunglasses"
-	desc = "Wearing them renders you outrageously cool."
-	icon_state = "dave"
-	item_state = "davesglasses"
+/obj/item/clothing/glasses/sunglasses/cool
+	name = "Cool sunglasses"
+	desc = "hmm cool" // - marcioainder
+	icon_state = "coolsunglasses"
+	item_state = "coolsunglasses"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
-	glass_colour_type = /datum/client_colour/glass_colour/gray
-	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
