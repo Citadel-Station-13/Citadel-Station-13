@@ -1404,8 +1404,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(result)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
-						features["mam_body_markings"] = "None"
-						features["body_markings"] = "None"
+						if(!("body_markings" in pref_species.default_features))
+							features["body_markings"] = "None"
+						if(!("mam_body_markings" in pref_species.default_features))
+							features["mam_body_markings"] = "None"
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))

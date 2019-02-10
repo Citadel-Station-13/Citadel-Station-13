@@ -292,8 +292,6 @@
 	if(no_update)
 		return
 
-	markings_color.Cut()
-
 	if(!animal_origin)
 		var/mob/living/carbon/human/H = C
 		should_draw_greyscale = FALSE
@@ -331,16 +329,16 @@
 		else
 			species_color = ""
 
-		if(H.dna.features.["mam_body_markings"] != "None")
-			body_markings = lowertext(H.dna.features.["mam_body_markings"])
-			if(MATRIXED)
-
-				markings_color = list(colorlist)
-			else
-				markings_color = (H.dna.features.["mcolor"])
+		if("mam_body_markings" in S.default_features)
+			if(H.dna.features.["mam_body_markings"] != "None")
+				body_markings = lowertext(H.dna.features.["mam_body_markings"])
+				if(MATRIXED)
+					markings_color = list(colorlist)
+				else
+					markings_color = (H.dna.features.["mcolor"])
 		else
 			body_markings = "None"
-			markings_color = "000"
+			markings_color = ""
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"
