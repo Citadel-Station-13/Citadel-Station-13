@@ -74,9 +74,8 @@
 	name = "Generic Blood"
 	description = "Nanotrasen's annual blood drive is back up to full speed, following the garlic incident. Good blood in good volumes accepted for Credit returns."
 	reward = 3500
-	required_count = 3
-	wanted_types = list(/obj/item/reagent_containers/blood)
-	exclude_types = list(/obj/item/reagent_containers/blood/lizard)
+	required_count = 600
+	wanted_types = list(/datum/reagent/blood)
 
 /*
 /datum/bounty/item/medical/medibot // Mob so this dosn't work yet*
