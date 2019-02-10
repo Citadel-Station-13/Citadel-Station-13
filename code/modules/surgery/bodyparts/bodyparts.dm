@@ -330,7 +330,7 @@
 
 		if(H.dna.features.["mam_body_markings"] != "None")
 			body_markings = lowertext(H.dna.features.["mam_body_markings"])
-			if(BODYMARKINGS)
+			if(MATRIXED)
 				markings_color = list(colorlist)
 			else
 				markings_color = (H.dna.features.["mcolor"])
