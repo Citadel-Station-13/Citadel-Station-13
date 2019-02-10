@@ -42,7 +42,7 @@
 
 /datum/sprite_accessory/tails/human/ailurus
 	name = "Red Panda"
-	icon_state = "ailurus"
+	icon_state = "wah"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 /datum/sprite_accessory/ears/human/axolotl
@@ -487,15 +487,39 @@
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = BODYMARKINGS
 
+/datum/sprite_accessory/snouts/lcanid
+	name = "Mammal, Long ALT"
+	icon_state = "lcanidalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = BODYMARKINGS
+
 /datum/sprite_accessory/snouts/scanid
 	name = "Mammal, Short"
 	icon_state = "scanid"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = BODYMARKINGS
 
+/datum/sprite_accessory/snouts/scanid
+	name = "Mammal, Short ALT"
+	icon_state = "scanidalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = BODYMARKINGS
+
 /datum/sprite_accessory/snouts/wolf
 	name = "Mammal, Thick"
 	icon_state = "wolf"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = BODYMARKINGS
+
+/datum/sprite_accessory/snouts/wolfalt
+	name = "Mammal, Thick ALT"
+	icon_state = "wolfalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = BODYMARKINGS
+
+/datum/sprite_accessory/snouts/redpanda
+	name = "WahCoon"
+	icon_state = "wah"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = BODYMARKINGS
 
@@ -841,11 +865,11 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "sergal"
 
 /datum/sprite_accessory/mam_tails/skunk
-	name = "skunk"
+	name = "Skunk"
 	icon_state = "skunk"
 
 /datum/sprite_accessory/mam_tails_animated/skunk
-	name = "skunk"
+	name = "Skunk"
 	icon_state = "skunk"
 
 /datum/sprite_accessory/mam_tails/shark
@@ -920,7 +944,7 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "none"
 
 /datum/sprite_accessory/mam_body_markings/ailurus
-	name = "Red Panda"
+	name = "Redpanda"
 	icon_state = "wah"
 
 /datum/sprite_accessory/mam_body_markings/bee
@@ -930,9 +954,9 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_body_markings/belly
 	name = "Belly"
 	icon_state = "belly"
-	
+
 /datum/sprite_accessory/mam_body_markings/bellyslim
-	name = "Slim Belly"
+	name = "Bellyslim"
 	icon_state = "bellyslim"
 
 /datum/sprite_accessory/mam_body_markings/corgi
@@ -940,11 +964,11 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "corgi"
 
 /datum/sprite_accessory/mam_body_markings/cow
-	name = "Cow"
-	icon_state = "cow"
+	name = "Bovine"
+	icon_state = "bovine"
 
 /datum/sprite_accessory/mam_body_markings/corvid
-	name = "Crow"
+	name = "Corvid"
 	icon_state = "corvid"
 
 /datum/sprite_accessory/mam_body_markings/deer
@@ -968,9 +992,9 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "frog"
 
 /datum/sprite_accessory/mam_body_markings/handsfeet
-	name = "Hands and Feet"
+	name = "Handsfeet"
 	icon_state = "handsfeet"
-	
+
 /datum/sprite_accessory/mam_body_markings/hawk
 	name = "Hawk"
 	icon_state = "hawk"
@@ -993,7 +1017,7 @@ datum/sprite_accessory/mam_tails/insect
 
 /datum/sprite_accessory/mam_body_markings/pede
 	name = "Scolipede"
-	icon_state = "pede"
+	icon_state = "scolipede"
 
 /datum/sprite_accessory/mam_body_markings/shark
 	name = "Shark"
@@ -1004,7 +1028,7 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "shepherd"
 
 /datum/sprite_accessory/mam_body_markings/tiger
-	name = "Tiger Stripes"
+	name = "Tiger"
 	icon_state = "tiger"
 
 /datum/sprite_accessory/mam_body_markings/turian
