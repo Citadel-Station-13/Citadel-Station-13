@@ -971,6 +971,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Corvid"
 	icon_state = "corvid"
 
+/datum/sprite_accessory/mam_body_markings/dalmation
+	name = "Dalmation"
+	icon_state = "dalmation"
+
 /datum/sprite_accessory/mam_body_markings/deer
 	name = "Deer"
 	icon_state = "deer"
@@ -978,6 +982,10 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_body_markings/eevee
 	name = "Eevee"
 	icon_state = "eevee"
+
+/datum/sprite_accessory/mam_body_markings/hippo
+	name = "Hippo"
+	icon_state = "hippo"
 
 /datum/sprite_accessory/mam_body_markings/fennec
 	name = "Fennec"
@@ -991,6 +999,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Frog"
 	icon_state = "frog"
 
+/datum/sprite_accessory/mam_body_markings/goat
+	name = "Goat"
+	icon_state = "goat"
+
 /datum/sprite_accessory/mam_body_markings/handsfeet
 	name = "Handsfeet"
 	icon_state = "handsfeet"
@@ -1003,6 +1015,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Husky"
 	icon_state = "husky"
 
+/datum/sprite_accessory/mam_body_markings/lab
+	name = "Lab"
+	icon_state = "lab"
+
 /datum/sprite_accessory/mam_body_markings/moth
 	name = "Moth"
 	icon_state = "moth"
@@ -1011,9 +1027,25 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Otie"
 	icon_state = "otie"
 
+/datum/sprite_accessory/mam_body_markings/otter
+	name = "Otter"
+	icon_state = "otter"
+
 /datum/sprite_accessory/mam_body_markings/orca
 	name = "Orca"
 	icon_state = "orca"
+
+/datum/sprite_accessory/mam_body_markings/panther
+	name = "Panther"
+	icon_state = "panther"
+
+/datum/sprite_accessory/mam_body_markings/possum
+	name = "Possum"
+	icon_state = "possum"
+
+/datum/sprite_accessory/mam_body_markings/raccoon
+	name = "Raccoon"
+	icon_state = "raccoon"
 
 /datum/sprite_accessory/mam_body_markings/pede
 	name = "Scolipede"
@@ -1023,6 +1055,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Shark"
 	icon_state = "shark"
 
+/datum/sprite_accessory/mam_body_markings/skunk
+	name = "Skunk"
+	icon_state = "skunk"
+
 /datum/sprite_accessory/mam_body_markings/sergal
 	name = "Sergal"
 	icon_state = "sergal"
@@ -1030,6 +1066,10 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_body_markings/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
+
+/datum/sprite_accessory/mam_body_markings/tajaran
+	name = "Tajaran"
+	icon_state = "tajaran"
 
 /datum/sprite_accessory/mam_body_markings/tiger
 	name = "Tiger"
