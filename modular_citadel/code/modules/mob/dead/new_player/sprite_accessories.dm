@@ -1023,6 +1023,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Shark"
 	icon_state = "shark"
 
+/datum/sprite_accessory/mam_body_markings/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+
 /datum/sprite_accessory/mam_body_markings/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
@@ -1127,11 +1131,6 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/taur/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
-	taur_mode = PAW_TAURIC
-
-/datum/sprite_accessory/taur/tajaran
-	name = "Tajaran"
-	icon_state = "tajaran"
 	taur_mode = PAW_TAURIC
 
 /datum/sprite_accessory/taur/tentacle
