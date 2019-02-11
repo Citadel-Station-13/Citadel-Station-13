@@ -47,7 +47,7 @@ client/verb/split_sprites()
 			Original.Blend(Cutter,ICON_AND) //AND, not ADD
 
 			//Make a useful name
-			var/good_name = "[OriginalState]-[CutterState]"
+			var/good_name = "[OriginalState]_[CutterState]"
 
 			//Add to the output with the good name
 			RunningOutput.Insert(Original,good_name)
