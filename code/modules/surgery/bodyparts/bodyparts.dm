@@ -47,7 +47,8 @@
 	var/no_update = 0
 	var/list/body_markings = list() 	//for bodypart markings
 	var/list/markings_color = list()
-//	var/auxmarking
+	var/auxmarking
+	var/list/auxmarking_color = list()
 
 	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
 	var/dismemberable = 1 //whether it can be dismembered with a weapon.
@@ -392,7 +393,7 @@
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 	var/image/marking
-//	var/image/auxmarking
+	var/image/auxmarking
 
 	. += limb
 
@@ -449,11 +450,10 @@
 
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
-//			if(body_markings)
-//				if(use_digitigrade == NOT_DIGITIGRADE)
-//					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
 			. += aux
-//			. += auxmarking
+			if(body_markings)
+				auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -aux_layer, image_dir)
+				. += auxmarking
 
 	else
 		limb.icon = icon
@@ -463,11 +463,10 @@
 			limb.icon_state = "[body_zone]"
 		if(aux_zone)
 			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
-//			if(body_markings)
-//				if(use_digitigrade == NOT_DIGITIGRADE)
-//					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -MARKING_LAYER, image_dir)
 			. += aux
-//			. += auxmarking
+			if(body_markings)
+				auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -aux_layer, image_dir)
+				. += auxmarking
 
 		if(body_markings)
 			if(use_digitigrade == NOT_DIGITIGRADE)
@@ -485,9 +484,11 @@
 			limb.color = "#[draw_color]"
 			if(aux_zone)
 				aux.color = "#[draw_color]"
+				if(body_markings)
+					auxmarking.color = list(markings_color)
+
 			if(body_markings)
 				marking.color = list(markings_color)
-//				auxmarking.color = list(markings_color)
 
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
