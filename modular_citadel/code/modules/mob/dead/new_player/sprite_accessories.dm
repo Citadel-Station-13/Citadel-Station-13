@@ -571,6 +571,12 @@
 	name = "Bear"
 	icon_state = "bear"
 
+/datum/sprite_accessory/mam_ears/cat
+	name = "Cat"
+	icon_state = "cat"
+	hasinner = 1
+	color_src = HAIR
+
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -699,6 +705,16 @@
 /datum/sprite_accessory/mam_tails_animated/bear
 	name = "Bear"
 	icon_state = "bear"
+
+/datum/sprite_accessory/mam_tails/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
+
+/datum/sprite_accessory/mam_tails_animated/cat
+	name = "Cat"
+	icon_state = "cat"
+	color_src = HAIR
 
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"

@@ -74,8 +74,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
-		"tail_lizard" = "Smooth", "tail_human" = "None",
-		"snout" = "Round", "horns" = "None", "ears" = "None",
+		"tail_lizard" = "Smooth", "tail_human" = "Cat",
+		"snout" = "Round", "horns" = "None", "ears" = "Cat",
 		"wings" = "None", "frills" = "None", "spines" = "None",
 		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
 
@@ -1417,6 +1417,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_tail"] = "None"
 						if("mam_ears" in pref_species.default_features)
 							features["mam_ears"] = "None"
+						if(pref_species.id == "felinid")
+							features["mam_tail"] = "Cat"
+							features["mam_ears"] = "Cat"
+
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
