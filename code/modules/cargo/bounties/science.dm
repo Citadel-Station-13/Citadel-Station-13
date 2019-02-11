@@ -109,7 +109,7 @@
 
 /datum/bounty/item/science/fakecrystals
 	name = "synthetic bluespace crystals"
-	description = "Don't, uh, tell anyone, but one of our BSA arrays might have had a little... accident. Send us some bluespace crystals so we can recalibrate it before anyone realizes."
+	description = "Don't, uh, tell anyone, but one of our BSA arrays might have had a little... accident. Send us some bluespace crystals so we can recalibrate it before anyone realizes. The whole set uses artificial bluespace crystals, so we need and not any other type of bluespace crystals..."
 	reward = 10000
 	required_count = 5
 	wanted_types = list(/obj/item/stack/ore/bluespace_crystal/artificial)
