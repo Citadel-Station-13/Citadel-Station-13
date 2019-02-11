@@ -2,6 +2,9 @@
 	if(iscarbon(new_owner) && (isnum(set_duration) || isnum(override_duration)))
 		new_owner.resting = TRUE
 		new_owner.adjustStaminaLoss(isnull(override_stam)? set_duration*0.25 : override_stam)
+		if(istype(new_owner.buckled, /obj/vehicle/ridden))
+			var/obj/buckl = new_owner.buckled
+			buckl.unbuckle_mob(new_owner)
 		if(isnull(override_duration) && (set_duration > 80))
 			set_duration = set_duration*0.01
 			return ..()
