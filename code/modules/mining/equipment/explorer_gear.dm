@@ -147,6 +147,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 25, "bio" = 50, "rad" = 25, "fire" = 100, "acid" = 25)
 	resistance_flags = FIRE_PROOF | GOLIATH_WEAKNESS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 
 /obj/item/clothing/mask/gas/seva
 	name = "SEVA Mask"
