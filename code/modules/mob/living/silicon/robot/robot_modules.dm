@@ -278,7 +278,8 @@
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+		/obj/item/sensor_device)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
@@ -330,7 +331,8 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg)
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/pinpointer/crew)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -342,7 +344,7 @@
 /obj/item/robot_module/security/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
 /obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
