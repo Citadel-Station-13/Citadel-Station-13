@@ -612,6 +612,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "mam_ears"
 
+	if("mam_snouts" in mutant_bodyparts) //Take a closer look at that snout!
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= "mam_snouts"
+
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
 			bodyparts_to_add -= "taur"
@@ -707,6 +711,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bodypart = "tailwag"
 			if(bodypart == "mam_ears" || bodypart == "ears")
 				bodypart = "ears"
+			if(bodypart == "mam_snouts" || bodypart == "snout")
+				bodypart = "snout"
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
 

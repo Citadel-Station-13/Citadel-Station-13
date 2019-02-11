@@ -98,6 +98,8 @@
 			return GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 		if("mam_ears")
 			return GLOB.mam_ears_list[H.dna.features["mam_ears"]]
+		if("mam_snouts")
+			return GLOB.mam_snouts_list[H.dna.features["mam_snouts"]]
 		if("taur")
 			return GLOB.taur_list[H.dna.features["taur"]]
 		if("xenodorsal")

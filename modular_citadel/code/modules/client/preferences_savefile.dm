@@ -40,6 +40,7 @@
 	WRITE_FILE(S["feature_mam_ears"], features["mam_ears"])
 	WRITE_FILE(S["feature_mam_tail_animated"], features["mam_tail_animated"])
 	WRITE_FILE(S["feature_taur"], features["taur"])
+	WRITE_FILE(S["feature_mam_snouts"],	features["mam_snouts"])
 	//Xeno features
 	WRITE_FILE(S["feature_xeno_tail"], features["xenotail"])
 	WRITE_FILE(S["feature_xeno_dors"], features["xenodorsal"])

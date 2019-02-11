@@ -434,6 +434,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(mutant_category >= MAX_MUTANT_ROWS)
 					dat += "</td>"
 					mutant_category = 0
+			if("mam_snouts" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Snout</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=mam_snouts;task=input'>[features["mam_snouts"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
 			if("legs" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
@@ -1530,6 +1542,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
+
+				if("mam_snouts")
+					var/new_mam_snouts
+					new_mam_snouts = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.mam_snouts_list
+					if(new_mam_snouts)
+						features["mam_snouts"] = new_mam_snouts
 
 				if("horns")
 					var/new_horns

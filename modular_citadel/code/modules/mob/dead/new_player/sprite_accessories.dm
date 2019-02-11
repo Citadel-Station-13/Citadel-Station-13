@@ -36,6 +36,113 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
+/************* Lizard compatable snoots ************/
+/datum/sprite_accessory/snouts/bird
+	name = "Beak"
+	icon_state = "bird"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/bigbeak
+	name = "Big Beak"
+	icon_state = "bigbeak"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/elephant
+	name = "Elephant"
+	icon_state = "elephant"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/lcanid
+	name = "Mammal, Long"
+	icon_state = "lcanid"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/lcanidalt
+	name = "Mammal, Long ALT"
+	icon_state = "lcanidalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/scanid
+	name = "Mammal, Short"
+	icon_state = "scanid"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/scanidalt
+	name = "Mammal, Short ALT"
+	icon_state = "scanidalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/wolf
+	name = "Mammal, Thick"
+	icon_state = "wolf"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/wolfalt
+	name = "Mammal, Thick ALT"
+	icon_state = "wolfalt"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/redpanda
+	name = "WahCoon"
+	icon_state = "wah"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/rhino
+	name = "Horn"
+	icon_state = "rhino"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+	extra = TRUE
+	extra = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/rodent
+	name = "Rodent"
+	icon_state = "rodent"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/otie
+	name = "Otie"
+	icon_state = "otie"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/pede
+	name = "Scolipede"
+	icon_state = "pede"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/toucan
+	name = "Toucan"
+	icon_state = "toucan"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	color_src = MATRIXED
+
 /******************************************
 ************ Human Ears/Tails *************
 *******************************************/
@@ -442,9 +549,11 @@
 	icon_state = "none"
 	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts
+/datum/sprite_accessory/mam_snouts
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 
-/datum/sprite_accessory/snouts/none
+/datum/sprite_accessory/mam_snouts/none
 	name = "None"
 	icon_state = "none"
 
@@ -453,111 +562,77 @@
 **************** Snouts *******************
 *******************************************/
 
-/datum/sprite_accessory/snouts/bird
+/datum/sprite_accessory/mam_snouts/bird
 	name = "Beak"
 	icon_state = "bird"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/bigbeak
+/datum/sprite_accessory/mam_snouts/bigbeak
 	name = "Big Beak"
 	icon_state = "bigbeak"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/elephant
+/datum/sprite_accessory/mam_snouts/elephant
 	name = "Elephant"
 	icon_state = "elephant"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
 
-/datum/sprite_accessory/snouts/lcanid
+/datum/sprite_accessory/mam_snouts/lcanid
 	name = "Mammal, Long"
 	icon_state = "lcanid"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/lcanidalt
+/datum/sprite_accessory/mam_snouts/lcanidalt
 	name = "Mammal, Long ALT"
 	icon_state = "lcanidalt"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/scanid
+/datum/sprite_accessory/mam_snouts/scanid
 	name = "Mammal, Short"
 	icon_state = "scanid"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/scanidalt
+/datum/sprite_accessory/mam_snouts/scanidalt
 	name = "Mammal, Short ALT"
 	icon_state = "scanidalt"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/wolf
+/datum/sprite_accessory/mam_snouts/wolf
 	name = "Mammal, Thick"
 	icon_state = "wolf"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/wolfalt
+/datum/sprite_accessory/mam_snouts/wolfalt
 	name = "Mammal, Thick ALT"
 	icon_state = "wolfalt"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/redpanda
+/datum/sprite_accessory/mam_snouts/redpanda
 	name = "WahCoon"
 	icon_state = "wah"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/rhino
+/datum/sprite_accessory/mam_snouts/rhino
 	name = "Horn"
 	icon_state = "rhino"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 	extra = TRUE
 	extra = MUTCOLORS3
 
-/datum/sprite_accessory/snouts/rodent
+/datum/sprite_accessory/mam_snouts/rodent
 	name = "Rodent"
 	icon_state = "rodent"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/husky
+/datum/sprite_accessory/mam_snouts/husky
 	name = "Husky"
 	icon_state = "husky"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/otie
+/datum/sprite_accessory/mam_snouts/otie
 	name = "Otie"
 	icon_state = "otie"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/pede
+/datum/sprite_accessory/mam_snouts/pede
 	name = "Scolipede"
 	icon_state = "pede"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/sergal
+/datum/sprite_accessory/mam_snouts/sergal
 	name = "Sergal"
 	icon_state = "sergal"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MATRIXED
 
-/datum/sprite_accessory/snouts/toucan
+/datum/sprite_accessory/mam_snouts/toucan
 	name = "Toucan"
 	icon_state = "toucan"
-	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
-	color_src = MUTCOLORS3
 
 /******************************************
 ***************** Ears ********************
