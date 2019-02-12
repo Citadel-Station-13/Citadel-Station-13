@@ -49,6 +49,13 @@
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/snouts/bug
+	name = "Bug"
+	icon_state = "bug"
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	extra2 = TRUE
+	extra2_color_src = MUTCOLORS3
+
 /datum/sprite_accessory/snouts/elephant
 	name = "Elephant"
 	icon_state = "elephant"
@@ -136,6 +143,12 @@
 	icon_state = "sergal"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = MATRIXED
+
+/datum/sprite_accessory/snouts/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 
 /datum/sprite_accessory/snouts/toucan
 	name = "Toucan"
@@ -570,6 +583,13 @@
 	name = "Big Beak"
 	icon_state = "bigbeak"
 
+/datum/sprite_accessory/mam_snouts/bug
+	name = "Bug"
+	icon_state = "bug"
+	color_src = MUTCOLORS
+	extra2 = TRUE
+	extra2_color_src = MUTCOLORS3
+
 /datum/sprite_accessory/mam_snouts/elephant
 	name = "Elephant"
 	icon_state = "elephant"
@@ -630,9 +650,33 @@
 	name = "Sergal"
 	icon_state = "sergal"
 
+/datum/sprite_accessory/mam_snouts/shark
+	name = "Shark"
+	icon_state = "shark"
+
 /datum/sprite_accessory/mam_snouts/toucan
 	name = "Toucan"
 	icon_state = "toucan"
+
+/datum/sprite_accessory/mam_snouts/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/round
+	name = "Round"
+	icon_state = "round"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/sharplight
+	name = "Sharp + Light"
+	icon_state = "sharplight"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/roundlight
+	name = "Round + Light"
+	icon_state = "roundlight"
+	color_src = MUTCOLORS
 
 /******************************************
 ***************** Ears ********************
@@ -1033,6 +1077,11 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
 	icon_state = "none"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_body_markings/plain
+	name = "Plain"
+	icon_state = "plain"
 
 /datum/sprite_accessory/mam_body_markings/ailurus
 	name = "Redpanda"
