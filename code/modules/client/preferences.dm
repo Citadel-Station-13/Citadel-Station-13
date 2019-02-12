@@ -260,8 +260,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
 				dat += "<h3>Body Colors</h3><BR>"
-				dat	+= "<b>To refresh Secondary and Tertiary, alter Primary color value.</b><BR>"
-				dat += "Yes, it's dumb. That's Byond for you.<BR>"
 				dat += "<b>Primary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 				dat += "<b>Secondary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 				dat += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
@@ -1423,6 +1421,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
 							features["mam_body_markings"] = "None"
+						if("mam_body_markings" in pref_species.default_features)
+							features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
 						if("mam_tail" in pref_species.default_features)
@@ -1663,6 +1663,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_mam_body_markings)
 						features["mam_body_markings"] = new_mam_body_markings
 						if(new_mam_body_markings != "None")
+							features["body_markings"] = "None"
+						else if(new_mam_body_markings == "None")
+							features["mam_body_markings"] = "Plain"
 							features["body_markings"] = "None"
 						update_preview_icon()
 
