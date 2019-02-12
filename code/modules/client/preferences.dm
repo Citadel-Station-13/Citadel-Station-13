@@ -1465,7 +1465,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
 							features["mam_body_markings"] = "None"
-						if("mam_body_markings" in pref_species.default_features)
+						if("mam_body_markings" in pref_species.default_features && features["mam_body_markings"] == "None")
 							features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
