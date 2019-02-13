@@ -678,6 +678,114 @@
 	icon_state = "roundlight"
 	color_src = MUTCOLORS
 
+
+/******************************************
+**************** Snouts *******************
+*************but higher up*****************/
+
+/datum/sprite_accessory/mam_snouts/fbird
+	name = "Beak (Top)"
+	icon_state = "fbird"
+
+/datum/sprite_accessory/mam_snouts/fbigbeak
+	name = "Big Beak (Top)"
+	icon_state = "fbigbeak"
+
+/datum/sprite_accessory/mam_snouts/fbug
+	name = "Bug (Top)"
+	icon_state = "fbug"
+	color_src = MUTCOLORS
+	extra2 = TRUE
+	extra2_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/mam_snouts/felephant
+	name = "Elephant (Top)"
+	icon_state = "felephant"
+	extra = TRUE
+	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/mam_snouts/flcanid
+	name = "Mammal, Long (Top)"
+	icon_state = "flcanid"
+
+/datum/sprite_accessory/mam_snouts/flcanidalt
+	name = "Mammal, Long ALT (Top)"
+	icon_state = "flcanidalt"
+
+/datum/sprite_accessory/mam_snouts/fscanid
+	name = "Mammal, Short (Top)"
+	icon_state = "fscanid"
+
+/datum/sprite_accessory/mam_snouts/fscanidalt
+	name = "Mammal, Short ALT (Top)"
+	icon_state = "fscanidalt"
+
+/datum/sprite_accessory/mam_snouts/fwolf
+	name = "Mammal, Thick (Top)"
+	icon_state = "fwolf"
+
+/datum/sprite_accessory/mam_snouts/fwolfalt
+	name = "Mammal, Thick ALT (Top)"
+	icon_state = "fwolfalt"
+
+/datum/sprite_accessory/mam_snouts/fredpanda
+	name = "WahCoon (Top)"
+	icon_state = "fwah"
+
+/datum/sprite_accessory/mam_snouts/frhino
+	name = "Horn (Top)"
+	icon_state = "frhino"
+	extra = TRUE
+	extra = MUTCOLORS3
+
+/datum/sprite_accessory/mam_snouts/frodent
+	name = "Rodent (Top)"
+	icon_state = "frodent"
+
+/datum/sprite_accessory/mam_snouts/fhusky
+	name = "Husky (Top)"
+	icon_state = "fhusky"
+
+/datum/sprite_accessory/mam_snouts/fotie
+	name = "Otie (Top)"
+	icon_state = "fotie"
+
+/datum/sprite_accessory/mam_snouts/fpede
+	name = "Scolipede (Top)"
+	icon_state = "fpede"
+
+/datum/sprite_accessory/mam_snouts/fsergal
+	name = "Sergal (Top)"
+	icon_state = "fsergal"
+
+/datum/sprite_accessory/mam_snouts/fshark
+	name = "Shark (Top)"
+	icon_state = "fshark"
+
+/datum/sprite_accessory/mam_snouts/ftoucan
+	name = "Toucan (Top)"
+	icon_state = "ftoucan"
+
+/datum/sprite_accessory/mam_snouts/fsharp
+	name = "Sharp (Top)"
+	icon_state = "fsharp"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/fround
+	name = "Round (Top)"
+	icon_state = "fround"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/fsharplight
+	name = "Sharp + Light (Top)"
+	icon_state = "fsharplight"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/mam_snouts/froundlight
+	name = "Round + Light (Top)"
+	icon_state = "froundlight"
+	color_src = MUTCOLORS
+
 /******************************************
 ***************** Ears ********************
 *******************************************/
