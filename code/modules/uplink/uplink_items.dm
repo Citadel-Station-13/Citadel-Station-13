@@ -1357,7 +1357,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/clumsyDNA
 	name = "Clumsy Clown DNA"
-	desc = "A DNA inject that has been loaded with the clown gene that makes people clumsy. \
+	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy. \
 	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try useing this on HOS to see how many times they shoot themselfs in the foot!"
 	cost = 3
 	item = /obj/item/dnainjector/clumsymut
