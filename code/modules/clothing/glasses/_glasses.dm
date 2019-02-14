@@ -67,6 +67,11 @@
 	user.visible_message("<span class='suicide'>[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
+/obj/item/clothing/glasses/meson/prescription
+	name = "prescription optical meson scanner"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions. This one has prescription lens fitted in."
+	vision_correction = 1
+
 /obj/item/clothing/glasses/meson/night
 	name = "night vision meson scanner"
 	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
@@ -159,6 +164,7 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/regular
