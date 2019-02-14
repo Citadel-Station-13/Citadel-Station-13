@@ -62,13 +62,15 @@
 	name = "L-type Blood"
 	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
-	wanted_types = list(/obj/item/reagent_containers/blood/lizard)
+	required_count = 200
+	wanted_types = list/datum/reagent/blood/L)
 
 /datum/bounty/item/medical/bloodu
 	name = "U-Type Blood"
 	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
-	wanted_types = list(/obj/item/reagent_containers/blood/universal)
+	required_count = 200
+	wanted_types = list(/datum/reagent/blood/U)
 
 /datum/bounty/item/medical/blood
 	name = "Generic Blood"
@@ -97,3 +99,24 @@
 	description = "After a new chemist mixed up some water and a banana, we lost our only chem dispenser. Please send us a replacement and you will be compensated."
 	reward = 7000
 	wanted_types = list(/obj/machinery/chem_dispenser)
+
+/datum/bounty/item/medical/advhealthscaner
+	name = "Advanced Health Analyzer"
+	description = "A ERT Medical unit needs the new 'advanced health analyzer', for a mission at a Station 4. Can you send some?."
+	reward = 4000
+	required_count = 5
+	wanted_types = list(/obj/item/healthanalyzer/advanced)
+
+/datum/bounty/item/medical/wallmounts
+	name = "Defibrillator wall mounts"
+	description = "New Space OSHA regulation state that are new cloning medical wing needs a few 'Easy to access defibrillartors'. Can you send a few before we get a lawsuit?"
+	reward = 5000
+	required_count = 3
+	wanted_types = list(/obj/machinery/defibrillator_mount)
+
+/datum/bounty/item/medical/defibrillator
+	name = "New defibillators"
+	description = "After years of storge are defibrillator units have become more liabilities then we want. Please send us some new ones to replace these old ones."
+	reward = 5000
+	required_count = 5
+	wanted_types = list(/obj/item/defibrillator)
