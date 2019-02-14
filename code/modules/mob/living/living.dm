@@ -700,9 +700,13 @@
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
 					if(who.dropItemToGround(what))
+						if(!put_in_hands(what))
+							what.forceMove(drop_location())
 						log_combat(src, who, "stripped [what] off")
 			if(what == who.get_item_by_slot(where))
 				if(who.dropItemToGround(what))
+					if(!put_in_hands(what))
+						what.forceMove(drop_location())
 					log_combat(src, who, "stripped [what] off")
 
 // The src mob is trying to place an item on someone
