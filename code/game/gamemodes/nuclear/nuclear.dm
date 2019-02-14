@@ -4,7 +4,7 @@
 	false_report_weight = 10
 	required_players = 28 // 30 players - 3 players to be the nuke ops = 25 players remaining
 	required_enemies = 2
-	recommended_enemies = 4
+	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 7
 
