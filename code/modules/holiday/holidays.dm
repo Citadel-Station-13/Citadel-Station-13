@@ -86,8 +86,8 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 13
-	end_day = 15
+	begin_day = 12
+	end_day = 16
 	begin_month = FEBRUARY
 
 /datum/holiday/valentines/getStationPrefix()
