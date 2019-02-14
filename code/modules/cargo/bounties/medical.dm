@@ -72,7 +72,7 @@
 	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
 	required_count = 200
-	wanted_types = (/datum/reagent/blood)
+	wanted_types = (U,/datum/reagent/blood)
 	if(istype(U,/datum/reagent/blood))
 	wanted_types += U 
 
