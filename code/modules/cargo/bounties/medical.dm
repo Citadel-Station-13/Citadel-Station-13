@@ -63,14 +63,14 @@
 	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
 	required_count = 200
-	wanted_types = list(/datum/reagent/blood/L)
+	wanted_types = list(/datum/reagent/blood/lizard)
 
 /datum/bounty/item/medical/bloodu
 	name = "U-Type Blood"
 	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
 	required_count = 200
-	wanted_types = list(/datum/reagent/blood/U)
+	wanted_types = list(/datum/reagent/blood/universal)
 
 /datum/bounty/item/medical/blood
 	name = "Generic Blood"
