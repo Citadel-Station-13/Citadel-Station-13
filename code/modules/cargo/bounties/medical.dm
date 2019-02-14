@@ -63,7 +63,7 @@
 	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
 	required_count = 200
-	wanted_types = list/datum/reagent/blood/L)
+	wanted_types = list(/datum/reagent/blood/L)
 
 /datum/bounty/item/medical/bloodu
 	name = "U-Type Blood"
