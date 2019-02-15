@@ -1357,15 +1357,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/clumsyDNA
 	name = "Clumsy Clown DNA"
-	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy. \
-	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try useing this on HOS to see how many times they shoot themselfs in the foot!"
+	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy.. \
+	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
 	cost = 3
 	item = /obj/item/dnainjector/clumsymut
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/anitclumsyDNA
 	name = "Clown punishment"
-	desc = "HONK Looks like one of are angents got, got! \
+	desc = "HONK! Looks like one of our agents got got! \
 	We got a barrle of laughs for you, HONK, we got a Mime DNA injector HONK! Use this on a clown HONK to make them not clusmy HONK!"
 	cost = 1 //If Hos or warden gets a uplink they should be able to get it for allmost free
 	item = /obj/item/dnainjector/clumsymut
