@@ -281,7 +281,10 @@ SUBSYSTEM_DEF(shuttle)
 			if(emergency.timeLeft(1) < emergencyCallTime)
 				return
 		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.6)
+				return
+		if(SEC_LEVEL_AMBER)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
 				return
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)

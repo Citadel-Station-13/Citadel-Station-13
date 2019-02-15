@@ -71,7 +71,7 @@
 	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
 	invocations = list("Divinity, show them your light!")
 	whispered = TRUE
-	channel_time = 30
+	channel_time = 20 // I think making kindle channel a third of the time less is a good make up for the fact that it silences people for such a little amount of time.
 	power_cost = 125
 	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
 	tier = SCRIPTURE_DRIVER
@@ -112,21 +112,21 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
-//Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
+//Vanguard: Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of greatly increased stamina and stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
-	power_cost = 25
+	power_cost = 75
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
+	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
 	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)

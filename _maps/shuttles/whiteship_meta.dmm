@@ -34,6 +34,7 @@
 /area/shuttle/abandoned/crew)
 "ah" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
@@ -458,6 +459,7 @@
 /area/shuttle/abandoned/crew)
 "aI" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -583,6 +585,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -704,6 +707,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -1893,6 +1897,7 @@
 /area/shuttle/abandoned/bridge)
 "ch" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1915,6 +1920,7 @@
 /area/shuttle/abandoned/engine)
 "cj" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -3094,6 +3100,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -3164,6 +3171,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -3432,6 +3440,7 @@
 /obj/item/shovel,
 /obj/item/pickaxe,
 /obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/item/mining_scanner,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -3514,6 +3523,7 @@
 /area/shuttle/abandoned/bar)
 "dP" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -3808,6 +3818,7 @@
 /area/shuttle/abandoned/cargo)
 "ej" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

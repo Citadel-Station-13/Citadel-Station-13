@@ -42,6 +42,18 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
+/obj/item/extinguisher/mini/family
+	name = "pocket fire extinguisher"
+	desc = "A old fashen pocket fire extinguisher that has been modified with a larger water tank, and a small high-power sprayer. It feels cool to the touch and has a small humming to it..."
+	icon_state = "miniFE0"
+	item_state = "miniFE"
+	throwforce = 1
+	w_class = WEIGHT_CLASS_SMALL
+	force = 2
+	max_water = 40
+	power = 7
+	cooling_power = 3
+
 /obj/item/extinguisher/Initialize()
 	. = ..()
 	create_reagents(max_water)

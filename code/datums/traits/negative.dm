@@ -269,14 +269,32 @@
 
 /datum/quirk/phobia
 	name = "Phobia"
-	desc = "You've had a traumatic past, that has scared you for life while dealing with your greatest fear."
+	desc = "You've had a traumatic past, one that has scarred you for life, and cripples you when dealing with your greatest fears."
 	value = -2 // It can hardstun you. You can be a job that your phobia targets...
-	gain_text = "<span class='danger'>You feel your fears manifest themselfs.</span>"
-	lose_text = "<span class='notice'>You feel your fears fade away.</span>"
-	medical_record_text = "Patient has an extreme or irrational fear of or aversion to something."
+	gain_text = "<span class='danger'>You begin to tremble as an immeasurable fear grips your mind.</span>"
+	lose_text = "<span class='notice'>Your confidence wipes away the fear that had been plaguing you.</span>"
+	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
-	
+
 /datum/quirk/phobia/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
+	value = -2 //HALP MAINTS
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
+	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
+	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+
+/datum/quirk/mute/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
+		qdel(src)

@@ -264,6 +264,8 @@
 				if(pocket_item)
 					if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
 						dropItemToGround(pocket_item)
+						if(!put_in_hands(pocket_item))
+							pocket_item.forceMove(drop_location())
 				else
 					if(place_item)
 						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
@@ -599,11 +601,7 @@
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-		threatcount += 6 //fuk u antags <3
-
-	//Check for nonhuman scum
-	if(dna && dna.species.id && dna.species.id != "human")
-		threatcount += 1
+		threatcount += 4 //fuk u antags <3			//no you
 
 	//mindshield implants imply trustworthyness
 	if(has_trait(TRAIT_MINDSHIELD))

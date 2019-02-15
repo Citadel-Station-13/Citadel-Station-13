@@ -37,6 +37,7 @@ Credit where due:
 4. PJB3005 from /vg/ for the failed continuation PR
 5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
 6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
+7. Clockwork cult code as of now, at least the one being pulled from Citadel Station's master branch, is being, or already is, fixed by Coolgat3 and Avunia.
 
 */
 
@@ -267,7 +268,7 @@ Credit where due:
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
-	uniform = /obj/item/clothing/under/chameleon/ratvar
+	uniform = /obj/item/clothing/under/rank/engineer //no more chameleon suit for them, as requested
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset

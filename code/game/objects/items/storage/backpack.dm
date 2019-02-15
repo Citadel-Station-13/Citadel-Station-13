@@ -441,6 +441,23 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
 
+/obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+	name = "advanced surgery duffel bag"
+	desc = "A large duffel bag for holding surgical tools. Bears the logo of an advanced med-tech firm."
+
+/obj/item/storage/backpack/duffelbag/syndie/surgery_adv/PopulateContents()
+	new /obj/item/hemostat/adv(src)
+	new /obj/item/circular_saw/adv(src)
+	new /obj/item/scalpel/adv(src)
+	new /obj/item/retractor/adv(src)
+	new /obj/item/cautery/adv(src)
+	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/storage/firstaid/tactical(src)
+	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/mmi/syndie(src)
+
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
 	desc = "A large duffel bag for holding extra weapons ammunition and supplies."

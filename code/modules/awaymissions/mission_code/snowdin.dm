@@ -10,6 +10,10 @@
 	name = "Snowdin Tundra Plains"
 	icon_state = "awaycontent25"
 
+/area/awaymission/snowdin/outside/vip
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent25"
+
 /area/awaymission/snowdin/post
 	name = "Snowdin Outpost"
 	icon_state = "awaycontent2"
@@ -116,7 +120,7 @@
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	requires_power = TRUE
+	requires_power = FALSE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"

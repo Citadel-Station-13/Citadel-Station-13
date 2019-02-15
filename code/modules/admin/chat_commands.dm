@@ -102,6 +102,15 @@ GLOBAL_LIST(round_end_notifiees)
 		return "Query produced no output"
 	var/list/text_res = results.Copy(1, 3)
 	var/list/refs = results.len > 3 ? results.Copy(4) : null
+	if(refs)
+		var/list/L = list()
+		for(var/ref in refs)
+			var/atom/A = locate(ref)
+			if(A)
+				L += "[A]"
+			else
+				L += "[ref]"
+		refs = L
 	. = "[text_res.Join("\n")][refs ? "\nRefs: [refs.Join(" ")]" : ""]"
 
 /datum/tgs_chat_command/reload_admins
