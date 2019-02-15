@@ -1366,8 +1366,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/role_restricted/anitclumsyDNA
 	name = "Clown punishment"
 	desc = "HONK! Looks like one of our agents got got! \
-	We got a barrle of laughs for you, HONK, we got a Mime DNA injector HONK! Use this on a clown HONK to make them not clusmy HONK!"
-	cost = 1 //If Hos or warden gets a uplink they should be able to get it for allmost free
+	We got a barrel of laughs for you, HONK, we got a Mime DNA injector HONK! Use this on a clown HONK to make them not clumsy HONK!"
+	cost = 1 //If Hos or warden gets an uplink they should be able to get it for almost free
 	item = /obj/item/dnainjector/clumsymut
 	restricted_roles = list("Warden", "Head of Security")
 
