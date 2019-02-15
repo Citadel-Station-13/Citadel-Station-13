@@ -67,6 +67,16 @@
 	category = list("Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/void_cell
+	name = "Void Cell"
+	desc = "A power cell that holds endless energy."
+	id = "void_cell"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 860, MAT_DIAMOND = 900, MAT_TITANIUM = 900, MAT_BLUESPACE = 200, MAT_PLASMA = 3000)
+	build_path = /obj/item/stock_parts/cell/infinite/abductor
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/inducer
 	name = "Inducer"
 	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
@@ -98,3 +108,24 @@
 	id = "mrspacman"
 	build_path = /obj/item/circuitboard/machine/pacman/mrs
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/rtg
+	name = "Machine Design (radioisotope thermoelectric generator)"
+	desc = "The circuit board that for a RTG generator."
+	id = "rtg"
+	build_path = /obj/item/circuitboard/machine/rtg
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/rtg_advanced
+	name = "Machine Design (advanced radioisotope thermoelectric generator)"
+	desc = "The circuit board that for a advanced RTG generator."
+	id = "rtg_advanced"
+	build_path = /obj/machinery/power/rtg/advanced
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/rtg_advanced
+	name = "Machine Design (Void RTG)"
+	desc = "The circuit board that for a alien RTG generator."
+	id = "rtg_advanced"
+	build_path = /obj/item/circuitboard/machine/abductor/core
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
