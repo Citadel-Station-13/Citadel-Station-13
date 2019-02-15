@@ -130,6 +130,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	var/troll_caste = ""
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -290,6 +292,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 			else if(use_skintones || mutant_colors)
+				dat += "</td>"
+
+			if(pref_species.has_castes)
+
+				dat += "<td valign='top' width='21%'>"
+
+				dat += "<h3>Blood Color</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=t_caste;task=input'>[troll_caste]</a><BR>"
+
 				dat += "</td>"
 
 			if(HAIR in pref_species.species_traits)
@@ -1278,6 +1290,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
+				if("t_caste")
+					troll_caste = random_troll_caste()
+					eye_color = get_color_from_caste(troll_caste)
+				if("")
+
 				if("bag")
 					backbag = pick(GLOB.backbaglist)
 				if("all")
@@ -1756,6 +1773,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
+				if("t_caste")
+					var/new_t_caste = input(user, "Choose your character's blood color:", "Character Preference") as null|anything in GLOB.troll_castes
+					if(new_t_caste)
+						troll_caste = new_t_caste
+
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
 					if(new_ooccolor)
@@ -2046,6 +2068,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.eye_color = eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
+	if (pref_species.has_castes)
+		character.eye_color=get_color_from_caste(troll_caste)
 	if(organ_eyes)
 		if(!initial(organ_eyes.eye_color))
 			organ_eyes.eye_color = eye_color
