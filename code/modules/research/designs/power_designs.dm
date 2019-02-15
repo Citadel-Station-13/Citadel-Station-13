@@ -123,9 +123,9 @@
 	build_path = /obj/machinery/power/rtg/advanced
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/rtg_advanced
+/datum/design/board/rtg_void
 	name = "Machine Design (Void RTG)"
 	desc = "The circuit board that for a alien RTG generator."
-	id = "rtg_advanced"
+	id = "rtg_void"
 	build_path = /obj/item/circuitboard/machine/abductor/core
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
