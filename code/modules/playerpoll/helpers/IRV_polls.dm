@@ -18,3 +18,4 @@
 		var/text = query_irv_options.item[2]
 		.["[id]"] = text
 	usr = oldusr
+
