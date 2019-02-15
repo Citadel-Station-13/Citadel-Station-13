@@ -190,7 +190,7 @@
 	display_name = "Advanced Power Manipulation"
 	description = "How to get more zap."
 	prereq_ids = list("engineering")
-	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "mrspacman", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
+	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
@@ -228,7 +228,7 @@
 	display_name = "Bluespace Power Technology"
 	description = "Even more powerful.. power!"
 	prereq_ids = list("adv_power", "adv_bluespace")
-	design_ids = list("bluespace_cell", "quadratic_capacitor")
+	design_ids = list("bluespace_cell", "quadratic_capacitor", "mrspacman")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -348,7 +348,7 @@
 	display_name = "Advanced Electromagnetic Theory"
 	description = "Determining whether reversing the polarity will actually help in a given situation."
 	prereq_ids = list("emp_basic")
-	design_ids = list("ultra_micro_laser")
+	design_ids = list("ultra_micro_laser", "rtg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
@@ -357,7 +357,7 @@
 	display_name = "Quantum Electromagnetic Technology"	//bs
 	description = "Even better electromagnetic technology."
 	prereq_ids = list("emp_adv")
-	design_ids = list("quadultra_micro_laser")
+	design_ids = list("quadultra_micro_laser", "rtg_advanced")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
@@ -978,7 +978,7 @@
 	display_name = "Alien Engineering"
 	description = "Alien engineering tools"
 	prereq_ids = list("alientech", "adv_engi")
-	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool")
+	design_ids = list("alien_wrench", "alien_wirecutters", "alien_screwdriver", "alien_crowbar", "alien_welder", "alien_multitool", "rtg_void" "void_cell")
 	boost_item_paths = list(/obj/item/screwdriver/abductor, /obj/item/wrench/abductor, /obj/item/crowbar/abductor, /obj/item/multitool/abductor,
 	/obj/item/weldingtool/abductor, /obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor, /obj/item/abductor_baton, /obj/item/abductor)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
