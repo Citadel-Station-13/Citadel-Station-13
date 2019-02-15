@@ -1263,6 +1263,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Husky"
 	icon_state = "husky"
 
+/datum/sprite_accessory/mam_body_markings/hyena
+	name = "Hyena"
+	icon_state = "hyena"
+
 /datum/sprite_accessory/mam_body_markings/lab
 	name = "Lab"
 	icon_state = "lab"
