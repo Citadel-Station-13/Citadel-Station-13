@@ -6,3 +6,4 @@ PLAYERPOLL_PROTECT_DATUM(/datum/poll_response)
 	var/ip			//IP of user
 	var/computerid	//ComputerID of user
 	var/datetime	//date/time of user
+	var/rank		//rank of user

@@ -2201,6 +2201,7 @@
 #include "code\modules\photography\photos\album.dm"
 #include "code\modules\photography\photos\frame.dm"
 #include "code\modules\photography\photos\photo.dm"
+#include "code\modules\playerpoll\_includes.dm"
 #include "code\modules\playerpoll\helpers\datetime.dm"
 #include "code\modules\playerpoll\helpers\IRV_polls.dm"
 #include "code\modules\playerpoll\helpers\player_alts.dm"
