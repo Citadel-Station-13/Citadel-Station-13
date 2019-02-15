@@ -58,7 +58,21 @@
 	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/cat)
 
-/datum/bounty/item/medical/bloodl
+/datum/bounty/item/medical/blood
+	name = "Generic Blood"
+	description = "Nanotrasen's annual blood drive is back up to full speed, following the garlic incident. Good blood in good volumes accepted for Credit returns."
+	reward = 3500
+	required_count = 600
+	wanted_types = list(/datum/reagent/blood)
+
+/* If anyone wants to try and fix/work, go for it
+/datum/bounty/item/medical/medibot // Mob so this dosn't work yet*
+	name = "Medibot"
+	description = "A sister station is dealing with um problem, they need a medibot to help treat their wounded..."
+	reward = 3000
+	wanted_types = list(/mob/living/simple_animal/bot/medbot)
+
+/datum/bounty/item/medical/bloodl //Dosnt work do to how blood is yet*
 	name = "L-type Blood"
 	description = "After a small scuffle, a few of our lizard employees need another blood transfusion."
 	reward = 4000
@@ -67,7 +81,7 @@
 	if(istype(L,/datum/reagent/blood))
 	wanted_types += L 
 
-/datum/bounty/item/medical/bloodu
+/datum/bounty/item/medical/bloodu //Dosnt work do to how blood is yet*
 	name = "U-Type Blood"
 	description = "After dealing with a small revolt in a local penal colony, the colony's anemic CMO needs blood, urgently. With his compromised immune system, only the best blood can be used."
 	reward = 5500 // Rarer blood
@@ -76,20 +90,6 @@
 	if(istype(U,/datum/reagent/blood))
 	wanted_types += U 
 
-
-/datum/bounty/item/medical/blood
-	name = "Generic Blood"
-	description = "Nanotrasen's annual blood drive is back up to full speed, following the garlic incident. Good blood in good volumes accepted for Credit returns."
-	reward = 3500
-	required_count = 600
-	wanted_types = list(/datum/reagent/blood)
-
-/*
-/datum/bounty/item/medical/medibot // Mob so this dosn't work yet*
-	name = "Medibot"
-	description = "A sister station is dealing with um problem, they need a medibot to help treat their wounded..."
-	reward = 3000
-	wanted_types = list(/mob/living/simple_animal/bot/medbot)
 */
 
 /datum/bounty/item/medical/surgery
