@@ -15,7 +15,7 @@
 
 /obj/item/camera/spooky/family
 	name = "fancy camera"
-	desc = "A fancy camera that has the latest magnifier mods and double the film load! With a complex double lens set with holy water to be able to see the dead, at laest to the Chaplain...
+	desc = "A fancy camera that has the latest magnifier mods and double the film load! With a complex double lens set with holy water to be able to see the dead, at laest to the Chaplain..."
 	see_ghosts = CAMERA_SEE_GHOSTS_ORBIT
 	pictures_max = 30
 	pictures_left = 30
