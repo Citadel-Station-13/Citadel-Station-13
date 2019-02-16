@@ -220,6 +220,7 @@
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
 
+
 /obj/structure/fans/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
@@ -243,6 +244,26 @@
 	density = FALSE
 	icon_state = "fan_tiny"
 	buildstackamount = 2
+
+/obj/structure/fans/ac_small // quero ar condicionado, meu ventilador pifou
+	icon = 'icons/obj/lavaland/air_conditioner.dmi'
+	icon_state = "ac"
+	name = "air conditioner"
+	desc = "A device for cleaning air and controlling its humidity and temperature. "
+	layer = ABOVE_NORMAL_TURF_LAYER
+	anchored = TRUE
+	density = TRUE
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 5
+	CanAtmosPass = ATMOS_PASS_NO
+	light_range = 2
+	light_power = 1.2
+	light_color = "#2d7eff"
+	var/can_displace = TRUE
+	var/temperature = 5
+	resistance_flags = FLAMMABLE
+	climbable = TRUE
+	pass_flags = LETPASSTHROW
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
