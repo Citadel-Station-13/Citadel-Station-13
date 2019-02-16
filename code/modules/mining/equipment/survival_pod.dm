@@ -253,17 +253,19 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = TRUE
 	density = TRUE
-	var/buildstacktype = /obj/item/stack/sheet/metal
-	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
 	light_range = 2
 	light_power = 1.2
 	light_color = "#2d7eff"
+	max_integrity = 300
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 0)
 	var/can_displace = TRUE
-	var/temperature = 5
 	resistance_flags = FLAMMABLE
 	climbable = TRUE
 	pass_flags = LETPASSTHROW
+
+/obj/structure/fans/ac_small/attack_hand(mob/user)
+	playsound(loc, 'sound/misc/ac_beep.ogg', 50, 1)
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
