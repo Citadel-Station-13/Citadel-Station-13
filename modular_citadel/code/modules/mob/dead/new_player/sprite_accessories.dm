@@ -798,6 +798,24 @@
 	name = "Bear"
 	icon_state = "bear"
 
+/datum/sprite_accessory/mam_ears/bigwolf
+	name = "Big Wolf"
+	icon_state = "bigwolf"
+
+/datum/sprite_accessory/mam_ears/bigwolfinner
+	name = "Big Wolf (ALT)"
+	icon_state = "bigwolfinner"
+	hasinner = 1
+
+/datum/sprite_accessory/mam_ears/bigwolfdark
+	name = "Dark Big Wolf"
+	icon_state = "bigwolfdark"
+
+/datum/sprite_accessory/mam_ears/bigwolfinnerdark
+	name = "Dark Big Wolf (ALT)"
+	icon_state = "bigwolfinnerdark"
+	hasinner = 1
+
 /datum/sprite_accessory/mam_ears/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -815,10 +833,12 @@
 /datum/sprite_accessory/mam_ears/curled
 	name = "Curled Horn"
 	icon_state = "horn1"
+	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/mam_ears/deer
 	name = "Deer"
 	icon_state = "deer"
+	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/mam_ears/eevee
 	name = "Eevee"
@@ -893,15 +913,6 @@
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
-/datum/sprite_accessory/mam_ears/bigwolf
-	name = "Big Wolf"
-	icon_state = "bigwolf"
-
-/datum/sprite_accessory/mam_ears/bigwolfinner
-	name = "Big Wolf (White Inner)"
-	icon_state = "bigwolfinner"
-	hasinner = 1
 
 /******************************************
 *********** Tails and Things **************
