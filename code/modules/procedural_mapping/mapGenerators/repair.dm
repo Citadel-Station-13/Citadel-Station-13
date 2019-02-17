@@ -16,6 +16,9 @@
 	spawnableTurfs = list(/turf/closed/wall = 100)
 	allowAtomsOnSpace = TRUE
 
+GLOBAL_VAR_INIT(cache_map_reloading, FALSE)
+GLOBAL_LIST_EMPTY(cached_reload_maps)
+
 /datum/mapGeneratorModule/reload_station_map/generate()
 	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
@@ -26,7 +29,12 @@
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
 	for (var/path in SSmapping.config.GetFullMapPaths())
-		var/datum/parsed_map/parsed = load_map(file(path), 1, 1, z_offset, measureOnly = FALSE, no_changeturf = FALSE, cropMap=TRUE, x_lower = mother1.x_low, y_lower = mother1.y_low, x_upper = mother1.x_high, y_upper = mother1.y_high)
+		var/datum/parsed_map/parsed
+		if(cached_reload_maps[path])
+			parsed = cached_reload_maps[path]
+		else
+			parsed = new(file(path))
+		parsed.load(1, 1, z_offset, measureOnly = FALSE, no_changeturf = FALSE, cropMap=TRUE, x_lower = mother1.x_low, y_lower = mother1.y_low, x_upper = mother1.x_high, y_upper = mother1.y_high)
 		bounds = parsed?.bounds
 		z_offset += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
