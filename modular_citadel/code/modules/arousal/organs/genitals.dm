@@ -311,10 +311,6 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			if(S.alt_aroused)
-				G.aroused_state = H.isPercentAroused(G.aroused_amount)
-			else
-				G.aroused_state = FALSE
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 
 			if(S.center)

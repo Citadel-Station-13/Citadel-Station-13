@@ -2,6 +2,7 @@
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
+	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur", "legs")
@@ -45,20 +46,13 @@
 /datum/species/mammal/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/mammal/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	. = ..()
-
-/datum/species/mammal/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	. = ..()
-
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
 	id = "avian"
 	say_mod = "chirps"
 	default_color = "BCAC9B"
+	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
@@ -99,19 +93,12 @@
 /datum/species/avian/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/avian/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	. = ..()
-
-/datum/species/avian/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	. = ..()
-
 //AQUATIC//
 /datum/species/aquatic
 	name = "Aquatic"
 	id = "aquatic"
 	default_color = "BCAC9B"
+	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur", "legs")
@@ -153,19 +140,12 @@
 /datum/species/aquatic/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/aquatic/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	. = ..()
-
-/datum/species/aquatic/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	. = ..()
-
 //INSECT//
 /datum/species/insect
 	name = "Insect"
 	id = "insect"
 	default_color = "BCAC9B"
+	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur", "moth_wings")
@@ -206,14 +186,6 @@
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/insect/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	. = ..()
-
-/datum/species/insect/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	. = ..()
-
 //Alien//
 /datum/species/xeno
 	// A cloning mistake, crossing human and xenomorph DNA
@@ -221,6 +193,7 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
+	should_draw_citadel = TRUE
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur", "mam_body_markings")
@@ -235,7 +208,6 @@
 	liked_food = MEAT
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
-	C.draw_citadel_parts()
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
@@ -243,7 +215,6 @@
 	. = ..()
 
 /datum/species/xeno/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
-	C.draw_citadel_parts(TRUE)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
 		species_traits -= DIGITIGRADE
 	if(DIGITIGRADE in species_traits)

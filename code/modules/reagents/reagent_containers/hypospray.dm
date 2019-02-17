@@ -168,6 +168,13 @@
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
 
+/obj/item/reagent_containers/hypospray/medipen/firelocker
+	name = "fire treatment medipen"
+	desc = "A medipen that has been fulled with burn healing chemicals for personnel without advanced medical knowledge."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list("oxandrolone" = 5, "kelotane" = 10)
+
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water autoinjector"
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with 5 doses of a holy water mixture."

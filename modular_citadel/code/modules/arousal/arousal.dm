@@ -90,6 +90,24 @@
 /mob/living/proc/updatearousal()
 	update_arousal_hud()
 
+/mob/living/carbon/updatearousal()
+	. = ..()
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(istype(G))
+			var/datum/sprite_accessory/S
+			switch(G.type)
+				if(/obj/item/organ/genital/penis)
+					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/vagina)
+					S = GLOB.vagina_shapes_list[G.shape]
+				if(/obj/item/organ/genital/breasts)
+					S = GLOB.breasts_shapes_list[G.shape]
+			if(S?.alt_aroused)
+				G.aroused_state = isPercentAroused(G.aroused_amount)
+			else
+				G.aroused_state = FALSE
+			G.update_appearance()
+
 /mob/living/proc/update_arousal_hud()
 	return 0
 
@@ -175,6 +193,7 @@
 								"<span class='userdanger'>You have relieved yourself.</span>")
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 					setArousalLoss(min_arousal)
+					adjustStaminaLoss(40) //Refractory periods 
 					/*
 					switch(gender)
 						if(MALE)
@@ -215,6 +234,7 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
+			adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes
@@ -252,6 +272,7 @@
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE, mb_time = 30) //Used for climaxing with any living thing
@@ -284,6 +305,7 @@
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 	else //knots and other non-spilling orgasms
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids)
@@ -295,6 +317,7 @@
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
@@ -325,6 +348,7 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
+			adjustStaminaLoss(40) //Refractory periods 
 
 /mob/living/carbon/human/proc/pick_masturbate_genitals()
 	var/obj/item/organ/genital/ret_organ

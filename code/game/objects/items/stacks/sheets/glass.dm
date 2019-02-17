@@ -266,6 +266,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		if("large")
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
+	var/matrix/M = matrix(transform)
+	M.Turn(rand(-170, 170))
+	transform = M
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	. = ..()
