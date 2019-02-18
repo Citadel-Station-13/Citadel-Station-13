@@ -142,7 +142,7 @@
 
 /datum/chemical_reaction/fermis_plush/on_reaction(datum/reagents/holder, created_volume)
     var/location = get_turf(holder.my_atom)
-    for(var/i = 1, i <= created_volume, i++)
+    for(var/i = 1, i <= created_volume, i+=10)
         new /obj/item/toy/plush/catgirl/fermis(location)
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
