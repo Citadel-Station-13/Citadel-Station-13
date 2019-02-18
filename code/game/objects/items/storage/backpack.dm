@@ -247,7 +247,7 @@
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	w_class = WEIGHT_CLASS_BULKY //Can fit in backpacks itself.
 	level = 1
 	component_type = /datum/component/storage/concrete/secret_satchel
 
@@ -258,7 +258,7 @@
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 15
+	STR.max_combined_w_class = 6
 	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
@@ -437,6 +437,23 @@
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
 	new /obj/item/surgical_drapes(src)
+	new /obj/item/clothing/suit/straight_jacket(src)
+	new /obj/item/clothing/mask/muzzle(src)
+	new /obj/item/mmi/syndie(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+	name = "advanced surgery duffel bag"
+	desc = "A large duffel bag for holding surgical tools. Bears the logo of an advanced med-tech firm."
+
+/obj/item/storage/backpack/duffelbag/syndie/surgery_adv/PopulateContents()
+	new /obj/item/hemostat/adv(src)
+	new /obj/item/circular_saw/adv(src)
+	new /obj/item/scalpel/adv(src)
+	new /obj/item/retractor/adv(src)
+	new /obj/item/cautery/adv(src)
+	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)

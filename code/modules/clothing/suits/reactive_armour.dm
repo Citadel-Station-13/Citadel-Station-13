@@ -36,7 +36,8 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	hit_reaction_chance = 50
+	hit_reaction_chance = 50 // Only on the chest yet blocks all attacks?
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
@@ -64,8 +65,9 @@
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
-	var/tele_range = 6
-	var/rad_amount= 15
+	var/tele_range = 8
+	var/rad_amount = 60
+	var/rad_amount_before = 120
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -79,6 +81,7 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, 1)
 		var/list/turfs = new/list()
+		var/turf/old = get_turf(src)
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
 				continue
@@ -93,7 +96,8 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		radiation_pulse(old, rad_amount_before)
+		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 	return 0
@@ -126,6 +130,7 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
+	reactivearmor_cooldown_duration = 65
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -139,7 +144,7 @@
 		E.Copy_Parent(owner, 50)
 		E.GiveTarget(owner) //so it starts running right away
 		E.Goto(owner, E.move_to_delay, E.minimum_distance)
-		owner.alpha = 0
+		owner.alpha = 30
 		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
 		spawn(40)
 			owner.alpha = initial(owner.alpha)
@@ -152,9 +157,12 @@
 	name = "reactive tesla armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
 	siemens_coefficient = -1
+	reactivearmor_cooldown_duration = 20
 	var/tesla_power = 25000
 	var/tesla_range = 20
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
+	var/legacy = FALSE
+	var/legacy_dmg = 30
 
 /obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()
@@ -177,7 +185,15 @@
 			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</span>")
 			return
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out arcs of lightning!</span>")
-		tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		if(!legacy)
+			tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		else
+			for(var/mob/living/M in view(7, owner))
+				if(M == owner)
+					continue
+				owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+				M.adjustFireLoss(legacy_dmg)
+				playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 
@@ -185,6 +201,7 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse
 	name = "reactive repulse armor"
+	reactivearmor_cooldown_duration = 20
 	desc = "An experimental suit of armor that violently throws back attackers."
 
 /obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -210,6 +227,7 @@
 
 /obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armor"
+	reactivearmor_cooldown_duration = 0
 	desc = "If you can't beat the memes, embrace them."
 	var/tele_range = 10
 
@@ -221,7 +239,7 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
 		owner.Knockdown(40)
 		var/list/turfs = new/list()

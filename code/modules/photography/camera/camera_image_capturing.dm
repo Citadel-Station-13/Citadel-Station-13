@@ -1,6 +1,6 @@
 /obj/effect/appearance_clone
 
-/obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize().
+/obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
 	if(istype(A))
 		appearance = A.appearance
 		dir = A.dir
@@ -73,7 +73,8 @@
 			xo += AM.step_x
 			yo += AM.step_y
 		var/icon/img = getFlatIcon(A)
-		res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
+		if(img)
+			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 		CHECK_TICK
 
 	if(!silent)

@@ -57,32 +57,35 @@
 
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
-
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/area/A = src.loc
 	A = A.loc
 
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return
-	else
+
+	if(stat & BROKEN)
+		icon_state = "firex"
+		return
+
+	if(stat & NOPOWER)
 		icon_state = "fire0"
+		return
 
-		if(stat & BROKEN)
-			icon_state = "firex"
-			return
+	if(is_station_level(z))
+		add_overlay("overlay_[GLOB.security_level]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_[SEC_LEVEL_GREEN]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
-		if(stat & NOPOWER)
-			return
-
-		if(is_station_level(z))
-			add_overlay("overlay_[GLOB.security_level]")
-		else
-			add_overlay("overlay_[SEC_LEVEL_GREEN]")
-
-		if(detecting)
-			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
-		else
-			add_overlay("overlay_fire")
+	if(detecting)
+		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[A.fire ? "fire" : "clear"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_fire")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_fire", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -285,3 +288,40 @@
 		set_light(l_power = 0.8)
 	else
 		set_light(l_power = 0)
+
+/*
+ * Return of Party button
+ */
+
+/area
+	var/party = FALSE
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+	var/static/party_overlay
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = get_area(src)
+	if (!A || !A.party)
+		return
+	A.party = FALSE
+	A.cut_overlay(party_overlay)
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = get_area(src)
+	if (!A || A.party || A.name == "Space")
+		return
+	A.party = TRUE
+	if (!party_overlay)
+		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
+	A.add_overlay(party_overlay)
+
+/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
+	. = ..()
+	var/area/A = get_area(src)
+	.["alarm"] = A && A.party

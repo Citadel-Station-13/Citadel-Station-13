@@ -97,6 +97,11 @@
 //Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
+#define ismammal(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/mammal) )
+#define isavian(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/avian) )
+#define isaquatic(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/aquatic) )
+#define isinsect(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/insect) )
+#define isxenoperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/xeno) )
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
@@ -119,7 +124,10 @@
 #define EATING_NOISES	2
 #define DIGESTION_NOISES 4
 
-#define TOGGLES_CITADEL (MEDIHOUND_SLEEPER|EATING_NOISES|DIGESTION_NOISES)
+#define TOGGLES_CITADEL (EATING_NOISES|DIGESTION_NOISES)
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
+
+//belly sound pref things
+#define NORMIE_HEARCHECK 4

@@ -66,8 +66,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define SHOES_LAYER				19
 #define GLOVES_LAYER			18
 #define EARS_LAYER				17
-#define SUIT_LAYER				16
-#define BODY_TAUR_LAYER			15
+#define BODY_TAUR_LAYER			16
+#define SUIT_LAYER				15
 #define GENITALS_FRONT_LAYER	14		//Draws some genitalia above clothes and the TAUR body if need be.
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
@@ -98,8 +98,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Security levels
 #define SEC_LEVEL_GREEN	0
 #define SEC_LEVEL_BLUE	1
-#define SEC_LEVEL_RED	2
-#define SEC_LEVEL_DELTA	3
+#define SEC_LEVEL_AMBER 2
+#define SEC_LEVEL_RED	3
+#define SEC_LEVEL_DELTA	4
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list
@@ -173,6 +174,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+#define BLOOD_AMOUNT_PER_DECAL		20
 
 //suit sensors: sensor_mode defines
 
@@ -448,6 +450,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically, overrides TEST_RUN_PARAMETER
 #define NO_INIT_PARAMETER "no-init"
+//Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
 
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
@@ -456,7 +460,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //Filters
 #define AMBIENT_OCCLUSION list("type"="drop_shadow","x"=0,"y"=-2,"size"=4,"border"=4,"color"="#04080FAA")
-#define EYE_BLUR list("type"="blur", "size"=3)
+#define EYE_BLUR(size) list("type"="blur", "size"=size)
 #define GRAVITY_MOTION_BLUR list("type"="motion_blur","x"=0,"y"=0)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav
@@ -467,3 +471,8 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+#define AREASELECT_CORNERA "corner A"
+#define AREASELECT_CORNERB "corner B"

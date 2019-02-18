@@ -23,6 +23,12 @@
 	var/obj/item/broken_bottle/B = new (loc)
 	if(!ranged)
 		thrower.put_in_hands(B)
+	else
+		var/matrix/M = matrix(B.transform)
+		M.Turn(rand(-170, 170))
+		B.transform = M
+		B.pixel_x = rand(-12, 12)
+		B.pixel_y = rand(-12, 12)
 	B.icon_state = icon_state
 
 	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
@@ -105,7 +111,7 @@
 				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
-	add_logs(user, target, "attacked", src)
+	log_combat(user, target, "attacked", src)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	SplashReagents(target)

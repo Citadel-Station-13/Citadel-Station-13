@@ -41,8 +41,10 @@ Difficulty: Hard
 	melee_damage_upper = 40
 	speed = 1
 	move_to_delay = 10
+	ranged_cooldown_time = 10
 	ranged = 1
 	pixel_x = -32
+	gender = MALE
 	del_on_death = 1
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
@@ -52,6 +54,8 @@ Difficulty: Hard
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
+	do_footstep = TRUE
+
 /obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
@@ -60,7 +64,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = CLAMP(round((health/maxHealth) * 10), 5, 10)
+	move_to_delay = CLAMP(round((health/maxHealth) * 10), 3, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
@@ -89,8 +93,8 @@ Difficulty: Hard
 			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1
+	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
+		bloodspell.phased = TRUE
 	internal = new/obj/item/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
@@ -147,7 +151,7 @@ Difficulty: Hard
 	Goto(target, move_to_delay, minimum_distance)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Collide(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)

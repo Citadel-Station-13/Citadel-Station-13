@@ -46,7 +46,7 @@
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
-		add_logs(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.log_list())
 
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
@@ -56,6 +56,7 @@
 	return 1
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
+	. = ..()
 	if(!proximity)
 		return
 
@@ -93,8 +94,6 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else
-
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.is_hot()
 	if(hotness && reagents)
@@ -121,6 +120,12 @@
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
 	B.name = "broken [name]"
+	if(ranged)
+		var/matrix/M = matrix(B.transform)
+		M.Turn(rand(-170, 170))
+		B.transform = M
+		B.pixel_x = rand(-12, 12)
+		B.pixel_y = rand(-12, 12)
 	if(prob(33))
 		new/obj/item/shard(drop_location())
 	playsound(src, "shatter", 70, 1)
@@ -297,6 +302,12 @@
 	B.force = 0
 	B.throwforce = 0
 	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
+	if(ranged)
+		var/matrix/M = matrix(B.transform)
+		M.Turn(rand(-170, 170))
+		B.transform = M
+		B.pixel_x = rand(-12, 12)
+		B.pixel_y = rand(-12, 12)
 	transfer_fingerprints_to(B)
 	qdel(src)
 

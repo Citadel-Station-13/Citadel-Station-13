@@ -99,6 +99,8 @@ GLOBAL_LIST(labor_sheet_values)
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), usr))
 				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
+			else if(!check_auth())
+				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released when they reach their point goal.</span>")
 			else
 				switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 					if(1)
@@ -135,6 +137,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 
 /obj/machinery/mineral/stacking_machine/laborstacker
+	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)

@@ -67,6 +67,11 @@
 	user.visible_message("<span class='suicide'>[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
+/obj/item/clothing/glasses/meson/prescription
+	name = "prescription optical meson scanner"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions. This one has prescription lens fitted in."
+	vision_correction = 1
+
 /obj/item/clothing/glasses/meson/night
 	name = "night vision meson scanner"
 	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
@@ -112,6 +117,11 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/night/prescription
+	name = "prescription night vision goggles"
+	desc = "NVGs but for those with nearsightedness."
+	vision_correction = 1
+
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
@@ -154,6 +164,7 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/regular

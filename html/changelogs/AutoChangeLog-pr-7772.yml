@@ -1,0 +1,5 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - tweak: "Adds a mixed clothing closet to Deltastation Dorms."
+  - tweak: "Adds a bottle of unstable mutagen to Botany, on account of its distance from Chemistry."

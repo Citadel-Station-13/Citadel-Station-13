@@ -1,5 +1,6 @@
 /mob/living
 	var/recoveringstam = FALSE
+	var/incomingstammult = 1
 	var/bufferedstam = 0
 	var/stambuffer = 20
 	var/stambufferregentime
@@ -34,8 +35,6 @@
 /mob/living/Move(atom/newloc, direct)
 	. = ..()
 	if(.)
-		if(makesfootstepsounds)
-			CitFootstep(newloc)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
 
@@ -103,9 +102,9 @@
 			return FALSE
 
 /mob/living/carbon/update_stamina()
-	var/total_health = (min(health*2,100) - getStaminaLoss())
-	if(getStaminaLoss())
-		if(!recoveringstam && total_health <= STAMINA_CRIT_TRADITIONAL && !stat)
+	var/total_health = getStaminaLoss()
+	if(total_health)
+		if(!recoveringstam && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			resting = TRUE
 			if(combatmode)
@@ -113,7 +112,7 @@
 			recoveringstam = TRUE
 			filters += CIT_FILTER_STAMINACRIT
 			update_canmove()
-	if(recoveringstam && total_health >= STAMINA_SOFTCRIT_TRADITIONAL)
+	if(recoveringstam && total_health <= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		recoveringstam = FALSE
 		filters -= CIT_FILTER_STAMINACRIT

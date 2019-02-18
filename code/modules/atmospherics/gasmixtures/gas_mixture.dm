@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -84,13 +85,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	. = ..()
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
-
-//prefer this in performance critical areas
-#define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
-	}
 
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
@@ -427,14 +421,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		for(var/r in SSair.gas_reactions)
 			var/datum/gas_reaction/reaction = r
 
-			var/list/min_reqs = reaction.min_requirements.Copy()
+			var/list/min_reqs = reaction.min_requirements
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
+				if (id == "TEMP" || id == "ENER")
+					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
@@ -443,13 +437,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
 				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
 
-			var/list/max_reqs = reaction.max_requirements.Copy()
+			var/list/max_reqs = reaction.max_requirements
 			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
 			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
 				continue
-			max_reqs -= "TEMP"
-			max_reqs -= "ENER"
 			for(var/id in max_reqs)
+				if(id == "TEMP" || id == "ENER")
+					continue
 				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()

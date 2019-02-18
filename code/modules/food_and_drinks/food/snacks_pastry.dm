@@ -28,12 +28,12 @@
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.mind && H.mind.assigned_role == "Security Officer" && !H.has_trait(TRAIT_AGEUSIA))
+			if(H.mind && H.mind.assigned_role == "Security Officer" || H.mind.assigned_role == "Detective" || H.mind.assigned_role == "Warden" || H.mind.assigned_role == "Head of Security" && !H.has_trait(TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
 				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 				if(mood)
-					mood.add_event("fav_food", /datum/mood_event/favorite_food)
+					mood.add_event(null, "fav_food", /datum/mood_event/favorite_food)
 				last_check_time = world.time
 				return
 	..()
@@ -89,6 +89,13 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
+	
+/obj/item/reagent_containers/food/snacks/donut/meat
+	bonus_reagents = list("ketchup" = 1)
+	list_reagents = list("nutriment" = 3, "ketchup" = 2)
+	tastes = list("meat" = 1)
+	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
+	
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 

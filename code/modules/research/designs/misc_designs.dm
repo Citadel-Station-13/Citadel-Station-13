@@ -13,6 +13,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/health_hud_prescription
+	name = "Prescription Health Scanner HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status. This one has a prescription lens."
+	id = "health_hud_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	build_path = /obj/item/clothing/glasses/hud/health/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/health_hud_night
 	name = "Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
@@ -33,6 +43,17 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/security_hud_prescription
+	name = "Prescription Security HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status. This one has a prescription lens."
+	id = "security_hud_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	build_path = /obj/item/clothing/glasses/hud/security/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -50,6 +71,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/diagnostic_hud_prescription
+	name = "Prescription Diagnostic HUD"
+	desc = "A HUD used to analyze and determine faults within robotic machinery. This one has a prescription lens."
+	id = "diagnostic_hud_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 350)
+	build_path = /obj/item/clothing/glasses/hud/diagnostic/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -107,6 +138,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/mesons_prescription
+	name = "Prescription Optical Meson Scanners"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition. Prescription lens has been added into this design."
+	id = "mesons_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 350)
+	build_path = /obj/item/clothing/glasses/meson/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/engine_goggles
 	name = "Engineering Scanner Goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
@@ -117,6 +158,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/engine_goggles_prescription
+	name = "Prescription Engineering Scanner Goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes. Prescription lens has been added into this design."
+	id = "engine_goggles_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 100, MAT_SILVER = 350)
+	build_path = /obj/item/clothing/glasses/meson/engine/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/tray_goggles
 	name = "Optical T-Ray Scanners"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
@@ -124,6 +175,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/tray_goggles_prescription
+	name = "Prescription Optical T-Ray Scanners"
+	desc = "Used by engineering staff to see underfloor objects such as cables and pipes.  Prescription lens has been added into this design."
+	id = "tray_goggles_prescription"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_SILVER = 150)
+	build_path = /obj/item/clothing/glasses/meson/engine/tray/prescription
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -147,6 +208,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/night_vision_goggles_glasses
+	name = "Prescription Night Vision Goggles"
+	desc = "Goggles that let you see through darkness unhindered. Corrects vision."
+	id = "night_visision_goggles_glasses"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	build_path = /obj/item/clothing/glasses/night/prescription
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/magboots
 	name = "Magnetic Boots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -154,6 +225,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/forcefield_projector
+	name = "Forcefield Projector"
+	desc = "A device which can project temporary forcefields to seal off an area."
+	id = "forcefield_projector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
+	build_path = /obj/item/forcefield_projector
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -166,86 +247,6 @@
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/handdrill
-	name = "Hand Drill"
-	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
-	id = "handdrill"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
-	build_path = /obj/item/screwdriver/power
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/jawsoflife
-	name = "Jaws of Life"
-	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
-	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
-	build_path = /obj/item/crowbar/power
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwrench
-	name = "Alien Wrench"
-	desc = "An advanced wrench obtained through Abductor technology."
-	id = "alien_wrench"
-	build_path = /obj/item/wrench/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwirecutters
-	name = "Alien Wirecutters"
-	desc = "Advanced wirecutters obtained through Abductor technology."
-	id = "alien_wirecutters"
-	build_path = /obj/item/wirecutters/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienscrewdriver
-	name = "Alien Screwdriver"
-	desc = "An advanced screwdriver obtained through Abductor technology."
-	id = "alien_screwdriver"
-	build_path = /obj/item/screwdriver/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/aliencrowbar
-	name = "Alien Crowbar"
-	desc = "An advanced crowbar obtained through Abductor technology."
-	id = "alien_crowbar"
-	build_path = /obj/item/crowbar/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienwelder
-	name = "Alien Welding Tool"
-	desc = "An advanced welding tool obtained through Abductor technology."
-	id = "alien_welder"
-	build_path = /obj/item/weldingtool/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/alienmultitool
-	name = "Alien Multitool"
-	desc = "An advanced multitool obtained through Abductor technology."
-	id = "alien_multitool"
-	build_path = /obj/item/multitool/abductor
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/diskplantgene
 	name = "Plant Data Disk"
@@ -266,6 +267,16 @@
 	build_path = /obj/item/melee/roastingstick
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/locator
+	name = "Bluespace locator"
+	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
+	id = "locator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=1000, MAT_GLASS=500, MAT_SILVER = 500)
+	build_path = /obj/item/locator
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -354,6 +365,86 @@
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
+	id = "handdrill"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	build_path = /obj/item/screwdriver/power
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
+	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwrench
+	name = "Alien Wrench"
+	desc = "An advanced wrench obtained through Abductor technology."
+	id = "alien_wrench"
+	build_path = /obj/item/wrench/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwirecutters
+	name = "Alien Wirecutters"
+	desc = "Advanced wirecutters obtained through Abductor technology."
+	id = "alien_wirecutters"
+	build_path = /obj/item/wirecutters/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienscrewdriver
+	name = "Alien Screwdriver"
+	desc = "An advanced screwdriver obtained through Abductor technology."
+	id = "alien_screwdriver"
+	build_path = /obj/item/screwdriver/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/aliencrowbar
+	name = "Alien Crowbar"
+	desc = "An advanced crowbar obtained through Abductor technology."
+	id = "alien_crowbar"
+	build_path = /obj/item/crowbar/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienwelder
+	name = "Alien Welding Tool"
+	desc = "An advanced welding tool obtained through Abductor technology."
+	id = "alien_welder"
+	build_path = /obj/item/weldingtool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/alienmultitool
+	name = "Alien Multitool"
+	desc = "An advanced multitool obtained through Abductor technology."
+	id = "alien_multitool"
+	build_path = /obj/item/multitool/abductor
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"

@@ -1,7 +1,7 @@
 
 /* EMOTE DATUMS */
 /datum/emote/living
-	mob_type_allowed_typecache = list(/mob/living)
+	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
 /datum/emote/living/blush
@@ -60,7 +60,7 @@
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE)
 	. = ..()
-	if(user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty"))
+	if(user.reagents && (user.reagents.get_reagent("menthol") || user.reagents.get_reagent("peppermint_patty")))
 		return FALSE
 
 /datum/emote/living/dance
@@ -209,13 +209,22 @@
 
 /datum/emote/living/laugh/run_emote(mob/user, params)
 	. = ..()
-	if(. && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
+		var/mob/living/carbon/C = user
+		if(!C.mind || C.mind.miming)
+			return
+		if(iscatperson(C))	//we ask for is cat first because they're a subtype that tests true for ishumanbasic because HERESY
+			playsound(C, pick('sound/voice/catpeople/nyahaha1.ogg',
+			'sound/voice/catpeople/nyahaha2.ogg',
+			'sound/voice/catpeople/nyaha.ogg',
+			'sound/voice/catpeople/nyahehe.ogg'),
+			50, 1)
+			return
+		if(ishumanbasic(C))
 			if(user.gender == FEMALE)
-				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
-				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+				playsound(C, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
 
 /datum/emote/living/look
 	key = "look"

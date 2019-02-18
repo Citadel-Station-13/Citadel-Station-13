@@ -30,7 +30,7 @@
 	for(var/datum/reagent/R in reagents.reagent_list)
 		injected += R.name
 	var/contained = english_list(injected)
-	add_logs(user, M, "attempted to inject", src, "([contained])")
+	log_combat(user, M, "attempted to inject", src, "([contained])")
 
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
@@ -48,7 +48,7 @@
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
 
 
-			add_logs(user, M, "injected", src, "([contained])")
+			log_combat(user, M, "injected", src, "([contained])")
 
 /obj/item/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
@@ -64,9 +64,9 @@
 	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
-	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with expensive medical nanites for rapid healing."
+	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
 	volume = 100
-	list_reagents = list("nanites" = 80, "synaptizine" = 20)
+	list_reagents = list("quantum_heal" = 80, "synaptizine" = 20)
 
 /obj/item/reagent_containers/hypospray/magillitis
 	name = "experimental autoinjector"
@@ -156,9 +156,9 @@
 	name = "survival medipen"
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
 	icon_state = "stimpen"
-	volume = 57
-	amount_per_transfer_from_this = 57
-	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10, "miningnanites" = 2, "omnizine" = 5)
+	volume = 52
+	amount_per_transfer_from_this = 52
+	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "neo_jelly" = 15, "epinephrine" = 10, "lavaland_extract" = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"
@@ -167,6 +167,13 @@
 	volume = 1
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
+
+/obj/item/reagent_containers/hypospray/medipen/firelocker
+	name = "fire treatment medipen"
+	desc = "A medipen that has been fulled with burn healing chemicals for personnel without advanced medical knowledge."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list("oxandrolone" = 5, "kelotane" = 10)
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water autoinjector"

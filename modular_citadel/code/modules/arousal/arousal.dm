@@ -90,6 +90,24 @@
 /mob/living/proc/updatearousal()
 	update_arousal_hud()
 
+/mob/living/carbon/updatearousal()
+	. = ..()
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(istype(G))
+			var/datum/sprite_accessory/S
+			switch(G.type)
+				if(/obj/item/organ/genital/penis)
+					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/vagina)
+					S = GLOB.vagina_shapes_list[G.shape]
+				if(/obj/item/organ/genital/breasts)
+					S = GLOB.breasts_shapes_list[G.shape]
+			if(S?.alt_aroused)
+				G.aroused_state = isPercentAroused(G.aroused_amount)
+			else
+				G.aroused_state = FALSE
+			G.update_appearance()
+
 /mob/living/proc/update_arousal_hud()
 	return 0
 
@@ -173,7 +191,9 @@
 				if(do_after(src, 30, target = src))
 					src.visible_message("<span class='danger'>[src] relieves [p_them()]self!</span>", \
 								"<span class='userdanger'>You have relieved yourself.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 					setArousalLoss(min_arousal)
+					adjustStaminaLoss(40) //Refractory periods 
 					/*
 					switch(gender)
 						if(MALE)
@@ -211,8 +231,10 @@
 		src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
 							"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
 							"<span class='green'>You have relieved yourself.</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
+			adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes
@@ -247,8 +269,10 @@
 			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
 								"<span class='green'>You climax using your [G.name].</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE, mb_time = 30) //Used for climaxing with any living thing
@@ -277,8 +301,11 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
 								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 	else //knots and other non-spilling orgasms
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids)
@@ -286,8 +313,11 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
 								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
 								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
+				adjustStaminaLoss(40) //Refractory periods 
 
 
 /mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
@@ -315,8 +345,10 @@
 		src.visible_message("<span class='danger'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
 							"<span class='green'>You used your [G.name] to fill [container].</span>", \
 							"<span class='green'>You have relieved some pressure.</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
+			adjustStaminaLoss(40) //Refractory periods 
 
 /mob/living/carbon/human/proc/pick_masturbate_genitals()
 	var/obj/item/organ/genital/ret_organ

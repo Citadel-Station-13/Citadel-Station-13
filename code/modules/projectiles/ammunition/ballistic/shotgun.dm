@@ -92,10 +92,12 @@
 	variance = 35
 
 /obj/item/ammo_casing/shotgun/laserslug
-	name = "laser slug"
-	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
+	name = "scatter laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam/laser
+	projectile_type = /obj/item/projectile/beam/weak
+	pellets = 6
+	variance = 35
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -113,7 +115,7 @@
 
 /obj/item/ammo_casing/shotgun/dart/noreact
 	name = "cryostasis shotgun dart"
-	desc = "A dart for use in shotguns, using similar technology as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
+	desc = "A dart for use in shotguns. Uses technology similar to cryostasis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
 	icon_state = "cnrshell"
 	reagent_amount = 10
 	reagent_react = FALSE

@@ -113,17 +113,18 @@
 
 /turf/open/proc/tile_graphic()
 	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
-	if(air)
-		. = new /list
-		var/list/gases = air.gases
-		for(var/id in gases)
-			if (nonoverlaying_gases[id])
-				continue
-			var/gas = gases[id]
-			var/gas_meta = gas[GAS_META]
-			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-				. += gas_overlay
+	if(!air)
+		return
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_meta = gas[GAS_META]
+		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()
@@ -223,15 +224,22 @@
 			our_air.share(G, adjacent_turfs_length)
 			LAST_SHARE_CHECK
 
-	our_air.react(src)
-
-	update_visuals()
+	SSair.add_to_react_queue(src)
 
 	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
 	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
 
 	atmos_cooldown = cached_atmos_cooldown
+
+/turf/proc/process_cell_reaction()
+	SSair.remove_from_react_queue(src)
+
+/turf/open/process_cell_reaction()
+	air.react(src)
+	update_visuals()
+	SSair.remove_from_react_queue(src)
+	return
 
 //////////////////////////SPACEWIND/////////////////////////////
 

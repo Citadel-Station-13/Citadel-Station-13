@@ -4,11 +4,11 @@ GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
-While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
-Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
+While Nar'Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
+Ratvar, the Clockwork Justiciar, a homage to Nar'Sie granted sentience by its own power, is one such other force.
 Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
-Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
+Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar'Sie, who can only influence natural life.
 
 This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
@@ -37,6 +37,7 @@ Credit where due:
 4. PJB3005 from /vg/ for the failed continuation PR
 5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
 6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
+7. Clockwork cult code as of now, at least the one being pulled from Citadel Station's master branch, is being, or already is, fixed by Coolgat3 and Avunia.
 
 */
 
@@ -59,8 +60,12 @@ Credit where due:
 			return FALSE
 	else
 		return FALSE
-	if(iscultist(M) || isconstruct(M) || M.isloyal() || ispAI(M))
+	if(iscultist(M) || isconstruct(M) || ispAI(M))
 		return FALSE
+	if(isliving(M))
+		var/mob/living/L = M
+		if(L.has_trait(TRAIT_MINDSHIELD))
+			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
 	return FALSE
@@ -144,11 +149,13 @@ Credit where due:
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	var/list/errorList = list()
-	SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
+	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
 		message_admins("Reebe failed to load!")
 		log_game("Reebe failed to load!")
 		return FALSE
+	for(var/datum/parsed_map/PM in reebes)
+		PM.initTemplateBounds()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
@@ -261,7 +268,7 @@ Credit where due:
 //Servant of Ratvar outfit
 /datum/outfit/servant_of_ratvar
 	name = "Servant of Ratvar"
-	uniform = /obj/item/clothing/under/chameleon/ratvar
+	uniform = /obj/item/clothing/under/rank/engineer //no more chameleon suit for them, as requested
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset

@@ -11,11 +11,44 @@
 	strip_delay = 80
 	dog_fashion = null
 
+// CITADEL CHANGES: More variants
+/obj/item/clothing/head/helmet/chaplain/bland
+	icon_state = "knight_generic"
+	item_state = "knight_generic"
+
+/obj/item/clothing/head/helmet/chaplain/bland/horned
+	name = "horned crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_horned"
+	item_state = "knight_horned"
+
+/obj/item/clothing/head/helmet/chaplain/bland/winged
+	name = "winged crusader helmet"
+	desc = "Helfen, Wehren, Heilen."
+	icon_state = "knight_winged"
+	item_state = "knight_winged"
+// CITADEL CHANGES ENDS HERE
+
 /obj/item/clothing/suit/armor/riot/chaplain
 	name = "crusader armour"
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+// CITADEL CHANGES: More variants
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic
+	desc = "Help, Defend, Heal!"
+	icon_state = "knight_teutonic"
+	item_state = "knight_teutonic"
+
+/obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt
+	icon_state = "knight_teutonic_alt"
+	item_state = "knight_teutonic_alt"
+
+/obj/item/clothing/suit/armor/riot/chaplain/hospitaller
+	icon_state = "knight_hospitaller"
+	item_state = "knight_hospitaller"
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/holybeacon
 	name = "armaments beacon"
@@ -59,6 +92,22 @@
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
 	new /obj/item/clothing/suit/armor/riot/chaplain(src)
+
+// CITADEL CHANGES: More Variants
+/obj/item/storage/box/holy/teutonic
+	name = "Teutonic Kit"
+
+/obj/item/storage/box/holy/teutonic/PopulateContents() // It just works
+	pick(new /obj/item/clothing/head/helmet/chaplain/bland/horned(src), new /obj/item/clothing/head/helmet/chaplain/bland/winged(src))
+	pick(new /obj/item/clothing/suit/armor/riot/chaplain/teutonic(src), new /obj/item/clothing/suit/armor/riot/chaplain/teutonic/alt(src))
+
+/obj/item/storage/box/holy/hospitaller
+	name = "Hospitaller Kit"
+
+/obj/item/storage/box/holy/hospitaller/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/bland(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/hospitaller(src)
+// CITADEL CHANGES ENDS HERE
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
@@ -169,7 +218,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -181,6 +230,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
+	var/chaplain_spawnable = TRUE
 
 /obj/item/nullrod/Initialize()
 	. = ..()
@@ -201,16 +251,15 @@
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
-		var/atom/A = V
-		display_names += initial(A.name)
+		var/obj/item/nullrod/rodtype = V
+		if (initial(rodtype.chaplain_spawnable))
+			display_names[initial(rodtype.name)] = rodtype
 
 	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 		return
 
-	var/index = display_names.Find(choice)
-	var/A = holy_weapons_list[index]
-
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
 	SSreligion.holy_weapon_type = holy_weapon.type
@@ -448,6 +497,8 @@
 	item_state = "chainswordon"
 	name = "possessed chainsaw sword"
 	desc = "Suffer not a heretic to live."
+	chaplain_spawnable = FALSE
+	force = 30
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
@@ -503,6 +554,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(30) && ishuman(A))

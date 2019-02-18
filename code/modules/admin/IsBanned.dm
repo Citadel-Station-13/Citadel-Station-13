@@ -23,7 +23,7 @@
 
 	//Whitelist
 	if(CONFIG_GET(flag/usewhitelist))
-		if(!check_whitelist(ckey(key)))
+		if(!check_whitelist(ckey))
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass the whitelist")
 				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass the whitelist</span>")
@@ -39,7 +39,7 @@
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
 			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
-			return list("reason"="guest", "desc"="\nReason: You must first join the Discord to verify your account before joining this server. To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: https://discord.gg/E6SQuhz")
+			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
 	//Population Cap Checking
 	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
@@ -50,7 +50,7 @@
 	if(CONFIG_GET(flag/ban_legacy_system))
 
 		//Ban Checking
-		. = CheckBan( ckey(key), computer_id, address )
+		. = CheckBan(ckey, computer_id, address )
 		if(.)
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass a matching ban on [.["key"]]")
@@ -61,11 +61,8 @@
 				return .
 
 	else
-
-		var/ckeytext = ckey(key)
-
 		if(!SSdbcore.Connect())
-			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
+			var/msg = "Ban database connection failure. Key [ckey] not checked"
 			log_world(msg)
 			message_admins(msg)
 			return
@@ -78,13 +75,13 @@
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
-		if(!query_ban_check.Execute())
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey), reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckey]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		if(!query_ban_check.Execute(async = TRUE))
 			qdel(query_ban_check)
 			return
 		while(query_ban_check.NextRow())
-			var/pckey = query_ban_check.item[1]
-			var/ackey = query_ban_check.item[2]
+			var/pkey = query_ban_check.item[1]
+			var/akey = query_ban_check.item[2]
 			var/reason = query_ban_check.item[3]
 			var/expiration = query_ban_check.item[4]
 			var/duration = query_ban_check.item[5]
@@ -95,16 +92,16 @@
 			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 				//admin bans MUST match on ckey to prevent cid-spoofing attacks
 				//	as well as dynamic ip abuse
-				if (pckey != ckey)
+				if (ckey(pkey) != ckey)
 					continue
 			if (admin)
 				if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 					log_admin("The admin [key] is admin banned (#[banid]), and has been disallowed access")
 					message_admins("<span class='adminnotice'>The admin [key] is admin banned (#[banid]), and has been disallowed access</span>")
 				else
-					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])")
-					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
-					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+					log_admin("The admin [key] has been allowed to bypass a matching ban on [pkey] (#[banid])")
+					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pkey] (#[banid])</span>")
+					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pkey] (#[banid])</span>")
 					continue
 			var/expires = ""
 			if(text2num(duration) > 0)
@@ -112,7 +109,7 @@
 			else
 				expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime] during round ID [ban_round_id], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pkey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [akey] on [bantime] during round ID [ban_round_id], [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 

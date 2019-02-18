@@ -56,6 +56,11 @@
 
 #define AALARM_REPORT_TIMEOUT 100
 
+#define AALARM_OVERLAY_OFF		"alarm_off"
+#define AALARM_OVERLAY_GREEN	"alarm_green"
+#define AALARM_OVERLAY_WARN		"alarm_amber"
+#define AALARM_OVERLAY_DANGER	"alarm_red"
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -78,6 +83,7 @@
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/brightness_on = 1
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
@@ -89,6 +95,7 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
+		/datum/gas/miasma			= new/datum/tlv/(-1, -1, 2, 5),
 		/datum/gas/plasma			= new/datum/tlv/dangerous,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
@@ -107,6 +114,7 @@
 		/datum/gas/oxygen			= new/datum/tlv/no_checks,
 		/datum/gas/nitrogen			= new/datum/tlv/no_checks,
 		/datum/gas/carbon_dioxide	= new/datum/tlv/no_checks,
+		/datum/gas/miasma			= new/datum/tlv/no_checks,
 		/datum/gas/plasma			= new/datum/tlv/no_checks,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/no_checks,
 		/datum/gas/bz				= new/datum/tlv/no_checks,
@@ -125,6 +133,7 @@
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
+		/datum/gas/miasma			= new/datum/tlv/(-1, -1, 2, 5),
 		/datum/gas/plasma			= new/datum/tlv/dangerous,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
@@ -145,6 +154,12 @@
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
 
+/obj/machinery/airalarm/mixingchamber
+	name = "chamber air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_TOX, ACCESS_TOX_STORAGE)
+
 /obj/machinery/airalarm/all_access
 	name = "all-access air alarm"
 	desc = "This particular atmos control unit appears to have no access restrictions."
@@ -155,6 +170,22 @@
 /obj/machinery/airalarm/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
+/obj/machinery/airalarm/directional/north //Pixel offsets get overwritten on New()
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/airalarm/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/airalarm/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/airalarm/directional/west
+	dir = EAST
+	pixel_x = -24
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
@@ -162,9 +193,10 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/airalarm/New(loc, ndir, nbuild)
-	..()
+/obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
+	. = ..()
 	wires = new /datum/wires/airalarm(src)
+
 	if(ndir)
 		setDir(ndir)
 
@@ -177,7 +209,8 @@
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
 
-	update_icon()
+	power_change()
+	set_frequency(frequency)
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -185,9 +218,15 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/Initialize(mapload)
+/obj/machinery/airalarm/examine(mob/user)
 	. = ..()
-	set_frequency(frequency)
+	switch(buildstage)
+		if(0)
+			to_chat(user, "<span class='notice'>It is missing air alarm electronics.</span>")
+		if(1)
+			to_chat(user, "<span class='notice'>It is missing wiring.</span>")
+		if(2)
+			to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>")
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
@@ -338,25 +377,25 @@
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")
-			send_signal(device_id, list("[action]" = params["val"]))
+			send_signal(device_id, list("[action]" = params["val"]), usr)
 			. = TRUE
 		if("excheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^1))
+			send_signal(device_id, list("checks" = text2num(params["val"])^1), usr)
 			. = TRUE
 		if("incheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^2))
+			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
 			. = TRUE
 		if("set_external_pressure", "set_internal_pressure")
 			var/area/A = get_area(src)
 			var/target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
 			if(!isnull(target) && !..())
-				send_signal(device_id, list("[action]" = target))
+				send_signal(device_id, list("[action]" = target), usr)
 				. = TRUE
 		if("reset_external_pressure")
-			send_signal(device_id, list("reset_external_pressure"))
+			send_signal(device_id, list("reset_external_pressure"), usr)
 			. = TRUE
 		if("reset_internal_pressure")
-			send_signal(device_id, list("reset_internal_pressure"))
+			send_signal(device_id, list("reset_internal_pressure"), usr)
 			. = TRUE
 		if("threshold")
 			var/env = params["env"]
@@ -373,9 +412,11 @@
 					tlv.vars[name] = -1
 				else
 					tlv.vars[name] = round(value, 0.01)
+				investigate_log(" treshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
 				. = TRUE
 		if("mode")
 			mode = text2num(params["mode"])
+			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
 			apply_mode()
 			. = TRUE
 		if("alarm")
@@ -389,7 +430,6 @@
 				post_alert(0)
 			. = TRUE
 	update_icon()
-
 
 /obj/machinery/airalarm/proc/reset(wire)
 	switch(wire)
@@ -433,16 +473,38 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
 
-/obj/machinery/airalarm/proc/send_signal(target, list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+/obj/machinery/airalarm/proc/send_signal(target, list/command, mob/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return 0
 
 	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
+	signal.data["user"] = user
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return 1
+
+/obj/machinery/airalarm/proc/get_mode_name(mode_value)
+	switch(mode_value)
+		if(AALARM_MODE_SCRUBBING)
+			return "Filtering"
+		if(AALARM_MODE_CONTAMINATED)
+			return "Contaminated"
+		if(AALARM_MODE_VENTING)
+			return "Draught"
+		if(AALARM_MODE_REFILL)
+			return "Refill"
+		if(AALARM_MODE_PANIC)
+			return "Panic Siphon"
+		if(AALARM_MODE_REPLACEMENT)
+			return "Cycle"
+		if(AALARM_MODE_SIPHON)
+			return "Siphon"
+		if(AALARM_MODE_OFF)
+			return "Off"
+		if(AALARM_MODE_FLOOD)
+			return "Flood"
 
 /obj/machinery/airalarm/proc/apply_mode()
 	var/area/A = get_area(src)
@@ -451,7 +513,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"set_filters" = list(/datum/gas/carbon_dioxide, /datum/gas/miasma),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -467,6 +529,7 @@
 					"power" = 1,
 					"set_filters" = list(
 						/datum/gas/carbon_dioxide,
+						/datum/gas/miasma,
 						/datum/gas/plasma,
 						/datum/gas/water_vapor,
 						/datum/gas/hypernoblium,
@@ -503,7 +566,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"set_filters" = list(/datum/gas/carbon_dioxide, /datum/gas/miasma),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -559,6 +622,17 @@
 				))
 
 /obj/machinery/airalarm/update_icon()
+	set_light(0)
+	cut_overlays()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(stat & NOPOWER)
+		icon_state = "alarm0"
+		return
+
+	if(stat & BROKEN)
+		icon_state = "alarmx"
+		return
+
 	if(panel_open)
 		switch(buildstage)
 			if(2)
@@ -569,18 +643,28 @@
 				icon_state = "alarm_b1"
 		return
 
-	if((stat & (NOPOWER|BROKEN)) || shorted)
-		icon_state = "alarmp"
-		return
-
+	icon_state = "alarm1"
+	var/overlay_state = AALARM_OVERLAY_OFF
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			icon_state = "alarm0"
+			add_overlay(AALARM_OVERLAY_GREEN)
+			overlay_state = AALARM_OVERLAY_GREEN
+			light_color = LIGHT_COLOR_PALEBLUE
+			set_light(brightness_on)
 		if(1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
+			add_overlay(AALARM_OVERLAY_WARN)
+			overlay_state = AALARM_OVERLAY_WARN
+			light_color = LIGHT_COLOR_LAVA
+			set_light(brightness_on)
 		if(2)
-			icon_state = "alarm1"
+			add_overlay(AALARM_OVERLAY_DANGER)
+			overlay_state = AALARM_OVERLAY_DANGER
+			light_color = LIGHT_COLOR_RED
+			set_light(brightness_on)
+
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	update_light()
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
@@ -620,6 +704,8 @@
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
+
+	return
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
@@ -749,6 +835,7 @@
 	else
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
+			updateUsrDialog()
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
@@ -756,6 +843,8 @@
 
 /obj/machinery/airalarm/power_change()
 	..()
+	if(stat & NOPOWER)
+		set_light(0)
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
@@ -768,6 +857,7 @@
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()
 	update_icon()
+	set_light(0)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

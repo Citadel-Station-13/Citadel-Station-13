@@ -335,7 +335,7 @@
 				sleep(3)
 				GLOB.clockwork_gateway_activated = TRUE
 				var/turf/T = SSmapping.get_station_center()
-				new /obj/structure/destructible/clockwork/massive/ratvar(T, TRUE)		//Citadel edit - hugboxes ratvar spawning by admins
+				new /obj/structure/destructible/clockwork/massive/ratvar(T)
 				SSticker.force_ending = TRUE
 				var/x0 = T.x
 				var/y0 = T.y

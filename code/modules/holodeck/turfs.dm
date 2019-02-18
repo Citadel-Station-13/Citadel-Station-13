@@ -28,6 +28,7 @@
 	name = "lush grass"
 	icon_state = "grass"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/beach
 	gender = PLURAL
@@ -35,6 +36,7 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "sand"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/beach/coast_t
 	gender = NEUTER
@@ -54,6 +56,7 @@
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid"
 	icon_state = "asteroid0"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/asteroid/Initialize()
 	icon_state = "asteroid[rand(0, 12)]"
@@ -63,6 +66,7 @@
 	gender = PLURAL
 	name = "basalt"
 	icon_state = "basalt0"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/basalt/Initialize()
 	. = ..()
@@ -84,6 +88,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "speedspace_ns_1"
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/hyperspace/Initialize()
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
@@ -102,6 +107,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()
@@ -113,6 +119,10 @@
 	if(intact)
 		queue_smooth(src)
 
+/turf/open/floor/holofloor/wood
+	icon_state = "wood"
+	tiled_dirt = FALSE
+
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"
@@ -122,6 +132,16 @@
 	slowdown = 2
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
+	tiled_dirt = FALSE
+	baseturfs = /turf/open/floor/holofloor/snow
+
+/turf/open/floor/holofloor/snow/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	user.visible_message("<span class='notice'>[user] scroops up some snow from [src].</span>", "<span class='notice'>You scoop up some snow from [src].</span>")
+	var/obj/item/toy/snowball/S = new(get_turf(src))
+	user.put_in_hands(S)
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
@@ -131,3 +151,23 @@
 	name = "asteroid sand"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
+	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "unsmooth"
+	baseturfs = /turf/open/floor/holofloor/ice
+	slowdown = 1
+	footstep = FOOTSTEP_FLOOR
+
+/turf/open/floor/holofloor/ice/smooth
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/holofloor/ice)
+	baseturfs = /turf/open/floor/holofloor/ice/smooth
+
+/turf/open/floor/holofloor/ice/Initialize()
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)

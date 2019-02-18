@@ -33,7 +33,8 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
+	output += "<p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -53,7 +54,7 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
 			var/rs = REF(src)
 			if(query_get_new_polls.Execute())
 				var/newpoll = 0
@@ -152,6 +153,21 @@
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
+
+	if(href_list["JoinAsGhostRole"])
+		if(!GLOB.enter_allowed)
+			to_chat(usr, "<span class='notice'> There is an administrative lock on entering the game!</span>")
+
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				return
+
+		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
+		if(istype(MS) && MS.attack_ghost(src, latejoinercalling = TRUE))
+			SSticker.queued_players -= src
+			SSticker.queue_delay = 4
+			qdel(src)
 
 	if(!ready && href_list["preference"])
 		if(client)
@@ -426,51 +442,87 @@
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			available_job_count++;
+			available_job_count++
+	for(var/spawner in GLOB.mob_spawners)
+		available_job_count++
+		break
 
-	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
-		if(prioritized_job.current_positions >= prioritized_job.total_positions)
-			SSjob.prioritized_jobs -= prioritized_job
+	if(!available_job_count)
+		dat += "<div class='notice red'>There are currently no open positions!</div>"
 
-	if(length(SSjob.prioritized_jobs))
-		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
-		var/amt = length(SSjob.prioritized_jobs)
-		var/amt_count
-		for(var/datum/job/a in SSjob.prioritized_jobs)
-			amt_count++
-			if(amt_count != amt) // checks for the last job added.
-				dat += " [a.title], "
-			else
-				dat += " [a.title]. </div>"
+	else
+		dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
+		var/list/categorizedJobs = list(
+			"Command" = list(jobs = list(), titles = GLOB.command_positions, color = "#aac1ee"),
+			"Engineering" = list(jobs = list(), titles = GLOB.engineering_positions, color = "#ffd699"),
+			"Supply" = list(jobs = list(), titles = GLOB.supply_positions, color = "#ead4ae"),
+			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
+			"Ghost Role" = list(jobs = list(), titles = GLOB.mob_spawners, color = "#ffffff"),
+			"Synthetic" = list(jobs = list(), titles = GLOB.nonhuman_positions, color = "#ccffcc"),
+			"Service" = list(jobs = list(), titles = GLOB.civilian_positions, color = "#cccccc"),
+			"Medical" = list(jobs = list(), titles = GLOB.medical_positions, color = "#99ffe6", colBreak = TRUE),
+			"Science" = list(jobs = list(), titles = GLOB.science_positions, color = "#e6b3e6"),
+			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
+		)
+		for(var/spawner in GLOB.mob_spawners)
+			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
-	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
-	dat += "<div class='jobs'><div class='jobsColumn'>"
-	var/job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
-			job_count++;
-			if (job_count > round(available_job_count / 2))
-				dat += "</div><div class='jobsColumn'>"
-			var/position_class = "otherPosition"
-			if (job.title in GLOB.command_positions)
-				position_class = "commandPosition"
-			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, overflow opens up.
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != SSjob.overflow_role)
+			if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
+				var/categorized = FALSE
+				for(var/jobcat in categorizedJobs)
+					var/list/jobs = categorizedJobs[jobcat]["jobs"]
+					if(job.title in categorizedJobs[jobcat]["titles"])
+						categorized = TRUE
+						if(jobcat == "Command")
+
+							if(job.title == "Captain") // Put captain at top of command jobs
+								jobs.Insert(1, job)
+							else
+								jobs += job
+						else // Put heads at top of non-command jobs
+							if(job.title in GLOB.command_positions)
+								jobs.Insert(1, job)
+							else
+								jobs += job
+				if(!categorized)
+					categorizedJobs["Miscellaneous"]["jobs"] += job
+
+
+		dat += "<table><tr><td valign='top'>"
+		for(var/jobcat in categorizedJobs)
+			if(categorizedJobs[jobcat]["colBreak"])
+				dat += "</td><td valign='top'>"
+			if(!length(categorizedJobs[jobcat]["jobs"]))
 				continue
-			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-			break
-	dat += "</div></div>"
+			var/color = categorizedJobs[jobcat]["color"]
+			dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
+			dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
+			for(var/datum/job/job in categorizedJobs[jobcat]["jobs"])
+				var/position_class = "otherPosition"
+				if(job.title in GLOB.command_positions)
+					position_class = "commandPosition"
+				if(job in SSjob.prioritized_jobs)
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job.title]'><font color='lime'><b>[job.title] ([job.current_positions])</b></font></a>"
+				else
+					dat += "<a class='[position_class]' style='display:block;width:170px' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a>"
+				categorizedJobs[jobcat]["jobs"] -= job
+
+			for(var/spawner in categorizedJobs[jobcat]["jobs"])
+				dat += "<a class='otherPosition' style='display:block;width:170px' href='byond://?src=[REF(src)];JoinAsGhostRole=[spawner]'>[spawner]</a>"
+
+			dat += "</fieldset><br>"
+		dat += "</td></tr></table></center>"
+		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
 
 	// Added the new browser window method
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 
 /mob/dead/new_player/proc/create_character(transfer_after)

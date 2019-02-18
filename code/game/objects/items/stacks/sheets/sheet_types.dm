@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bed", /obj/structure/bed, 2, one_per_turf = TRUE, on_floor = TRUE), \
-  //CIT CHANGE - adds sofas to metal recipe list
+	//CIT CHANGE - adds sofas to metal recipe list
 	new/datum/stack_recipe_list("sofas", list( \
 		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa, one_per_turf = TRUE, on_floor = TRUE), \
 		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/left, one_per_turf = TRUE, on_floor = TRUE), \
@@ -190,8 +190,10 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("plywood chair", /obj/structure/chair/comfy/plywood, 4, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("rustic wooden door", /obj/structure/mineral_door/woodrustic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
@@ -412,6 +414,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
 	grind_results = list("iron" = 5, "teslium" = 15)
+	merge_type = /obj/item/stack/tile/brass
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -461,6 +464,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
 	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+	merge_type = /obj/item/stack/tile/bronze
 
 /obj/item/stack/tile/bronze/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user)) //still lets them build with it, just gives a message
@@ -513,6 +517,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_speed = 1
 	throw_range = 3
 	grind_results = list("carbon" = 10)
+	merge_type = /obj/item/stack/sheet/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
@@ -552,6 +557,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	item_state = "sheet-paper"
 	merge_type = /obj/item/stack/sheet/paperframes
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/paperframes
 
 /obj/item/stack/sheet/paperframes/Initialize()
 	recipes = GLOB.paperframe_recipes

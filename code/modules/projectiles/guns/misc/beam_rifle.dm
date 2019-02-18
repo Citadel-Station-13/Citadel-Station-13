@@ -29,36 +29,38 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	//Cit changes: beam rifle stats.
+	slowdown = 1
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 12
+	var/aiming_time = 14
 	var/aiming_time_fire_threshold = 5
-	var/aiming_time_left = 12
-	var/aiming_time_increase_user_movement = 3
-	var/scoped_slow = 1
-	var/aiming_time_increase_angle_multiplier = 0.3
+	var/aiming_time_left = 14
+	var/aiming_time_increase_user_movement = 7
+	var/aiming_time_increase_angle_multiplier = 0.30
 	var/last_process = 0
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile/tracer/current_tracers
-
-	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
+	
+	var/structure_piercing = 1
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 50
-	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 40
+	var/aoe_structure_damage = 35
+	var/aoe_fire_range = 1
+	var/aoe_fire_chance = 100
 	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 30
-	var/impact_structure_damage = 60
-	var/projectile_damage = 30
+	var/aoe_mob_damage = 20
+	var/impact_structure_damage = 75
+	var/projectile_damage = 40
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 25
+	var/delay = 30
 	var/lastfire = 0
 
 	//ZOOMING
@@ -69,7 +71,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-	var/zoom_animating = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -112,18 +113,6 @@
 				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
 	reset_zooming()
 
-/obj/item/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
-	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
-		return
-	if(zoom_animating && delay_override != 0)
-		return smooth_zooming(zoom_animating + delay_override)	//Automatically compensate for ongoing zooming actions.
-	var/total_time = SSfastprocess.wait
-	if(delay_override)
-		total_time = delay_override
-	zoom_animating = total_time
-	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
-	zoom_animating = 0
-
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
 		return
@@ -133,15 +122,14 @@
 /obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
-	current_user.client.change_view(world.view + zoom_target_view_increase)
-	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
-	smooth_zooming()
 
 /obj/item/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
 		return
 	zooming = TRUE
+	current_user.client.change_view(world.view + zoom_target_view_increase)
+	zoom_current_view_increase = zoom_target_view_increase
 
 /obj/item/gun/energy/beam_rifle/proc/stop_zooming(mob/user)
 	if(zooming)
@@ -153,7 +141,6 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	zoom_animating = 0
 	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
 	user.client.change_view(CONFIG_GET(string/default_view))
@@ -164,7 +151,7 @@
 /obj/item/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(cell.charge > primary_ammo.e_cost)
+	if(!QDELETED(cell) && (cell.charge > primary_ammo.e_cost))
 		add_overlay(charged_overlay)
 	else
 		add_overlay(drained_overlay)
@@ -174,17 +161,11 @@
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 	aiming_beam()
 
-/obj/item/gun/energy/beam_rifle/proc/update_slowdown()
-	if(aiming)
-		slowdown = scoped_slow
-	else
-		slowdown = initial(slowdown)
-
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()
-	START_PROCESSING(SSprojectiles, src)
+	START_PROCESSING(SSfastprocess, src)
 	zoom_lock_action = new(src)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
@@ -247,17 +228,7 @@
 /obj/item/gun/energy/beam_rifle/proc/process_aim()
 	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
 		var/angle = mouse_angle_from_client(current_user.client)
-		switch(angle)
-			if(316 to 360)
-				current_user.setDir(NORTH)
-			if(0 to 45)
-				current_user.setDir(NORTH)
-			if(46 to 135)
-				current_user.setDir(EAST)
-			if(136 to 225)
-				current_user.setDir(SOUTH)
-			if(226 to 315)
-				current_user.setDir(WEST)
+		current_user.setDir(angle2dir_cardinal(angle))
 		var/difference = abs(closer_angle_difference(lastangle, angle))
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
@@ -295,7 +266,7 @@
 	if(istype(user))
 		current_user = user
 		LAZYOR(current_user.mousemove_intercept_objects, src)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/on_mob_move)))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
@@ -304,7 +275,6 @@
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-			smooth_zooming(2)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
@@ -513,6 +483,8 @@
 		return 0.4
 	if(istype(target, /obj/structure/window))
 		return 0.5
+	if(istype(target, /obj/structure/blob))
+		return 0.65			//CIT CHANGE.
 	return 1
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
@@ -535,11 +507,11 @@
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
+/obj/item/projectile/beam/beam_rifle/Bump(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE
-		forceMove(target)
+		forceMove(target.loc)
 		trajectory_ignore_forcemove = FALSE
 		return FALSE
 	if(!QDELETED(target))

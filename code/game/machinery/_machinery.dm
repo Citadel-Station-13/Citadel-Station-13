@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -130,7 +131,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
+	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA = CALLBACK(src, .proc/power_change)))
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -218,10 +219,17 @@ Class Procs:
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
-	if(!silicon && (interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON))
-		return FALSE
-	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
-		return FALSE
+
+	if(silicon)
+		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
+			return FALSE
+	else
+		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON)
+			return FALSE
+		if(!Adjacent(user))
+			var/mob/living/carbon/H = user
+			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
+				return FALSE
 	return TRUE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,11 +239,6 @@ Class Procs:
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
 	. = ..()
-
-/obj/machinery/ui_status(mob/user)
-	if(can_interact(user))
-		return ..()
-	return UI_CLOSE
 
 /obj/machinery/ui_act(action, params)
 	add_fingerprint(usr)

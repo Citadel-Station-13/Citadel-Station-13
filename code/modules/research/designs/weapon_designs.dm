@@ -8,6 +8,11 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/c38/sec/lethal
+	name = "Speed Loader (.38)"
+	id = "sec_38lethal"
+	build_path = /obj/item/ammo_box/c38/lethal
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE
@@ -148,7 +153,7 @@
 	materials = list(MAT_METAL = 3000)
 	build_path = /obj/item/grenade/chem_grenade/large
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE //Citadel edit added to science
 
 /datum/design/pyro_grenade
 	name = "Pyro Grenade"
@@ -289,7 +294,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/cryostatis_shotgun_dart
-	name = "Cryostatis Shotgun Dart"
+	name = "Cryostasis Shotgun Dart"
 	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
 	id = "shotgundartcryostatis"
 	build_type = PROTOLATHE

@@ -3,10 +3,8 @@
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
-
-/turf/closed/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 
 /turf/closed/AfterChange()
 	. = ..()
@@ -35,6 +33,9 @@
 	to_be_destroyed = FALSE
 	return src
 
+/turf/closed/indestructible/singularity_act()
+	return
+
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
@@ -46,6 +47,14 @@
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
 	baseturfs = /turf/closed/indestructible/sandstone
+	smooth = SMOOTH_TRUE
+
+/turf/closed/indestructible/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
+	baseturfs = /turf/closed/indestructible/wood
 	smooth = SMOOTH_TRUE
 
 /turf/closed/indestructible/oldshuttle/corner
@@ -75,6 +84,7 @@
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
+	explosion_block = INFINITY
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'

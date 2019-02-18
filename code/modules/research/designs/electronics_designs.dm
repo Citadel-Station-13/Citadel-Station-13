@@ -23,6 +23,29 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+///////////////////////////////////
+//////////Nanite Devices///////////
+///////////////////////////////////
+/datum/design/nanite_remote
+	name = "Nanite Remote"
+	desc = "Allows for the construction of a nanite remote."
+	id = "nanite_remote"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_remote
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/nanite_scanner
+	name = "Nanite Scanner"
+	desc = "Allows for the construction of a nanite scanner."
+	id = "nanite_scanner"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
+	build_path = /obj/item/nanite_scanner
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
 ////////////////////////////////////////
@@ -56,6 +79,16 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/nanite_disk
+	name = "Nanite Program Disk"
+	desc = "Stores nanite programs."
+	id = "nanite_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/nanite_program
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/integrated_printer
 	name = "Integrated circuit printer"
 	desc = "This machine provides all necessary things for circuitry."
@@ -85,3 +118,16 @@
 	build_path = /obj/item/disk/integrated_circuit/upgrade/clone
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+//CIT ADDITIONS
+/datum/design/drone_shell
+	name = "Drone Shell"
+	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
+	id = "drone_shell"
+	build_type = MECHFAB | PROTOLATHE
+	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
+	construction_time = 150
+	build_path = /obj/item/drone_shell
+	category = list("Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+

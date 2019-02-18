@@ -81,15 +81,8 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "old, robust toolbox" //this will be named "X family toolbox"
 	desc = "It's seen better days."
-	force = 12
+	//Citadel change buffed to base levels
 	total_mass = 2
-
-/obj/item/storage/toolbox/mechanical/old/heirloom/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(proximity)
-		if(isobj(A))
-			var/obj/O = A
-			O.take_damage(20)
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
@@ -113,9 +106,10 @@
 		new /obj/item/stack/cable_coil(src,30,pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
-	name = "suspicious looking toolbox"
+	name = "black and red toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
+	desc = "A toolbox painted black with a red stripe. It looks more heavier than normal toolboxes."
 	force = 15
 	throwforce = 18
 

@@ -26,13 +26,10 @@
 
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
-
-/obj/machinery/power/rad_collector/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
@@ -134,6 +131,8 @@
 	return TRUE
 
 /obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	if(loaded_tank)
 		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
 	else

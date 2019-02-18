@@ -1,6 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - tweak: "Removes the tesla coils from engineering secure storage, and places them within the engine room, functional upon being wrenched down. (Arranged in the common method of three coils on the left and right sides.)
-
-Reduces the width of engineering secure storage and its blast door by one tile. The machinery within has been rearranged in order to make the most commonly used machinery the most accessible."

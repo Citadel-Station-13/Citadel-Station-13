@@ -28,6 +28,7 @@
 			eye_color = HMN.eye_color
 		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+			see_in_dark = 8
 	M.update_tint()
 	owner.update_sight()
 
@@ -242,7 +243,7 @@
 	if (mobhook && mobhook.parent != M)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE), CALLBACK(src, .proc/update_visuals))
+		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
 
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
 	. = ..()
@@ -266,7 +267,7 @@
 	active = FALSE
 	remove_mob_overlay()
 
-/obj/item/organ/eyes/robotic/glow/proc/update_visuals(olddir, newdir)
+/obj/item/organ/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
 	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	var/turf/scanfrom = get_turf(owner)

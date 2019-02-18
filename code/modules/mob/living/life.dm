@@ -43,7 +43,10 @@
 		//Breathing, if applicable
 		handle_breathing(times_fired)
 
-	handle_diseases() // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+	if (QDELETED(src)) // diseases can qdel the mob via transformations
+		return
 
 	if(stat != DEAD)
 		//Random events (vomiting etc)
@@ -132,8 +135,11 @@
 			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
-		if(client && !eye_blurry)
-			remove_eyeblur()
+		if(client)
+			if(!eye_blurry)
+				remove_eyeblur()
+			else
+				update_eyeblur()
 
 /mob/living/proc/update_damage_hud()
 	return

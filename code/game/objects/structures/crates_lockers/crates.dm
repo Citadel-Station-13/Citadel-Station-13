@@ -69,7 +69,7 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	max_integrity = 70 
+	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
 
@@ -96,6 +96,7 @@
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
+	icon_state = "surgery"
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()

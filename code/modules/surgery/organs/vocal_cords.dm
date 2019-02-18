@@ -251,6 +251,10 @@
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
+	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE
+	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
+	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
+	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
 
 	var/i = 0
 	//STUN
@@ -564,6 +568,35 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.SpinAnimation(speed = 10, loops = 5)
+
+	//CITADEL CHANGES
+	//ORGASM
+	else if((findtext(message, orgasm_words)))
+		cooldown = COOLDOWN_MEME
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
+				H.mob_climax(forced_climax=TRUE)
+
+	//DAB
+	else if((findtext(message, dab_words)))
+		cooldown = COOLDOWN_DAMAGE
+		for(var/V in listeners)
+			var/mob/living/M = V
+			M.say("*dab")
+
+	//SNAP
+	else if((findtext(message, snap_words)))
+		cooldown = COOLDOWN_MEME
+		for(var/V in listeners)
+			var/mob/living/M = V
+			M.say("*snap")
+
+	//BWOINK
+	else if((findtext(message, bwoink_words)))
+		cooldown = COOLDOWN_MEME
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/effects/adminhelp.ogg', 300, 1), 25)
+	//END CITADEL CHANGES
 
 	else
 		cooldown = COOLDOWN_NONE

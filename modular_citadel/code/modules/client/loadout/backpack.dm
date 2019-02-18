@@ -18,6 +18,11 @@
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/plush/slimeplushie
 
+/datum/gear/plushlamp
+	name = "Lamp plushie"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/lampplushie
+
 /datum/gear/tennis
 	name = "Classic Tennis Ball"
 	category = SLOT_IN_BACKPACK
@@ -57,3 +62,13 @@
 	name = "Customizable dildo"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/dildo/custom
+
+/datum/gear/paperbin
+	name = "Paper Bin"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/paper_bin
+
+/datum/gear/crayons
+	name = "Box of crayons"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/storage/crayons

@@ -76,3 +76,17 @@
 /datum/export/manifest_correct_denied/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
 	return ..() - M.order_cost
+
+// Paper work done correctly
+
+/datum/export/paperwork_correct
+	cost = 50
+	unit_name = "correct paperwork"
+	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct)
+
+// Paper work not done retruned
+
+/datum/export/paperwork_incorrect
+	cost = -500 // Failed to meet NT standers
+	unit_name = "returned incorrect paperwork"
+	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork)

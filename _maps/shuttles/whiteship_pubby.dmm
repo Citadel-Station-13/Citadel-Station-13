@@ -15,6 +15,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
@@ -42,7 +43,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "i" = (
-/obj/structure/chair/shuttle,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "j" = (
@@ -65,7 +66,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "l" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plating/abductor,
@@ -75,7 +76,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "n" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/plating/abductor,
@@ -96,6 +97,7 @@
 	preferred_direction = 1;
 	width = 9
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
@@ -110,7 +112,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "q" = (
-/obj/structure/chair/shuttle{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plating/abductor,

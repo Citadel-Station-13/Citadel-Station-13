@@ -7,6 +7,9 @@
 
 /datum/config_entry/string/servername	// server name (the name of the game window)
 
+/datum/config_entry/string/servertagline
+	config_entry_value = "We forgot to set the server's tagline in config.txt"
+
 /datum/config_entry/string/serversqlname	// short form server name used for the DB
 
 /datum/config_entry/string/stationname	// station name (the name of the station in-game)
@@ -48,6 +51,8 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/log_pda	// log pda messages
+
+/datum/config_entry/flag/log_telecomms	// log telecomms messages
 
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
@@ -248,6 +253,8 @@
 
 /datum/config_entry/flag/maprotation
 
+/datum/config_entry/flag/tgstyle_maprotation
+
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
 	min_val = 0
@@ -323,8 +330,6 @@
 /datum/config_entry/flag/announce_admin_login
 
 /datum/config_entry/flag/allow_map_voting
-
-/datum/config_entry/flag/generate_minimaps
 
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null

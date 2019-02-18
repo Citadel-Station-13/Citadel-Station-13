@@ -1,6 +1,6 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/digestable = TRUE					// Can the mob be digested inside a belly?
+	var/digestable = FALSE					// Can the mob be digested inside a belly?
 	var/obj/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
@@ -10,6 +10,7 @@
 	var/openpanel = 0					// Is the vore panel open?
 	var/noisy = FALSE					// tummies are rumbly?
 	var/absorbed = FALSE				//are we absorbed?
+	var/next_preyloop
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -24,7 +25,7 @@
 	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	spawn(20 SECONDS) // long delay because the server delays in its startup. just on the safe side.
+	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
 		M.init_vore()
 
 	//Return 1 to hook-caller
@@ -132,20 +133,23 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return
+		return FALSE
+
+	if(istype(pred, /mob/living/simple_animal/hostile/megafauna/dragon))
+		if(isliving(prey) && !prey.Adjacent(pred))
+			return FALSE
 
 	// The belly selected at the time of noms
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
-/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
-	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
-	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
-
 		// Prepare messages
 	if(user == pred) //Feeding someone to yourself
 		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
 		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
+
+	if(!prey.Adjacent(user)) // let's doublecheck for sanity's sake.
+		return FALSE
 
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
@@ -161,8 +165,10 @@
 	belly.nom_mob(prey, user)
 	if (pred == user)
 		message_admins("[key_name(pred)] ate [key_name(prey)].")
-		log_attack("[key_name(pred)] ate [key_name(prey)]")
+		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
 	return TRUE
+
 //
 // Master vore proc that actually does vore procedures
 //
@@ -171,17 +177,15 @@
 	//Sanity
 	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return
+		return FALSE
+
 	if (!prey.devourable)
 		to_chat(user, "This can't be eaten!")
-		return
+		return FALSE
+
 	// The belly selected at the time of noms
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
-
-/*	//Final distance check. Time has passed, menus have come and gone. Can't use do_after adjacent because doesn't behave for held micros
-	var/user_to_pred = get_dist(get_turf(user),get_turf(pred))
-	var/user_to_prey = get_dist(get_turf(user),get_turf(prey)) */
 
 	// Prepare messages
 	if(user == pred) //Feeding someone to yourself
@@ -193,19 +197,19 @@
 
 	if(!prey.Adjacent(user)) // let's not even bother attempting it yet if they aren't next to us.
 		return FALSE
-		
+
 	// Announce that we start the attempt!
 	user.visible_message(attempt_msg)
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = delay || ishuman(prey) ? belly.human_prey_swallow_time : belly.nonhuman_prey_swallow_time
-		
+
 	if(!do_mob(src, user, swallow_time))
 		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	if(!prey.Adjacent(user)) //double check'd just in case they moved during the timer and the do_mob didn't fail for whatever reason
 		return FALSE
-		
+
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
 	for(var/mob/M in get_hearers_in_view(5, get_turf(user)))
@@ -214,7 +218,6 @@
 
 	// Actually shove prey into the belly.
 	belly.nom_mob(prey, user)
-//	user.update_icons()
 	stop_pulling()
 
 	// Flavor handling
@@ -230,10 +233,13 @@
 			prey_braindead = 1
 	if (pred == user)
 		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
-		log_attack("[key_name(pred)] ate [key_name(prey)]")
+		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
 	else
 		message_admins("[ADMIN_LOOKUPFLW(user)] forced [ADMIN_LOOKUPFLW(pred)] to eat [ADMIN_LOOKUPFLW(prey)].")
-		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
+		user.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
+		pred.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
+		prey.log_message("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].", LOG_ATTACK)
 	return TRUE
 
 //
@@ -273,14 +279,6 @@
 
 	return 0
 */
-
-//
-// Release everything in every vore organ
-//
-/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE)
-	for(var/belly in vore_organs)
-		var/obj/belly/B = belly
-		B.release_all_contents(include_absorbed)
 
 //
 // Custom resist catches for /mob/living
@@ -348,35 +346,29 @@
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		return FALSE
+	if(!client || !client.prefs_vr)
+		return 0
 	if(!copy_to_prefs_vr())
-		return FALSE
-	if(client && !client.prefs_vr.save_vore())
-		return FALSE
+		return 0
+	if(!client.prefs_vr.save_vore())
+		return 0
 
-	return TRUE
+	return 1
 
 /mob/living/proc/apply_vore_prefs()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		return FALSE
-	if(client && !client.prefs_vr.load_vore())
-		return FALSE
+	if(!client || !client.prefs_vr)
+		return 0
+	if(!client.prefs_vr.load_vore())
+		return 0
 	if(!copy_from_prefs_vr())
-		return FALSE
+		return 0
 
-	return TRUE
+	return 1
 
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
+	if(!client || !client.prefs_vr)
+		to_chat(src,"<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+		return 0
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -391,17 +383,15 @@
 
 	P.belly_prefs = serialized
 
-	return TRUE
+	return 1
 
 //
 //	Proc for applying vore preferences, given bellies
 //
 /mob/living/proc/copy_from_prefs_vr()
-	if(!client)
-		return FALSE
-	if(client && !client.prefs_vr)
-		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
+	if(!client || !client.prefs_vr)
+		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
+		return 0
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
@@ -409,11 +399,20 @@
 	devourable = P.devourable
 	vore_taste = P.vore_taste
 
+	release_vore_contents(silent = TRUE)
 	vore_organs.Cut()
 	for(var/entry in P.belly_prefs)
 		list_to_object(entry,src)
 
-	return TRUE
+	return 1
+
+//
+// Release everything in every vore organ
+//
+/mob/living/proc/release_vore_contents(var/include_absorbed = TRUE, var/silent = FALSE)
+	for(var/belly in vore_organs)
+		var/obj/belly/B = belly
+		B.release_all_contents(include_absorbed, silent)
 
 //
 // Returns examine messages for bellies

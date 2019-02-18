@@ -41,6 +41,15 @@
 	else if(dx<0)
 		.+=360
 
+/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
+	if(!y)
+		return (x>=0)?90:270
+	.=arctan(x/y)
+	if(y<0)
+		.+=180
+	else if(x<0)
+		.+=360
+
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -372,80 +381,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return "[round(units * 0.000001, 0.001)] MJ"
 	return "[round(units * 0.000000001, 0.0001)] GJ"
 
-/proc/key_name(whom, include_link = null, include_name = 1)
-	var/mob/M
-	var/client/C
-	var/key
-	var/ckey
-	var/fallback_name
-
-	if(!whom)
-		return "*null*"
-	if(istype(whom, /client))
-		C = whom
-		M = C.mob
-		key = C.key
-		ckey = C.ckey
-	else if(ismob(whom))
-		M = whom
-		C = M.client
-		key = M.key
-		ckey = M.ckey
-	else if(istext(whom))
-		key = whom
-		ckey = ckey(whom)
-		C = GLOB.directory[ckey]
-		if(C)
-			M = C.mob
-	else if(istype(whom,/datum/mind))
-		var/datum/mind/mind = whom
-		key = mind.key
-		ckey = ckey(key)
-		if(mind.current)
-			M = mind.current
-			if(M.client)
-				C = M.client
-		else
-			fallback_name = mind.name
-	else
-		return "*invalid*"
-
-	. = ""
-
-	if(!ckey)
-		include_link = 0
-
-	if(key)
-		if(C && C.holder && C.holder.fakekey && !include_name)
-			if(include_link)
-				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
-			. += "Administrator"
-		else
-			if(include_link)
-				. += "<a href='?priv_msg=[ckey]'>"
-			. += key
-		if(!C)
-			. += "\[DC\]"
-
-		if(include_link)
-			. += "</a>"
-	else
-		. += "*no key*"
-
-	if(include_name)
-		if(M)
-			if(M.real_name)
-				. += "/([M.real_name])"
-			else if(M.name)
-				. += "/([M.name])"
-		else if(fallback_name)
-			. += "/([fallback_name])"
-
-	return .
-
-/proc/key_name_admin(whom, include_name = 1)
-	return key_name(whom, 1, include_name)
-
 /proc/get_mob_by_ckey(key)
 	if(!key)
 		return
@@ -651,14 +586,9 @@ Turf and target are separate in case you want to teleport some distance from a t
 //Takes: Area type as a text string from a variable.
 //Returns: Instance for the area in the world.
 /proc/get_area_instance_from_text(areatext)
-	var/areainstance = null
 	if(istext(areatext))
 		areatext = text2path(areatext)
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		if(A.type == areatext)
-			areainstance = V
-	return areainstance
+	return GLOB.areas_by_type[areatext]
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1309,6 +1239,20 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
+/atom/proc/do_jiggle(targetangle = 45)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Turn(pick(-targetangle, targetangle))
+	animate(src, transform = M, time = 10, easing = ELASTIC_EASING)
+	animate(src, transform = OM, time = 10, easing = ELASTIC_EASING)
+
+/atom/proc/do_squish(squishx = 1.2, squishy = 0.6)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Scale(squishx, squishy)
+	animate(src, transform = M, time = 10, easing = BOUNCE_EASING)
+	animate(src, transform = OM, time = 10, easing = BOUNCE_EASING)
+
 /proc/weightclass2text(var/w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
@@ -1349,7 +1293,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
-	return
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)
@@ -1538,6 +1482,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/soup,
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
 		/obj/item/reagent_containers/food/snacks/deepfryholder
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
@@ -1545,7 +1490,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
 
 /proc/get_random_drink()
-	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
+	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
+		/obj/item/reagent_containers/food/drinks/bottle
+		)
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks) - blocked)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!
 /proc/weakref_filter_list(list/things, list/refs)

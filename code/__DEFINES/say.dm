@@ -42,24 +42,13 @@
 #define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
-#define LOGSAY "say"
-#define LOGWHISPER "whisper"
-#define LOGEMOTE "emote"
-#define LOGDSAY "dsay"
-#define LOGPDA "pda"
-#define LOGCHAT "chat"
-#define LOGASAY "adminsay"
-#define LOGCOMMENT "comment"
-#define LOGOOC "ooc"
-
-
 #define LINGHIVE_NONE 0
 #define LINGHIVE_OUTSIDER 1
 #define LINGHIVE_LING 2
 #define LINGHIVE_LINK 3
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN			1024
+#define MAX_MESSAGE_LEN			2048		//Citadel edit: What's the WORST that could happen?
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80

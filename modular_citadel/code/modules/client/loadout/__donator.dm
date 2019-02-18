@@ -10,7 +10,7 @@
 	name = "Donor item testing bikehorn"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bikehorn
-	geargroupID = "DONORTEST"
+	geargroupID = list("DONORTEST") //This is a list mainly for the sake of testing, but geargroupID works just fine with ordinary strings
 
 /datum/gear/kevhorn
 	name = "Airhorn"
@@ -258,7 +258,7 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
-	ckeywhitelist = list("johnnyvitrano")
+	ckeywhitelist = list("nik707")
 
 /datum/gear/paperhat
 	name = "Paper Hat"
@@ -326,3 +326,45 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/gun/m41
 	ckeywhitelist = list("thalverscholen")
+
+/datum/gear/Divine_robes
+	name = "Divine robes"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/lunasune
+	ckeywhitelist = list("invader4352")
+
+/datum/gear/gothcoat
+	name = "Goth Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/gothcoat
+	ckeywhitelist = list("norko")
+
+/datum/gear/corgisuit
+	name = "Corgi Suit"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/ian_costume
+	ckeywhitelist = list("cathodetherobot")
+
+/datum/gear/sharkcloth
+	name = "Leon's Skimpy Outfit"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/leoskimpy
+	ckeywhitelist = list("spectrosis")
+
+/datum/gear/mimemask
+	name = "Mime Mask"
+	category = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/gas/mime
+	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/mimeoveralls
+	name = "Mime's Overalls"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/mimeoveralls
+	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/soulneck
+	name = "Soul Necklace"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/undertale
+	ckeywhitelist = list("twilightic")

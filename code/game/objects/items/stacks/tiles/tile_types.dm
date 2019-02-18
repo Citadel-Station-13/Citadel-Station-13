@@ -100,6 +100,9 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/fifty
+	amount = 50
+
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
 	icon_state = "tile-carpet-black"
@@ -107,6 +110,22 @@
 
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/blackred
+    name = "red carpet"
+    icon_state = "tile-carpet-blackred"
+    turf_type = /turf/open/floor/carpet/blackred
+
+/obj/item/stack/tile/carpet/blackred/fifty
+    amount = 50
+
+/obj/item/stack/tile/carpet/monochrome
+    name = "monochrome carpet"
+    icon_state = "tile-carpet-monochrome"
+    turf_type = /turf/open/floor/carpet/monochrome
+
+/obj/item/stack/tile/carpet/monochrome/fifty
+    amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"

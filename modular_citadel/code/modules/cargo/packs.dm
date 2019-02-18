@@ -23,6 +23,6 @@
 
 /datum/supply_pack/misc/jukebox
 	name = "Jukebox"
-	cost = 1000000
+	cost = 35000
 	contains = list(/obj/machinery/jukebox)
 	crate_name = "Jukebox"
