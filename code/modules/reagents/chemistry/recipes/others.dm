@@ -135,15 +135,15 @@
 
 /datum/chemical_reaction/fermis_plush
 	name = "Fermis plush"
-    id = "fermis_plush"
-    required_reagents = list("sugar" = 10, "mutagen" = 10)
-    mob_react = FALSE
-    required_temp = 400
+	id = "fermis_plush"
+	required_reagents = list("sugar" = 10, "blood" = 10)
+	mob_react = FALSE
+	required_temp = 400
 
 /datum/chemical_reaction/fermis_plush/on_reaction(datum/reagents/holder, created_volume)
-    var/location = get_turf(holder.my_atom)
-    for(var/i = 1, i <= created_volume, i+=10)
-        new /obj/item/toy/plush/catgirl/fermis(location)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i+=10)
+		new /obj/item/toy/plush/catgirl/fermis(location)
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
