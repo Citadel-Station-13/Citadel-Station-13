@@ -49,7 +49,7 @@ PLAYERPOLL_PROTECT_DATUM(/datum/poll_option)
 	var/list/assembled = list()
 	for(var/i in options)
 		var/datum/poll_option/O = i
-		assembled += "([O.pollid], [O.text], [O.minval], [O.maxval], [O.descminval], [O.descmidval], [O.descmaxval], [O.default_percent_count])"
+		assembled += "([O.pollid], '[O.text]', [O.minval], [O.maxval], [O.descminval], [O.descmidval], [O.descmaxval], [O.default_percent_count])"
 	var/poll_option_table_name = PLAYERPOLL_TABLENAMEF_OPTIONS
 	assembled = assembled.Join(",\n")
 	var/datum/playerpoll_DBQuery/query = PLAYERPOLL_NEW_QUERY("INSERT INTO [poll_option_table_name] (pollid, text, minval, maxval, descmin, descmid, descmax, default_percentage_calc) VALUES [assembled]")

@@ -9,13 +9,13 @@
 	usr = null				//shitcode to allow admin proccalls
 	var/list/cids = list()
 	var/list/ips = list()
-	var/datum/DBQuery/get_ip = SSdbcore.NewQuery("SELECT ip FROM [format_table_name("connection_log")] WHERE ckey = [ckey]")
+	var/datum/DBQuery/get_ip = SSdbcore.NewQuery("SELECT ip FROM [format_table_name("connection_log")] WHERE ckey = '[ckey]'")
 	if(!get_ip.warn_execute())
 		qdel(get_ip)
 		RETURN_ERROR
 	while(get_ip.NextRow())
 		ips += get_ip.item[1]
-	var/datum/DBQuery/get_cid = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("connection_log")] WHERE ckey = [ckey]")
+	var/datum/DBQuery/get_cid = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("connection_log")] WHERE ckey = '[ckey]'")
 	if(!get_cid.warn_execute())
 		qdel(get_cid)
 		RETURN_ERROR
@@ -39,13 +39,10 @@
 	. = "ERROR"
 	if(!SSdbcore.IsConnected())
 		RETURN_ERROR
-	if(!isnum(ip))
-		ip = text2num(ip)
-		if(!isnum(ip))
-			RETURN_ERROR
+	ip = sanitizeSQL(ip)
 	var/oldusr = usr
 	usr = null				//shitcode to allow admin proccalls
-	var/datum/DBQuery/get_players = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = [ip]")
+	var/datum/DBQuery/get_players = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[ip]')")
 	if(!get_players.warn_execute())
 		qdel(get_players)
 		RETURN_ERROR
@@ -59,13 +56,10 @@
 	. = "ERROR"
 	if(!SSdbcore.IsConnected())
 		return
-	if(!isnum(cid))
-		cid = text2num(cid)
-		if(!isnum(cid))
-			RETURN_ERROR
+	cid = sanitizeSQL(cid)
 	var/oldusr = usr
 	usr = null				//shitcode to allow admin proccalls
-	var/datum/DBQuery/get_players = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE cid = [cid]")
+	var/datum/DBQuery/get_players = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[cid]'")
 	if(!get_players.warn_execute())
 		qdel(get_players)
 		RETURN_ERROR
