@@ -8,11 +8,14 @@
 #define PLAYERPOLL_EXTERNAL_CONFIGURATION
 #define PLAYERPOLL_PROTECT_DATUM(path)
 #define PLAYERPOLL_NEW_QUERY(text)
-#define PLAYERPOLL_DBQUERY_PATH
 #define PLAYERPOLL_DELETE_DATUM(instance)
 #define PLAYERPOLL_EXECUTE_QUERY(query)
 #define PLAYERPOLL_QUERY_NEXTROW(query)
 #define PLAYERPOLL_QUERY_GETITEM(query, index)
 #define PLAYERPOLL_FORMAT_TABLE_NAME(name)
 #define PLAYERPOLL_CHECK_DATABASE
+
+/datum/playerpoll_DBquery
+	parent_type = /datum/DBquery
+
 */
