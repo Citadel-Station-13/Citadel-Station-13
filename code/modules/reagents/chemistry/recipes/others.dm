@@ -136,7 +136,7 @@
 /datum/chemical_reaction/fermis_plush
 	name = "Fermis plush"
 	id = "fermis_plush"
-	required_reagents = list("sugar" = 10, "blood" = 10, "mutagen" = 10)
+	required_reagents = list("sugar" = 10, "blood" = 10, "stable_plasma" = 10)
 	mob_react = FALSE
 	required_temp = 400
 
