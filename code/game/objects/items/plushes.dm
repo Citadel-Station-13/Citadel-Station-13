@@ -806,6 +806,13 @@
 	icon_state = "robin"
 	item_state = "robin"
 
+/obj/item/toy/plush/catgirl/fermis
+    name = "fermis"
+    desc = "An adorable stuffed toy that resembles Fermis, comes complete with battery operated wagging tail! You get the impression she's cheering you on to to find happiness and be kind to people."
+    item_state = "fermis"
+    attack_verb = list("cuddled", "petpatted", "wigglepurred")
+    squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
