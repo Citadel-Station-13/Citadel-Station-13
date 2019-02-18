@@ -962,6 +962,14 @@
 	name = "Cat, Big"
 	icon_state = "catbig"
 
+/datum/sprite_accessory/mam_tails/corvid
+	name = "Corvid"
+	icon_state = "crow"
+
+/datum/sprite_accessory/mam_tails_animated/corvid
+	name = "Corvid"
+	icon_state = "crow"
+
 /datum/sprite_accessory/mam_tail/cow
 	name = "Cow"
 	icon_state = "cow"
