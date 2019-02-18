@@ -1892,6 +1892,26 @@
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/vday
+	name = "Surplus Valentine Crate"
+	desc = "Turns out we got warehouses of this love-y dove-y crap. Were sending out small barged buddle of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
+	cost = 3000
+	contains = list(/obj/item/storage/fancy/heart_box,
+					/obj/item/storage/fancy/heart_box,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/valentine,
+					/obj/item/valentine,
+					/obj/item/valentine)
+	crate_name = "valentine crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
 	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
