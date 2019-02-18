@@ -1724,6 +1724,39 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/candy
+	name = "Candy Crate"
+	desc = "For people that have a insatiable sweet tooth! Has ten candies to be eaten up.."
+	cost = 2500
+	var/num_contained = 10 //number of items picked to be contained in a randomised crate
+	contains = list(/obj/item/reagent_containers/food/snacks/candy,
+					/obj/item/reagent_containers/food/snacks/lollipop,
+					/obj/item/reagent_containers/food/snacks/gumball,
+					/obj/item/reagent_containers/food/snacks/chocolateegg,
+					/obj/item/reagent_containers/food/snacks/donut,
+					/obj/item/reagent_containers/food/snacks/cookie,
+					/obj/item/reagent_containers/food/snacks/sugarcookie,
+					/obj/item/reagent_containers/food/snacks/chococornet,
+					/obj/item/reagent_containers/food/snacks/mint,
+					/obj/item/reagent_containers/food/snacks/spiderlollipop,
+					/obj/item/reagent_containers/food/snacks/chococoin,
+					/obj/item/reagent_containers/food/snacks/fudgedice,
+					/obj/item/reagent_containers/food/snacks/chocoorange,
+					/obj/item/reagent_containers/food/snacks/honeybar,
+					/obj/item/reagent_containers/food/snacks/tinychocolate,
+					/obj/item/reagent_containers/food/snacks/spacetwinkie,
+					/obj/item/reagent_containers/food/snacks/syndicake,
+					/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+					/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
+					/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
+					/obj/item/reagent_containers/food/snacks/candy_corn,
+					/obj/item/reagent_containers/food/snacks/candiedapple,
+					/obj/item/reagent_containers/food/snacks/chocolatebar,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/storage/fancy/heart_box,
+					/obj/item/storage/fancy/donut_box)
+	crate_name = "candy crate"
+
 /datum/supply_pack/organic/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
 	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
@@ -1896,6 +1929,7 @@
 	name = "Surplus Valentine Crate"
 	desc = "Turns out we got warehouses of this love-y dove-y crap. Were sending out small barged buddle of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
 	cost = 3000
+	contraband = TRUE
 	contains = list(/obj/item/storage/fancy/heart_box,
 					/obj/item/storage/fancy/heart_box,
 					/obj/item/reagent_containers/food/snacks/grown/poppy,
