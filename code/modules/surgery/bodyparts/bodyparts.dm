@@ -290,7 +290,6 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 		body_markings = "husk" // reeee
-		markings_color = ""
 
 	if(no_update)
 		return

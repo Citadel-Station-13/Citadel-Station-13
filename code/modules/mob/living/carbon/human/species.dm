@@ -314,16 +314,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
-	to_chat(world, "Hair overlay removed")
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
-	to_chat(world, "not decapitated")
 	if(H.has_trait(TRAIT_HUSK))
-		to_chat(world, "we're husked, try updating hair")
 		H.facial_hair_style = "Shaved"
 		H.hair_style = "Skinhead"
-		to_chat(world, "[H.hair_style], [H.facial_hair_style] set")
 
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -356,7 +352,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
 		S = GLOB.facial_hair_styles_list[H.facial_hair_style]
 		if(S)
-			to_chat(world, "our facial hair is [H.facial_hair_style]")
 			//List of all valid dynamic_fhair_suffixes
 			var/static/list/fextensions
 			if(!fextensions)
@@ -415,7 +410,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if(H.hair_style && (HAIR in species_traits))
 			S = GLOB.hair_styles_list[H.hair_style]
 			if(S)
-				to_chat(world, "Our hair style is [H.hair_style]")
 				//List of all valid dynamic_hair_suffixes
 				var/static/list/extensions
 				if(!extensions)
@@ -772,6 +766,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					accessory_overlay.color = forced_colour
 			else
+				if(bodypart == "ears")
+					accessory_overlay.icon_state = "m_ears_none_[layertext]"
+				if(bodypart == "tail")
+					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
 				if(MATRIXED)
 					var/list/husklist = list()
 					husklist += ReadRGB("#a3a3a3")
