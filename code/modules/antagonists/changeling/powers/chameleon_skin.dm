@@ -1,10 +1,9 @@
 /obj/effect/proc_holder/changeling/chameleon_skin
 	name = "Chameleon Skin"
 	desc = "Our skin pigmentation rapidly changes to suit our current environment."
-	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
+	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
 	dna_cost = 2
 	chemical_cost = 25
-	loudness = 1
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/chameleon_skin/sting_action(mob/user)
