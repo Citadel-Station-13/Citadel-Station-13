@@ -807,7 +807,7 @@
 	item_state = "robin"
 
 /obj/item/toy/plush/catgirl/fermis
-    name = "Fermis plushie"
+    name = "medcat plushie"
     desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to to find happiness and be kind to people."
     icon_state = "fermis"
     item_state = "fermis"
