@@ -82,6 +82,7 @@
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime()
+	log_game("Grenade detonation at [AREACOORD(get_turf(src))], location [loc]")
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
