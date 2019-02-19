@@ -232,6 +232,8 @@
 		remove_eyeblur()
 
 /mob/proc/add_eyeblur()
+	if(!client)
+		return
 	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
 	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
 	GW.add_filter("blurry_eyes", 2, EYE_BLUR(CLAMP(eye_blurry*0.1,0.6,3)))
@@ -242,6 +244,8 @@
 	add_eyeblur()
 
 /mob/proc/remove_eyeblur()
+	if(!client)
+		return
 	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
 	var/obj/screen/plane_master/floor/F = locate(/obj/screen/plane_master/floor) in client.screen
 	GW.remove_filter("blurry_eyes")
