@@ -396,10 +396,10 @@
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into a hard shield."
-	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form. This ability is loud, and might cause our blood to react violently to heat."
+	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	chemical_cost = 20
 	dna_cost = 1
-	loudness = 2
+	loudness = 1
 	req_human = 1
 
 	weapon_type = /obj/item/shield/changeling
