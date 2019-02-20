@@ -881,11 +881,6 @@
 	name = "Murid"
 	icon_state = "murid"
 
-/datum/sprite_accessory/mam_ears/neko
-	name = "Neko"
-	icon_state = "cat"
-	color_src = HAIR
-
 /datum/sprite_accessory/mam_ears/otie
 	name = "Otusian"
 	icon_state = "otie"
@@ -1075,16 +1070,6 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_tails_animated/murid
 	name = "Murid"
 	icon_state = "murid"
-
-/datum/sprite_accessory/mam_tails/neko
-	name = "Neko"
-	icon_state = "cat"
-	color_src = HAIR
-
-/datum/sprite_accessory/mam_tails_animated/neko
-	name = "Neko"
-	icon_state = "cat"
-	color_src = HAIR
 
 /datum/sprite_accessory/mam_tails/otie
 	name = "Otusian"
