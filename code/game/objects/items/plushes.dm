@@ -688,6 +688,8 @@
 	item_state = "jewel"
 
 /obj/item/toy/plush/sergal
+	name = "sergal plushie"
+	desc = "An adorable stuffed plushie that resembles a sagaru."
 	icon_state = "faux"
 	item_state = "faux"
 	squeak_override = list('modular_citadel/sound/voice/merp.ogg' = 1)
