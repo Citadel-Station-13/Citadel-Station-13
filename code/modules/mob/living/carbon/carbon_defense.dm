@@ -90,7 +90,6 @@
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
-				var/turf/location = get_turf(src)
 				bleed(totitemdamage)
 				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
