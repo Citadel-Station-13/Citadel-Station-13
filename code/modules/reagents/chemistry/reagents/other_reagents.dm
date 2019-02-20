@@ -32,6 +32,12 @@
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
+	if(reac_volume >= 10 && istype(L))
+		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/reaction_obj(obj/O, volume)
+	if(volume >= 3 && istype(O))
+		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))

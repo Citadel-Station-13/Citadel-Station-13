@@ -164,8 +164,7 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
-			if(prob(33))
-				L.add_splatter_floor(target_loca)
+			L.bleed(damage)
 		else if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
