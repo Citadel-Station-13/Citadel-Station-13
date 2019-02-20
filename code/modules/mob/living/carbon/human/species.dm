@@ -318,8 +318,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 	if(H.has_trait(TRAIT_HUSK))
-		H.facial_hair_style = "Shaved"
-		H.hair_style = "Skinhead"
+		return
 
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
