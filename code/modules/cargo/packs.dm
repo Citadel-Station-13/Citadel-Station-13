@@ -1500,7 +1500,7 @@
 					/obj/item/flashlight/lamp,
 					/obj/item/flashlight/lamp/green,
 					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"  
+	crate_name = "advanced lighting crate"
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/service/cargo_supples
@@ -2303,69 +2303,11 @@
 	desc = "Plush tide station wide. Contains 5 random plushies for you to love. Warranty void if your love violates the terms of use."
 	cost = 1500 // or play the arcade machines ya lazy bum
 	num_contained = 5
-	contains = list(/obj/item/toy/plush/lizardplushie,
-					/obj/item/toy/plush/lizardplushie/durgit,
-					/obj/item/toy/plush/lizardplushie/rio,
-					/obj/item/toy/plush/lizardplushie/urinsu,
-					/obj/item/toy/plush/lizardplushie/arfrehn,
-					/obj/item/toy/plush/lizardplushie/soars,
-					/obj/item/toy/plush/lizardplushie/ghostie,
-					/obj/item/toy/plush/lizardplushie/amber,
-					/obj/item/toy/plush/lizardplushie/cyan,
-					/obj/item/toy/plush/lizardplushie/meena,
-					/obj/item/toy/plush/lizardplushie/stalks,
-					/obj/item/toy/plush/lizardplushie/kobold,
-					/obj/item/toy/plush/lizardplushie/gorgi,
-					/obj/item/toy/plush/lizardplushie/almaz,
-					/obj/item/toy/plush/snakeplushie/sasha,
-					/obj/item/toy/plush/snakeplushie/shay,
-					/obj/item/toy/plush/snakeplushie/vulken,
-					/obj/item/toy/plush/mothplushie,
-					/obj/item/toy/plush/mothplushie/bumble,
-					/obj/item/toy/plush/mothplushie/nameko,
-					/obj/item/toy/plush/mothplushie/suru,
-					/obj/item/toy/plush/xeno,
-					/obj/item/toy/plush/lampplushie,
-					/obj/item/toy/plush/borgplushie,
-					/obj/item/toy/plush/borgplushie/medihound,
-					/obj/item/toy/plush/borgplushie/scrubpuppy,
-					/obj/item/toy/plush/borgplushie/seeking,
-					/obj/item/toy/plush/borgplushie/neeb,
-					/obj/item/toy/plush/bird,
-					/obj/item/toy/plush/bird/esela,
-					/obj/item/toy/plush/bird/jahonna,
-					/obj/item/toy/plush/bird/krick,
-					/obj/item/toy/plush/bird/birddi,
-					/obj/item/toy/plush/bird/jewel,
-					/obj/item/toy/plush/mammal,
-					/obj/item/toy/plush/mammal/dubious,
-					/obj/item/toy/plush/mammal/gladwyn,
-					/obj/item/toy/plush/mammal/gavin,
-					/obj/item/toy/plush/mammal/blep,
-					/obj/item/toy/plush/mammal/circe,
-					/obj/item/toy/plush/mammal/pavel,
-					/obj/item/toy/plush/mammal/oten,
-					/obj/item/toy/plush/mammal/ray,
-					/obj/item/toy/plush/mammal/dawud,
-					/obj/item/toy/plush/mammal/edgar,
-					/obj/item/toy/plush/mammal/frank,
-					/obj/item/toy/plush/mammal/poojawa,
-					/obj/item/toy/plush/mammal/hazel,
-					/obj/item/toy/plush/mammal/jermaine,
-					/obj/item/toy/plush/mammal/gunther,
-					/obj/item/toy/plush/mammal/fox,
-					/obj/item/toy/plush/mammal/zed,
-					/obj/item/toy/plush/mammal/dog,
-					/obj/item/toy/plush/mammal/dog/frost,
-					/obj/item/toy/plush/mammal/dog/atticus,
-					/obj/item/toy/plush/mammal/dog/fletch,
-					/obj/item/toy/plush/mammal/dog/vincent,
-					/obj/item/toy/plush/mammal/dog/zigfried,
-					/obj/item/toy/plush/mammal/dog/nikolai,
-					/obj/item/toy/plush/catgirl,
-					/obj/item/toy/plush/catgirl/skylar,
-					/obj/item/toy/plush/catgirl/mikeel,
-					/obj/item/toy/plush/catgirl/robin)
+	contains = list(/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random) //I'm lazy
 	crate_name = "plushie crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
