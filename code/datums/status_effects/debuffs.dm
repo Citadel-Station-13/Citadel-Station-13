@@ -459,7 +459,6 @@
 
 /datum/status_effect/kindle/tick()
 	owner.Knockdown(15, TRUE, FALSE, 15)
-	owner.Stun(15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.silent = max(2, C.silent)
