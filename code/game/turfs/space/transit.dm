@@ -26,12 +26,37 @@
 /turf/open/space/transit/east
 	dir = EAST
 
+/turf/open/space/transit/border
+	opacity = TRUE
+
+/turf/open/space/transit/border/south
+	dir = SOUTH
+
+/turf/open/space/transit/border/north
+	dir = NORTH
+
+/turf/open/space/transit/border/west
+	dir = WEST
+
+/turf/open/space/transit/border/east
+	dir = EAST
+
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	..()
-	if(!locate(/obj/structure/lattice) in src)
+	if(!locate(/obj/structure/lattice) in src && !SSshuttle.is_in_shuttle_bounds(src))
 		throw_atom(AM)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
+	if(!AM || istype(AM, /obj/docking_port))
+		return
+	if(AM.loc != src)
+		return
+	if(AM.throwing)
+		return
+	var/turf/T = get_ranged_target_turf(src, turn(dir, 180), 10)
+	AM.safe_throw_at(T, 10, 1, null, FALSE)
+
+/turf/open/space/transit/border/throw_atom(atom/movable/AM)
 	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))
 		return
