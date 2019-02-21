@@ -91,6 +91,8 @@
 
 	var/turf/T = locate(_x, _y, _z)
 	AM.forceMove(T)
+	var/turf/throwturf = get_ranged_target_turf(T, dir, 10)
+	AM.safe_throw_at(throwturf, 10, 4, null, FALSE)
 
 
 /turf/open/space/transit/CanBuildHere()
