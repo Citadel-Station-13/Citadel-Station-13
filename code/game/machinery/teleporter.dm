@@ -81,10 +81,12 @@
 	return
 
 /obj/machinery/teleport/hub/update_icon()
+	density = TRUE
 	if(panel_open)
 		icon_state = "tele-o"
 	else if(is_ready())
 		icon_state = "tele1"
+		density = FALSE
 	else
 		icon_state = "tele0"
 
