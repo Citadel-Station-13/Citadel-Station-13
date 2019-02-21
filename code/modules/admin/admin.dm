@@ -613,6 +613,10 @@
 	CONFIG_SET(flag/allow_ai_multicam, !almcam)
 	if (almcam)
 		to_chat(world, "<B>The AI no longer has multicam.</B>")
+		for(var/i in GLOB.ai_list)
+			var/mob/living/silicon/ai/aiPlayer = i
+			if(aiPlayer.multicam_on)
+				aiPlayer.end_multicam()
 	else
 		to_chat(world, "<B>The AI now has multicam.</B>")
 	log_admin("[key_name(usr)] toggled AI multicam.")
