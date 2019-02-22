@@ -477,8 +477,12 @@
 
 /datum/action/toggle_scope_zoom/IsAvailable()
 	. = ..()
-	if(!. && gun)
+	if(!gun)
+		return FALSE
+	if(!.)
 		gun.zoom(owner, FALSE)
+	if(!owner.get_held_index_of_item(gun))
+		return FALSE
 
 /datum/action/toggle_scope_zoom/Remove(mob/living/L)
 	gun.zoom(L, FALSE)

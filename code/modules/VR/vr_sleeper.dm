@@ -93,6 +93,7 @@
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_human && vr_human.stat == CONSCIOUS && !vr_human.real_mind)
 					SStgui.close_user_uis(occupant, src)
+					human_occupant.audiovisual_redirect = vr_human
 					vr_human.real_mind = human_occupant.mind
 					vr_human.ckey = human_occupant.ckey
 					to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
@@ -171,6 +172,7 @@
 			O.equip(vr_human)
 		if(transfer && H.mind)
 			SStgui.close_user_uis(H, src)
+			H.audiovisual_redirect = vr_human
 			vr_human.ckey = H.ckey
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()

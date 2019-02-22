@@ -361,6 +361,8 @@
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
 				var/meets_temp_requirement = 0
+				var/has_special_react = C.special_react
+				var/can_special_react = 0
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -396,7 +398,10 @@
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 					meets_temp_requirement = 1
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
+				if(!has_special_react || C.check_special_react(src))
+					can_special_react = 1
+
+				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
 		if(possible_reactions.len)
@@ -412,6 +417,7 @@
 						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents
 			var/list/cached_results = selected_reaction.results
+			var/special_react_result = selected_reaction.check_special_react(src)
 			var/list/multiplier = INFINITY
 			for(var/B in cached_required_reagents)
 				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
@@ -443,7 +449,7 @@
 							ME2.name = "used slime extract"
 							ME2.desc = "This extract has been used up."
 
-			selected_reaction.on_reaction(src, multiplier)
+			selected_reaction.on_reaction(src, multiplier, special_react_result)
 			reaction_occurred = 1
 
 	while(reaction_occurred)

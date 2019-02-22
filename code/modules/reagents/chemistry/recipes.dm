@@ -13,12 +13,16 @@
 
 	var/required_temp = 0
 	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
+	var/special_react = FALSE //Determines if the recipe has special conditions for it to react. Mainly used for ling blood tests
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
-/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
 	return
 	//I recommend you set the result amount to the total volume of all components.
+
+/datum/chemical_reaction/proc/check_special_react(datum/reagents/holder)
+	return
 
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)

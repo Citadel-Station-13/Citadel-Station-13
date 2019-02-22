@@ -1,9 +1,10 @@
 /obj/effect/proc_holder/changeling/headcrab
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
-	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us. This ability is loud, and might cause our blood to react violently to heat."
 	chemical_cost = 20
 	dna_cost = 1
+	loudness = 2
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
