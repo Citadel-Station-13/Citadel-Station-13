@@ -73,8 +73,6 @@
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
-		if(team_mode)
-			forge_team_objectives()
 		forge_objectives()
 	remove_clownmut()
 	. = ..()
