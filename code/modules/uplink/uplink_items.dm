@@ -1359,17 +1359,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Clumsy Clown DNA"
 	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy.. \
 	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
-	cost = 3
+	cost = 1
 	item = /obj/item/dnainjector/clumsymut
 	restricted_roles = list("Clown")
-
-/datum/uplink_item/role_restricted/anitclumsyDNA
-	name = "Clown punishment"
-	desc = "HONK! Looks like one of our agents got got! \
-	We got a barrel of laughs for you, HONK, we got a Mime DNA injector HONK! Use this on a clown HONK to make them not clumsy HONK!"
-	cost = 1 //If Hos or warden gets an uplink they should be able to get it for almost free
-	item = /obj/item/dnainjector/clumsymut
-	restricted_roles = list("Warden", "Head of Security")
 
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
