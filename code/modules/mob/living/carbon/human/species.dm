@@ -317,9 +317,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
-
 	if(H.has_trait(TRAIT_HUSK))
 		return
+
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
 
@@ -351,7 +351,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
 		S = GLOB.facial_hair_styles_list[H.facial_hair_style]
 		if(S)
-
 			//List of all valid dynamic_fhair_suffixes
 			var/static/list/fextensions
 			if(!fextensions)
@@ -410,7 +409,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if(H.hair_style && (HAIR in species_traits))
 			S = GLOB.hair_styles_list[H.hair_style]
 			if(S)
-
 				//List of all valid dynamic_hair_suffixes
 				var/static/list/extensions
 				if(!extensions)
@@ -612,6 +610,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "mam_ears"
 
+	if("mam_snouts" in mutant_bodyparts) //Take a closer look at that snout!
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == BODYPART_ROBOTIC)
+			bodyparts_to_add -= "mam_snouts"
+
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
 			bodyparts_to_add -= "taur"
@@ -696,13 +698,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 
+			accessory_overlay.color = null //just because. reee.
+
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "xenotail")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
+			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
 				bodypart = "waggingtail"
+			if(bodypart == "mam_waggingtail")
+				bodypart = "tailwag"
 			if(bodypart == "mam_ears" || bodypart == "ears")
 				bodypart = "ears"
+			if(bodypart == "mam_snouts" || bodypart == "snout")
+				bodypart = "snout"
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
 
@@ -713,6 +721,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
+
+			var/list/colorlist = list()
+			colorlist.Cut()
+			colorlist += ReadRGB(H.dna.features["mcolor"])
+			colorlist += ReadRGB(H.dna.features["mcolor2"])
+			colorlist += ReadRGB(H.dna.features["mcolor3"])
+			colorlist += list(0,0,0)
+			for(var/index=1, index<=colorlist.len, index++)
+				colorlist[index] = colorlist[index]/255
 
 			if(!(H.has_trait(TRAIT_HUSK)))
 				if(!forced_colour)
@@ -732,6 +749,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
 								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+
+						if(MATRIXED)
+							accessory_overlay.color = list(colorlist)
+
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
@@ -743,6 +764,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							accessory_overlay.color = "#[H.eye_color]"
 				else
 					accessory_overlay.color = forced_colour
+			else
+				if(bodypart == "ears")
+					accessory_overlay.icon_state = "m_ears_none_[layertext]"
+				if(bodypart == "tail")
+					accessory_overlay.icon_state = "m_tail_husk_[layertext]"
+				if(MATRIXED)
+					var/list/husklist = list()
+					husklist += ReadRGB("#a3a3a3")
+					husklist += ReadRGB("#a3a3a3")
+					husklist += ReadRGB("#a3a3a3")
+					husklist += list(0,0,0)
+					for(var/index=1, index<=husklist.len, index++)
+						husklist[index] = husklist[index]/255
+					accessory_overlay.color = husklist
+
 			standing += accessory_overlay
 
 			if(S.hasinner)

@@ -288,6 +288,7 @@
 		O.drop_limb(1)
 		qdel(O)
 		N.attach_limb(src)
+
 	if(body_plan_changed && ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.w_uniform)
