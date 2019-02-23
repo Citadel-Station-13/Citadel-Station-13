@@ -22,6 +22,12 @@
 		SSmapping.used_turfs -= i
 	SSmapping.reserve_turfs(v)
 
+/datum/turf_reservation/transit/Release()
+	for(var/turf/open/space/transit/T in reserved_turfs)
+		for(var/atom/movable/AM in T)
+			T.throw_atom(AM)
+	. = ..()
+
 /datum/turf_reservation/proc/Reserve(width, height, zlevel)
 	if(width > world.maxx || height > world.maxy || width < 1 || height < 1)
 		return FALSE
