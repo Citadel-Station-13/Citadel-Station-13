@@ -38,9 +38,11 @@
 	var/obj/item/heirloom_type
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
-			heirloom_type = /obj/item/paint/anycolor, /obj/item/bikehorn/golden
+			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
-			heirloom_type = /obj/item/paint/anycolor, /obj/item/toy/dummy
+			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/toy/dummy
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife/scimitar
 		if("Medical Doctor")
