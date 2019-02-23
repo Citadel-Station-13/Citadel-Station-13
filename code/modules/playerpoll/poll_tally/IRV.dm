@@ -50,7 +50,7 @@
 	src.id = id
 
 /datum/IRV_poll_tally/proc/Execute()
-	var/list/force_eliminations = src.force_eliminations.Copy()
+	var/list/force_eliminations = islist(src.force_eliminations)? src.force_eliminations.Copy() : list()
 	var/oldusr = usr
 	usr = null				//shitcode to allow admin proccalls
 	initial_options.Cut()
