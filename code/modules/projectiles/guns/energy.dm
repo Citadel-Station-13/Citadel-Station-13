@@ -76,7 +76,7 @@
 			var/mob/living/silicon/robot/R = owner
 			if(!R.cell?.use(100))
 				return
-			cell.give(100)
+		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
 		update_icon()
