@@ -153,8 +153,14 @@
 				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
-			if(!EG.chambered)
-				EG.recharge_newshot() //try to reload a new shot.
+			if(EG.cell?.charge < EG.cell.maxcharge)
+				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.select]
+				EG.cell.give(S.e_cost * coeff)
+				if(!EG.chambered)
+					EG.recharge_newshot(TRUE)
+				EG.update_icon()
+			else
+				EG.charge_tick = 0
 
 	R.toner = R.tonermax
 
@@ -345,17 +351,6 @@
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"

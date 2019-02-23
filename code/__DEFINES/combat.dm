@@ -118,6 +118,10 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//E-gun self-recharge values
+#define EGUN_NO_SELFCHARGE 0
+#define EGUN_SELFCHARGE 1
+#define EGUN_SELFCHARGE_BORG 2
 
 //Object/Item sharpness
 #define IS_BLUNT			0
