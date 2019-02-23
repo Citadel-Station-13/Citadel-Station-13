@@ -192,7 +192,7 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	send2irc("Server", "Round just ended.")
+	send2irc("Server", "Round of [mode.name] just ended[mode_result == "undefined" ? "." : "with a [mode_result]."] Survival rate: [PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
