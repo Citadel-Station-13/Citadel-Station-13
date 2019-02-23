@@ -67,8 +67,7 @@
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
-		var/borgcharge = selfcharge == EGUN_SELFCHARGE_BORG ? TRUE : FALSE
-		if(borgcharge)
+		if(selfcharge == EGUN_SELFCHARGE_BORG)
 			var/atom/owner = loc
 			if(istype(owner, /obj/item/robot_module))
 				owner = owner.loc
