@@ -264,7 +264,7 @@
 				if(pocket_item)
 					if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
 						dropItemToGround(pocket_item)
-						if(!put_in_hands(pocket_item))
+						if(!usr.can_hold_items() || !usr.put_in_hands(pocket_item))
 							pocket_item.forceMove(drop_location())
 				else
 					if(place_item)
