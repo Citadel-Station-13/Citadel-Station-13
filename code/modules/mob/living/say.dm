@@ -170,7 +170,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			var/message_len = length(message)
 			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 			message = Ellipsis(message, 10, 1)
-			last_words = message
 			message_mode = MODE_WHISPER_CRIT
 			succumbed = TRUE
 	else
@@ -179,6 +178,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	message = treat_message(message)
 	if(!message)
 		return
+
+	last_words = message
 
 	spans |= get_spans()
 
