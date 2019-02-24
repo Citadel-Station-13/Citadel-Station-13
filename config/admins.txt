@@ -8,8 +8,8 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 
-ShiroOvo = Host
+ShiroOvo = HeadAdmin
 
-Bob Joga = GameMaster
+Bob Joga = Host
 
 ThuxTK= GameMaster
