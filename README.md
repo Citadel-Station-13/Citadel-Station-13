@@ -9,4 +9,4 @@ Just a stupid private server.<BR>
 
 **Rato Station 24 Information** <BR>
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
-**Discord:**  https://anonref.me/1njdnq. <BR>
+**Discord:**  https://discord.gg/BsPrs47 <BR>
