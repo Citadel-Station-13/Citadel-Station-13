@@ -13,8 +13,7 @@ Clown
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
-
-	access = list(ACCESS_THEATRE)
+	access = list(ACCESS_THEATRE, ACCESS_HYDROPONICS, ACCESS_KITCHEN,)
 	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
@@ -77,7 +76,7 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(ACCESS_THEATRE)
+	access = list(ACCESS_THEATRE, ACCESS_HYDROPONICS, ACCESS_KITCHEN,)
 	minimal_access = list(ACCESS_THEATRE)
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
