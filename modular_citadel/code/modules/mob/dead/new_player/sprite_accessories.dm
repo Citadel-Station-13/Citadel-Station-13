@@ -1231,6 +1231,10 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Deer"
 	icon_state = "deer"
 
+/datum/sprite_accessory/mam_body_markings/dog
+	name = "Dog"
+	icon_state = "dog"
+
 /datum/sprite_accessory/mam_body_markings/eevee
 	name = "Eevee"
 	icon_state = "eevee"
