@@ -76,17 +76,6 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/reagent_containers/food/snacks/donut/semen
-	name = "semen donut"
-	desc = "It's rather sticky."
-	icon_state = "donut3"
-	bitesize = 10
-	bonus_reagents = list("sugar" = 1)
-	list_reagents = list("nutriment" = 3, "sugar" = 2, "semen" = 5)
-	filling_color = "#FFFFFF"
-	tastes = list("donut" = 1, "semen" = 2)
-	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
-
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
@@ -106,6 +95,17 @@
 	list_reagents = list("nutriment" = 3, "ketchup" = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
+
+/obj/item/reagent_containers/food/snacks/donut/semen
+	name = "semen donut"
+	desc = "It's rather sticky."
+	icon_state = "donut3"
+	bitesize = 10
+	bonus_reagents = list("semen" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 2, "semen" = 5)
+	filling_color = "#FFFFFF"
+	tastes = list("donut" = 1, "salt" = 3)
+	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
 
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
