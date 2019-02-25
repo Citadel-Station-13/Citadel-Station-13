@@ -83,7 +83,6 @@
 	bitesize = 10
 	bonus_reagents = list("sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 2, "semen" = 5)
-	var/extra_reagent = null
 	filling_color = "#FFFFFF"
 	tastes = list("donut" = 1, "semen" = 2)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
@@ -101,13 +100,13 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
-	
+
 /obj/item/reagent_containers/food/snacks/donut/meat
 	bonus_reagents = list("ketchup" = 1)
 	list_reagents = list("nutriment" = 3, "ketchup" = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
-	
+
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
