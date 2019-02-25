@@ -77,7 +77,7 @@
 		filling_color = "#FF69B4"
 
 /obj/item/reagent_containers/food/snacks/donut/semen
-	name = "donut"
+	name = "semen donut"
 	desc = "It's rather sticky."
 	icon_state = "donut3"
 	bitesize = 10
