@@ -103,7 +103,6 @@
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
-		transform = initial(transform)
 		return
 
 	else
