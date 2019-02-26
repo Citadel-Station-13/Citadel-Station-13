@@ -499,7 +499,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
-
+/*
 /obj/item/melee/baseball_bat/electric_bat
 	name = "electric bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
@@ -518,6 +518,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitcost = 1000
 	obj/item/stock_parts/cell/cell
 	preload_cell_type
+radix, essa porra tá quebrada.
+*/
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
