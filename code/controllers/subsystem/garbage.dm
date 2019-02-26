@@ -98,8 +98,25 @@ SUBSYSTEM_DEF(garbage)
 					state = SS_RUNNING
 				break
 
-	
-
+/datum/controller/subsystem/garbage/proc/debug_count(queuenum, world = TRUE)
+	var/list/queue = queues[queuenum]
+	var/list/L = list()
+	for(var/ref in queue)
+		var/datum/D = locate(ref)
+		if(D && D.gc_destroyed == queue[ref])
+			if(L[D.type])
+				L[D.type]++
+			else
+				L[D.type] = 1
+		else
+			if(L["DESTROYED"])
+				L["DESTROYED"]++
+			else
+				L["DESTROYED"] = 1
+	var/list/assembled = list()
+	for(var/type in L)
+		assembled += "[type] - [L[type]]"
+	to_chat(world? world : usr, assembled.Join("<br>"))
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
