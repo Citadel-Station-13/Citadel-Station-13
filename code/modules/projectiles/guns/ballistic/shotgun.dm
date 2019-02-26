@@ -250,5 +250,11 @@
 		return
 	pump()
 
-
+/obj/item/gun/ballistic/shotgun/shotcum
+	name = "Shotcum"
+	icon_state = "shotcum"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/cum
+	desc = "Well, it's a toy... but it's an adult's one."
+	damtype = AROUSAL
+	force = 100
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm

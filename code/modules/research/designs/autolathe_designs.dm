@@ -686,6 +686,22 @@
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("hacked", "Security")
 
+/datum/design/cum_shell
+	name = "Cum Shell"
+	id = "cum_shell"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 250)
+	build_path = /obj/item/ammo_casing/shotgun/cumshell
+	category = list("Security")
+
+/datum/design/shotcum
+	name = "Shotcum"
+	id = "shotcum"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 16000)
+	build_path = /obj/item/gun/ballistic/shotgun/shotcum
+	category = list("hacked", "Security")
+
 /datum/design/shotgun_dart
 	name = "Shotgun Dart"
 	id = "shotgun_dart"

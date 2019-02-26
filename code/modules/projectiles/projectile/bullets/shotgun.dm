@@ -7,6 +7,16 @@
 	damage = 5
 	stamina = 80
 
+/obj/item/projectile/bullet/shotgun_arousal
+	name = "arousal slug"
+	damage = 100
+	stamina = 5
+	damage_type = AROUSAL
+/obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/target)
+	..()
+	target(mob_climax(forced_climax=TRUE))
+
+
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	damage = 20
