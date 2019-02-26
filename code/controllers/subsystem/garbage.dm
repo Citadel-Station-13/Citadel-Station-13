@@ -21,6 +21,9 @@ SUBSYSTEM_DEF(garbage)
 	var/list/fail_counts
 
 	var/list/items = list()			// Holds our qdel_item statistics datums
+	
+	//debugging
+	var/list/refids_types = list()
 
 	//Queue
 	var/list/queues
@@ -118,6 +121,19 @@ SUBSYSTEM_DEF(garbage)
 		assembled += "[type] - [L[type]]"
 	to_chat(world? world : usr, assembled.Join("<br>"))
 
+/datum/controller/subsystem/garbage/proc/debug_refids(world = TRUE)
+	var/list/L = list()
+	for(var/ref in refids_types)
+		var/type = refids_types[ref]
+		if(L[type])
+			L[type]++
+		else
+			L[type] = 1
+	var/list/assembled = list()
+	for(var/i in L)
+		assembled += "[type] - [L[type]]"
+	to_chat(world? world : usr, assembled.Join("<br>"))
+
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
 		delslasttick = 0
@@ -156,6 +172,7 @@ SUBSYSTEM_DEF(garbage)
 			#ifdef TESTING
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
+			refids_types -= refID
 			if (MC_TICK_CHECK)
 				return
 			continue
@@ -199,7 +216,7 @@ SUBSYSTEM_DEF(garbage)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[D]"
-
+	refids_types[refid] = D.type
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
 	if (queue[refid])
@@ -216,7 +233,7 @@ SUBSYSTEM_DEF(garbage)
 	++totaldels
 	var/type = D.type
 	var/refID = "\ref[D]"
-
+	refids_types -= refID
 	del(D)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
