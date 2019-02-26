@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(garbage)
 		assembled += "[type] - [L[type]]"
 	to_chat(world? world : usr, assembled.Join("<br>"))
 
-/datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
+/datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK, force_nochecktick)
 	if (level == GC_QUEUE_CHECK)
 		delslasttick = 0
 		gcedlasttick = 0
@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(garbage)
 	for (var/refID in queue)
 		if (!refID)
 			count++
-			if (MC_TICK_CHECK)
+			if (!force_nochecktick && MC_TICK_CHECK)
 				return
 			continue
 
@@ -202,7 +202,7 @@ SUBSYSTEM_DEF(garbage)
 
 		Queue(D, level+1)
 
-		if (MC_TICK_CHECK)
+		if (!force_nochecktick && MC_TICK_CHECK)
 			return
 	if (count)
 		queue.Cut(1,count+1)
