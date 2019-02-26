@@ -102,6 +102,8 @@ SUBSYSTEM_DEF(garbage)
 				break
 
 /datum/controller/subsystem/garbage/proc/debug_count(queuenum, world = TRUE)
+	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+	sleep(1)
 	var/list/queue = queues[queuenum]
 	var/list/L = list()
 	for(var/ref in queue)
@@ -122,6 +124,8 @@ SUBSYSTEM_DEF(garbage)
 	to_chat(world? world : usr, assembled.Join("<br>"))
 
 /datum/controller/subsystem/garbage/proc/debug_refids(world = TRUE)
+	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+	sleep(1)
 	var/list/L = list()
 	for(var/ref in refids_types)
 		var/type = refids_types[ref]
@@ -133,6 +137,11 @@ SUBSYSTEM_DEF(garbage)
 	for(var/i in L)
 		assembled += "[type] - [L[type]]"
 	to_chat(world? world : usr, assembled.Join("<br>"))
+
+/datum/controller/subsystem/garbage/proc/no_tickcheck_handlequeue(level)
+	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+	sleep(1)
+	HandleQueue(level, TRUE)
 
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK, force_nochecktick)
 	if (level == GC_QUEUE_CHECK)
