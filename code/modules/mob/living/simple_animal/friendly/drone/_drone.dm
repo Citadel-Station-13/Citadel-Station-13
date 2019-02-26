@@ -273,3 +273,15 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/helloworld
+	name = "H.3LLO W0-RL.D"
+	desc = "A advanced and stronger maintenance drone, an expendable robot built to perform station repairs."
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "helloworld"
+	icon_living = "helloworld"
+	icon_dead = "helloworld_dead"
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
+	health = 100
+	maxHealth = 100
+	can_be_held = FALSE
