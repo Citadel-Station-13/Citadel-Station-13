@@ -50,4 +50,4 @@
 /obj/item/ammo_box/magazine/internal/shot/shotcum
 	name = "shotcum internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/cumshell
-	max_ammo = 2
+	max_ammo = 1

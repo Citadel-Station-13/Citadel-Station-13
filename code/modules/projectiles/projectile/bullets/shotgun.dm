@@ -15,11 +15,14 @@
 	knockdown = 10
 	stutter = 10
 	damage_type = AROUSAL
+	ricochet_chance = 0
+	ricochets_max = 0
+
 /obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/living/carbon/human/target)
-	..()
 	to_chat(target, "<span class='boldwarning'>OH FUCK YOU'RE GONNA BUST A BIG NUT RIGHT NOW.</span>")
 	sleep(10)
 	target.mob_climax(forced_climax=TRUE)
+	..()
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
