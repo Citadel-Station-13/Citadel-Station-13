@@ -65,5 +65,3 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)
 			if(M.stat == DEAD)
 				M.gib()
-/mob/living/proc/soundbang_act()
-	return 0 //Deixa ele imune ao próprio snap.

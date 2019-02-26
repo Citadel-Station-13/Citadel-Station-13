@@ -198,6 +198,7 @@
 			state = STATE_DEFAULT
 			if(authenticated)
 				state = STATE_CANCELSHUTTLE
+		/*
 		if("cancelshuttle2")
 			if(authenticated)
 				if(world.time > SSshuttle.auto_call) //Citadel Edit Removing auto_call caused recall.
@@ -205,6 +206,7 @@
 				else
 					SSshuttle.cancelEvac(usr)
 			state = STATE_DEFAULT
+			*/
 		if("messagelist")
 			currmsg = 0
 			state = STATE_MESSAGELIST
