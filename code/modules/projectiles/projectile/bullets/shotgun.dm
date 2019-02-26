@@ -14,10 +14,9 @@
 	knockdown = 10
 	stutter = 10
 	damage_type = AROUSAL
-/obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/target)
+/obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/living/carbon/human/target)
 	..()
 	target.mob_climax(forced_climax=TRUE)
-
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
