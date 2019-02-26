@@ -11,6 +11,8 @@
 	name = "arousal slug"
 	damage = 100
 	stamina = 5
+	knockdown = 10
+	stutter = 10
 	damage_type = AROUSAL
 /obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/target)
 	..()
