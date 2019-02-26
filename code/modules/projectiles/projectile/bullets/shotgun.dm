@@ -9,6 +9,7 @@
 
 /obj/item/projectile/bullet/shotgun_arousal
 	name = "arousal slug"
+	icon_state = "cum"
 	damage = 100
 	stamina = 5
 	knockdown = 10
@@ -16,6 +17,8 @@
 	damage_type = AROUSAL
 /obj/item/projectile/bullet/shotgun_arousal/on_hit(mob/living/carbon/human/target)
 	..()
+	to_chat(target, "<span class='boldwarning'>OH FUCK YOU'RE GONNA BUST A BIG NUT RIGHT NOW.</span>")
+	sleep(10)
 	target.mob_climax(forced_climax=TRUE)
 
 /obj/item/projectile/bullet/incendiary/shotgun

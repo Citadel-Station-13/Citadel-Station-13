@@ -252,6 +252,7 @@
 
 /obj/item/gun/ballistic/shotgun/shotcum
 	name = "Shotcum"
+	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "shotcum"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/shotcum
 	desc = "Well, it's a toy... but it's an adult's one."
