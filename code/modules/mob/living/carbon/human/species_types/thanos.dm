@@ -56,14 +56,14 @@
 		M.show_message("<span class='narsiesmall'>SNAP!</span>", 2)
 		if(M == src)
 			M.playsound_local(H, 'modular_citadel/sound/misc/thanos.ogg', 100, TRUE)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)
-			return
-		if(M.stat == DEAD)
-			M.gib()
 			return
 		else
 			M.apply_effect(80, EFFECT_KNOCKDOWN)
 			M.playsound_local(M, 'sound/effects/Explosion1.ogg', 100, TRUE)
-			M.soundbang_act(2, 0, 100, 1)
+			M.soundbang_act(1, 200, 10, 15)
 			M.jitteriness += 10
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "thanged", /datum/mood_event/thaned)
+			if(M.stat == DEAD)
+				M.gib()
+/mob/living/proc/soundbang_act()
+	return 0 //Deixa ele imune ao próprio snap.
