@@ -45,7 +45,7 @@
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
-	var/list/body_markings = list() 	//for bodypart markings
+	var/body_markings 	//for bodypart markings
 	var/list/markings_color = list()
 	var/auxmarking
 	var/list/auxmarking_color = list()
