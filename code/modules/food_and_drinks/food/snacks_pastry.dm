@@ -98,7 +98,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut/semen
 	name = "\"cream\" donut"
-	desc = "It's rather sticky."
+	desc = "That cream looks a little runny..."
 	icon_state = "donut3"
 	bitesize = 10
 	bonus_reagents = list("semen" = 1)
