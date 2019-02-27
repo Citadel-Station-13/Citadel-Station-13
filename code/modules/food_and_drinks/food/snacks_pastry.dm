@@ -97,7 +97,7 @@
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
 
 /obj/item/reagent_containers/food/snacks/donut/semen
-	name = "semen donut"
+	name = "\"cream\" donut"
 	desc = "It's rather sticky."
 	icon_state = "donut3"
 	bitesize = 10
