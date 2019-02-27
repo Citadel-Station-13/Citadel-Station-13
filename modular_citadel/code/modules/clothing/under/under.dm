@@ -47,3 +47,27 @@
 	sensor_mode = SENSOR_COORDS  //it's still a captain's suit nerd
 	random_sensor = FALSE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/under/charlie
+	name ="Charlie's outfit"
+	desc = ""
+	icon = 'icons/mob/uniform.dmi'
+	icon_state = "charlie"
+	can_adjust = FALSE
+	sensor_mode = SENSOR_COORDS
+
+/obj/item/clothing/under/jotaro
+	name ="Jotaro's shirt"
+	desc = ""
+	icon = 'icons/mob/uniform.dmi'
+	icon_state = "jotaro_shirt"
+	can_adjust = FALSE
+	sensor_mode = SENSOR_COORDS
+
+/obj/item/clothing/under/dio
+	name ="Dio's shirt"
+	desc = ""
+	icon = 'icons/mob/uniform.dmi'
+	icon_state = "dio"
+	can_adjust = FALSE
+	sensor_mode = SENSOR_COORDS
