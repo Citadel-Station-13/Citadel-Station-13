@@ -109,7 +109,7 @@
 
 /obj/item/robot_module/medihound/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/medhoundmodels = list("Default")
+	var/list/medhoundmodels = list("Default", "Dark")
 	if(R.client && R.client.ckey in list("nezuli"))
 		medhoundmodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medhoundmodels
@@ -120,6 +120,10 @@
 			cyborg_base_icon = "medihound"
 			moduleselect_icon = "medihound"
 			sleeper_overlay = "msleeper"
+		if("Dark")
+			cyborg_base_icon = "medihounddark"
+			moduleselect_icon = "medihounddark"
+			sleeper_overlay = "mdsleeper"
 		if("Alina")
 			cyborg_base_icon = "alina"
 			special_light_key = "alina"
@@ -261,7 +265,7 @@
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/engymodels = list("Default", "Default - Treads","Loader","Handy")
+	var/list/engymodels = list("Default", "Default - Treads","Loader","Handy", "Pup Dozer")
 	if(R.client && R.client.ckey in list("nezuli"))
 		engymodels += "Alina"
 	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
@@ -282,6 +286,15 @@
 			cyborg_base_icon = "handyeng"
 			special_light_key = "handyeng"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+		if("Pup Dozer")
+			cyborg_base_icon = "pupdozer"
+			special_light_key = "pupdozer"
+			can_be_pushed = FALSE
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 		if("Alina")
 			cyborg_base_icon = "alina"
 			special_light_key = "alina"
