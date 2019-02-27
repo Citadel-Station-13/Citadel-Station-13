@@ -205,8 +205,23 @@
 	mob_type_allowed_typecache = list(/mob/living/carbon)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
-	if(user.nextsoundemote >= world.time)
-		return
-	user.nextsoundemote = world.time + 7
-	playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
+	. = ..()
+
+/datum/emote/living/merp
+	key = "merp"
+	key_third_person = "merps"
+	message = "merps!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/merp/run_emote(mob/living/user, params)
+	if(ishuman(user))
+		if(user.nextsoundemote >= world.time)
+			return
+		user.nextsoundemote = world.time + 7
+		playsound(user, 'modular_citadel/sound/voice/merp.ogg', 50, 1, -1)
 	. = ..()
