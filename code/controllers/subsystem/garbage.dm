@@ -101,8 +101,8 @@ SUBSYSTEM_DEF(garbage)
 					state = SS_RUNNING
 				break
 
-/datum/controller/subsystem/garbage/proc/debug_count(queuenum, world = TRUE)
-	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+/datum/controller/subsystem/garbage/proc/debug_count(queuenum, world = FALSE)
+	to_chat(GLOB.clients, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
 	sleep(1)
 	var/list/queue = queues[queuenum]
 	var/list/L = list()
@@ -121,10 +121,10 @@ SUBSYSTEM_DEF(garbage)
 	var/list/assembled = list()
 	for(var/type in L)
 		assembled += "[type] - [L[type]]"
-	to_chat(world? world : usr, assembled.Join("<br>"))
+	to_chat(world? GLOB.clients : usr, assembled.Join("<br>"))
 
-/datum/controller/subsystem/garbage/proc/debug_refids(world = TRUE)
-	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+/datum/controller/subsystem/garbage/proc/debug_refids(world = FALSE)
+	to_chat(GLOB.clients, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
 	sleep(1)
 	var/list/L = list()
 	for(var/ref in refids_types)
@@ -135,11 +135,11 @@ SUBSYSTEM_DEF(garbage)
 			L[type] = 1
 	var/list/assembled = list()
 	for(var/i in L)
-		assembled += "[type] - [L[type]]"
-	to_chat(world? world : usr, assembled.Join("<br>"))
+		assembled += "[i] - [L[i]]"
+	to_chat(world? GLOB.clients : usr, assembled.Join("<br>"))
 
 /datum/controller/subsystem/garbage/proc/no_tickcheck_handlequeue(level)
-	to_chat(world, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
+	to_chat(GLOB.clients, "<span class='danger'>An administrator has initiated a debug dump/count/clear of the garbage collector, brace for lag!</span>")
 	sleep(1)
 	HandleQueue(level, TRUE)
 
