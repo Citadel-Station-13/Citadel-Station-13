@@ -18,7 +18,6 @@
 /obj/item/ammo_casing/shotgun/cumshell
 	name = "cum shell"
 	desc = "A slug... for shooting at sluts."
-	pellets = 3
 	icon_state = "cumshell"
 	projectile_type = /obj/item/projectile/bullet/shotgun_arousal
 	materials = list(MAT_METAL=250)
