@@ -118,11 +118,8 @@
 	switch(borg_icon)
 		if("Default")
 			cyborg_base_icon = "medihound"
-			moduleselect_icon = "medihound"
-			sleeper_overlay = "msleeper"
 		if("Dark")
 			cyborg_base_icon = "medihounddark"
-			moduleselect_icon = "medihounddark"
 			sleeper_overlay = "mdsleeper"
 		if("Alina")
 			cyborg_base_icon = "alina"
