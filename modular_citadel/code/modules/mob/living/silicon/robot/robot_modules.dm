@@ -72,7 +72,7 @@
 			cyborg_base_icon = "k9"
 			moduleselect_icon = "k9"
 		if("Alina")
-			cyborg_base_icon = "alina"
+			cyborg_base_icon = "alina-sec"
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
 	return ..()
@@ -122,7 +122,7 @@
 			cyborg_base_icon = "medihounddark"
 			sleeper_overlay = "mdsleeper"
 		if("Alina")
-			cyborg_base_icon = "alina"
+			cyborg_base_icon = "alina-med"
 			special_light_key = "alina"
 			sleeper_overlay = "alinasleeper"
 	return ..()
@@ -293,7 +293,7 @@
 			dogborg = TRUE
 			cyborg_pixel_offset = -16
 		if("Alina")
-			cyborg_base_icon = "alina"
+			cyborg_base_icon = "alina-eng"
 			special_light_key = "alina"
 			can_be_pushed = FALSE
 			hat_offset = INFINITY
