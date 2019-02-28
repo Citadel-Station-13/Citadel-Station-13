@@ -41,8 +41,8 @@
 			heirloom_type = /obj/item/paint/anycolor
 			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
-			heirloom_type = /obj/item/toy/dummy
 			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/toy/dummy
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife/scimitar
 		if("Medical Doctor")
@@ -52,7 +52,7 @@
 		if("Atmospheric Technician")
 			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
-			heirloom_type = /obj/item/gavelhammer
+			heirloom_type = /obj/item/storage/briefcase/lawyer/family
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
@@ -61,6 +61,10 @@
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
 			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+		if("Chaplain")
+			heirloom_type = /obj/item/camera/spooky/family
+		if("Captain")
+			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
 	if(!heirloom_type)
 		heirloom_type = pick(
 		/obj/item/toy/cards/deck,
