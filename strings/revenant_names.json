@@ -1,10 +1,9 @@
 {
     "spirit_type": [
         "Spirit",
-        "Ghost",
-        "Spectre",
+		"Spectre",
         "Phantom",
-        "Revenant",
+		"Phantom",
         "Essence",
         "Soul"
     ],
