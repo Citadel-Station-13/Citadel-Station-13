@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//character preferences
 	var/real_name						//our character's name
+	var/nameless = FALSE				//whether or not our character is nameless
 	var/be_random_name = 0				//whether we'll have a random name every round
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
@@ -206,8 +207,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 			dat += "<b>Always Random Name:</b><a style='display:block;width:30px' href='?_src_=prefs;preference=name'>[be_random_name ? "Yes" : "No"]</a><BR>"
 
-			dat += "<b>Name:</b>"
+			dat += "<b>[nameless ? "Default designation" : "Name"]:</b>"
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
+			dat += "<a href='?_src_=prefs;preference=nameless'>Be nameless: [nameless ? "Yes" : "No"]</a><BR>"
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
@@ -1928,6 +1930,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							damagescreenshake = 0
 						else
 							damagescreenshake = 1
+				if("nameless")
+					nameless = !nameless
 				//END CITADEL EDIT
 				if("publicity")
 					if(unlock_content)
@@ -2108,8 +2112,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else if(firstspace == name_length)
 				real_name += "[pick(GLOB.last_names)]"
 
-	character.real_name = real_name
+	character.real_name = nameless ? "[real_name] #[rand(10000, 99999)]" : real_name
 	character.name = character.real_name
+	character.nameless = nameless
 
 	character.gender = gender
 	character.age = age
@@ -2143,6 +2148,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
+	character.dna.nameless = character.nameless
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
