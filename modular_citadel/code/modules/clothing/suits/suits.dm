@@ -44,7 +44,7 @@
 /obj/item/clothing/suit/sneaking
 	name = "sneaking suit"
 	desc = "Kept you waiting, huh?"
-	icon = 'icons\mob\suit.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "sneaking_suit"
 	item_state = "sneaking_suit"
 	blood_overlay_type = "armor"
@@ -60,20 +60,19 @@
 /obj/item/clothing/suit/classic_wintercoat
 	name = "classic wintercoat"
 	desc = ""
-	icon = 'icons\mob\suit.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "classic_wintersuit"
 	item_state = "classic_wintersuit"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|ARMS|HANDS
 	clothing_flags = THICKMATERIAL
-	FLAGS_INV = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = FLAMMABLE
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -5, "acid" = 0)
 
 /obj/item/clothing/suit/jotaro_jacket
 	name = "Jotaro's jacket"
 	desc = ""
-	icon = 'icons\mob\suit.dmi'
+	icon = 'icons/mob/suit.dmi'
 	icon_state = "jotaro_jacket"
 	item_state = "jotaro_jacket"
 	body_parts_covered = GROIN|ARMS
