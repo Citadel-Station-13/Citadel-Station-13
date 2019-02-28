@@ -192,7 +192,7 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	var/survival_rate = GLOB.joined_player_list.len ? "PERCENT(popcount[POPCOUNT_SURVIVORS]/GLOB.joined_player_list.len)%" : "there's literally no player"
+	var/survival_rate = GLOB.joined_player_list.len ? "[PERCENT(popcount[POPCOUNT_SURVIVORS]/GLOB.joined_player_list.len)]%" : "there's literally no player"
 
 	send2irc("Server", "A round of [mode.name] just ended[mode_result == "undefined" ? "." : " with a [mode_result]."] Survival rate: [survival_rate]")
 
