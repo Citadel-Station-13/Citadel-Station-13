@@ -769,7 +769,7 @@
 	item_state = "fox"
 
 /obj/item/toy/plush/mammal/rae
-    desc = "An adorable stuffed toy of an artic fox."
+	desc = "An adorable stuffed toy of an artic fox."
 	icon_state = "rae"
 	item_state = "rae"
 
