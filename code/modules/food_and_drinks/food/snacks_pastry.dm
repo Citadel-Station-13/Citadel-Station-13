@@ -89,13 +89,24 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
-	
+
 /obj/item/reagent_containers/food/snacks/donut/meat
 	bonus_reagents = list("ketchup" = 1)
 	list_reagents = list("nutriment" = 3, "ketchup" = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
-	
+
+/obj/item/reagent_containers/food/snacks/donut/semen
+	name = "\"cream\" donut"
+	desc = "That cream looks a little runny..."
+	icon_state = "donut3"
+	bitesize = 10
+	bonus_reagents = list("semen" = 1)
+	list_reagents = list("nutriment" = 3, "sugar" = 2, "semen" = 5)
+	filling_color = "#FFFFFF"
+	tastes = list("donut" = 1, "salt" = 3)
+	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
+
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
