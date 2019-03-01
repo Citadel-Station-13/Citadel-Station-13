@@ -23,6 +23,16 @@
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
 	
+/datum/crafting_recipe/food/donut
+	time = 15
+	name = "Semen donut"
+	reqs = list(
+		/datum/reagent/consumable/semen = 10,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donut/semen
+	subcategory = CAT_PASTRY
+
 datum/crafting_recipe/food/donut/meat
 	time = 15
 	name = "Meat donut"

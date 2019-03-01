@@ -41,8 +41,8 @@
 			heirloom_type = /obj/item/paint/anycolor
 			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
-			heirloom_type = /obj/item/toy/dummy
 			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/toy/dummy
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife/scimitar
 		if("Medical Doctor")
@@ -52,7 +52,7 @@
 		if("Atmospheric Technician")
 			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
-			heirloom_type = /obj/item/gavelhammer
+			heirloom_type = /obj/item/storage/briefcase/lawyer/family
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
@@ -61,6 +61,10 @@
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
 			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+		if("Chaplain")
+			heirloom_type = /obj/item/camera/spooky/family
+		if("Captain")
+			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
 	if(!heirloom_type)
 		heirloom_type = pick(
 		/obj/item/toy/cards/deck,
@@ -153,6 +157,21 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/datum/quirk/lightless
+	name = "Light Sensitivity"
+	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
+	value = -1
+	gain_text = "<span class='danger'>The safty of light feels off...</span>"
+	lose_text = "<span class='notice'>Enlighing.</span>"
+
+/datum/quirk/lightless/on_process()
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums >= 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "brightlight", /datum/mood_event/brightlight)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
 
 /datum/quirk/nonviolent
 	name = "Pacifist"

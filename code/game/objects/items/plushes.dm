@@ -768,6 +768,11 @@
 	icon_state = "fox"
 	item_state = "fox"
 
+/obj/item/toy/plush/mammal/rae
+	desc = "An adorable stuffed toy of an artic fox."
+	icon_state = "rae"
+	item_state = "rae"
+
 /obj/item/toy/plush/mammal/zed
 	icon_state = "zed"
 	item_state = "zed"
@@ -834,6 +839,14 @@
 /obj/item/toy/plush/catgirl/drew
 	icon_state = "drew"
 	item_state = "drew"
+
+/obj/item/toy/plush/catgirl/fermis
+    name = "medcat plushie"
+    desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to to find happiness and be kind to people."
+    icon_state = "fermis"
+    item_state = "fermis"
+    attack_verb = list("cuddled", "petpatted", "wigglepurred")
+    squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()

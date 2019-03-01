@@ -12,7 +12,7 @@
 	charge_cost = 100
 	projectile_type = /obj/item/projectile/beam/shrinklaser
 	modifystate = "sizegun-shrink"
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 	firemodes = list(
 		list(mode_name		= "grow",
 			projectile_type	= /obj/item/projectile/beam/growlaser,
@@ -153,7 +153,7 @@ datum/design/sizeray
 	desc = "Size manipulator using bluespace breakthroughs."
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/shrinkray, /obj/item/ammo_casing/energy/laser/growthray)
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 5
 	ammo_x_offset = 2
 	clumsy_check = 1

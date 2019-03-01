@@ -64,10 +64,11 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
+	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
+	loudness = 1
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -111,10 +112,11 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade
 	name = "False Armblade Sting"
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
-	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
+	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_armblade"
 	chemical_cost = 20
 	dna_cost = 1
+	loudness = 1
 
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
@@ -183,10 +185,11 @@
 /obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
-	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
+	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot. This ability is loud, and might cause our blood to react violently to heat."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
 	dna_cost = 2
+	loudness = 2
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "mute sting")
@@ -196,10 +199,11 @@
 /obj/effect/proc_holder/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "Temporarily blinds the target."
-	helptext = "This sting completely blinds a target for a short time."
+	helptext = "This sting completely blinds a target for a short time. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
+	loudness = 1
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "blind sting")
@@ -229,10 +233,11 @@
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
-	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
+	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
 	dna_cost = 2
+	loudness = 1
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "cryo sting")

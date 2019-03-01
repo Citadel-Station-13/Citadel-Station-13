@@ -57,7 +57,25 @@
 /obj/item/robot_module/k9/do_transform_animation()
 	..()
 	to_chat(loc,"<span class='userdanger'>While you have picked the Security K-9 module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+
+/obj/item/robot_module/k9/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/sechoundmodels = list("Default")
+	if(R.client && R.client.ckey in list("nezuli"))
+		sechoundmodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sechoundmodels
+	if(!borg_icon)
+		return FALSE
+	switch(borg_icon)
+		if("Default")
+			cyborg_base_icon = "k9"
+			moduleselect_icon = "k9"
+		if("Alina")
+			cyborg_base_icon = "alina-sec"
+			special_light_key = "alina"
+			sleeper_overlay = "alinasleeper"
+	return ..()
 
 /obj/item/robot_module/medihound
 	name = "MediHound"
@@ -73,6 +91,7 @@
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/twohanded/shockpaddles/cyborg/hound,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/pinpointer/crew,
 		/obj/item/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
@@ -87,6 +106,26 @@
 	has_snowflake_deadsprite = TRUE
 	dogborg = TRUE
 	cyborg_pixel_offset = -16
+
+/obj/item/robot_module/medihound/be_transformed_to(obj/item/robot_module/old_module)
+	var/mob/living/silicon/robot/R = loc
+	var/list/medhoundmodels = list("Default", "Dark")
+	if(R.client && R.client.ckey in list("nezuli"))
+		medhoundmodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in medhoundmodels
+	if(!borg_icon)
+		return FALSE
+	switch(borg_icon)
+		if("Default")
+			cyborg_base_icon = "medihound"
+		if("Dark")
+			cyborg_base_icon = "medihounddark"
+			sleeper_overlay = "mdsleeper"
+		if("Alina")
+			cyborg_base_icon = "alina-med"
+			special_light_key = "alina"
+			sleeper_overlay = "alinasleeper"
+	return ..()
 
 /obj/item/robot_module/scrubpup
 	name = "Scrub Pup"
@@ -223,7 +262,10 @@
 
 /obj/item/robot_module/engineering/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Default", "Default - Treads","Loader","Handy")
+	var/list/engymodels = list("Default", "Default - Treads","Loader","Handy", "Pup Dozer")
+	if(R.client && R.client.ckey in list("nezuli"))
+		engymodels += "Alina"
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in engymodels
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -241,6 +283,24 @@
 			cyborg_base_icon = "handyeng"
 			special_light_key = "handyeng"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+		if("Pup Dozer")
+			cyborg_base_icon = "pupdozer"
+			special_light_key = "pupdozer"
+			can_be_pushed = FALSE
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
+		if("Alina")
+			cyborg_base_icon = "alina-eng"
+			special_light_key = "alina"
+			can_be_pushed = FALSE
+			hat_offset = INFINITY
+			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			has_snowflake_deadsprite = TRUE
+			dogborg = TRUE
+			cyborg_pixel_offset = -16
 	return ..()
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)

@@ -40,6 +40,7 @@
 		"mcolor3" = "FFF",
 		"mam_body_markings" = "None",
 		"mam_ears" = "None",
+		"mam_snouts" = "None",
 		"mam_tail" = "None",
 		"mam_tail_animated" = "None",
 		"xenodorsal" = "Standard",

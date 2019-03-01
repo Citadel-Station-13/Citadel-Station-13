@@ -1,8 +1,9 @@
 /obj/effect/proc_holder/changeling/lesserform
 	name = "Lesser Form"
-	desc = "We debase ourselves and become lesser. We become a monkey."
+	desc = "We debase ourselves and become lesser. We become a monkey. This ability is loud, and might cause our blood to react violently to heat."
 	chemical_cost = 5
 	dna_cost = 1
+	loudness = 2
 	req_human = 1
 
 //Transform into a monkey.

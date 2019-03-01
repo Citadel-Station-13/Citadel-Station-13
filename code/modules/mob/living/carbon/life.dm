@@ -455,6 +455,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		adjustStaminaLoss(resting ? (recoveringstam ? -7.5 : -3) : -1.5)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
 
 	if(!recoveringstam && incomingstammult != 1)
+		incomingstammult = max(0.01, incomingstammult)
 		incomingstammult = min(1, incomingstammult*2)
 
 	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
