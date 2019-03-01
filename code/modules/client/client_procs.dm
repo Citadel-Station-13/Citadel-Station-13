@@ -744,14 +744,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 				msg += " Administrators have been informed."
 				if (ab)
-					log_game("[key_name(src)] is using the middle click aimbot exploit")
-					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
-					add_system_note("aimbot", "Is using the middle click aimbot exploit")
+					log_game("[key_name(src)] is using the middle click aimbot exploit. Detection type: Normal")
+					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit. Detection type: Normal</span>")
+					add_system_note("aimbot", "Is using the middle click aimbot exploit Detection type: Normal")
 
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
+	var/ab2
+	mouseParams = params
+	var/datum/position/P = mouse_absolute_datum_map_position_from_client(src)
+	if(!(object in range(P.resolve(), 1)))
+		ab2 = TRUE
+	if (ab2)
+		log_game("[key_name(src)] is using the middle click aimbot exploit. Detection type: Aggressive")
+		message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit. Detection type: Aggressive</span>")
+		add_system_note("aimbot", "Is using the middle click aimbot exploit. Detection type: Aggressive")
 
 	var/scl = CONFIG_GET(number/second_click_limit)
 	if (!holder && scl)
