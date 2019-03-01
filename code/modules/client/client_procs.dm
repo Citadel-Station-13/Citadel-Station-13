@@ -775,7 +775,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
 			return
 
-	if(ab) //Citadel edit, things with stuff.
+	if(ab || ab2) //Citadel edit, things with stuff.
 		return
 
 	if (prefs.hotkeys)
