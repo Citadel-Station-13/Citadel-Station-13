@@ -17,7 +17,21 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-
+"f" = (
+/turf/open/floor/plating/airless,
+/obj/structure/closet/crate{
+	name = "rpc crate"
+	},
+/obj/item/construction/rcd/loaded,
+/area/ruin/unpowered/no_grav)
+"g" = (
+/turf/open/floor/plating/airless,
+/obj/item/rcd_ammo/large,
+/area/ruin/unpowered/no_grav)
+"h" = (
+/turf/open/floor/plating/airless,
+/obj/item/rcd_ammo,
+/area/ruin/unpowered/no_grav)
 (1,1,1) = {"
 a
 a
@@ -390,7 +404,7 @@ a
 a
 d
 d
-d
+g
 d
 a
 a
@@ -515,7 +529,7 @@ b
 b
 c
 b
-b
+f
 b
 d
 a
@@ -541,7 +555,7 @@ a
 a
 d
 d
-b
+g
 b
 b
 b
@@ -640,7 +654,7 @@ d
 b
 b
 b
-b
+g
 b
 b
 d
@@ -671,7 +685,7 @@ d
 d
 b
 b
-b
+h
 b
 d
 d
@@ -728,7 +742,7 @@ b
 b
 c
 b
-b
+h
 b
 b
 d
@@ -822,7 +836,7 @@ a
 a
 b
 b
-b
+h
 c
 c
 b
@@ -1024,7 +1038,7 @@ d
 d
 d
 b
-b
+h
 b
 b
 a
