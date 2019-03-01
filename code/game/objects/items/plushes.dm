@@ -768,6 +768,11 @@
 	icon_state = "fox"
 	item_state = "fox"
 
+/obj/item/toy/plush/mammal/rae
+	desc = "An adorable stuffed toy of an artic fox."
+	icon_state = "rae"
+	item_state = "rae"
+
 /obj/item/toy/plush/mammal/zed
 	icon_state = "zed"
 	item_state = "zed"
