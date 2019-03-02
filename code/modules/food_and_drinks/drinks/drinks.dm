@@ -435,7 +435,36 @@
 	name = "Space Pepsi Deluxe"
 	desc = "We are still not sponsored by Pepsi. This is some good as fuck soda, though."
 	icon_state = "pepsideluxe"
+	volume = 100
 	list_reagents = list("pepsideluxe" = 100)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/endme
+	name = "End Me"
+	desc = "This sure isn't making your depression any better."
+	icon_state = "endme"
+	list_reagents = list("endme" = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/pepe
+	name = "Pepe"
+	desc = "Tastes like canned frog."
+	icon_state = "pepe"
+	list_reagents = list("pepe" = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/conk
+	name = "Conk"
+	desc = "You shouldn't drink this, like, at all..."
+	icon_state = "conk"
+	list_reagents = list("conk" = 30)
+	foodtype = SUGAR
+
+/obj/item/reagent_containers/food/drinks/soda_cans/pepsi/bepis
+	name = "Bepis"
+	desc = "Makes you go partying all night long."
+	icon_state = "bepis"
+	list_reagents = list("bepis" = 30)
 	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic

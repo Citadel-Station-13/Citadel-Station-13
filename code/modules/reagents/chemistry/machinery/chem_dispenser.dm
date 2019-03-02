@@ -446,13 +446,15 @@
 		"limejuice",
 		"tomatojuice",
 		"lemonjuice",
-		"menthol"
+		"menthol",
+		"pepsi"
 	)
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
 		"mindbreaker",
-		"tirizene"
+		"tirizene",
+		"conk"
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -550,7 +552,7 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
-	
+
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
 	component_parts = list()
