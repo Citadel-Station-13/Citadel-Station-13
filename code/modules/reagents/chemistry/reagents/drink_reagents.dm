@@ -525,11 +525,8 @@
 	..()
 
 /datum/reagent/consumable/conk/on_mob_life(mob/living/carbon/M)
-	var/i = 0
-	for(i=0, i<2, i++)
-		M.vomit(20)
-		sleep(600)
-		M.adjustToxLoss(0.1)
+	M.vomit(20)
+	M.adjustToxLoss(0.1)
 	. = 1
 	..()
 
