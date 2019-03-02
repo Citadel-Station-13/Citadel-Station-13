@@ -499,6 +499,27 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
+/*
+/obj/item/melee/baseball_bat/electric_bat
+	name = "electric bat"
+	desc = "There ain't a skull in the league that can withstand a swatter."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "electric_bat"
+	item_state = "electric_bat"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 10
+	throwforce = 12
+	attack_verb = list("beat", "smacked")
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 0)
+	stunforce = 90
+	light_intensity = 1
+	status = 0
+	hitcost = 1000
+	obj/item/stock_parts/cell/cell
+	preload_cell_type
+radix, essa porra tá quebrada.
+*/
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
