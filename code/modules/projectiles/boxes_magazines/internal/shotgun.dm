@@ -15,13 +15,6 @@
 	else
 		return ..()
 
-/obj/item/ammo_box/magazine/internal/shot/pepsi
-	name = "pepsi internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	caliber = "shotgun"
-	max_ammo = 5
-	multiload = 0
-
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot

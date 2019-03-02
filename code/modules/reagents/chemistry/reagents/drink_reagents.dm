@@ -382,217 +382,45 @@
 /datum/reagent/consumable/pepsi
 	name = "Pepsi"
 	id = "pepsi"
-	description = "The second most refreshing beverage, only topped by Pepsi Deluxe(TM)."
+	description = "The second most refreshing beverage, only topped by Pepsi Deluxe(TM)"
 	color = "#100800" // rgb: 16, 8, 0
+	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
 	glass_name = "glass of Space Pepsi"
 	glass_desc = "A glass of good ol' Pepsi."
 	quality = DRINK_NICE
-	taste_description = "diabetes"
+	taste_description = "diabetes."
 
 /datum/reagent/consumable/pepsi/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	. = 1
 	..()
+	. = 1
 
 /datum/reagent/consumable/pepsideluxe
 	name = "Pepsi Deluxe"
 	id = "pepsideluxe"
 	description = "The most refreshing of beverages."
 	color = "#100800" // rgb: 16, 8, 0
-	glass_icon_state  = "pepsideluxe"
+	taste_description = "cola"
+	glass_icon_state  = "glass_brown"
 	glass_name = "glass of Space Pepsi"
-	glass_desc = "A glass of fancy, expensive Pepsi,"
+	glass_desc = "A glass of good ol' Pepsi. But fancy Pepsi,"
 	quality = DRINK_VERYGOOD
-	taste_description = "pure happiness. And diabetes"
+	taste_description = "pure happiness. And diabetes."
 
 /datum/reagent/consumable/pepsideluxe/on_mob_life(mob/living/carbon/M)
-	M.AdjustSleeping(-20, FALSE)
-	M.adjust_bodytemperature(-100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	M.adjustBruteLoss(-0.5, 0)
-	M.adjustToxLoss(-0.5, 0)
-	M.adjustFireLoss(-1, 0)
-	M.adjustStaminaLoss(-0.5, 0)
-	M.nutrition -= 1.5
-	. = 1
-	..()
-
-/datum/reagent/consumable/bepis
-	name = "Bepis"
-	id = "bepis"
-	description = "Non-stop partying. No cades. Overstimulation. +1 flirting."
-	color = "#00FFFF" // rgb: 0, 255, 255
-	glass_icon_state  = "bepis"
-	glass_name = "Bepis Drincc"
-	glass_desc = "Warning: do NOT mix with conk."
-	quality = DRINK_VERYGOOD
-	taste_description = "carbonated good boys"
-
-/datum/reagent/consumable/bepis/on_mob_life(mob/living/carbon/M)
-	M.set_drugginess(15)
-	M.Jitter(10)
+	M.Jitter(100)
 	M.drowsyness = 0
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	M.adjustStaminaLoss(-5, 0)
-	M.adjustFireLoss(-2, 0)
-	M.AdjustKnockdown(-40, 0)
-	M.AdjustStun(-30, 0)
-	if(prob(4))
-		M.say(";AWOOOOO!!!")
-		M.say("AWOOOOO!!!")
-	if(prob(5))
-		M.say("*flip")
-	if(prob(5))
-		M.say("*spin") //Yes, i actually did this. Yes, i am a terribly man.
-	. = 1
-	..()
-
-/datum/reagent/consumable/bepis/on_mob_add(mob/living/M)
-	M.add_trait(TRAIT_GOTTAGOREALLYFAST)
-	. = 1
-	..()
-
-/datum/reagent/consumable/bepis/on_mob_delete(mob/living/M)
-	M.remove_trait(TRAIT_GOTTAGOREALLYFAST)
-	. = 1
-	..()
-
-/datum/reagent/consumable/endme
-	name = "End Me"
-	id = "endme"
-	description = "We'll all die someday."
-	color = "#000000" // rgb: 0, 0, 0
-	glass_icon_state  = "endme"
-	glass_name = "glass of End Me"
-	glass_desc = "Just looking at this makes you feel miserable."
-	taste_description = "sadness"
-
-/datum/reagent/consumable/endme/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-1, 0)
-	. = 1
-	..()
-
-/datum/reagent/consumable/endme/on_mob_add(mob/living/M)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "baddrink", /datum/mood_event/baddrink)
-	to_chat(M, "This drink is cold, just like your heart...")
-	M.add_quirk(/datum/quirk/monochromatic)
-	. = 1
-	..()
-
-/datum/reagent/consumable/bepis/on_mob_delete(mob/living/M)
-	to_chat(M, "Maybe life isn't that bad after all.")
-	M.remove_quirk(/datum/quirk/monochromatic)
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "baddrink", /datum/mood_event/baddrink)
-	. = 1
-	..()
-
-/datum/reagent/consumable/pepe
-	name = "Pepe"
-	id = "pepe"
-	description = "A drink for edgy teenagers."
-	color = "#00FFFF" // rgb: 0, 255, 255
-	glass_icon_state  = "pepe"
-	glass_name = "Pepe the Drink"
-	glass_desc = "<span class='greentext'>>drinking softdrinks in 2559</span>"
-	quality = DRINK_NICE
-	taste_description = "the alt-right and edgyness"
-
-/datum/reagent/consumable/pepe/on_mob_life(mob/living/carbon/M)
-	to_chat(M, "<span class='warning'>You cut yourself a bit on the edge of that drink.</span>")
-	M.adjustBruteLoss(0.5, 0)
-	M.adjust_bodytemperature(100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	var/obj/effect/decal/cleanable/blood/v = new
-	v.loc = M.loc
-	. = 1
-	..()
-
-/datum/reagent/consumable/conk
-	name = "Conk"
-	id = "conk"
-	description = "ABSOLUTELY DISGUSTANG."
-	color = "#b90000" // rgb: 185, 0, 0
-	glass_icon_state  = "conk"
-	glass_name = "glass of Conke"
-	glass_desc = "<span class='greentext'>Do NOT drinke.</span>"
-	taste_description = "rat poison and misery"
-
-/datum/reagent/consumable/conk/on_mob_add(mob/living/M)
-	to_chat(M, "<span class='narsie'>Why...</span>")
-	. = 1
-	..()
-
-/datum/reagent/consumable/conk/on_mob_life(mob/living/carbon/M)
-	var/i = 0
-	for(i=0, i<2, i++)
-		M.vomit(20)
-		sleep(600)
-		M.adjustToxLoss(0.1)
-	. = 1
-	..()
-
-/datum/reagent/consumable/pepsimax
-	name = "Pepsi Max"
-	id = "pepsimax"
-	description = "Tastes like RAW POWER... and diabetes."
-	color = "#100800" // rgb: 16, 8, 0
-	glass_icon_state  = "pepsimax"
-	glass_name = "Pepsi Max!"
-	glass_desc = "Hey, it looks like a failing CRT monitor!"
-	quality = DRINK_VERYGOOD
-	taste_description = "pepsi, but with more sugar"
-
-/datum/reagent/consumable/pepsimax/on_mob_add(mob/living/carbon/M)
-	var/hasvocal = 0
-	for(var/obj/item/organ/vocal_cords in M)
-		hasvocal += 1
-	if(hasvocal)
-		return
-	else
-		var/obj/item/organ/vocal_cords/V = new
-		V.Insert(M)
-	. = 1
-	..()
-
-/datum/reagent/consumable/pepsimax/on_mob_delete(mob/living/carbon/M)
-	for(var/obj/item/organ/vocal_cords/colossus/V in M)
-		V.Remove(M)
-	. = 1
-	..()
-
-/datum/reagent/consumable/pepsimax/on_mob_life(mob/living/carbon/M)
-	M.AdjustSleeping(-20, FALSE)
-	M.adjust_bodytemperature(-100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	M.adjustBruteLoss(-0.5, 0)
 	M.adjustToxLoss(-0.5, 0)
 	M.adjustFireLoss(-1, 0)
-	M.adjustStaminaLoss(-0.5, 0)
+	M.nutrition -= 1.5
+	..()
 	. = 1
-	..()
-
-/datum/reagent/consumable/monster
-	name = "Monster Energy"
-	id = "monster"
-	description = "Just like in the good ol' days."
-	color = "#e3ebf7" // rgb: 227, 235, 247
-	glass_icon_state  = "monster"
-	glass_name = "579 Year Old Boomer in a can"
-	glass_desc = "Just like good old times."
-	quality = DRINK_VERYGOOD
-	taste_description = "MS-DOS"
-
-/datum/reagent/consumable/monster/on_mob_add(mob/living/M)
-	to_chat(M, "<span class='nicegreen'>Kids these days, man.</span>")
-	..()
-
-/datum/reagent/consumable/monster/on_mob_life(mob/living/M)
-	M.adjust_bodytemperature(100 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	M.adjustToxLoss(-0.5)
-	M.adjustOxyLoss(-0.5)
-	. = 1
-	..()
 
 /datum/reagent/consumable/nuka_cola
 	name = "Nuka Cola"

@@ -5,12 +5,6 @@
 	icon_state = "keg"
 	reagent_id = "water"
 
-/obj/structure/reagent_dispensers/keg/pepsi
-	name = "Pepsi-Keg"
-	desc = "A keg full of cold pepsi."
-	icon_state = "pepsikeg"
-	reagent_id = "pepsi"
-
 /obj/structure/reagent_dispensers/keg/mead
 	name = "keg of mead"
 	desc = "A keg of mead."
