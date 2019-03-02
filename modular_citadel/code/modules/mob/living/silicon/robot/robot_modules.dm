@@ -320,9 +320,11 @@
 			hat_offset = INFINITY //He is already wearing a hat
 		if("Sleek")
 			cyborg_base_icon = "sleekserv"
+			special_light_key = "sleekserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Heavy")
 			cyborg_base_icon = "heavyserv"
+			special_light_key = "heavyserv"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	return ..()
 
