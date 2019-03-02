@@ -182,7 +182,7 @@ SUBSYSTEM_DEF(garbage)
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
 			refids_types -= refID
-			if (MC_TICK_CHECK)
+			if (!force_no_checktick && MC_TICK_CHECK)
 				return
 			continue
 
