@@ -36,6 +36,14 @@
 				            'sound/misc/clap4.ogg')
 			playsound(user, clap, 50, 1, -1)
 
+/datum/emote/living/yareyaredaze
+	key = "yareyaredaze"
+	key_third_person = "yareyaredaze"
+	message = "says ''Yare yare daze.''"
+/datum/emote/living/yareyaredaze/run_emote(mob/living/user, params)
+	var/goodgrief = 'sound/misc/yare1.ogg'
+	playsound(user, goodgrief, 50, 1, -1)
+
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"

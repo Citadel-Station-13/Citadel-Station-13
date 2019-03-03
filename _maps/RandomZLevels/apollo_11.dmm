@@ -1,0 +1,375 @@
+"aa" = (/turf/open/space/basic,/area/awaymission/moonoutpost19)
+"ab" = (/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"ac" = (/obj/structure/flora/rock{icon_state = "basalt1"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"ad" = (/obj/structure/flora/rock{icon_state = "lavarocks2"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"ae" = (/obj/structure/flora/rock{icon_state = "basalt3"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"af" = (/obj/structure/flora/rock{icon_state = "basalt2"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"ag" = (/turf/closed/wall/mineral/titanium/survival,/area/survivalpod)
+"ah" = (/obj/structure/window/shuttle/survival_pod,/turf/open/floor/plating/dirt/moon,/area/survivalpod)
+"ai" = (/obj/machinery/power/apc,/turf/closed/wall/mineral/titanium/survival,/area/survivalpod)
+"aj" = (/obj/structure/table/optable,/obj/machinery/light{dir = 1},/turf/open/floor/vault,/area/survivalpod)
+"ak" = (/obj/item/storage/backpack/duffelbag/med/surgery,/obj/machinery/iv_drip,/turf/open/floor/vault,/area/survivalpod)
+"al" = (/turf/open/floor/vault,/area/survivalpod)
+"am" = (/obj/structure/fans,/turf/open/floor/vault,/area/survivalpod)
+"an" = (/obj/machinery/sleeper/survival_pod,/turf/open/floor/vault,/area/survivalpod)
+"ao" = (/obj/machinery/smartfridge/survival_pod,/turf/open/floor/vault,/area/survivalpod)
+"ap" = (/obj/machinery/door/window/survival_pod{icon_state = "windoor"; dir = 1},/obj/structure/curtain,/turf/open/floor/vault,/area/survivalpod)
+"aq" = (/obj/machinery/cryopod,/obj/effect/landmark/awaystart,/turf/open/floor/vault,/area/survivalpod)
+"ar" = (/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"as" = (/obj/machinery/light{dir = 8},/turf/open/floor/vault,/area/survivalpod)
+"at" = (/obj/effect/landmark/awaystart,/obj/machinery/cryopod,/turf/open/floor/vault,/area/survivalpod)
+"au" = (/obj/structure/flora/rock,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"av" = (/obj/structure/closet/crate/freezer/blood,/turf/open/floor/vault,/area/survivalpod)
+"aw" = (/obj/machinery/light{dir = 4},/turf/open/floor/vault,/area/survivalpod)
+"ax" = (/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"ay" = (/obj/structure/bookcase/manuals/medical,/turf/open/floor/vault,/area/survivalpod)
+"az" = (/obj/structure/bookcase/manuals/engineering,/turf/open/floor/vault,/area/survivalpod)
+"aA" = (/obj/structure/flora/rock{icon_state = "lavarocks3"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"aB" = (/obj/structure/flora/rock{icon_state = "Basalt Sand"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"aC" = (/obj/structure/flora/rock{icon_state = "lavarocks1"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"aD" = (/obj/structure/flora/rock{icon_state = "lavarocks"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"aE" = (/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"aF" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"aG" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"aH" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 9},/area/awaymission/moonoutpost19)
+"aI" = (/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/awaymission/moonoutpost19)
+"aJ" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/awaymission/moonoutpost19)
+"aK" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 9},/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/awaymission/moonoutpost19)
+"aL" = (/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"aM" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 5},/area/awaymission/moonoutpost19)
+"aN" = (/obj/effect/decal/cleanable/blood/old{icon_state = "u_dangerous_l"},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"aO" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 8},/area/awaymission/moonoutpost19)
+"aP" = (/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aQ" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/oil/slippery,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aR" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 1},/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aS" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aT" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 4},/area/awaymission/moonoutpost19)
+"aU" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/ash,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aV" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 1},/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aW" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/xenoblood/xgibs,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aX" = (/obj/effect/decal/cleanable/blood/old{icon_state = "floor7"},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"aY" = (/obj/effect/decal/cleanable/blood/old{icon_state = "handblood"},/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"aZ" = (/obj/structure/LEM,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/oil,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"ba" = (/obj/effect/decal/cleanable/blood/xtracks,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/glass,/obj/effect/decal/cleanable/ash,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bb" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bc" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 4},/area/awaymission/moonoutpost19)
+"bd" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"be" = (/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bf" = (/obj/effect/decal/cleanable/blood/xtracks,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bg" = (/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bh" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 10},/area/awaymission/moonoutpost19)
+"bi" = (/turf/open/floor/plasteel/yellowsiding,/area/awaymission/moonoutpost19)
+"bj" = (/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/plasteel/yellowsiding,/area/awaymission/moonoutpost19)
+"bk" = (/obj/structure/fence/corner{icon_state = "corner"; dir = 10},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bl" = (/obj/structure/fence{icon_state = "straight"; dir = 8},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bm" = (/obj/effect/decal/cleanable/blood/tracks,/obj/structure/fence/door/opened,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bn" = (/obj/structure/fence/corner,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bo" = (/obj/structure/fence{icon_state = "straight"; dir = 1},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bp" = (/obj/machinery/door/airlock/external/glass,/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bq" = (/obj/machinery/door/window{icon_state = "left"; dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/machinery/camera{icon_state = "camera"; dir = 1},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"br" = (/obj/structure/fence,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bs" = (/obj/structure/fence/cut/large,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bt" = (/obj/structure/fence/door/opened{icon_state = "door_opened"; dir = 4},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bu" = (/obj/structure/window/reinforced{dir = 1},/obj/machinery/camera{icon_state = "camera"; dir = 10},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bv" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"bw" = (/turf/closed/wall,/area/awaymission/moonoutpost19)
+"bx" = (/obj/machinery/firealarm,/turf/closed/wall,/area/awaymission/moonoutpost19)
+"by" = (/obj/structure/fence/door{icon_state = "door_closed"; dir = 8},/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bz" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bA" = (/obj/structure/alien/weeds,/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 4},/area/awaymission/moonoutpost19)
+"bB" = (/obj/effect/decal/cleanable/glass,/obj/structure/alien/weeds,/turf/open/floor/plasteel/yellowsiding,/area/awaymission/moonoutpost19)
+"bC" = (/obj/machinery/vending/wallmed/pubby,/turf/closed/wall,/area/awaymission/moonoutpost19)
+"bD" = (/obj/item/shard,/obj/effect/decal/cleanable/glass,/obj/structure/alien/weeds,/turf/open/floor/plasteel/yellowsiding,/area/awaymission/moonoutpost19)
+"bE" = (/obj/effect/decal/cleanable/glass,/obj/structure/alien/weeds,/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 6},/area/awaymission/moonoutpost19)
+"bF" = (/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bG" = (/obj/structure/flora/rock{icon_state = "lavarocks2"},/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bH" = (/obj/machinery/door/airlock/external/glass,/obj/structure/window/reinforced{dir = 1},/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bI" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bJ" = (/obj/effect/decal/cleanable/xenoblood,/obj/effect/decal/cleanable/xenoblood/xgibs,/obj/item/shard,/obj/effect/decal/cleanable/glass,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bK" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/windoor_assembly{icon_state = "l_windoor_assembly01"; dir = 4},/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bL" = (/obj/machinery/door/airlock/security,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bM" = (/obj/effect/decal/cleanable/dirt,/mob/living/simple_animal/hostile/alien,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"bN" = (/obj/structure/table/reinforced,/obj/item/paper_bin,/obj/item/pen/fountain,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bO" = (/obj/effect/spawner/structure/window/hollow/reinforced,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bP" = (/obj/effect/decal/cleanable/insectguts,/turf/closed/wall,/area/awaymission/moonoutpost19)
+"bQ" = (/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/vault,/area/survivalpod)
+"bR" = (/obj/machinery/door/airlock/survival_pod,/obj/structure/fans/tiny,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault,/area/survivalpod)
+"bS" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"bT" = (/obj/structure/fans/ac_small,/obj/effect/decal/cleanable/cobweb,/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault,/area/survivalpod)
+"bU" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/vault,/area/survivalpod)
+"bV" = (/obj/machinery/camera{c_tag = "Arena"; network = list("thunder"); pixel_x = 10; resistance_flags = 64},/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bW" = (/obj/machinery/vending/security,/obj/structure/alien/gelpod,/obj/structure/alien/weeds/node,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bX" = (/obj/structure/closet/emcloset,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bY" = (/mob/living/simple_animal/hostile/alien,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"bZ" = (/obj/structure/alien/egg/burst,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"ca" = (/obj/structure/alien/weeds/node,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cb" = (/obj/structure/sign/apollo11crew,/turf/closed/wall,/area/awaymission/moonoutpost19)
+"cc" = (/obj/structure/alien/egg/grown,/obj/structure/alien/weeds/node,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cd" = (/obj/machinery/computer/med_data{dir = 1},/obj/structure/alien/weeds/node,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"ce" = (/obj/machinery/computer/security{dir = 1},/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cf" = (/obj/machinery/holopad,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cg" = (/obj/structure/table/wood,/obj/item/storage/box/donkpockets,/obj/item/toy/figure/hos,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"ch" = (/obj/machinery/camera{icon_state = "camera"; dir = 1},/obj/structure/table/wood,/obj/machinery/microwave,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"ci" = (/obj/machinery/vending/coffee,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cj" = (/obj/structure/table/reinforced,/obj/item/modular_computer/laptop,/obj/item/stamp/denied,/obj/item/stamp,/obj/structure/alien/weeds,/obj/item/flashlight/lamp,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"ck" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/drone,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cl" = (/obj/structure/chair/office/dark{dir = 1},/obj/structure/alien/weeds,/obj/item/clothing/mask/facehugger/impregnated,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cm" = (/obj/machinery/door/airlock/security/glass,/obj/structure/alien/weeds,/obj/item/clothing/mask/facehugger,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cn" = (/obj/structure/alien/weeds,/obj/item/clothing/mask/facehugger/dead,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"co" = (/obj/structure/alien/egg/burst,/obj/structure/alien/weeds,/obj/item/clothing/mask/facehugger/dead,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"cp" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cq" = (/obj/machinery/power/port_gen/pacman,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cr" = (/obj/item/crowbar,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cs" = (/obj/item/screwdriver,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ct" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cu" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cv" = (/obj/machinery/smartfridge/food,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cw" = (/obj/machinery/food_cart,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cx" = (/obj/structure/closet/crate/freezer,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cy" = (/obj/structure/closet/secure_closet/freezer,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cz" = (/obj/machinery/power/smes,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cA" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cB" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cC" = (/obj/structure/fence/cut/medium,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"cD" = (/obj/structure/fence,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"cE" = (/obj/structure/fence/door/opened{icon_state = "door_opened"; dir = 4},/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"cF" = (/obj/structure/fence/cut/large,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"cG" = (/turf/open/floor/plating/snowed,/area/awaymission/moonoutpost19)
+"cH" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/snowed,/area/awaymission/moonoutpost19)
+"cI" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating/snowed,/area/awaymission/moonoutpost19)
+"cJ" = (/obj/machinery/door/airlock/maintenance,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cK" = (/obj/machinery/door/airlock/freezer,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cL" = (/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cM" = (/mob/living/simple_animal/hostile/alien,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cN" = (/obj/item/wirecutters,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cO" = (/obj/item/stack/sheet/mineral/uranium,/obj/item/stack/sheet/mineral/uranium,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cP" = (/obj/structure/sink{dir = 8; pixel_x = -12},/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cQ" = (/obj/structure/chair/stool,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cR" = (/obj/structure/table/wood,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cS" = (/obj/machinery/icecream_vat,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"cT" = (/obj/machinery/power/apc,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"cU" = (/obj/structure/sign/plaques/atmos,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"cV" = (/obj/structure/sign/poster/ripped,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"cW" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 1},/obj/effect/decal/cleanable/oil/slippery,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cX" = (/obj/item/bodypart/head/robot,/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cY" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"cZ" = (/obj/structure/table/reinforced,/obj/item/organ_storage,/obj/item/organ_storage,/obj/item/organ_storage,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"da" = (/obj/structure/table/reinforced,/obj/item/storage/bag/bio,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"db" = (/obj/structure/table/reinforced,/obj/item/storage/bag/tray,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dc" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dd" = (/obj/structure/table/reinforced,/obj/item/defibrillator,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"de" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"df" = (/obj/effect/decal/cleanable/dirt,/obj/item/bodypart/l_arm/robot,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dg" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 9},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dh" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"di" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dj" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 5},/obj/item/organ/heart,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dk" = (/obj/structure/table/reinforced,/obj/item/storage/backpack/duffelbag/med/surgery,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dl" = (/obj/effect/meteor/dust,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dm" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dn" = (/obj/effect/decal/cleanable/dirt,/obj/item/bodypart/r_arm/robot,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"do" = (/obj/structure/sign/warning/biohazard,/turf/closed/wall/r_wall,/area/awaymission/BMPship)
+"dp" = (/obj/effect/decal/cleanable/blood/xtracks,/obj/item/kitchen/knife,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dq" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dr" = (/obj/item/bodypart/l_arm,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 10},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ds" = (/obj/item/organ/liver,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 5},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dt" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/old{icon_state = "floor3-old"},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"du" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/oil/slippery,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dv" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 4},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dw" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 6},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dx" = (/obj/machinery/door/airlock/science,/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dy" = (/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dz" = (/obj/structure/table/optable,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 6},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dA" = (/obj/machinery/computer/operating{dir = 4},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dB" = (/obj/effect/decal/cleanable/xenoblood,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dC" = (/obj/effect/decal/cleanable/dirt,/obj/item/gun/ballistic/automatic/pistol,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"dD" = (/obj/effect/decal/cleanable/dirt,/obj/item/ammo_casing/caseless,/turf/open/floor/plating,/area/awaymission/moonoutpost19)
+"dE" = (/obj/effect/decal/cleanable/dirt,/obj/item/ammo_casing/caseless,/turf/open/floor/plating/snowed,/area/awaymission/moonoutpost19)
+"dF" = (/obj/item/ammo_casing/caseless,/turf/open/floor/plating/snowed,/area/awaymission/moonoutpost19)
+"dG" = (/obj/item/kitchen/knife/combat/survival,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"dH" = (/obj/item/ammo_casing/caseless,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"dI" = (/obj/effect/decal/cleanable/blood/tracks,/obj/item/ammo_casing/caseless,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"dJ" = (/obj/item/ammo_casing/caseless,/turf/open/floor/plasteel,/area/awaymission/moonoutpost19)
+"dK" = (/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 6},/obj/item/ammo_casing/caseless,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/awaymission/moonoutpost19)
+"dL" = (/obj/structure/sign/warning/docking,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"dM" = (/obj/effect/meteor/dust,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/glass,/obj/machinery/door/firedoor/closed,/turf/open/floor/plating,/area/awaymission/BMPship)
+"dN" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment,/obj/structure/firelock_frame,/obj/item/clothing/mask/facehugger/dead,/turf/open/floor/plating,/area/awaymission/BMPship)
+"dO" = (/obj/structure/sign/warning/nosmoking,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"dP" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dQ" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dR" = (/turf/closed/wall/r_wall,/area/awaymission/BMPship)
+"dS" = (/obj/structure/closet/crate/bin,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dT" = (/obj/machinery/iv_drip,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dU" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/fakelattice,/turf/open/floor/plating,/area/awaymission/BMPship)
+"dV" = (/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/fakelattice,/turf/open/floor/plating,/area/awaymission/BMPship)
+"dW" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dX" = (/obj/item/lighter,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dY" = (/obj/item/clothing/mask/facehugger/impregnated,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"dZ" = (/obj/item/bodypart/chest/larva,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ea" = (/obj/effect/decal/cleanable/blood/xtracks{icon_state = "xtracks"; dir = 10},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eb" = (/obj/structure/table/optable,/obj/effect/decal/cleanable/blood/xtracks{icon_state = "xtracks"; dir = 5},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ec" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs{icon_state = "gibbearcore"},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ed" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/fakelattice,/turf/open/floor/plating,/area/awaymission/BMPship)
+"ee" = (/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/broken,/obj/effect/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 9},/obj/item/clothing/mask/facehugger,/obj/effect/decal/fakelattice,/turf/open/floor/plating,/area/awaymission/BMPship)
+"ef" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eg" = (/obj/machinery/iv_drip,/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eh" = (/obj/effect/decal/cleanable/blood/innards,/obj/effect/decal/cleanable/blood/gibs{icon_state = "gib2"},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ei" = (/obj/item/bodypart/chest,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/innards,/obj/effect/decal/cleanable/blood/gibs{icon_state = "coatblood"},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ej" = (/obj/structure/sign/warning/vacuum,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"ek" = (/obj/effect/decal/cleanable/dirt,/obj/structure/grille/broken,/obj/machinery/door/firedoor,/obj/effect/decal/fakelattice,/turf/open/floor/plating/snowed,/area/awaymission/BMPship)
+"el" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/firedoor/closed,/turf/open/floor/plating,/area/awaymission/BMPship)
+"em" = (/obj/machinery/door/airlock/glass_large,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"en" = (/obj/machinery/firealarm,/turf/closed/wall/r_wall/rust,/area/awaymission/BMPship)
+"eo" = (/turf/closed/wall/r_wall/rust,/area/awaymission/moonoutpost19)
+"ep" = (/obj/machinery/door/poddoor/preopen,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eq" = (/obj/effect/spawner/structure/window/reinforced/tinted,/obj/machinery/door/poddoor/preopen,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"er" = (/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"es" = (/obj/machinery/door/airlock/command,/obj/machinery/door/poddoor/preopen,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"et" = (/obj/item/clothing/mask/facehugger/impregnated,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eu" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ev" = (/obj/structure/alien/weeds/node,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ew" = (/obj/item/clothing/mask/facehugger,/turf/open/floor/plasteel/freezer,/area/awaymission/BMPship)
+"ex" = (/obj/item/clothing/mask/facehugger/dead,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ey" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/queen/large,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ez" = (/obj/effect/decal/cleanable/dirt,/turf/closed/wall/r_wall,/area/awaymission/BMPship)
+"eA" = (/obj/machinery/door/airlock/glass_large,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eB" = (/obj/structure/girder,/obj/effect/decal/cleanable/dirt,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eC" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eD" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/alien/weeds,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eE" = (/obj/structure/alien/weeds,/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eF" = (/obj/machinery/gateway{dir = 9},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eG" = (/obj/machinery/gateway,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eH" = (/obj/machinery/gateway{dir = 5},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eI" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/insectguts,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eJ" = (/obj/structure/alien/egg/burst,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eK" = (/obj/structure/alien/weeds,/obj/structure/alien/egg,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eL" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/window/reinforced/spawner/west,/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eM" = (/obj/structure/window/reinforced/spawner/north,/obj/structure/window/reinforced/spawner/east,/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eN" = (/obj/structure/window/reinforced/spawner/west,/obj/structure/flora/ausbushes,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eO" = (/obj/structure/window/reinforced/spawner/east,/obj/structure/flora/tree/jungle/small,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eP" = (/obj/effect/decal/cleanable/insectguts,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eQ" = (/obj/effect/decal/cleanable/oil/slippery,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eR" = (/obj/structure/window/reinforced/spawner/west,/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eS" = (/obj/structure/window/reinforced/spawner/east,/obj/structure/flora/rock/jungle,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eT" = (/obj/structure/alien/weeds,/obj/structure/alien/egg/grown,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eU" = (/obj/structure/window/reinforced/spawner/west,/obj/structure/flora/ausbushes/fullgrass,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eV" = (/obj/structure/window/reinforced/spawner/east,/obj/structure/flora/ausbushes/grassybush,/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eW" = (/obj/machinery/door/window,/obj/structure/window/reinforced/spawner/west,/obj/structure/flora/ausbushes/fernybush,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eX" = (/obj/structure/window/reinforced/spawner/east,/obj/structure/window/reinforced/spawner,/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/genericbush,/turf/open/floor/grass,/area/awaymission/BMPship)
+"eY" = (/obj/structure/alien/weeds,/obj/item/organ/alien/eggsac,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"eZ" = (/obj/item/shard{icon_state = "small"},/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fa" = (/obj/structure/grille,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fb" = (/turf/closed/indestructible/fakedoor{name = "External Access"},/area/awaymission/BMPship)
+"fc" = (/obj/structure/closet/secure_closet/armory1,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fd" = (/obj/structure/closet/secure_closet/armory2,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fe" = (/obj/structure/closet/secure_closet/armory3,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"ff" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fg" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fh" = (/obj/item/shard,/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fi" = (/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fj" = (/obj/structure/table/reinforced,/obj/machinery/door/window{icon_state = "left"; dir = 8},/obj/machinery/door/window{icon_state = "right"; dir = 4},/obj/item/paper_bin,/obj/item/pen/fountain,/obj/machinery/door/poddoor/shutters/preopen,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fk" = (/obj/effect/decal/cleanable/dirt,/obj/structure/chair/office/dark{dir = 8},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fl" = (/obj/structure/rack,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fm" = (/obj/structure/plasticflaps,/obj/machinery/door/poddoor/shutters,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fn" = (/obj/machinery/gateway{dir = 8},/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 9},/area/awaymission/BMPship)
+"fo" = (/obj/machinery/gateway/centeraway,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/awaymission/BMPship)
+"fp" = (/obj/machinery/gateway{dir = 4},/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 5},/area/awaymission/BMPship)
+"fq" = (/obj/structure/rack,/obj/item/gun/ballistic,/obj/item/gun/ballistic/automatic/ar,/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fr" = (/obj/machinery/door/airlock/security/glass{name = "Security Post"; req_access_txt = "201"},/turf/open/floor/plasteel,/area/awaymission/BMPship)
+"fs" = (/obj/machinery/gateway{dir = 10},/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 8},/area/awaymission/BMPship)
+"ft" = (/obj/machinery/gateway,/turf/open/floor/plating,/area/awaymission/BMPship)
+"fu" = (/obj/machinery/gateway{dir = 6},/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 4},/area/awaymission/BMPship)
+"fv" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 10},/area/awaymission/BMPship)
+"fw" = (/turf/open/floor/plasteel/yellowsiding,/area/awaymission/BMPship)
+"fx" = (/turf/open/floor/plasteel/yellowsiding{icon_state = "yellowsiding"; dir = 6},/area/awaymission/BMPship)
+"fy" = (/obj/structure/alien/resin/wall,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fz" = (/obj/structure/alien/weeds,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fA" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/drone,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fB" = (/obj/structure/alien/weeds/node,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fC" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fD" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/queen/large,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+"fE" = (/obj/structure/alien/resin/wall,/turf/open/space/basic,/area/awaymission/moonoutpost19)
+"fF" = (/obj/structure/alien/resin/membrane,/turf/open/floor/plating/dirt/moon,/area/awaymission/moonoutpost19)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaabababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaaaaababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababfyfyfyfyfyfyfyfyababababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababfyfyfyfzfzfzfzfzfzfyfyfyfyfyababababababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoababababababababfyfyfyfyfzfzfzfzfzfzfzfzfzfzfzfzfyfyfyabababababaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaeoarararararararararararepeqepararararararararerererctarararareoabababababfyfyfyfyfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfyfyfyfyfyababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaeoarararararararararararepesepararararararereIerererctarararareoababababfyfyfzfzfzfzfzfzfzfzfzfzfAfzfzfzfzfzfAfzfzfzfzfzfzfzfyfyababaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaeoarararararararararetarepeqepareJarcMereKerererererdRareLeMareoabababfyfyfzfzfzfzfzfzfzfzfBfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfyabaaaaaaaaaaaa
+aaaaaaaaaaaaaaaLaLaLaLaLaLaLaLemaraLaLaLaLaLaLararararerererereuerereEareNeOareoababfyfyfzfzfzfzfzfzfzfzfzfzfzfzfCfzfzfzfzfBfzfzfzfzfzfzfzfzfzfzfyabaaaaaaaaaaaa
+aaaaaaaaaaaaaaaLcpcpcqcrcsarctararcucvcwcxcyaLareParerereverereverereEeQeReSareoababfyfzfzfzfzfzfzfzfzfCfzfzfBfzfzfzfzfzfzfzfzfzfzfzfzfzfAfzfzfzfyabaaaaaaaaaaaa
+aaaaaaaaaaaaaaaLczcpcAcBcAarcJararcKewcLcLcLaLerereTereuereKererererdRareUeVareoababfyfyfzfzfBfzfzfzfzfzfzfzfAfzfzfzfzfzfzfzfzfCfzfzfzfzfzfBfzfzfyababaaaaaaaaaa
+aaaaaaaaaaaaaaaLcBcNcOcBexarctararcucPcQcRcSaLereuererevererereueTerctareWeXareoabababfyfzfzfzfzfAfzfBfzfzfzfzfzfzfzfCfzfBfzfzfzfzfzfzfzfzfzfzfzfyfyabaaaaaaaaaa
+aaaaaaaaaaaaaLaLenaLcTcUaLaLcVemcWaLaLaLaLaLaLaLaLerererererererererctarararareoabababfyfzfzfzfzfzfzfzfzfzfzfzfCfzfzfzfzfzfzfzfzfzfzfCfBfzfzfzfzfzfyfyaaaaaaaaaa
+aaaaaaaaaaaaaLararararararcXararararcYcZdadbdcddaLererereyerereYerercteZararareoabababfyfyfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfDfzfzfzfzfzfzfzfzfzfzfzfzfzfyaaaaaaaaaa
+aaaaaaaaaaaaaLarararcBdedfdgdhcWararcYcZdidjdhdkaLdRdRdRezeAdPeBdRdRdRfafbfbcteoababababfyfzfzfzfzfzfzfCfzfzfzfzfzfzfzfzfCfzfzfzfCfzfzfzfzfzfzfyfyfyfEaaaaaaaaaa
+aaaaaaaaaaaaaLarcpcpcBdlcpdmdnararcMdoardpdqdrdsaLfcfdfeffcBeCeDerdRfgfhfgarareoababababfyfyfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfzfyfyababaaaaaaaaaaaa
+aaaaaaaaaaabaLcpcpcBdtdudvdwcBcparardxardydzdAdBaLararfifjfkcperardRareFeGeHareoabababababfyfyfyfzfzfzfzfzfzfzfzfzfCfBfzfzfzfzfzfzfzfzfzfzfzfyfyababaaaaaaaaaaaa
+aaaaaaaaababaLarcpdLdMdNdOdPcBcpdQardRdSdydTardqaLarflarfmarcBararfbarfnfofpareoabababababababfyfyfzfzfzfzfzfzfzfzfzfzfzfzfzfCfzfzfzfyfzfzfyfyfyfyfyaaaaaaaaaaaa
+aaaaaaaaababaLararaLdUdVaLdWdXdYarardRdZeaebdAecaLarfqarfrararararfbarfsftfuareoababababababababfyfyfyfyfFfFfyfyfyfzfzfzfzfzfzfzfzfyfyfyfyfyfyfyfyfyaaaaaaaaaaaa
+aaaaaaaaababaLararaLedeeaLefdPararardRararegeheiaLarararcYarararardRarfvfwfxareoababababababababababababababababfyfzfzfzfzfzfzfzfzfyababababababababaaaaaaaaaaaa
+aaaaaaaaababaLaLaLejekeldOaLaLaLaLaLaLaLaLaLaLaLaLeoeoeoeoeoeoeoeoeoeoeoeoeoeoeoababababababababababababababababfyfyfyfzfzfyfyfyfyfyabababababababaaaaaaaaaaaaaa
+aaaaaaabababcCabcGdCcHdDdEcGcDabababababababababababababababababababababababababababababababababababababababababababfyfyfyababababababababababababaaabaaaaaaaaaa
+aaaaaaabababcDabcGdFcGcGcGdGcCababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaa
+aaaaaaabababcEabdHcGcIdFababcFababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaa
+aaaaaaabababcDabdHabdIababaxcDabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaa
+aaaaaaabbkblblblblblbmblblblbnababababababababababababababababababababababababababababababababababababababababafababababababababababababababababababababaaaaaaaa
+aaaaaaabboaEaEaEaEaEaFdJaGaEbrabababababababababababababababababababababababaCabababababauabababababababababababababababababababababababababababababababaaaaaaaa
+aaaaaaabbsaHaIaJaIaKdKaIaMaEbraNababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaa
+aaaaababboaOaPaPaQaRaSaPaTaEbrababababababababababababababababafababababababababababababababababababababababababababababababababababaeababababababababababaaaaaa
+aaaaababbtaOaSaSaUaVaWaSaTaXbrababababababababababababababababababababababababababafabababababababababaAabababababababababababababababababababababadabababaaaaaa
+aaaaababbsaOaYbMaZbabbaSbcbdbrababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaa
+aaaaabadboaObeaPaSbfaSaSaTaEbyababadababababababababababauabababababababababababababababababababababababababababababababauababababaAabababababababababababaaaaaa
+aaaaababbsaOaPaPaPbgaPaPbAbYbrabababababababababababababababababababaCababababababababaAabababababababababababababababababababababababababababababababababaaaaaa
+aaaaababbobhbibibibjbBbDbEbFbrababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaa
+aaaaababbobFbGbHbqbIbIbJbKbubpabbvababababababababafabababababababababababababababababababababababababaCababababababababababababababababababacababababababaaaaaa
+aaaaababbwbxbLbwcbbzcjbNbzbCbwababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaa
+aaaaababbwbVckbwbWbXbFclbFbZbzabababababababababababababababababababababababababauabababababababababababababacabababababababababaAababababababababababababaaaaaa
+aaaaababbwcabFcmbFbFcabFcccnbzabababababababauababababababababababababababababababababababababababababababababababababababababababababababababababaDabababaaaaaa
+aaaaababbwcobFbwcdcecfcgchcibzababababababababababababababababaAababababababababababababababadababababababababababababababababababababababababababababababaaaaaa
+aaaaabadbwbwbwbwbzbObObwbPbwbwababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaa
+aaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeababababababababababafababababaaaaaa
+aaaaababababababababaAababababababababababababababababababababababababababababaAabababababababafababababababababababababababababababadabababababababababaaaaaaaa
+aaaaaaababababababababababababababadababababababaeababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaa
+aaaaaaababababababababababababababababababababababababababababababababababagagahahaiagababababababababababababababababababababababababababababababababababaaaaaa
+aaaaaaabababababababababababababababababababababababababababaAababababababagajakalbQagabababababababababababadababababababababababababababababababababababaaaaaa
+aaaaaaaaabababababababababababababababababababababababababababababababababagamanaoapagabababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaabababababababababababababababababababababababababababababababababagalaqaqalbRbSababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaababababababababababababababacabababababababababababababababababagasatatalbRbSabababababababababababababababababababababauababababababababababababaaaa
+aaaaaaaaaaababababababababababababababababababababababababababababababababagavalalawagabababauabababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaababababababababababababababababababababababababababababababababagbTbUayazagababababababababaAababababababababababababababababababababababababababaaaa
+aaaaaaaaaaabababababaeababababababababababababababababauabababababababababagagagagagagabababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababadabababababaaaa
+aaaaaaaaaaaaabababababababababababababababababababababababababababafababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaaaabababababababababaAababababababababababababababababababababababababababababababababababababababababaeabababababababababababababababababababababaaaa
+aaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaa
+aaaaaaaaaaaaabababababababababababababababababafabababababababababababababababababababababababaBabababababababababababababababababababababababababababababaaaaaa
+aaaaaaaaaaaaaaababababadabababababababababababababababababababababababababababababacababababababababababababababababababababababababababababababababababaaaaaaaa
+aaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaeababababababababababaaaaaaaa
+aaaaaaaaaaaaaaabababababababababababababababababababababaeababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaabababababababababacabababababababababababababababababaAabababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababafabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
