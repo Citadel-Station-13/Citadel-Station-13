@@ -14,6 +14,12 @@
 	desc = "How can signs be real if our eyes aren't real?"
 	icon_state = "backing"
 
+/obj/structure/sign/apollo11crew
+	name = "shuttle crew"
+	desc = ""
+	icon = 'icons/misc/lunar.dmi'
+	icon_state = "photo"
+
 /obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
