@@ -80,3 +80,24 @@
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FLAMMABLE
 	armor = list("melee" = 50, "bullet" = 10, "laser" = 5, "energy" = 5, "bomb" = 10, "bio" = 5, "rad" = 5, "fire" = 5, "acid" = 5)
+
+//homestuck é gay
+/obj/item/clothing/suit/jade_harley
+	name = "Space Witch robe"
+	desc = ""
+	icon = 'icons/mob/suit.dmi'
+	icon_state = "jade_harley"
+	item_state = "jade_harley"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	cold_protection = CHEST|GROIN|ARMS|LEGS
+	clothing_flags = THICKMATERIAL
+//preguiça da porra
+/obj/item/clothing/suit/dave_strider
+	name = "Knight of Time robe"
+	desc = ""
+	icon = 'icons/mob/suit.dmi'
+	icon_state = "dave_strider"
+	item_state = "dave_strider"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	cold_protection = CHEST|GROIN|ARMS|LEGS
+	clothing_flags = THICKMATERIAL
