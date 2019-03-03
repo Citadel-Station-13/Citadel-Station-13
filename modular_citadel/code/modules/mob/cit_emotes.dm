@@ -15,6 +15,7 @@
 
 /datum/emote/living/insult/run_emote(mob/living/user, params)
 	var/insult_message = ""
+	var/miming = user.mind ? user.mind.miming : 0
 	if(!user.is_muzzled() && !miming)
 		insult_message += pick_list_replacements(INSULTS_FILE, "insult_gen")
 		message = insult_message
