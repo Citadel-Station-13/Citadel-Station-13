@@ -19,9 +19,11 @@
 /area/space/nearstation)
 "f" = (
 /turf/open/floor/plating/airless,
+/obj/item/paper/fluff/ruins/derelict3/drone,
 /obj/structure/closet/crate{
-	name = "rpc crate"
+	name = "old drone crate"
 	},
+/mob/living/simple_animal/drone,
 /area/ruin/unpowered/no_grav)
 "g" = (
 /turf/open/floor/plating/airless,
