@@ -22,7 +22,6 @@
 /obj/structure/closet/crate{
 	name = "rpc crate"
 	},
-/obj/item/construction/rcd/loaded,
 /area/ruin/unpowered/no_grav)
 "g" = (
 /turf/open/floor/plating/airless,
@@ -742,7 +741,7 @@ b
 b
 c
 b
-h
+b
 b
 b
 d
@@ -836,7 +835,7 @@ a
 a
 b
 b
-h
+b
 c
 c
 b
