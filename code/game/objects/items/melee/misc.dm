@@ -29,6 +29,16 @@
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
+/obj/item/melee/chainofcommand/lust
+	name = "Lust's Whip"
+	desc = "A strange whip that sparks arousal from the slightest touch"
+	icon_state = "lustwhip"
+	damtype = AROUSAL
+	force = 100
+	attack_verb = list("punished", "disciplined", "tamed", "teased")
+	hitsound = 'sound/weapons/whip.ogg'
+
+
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
 	desc = "A grotesque blade that on closer inspection seems made of synthetic flesh, it still feels like it would hurt very badly as a weapon."

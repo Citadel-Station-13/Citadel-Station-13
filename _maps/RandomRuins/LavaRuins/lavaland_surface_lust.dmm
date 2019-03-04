@@ -1,0 +1,60 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/space)
+"b" = (/turf/closed/wall/mineral/gold,/area/space)
+"c" = (/obj/structure/bookcase/random/adult,/turf/open/floor/mineral/plasma,/area/space)
+"d" = (/obj/structure/reagent_dispensers/keg/aphro/strong,/turf/open/floor/mineral/diamond,/area/space)
+"e" = (/obj/structure/reagent_dispensers/keg/aphro/strong,/turf/open/floor/mineral/plasma,/area/space)
+"f" = (/obj/structure/bookcase/random/adult,/turf/open/floor/mineral/diamond,/area/space)
+"g" = (/turf/open/floor/mineral/plasma,/area/space)
+"h" = (/turf/open/floor/mineral/diamond,/area/space)
+"i" = (/obj/structure/bed/alien,/turf/open/floor/mineral/diamond,/area/space)
+"j" = (/obj/machinery/door/airlock/gold/glass,/turf/open/floor/mineral/plasma,/area/space)
+"k" = (/obj/machinery/door/airlock/gold/glass,/turf/open/floor/mineral/diamond,/area/space)
+"l" = (/obj/structure/bed/abductor,/turf/open/floor/mineral/plasma,/area/space)
+"m" = (/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/plasma,/area/space)
+"n" = (/obj/structure/reagent_dispensers/keg/semen,/turf/open/floor/mineral/diamond,/area/space)
+"o" = (/obj/structure/reagent_dispensers/keg/semen,/turf/open/floor/mineral/plasma,/area/space)
+"p" = (/obj/structure/bed/dogbed,/turf/open/floor/mineral/diamond,/area/space)
+"q" = (/obj/structure/bed/nest,/turf/open/floor/mineral/diamond,/area/space)
+"r" = (/obj/structure/bodycontainer/morgue,/turf/open/floor/mineral/plasma,/area/space)
+"s" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"t" = (/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/space)
+"u" = (/obj/effect/decal/cleanable/femcum,/turf/open/floor/mineral/plasma,/area/space)
+"v" = (/obj/effect/decal/cleanable/semen,/obj/item/toy/plush/random,/turf/open/floor/mineral/diamond,/area/space)
+"w" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/space)
+"x" = (/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/space)
+"y" = (/obj/item/dildo/random,/turf/open/floor/mineral/diamond,/area/space)
+"z" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/remains/robot,/turf/open/floor/mineral/plasma,/area/space)
+"A" = (/obj/effect/decal/cleanable/semen,/obj/item/restraints/handcuffs/fake/kinky,/turf/open/floor/mineral/diamond,/area/space)
+"B" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/insectguts,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/space)
+"C" = (/obj/effect/decal/cleanable/semen,/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/space)
+"D" = (/obj/effect/decal/cleanable/vomit,/turf/open/floor/mineral/plasma,/area/space)
+"E" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/pie_smudge,/obj/item/restraints/handcuffs/sinew,/turf/open/floor/mineral/diamond,/area/space)
+"F" = (/obj/structure/bed/pod,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/plasma,/area/space)
+"G" = (/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/mineral/plasma,/area/space)
+"H" = (/obj/effect/decal/cleanable/blood,/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/space)
+"I" = (/obj/effect/decal/cleanable/semen,/obj/effect/decal/remains/xeno,/turf/open/floor/mineral/diamond,/area/space)
+"J" = (/obj/machinery/door/airlock/gold/glass,/obj/effect/mine/sound/bwoink,/turf/open/floor/mineral/diamond,/area/space)
+"K" = (/obj/machinery/door/airlock/gold/glass,/obj/effect/mine/sound/bwoink,/turf/open/floor/mineral/plasma,/area/space)
+"L" = (/obj/effect/decal/cleanable/femcum,/obj/structure/closet,/obj/item/dildo/random,/obj/item/dildo/random,/obj/item/electropack/shockcollar,/turf/open/floor/mineral/plasma,/area/space)
+"M" = (/obj/effect/decal/cleanable/femcum,/obj/item/toy/plush/mammal/robin{name = "A friend"},/turf/open/floor/mineral/plasma,/area/space)
+"N" = (/obj/effect/decal/cleanable/femcum,/obj/item/toy/plush/random,/turf/open/floor/mineral/diamond,/area/space)
+"O" = (/obj/item/melee/chainofcommand/lust,/turf/open/floor/mineral/plasma,/area/space)
+
+(1,1,1) = {"
+aaaaabbbbbbaaaaa
+aaaaabcdefbaaaaa
+aaaaabfmtcbaaaaa
+aaaaabcvMfbaaaaa
+aaaaabfuNcbaaaaa
+aaaaabcwOfbaaaaa
+aaaaabfxtcbaaaaa
+aaaaabchufbaaaaa
+aabbbbbmybbbbbaa
+aabizAjBCkDElbaa
+aabFnGbghbwopbaa
+aabqHIbJKbLtrbaa
+aabbbbbsabbbbbaa
+aaaaaassaaaaaaaa
+aaaaasssaaaaaaaa
+aaaasssaaaaaaaaa
+"}
