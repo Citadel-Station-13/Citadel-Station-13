@@ -249,7 +249,9 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
-
+//mp = Miner Pointers
+//c  =  Cash
+//TODO add in cr = Credits for cargo
 /obj/item/card/mining_point_card
 	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard. This one only holds a small 50 points on it."
