@@ -901,7 +901,7 @@
 				return TRUE
 	return FALSE
 
- /mob/living/carbon/human/proc/clear_shove_slowdown()
+/mob/living/carbon/human/proc/clear_shove_slowdown()
 	remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
 	var/active_item = get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
