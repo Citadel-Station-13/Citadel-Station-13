@@ -44,37 +44,186 @@
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
 		return FALSE
-	else if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
-		return 0
+	if(target.check_block())
+		target.visible_message("<span class='warning'>[target] blocks [user]'s shoving attempt!</span>")
+		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
-		return 1
+		return TRUE
+	if(user.resting)
+		return FALSE
 	else
+		if(user == target)
+			return
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-
-		user.adjustStaminaLossBuffered(4) //CITADEL CHANGE - makes disarmspam cause staminaloss
+		user.adjustStaminaLossBuffered(4)
+		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
-		var/randomized_zone = ran_zone(user.zone_selected)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
-		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 
-		if((!target.combatmode && user.combatmode || prob(target.getStaminaLoss()*(user.resting ? 0.25 : 1)*(user.combatmode ? 1 : 0.05))) && !target.resting) //probability depends on staminaloss. it's plausible, but unlikely that you'll be able to push someone over while resting, and pretty rare to successfully push someone outside of combat mode. The few people that even know how to right-click outside of combat mode are a rarity but let's take that into account regardless.
-			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			target.visible_message("<span class='danger'>[user] [user.combatmode ? "has" : "gently"] pushed [target]!</span>",
-				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(40, EFFECT_KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
-			target.forcesay(GLOB.hit_appends)
-			log_combat(user, target, "disarmed", " pushing them to the ground")
-			return
+		if(!target.resting)
+			target.adjustStaminaLoss(5)
 
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 25, 1, -1)
-		target.visible_message("<span class='danger'>[user] [user.combatmode ? "attempted to push" : "tries to gently push"] [target] over!</span>", \
-						"<span class='userdanger'>[user] [user.combatmode ? "attempted to push" : "tries to gently push"] [target] over!</span>", null, COMBAT_MESSAGE_RANGE)
-		if(!target.resting && !user.resting && user.combatmode)
-			target.adjustStaminaLoss(rand(1,5)) //This is the absolute most inefficient way to get someone into soft stamcrit, but if you've got a crowd trying to shove you over, you've no option but to get knocked down and accept fate
-		log_combat(user, target, "attempted to disarm push")
+
+		var/turf/target_oldturf = target.loc
+		var/shove_dir = get_dir(user.loc, target_oldturf)
+		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+		var/mob/living/carbon/human/collateral_human
+		var/obj/structure/table/target_table
+		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
+		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is potentially blocking
+		
+		//WARNING: INCOMING MEGA HELLCODE
+		//Blame that directional windows are insane and that diagonal movement is kind of a bitch.
+		for(var/obj/O in target_oldturf.contents)
+			if(O.flags_1 & ON_BORDER_1)
+				directional_obstruction = TRUE
+				break
+		if(directional_obstruction)
+			if(!(shove_dir in GLOB.diagonals)) //the logic is a bit different for diagonal shoves, see later in the code
+				for(var/obj/A in target_oldturf.contents)
+					if(A.flags_1 & ON_BORDER_1 && A.dir == shove_dir)
+						shove_blocked = TRUE
+			else
+				var/dir_1 = turn(shove_dir, -45) //No randomization on the assignment here because the situation that requires randomization can't happen
+				var/dir_1_blocked = FALSE
+				var/dir_2 = turn(shove_dir, 45)
+				var/dir_2_blocked = FALSE
+				for(var/obj/A in target_oldturf.contents)
+					if(A.flags_1 & ON_BORDER_1)
+						if(A.dir == dir_1)
+							dir_1_blocked = TRUE
+						else if(A.dir == dir_2)
+							dir_2_blocked = TRUE
+						if(dir_1_blocked && dir_2_blocked)
+							break
+				if(dir_1_blocked && dir_2_blocked)
+					shove_blocked = TRUE
+				else if(dir_1_blocked && !dir_2_blocked)
+					shove_dir = dir_2
+				else if(dir_2 && !dir_1_blocked)
+					shove_dir = dir_1
+				target_shove_turf = get_step(target.loc, shove_dir)
+				
+		if(!shove_blocked) //Skip this if it's already directionally blocked for speed reasons
+			if (!(shove_dir in GLOB.diagonals)) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
+				if(is_blocked_turf(target_shove_turf, FALSE))
+					var/blocking_dir = turn(shove_dir, 180)
+					var/no_directionals = TRUE
+					var/blocked_by_directional = FALSE
+					for(var/obj/O in target_shove_turf.contents)
+						if(O.anchored)
+							shove_blocked = TRUE
+						if(O.flags_1 & ON_BORDER_1)
+							no_directionals = FALSE
+							if(O.dir == blocking_dir)
+								blocked_by_directional = TRUE
+					if(no_directionals && blocked_by_directional)
+						shove_blocked = TRUE
+			else
+				var/turf/diagonal_turf = target_shove_turf
+				var/turf/cardinal_turf_1
+				var/turf/cardinal_turf_2
+				target_shove_turf = diagonal_turf
+				if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
+					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
+					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
+				else
+					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, 45))
+					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, -45))
+				var/cardinal_1_free = FALSE
+				var/cardinal_2_free = FALSE
+				var/diagonal_free = FALSE
+				if(!is_blocked_turf(cardinal_turf_1, FALSE))
+					target_shove_turf = cardinal_turf_1
+					cardinal_1_free = TRUE
+				if(!is_blocked_turf(cardinal_turf_2, FALSE))
+					target_shove_turf = cardinal_turf_2
+					cardinal_2_free = TRUE
+				if(cardinal_1_free && cardinal_2_free && !is_blocked_turf(diagonal_turf, FALSE)) //Check the diagonal last because the other two need to be clear as well
+					target_shove_turf = diagonal_turf
+					diagonal_free = TRUE
+				if(!cardinal_1_free && !cardinal_2_free && !diagonal_free) //If a free tile wasn't found, we need to do even more expensive of checks
+					shove_blocked = TRUE
+					if(!istype(cardinal_turf_1, /turf/closed))
+						for(var/content in cardinal_turf_1.contents)
+							if(istype(content, /obj/structure/table))
+								target_table = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(target_table || collateral_human)
+							target_shove_turf = cardinal_turf_1
+					if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
+						for(var/content in cardinal_turf_2.contents)
+							if(istype(content, /obj/structure/table))
+								target_table = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(target_table || collateral_human)
+							target_shove_turf = cardinal_turf_2
+
+		var/targetatrest = target.resting
+		if(shove_blocked && !target.is_shove_knockdown_blocked())
+			if((!target_table || !collateral_human) && !directional_obstruction && !(shove_dir in GLOB.diagonals))
+				for(var/content in target_shove_turf.contents)
+					if(istype(content, /obj/structure/table))
+						target_table = content
+						break
+					if(ishuman(content))
+						collateral_human = content
+						break
+			if(target_table)
+				if(!targetatrest)
+					target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
+					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.forceMove(target_shove_turf)
+				log_combat(user, target, "shoved", "onto [target_table]")
+			else if(collateral_human && !targetatrest)
+				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [collateral_human.name]!</span>",
+					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "into [collateral_human.name]")
+			else
+				target.Move(target_shove_turf) //This move should be blocked anyways, this fixes some odd behavior with things like doors and grills
+				if(!targetatrest)
+					target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name][targetatrest ? ".": ", knocking them down!"]</span>",
+					"<span class='danger'>You shove [target.name][targetatrest ? ".": ", knocking them down!"]</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "knocking them down")
+		else
+			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
+				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+			var/target_held_item = target.get_active_held_item()
+			var/knocked_item = FALSE
+			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+				target_held_item = null
+			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
+				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+				if(target_held_item)
+					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
+						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
+				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+			else if(target_held_item)
+				target.dropItemToGround(target_held_item)
+				knocked_item = TRUE
+				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.Move(target_shove_turf)
+			var/append_message = ""
+			if(target_held_item)
+				if(knocked_item)
+					append_message = "causing them to drop [target_held_item]"
+				else
+					append_message = "loosening their grip on [target_held_item]"
+			log_combat(user, target, "shoved", append_message)
+
 
 ////////////////////
 /////BODYPARTS/////
