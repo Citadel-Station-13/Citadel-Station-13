@@ -191,3 +191,16 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/krav_maga/hm
+	name = "makeshift gloves"
+	desc = ""
+	icon_state = "hmgloves"
+	item_state = "hmgloves"
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE

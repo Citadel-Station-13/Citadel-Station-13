@@ -73,6 +73,15 @@
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
+/obj/item/clothing/suit/letterman_jackethm
+	name = "Letterman Jacket"
+	desc = "Literally Jacket's jacket."
+	icon_state = "jacket" //lol
+	body_parts_covered = CHEST|GROIN|ARMS
+	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
 	desc = "Und das heiﬂt: Erika."
