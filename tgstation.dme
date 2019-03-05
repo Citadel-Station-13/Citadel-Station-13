@@ -6,6 +6,7 @@
 
 // BEGIN_FILE_DIR
 #define FILE_DIR .
+<<<<<<< HEAD
 #define FILE_DIR "config"
 #define FILE_DIR "config/jukebox_music"
 #define FILE_DIR "config/title_music"
@@ -181,6 +182,8 @@
 #define FILE_DIR "sound/weather/ashstorm/outside"
 #define FILE_DIR "tools"
 #define FILE_DIR "tools/SS13SmoothingCutter"
+=======
+>>>>>>> parent of 2c12b4de1... hotline miami test
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES

@@ -28,7 +28,6 @@
 	desc = "This helmet should protect you from russians and masked vigilantes."
 	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "biker_helmet"
-	item_state = "biker_helmet"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
@@ -38,44 +37,6 @@
 	desc = "Do you like hurting people?"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	icon_state = "richard"
-	item_state = "richard"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-
-/obj/item/clothing/mask/gas/sechailer/tony
-	name = "Tony"
-	desc = "Man, this party stinks, I fucking hate these people."
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	icon_state = "tony"
-	item_state = "tony"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-
-/obj/item/clothing/mask/gas/sechailer/swan_1
-	name = "Swan #1"
-	desc = "What the fuck are you waiting for"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	icon_state = "swan_1"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-
-/obj/item/clothing/mask/gas/sechailer/swan_2
-	name = "Swan #2"
-	desc = "Who invited all these morons?"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	icon_state = "swan_2"
-	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-
-/obj/item/clothing/mask/gas/sechailer/mark
-	name = "Mark"
-	desc = "We can always grab pizza later if we don't find anything."
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	icon_state = "mark"
 	icon = 'modular_citadel/icons/obj/clothing/vg_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/head.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
