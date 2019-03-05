@@ -69,134 +69,54 @@
 		var/turf/target_oldturf = target.loc
 		var/shove_dir = get_dir(user.loc, target_oldturf)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
-		var/mob/living/carbon/human/collateral_human
+		var/mob/living/carbon/human/target_collateral_human
 		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is potentially blocking
-		
-		//WARNING: INCOMING MEGA HELLCODE
-		//Blame that directional windows are insane and that diagonal movement is kind of a bitch.
-		for(var/obj/O in target_oldturf.contents)
-			if(O.flags_1 & ON_BORDER_1)
-				directional_obstruction = TRUE
-				break
-		if(directional_obstruction)
-			if(!(shove_dir in GLOB.diagonals)) //the logic is a bit different for diagonal shoves, see later in the code
-				for(var/obj/A in target_oldturf.contents)
-					if(A.flags_1 & ON_BORDER_1 && A.dir == shove_dir)
-						shove_blocked = TRUE
-			else
-				var/dir_1 = turn(shove_dir, -45) //No randomization on the assignment here because the situation that requires randomization can't happen
-				var/dir_1_blocked = FALSE
-				var/dir_2 = turn(shove_dir, 45)
-				var/dir_2_blocked = FALSE
-				for(var/obj/A in target_oldturf.contents)
-					if(A.flags_1 & ON_BORDER_1)
-						if(A.dir == dir_1)
-							dir_1_blocked = TRUE
-						else if(A.dir == dir_2)
-							dir_2_blocked = TRUE
-						if(dir_1_blocked && dir_2_blocked)
-							break
-				if(dir_1_blocked && dir_2_blocked)
-					shove_blocked = TRUE
-				else if(dir_1_blocked && !dir_2_blocked)
-					shove_dir = dir_2
-				else if(dir_2 && !dir_1_blocked)
-					shove_dir = dir_1
-				target_shove_turf = get_step(target.loc, shove_dir)
-				
-		if(!shove_blocked) //Skip this if it's already directionally blocked for speed reasons
-			if (!(shove_dir in GLOB.diagonals)) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
-				if(is_blocked_turf(target_shove_turf, FALSE))
-					var/blocking_dir = turn(shove_dir, 180)
-					var/no_directionals = TRUE
-					var/blocked_by_directional = FALSE
-					for(var/obj/O in target_shove_turf.contents)
-						if(O.anchored)
-							shove_blocked = TRUE
-						if(O.flags_1 & ON_BORDER_1)
-							no_directionals = FALSE
-							if(O.dir == blocking_dir)
-								blocked_by_directional = TRUE
-					if(no_directionals && blocked_by_directional)
-						shove_blocked = TRUE
-			else
-				var/turf/diagonal_turf = target_shove_turf
-				var/turf/cardinal_turf_1
-				var/turf/cardinal_turf_2
-				target_shove_turf = diagonal_turf
-				if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
-					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
-					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
-				else
-					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, 45))
-					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, -45))
-				var/cardinal_1_free = FALSE
-				var/cardinal_2_free = FALSE
-				var/diagonal_free = FALSE
-				if(!is_blocked_turf(cardinal_turf_1, FALSE))
-					target_shove_turf = cardinal_turf_1
-					cardinal_1_free = TRUE
-				if(!is_blocked_turf(cardinal_turf_2, FALSE))
-					target_shove_turf = cardinal_turf_2
-					cardinal_2_free = TRUE
-				if(cardinal_1_free && cardinal_2_free && !is_blocked_turf(diagonal_turf, FALSE)) //Check the diagonal last because the other two need to be clear as well
-					target_shove_turf = diagonal_turf
-					diagonal_free = TRUE
-				if(!cardinal_1_free && !cardinal_2_free && !diagonal_free) //If a free tile wasn't found, we need to do even more expensive of checks
-					shove_blocked = TRUE
-					if(!istype(cardinal_turf_1, /turf/closed))
-						for(var/content in cardinal_turf_1.contents)
-							if(istype(content, /obj/structure/table))
-								target_table = content
-								break
-							if(ishuman(content))
-								collateral_human = content
-								break
-						if(target_table || collateral_human)
-							target_shove_turf = cardinal_turf_1
-					if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
-						for(var/content in cardinal_turf_2.contents)
-							if(istype(content, /obj/structure/table))
-								target_table = content
-								break
-							if(ishuman(content))
-								collateral_human = content
-								break
-						if(target_table || collateral_human)
-							target_shove_turf = cardinal_turf_2
 
-		var/targetatrest = target.resting
+		//Thank you based whoneedsspace
+		target_collateral_human = locate(/mob/living/carbon/human) in target_shove_turf.contents
+		if(target_collateral_human)
+			shove_blocked = TRUE
+		else
+			target.Move(target_shove_turf, shove_dir)
+			if(get_turf(target) == target_oldturf)
+				target_table = locate(/obj/structure/table) in target_shove_turf.contents
+				shove_blocked = TRUE
+		
 		if(shove_blocked && !target.is_shove_knockdown_blocked())
-			if((!target_table || !collateral_human) && !directional_obstruction && !(shove_dir in GLOB.diagonals))
-				for(var/content in target_shove_turf.contents)
-					if(istype(content, /obj/structure/table))
-						target_table = content
+			var/directional_blocked = FALSE
+			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
+				var/target_turf = get_turf(target)
+				for(var/obj/O in target_turf)
+					if(O.flags_1 & ON_BORDER_1 && O.dir == shove_dir && O.density)
+						directional_blocked = TRUE
 						break
-					if(ishuman(content))
-						collateral_human = content
-						break
-			if(target_table)
+				if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
+					for(var/obj/O in target_shove_turf)
+						if(O.flags_1 & ON_BORDER_1 && O.dir == turn(shove_dir, 180) && O.density)
+							directional_blocked = TRUE
+							break
+			var/targetatrest = target.resting
+			if(((!target_table && !target_collateral_human) || directional_blocked) && !targetatrest)
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
+					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "knocking them down")
+			else if(target_table)
 				if(!targetatrest)
 					target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
 					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
 				target.forceMove(target_shove_turf)
 				log_combat(user, target, "shoved", "onto [target_table]")
-			else if(collateral_human && !targetatrest)
+			else if(target_collateral_human && !targetatrest)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [collateral_human.name]!</span>",
-					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, target, "shoved", "into [collateral_human.name]")
-			else
-				target.Move(target_shove_turf) //This move should be blocked anyways, this fixes some odd behavior with things like doors and grills
-				if(!targetatrest)
-					target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name][targetatrest ? ".": ", knocking them down!"]</span>",
-					"<span class='danger'>You shove [target.name][targetatrest ? ".": ", knocking them down!"]</span>", null, COMBAT_MESSAGE_RANGE)
-				log_combat(user, target, "shoved", "knocking them down")
+				if(!target_collateral_human.resting)
+					target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
+					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -215,7 +135,6 @@
 				knocked_item = TRUE
 				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.Move(target_shove_turf)
 			var/append_message = ""
 			if(target_held_item)
 				if(knocked_item)
