@@ -4,3 +4,4 @@
 client/mouse_pointer_icon = 'icons/cursors/test.dmi'
 /obj/
 	mouse_over_pointer = "over"
+*/
