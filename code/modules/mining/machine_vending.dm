@@ -260,19 +260,19 @@
 
 /obj/item/card/mining_point_card/mp500
 	desc = "A small card preloaded with 500 mining points. Swipe your ID card over it to transfer the points, then discard."
-	var/points = 500
+	points = 500
 
 /obj/item/card/mining_point_card/mp1000
 	desc = "A small card preloaded with 1000 mining points. Swipe your ID card over it to transfer the points, then discard."
-	var/points = 1000
+	points = 1000
 
 /obj/item/card/mining_point_card/mp1500
 	desc = "A small card preloaded with 1500 mining points. Swipe your ID card over it to transfer the points, then discard."
-	var/points = 1500
+	points = 1500
 
 /obj/item/card/mining_point_card/mp2000
 	desc = "A small card preloaded with 2000 mining points. Swipe your ID card over it to transfer the points, then discard."
-	var/points = 2000
+	points = 2000
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
