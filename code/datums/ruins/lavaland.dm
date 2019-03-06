@@ -223,3 +223,11 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+
+/datum/map_template/ruin/lavaland/lust
+	name = "Lust Ruin"
+	id = "lust"
+	description = "An abandoned sex dungeon with a powerful artifact."
+	suffix = "lavaland_surface_lust.dmm"
+	allow_duplicates = FALSE
+	cost = 10
