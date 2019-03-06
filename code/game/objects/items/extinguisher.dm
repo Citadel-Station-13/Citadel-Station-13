@@ -227,7 +227,7 @@
 	repetition++
 	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
-/obj/item/extinguisher/screwdriver_act(mob/user, obj/item/tool)
+/obj/item/extinguisher/screwdriver_act()
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	EmptyExtinguisher(user)
