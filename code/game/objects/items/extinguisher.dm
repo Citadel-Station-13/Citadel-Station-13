@@ -227,10 +227,10 @@
 	repetition++
 	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
-/obj/item/extinguisher/screwdriver_act()
+/obj/item/extinguisher/screwdriver_act(
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	EmptyExtinguisher(user)
+	EmptyExtinguisher(user))
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
