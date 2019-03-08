@@ -132,7 +132,7 @@ Slimecrossing Armor
 	icon_state = "adamsuit"
 	item_state = "adamsuit"
 	flags_inv = NONE
-//	obj_flags = IMMUTABLE_SLOW //Commented this out as Citadel currently lacks the IMMUTABLE_SLOW obj_flag.
+	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40
 
