@@ -224,7 +224,7 @@
 /datum/chemical_reaction/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
-	results = list("tricordrazine" = 3)
+	results = list("tricordrazine" = 2)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 
 /datum/chemical_reaction/regen_jelly
