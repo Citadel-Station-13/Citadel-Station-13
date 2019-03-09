@@ -22,7 +22,7 @@
 		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
 		return
 
-	GLOB.bunker_passthrough |= ckeytobypass
+	GLOB.bunker_passthrough |= ckey(ckeytobypass)
 	log_admin("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
 	message_admins("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
 
@@ -34,7 +34,7 @@
 		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
 		return
 
-	GLOB.bunker_passthrough -= ckeytobypass
+	GLOB.bunker_passthrough -= ckey(ckeytobypass)
 	log_admin("[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
 	message_admins("[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
 
