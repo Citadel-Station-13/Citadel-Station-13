@@ -1003,12 +1003,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
-	name = "Syndicate Combat Medic Kit"
-	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
-			for rapid healing, a medical HUD for quick identification of injured personnel, \
-			and other supplies helpful for a field medic."
+	name = "New Syndicate Combat Medic Kit"
+	desc = "A superior version of the older combat first aid kit. \
+			Included are two injectors for rapid healing or stabilization, \
+			two medical spray bottles, a diamond piercing syringe \
+			and a medical HUD for quick identification of injured personnel."
 	item = /obj/item/storage/firstaid/tactical
-	cost = 4
+	cost = 6
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/syndietome
@@ -1504,7 +1505,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo 
+/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo
 	name = "Hilarious firing pin"
 	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
 	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
