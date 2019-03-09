@@ -413,7 +413,7 @@
 	description = "Slowly heals all damage types. Overdose will cause damage in all types instead."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
