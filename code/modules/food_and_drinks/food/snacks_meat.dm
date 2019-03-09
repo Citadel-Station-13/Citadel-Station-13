@@ -187,7 +187,7 @@
 /obj/item/reagent_containers/food/snacks/monkeycube/On_Consume(mob/living/carbon/M)
 	if(iscarbon(M))
 		M.visible_message("[src] bursts out of [M]!</span>")
-		M.say("*scream")
+		M.emote("scream")
 		M.Knockdown(40)
 		M.adjustBruteLoss(60)
 		Expand()
