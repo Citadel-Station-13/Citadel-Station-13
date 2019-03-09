@@ -54,6 +54,15 @@
 	list_reagents = list("omnizine" = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/reagent_containers/hypospray/emergency_combat
+	name = "emergency combat stabilizer" //Used for the new combat medical kit.
+	desc = "A small modified air-needle auto injector, used by support operatives to quickly stabilize their allies in critical condition."
+	amount_per_transfer_from_this = 5
+	icon_state = "hypo"
+	volume = 35
+	ignore_flags = 1 // So they can heal their comrades.
+	list_reagents = list("oculine" = 5, "stimulants" = 15, "atropine" = 15)
+
 /obj/item/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by support operatives to quickly heal injuries in combat."
@@ -61,7 +70,7 @@
 	icon_state = "combat_hypo"
 	volume = 90
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("epinephrine" = 30, "omnizine" = 30, "leporazine" = 15, "atropine" = 15)
+	list_reagents = list("tricordrazine" = 30, "omnizine" = 30)
 
 /obj/item/reagent_containers/hypospray/combat/nanites
 	desc = "A modified air-needle autoinjector for use in combat situations. Prefilled with experimental medical compounds for rapid healing."
