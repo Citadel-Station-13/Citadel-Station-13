@@ -273,7 +273,7 @@
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 				if(!lying)				//CITADEL EDIT
-					Knockdown(100, override_duration = 30, override_stam = 25)
+					Knockdown(100, TRUE, FALSE, 30, 25)
 				else
 					Knockdown(100)
 				log_combat(M, src, "tackled")

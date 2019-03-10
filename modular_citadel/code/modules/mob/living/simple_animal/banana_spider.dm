@@ -38,7 +38,7 @@
 		return
 	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
 	awakening = 1
-
+	
 	spawn(30)
 		if(!QDELETED(src))
 			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
@@ -55,7 +55,8 @@
 	icon_dead = "banana_peel"
 	health = 1
 	maxHealth = 1
-	turns_per_move = 5
+	turns_per_move = 5			//this isn't player speed =|
+	speed = 2				//this is player speed
 	loot = list(/obj/item/reagent_containers/food/snacks/deadbanana_spider)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
@@ -67,7 +68,7 @@
 	response_harm   = "splats"
 	speak_emote = list("chitters")
 	mouse_opacity = 2
-	density = FALSE
+	density = TRUE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
@@ -75,19 +76,17 @@
 	verb_exclaim = "chitters loudly"
 	verb_yell = "chitters loudly"
 	var/squish_chance = 50
-	del_on_death = 1
-
+	var/projectile_density = TRUE		//griffons get shot
+	del_on_death = TRUE
 
 /mob/living/simple_animal/banana_spider/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
-	GLOB.poi_list |= src
-
 
 /mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
-	if(src.key)
+	if(key)			//please stop using src. without a good reason.
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
 		if(!isnum(user.client.player_age))
@@ -98,17 +97,19 @@
 	var/be_spider = alert("Become a banana spider? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
 		return
-	src.sentience_act()
-	src.key = user.key
+	sentience_act()
+	key = user.key
 	density = TRUE
 
 /mob/living/simple_animal/banana_spider/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 40)
 
-
-/mob/living/simple_animal/banana_spider/Crossed(var/atom/movable/AM)
+/mob/living/simple_animal/banana_spider/Crossed(atom/movable/AM)		//no /var in proc headers
 	. = ..()
+	if(istype(AM, /obj/item/projectile) && projectile_density)		//forced projectile density
+		var/obj/item/projectile/P = AM
+		P.Bump(src)
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
@@ -147,4 +148,4 @@
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 20)

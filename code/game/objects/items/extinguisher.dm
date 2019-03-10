@@ -42,6 +42,18 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
+/obj/item/extinguisher/mini/family
+	name = "pocket fire extinguisher"
+	desc = "A old fashen pocket fire extinguisher that has been modified with a larger water tank, and a small high-power sprayer. It feels cool to the touch and has a small humming to it..."
+	icon_state = "miniFE0"
+	item_state = "miniFE"
+	throwforce = 1
+	w_class = WEIGHT_CLASS_SMALL
+	force = 2
+	max_water = 40
+	power = 7
+	cooling_power = 3
+
 /obj/item/extinguisher/Initialize()
 	. = ..()
 	create_reagents(max_water)
@@ -215,7 +227,7 @@
 	repetition++
 	addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection, repetition), timer_seconds)
 
-/obj/item/extinguisher/AltClick(mob/user)
+/obj/item/extinguisher/screwdriver_act(mob/user, obj/item/tool)
 	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	EmptyExtinguisher(user)
@@ -230,3 +242,4 @@
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+

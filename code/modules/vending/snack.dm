@@ -12,6 +12,9 @@
 		            /obj/item/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
+	premium = list(/obj/item/storage/box/donkpockets = 1,
+				   /obj/item/reagent_containers/food/snacks/poppypretzel = 3)
+				   
 	refill_canister = /obj/item/vending_refill/snack
 	var/chef_compartment_access = "28" //ACCESS_KITCHEN
 

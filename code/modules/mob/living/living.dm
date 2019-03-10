@@ -170,6 +170,9 @@
 		var/mob/living/L = M
 		if(L.has_trait(TRAIT_PUSHIMMUNE))
 			return 1
+	//If they're a human, and they're not in help intent, block pushing
+	if(ishuman(M) && (M.a_intent != INTENT_HELP))
+		return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
@@ -700,9 +703,13 @@
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
 					if(who.dropItemToGround(what))
+						if(!put_in_hands(what))
+							what.forceMove(drop_location())
 						log_combat(src, who, "stripped [what] off")
 			if(what == who.get_item_by_slot(where))
 				if(who.dropItemToGround(what))
+					if(!can_hold_items() || !put_in_hands(what))
+						what.forceMove(drop_location())
 					log_combat(src, who, "stripped [what] off")
 
 // The src mob is trying to place an item on someone
@@ -1063,10 +1070,12 @@
 		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
+	if(isnull(new_z) && audiovisual_redirect)
+		return
 	if (registered_z != new_z)
 		if (registered_z)
 			SSmobs.clients_by_zlevel[registered_z] -= src
-		if (client)
+		if (client || audiovisual_redirect)
 			if (new_z)
 				SSmobs.clients_by_zlevel[new_z] += src
 				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511

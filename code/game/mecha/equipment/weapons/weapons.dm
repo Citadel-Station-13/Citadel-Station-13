@@ -275,6 +275,18 @@
 	variance = 25
 	harmful = TRUE
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/seedscatter
+	name = "\improper Melon Seed \"Scattershot\""
+	desc = "A weapon for combat exosuits. Shoots a spread of pellets, shaped as seed."
+	icon_state = "mecha_scatter"
+	equip_cooldown = 30
+	projectile = /obj/item/projectile/bullet/seed
+	projectiles = 4
+	projectile_energy_cost = 55
+	projectiles_per_shot = 10
+	variance = 20
+	harmful = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."

@@ -88,6 +88,9 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
+	
+	if(combatmode)
+		msg += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]\n"
 
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)

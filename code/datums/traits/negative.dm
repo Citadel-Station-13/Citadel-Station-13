@@ -38,19 +38,33 @@
 	var/obj/item/heirloom_type
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
+			heirloom_type = /obj/item/paint/anycolor
 			heirloom_type = /obj/item/bikehorn/golden
 		if("Mime")
-			heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+			heirloom_type = /obj/item/paint/anycolor
+			heirloom_type = /obj/item/toy/dummy
+		if("Cook")
+			heirloom_type = /obj/item/kitchen/knife/scimitar
+		if("Medical Doctor")
+			heirloom_type = /obj/item/healthanalyzer/advanced
+		if("Station Engineer")
+			heirloom_type = /obj/item/wirecutters/brass
+		if("Atmospheric Technician")
+			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
-			heirloom_type = /obj/item/gavelhammer
+			heirloom_type = /obj/item/storage/briefcase/lawyer/family
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
-			heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			heirloom_type = /obj/item/clothing/accessory/medal/silver/valor
 		if("Scientist")
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
 			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+		if("Chaplain")
+			heirloom_type = /obj/item/camera/spooky/family
+		if("Captain")
+			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
 	if(!heirloom_type)
 		heirloom_type = pick(
 		/obj/item/toy/cards/deck,
@@ -143,6 +157,21 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/datum/quirk/lightless
+	name = "Light Sensitivity"
+	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
+	value = -1
+	gain_text = "<span class='danger'>The safty of light feels off...</span>"
+	lose_text = "<span class='notice'>Enlighing.</span>"
+
+/datum/quirk/lightless/on_process()
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums >= 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "brightlight", /datum/mood_event/brightlight)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "brightlight")
 
 /datum/quirk/nonviolent
 	name = "Pacifist"
@@ -257,14 +286,32 @@
 
 /datum/quirk/phobia
 	name = "Phobia"
-	desc = "You've had a traumatic past, that has scared you for life while dealing with your greatest fear."
+	desc = "You've had a traumatic past, one that has scarred you for life, and cripples you when dealing with your greatest fears."
 	value = -2 // It can hardstun you. You can be a job that your phobia targets...
-	gain_text = "<span class='danger'>You feel your fears manifest themselfs.</span>"
-	lose_text = "<span class='notice'>You feel your fears fade away.</span>"
-	medical_record_text = "Patient has an extreme or irrational fear of or aversion to something."
+	gain_text = "<span class='danger'>You begin to tremble as an immeasurable fear grips your mind.</span>"
+	lose_text = "<span class='notice'>Your confidence wipes away the fear that had been plaguing you.</span>"
+	medical_record_text = "Patient has an extreme or irrational fear and aversion to an undefined stimuli."
 	var/datum/brain_trauma/mild/phobia/phobia
-	
+
 /datum/quirk/phobia/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	phobia = new
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "Due to some accident, medical condition, or simply by choice, you are completely unable to speak."
+	value = -2 //HALP MAINTS
+	mob_trait = TRAIT_MUTE
+	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
+	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
+	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
+
+/datum/quirk/mute/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(TRAIT_MUTE, TRAUMA_RESILIENCE_SURGERY)
+
+/datum/quirk/mute/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
+		qdel(src)

@@ -1239,6 +1239,20 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
+/atom/proc/do_jiggle(targetangle = 45)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Turn(pick(-targetangle, targetangle))
+	animate(src, transform = M, time = 10, easing = ELASTIC_EASING)
+	animate(src, transform = OM, time = 10, easing = ELASTIC_EASING)
+
+/atom/proc/do_squish(squishx = 1.2, squishy = 0.6)
+	var/matrix/OM = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Scale(squishx, squishy)
+	animate(src, transform = M, time = 10, easing = BOUNCE_EASING)
+	animate(src, transform = OM, time = 10, easing = BOUNCE_EASING)
+
 /proc/weightclass2text(var/w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)

@@ -364,6 +364,12 @@
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
 
+//Donator item - fractious
+/datum/sprite_accessory/hair/over_eye_fr
+	name = "Over Eye (fract)"
+	icon_state = "hair_shortovereye_1f"
+	ckeys_allowed = list("fractious")
+
 /datum/sprite_accessory/hair/parted
 	name = "Parted"
 	icon_state = "hair_parted"
@@ -1516,18 +1522,3 @@
 /datum/sprite_accessory/moth_wings/snow
 	name = "Snow"
 	icon_state = "snow"
-
-//Lunasune
-/datum/sprite_accessory/mam_ears/lunasune
-	name = "lunasune"
-	icon_state = "lunasune"
-	hasinner = 1
-	extra = TRUE
-	extra_color_src = MUTCOLORS2
-	ckeys_allowed = list("invader4352")
-
-/datum/sprite_accessory/mam_tails/lunasune
-	name = "lunasune"
-	icon_state = "lunasune"
-	extra = TRUE
-	ckeys_allowed = list("invader4352")

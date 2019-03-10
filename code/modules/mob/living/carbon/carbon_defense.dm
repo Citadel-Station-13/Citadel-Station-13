@@ -87,21 +87,21 @@
 	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
-			if(prob(33))
+			var/basebloodychance = affecting.brute_dam + totitemdamage
+			if(prob(basebloodychance))
 				I.add_mob_blood(src)
-				var/turf/location = get_turf(src)
-				add_splatter_floor(location)
-				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+				bleed(totitemdamage)
+				if(totitemdamage >= 10 && get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 
 				if(affecting.body_zone == BODY_ZONE_HEAD)
-					if(wear_mask)
+					if(wear_mask && prob(basebloodychance))
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
-					if(wear_neck)
+					if(wear_neck && prob(basebloodychance))
 						wear_neck.add_mob_blood(src)
 						update_inv_neck()
-					if(head)
+					if(head && prob(basebloodychance))
 						head.add_mob_blood(src)
 						update_inv_head()
 

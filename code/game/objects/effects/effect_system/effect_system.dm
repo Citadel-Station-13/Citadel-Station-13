@@ -56,6 +56,8 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /datum/effect_system/proc/generate_effect()
 	if(holder)
 		location = get_turf(holder)
+	if(location.contents.len > 200)		//Bandaid to prevent server crash exploit
+		return
 	var/obj/effect/E = new effect_type(location)
 	total_effects++
 	var/direction

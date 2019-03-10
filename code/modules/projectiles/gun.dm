@@ -451,6 +451,8 @@
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
+	playsound('sound/weapons/dink.ogg', 30, 1)
+
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
@@ -477,8 +479,12 @@
 
 /datum/action/toggle_scope_zoom/IsAvailable()
 	. = ..()
-	if(!. && gun)
+	if(!gun)
+		return FALSE
+	if(!.)
 		gun.zoom(owner, FALSE)
+	if(!owner.get_held_index_of_item(gun))
+		return FALSE
 
 /datum/action/toggle_scope_zoom/Remove(mob/living/L)
 	gun.zoom(L, FALSE)

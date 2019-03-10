@@ -75,7 +75,11 @@
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.forceMove(drop_location())
 			L.emote("scream")
-			L.add_splatter_floor()
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.bleed(30)
+			else
+				L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.setDir(2)
 			buckle_mob(L, force=1)
