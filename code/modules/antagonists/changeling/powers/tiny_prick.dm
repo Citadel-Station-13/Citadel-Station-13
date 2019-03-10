@@ -68,7 +68,7 @@
 	sting_icon = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
-	loudness = 1
+	loudness = 3
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
