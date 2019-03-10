@@ -61,7 +61,7 @@
 	icon_state = "hypo"
 	volume = 35
 	ignore_flags = 1 // So they can heal their comrades.
-	list_reagents = list("oculine" = 5, "stimulants" = 15, "atropine" = 15)
+	list_reagents = list("inacusiate" = 5, "stimulants" = 15, "atropine" = 15)
 
 /obj/item/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
