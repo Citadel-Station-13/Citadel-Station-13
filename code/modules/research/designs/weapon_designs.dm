@@ -218,7 +218,7 @@
 //WT550 Mags
 
 /datum/design/mag_oldsmg
-	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
+	name = "WT-550 Semi-Auto Gun Magazine (4.6x30mm)"
 	desc = "A 20 round magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg"
 	build_type = PROTOLATHE
@@ -228,7 +228,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_oldsmg/ap_mag
-	name = "WT-550 Auto Gun Armour Piercing Magazine (4.6x30mm AP)"
+	name = "WT-550 Semi-Auto Gun Armour Piercing Magazine (4.6x30mm AP)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ap"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
@@ -236,7 +236,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/mag_oldsmg/ic_mag
-	name = "WT-550 Auto Gun Incendiary Magazine (4.6x30mm IC)"
+	name = "WT-550 Semi-Auto Gun Incendiary Magazine (4.6x30mm IC)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ic"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
@@ -265,7 +265,7 @@
 
 /datum/design/suppressor
 	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	desc = "A reverse-engineered universal suppressor that fits on most some arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
