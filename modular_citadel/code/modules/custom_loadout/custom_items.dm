@@ -450,9 +450,9 @@
 	name = "Singing Telegram Suit"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	desc = "'Hello, I am, your singing, telegram!'
-            /A red button up suit that has a the insignia of a out dated means of relaying information to people
-            /Someone has shot the massager it seems..."
+	desc = "'Hello, I am, your singing, telegram!'/
+	A red button up suit that has a the insignia of a out dated means of relaying information to people/
+	Someone has shot the massager it seems..."
 	item_state = "telegram"
 	icon_state = "telegram"
 	armor = list("melee" = 0, "bullet" = -500, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0) //Dont shoot the messager!
