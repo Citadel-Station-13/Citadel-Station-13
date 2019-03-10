@@ -1,4 +1,4 @@
-#define INITIAL_CRYSTALS 5 // initial telecrystals in the boss' uplink
+#define INITIAL_CRYSTALS 24 // initial telecrystals in the boss' uplink
 
 // Syndicate mutineer agents. They're agents selected by the Syndicate to take control of stations when assault teams like nuclear operatives cannot be sent.
 // They sent teams made of 3 agents, of which only one is woke up at round start. The others are, lore-wise, sleeping agents and must be implanted with the converter to wake up.
