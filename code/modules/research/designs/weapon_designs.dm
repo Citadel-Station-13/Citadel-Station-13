@@ -265,7 +265,7 @@
 
 /datum/design/suppressor
 	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most some arms with threaded barrels."
+	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
 	id = "suppressor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
