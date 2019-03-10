@@ -344,3 +344,17 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/ian_costume
 	ckeywhitelist = list("cathodetherobot")
+
+/datum/gear/telegramsuit
+	name = "Singing Telegram Suit"
+	category = SLOT_IN_BACKPACK
+	cost = 0
+	path = /obj/item/clothing/head/telegramhat
+	ckeywhitelist = list("TrilbySpaseClone")
+
+/datum/gear/telegramhat
+	name = "Corgi Suit"
+	category = SLOT_IN_BACKPACK
+	cost = 0
+	path = /obj/item/clothing/under/telegramhat
+	ckeywhitelist = list("TrilbySpaseClone")
