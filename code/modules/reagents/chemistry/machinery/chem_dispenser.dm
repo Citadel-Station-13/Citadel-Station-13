@@ -69,7 +69,7 @@
 		"sulfonal",
 		"frostoil",
 		"carpotoxin",
-		"plasma"
+		"histamine"
 	)
 
 	var/list/saved_recipes = list()
