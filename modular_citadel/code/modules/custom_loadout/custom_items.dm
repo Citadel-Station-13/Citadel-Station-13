@@ -319,7 +319,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 
-
 /obj/item/storage/belt/sabre/darksabre
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
@@ -350,7 +349,6 @@
 	dog_fashion = /datum/dog_fashion/back
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
@@ -402,7 +400,6 @@
 	icon_state = "flagcape"
 	item_state = "flagcape"
 
-
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
@@ -419,4 +416,26 @@
 	desc = "Heavenly robes of the kitsune Luna Pumpkin,you can feel radiance coming from them."
 	item_state = "Divine_robes"
 	icon_state = "Divine_robes"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/telegramhat
+	name = "Singing Telegram Hat"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	desc = "A red fez like hat, has a yellow lining on the side."
+	item_state = "telegramhat"
+	icon_state = "telegramhat"
+	armor = list("melee" = 0, "bullet" = -500, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0) //Dont shoot the messager!
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/under/telegramhat
+	name = "Singing Telegram Suit"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	desc = "'Hello, I am, your singing, telegram!'
+            /A red button up suit that has a the insignia of a out dated means of relaying information to people
+            /Someone has shot the massager it seems..."
+	item_state = "telegram"
+	icon_state = "telegram"
+	armor = list("melee" = 0, "bullet" = -500, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0) //Dont shoot the messager!
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
