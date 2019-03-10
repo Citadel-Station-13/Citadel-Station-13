@@ -456,7 +456,7 @@
 	obj_flags = 0
 	fire_delay = 40
 	weapon_weight = WEAPON_HEAVY
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst

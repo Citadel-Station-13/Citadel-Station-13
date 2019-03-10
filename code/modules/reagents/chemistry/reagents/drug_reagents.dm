@@ -167,10 +167,10 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
 
 /datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
@@ -180,9 +180,12 @@
 	M.AdjustStun(-40, 0)
 	M.AdjustKnockdown(-40, 0)
 	M.AdjustUnconscious(-40, 0)
-	M.adjustStaminaLoss(-2, 0)
+	M.adjustStaminaLoss(-7.5 * REM, 0)
 	M.Jitter(2)
 	M.adjustBrainLoss(rand(1,4))
+	if(prob(30))
+		M.confused = max(1, M.confused)
+	M.heal_overall_damage(2, 2)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()

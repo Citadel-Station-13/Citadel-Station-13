@@ -84,7 +84,7 @@
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
 	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
-	cost = 1500 
+	cost = 1500
 	contains = list(/obj/item/construction/rcd,
 					/obj/item/construction/rcd)
 	crate_name = "emergency rcds"
@@ -93,7 +93,7 @@
 /datum/supply_pack/emergency/soft_suit
 	name = "Emergency Space Suit "
 	desc = "Is there bombs going off left and right? Is there meteors shooting around the station? Well we have two fragile space suit for emergencys as well as air and masks."
-	cost = 1000 
+	cost = 1000
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
@@ -268,7 +268,7 @@
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
 	desc = "Viro let out a death plague Mk II again? Someone didnt wash there hands? Old plagues born anew? Well this crate is for you! Hope you cure it before it brakes out of the station... This crate needs medical access to open and has two bio suits, a box of needles and beakers, five spaceacillin needles, and a medibot."
-	cost = 3000 
+	cost = 3000
 	access = ACCESS_MEDICAL
 	contains = list(/mob/living/simple_animal/bot/medbot,
 					/obj/item/clothing/head/bio_hood,
@@ -721,7 +721,7 @@
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
 	desc = "A industrial RCD in case the station has gone through more then one meteor storm and the CE needs to bring out the somthing a bit more reliable. Dose not contain spare ammo for the industrial RCD or any other RCD modles."
-	cost = 4500	
+	cost = 4500
 	access = ACCESS_CE
 	contains = list(/obj/item/construction/rcd/industrial)
 	crate_name = "industrial rcd"
@@ -1236,6 +1236,24 @@
 					/obj/item/storage/firstaid/regular)
 	crate_name = "first aid kit crate"
 
+/datum/supply_pack/medical/iv_drip
+	name = "IV Drip Crate"
+	desc = "Contains a single IV drip stand for intravenous delivery."
+	cost = 700
+	contains = list(/obj/machinery/iv_drip)
+	crate_name = "iv drip crate"
+
+/datum/supply_pack/science/adv_surgery_tools
+	name = "Med-Co Advanced surgery tools"
+	desc = "A full set of Med-Co advanced surgery tools, this crate also comes with a spay of synth flesh as well as a can of . Requires Surgery access to open."
+	cost = 5000
+	access = ACCESS_SURGERY
+	contains = list(/obj/item/storage/belt/medical/surgery_belt_adv,
+					/obj/item/reagent_containers/medspray/synthflesh,
+					/obj/item/reagent_containers/medspray/sterilizine)
+	crate_name = "medco newest surgery tools"
+	crate_type = /obj/structure/closet/crate/medical
+
 /datum/supply_pack/medical/medicalhardsuit
 	name = "Medical Hardsuit"
 	desc = "Got people being spaced left and right? Hole in the same room as the dead body of Hos or cap? Fear not, now you can buy one medical hardsuit with a mask and air tank to save your fellow crewmembers."
@@ -1244,13 +1262,6 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/medical)
 	crate_name = "medical hardsuit"
-
-/datum/supply_pack/medical/iv_drip
-	name = "IV Drip Crate"
-	desc = "Contains a single IV drip for administering blood to patients."
-	cost = 700
-	contains = list(/obj/machinery/iv_drip)
-	crate_name = "iv drip crate"
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
@@ -1479,6 +1490,19 @@
 /datum/supply_pack/service
 	group = "Service"
 
+
+/datum/supply_pack/service/advlighting
+	name = "Advanced Lighting crate"
+	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
+	cost = 2500 //Fair
+	contains = list(/obj/item/construction/rld,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp,
+					/obj/item/flashlight/lamp/green,
+					/obj/item/storage/box/lights/mixed)
+	crate_name = "advanced lighting crate"
+	crate_type = /obj/structure/closet/crate/secure
+
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
 	desc = "Sold everything that wasn't bolted down? You can get right back to work with this crate containing stamps, an export scanner, destination tagger, hand labeler and some package wrapping."
@@ -1537,17 +1561,19 @@
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/service/advlighting
-	name = "Advanced Lighting crate"
-	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
-	cost = 2500 //Fair
-	contains = list(/obj/item/construction/rld,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp,
-					/obj/item/flashlight/lamp/green,
-					/obj/item/storage/box/lights/mixed)
-	crate_name = "advanced lighting crate"
-	crate_type = /obj/structure/closet/crate/secure
+/datum/supply_pack/service/janitor/janpremium
+	name = "Janitor Premium Supplies"
+	desc = "Do to the union for better supplies, we have desided to make a deal for you, In this crate you can get a brand new chem, Drying Angent this stuff is the work of slimes or magic! This crate also contains a rag to test out the Drying Angent magic, three wet floor signs, and some spare bottles of ammonia."
+	cost = 3000
+	access = ACCESS_JANITOR
+	contains = list(/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/caution,
+					/obj/item/reagent_containers/glass/rag,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/glass/bottle/ammonia,
+					/obj/item/reagent_containers/spray/drying_agent)
+	crate_name = "janitor backpack crate"
 
 /datum/supply_pack/service/mule
 	name = "MULEbot Crate"
@@ -1698,11 +1724,44 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/candy
+	name = "Candy Crate"
+	desc = "For people that have a insatiable sweet tooth! Has ten candies to be eaten up.."
+	cost = 2500
+	var/num_contained = 10 //number of items picked to be contained in a randomised crate
+	contains = list(/obj/item/reagent_containers/food/snacks/candy,
+					/obj/item/reagent_containers/food/snacks/lollipop,
+					/obj/item/reagent_containers/food/snacks/gumball,
+					/obj/item/reagent_containers/food/snacks/chocolateegg,
+					/obj/item/reagent_containers/food/snacks/donut,
+					/obj/item/reagent_containers/food/snacks/cookie,
+					/obj/item/reagent_containers/food/snacks/sugarcookie,
+					/obj/item/reagent_containers/food/snacks/chococornet,
+					/obj/item/reagent_containers/food/snacks/mint,
+					/obj/item/reagent_containers/food/snacks/spiderlollipop,
+					/obj/item/reagent_containers/food/snacks/chococoin,
+					/obj/item/reagent_containers/food/snacks/fudgedice,
+					/obj/item/reagent_containers/food/snacks/chocoorange,
+					/obj/item/reagent_containers/food/snacks/honeybar,
+					/obj/item/reagent_containers/food/snacks/tinychocolate,
+					/obj/item/reagent_containers/food/snacks/spacetwinkie,
+					/obj/item/reagent_containers/food/snacks/syndicake,
+					/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+					/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
+					/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
+					/obj/item/reagent_containers/food/snacks/candy_corn,
+					/obj/item/reagent_containers/food/snacks/candiedapple,
+					/obj/item/reagent_containers/food/snacks/chocolatebar,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/storage/fancy/heart_box,
+					/obj/item/storage/fancy/donut_box)
+	crate_name = "candy crate"
+
 /datum/supply_pack/organic/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
 	desc = "Need to slice and dice away those ''Tomatos'' well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
 	cost = 10000
-	contraband = TRUE 
+	contraband = TRUE
 	contains = list(/obj/item/sharpener,
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/fork,
@@ -1865,6 +1924,27 @@
 					/obj/item/seeds/sugarcane)
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
+
+/datum/supply_pack/organic/vday
+	name = "Surplus Valentine Crate"
+	desc = "Turns out we got warehouses of this love-y dove-y crap. Were sending out small barged buddle of Valentine gear. This crate has two boxes of chocolate, three poppy flowers, five candy hearts, and three cards."
+	cost = 3000
+	contraband = TRUE
+	contains = list(/obj/item/storage/fancy/heart_box,
+					/obj/item/storage/fancy/heart_box,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/grown/poppy,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/reagent_containers/food/snacks/candyheart,
+					/obj/item/valentine,
+					/obj/item/valentine,
+					/obj/item/valentine)
+	crate_name = "valentine crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
@@ -2218,8 +2298,7 @@
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
-	cost = 5000 // or play the arcade machines ya lazy bum
-	// TODID make this actually just use the arcade machine loot list
+	cost = 1500 // or play the arcade machines ya lazy bum
 	num_contained = 5
 	contains = list(/obj/item/storage/box/snappops,
 					/obj/item/toy/talking/AI,
@@ -2271,6 +2350,19 @@
 					/obj/item/toy/eightball,
 					/obj/item/vending_refill/donksoft)
 	crate_name = "toy crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/randomised/plush
+	name = "Plush Crate"
+	desc = "Plush tide station wide. Contains 5 random plushies for you to love. Warranty void if your love violates the terms of use."
+	cost = 1500 // or play the arcade machines ya lazy bum
+	num_contained = 5
+	contains = list(/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random,
+					/obj/item/toy/plush/random) //I'm lazy
+	crate_name = "plushie crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/wizard
@@ -2516,13 +2608,34 @@
 	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/misc/lewdkeg
-	name = "Lewd Deluxe Keg" 
+	name = "Lewd Deluxe Keg"
 	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
 	cost = 7000 //It can be a weapon
 	contraband = TRUE
 	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
+
+/datum/supply_pack/misc/paper_work
+	name = "Freelance Paper work"
+	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
+	cost = 400 // Net of 0 credits
+	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain)
+	crate_name = "Paperwork"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

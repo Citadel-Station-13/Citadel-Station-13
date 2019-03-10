@@ -37,6 +37,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	hit_reaction_chance = 50 // Only on the chest yet blocks all attacks?
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
@@ -64,8 +65,9 @@
 /obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
-	var/tele_range = 6
-	var/rad_amount= 15
+	var/tele_range = 8
+	var/rad_amount = 60
+	var/rad_amount_before = 120
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -79,6 +81,7 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, 1)
 		var/list/turfs = new/list()
+		var/turf/old = get_turf(src)
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
 				continue
@@ -93,7 +96,8 @@
 		if(!isturf(picked))
 			return
 		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		radiation_pulse(old, rad_amount_before)
+		radiation_pulse(src, rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 	return 0
@@ -157,6 +161,8 @@
 	var/tesla_power = 25000
 	var/tesla_range = 20
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
+	var/legacy = FALSE
+	var/legacy_dmg = 30
 
 /obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()
@@ -179,7 +185,15 @@
 			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</span>")
 			return
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out arcs of lightning!</span>")
-		tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		if(!legacy)
+			tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
+		else
+			for(var/mob/living/M in view(7, owner))
+				if(M == owner)
+					continue
+				owner.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
+				M.adjustFireLoss(legacy_dmg)
+				playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 

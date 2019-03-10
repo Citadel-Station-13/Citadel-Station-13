@@ -133,6 +133,18 @@
 	required_reagents = list("slime_toxin" = 1, "mutagen" = 1)
 
 
+/datum/chemical_reaction/fermis_plush
+	name = "Fermis plush"
+	id = "fermis_plush"
+	required_reagents = list("sugar" = 10, "blood" = 10, "stable_plasma" = 10)
+	mob_react = FALSE
+	required_temp = 400
+
+/datum/chemical_reaction/fermis_plush/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i+=10)
+		new /obj/item/toy/plush/catgirl/fermis(location)
+
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
 /datum/chemical_reaction/virus_food
@@ -592,3 +604,24 @@
 	id = "pax"
 	results = list("pax" = 3)
 	required_reagents  = list("mindbreaker" = 1, "synaptizine" = 1, "water" = 1)
+
+/datum/chemical_reaction/cat
+	name = "felined mutation toxic"
+	id = "cats"
+	results = list("felinidmutationtoxin" = 1)
+	required_reagents  = list("mindbreaker" = 1, "ammonia" = 1, "water" = 1, "aphro" = 10, "stablemutationtoxin" = 1) // Maybe aphro+ if it becomes a shitty meme
+	required_temp = 450
+
+/datum/chemical_reaction/moff
+	name = "moth mutation toxic"
+	id = "moffs"
+	results = list("mothmutationtoxin" = 1)
+	required_reagents  = list("liquid_dark_matter" = 2, "ammonia" = 5, "lithium" = 1, "stablemutationtoxin" = 1)
+	required_temp = 320
+
+/datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
+	name = "shadow muatatuin toxic"
+	id = "notlight"
+	results = list("shadowmutationtoxin" = 1)
+	required_reagents  = list("liquid_dark_matter" = 5, "synaptizine" = 10, "oculine" = 10, "stablemutationtoxin" = 1)
+	required_temp = 600

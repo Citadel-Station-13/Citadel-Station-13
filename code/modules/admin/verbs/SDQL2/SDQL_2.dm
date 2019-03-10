@@ -714,7 +714,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			SDQL_print(x, text_list)
 			if (!isnull(x) && !isnum(x) && L[x] != null)
 				text_list += " -> "
-				SDQL_print(L[L[x]])
+				SDQL_print(L[L[x]], text_list)
 		text_list += "]<br>"
 	else
 		if(isnull(object))

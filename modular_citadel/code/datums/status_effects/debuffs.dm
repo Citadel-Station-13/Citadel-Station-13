@@ -1,5 +1,8 @@
 /datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, updating_canmove, override_duration, override_stam)
 	if(iscarbon(new_owner) && (isnum(set_duration) || isnum(override_duration)))
+		if(istype(new_owner.buckled, /obj/vehicle/ridden))
+			var/obj/buckl = new_owner.buckled
+			buckl.unbuckle_mob(new_owner)
 		new_owner.resting = TRUE
 		new_owner.adjustStaminaLoss(isnull(override_stam)? set_duration*0.25 : override_stam)
 		if(isnull(override_duration) && (set_duration > 80))

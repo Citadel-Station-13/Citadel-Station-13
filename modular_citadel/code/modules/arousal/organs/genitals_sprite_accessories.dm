@@ -100,6 +100,7 @@
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
 	name = "Pair"
+	alt_aroused = TRUE
 
 
 //OVIPOSITORS BE HERE
