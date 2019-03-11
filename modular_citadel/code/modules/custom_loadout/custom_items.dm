@@ -448,6 +448,7 @@
 /obj/item/clothing/under/telegramhat
 	name = "Singing Telegram Suit"
 	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
 	desc = "'Hello, I am, your singing, telegram!' \
 				A red button up suit that has a the insignia of a out dated means of relaying information to people \
 				Someone has shot the massager it seems..."
