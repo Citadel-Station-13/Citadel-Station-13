@@ -240,7 +240,7 @@
 	user << browse(dat, "window=port_gen")
 	onclose(user, "port_gen")
 
-/obj/machinery/power/port_gen/pacman/Topic(href, href_list)
+/obj/machinery/power/port_gen/pacman/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
