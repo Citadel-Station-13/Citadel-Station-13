@@ -438,8 +438,7 @@
 
 /obj/item/clothing/head/telegramhat
 	name = "Singing Telegram Hat"
-	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/cit_hats.dmi'
 	desc = "A red fez like hat, has a yellow lining on the side."
 	item_state = "telegramhat"
 	icon_state = "telegramhat"
@@ -448,8 +447,7 @@
 
 /obj/item/clothing/under/telegramhat
 	name = "Singing Telegram Suit"
-	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
 	desc = "'Hello, I am, your singing, telegram!' \
 				A red button up suit that has a the insignia of a out dated means of relaying information to people \
 				Someone has shot the massager it seems..."
