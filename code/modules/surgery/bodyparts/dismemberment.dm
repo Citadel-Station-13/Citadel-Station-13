@@ -26,9 +26,7 @@
 		burn()
 		return 1
 	add_mob_blood(C)
-	var/turf/location = C.loc
-	if(istype(location))
-		C.add_splatter_floor(location)
+	C.bleed(40)
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -54,7 +52,7 @@
 	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
-	C.add_splatter_floor(T)
+	C.bleed(50)
 	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X

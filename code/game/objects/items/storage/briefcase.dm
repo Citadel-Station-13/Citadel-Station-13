@@ -30,6 +30,30 @@
 /obj/item/storage/briefcase/lawyer
 	folder_path = /obj/item/folder/blue
 
+/obj/item/storage/briefcase/lawyer/family 
+	name = "battered  briefcase"
+	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. The corners are modified with metal trim adding in weight!"
+
+/obj/item/storage/briefcase/lawyer/family/PopulateContents()
+	new /obj/item/stamp/law(src)
+	new /obj/item/pen/fountain(src)
+	new /obj/item/paper_bin(src)
+	new /obj/item/storage/box/evidence(src)
+	new /obj/item/storage/box/lawyer(src)
+
+/obj/item/storage/box/lawyer
+	name = "Box of lawyer tools"
+	desc = "A custom made box, full of items used by a Lawyer, all packed into one box!"
+
+/obj/item/storage/box/lawyer/PopulateContents()
+		new /obj/item/clothing/gloves/color/white(src)
+		new /obj/item/folder/white(src)
+		new /obj/item/clothing/glasses/regular(src)
+		new /obj/item/folder/red(src)
+		new /obj/item/gavelhammer(src)
+		new /obj/item/stack/sheet/cloth(src)
+		new /obj/item/reagent_containers/glass/beaker/waterbottle(src)
+
 /obj/item/storage/briefcase/lawyer/PopulateContents()
 	new /obj/item/stamp/law(src)
 	..()

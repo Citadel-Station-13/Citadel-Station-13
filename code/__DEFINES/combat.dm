@@ -97,6 +97,20 @@
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 
+//Shove knockdown lengths (deciseconds)
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+//Shove slowdown
+#define SHOVE_SLOWDOWN_ID "shove_slowdown"
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Shove disarming item list
+GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
+	/obj/item/gun)))
+
+
 //Combat object defines
 
 //Embedded objects
@@ -118,6 +132,10 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//E-gun self-recharge values
+#define EGUN_NO_SELFCHARGE 0
+#define EGUN_SELFCHARGE 1
+#define EGUN_SELFCHARGE_BORG 2
 
 //Object/Item sharpness
 #define IS_BLUNT			0

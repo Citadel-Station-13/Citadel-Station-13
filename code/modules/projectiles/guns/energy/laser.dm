@@ -36,7 +36,7 @@
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	ammo_x_offset = 3
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/gun/energy/laser/captain/scattershot
@@ -47,12 +47,18 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/gun/energy/laser/cyborg
-	can_charge = 0
+	can_charge = FALSE
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
-	use_cyborg_cell = 1
+	selfcharge = EGUN_SELFCHARGE_BORG
+	cell_type = /obj/item/stock_parts/cell/secborg
+	charge_delay = 3
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return
+
+/obj/item/gun/energy/laser/cyborg/mean
+	use_cyborg_cell = TRUE
+	selfcharge = EGUN_NO_SELFCHARGE
 
 /obj/item/gun/energy/laser/scatter
 	name = "scatter laser gun"
@@ -120,7 +126,7 @@
 	clumsy_check = FALSE
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -134,7 +140,7 @@
 	clumsy_check = FALSE
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

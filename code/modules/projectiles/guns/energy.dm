@@ -15,10 +15,10 @@
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
 	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
-	var/selfcharge = 0
+	var/selfcharge = EGUN_NO_SELFCHARGE // EGUN_SELFCHARGE if true, EGUN_SELFCHARGE_BORG drains the cyborg's cell to recharge its own
 	var/charge_tick = 0
 	var/charge_delay = 4
-	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/use_cyborg_cell = FALSE //whether the gun drains the cyborg user's cell instead, not to be confused with EGUN_SELFCHARGE_BORG
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
@@ -62,11 +62,20 @@
 	return ..()
 
 /obj/item/gun/energy/process()
-	if(selfcharge && cell && cell.percent() < 100)
+	if(selfcharge && cell?.charge < cell.maxcharge)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
+		if(selfcharge == EGUN_SELFCHARGE_BORG)
+			var/atom/owner = loc
+			if(istype(owner, /obj/item/robot_module))
+				owner = owner.loc
+			if(!iscyborg(owner))
+				return
+			var/mob/living/silicon/robot/R = owner
+			if(!R.cell?.use(100))
+				return
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
@@ -175,6 +184,7 @@
 		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
 			playsound(loc, fire_sound, 50, 1, -1)
+			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_icon()

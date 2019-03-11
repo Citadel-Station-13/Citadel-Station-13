@@ -16,13 +16,20 @@
 	update_icon()
 
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
-	if(selfcharge)
+	if(selfcharge && cell?.charge < cell.maxcharge)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
-		if(!cell)
-			return
+		if(selfcharge == EGUN_SELFCHARGE_BORG)
+			var/atom/owner = loc
+			if(istype(owner, /obj/item/robot_module))
+				owner = owner.loc
+			if(!iscyborg(owner))
+				return
+			var/mob/living/silicon/robot/R = owner
+			if(!R.cell?.use(100))
+				return
 		cell.give(100)
 	update_icon()
 

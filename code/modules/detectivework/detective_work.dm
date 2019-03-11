@@ -93,6 +93,15 @@
 	else if(length(blood_dna))
 		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		bloody_hands = rand(2, 4)
+	if(head)
+		head.add_blood_DNA(blood_dna)
+		update_inv_head()
+	else if(wear_mask)
+		wear_mask.add_blood_DNA(blood_dna)
+		update_inv_wear_mask()
+	if(wear_neck)
+		wear_neck.add_blood_DNA(blood_dna)
+		update_inv_neck()
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE
 

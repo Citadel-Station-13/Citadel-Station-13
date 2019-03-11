@@ -26,7 +26,30 @@
 /turf/open/space/transit/east
 	dir = EAST
 
-/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
+/turf/open/space/transit/border
+	opacity = TRUE
+
+/turf/open/space/transit/border/south
+	dir = SOUTH
+
+/turf/open/space/transit/border/north
+	dir = NORTH
+
+/turf/open/space/transit/border/west
+	dir = WEST
+
+/turf/open/space/transit/border/east
+	dir = EAST
+
+/turf/open/space/transit/centcom
+	dir = SOUTH
+
+/turf/open/space/transit/centcom/Entered(atom/movable/AM, atom/OldLoc)
+	..()
+	if(!locate(/obj/structure/lattice) in src)
+		throw_atom(AM)
+
+/turf/open/space/transit/border/Entered(atom/movable/AM, atom/OldLoc)
 	..()
 	if(!locate(/obj/structure/lattice) in src)
 		throw_atom(AM)
@@ -66,6 +89,8 @@
 
 	var/turf/T = locate(_x, _y, _z)
 	AM.forceMove(T)
+	var/turf/throwturf = get_ranged_target_turf(T, dir, 1)
+	AM.safe_throw_at(throwturf, 1, 4, null, FALSE)
 
 
 /turf/open/space/transit/CanBuildHere()

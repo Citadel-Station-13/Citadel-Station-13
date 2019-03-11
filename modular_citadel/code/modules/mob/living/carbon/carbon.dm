@@ -29,7 +29,7 @@
 		for(var/obj/screen/combattoggle/selector in hud_used.static_inventory)
 			selector.rebasetointerbay(src)
 	if(world.time >= combatmessagecooldown && combatmode)
-		visible_message("<span class='warning'>[src] [resting ? "tenses up" : "drops into a combative stance"].</span>")
+		visible_message("<span class='warning'>[src] [resting ? "tenses up" : (prob(95)? "drops into a combative stance" : (prob(95)? "poses aggressively" : "asserts dominance with their pose"))].</span>")
 	combatmessagecooldown = 10 SECONDS + world.time //This is set 100% of the time to make sure squeezing regen out of process cycles doesn't result in the combat mode message getting spammed
 	SEND_SIGNAL(src, COMSIG_COMBAT_TOGGLED, src, combatmode)
 	return TRUE
