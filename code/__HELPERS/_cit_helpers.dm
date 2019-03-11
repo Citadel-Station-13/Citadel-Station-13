@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(mam_ears_list)
 GLOBAL_LIST_EMPTY(mam_tails_list)
 GLOBAL_LIST_EMPTY(mam_tails_animated_list)
 GLOBAL_LIST_EMPTY(taur_list)
+GLOBAL_LIST_EMPTY(mam_snouts_list)
 
 	//Exotic Species
 GLOBAL_LIST_EMPTY(exotic_tails_list)
@@ -242,7 +243,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 			if("Wolf")
 				hdna.features["mam_tail"] = "Wolf"
 				hdna.features["mam_ears"] = "Wolf"
-				hdna.features["snout"] = "Wolf"
+				hdna.features["mam_snouts"] = "Wolf"
 				hdna.features["mam_body_markings"] = "Wolf"
 				hdna.features["mcolor"] = "555"
 				hdna.features["mcolor2"] = "999"
@@ -250,7 +251,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 			if("Fox")
 				hdna.features["mam_tail"] = "Fox"
 				hdna.features["mam_ears"] = "Fox"
-				hdna.features["snout"] = "Fox, Long"
+				hdna.features["mam_snouts"] = "Fox, Long"
 				hdna.features["mam_body_markings"] = "Fox"
 				hdna.features["mcolor"] = "f60"
 				hdna.features["mcolor2"] = "fff"
@@ -258,6 +259,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 			if("Fennec")
 				hdna.features["mam_tail"] = "Fennec"
 				hdna.features["mam_ears"] = "Fennec"
-				hdna.features["snout"] = "Fox, Short"
+				hdna.features["mam_snouts"] = "Fox, Short"
 				hdna.features["mam_body_markings"] = "Fox"
 		H.regenerate_icons()

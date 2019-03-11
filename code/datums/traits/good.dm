@@ -58,6 +58,14 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 
+/datum/quirk/quick_step
+	name = "Quick Step"
+	desc = "You walk with determined strides, and out-pace most people when walking."
+	value = 2
+	mob_trait = TRAIT_SPEEDY_STEP
+	gain_text = "<span class='notice'>You feel determined. No time to lose.</span>"
+	lose_text = "<span class='danger'>You feel less determined. What's the rush, man?</span>"
+
 /datum/quirk/musician
 	name = "Musician"
 	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."

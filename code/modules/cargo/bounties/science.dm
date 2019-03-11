@@ -64,3 +64,55 @@
 	description = "With the price of rechargers on the rise, upper management is interested in purchasing guns that are self-powered. If you ship one, they'll pay."
 	reward = 10000
 	wanted_types = list(/obj/item/gun/energy/e_gun/nuclear)
+
+/datum/bounty/item/science/bscells
+	name = "Bluespace Power Cells"
+	description = "Someone in upper management keeps using the excuse that his tablet battery dies when he's in the middle of work. This will be the last time he doesn't have his presentation, I swear to -"
+	reward = 7000
+	required_count = 10 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/cell/bluespace)
+
+/datum/bounty/item/science/t4manip
+	name = "Femto-Manipulators"
+	description = "One of our Chief Engineers has OCD. Can you send us some femto-manipulators so he stops complaining that his ID doesn't fit perfectly in the PDA slot?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/manipulator/femto)
+
+/datum/bounty/item/science/t4bins
+	name = "Bluespace Matter Bins"
+	description = "The local Janitorial union has gone on strike. Can you send us some bluespace bins so we don't have to take out our own trash?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/matter_bin/bluespace)
+
+/datum/bounty/item/science/t4capacitor
+	name = "Quadratic Capacitor"
+	description = "One of our linguists doesn't understand why they're called Quadratic capacitors. Can you give him a few so he leaves us alone about it?"
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/capacitor/quadratic)
+
+/datum/bounty/item/science/t4triphasic
+	name = "Triphasic Scanning Module"
+	description = "One of our scientists got into the liberty caps and is demanding new scanning modules so he can talk to ghosts. At this point we just want him out of our office."
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/scanning_module/triphasic)
+
+/datum/bounty/item/science/t4microlaser
+	name = "Quad-Ultra Micro-Laser"
+	description = "The cats on Vega 9 are breeding out of control. We need something to corral them into one area so we can saturation bomb it."
+	reward = 7000
+	required_count = 20 //Easy to make
+	wanted_types = list(/obj/item/stock_parts/micro_laser/quadultra)
+
+/datum/bounty/item/science/fakecrystals
+	name = "synthetic bluespace crystals"
+	description = "Don't, uh, tell anyone, but one of our BSA arrays might have had a little... accident. Send us some bluespace crystals so we can recalibrate it before anyone realizes. The whole set uses artificial bluespace crystals, so we need and not any other type of bluespace crystals..."
+	reward = 10000
+	required_count = 5
+	wanted_types = list(/obj/item/stack/ore/bluespace_crystal/artificial)
+	exclude_types = list(/obj/item/stack/ore/bluespace_crystal,
+						 /obj/item/stack/sheet/bluespace_crystal,
+						 /obj/item/stack/ore/bluespace_crystal/refined)

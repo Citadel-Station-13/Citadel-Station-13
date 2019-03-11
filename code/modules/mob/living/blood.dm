@@ -198,6 +198,11 @@
 		for(var/V in roundstart_quirks)
 			var/datum/quirk/T = V
 			blood_data["quirks"] += T.type
+		blood_data["changeling_loudness"] = 0
+		if(mind)
+			var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
+			if(istype(ling))
+				blood_data["changeling_loudness"] = ling.loudfactor
 		return blood_data
 
 //get the id of the substance this mob use as blood.

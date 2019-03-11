@@ -153,8 +153,14 @@
 				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/gun/energy))
 			var/obj/item/gun/energy/EG = I
-			if(!EG.chambered)
-				EG.recharge_newshot() //try to reload a new shot.
+			if(EG.cell?.charge < EG.cell.maxcharge)
+				var/obj/item/ammo_casing/energy/S = EG.ammo_type[EG.select]
+				EG.cell.give(S.e_cost * coeff)
+				if(!EG.chambered)
+					EG.recharge_newshot(TRUE)
+				EG.update_icon()
+			else
+				EG.charge_tick = 0
 
 	R.toner = R.tonermax
 
@@ -278,7 +284,8 @@
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
-		/obj/item/borg/lollipop)
+		/obj/item/borg/lollipop,
+		/obj/item/sensor_device)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
@@ -330,7 +337,8 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg)
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/pinpointer/crew)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -342,18 +350,7 @@
 /obj/item/robot_module/security/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
+	For Crewsimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
@@ -489,28 +486,6 @@
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
 		O.reagents.add_reagent("enzyme", 2 * coeff)
-
-/obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
-	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Waitress", "Butler", "Tophat", "Kent", "Bro")
-	if(!borg_icon)
-		return FALSE
-	switch(borg_icon)
-		if("Waitress")
-			cyborg_base_icon = "service_f"
-		if("Butler")
-			cyborg_base_icon = "service_m"
-		if("Bro")
-			cyborg_base_icon = "brobot"
-		if("Kent")
-			cyborg_base_icon = "kent"
-			special_light_key = "medical"
-			hat_offset = 3
-		if("Tophat")
-			cyborg_base_icon = "tophat"
-			special_light_key = null
-			hat_offset = INFINITY //He is already wearing a hat
-	return ..()
 
 /obj/item/robot_module/miner
 	name = "Miner"

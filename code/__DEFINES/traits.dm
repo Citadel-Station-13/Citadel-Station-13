@@ -57,6 +57,7 @@
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
 #define TRAIT_NIGHT_VISION		"night_vision"
 #define TRAIT_LIGHT_STEP		"light_step"
+#define TRAIT_SPEEDY_STEP		"speedy_step"
 #define TRAIT_SPIRITUAL			"spiritual"
 #define TRAIT_VORACIOUS			"voracious"
 #define TRAIT_SELF_AWARE		"self_aware"

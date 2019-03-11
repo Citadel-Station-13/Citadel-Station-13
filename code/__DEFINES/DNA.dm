@@ -97,6 +97,7 @@
 #define NO_DNA_COPY     14
 #define DRINKSBLOOD		15
 #define NOEYES			16
+#define MARKINGS		17
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

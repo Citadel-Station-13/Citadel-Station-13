@@ -227,7 +227,7 @@
 		if((mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
 			if(internal_radio)
-				SPEAK("The cloning of [mob_occupant.real_name] has been \
+				SPEAK("The cloning has been \
 					aborted due to unrecoverable tissue failure.")
 			go_out()
 			mob_occupant.apply_vore_prefs()
@@ -261,7 +261,7 @@
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			if(internal_radio)
-				SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
+				SPEAK("The cloning cycle is complete.")
 
 			// If the cloner is upgraded to debugging high levels, sometimes
 			// organs and limbs can be missing.
@@ -319,7 +319,7 @@
 			return
 		else
 			connected_message("Emergency Ejection")
-			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
+			SPEAK("An emergency ejection of the current clone has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 			mob_occupant.apply_vore_prefs()
@@ -412,7 +412,7 @@
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && prob(100/(severity*efficiency)))
 			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
+			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of, ERROR: John Doe, prematurely." ,0))
 			mob_occupant.apply_vore_prefs()
 			go_out()
 

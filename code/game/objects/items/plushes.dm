@@ -359,6 +359,16 @@
 	if(mood_message)
 		desc += mood_message
 
+/obj/item/toy/plush/random
+	name = "Illegal plushie"
+	desc = "Something fucked up"
+
+/obj/item/toy/plush/random/Initialize()
+	..()
+	var/newtype = pick(subtypesof(/obj/item/toy/plush))
+	new newtype(loc)
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
@@ -495,6 +505,10 @@
 	icon_state = "rio"
 	item_state = "rio"
 
+/obj/item/toy/plush/lizardplushie/dan
+	icon_state = "dan"
+	item_state = "dan"
+
 /obj/item/toy/plush/lizardplushie/urinsu
 	icon_state = "urinsu"
 	item_state = "urinsu"
@@ -546,7 +560,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	squeak_override = list('sound/voice/lowHiss2.ogg' = 1)
+	squeak_override = list('modular_citadel/sound/voice/hiss.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie/sasha
 	icon_state = "sasha"
@@ -559,6 +573,10 @@
 /obj/item/toy/plush/snakeplushie/vulken
 	icon_state = "vulken"
 	item_state = "vulken"
+
+/obj/item/toy/plush/snakeplushie/jecca
+	icon_state = "jecca"
+	item_state = "jecca"
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -669,19 +687,26 @@
 	icon_state = "jewel"
 	item_state = "jewel"
 
-/obj/item/toy/plush/mammal
-	name = "mammal plushie"
-	desc = "An adorable stuffed toy resembling some sort of mammallian crew member."
+/obj/item/toy/plush/sergal
+	name = "sergal plushie"
+	desc = "An adorable stuffed plushie that resembles a sagaru."
 	icon_state = "faux"
 	item_state = "faux"
+	squeak_override = list('modular_citadel/sound/voice/merp.ogg' = 1)
 
-/obj/item/toy/plush/mammal/dubious
-	icon_state = "dubious"
-	item_state = "dubious"
-
-/obj/item/toy/plush/mammal/gladwyn
+/obj/item/toy/plush/sergal/gladwyn
 	icon_state = "gladwyn"
 	item_state = "gladwyn"
+
+/obj/item/toy/plush/sergal/jermaine
+	icon_state = "jermaine"
+	item_state = "jermaine"
+
+/obj/item/toy/plush/mammal
+	name = "mammal plushie"
+	desc = "An adorable stuffed toy resembling some sort of crew member."
+	icon_state = "dubious"
+	item_state = "dubious"
 
 /obj/item/toy/plush/mammal/gavin
 	icon_state = "gavin"
@@ -694,6 +719,10 @@
 /obj/item/toy/plush/mammal/circe
 	icon_state = "circe"
 	item_state = "circe"
+
+/obj/item/toy/plush/mammal/robin
+	icon_state = "robin"
+	item_state = "robin"
 
 /obj/item/toy/plush/mammal/pavel
 	icon_state = "pavel"
@@ -731,10 +760,6 @@
 	icon_state = "joker"
 	item_state = "joker"
 
-/obj/item/toy/plush/mammal/jermaine
-	icon_state = "jermaine"
-	item_state = "jermaine"
-
 /obj/item/toy/plush/mammal/gunther
 	icon_state = "gunther"
 	item_state = "gunther"
@@ -742,6 +767,11 @@
 /obj/item/toy/plush/mammal/fox
 	icon_state = "fox"
 	item_state = "fox"
+
+/obj/item/toy/plush/mammal/rae
+	desc = "An adorable stuffed toy of an artic fox."
+	icon_state = "rae"
+	item_state = "rae"
 
 /obj/item/toy/plush/mammal/zed
 	icon_state = "zed"
@@ -782,9 +812,13 @@
 	icon_state = "nikolai"
 	item_state = "nikolai"
 
+/obj/item/toy/plush/mammal/dog/flynn
+	icon_state = "flynn"
+	item_state = "flynn"
+
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
-	desc = "An adorable stuffed toy that resembles a felinid."
+	desc = "An adorable stuffed toy that resembles a feline."
 	icon_state = "bailey"
 	item_state = "bailey"
 	attack_verb = list("headbutt", "scritched", "bit")
@@ -802,9 +836,17 @@
 	attack_verb = list("powergamed", "merged", "tabled")
 	squeak_override = list('sound/effects/meow1.ogg' = 1)
 
-/obj/item/toy/plush/catgirl/robin
-	icon_state = "robin"
-	item_state = "robin"
+/obj/item/toy/plush/catgirl/drew
+	icon_state = "drew"
+	item_state = "drew"
+
+/obj/item/toy/plush/catgirl/fermis
+    name = "medcat plushie"
+    desc = "An affectionate stuffed toy that resembles a certain medcat, comes complete with battery operated wagging tail!! You get the impression she's cheering you on to to find happiness and be kind to people."
+    icon_state = "fermis"
+    item_state = "fermis"
+    attack_verb = list("cuddled", "petpatted", "wigglepurred")
+    squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()

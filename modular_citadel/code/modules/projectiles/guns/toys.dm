@@ -15,7 +15,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/dispersal, /obj/item/ammo_casing/energy/laser/wavemotion)
 	ammo_x_offset = 2
 	modifystate = 1
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE
 	item_flags = NONE
 	clumsy_check = FALSE
 

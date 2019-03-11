@@ -56,19 +56,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-	//Decide if it's ok for the lings to have a team objective
-	//And then set it up to be handed out in forge_changeling_objectives
-	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
-	var/list/possible_team_objectives = list()
-	for(var/T in team_objectives)
-		var/datum/objective/changeling_team_objective/CTO = T
-
-		if(changelings.len >= initial(CTO.min_lings))
-			possible_team_objectives += T
-
-	if(possible_team_objectives.len && prob(20*changelings.len))
-		GLOB.changeling_team_objective_type = pick(possible_team_objectives)
-
 	for(var/datum/mind/changeling in changelings)
 		log_game("[key_name(changeling)] has been selected as a changeling")
 		var/datum/antagonist/changeling/new_antag = new()

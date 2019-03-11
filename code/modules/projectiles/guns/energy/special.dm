@@ -48,7 +48,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	modifystate = 1
 	ammo_x_offset = 1
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -59,7 +59,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/stock_parts/cell/potato"
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
-	selfcharge = 1
+	selfcharge = EGUN_SELFCHARGE
 
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"

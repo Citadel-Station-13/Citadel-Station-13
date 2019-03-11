@@ -31,3 +31,7 @@
 		for(var/obj/screen/sprintbutton/selector in hud_used.static_inventory)
 			selector.insert_witty_toggle_joke_here(src)
 	return TRUE
+
+/mob/living/carbon/human/proc/sprint_hotkey(targetstatus)
+	if(targetstatus ? !sprinting : sprinting)
+		togglesprint()

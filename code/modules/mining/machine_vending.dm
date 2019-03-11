@@ -11,6 +11,7 @@
 	var/obj/item/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, sort it by price/type. use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
+		new /datum/data/mining_equipment("50 Point Transfer Card",		/obj/item/card/mining_point_card,									50),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
 		new /datum/data/mining_equipment("30 Marker Beacons",			/obj/item/stack/marker_beacon/thirty,								300),
 		new /datum/data/mining_equipment("Whiskey",						/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
@@ -23,7 +24,7 @@
 		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
-		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
+		new /datum/data/mining_equipment("500 Point Transfer Card",		/obj/item/card/mining_point_card/mp500,								500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			750),
@@ -41,6 +42,9 @@
 		new /datum/data/mining_equipment("Lazarus Injector",			/obj/item/lazarus_injector,											1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
 		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining_conscript,				1000),
+		new /datum/data/mining_equipment("1000 Point Transfer Card",	/obj/item/card/mining_point_card/mp1000,								1000),
+		new /datum/data/mining_equipment("1500 Point Transfer Card",	/obj/item/card/mining_point_card/mp1500,								1500),
+		new /datum/data/mining_equipment("2000 Point Transfer Card",	/obj/item/card/mining_point_card/mp2000,								2000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",				/obj/item/tank/jetpack/suit,										2000),
 		new /datum/data/mining_equipment("Space Cash",					/obj/item/stack/spacecash/c1000,									2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",				/obj/item/clothing/suit/space/hardsuit/mining,						2000),
@@ -245,12 +249,30 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
-
+//mp = Miner Pointers
+//c  =  Cash
+//TODO add in cr = Credits for cargo
 /obj/item/card/mining_point_card
 	name = "mining points card"
-	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard. This one only holds a small 50 points on it."
 	icon_state = "data_1"
-	var/points = 500
+	var/points = 50
+
+/obj/item/card/mining_point_card/mp500
+	desc = "A small card preloaded with 500 mining points. Swipe your ID card over it to transfer the points, then discard."
+	points = 500
+
+/obj/item/card/mining_point_card/mp1000
+	desc = "A small card preloaded with 1000 mining points. Swipe your ID card over it to transfer the points, then discard."
+	points = 1000
+
+/obj/item/card/mining_point_card/mp1500
+	desc = "A small card preloaded with 1500 mining points. Swipe your ID card over it to transfer the points, then discard."
+	points = 1500
+
+/obj/item/card/mining_point_card/mp2000
+	desc = "A small card preloaded with 2000 mining points. Swipe your ID card over it to transfer the points, then discard."
+	points = 2000
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
