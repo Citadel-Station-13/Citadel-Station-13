@@ -495,11 +495,11 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || IsKnockdown() || IsStun() || src.restrained())
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(has_trait(TRAIT_PIERCEIMMUNE))
+	if(has_trait(TRAIT_PIERCEIMMUNE) && !bypass_immunity)
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
