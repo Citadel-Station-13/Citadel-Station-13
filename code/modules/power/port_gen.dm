@@ -217,28 +217,29 @@
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
-	. = ..()
-	if (get_dist(src, user) > 1 )
-		if(!isAI(user))
-			user.unset_machine()
-			user << browse(null, "window=port_gen")
-			return
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "portable_generator", name, 450, 340, master_ui, state)
+		ui.open()
 
-	var/dat = text("<b>[name]</b><br>")
-	if (active)
-		dat += text("Generator: <A href='?src=[REF(src)];action=disable'>On</A><br>")
-	else
-		dat += text("Generator: <A href='?src=[REF(src)];action=enable'>Off</A><br>")
-	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=[REF(src)];action=eject'>Eject</A><br>")
-	var/stack_percent = round(sheet_left * 100, 1)
-	dat += text("Current stack: [stack_percent]% <br>")
-	dat += text("Power output: <A href='?src=[REF(src)];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=[REF(src)];action=higher_power'>+</A><br>")
-	dat += text("Power current: [(powernet == null ? "Unconnected" : "[DisplayPower(avail())]")]<br>")
-	dat += text("Heat: [current_heat]<br>")
-	dat += "<br><A href='?src=[REF(src)];action=close'>Close</A>"
-	user << browse(dat, "window=port_gen")
-	onclose(user, "port_gen")
+/obj/machinery/power/port_gen/pacman/ui_data()
+	var/data = list()
+
+	data["active"] = active
+	data["sheet_name"] = capitalize(sheet_name)
+	data["sheets"] = sheets
+	data["stack_percent"] = round(sheet_left * 100, 0.1)
+
+	data["anchored"] = anchored
+	data["connected"] = (powernet == null ? 0 : 1)
+	data["ready_to_boot"] = anchored && HasFuel()
+	data["power_generated"] = DisplayPower(power_gen)
+	data["power_output"] = DisplayPower(power_gen * power_output)
+	data["power_available"] = (powernet == null ? 0 : DisplayPower(avail()))
+	data["current_heat"] = current_heat
+	. =  data
 
 /obj/machinery/power/port_gen/pacman/ui_act(action, params)
 	if(..())
