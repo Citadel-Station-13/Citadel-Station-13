@@ -1,60 +1,471 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/wall/mineral/gold,/area/ruin/powered/lust)
-"c" = (/obj/structure/bookcase/random/adult,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"d" = (/obj/structure/reagent_dispensers/keg/aphro/strong,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"e" = (/obj/structure/reagent_dispensers/keg/aphro/strong,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"f" = (/obj/structure/bookcase/random/adult,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"g" = (/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"h" = (/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"i" = (/obj/effect/decal/cleanable/semen,/obj/item/toy/plush/random,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"j" = (/obj/effect/decal/cleanable/femcum,/obj/item/toy/plush/mammal/robin{name = "A friend"},/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"k" = (/obj/effect/decal/cleanable/femcum,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"l" = (/obj/effect/decal/cleanable/femcum,/obj/item/toy/plush/random,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"m" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"n" = (/obj/item/melee/chainofcommand/lust,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"o" = (/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"p" = (/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"q" = (/obj/item/dildo/random,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"r" = (/obj/structure/bed/alien,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"s" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/remains/robot,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"t" = (/obj/effect/decal/cleanable/semen,/obj/item/restraints/handcuffs/fake/kinky,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"u" = (/obj/machinery/door/airlock/gold/glass,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"v" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/insectguts,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"w" = (/obj/effect/decal/cleanable/semen,/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"x" = (/obj/machinery/door/airlock/gold/glass,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"y" = (/obj/effect/decal/cleanable/vomit,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"z" = (/obj/effect/decal/cleanable/femcum,/obj/effect/decal/cleanable/pie_smudge,/obj/item/restraints/handcuffs/sinew,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"A" = (/obj/structure/bed/abductor,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"B" = (/obj/structure/bed/pod,/obj/effect/decal/cleanable/semen,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"C" = (/obj/structure/reagent_dispensers/keg/semen,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"D" = (/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"E" = (/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"F" = (/obj/structure/reagent_dispensers/keg/semen,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"G" = (/obj/structure/bed/dogbed,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"H" = (/obj/structure/bed/nest,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"I" = (/obj/effect/decal/cleanable/blood,/obj/item/dildo/random,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"J" = (/obj/effect/decal/cleanable/semen,/obj/effect/decal/remains/xeno,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"K" = (/obj/machinery/door/airlock/gold/glass,/obj/effect/mine/sound/bwoink,/turf/open/floor/mineral/diamond,/area/ruin/powered/lust)
-"L" = (/obj/machinery/door/airlock/gold/glass,/obj/effect/mine/sound/bwoink,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"M" = (/obj/effect/decal/cleanable/femcum,/obj/structure/closet,/obj/item/dildo/random,/obj/item/dildo/random,/obj/item/electropack/shockcollar,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"N" = (/obj/structure/bodycontainer/morgue,/turf/open/floor/mineral/plasma,/area/ruin/powered/lust)
-"O" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/lust)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/gold,
+/area/ruin/powered/lust)
+"c" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"d" = (
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"e" = (
+/obj/structure/reagent_dispensers/keg/aphro/strong,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"f" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"g" = (
+/obj/effect/decal/cleanable/semen,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"h" = (
+/obj/effect/decal/cleanable/semen,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"i" = (
+/obj/effect/decal/cleanable/semen,
+/obj/item/toy/plush/random,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"j" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/item/toy/plush/mammal/robin{
+	name = "A friend"
+	},
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"k" = (
+/obj/effect/decal/cleanable/femcum,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"l" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/item/toy/plush/random,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"m" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/effect/decal/cleanable/semen,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"n" = (
+/obj/item/melee/chainofcommand/lust,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"o" = (
+/obj/item/dildo/random,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"p" = (
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"q" = (
+/obj/item/dildo/random,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"r" = (
+/obj/structure/bed/alien,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"s" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/effect/decal/remains/robot,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"t" = (
+/obj/effect/decal/cleanable/semen,
+/obj/item/restraints/handcuffs/fake/kinky,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"u" = (
+/obj/machinery/door/airlock/gold/glass,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"v" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/effect/decal/cleanable/insectguts,
+/obj/effect/decal/cleanable/semen,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"w" = (
+/obj/effect/decal/cleanable/semen,
+/obj/item/dildo/random,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"x" = (
+/obj/machinery/door/airlock/gold/glass,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"y" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"z" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/effect/decal/cleanable/pie_smudge,
+/obj/item/restraints/handcuffs/sinew,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"A" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"B" = (
+/obj/structure/bed/pod,
+/obj/effect/decal/cleanable/semen,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"C" = (
+/obj/structure/reagent_dispensers/keg/semen,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"D" = (
+/obj/effect/decal/cleanable/blood/xtracks,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"E" = (
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"F" = (
+/obj/structure/reagent_dispensers/keg/semen,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"G" = (
+/obj/structure/bed/dogbed,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"H" = (
+/obj/structure/bed/nest,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"I" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/dildo/random,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"J" = (
+/obj/effect/decal/cleanable/semen,
+/obj/effect/decal/remains/xeno,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"K" = (
+/obj/machinery/door/airlock/gold/glass,
+/obj/effect/mine/sound/bwoink,
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered/lust)
+"L" = (
+/obj/machinery/door/airlock/gold/glass,
+/obj/effect/mine/sound/bwoink,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"M" = (
+/obj/effect/decal/cleanable/femcum,
+/obj/structure/closet,
+/obj/item/dildo/random,
+/obj/item/dildo/random,
+/obj/item/electropack/shockcollar,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"N" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/mineral/plasma,
+/area/ruin/powered/lust)
+"O" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered/lust)
 
 (1,1,1) = {"
-aaaaabbbbbbaaaaa
-aaaaabcdefbaaaaa
-aaaaabfghcbaaaaa
-aaaaabcijfbaaaaa
-aaaaabfklcbaaaaa
-aaaaabcmnfbaaaaa
-aaaaabfohcbaaaaa
-aaaaabcpkfbaaaaa
-aabbbbbgqbbbbbaa
-aabrstuvwxyzAbaa
-aabBCDbEpbmFGbaa
-aabHIJbKLbMhNbaa
-aabbbbbOabbbbbaa
-aaaaaaOOaaaaaaaa
-aaaaaOOOaaaaaaaa
-aaaaOOOaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+r
+B
+H
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+s
+C
+I
+b
+a
+a
+O
+"}
+(6,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+t
+D
+J
+b
+a
+O
+O
+"}
+(7,1,1) = {"
+b
+c
+f
+c
+f
+c
+f
+c
+b
+u
+b
+b
+b
+O
+O
+O
+"}
+(8,1,1) = {"
+b
+d
+g
+i
+k
+m
+o
+p
+g
+v
+E
+K
+O
+O
+O
+a
+"}
+(9,1,1) = {"
+b
+e
+h
+j
+l
+n
+h
+k
+q
+w
+p
+L
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+b
+f
+c
+f
+c
+f
+c
+f
+b
+x
+b
+b
+b
+a
+a
+a
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+y
+m
+M
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+z
+F
+h
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+A
+G
+N
+b
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
