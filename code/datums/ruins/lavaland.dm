@@ -230,4 +230,4 @@
 	description = "An abandoned sex dungeon with a powerful artifact."
 	suffix = "lavaland_surface_lust.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
