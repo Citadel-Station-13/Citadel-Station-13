@@ -23,7 +23,10 @@
 
 /obj/item/storage/firstaid/o2
 	icon_state = "oxy"
-
+	
+/obj/item/storage/firstaid/radbgone
+	icon_state = "rad"
+	
 /obj/item/storage/firstaid/tactical
 	icon_state = "tactical"
 
