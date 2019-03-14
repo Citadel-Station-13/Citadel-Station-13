@@ -27,7 +27,7 @@
 
 /datum/surgery_step/revive
 	name = "repair body"
-	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
+	implements = list(/obj/item/twohanded/shockpaddles = 100, /obj/item/abductor/gizmo = 100, /obj/item/melee/baton = 75, /obj/item/gun/energy = 60)
 	time = 120
 
 /datum/surgery_step/revive/tool_check(mob/user, obj/item/tool)
