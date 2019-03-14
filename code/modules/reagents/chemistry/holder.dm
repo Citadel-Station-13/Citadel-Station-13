@@ -48,6 +48,7 @@
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
+	var/pH = REAGENT_NORMAL_PH
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
@@ -182,7 +183,9 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+
+			//fermichem Added ph and T.purity
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, T.purity, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
@@ -242,7 +245,7 @@
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp)
+			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, current_reagent.purity, no_react = TRUE) //Fermichem edit
 			remove_reagent(current_reagent.id, amount, 1)
 			break
 
@@ -332,19 +335,19 @@
 		R.on_update (A)
 	update_total()
 
-/datum/reagents/proc/handle_reactions()
-	var/list/cached_reagents = reagent_list
-	var/list/cached_reactions = GLOB.chemical_reactions_list
-	var/datum/cached_my_atom = my_atom
-	if(reagents_holder_flags & REAGENT_NOREACT)
+/datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
+	var/list/cached_reagents = reagent_list //a list of the reagents?
+	var/list/cached_reactions = GLOB.chemical_reactions_list //a list of the whole reactions?
+	var/datum/cached_my_atom = my_atom //It says my atom, but I didn't bring one with me!!
+	if(reagents_holder_flags & REAGENT_NOREACT) //Not sure on reagents_holder_flags, but I think it checks to see if theres a reaction with current stuff.
 		return //Yup, no reactions here. No siree.
 
-	var/reaction_occurred = 0
-	do
-		var/list/possible_reactions = list()
-		reaction_occurred = 0
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
+	var/reaction_occurred = 0 // checks if reaction, binary variable
+	do //What does do do in byond? It sounds very redundant? is it a while loop?
+		var/list/possible_reactions = list() //init list
+		reaction_occurred = 0 // sets it back to 0?
+		for(var/reagent in cached_reagents) //for reagent in beaker/holder
+			var/datum/reagent/R = reagent //check to make sure that reagent is there for the reaction list
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 				if(!reaction)
 					continue
@@ -377,26 +380,30 @@
 						matching_container = 1
 
 					else
-						if(cached_my_atom.type == C.required_container)
+						if(cached_my_atom.type == C.required_container)//if the container requires a certain type, and if it equals what it needs?
 							matching_container = 1
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 						return
-					if(!C.required_other)
-						matching_other = 1
+					if(!C.required_other)//Checks for other things required
+						matching_other = 1//binary check passes
 
-					else if(istype(cached_my_atom, /obj/item/slime_extract))
+					else if(istype(cached_my_atom, /obj/item/slime_extract))//if the object is a slime_extract. This might be complicated as to not break them via fermichem
 						var/obj/item/slime_extract/M = cached_my_atom
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
 				else
-					if(!C.required_container)
+					if(!C.required_container)//I'm not sure why this is here twice, I think if it's not a beaker?
 						matching_container = 1
 					if(!C.required_other)
 						matching_other = 1
 
-				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = 1
+				//FermiChem
+				if (chem_temp > C.ExplodeTemp)//Check to see if reaction is too hot!
+					//explode function!!
+
+				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))//Temperature check!!
+					meets_temp_requirement = 1//binary pass
 
 				if(!has_special_react || C.check_special_react(src))
 					can_special_react = 1
@@ -404,33 +411,44 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
-		if(possible_reactions.len)
+		if(possible_reactions.len)//does list exist?
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
 			//select the reaction with the most extreme temperature requirements
-			for(var/V in possible_reactions)
-				var/datum/chemical_reaction/competitor = V
+			for(var/V in possible_reactions)//why V, surely that would indicate volume? V is the reaction potential.
+				var/datum/chemical_reaction/competitor = V //competitor? I think this is theres two of them. Troubling..!
 				if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
-					if(competitor.required_temp <= selected_reaction.required_temp)
+					if(competitor.required_temp <= selected_reaction.required_temp)//only returns with lower if reaction "is cold" var.
 						selected_reaction = competitor
 				else
-					if(competitor.required_temp >= selected_reaction.required_temp)
+					if(competitor.required_temp >= selected_reaction.required_temp) //will return with the hotter reacting first.
 						selected_reaction = competitor
-			var/list/cached_required_reagents = selected_reaction.required_reagents
-			var/list/cached_results = selected_reaction.results
-			var/special_react_result = selected_reaction.check_special_react(src)
-			var/list/multiplier = INFINITY
-			for(var/B in cached_required_reagents)
-				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+			var/list/cached_required_reagents = selected_reaction.required_reagents//update reagents list
+			var/list/cached_results = selected_reaction.results//resultant chemical list
+			var/list/multiplier = INFINITY //Wat
+			for(var/B in cached_required_reagents) //
+				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+
+				//FermiChem
+				if (purity != 1)//if purity of reaction isn't 1
+					multiplierProd = multiplier * purity //adjusts multiplier to be in line with purity
+					multiplierTox = multiplier - multiplierProd //
+
 
 			for(var/B in cached_required_reagents)
-				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
-			for(var/P in selected_reaction.results)
+			for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
 				multiplier = max(multiplier, 1) //this shouldnt happen ...
-				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-				add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
+				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)//log
+				//add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!! I THINK I can do this:
+				//FermiChem
+				if (purity != 1)//if purity of reaction isn't 1
+					add_reagent(P, cached_results[P]*multiplierProd, null, chem_temp)//add reagent function for product
+					add_reagent(P, cached_results[P]*multiplierTox, null, chem_temp)//add reagent function for product
+				else
+					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!!
 
-			var/list/seen = viewers(4, get_turf(my_atom))
+			var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
 			var/iconhtml = icon2html(cached_my_atom, seen)
 			if(cached_my_atom)
 				if(!ismob(cached_my_atom)) // No bubbling mobs
@@ -440,7 +458,7 @@
 					for(var/mob/M in seen)
 						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
-				if(istype(cached_my_atom, /obj/item/slime_extract))
+				if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
 					var/obj/item/slime_extract/ME2 = my_atom
 					ME2.Uses--
 					if(ME2.Uses <= 0) // give the notification that the slime core is dead
@@ -452,9 +470,9 @@
 			selected_reaction.on_reaction(src, multiplier, special_react_result)
 			reaction_occurred = 1
 
-	while(reaction_occurred)
-	update_total()
-	return 0
+	while(reaction_occurred)//while do nothing?
+	update_total()//Don't know waht this does.
+	return 0//end!
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -544,7 +562,7 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -555,7 +573,7 @@
 	if(!D)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
-	
+
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
@@ -599,9 +617,9 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	
+
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
