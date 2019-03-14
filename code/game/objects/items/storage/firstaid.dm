@@ -55,7 +55,7 @@
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
-	icon_state = "burn"
+	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
 /obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
@@ -64,7 +64,7 @@
 
 /obj/item/storage/firstaid/fire/Initialize(mapload)
 	. = ..()
-	icon_state = pick("burn","burn2", "burn3", "burn4")
+	icon_state = pick("ointment","firefirstaid")
 
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
@@ -79,7 +79,7 @@
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
-	icon_state = "toxin"
+	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
@@ -88,7 +88,7 @@
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
-	icon_state = pick("toxin","toxin2","toxin3","toxin4")
+	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
@@ -102,7 +102,7 @@
 /obj/item/storage/firstaid/radbgone
 	name = "radiation treatment kit"
 	desc = "Used to treat minor toxic blood content and major radiation poisoning."
-	icon_state = "toxin"
+	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/firstaid/radbgone/suicide_act(mob/living/carbon/user)
@@ -122,16 +122,12 @@
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
-	icon_state = "oxy"
+	icon_state = "o2"
 	item_state = "firstaid-o2"
 
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return OXYLOSS
-
-/obj/item/storage/firstaid/o2/Initialize(mapload)
-	. = ..()
-	icon_state = pick("oxy","oxy2","oxy3","oxy4")
 
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
@@ -151,10 +147,6 @@
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
-
-/obj/item/storage/firstaid/brute/Initialize(mapload)
-	. = ..()
-	icon_state = pick("brute","brute2","brute3","brute4")
 
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
