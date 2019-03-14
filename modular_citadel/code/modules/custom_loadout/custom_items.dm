@@ -450,7 +450,7 @@
 	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
 	desc = "'Hello, I am, your singing, telegram!' \
-				A red button up suit that has a the insignia of a out dated means of relaying information to people \
+				A red button up suit bearing the insignia of an outdated mean of relaying information to people. \
 				Someone has shot the massager it seems..."
 	item_state = "telegram"
 	icon_state = "telegram"
