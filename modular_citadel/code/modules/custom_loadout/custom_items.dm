@@ -439,6 +439,7 @@
 /obj/item/clothing/head/telegramhat
 	name = "Singing Telegram Hat"
 	icon = 'modular_citadel/icons/obj/clothing/cit_hats.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/obj/clothing/turtlenecks.dmi'
 	desc = "A red fez like hat, has a yellow lining on the side."
 	item_state = "telegramhat"
 	icon_state = "telegramhat"
