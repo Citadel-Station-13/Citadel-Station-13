@@ -250,14 +250,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 	currentconversionman = convertee
 	conversiontimeout = world.time + (10 SECONDS)
 	convertee.Stun(100)
+	convertee.add_trait(TRAIT_MUTE, "conversionrune")
 	conversionresult = FALSE
 	while(world.time < conversiontimeout && convertee && !conversionresult)
 		stoplag(1)
 	currentconversionman = null
-	if(convertee && get_turf(convertee) != get_turf(src))
+	if(!convertee)
 		return FALSE
-	if(!conversionresult && convertee)
-		do_sacrifice(convertee, invokers)
+	convertee.remove_trait(TRAIT_MUTE, "conversionrune")
+	if(get_turf(convertee) != get_turf(src))
+		return FALSE
+	if(!conversionresult)
+		do_sacrifice(convertee, invokers, TRUE)
 		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
@@ -279,7 +283,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 	return 1
 
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]
 	if(!first_invoker)
 		return FALSE
