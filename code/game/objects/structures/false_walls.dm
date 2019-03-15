@@ -9,9 +9,9 @@
 	icon_state = "wall"
 	layer = CLOSED_TURF_LAYER
 	density = TRUE
+	hidden = TRUE
 	opacity = 1
 	max_integrity = 100
-	hidden = 1
 
 	canSmoothWith = list(
 	/turf/closed/wall,
