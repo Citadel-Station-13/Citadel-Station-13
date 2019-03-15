@@ -11,6 +11,7 @@
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
+	hidden = 1
 
 	canSmoothWith = list(
 	/turf/closed/wall,
