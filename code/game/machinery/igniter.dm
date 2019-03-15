@@ -73,7 +73,7 @@
 /obj/machinery/sparker/Initialize()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(2, 1, src)
+	spark_system.set_up(25, 2, src)
 	spark_system.attach(src)
 
 /obj/machinery/sparker/Destroy()
