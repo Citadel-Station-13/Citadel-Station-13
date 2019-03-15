@@ -413,7 +413,8 @@
 	var/list/candidates = list()
 
 	for(var/mob/dead/observer/G in GLOB.player_list)
-		candidates += G
+		if(G.can_reenter_round)
+			candidates += G
 
 	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
