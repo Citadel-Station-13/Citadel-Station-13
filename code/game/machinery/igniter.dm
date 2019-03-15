@@ -57,7 +57,7 @@
 
 /obj/machinery/sparker
 	name = "mounted igniter"
-	desc = "A wall-mounted ignition device."
+	desc = "A wall-mounted ignition device. This mounted igniter has been modified heavily to be able to light plasma in the controlled environment of the Toxin Burner."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
@@ -73,7 +73,7 @@
 /obj/machinery/sparker/Initialize()
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(25, 2, src)
+	spark_system.set_up(12, 2, src)
 	spark_system.attach(src)
 
 /obj/machinery/sparker/Destroy()
