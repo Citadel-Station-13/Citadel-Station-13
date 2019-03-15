@@ -310,7 +310,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(response != "Ghost")
 		return
 	ghostize(0)
-	suicide_log(TRUE)
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
