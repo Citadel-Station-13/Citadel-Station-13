@@ -195,6 +195,7 @@ Contains:
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+	armor = list("melee" = 75, "bullet" = 80, "laser" = 80, "energy" = 80, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
@@ -202,6 +203,9 @@ Contains:
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 80)
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	desc = "Standard issue engineer suit for the ERT."
@@ -209,6 +213,9 @@ Contains:
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 80)
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
@@ -223,6 +230,7 @@ Contains:
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/defibrillator)
 	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/eva
