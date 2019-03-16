@@ -102,6 +102,15 @@
 	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple
 	subcategory = CAT_PIZZA
 
+/datum/crafting_recipe/food/pineapplepizza/anomaly
+	name = "Anomaly Hawaiian pizza"
+	reqs = list(
+	/obj/item/assembly/signaler/anomaly = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/pineapple = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple/anomaly
+	subcategory = CAT_PIZZA
+
 /datum/crafting_recipe/food/anomalypizzaboy
 	name = "Anomaly pizza box"
 	reqs = list(
