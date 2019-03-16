@@ -305,7 +305,7 @@
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
 				occupant_message("Disconnected from the air system port.")
-				log_message("Disconnected from gas port.", LOG_MECHA)
+				log_message("Disconnected from gas port.")
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
 				return
@@ -313,7 +313,7 @@
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
 				occupant_message("Connected to the air system port.")
-				log_message("Connected to gas port.", LOG_MECHA)
+				log_message("Connected to gas port.")
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
 				return
@@ -331,13 +331,13 @@
 
 	if(href_list["repair_int_control_lost"])
 		occupant_message("Recalibrating coordination system...")
-		log_message("Recalibration of coordination system started.", LOG_MECHA)
+		log_message("Recalibration of coordination system started.")
 		var/T = loc
 		spawn(100)
 			if(T == loc)
 				clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant_message("<span class='notice'>Recalibration successful.</span>")
-				log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
+				log_message("Recalibration of coordination system finished with 0 errors.")
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.", LOG_MECHA, color="red")
+				log_message("Recalibration of coordination system failed with 1 error.", color="red")
