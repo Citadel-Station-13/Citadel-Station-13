@@ -142,7 +142,7 @@
 	add_cell()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
-	log_message("[src.name] created.", LOG_MECHA)
+	log_message("[src.name] created.")
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -507,7 +507,7 @@
 		events.fireEvent("onMove",get_turf(src))
 	if (internal_tank?.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection teared off!</span>")
-		log_message("Lost connection to gas port.", LOG_MECHA)
+		log_message("Lost connection to gas port.")
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
@@ -651,7 +651,7 @@
 
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
 	internal_damage |= int_dam_flag
-	log_message("Internal damage of type [int_dam_flag].", LOG_MECHA)
+	log_message("Internal damage of type [int_dam_flag].")
 	SEND_SOUND(occupant, sound('sound/machines/warning-buzzer.ogg',wait=0))
 	diag_hud_set_mechstat()
 	return
@@ -837,10 +837,10 @@
 		return
 	if(!ishuman(user)) // no silicons or drones in mechas.
 		return
-	log_message("[user] tries to move in.", LOG_MECHA)
+	log_message("[user] tries to move in.")
 	if (occupant)
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
-		log_message("Permission denied (Occupied).", LOG_MECHA)
+		log_message("Permission denied (Occupied).")
 		return
 	if(dna_lock)
 		var/passed = FALSE
@@ -850,19 +850,19 @@
 				passed = TRUE
 		if (!passed)
 			to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
-			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
+			log_message("Permission denied (DNA LOCK).")
 			return
 	if(!operation_allowed(user))
 		to_chat(user, "<span class='warning'>Access denied. Insufficient operation keycodes.</span>")
-		log_message("Permission denied (No keycode).", LOG_MECHA)
+		log_message("Permission denied (No keycode).")
 		return
 	if(user.buckled)
 		to_chat(user, "<span class='warning'>You are currently buckled and cannot move.</span>")
-		log_message("Permission denied (Buckled).", LOG_MECHA)
+		log_message("Permission denied (Buckled).")
 		return
 	if(user.has_buckled_mobs()) //mob attached to us
 		to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
-		log_message("Permission denied (Attached mobs).", LOG_MECHA)
+		log_message("Permission denied (Attached mobs).")
 		return
 
 	visible_message("[user] starts to climb into [name].")
@@ -890,7 +890,7 @@
 		add_fingerprint(H)
 		GrantActions(H, human_occupant=1)
 		forceMove(loc)
-		log_message("[H] moved in as pilot.", LOG_MECHA)
+		log_message("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
 		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
@@ -949,7 +949,7 @@
 	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
-	log_message("[mmi_as_oc] moved in as pilot.", LOG_MECHA)
+	log_message("[mmi_as_oc] moved in as pilot.")
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	GrantActions(brainmob)
@@ -1002,7 +1002,7 @@
 	occupant = null //we need it null when forceMove calls Exited().
 	silicon_pilot = FALSE
 	if(mob_container.forceMove(newloc))//ejecting mob container
-		log_message("[mob_container] moved out.", LOG_MECHA)
+		log_message("[mob_container] moved out.")
 		L << browse(null, "window=exosuit")
 
 		if(istype(mob_container, /obj/item/mmi))
