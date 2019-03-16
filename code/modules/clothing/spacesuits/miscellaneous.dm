@@ -188,6 +188,7 @@ Contains:
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
+	armor = list("melee" = 75, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
 	desc = "Standard issue security suit for the ERT."
@@ -195,7 +196,7 @@ Contains:
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
 	tauric = TRUE		//Citadel Add for tauric hardsuits
-	armor = list("melee" = 75, "bullet" = 80, "laser" = 80, "energy" = 80, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 75, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
