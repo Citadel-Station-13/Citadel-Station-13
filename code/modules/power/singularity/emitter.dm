@@ -66,7 +66,7 @@
 
 	sparks = new
 	sparks.attach(src)
-	sparks.set_up(5, TRUE, src)
+	sparks.set_up(1, TRUE, src)
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
