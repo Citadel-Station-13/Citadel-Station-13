@@ -164,10 +164,10 @@ Contains:
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
-	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 75, "bullet" = 55, "laser" = 55, "energy" = 55, "bomb" = 80, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 100)
 	strip_delay = 130
 	item_flags = NODROP
-	brightness_on = 7
+	brightness_on = 9
 	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert
@@ -177,7 +177,7 @@ Contains:
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 75, "bullet" = 55, "laser" = 55, "energy" = 55, "bomb" = 80, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 100)
 	slowdown = 0
 	strip_delay = 130
 	resistance_flags = ACID_PROOF
@@ -188,6 +188,7 @@ Contains:
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
 	item_color = "ert_security"
+	brightness_on = 7
 	armor = list("melee" = 75, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 55, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
@@ -204,6 +205,7 @@ Contains:
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
+	brightness_on = 7
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 80)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -224,6 +226,7 @@ Contains:
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
+	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
 	desc = "Standard issue medical suit for the ERT."
