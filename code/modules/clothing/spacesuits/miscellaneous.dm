@@ -226,6 +226,7 @@ Contains:
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
@@ -236,6 +237,7 @@ Contains:
 	species_exception = list(/datum/species/angel)
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/defibrillator)
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
