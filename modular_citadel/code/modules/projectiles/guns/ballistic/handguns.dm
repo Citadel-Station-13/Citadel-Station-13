@@ -144,4 +144,4 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon_state = "raygun"
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
-	selfcharge = TRUE
+	selfcharge = EGUN_SELFCHARGE

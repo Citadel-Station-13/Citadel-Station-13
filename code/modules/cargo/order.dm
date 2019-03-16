@@ -95,3 +95,14 @@
 			while(--lost >= 0)
 				qdel(pick(C.contents))
 	return C
+
+//Paperwork for NT
+/obj/item/paper/fluff/jobs/cargo/manifest/paperwork
+	name = "Incomplete Paperwork"
+	desc = "These should've been filled out four months ago! Unfinished grant papers issued by Nanotrasen's finance department. Complete this page for additional funding."
+	icon = 'icons/obj/bureaucracy.dmi'
+
+/obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
+	name = "Finished Paperwork"
+	desc = "A neat stack of filled-out forms, in triplicate and signed. Is there anything more satisfying? Make sure they get stamped."
+	icon = 'icons/obj/bureaucracy.dmi'

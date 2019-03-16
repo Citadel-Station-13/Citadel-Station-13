@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Changeling screeches now have their own unique sounds, and are much easier to recognize."

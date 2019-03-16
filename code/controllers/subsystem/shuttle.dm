@@ -281,7 +281,10 @@ SUBSYSTEM_DEF(shuttle)
 			if(emergency.timeLeft(1) < emergencyCallTime)
 				return
 		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.6)
+				return
+		if(SEC_LEVEL_AMBER)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
 				return
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
@@ -440,17 +443,22 @@ SUBSYSTEM_DEF(shuttle)
 */
 
 	var/transit_path = /turf/open/space/transit
+	var/border_path = /turf/open/space/transit/border
 	switch(travel_dir)
 		if(NORTH)
 			transit_path = /turf/open/space/transit/north
+			border_path = /turf/open/space/transit/border/north
 		if(SOUTH)
 			transit_path = /turf/open/space/transit/south
+			border_path = /turf/open/space/transit/border/south
 		if(EAST)
 			transit_path = /turf/open/space/transit/east
+			border_path = /turf/open/space/transit/border/east
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
+			border_path = /turf/open/space/transit/border/west
 
-	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path)
+	var/datum/turf_reservation/proposal = SSmapping.RequestBlockReservation(transit_width, transit_height, null, /datum/turf_reservation/transit, transit_path, border_path)
 
 	if(!istype(proposal))
 		return FALSE

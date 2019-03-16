@@ -91,6 +91,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
 	if(!GLOB.mam_ears_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+	if(!GLOB.mam_snouts_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_snouts, GLOB.mam_snouts_list)
 
 //	if(ishuman(src))
 	//	var/mob/living/carbon/human/H = src
@@ -113,11 +115,11 @@
 		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"tail_lizard" = pick(GLOB.tails_list_lizard),
-		"tail_human" = "None",
+		"tail_human" = pick(GLOB.tails_list_human),
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
 		"horns" = pick(GLOB.horns_list),
-		"ears" = "None",
+		"ears" = pick(GLOB.ears_list),
 		"frills" = pick(GLOB.frills_list),
 		"spines" = pick(GLOB.spines_list),
 		"body_markings" = pick(GLOB.body_markings_list),
@@ -127,6 +129,7 @@
 		"taur" = "None",
 		"mam_body_markings" = pick(GLOB.mam_body_markings_list),
 		"mam_ears" 			= pick(GLOB.mam_ears_list),
+		"mam_snouts"		= pick(GLOB.mam_snouts_list),
 		"mam_tail"			= pick(GLOB.mam_tails_list),
 		"mam_tail_animated" = "None",
 		"xenodorsal" 		= "Standard",

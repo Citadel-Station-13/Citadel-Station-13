@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, soundenvwet = -10000, soundenvdry = 0)
 	if(isarea(source))
 		throw EXCEPTION("playsound(): source is an area")
 		return
@@ -21,13 +21,16 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, soundenvwet, soundenvdry)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, soundenvwet, soundenvdry)
 
-/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S, envwet = -10000, envdry = 0, manual_x, manual_y)
+	if(audiovisual_redirect)
+		var/turf/T = get_turf(src)
+		audiovisual_redirect.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, 0, -1000, turf_source.x - T.x, turf_source.y - T.y)
 	if(!client || !can_hear())
 		return
 
@@ -49,7 +52,9 @@
 		var/turf/T = get_turf(src)
 
 		//sound volume falloff with distance
-		var/distance = get_dist(T, turf_source)
+		var/distance = 0
+		if(!manual_x && !manual_y)
+			distance = get_dist(T, turf_source)
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
@@ -77,9 +82,17 @@
 		if(S.volume <= 0)
 			return //No sound
 
-		var/dx = turf_source.x - T.x // Hearing from the right/left
+		var/dx = 0 // Hearing from the right/left
+		if(!manual_x)
+			dx = turf_source.x - T.x
+		else
+			dx = manual_x
 		S.x = dx
-		var/dz = turf_source.y - T.y // Hearing from infront/behind
+		var/dz = 0 // Hearing from infront/behind
+		if(!manual_x)
+			dz = turf_source.y - T.y
+		else
+			dz = manual_y
 		S.z = dz
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
@@ -200,5 +213,11 @@
 								'sound/vore/prey/death_04.ogg','sound/vore/prey/death_05.ogg','sound/vore/prey/death_06.ogg',
 								'sound/vore/prey/death_07.ogg','sound/vore/prey/death_08.ogg','sound/vore/prey/death_09.ogg',
 								'sound/vore/prey/death_10.ogg')
+			if("clang")
+				soundin = pick('sound/effects/clang1.ogg', 'sound/effects/clang2.ogg')
+			if("clangsmall")
+				soundin = pick('sound/effects/clangsmall1.ogg', 'sound/effects/clangsmall2.ogg')
+			if("slosh")
+				soundin = pick('sound/effects/slosh1.ogg', 'sound/effects/slosh2.ogg')
 			//END OF CIT CHANGES
 	return soundin

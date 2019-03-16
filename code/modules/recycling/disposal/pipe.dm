@@ -1,5 +1,7 @@
 // Disposal pipes
 
+#define IFFY 2
+
 /obj/structure/disposalpipe
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
@@ -16,6 +18,7 @@
 	var/dpdir = NONE					// bitmask of pipe directions
 	var/initialize_dirs = NONE			// bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
 	var/flip_type						// If set, the pipe is flippable and becomes this type when flipped
+	var/canclank = FALSE				// Determines if the pipe will cause a clank sound when holders pass by it. use the IFFY define for weird-ass edge cases like the segment subtype
 	var/obj/structure/disposalconstruct/stored
 
 
@@ -75,6 +78,8 @@
 			H.merge(H2)
 
 		H.forceMove(P)
+		if(P.canclank == TRUE || (P.canclank == IFFY && P.dpdir != 3 && P.dpdir != 12))
+			playsound(P, H.hasmob ? "clang" : "clangsmall", H.hasmob ? 50 : 25, 1)
 		return P
 	else			// if wasn't a pipe, then they're now in our turf
 		H.forceMove(get_turf(src))
@@ -184,6 +189,7 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe"
 	initialize_dirs = DISP_DIR_FLIP
+	canclank = IFFY
 
 
 // A three-way junction with dir being the dominant direction
@@ -191,6 +197,7 @@
 	icon_state = "pipe-j1"
 	initialize_dirs = DISP_DIR_RIGHT | DISP_DIR_FLIP
 	flip_type = /obj/structure/disposalpipe/junction/flip
+	canclank = TRUE
 
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir
@@ -229,6 +236,7 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
+	canclank = TRUE
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
 /obj/structure/disposalpipe/trunk/Initialize()
@@ -299,3 +307,5 @@
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
+
+#undef IFFY

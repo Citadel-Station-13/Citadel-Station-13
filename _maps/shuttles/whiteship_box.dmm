@@ -15,6 +15,7 @@
 "ae" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	callTime = 250;
 	dheight = 0;
@@ -148,6 +149,7 @@
 /area/shuttle/abandoned/crew)
 "ap" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -737,6 +739,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
+/obj/item/assembly/prox_sensor,
 /obj/item/storage/bag/trash{
 	pixel_x = 6
 	},
@@ -954,6 +957,7 @@
 /area/shuttle/abandoned/engine)
 "bm" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1130,6 +1134,7 @@
 /area/shuttle/abandoned/bridge)
 "by" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -2600,6 +2605,7 @@
 "do" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -2670,6 +2676,7 @@
 /area/shuttle/abandoned/medbay)
 "dt" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

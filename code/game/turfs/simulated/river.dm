@@ -4,11 +4,14 @@
 #define RANDOM_LOWER_X 50
 #define RANDOM_LOWER_Y 50
 
+#define RIVERGEN_SAFETY_LOCK 1000000
+
 /proc/spawn_rivers(target_z, nodes = 4, turf_type = /turf/open/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors/unexplored, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
 	var/list/possible_locs = block(locate(min_x, min_y, target_z), locate(max_x, max_y, target_z))
-	while(num_spawned < nodes && possible_locs.len)
+	var/safety = 0
+	while(num_spawned < nodes && possible_locs.len && (safety++ < RIVERGEN_SAFETY_LOCK))
 		var/turf/T = pick(possible_locs)
 		var/area/A = get_area(T)
 		if(!istype(A, whitelist_area) || (T.flags_1 & NO_LAVA_GEN_1))
@@ -16,7 +19,8 @@
 		else
 			river_nodes += new /obj/effect/landmark/river_waypoint(T)
 			num_spawned++
-
+	
+	safety = 0
 	//make some randomly pathing rivers
 	for(var/A in river_nodes)
 		var/obj/effect/landmark/river_waypoint/W = A
@@ -30,7 +34,7 @@
 			break
 		var/detouring = 0
 		var/cur_dir = get_dir(cur_turf, target_turf)
-		while(cur_turf != target_turf)
+		while(cur_turf != target_turf && (safety++ < RIVERGEN_SAFETY_LOCK))
 
 			if(detouring) //randomly snake around a bit
 				if(prob(20))

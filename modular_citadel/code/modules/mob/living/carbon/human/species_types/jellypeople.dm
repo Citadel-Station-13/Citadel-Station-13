@@ -6,6 +6,7 @@
 /datum/species/jelly/roundstartslime
 	name = "Slimeperson"
 	id = "slimeperson"
+	limbs_id = "slime"
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
@@ -18,14 +19,6 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
-
-/datum/species/jelly/roundstartslime/on_species_gain(mob/living/carbon/human/C)
-	C.draw_citadel_parts()
-	. = ..()
-
-/datum/species/jelly/roundstartslime/on_species_loss(mob/living/carbon/human/C)
-	C.draw_citadel_parts(TRUE)
-	. = ..()
 
 /datum/action/innate/slime_change
 	name = "Alter Form"

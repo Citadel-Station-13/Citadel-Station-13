@@ -49,6 +49,20 @@
 	if(istype(AM))
 		playsound(src,sound,50,1)
 
+/turf/open/indestructible/cobble/side
+	icon_state = "cobble_side"
+
+/turf/open/indestructible/cobble/corner
+	icon_state = "cobble_corner"
+
+/turf/open/indestructible/cobble
+	name = "cobblestone path"
+	desc = "A simple but beautiful path made of various sized stones."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cobble"
+	baseturfs = /turf/open/indestructible/cobble
+	tiled_dirt = FALSE
+
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"
 	desc = "It's regarding you suspiciously."
@@ -231,6 +245,10 @@
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
+			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
+				var/mob/living/carbon/human/H = C
+				if(!H.sprinting && H.getStaminaLoss() >= 20)
+					return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)

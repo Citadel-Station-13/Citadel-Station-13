@@ -3,7 +3,7 @@
 	name = "Hivemind Communication"
 	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
 	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
-	dna_cost = 0
+	dna_cost = 1
 	chemical_cost = -1
 
 /obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
@@ -17,6 +17,9 @@
 	var/obj/effect/proc_holder/changeling/hivemind_download/S2 = new
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
+	var/obj/effect/proc_holder/changeling/linglink/S3 = new
+	if(!changeling.has_sting(S3))
+		changeling.purchasedpowers+=S3
 
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)

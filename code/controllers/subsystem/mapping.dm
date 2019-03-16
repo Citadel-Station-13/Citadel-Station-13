@@ -435,11 +435,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		GLOB.the_gateway.awaygate = new_gate
 		GLOB.the_gateway.wait = world.time
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
+/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override, border_type_override)
 	UNTIL(initialized && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new type
 	if(turf_type_override)
 		reserve.turf_type = turf_type_override
+	if(border_type_override)
+		reserve.borderturf = border_type_override
 	if(!z)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 			if(reserve.Reserve(width, height, i))

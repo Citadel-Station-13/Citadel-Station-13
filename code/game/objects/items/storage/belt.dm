@@ -168,6 +168,20 @@
 		/obj/item/pinpointer/crew
 		))
 
+
+/obj/item/storage/belt/medical/surgery_belt_adv
+	name = "surgical supply belt"
+	desc = "A specialized belt designed for holding surgical equipment. It seems to have specific pockets for each and every surgical tool you can think of."
+
+/obj/item/storage/belt/medical/surgery_belt_adv/PopulateContents()
+	new /obj/item/hemostat/adv(src)
+	new /obj/item/circular_saw/adv(src)
+	new /obj/item/scalpel/adv(src)
+	new /obj/item/retractor/adv(src)
+	new /obj/item/cautery/adv(src)
+	new /obj/item/surgicaldrill/adv(src)
+	new /obj/item/surgical_drapes(src)
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."

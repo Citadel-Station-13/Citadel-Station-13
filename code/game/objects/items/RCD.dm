@@ -36,6 +36,7 @@ RLD
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
 	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
 	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/custom_range = 7
 
 /obj/item/construction/Initialize()
 	. = ..()
@@ -75,6 +76,10 @@ RLD
 		loaded = loadwithsheets(W, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
 	else if(istype(W, /obj/item/stack/sheet/rglass))
 		loaded = loadwithsheets(W, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
+	else if(istype(W, /obj/item/stack/rods))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
+	else if(istype(W, /obj/item/stack/tile/plasteel))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else
@@ -119,7 +124,7 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
-	if(!(A in view(7, get_turf(user))))
+	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
 	else
@@ -445,12 +450,22 @@ RLD
 	matter = 160
 
 /obj/item/construction/rcd/combat
-	name = "industrial RCD"
+	name = "Combat RCD"
+	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges. This RCD has been upgraded to be able to remove Rwalls!"
 	icon_state = "ircd"
 	item_state = "ircd"
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
+
+/obj/item/construction/rcd/industrial
+	name = "industrial RCD"
+	icon_state = "ircd"
+	item_state = "ircd"
+	max_matter = 500
+	matter = 500
+	delay_mod = 0.6
+	sheetmultiplier	= 8
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
@@ -464,6 +479,8 @@ RLD
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
+	name = "large compressed matter cartridge"
+	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
 	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
 
@@ -509,8 +526,9 @@ RLD
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 200
-	max_matter = 200
+	matter = 500
+	max_matter = 500
+	sheetmultiplier = 16
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
 
@@ -521,7 +539,7 @@ RLD
 
 	var/walldelay = 10
 	var/floordelay = 10
-	var/decondelay = 15
+	var/decondelay = 10
 
 	var/color_choice = null
 
