@@ -1,5 +1,5 @@
 /datum/job/chief_engineer
-	minimal_player_age = 30
+	minimal_player_age = 10
 	
 /datum/job/engineer
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,

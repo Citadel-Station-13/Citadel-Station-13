@@ -4696,7 +4696,7 @@
 	},
 /area/abductor_ship)
 "lI" = (
-/turf/open/space/transit,
+/turf/open/space/transit/centcom,
 /area/space)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
@@ -20511,7 +20511,7 @@ fX
 fX
 fX
 fX
-fY
+fX
 fX
 fX
 fX
@@ -21282,7 +21282,7 @@ fX
 fX
 fX
 fX
-fX
+fY
 fX
 fX
 fX

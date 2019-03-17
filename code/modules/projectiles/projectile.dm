@@ -185,6 +185,8 @@
 				playsound(loc, hitsound, volume, 1, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+		if(def_zone == BODY_ZONE_HEAD)
+			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
 		L.on_hit(src)
 
 	var/reagent_note

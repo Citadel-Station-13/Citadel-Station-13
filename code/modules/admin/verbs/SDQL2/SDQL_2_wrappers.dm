@@ -184,6 +184,9 @@
 /proc/_list_swap(list/L, Index1, Index2)
 	L.Swap(Index1, Index2)
 
+/proc/_list_get(list/L, index)
+	return L[index]
+
 /proc/_walk(ref, dir, lag)
 	walk(ref, dir, lag)
 

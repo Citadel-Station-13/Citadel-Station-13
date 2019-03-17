@@ -50,7 +50,8 @@
 	can_charge = FALSE
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	selfcharge = EGUN_SELFCHARGE_BORG
-	charge_delay = 6
+	cell_type = /obj/item/stock_parts/cell/secborg
+	charge_delay = 3
 
 /obj/item/gun/energy/laser/cyborg/emp_act()
 	return

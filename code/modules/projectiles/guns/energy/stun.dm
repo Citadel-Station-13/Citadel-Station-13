@@ -29,7 +29,8 @@
 	can_flashlight = FALSE
 	can_charge = FALSE
 	selfcharge = EGUN_SELFCHARGE_BORG
-	charge_delay = 10
+	cell_type = /obj/item/stock_parts/cell/secborg
+	charge_delay = 5
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg/mean
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell."
@@ -49,7 +50,8 @@
 	desc = "An integrated disabler that draws from a cyborg's power cell. This one contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = FALSE
 	selfcharge = EGUN_SELFCHARGE_BORG
-	charge_delay = 10
+	cell_type = /obj/item/stock_parts/cell/secborg
+	charge_delay = 5
 
 /obj/item/gun/energy/disabler/cyborg/mean
 	desc = "An integrated disabler that draws from a cyborg's power cell."
