@@ -82,6 +82,9 @@
 			if(D.active)
 				return TRUE
 
+/obj/item/reagent_containers/proc/ForceResetRotation()
+	transform = initial(transform)
+
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)
 		return
@@ -103,6 +106,8 @@
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
+		transform = initial(transform)
+		addtimer(CALLBACK(src, .proc/ForceResetRotation), 1)
 		return
 
 	else

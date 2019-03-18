@@ -12,7 +12,7 @@
 	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 10
-	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
+	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means it is announced
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
@@ -30,7 +30,7 @@
 
 
 /datum/round_event/ion_storm/start()
-	//AI laws
+	//Generate AI law change
 	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
 		if(M.stat != DEAD && M.see_in_dark != 0)
@@ -53,6 +53,31 @@
 			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
 			M.post_lawchange()
 
+	//Generate Cyborg law change
+	for(var/mob/living/silicon/robot/M in GLOB.alive_mob_list)
+		M.laws_sanity_check()
+		if(M.stat != DEAD && M.see_in_dark != 0)
+			if(prob(replaceLawsetChance))
+				M.laws.pick_weighted_lawset()
+
+			if(prob(removeRandomLawChance))
+				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
+
+			var/message = ionMessage || generate_ion_law()
+			if(message)
+				if(prob(removeDontImproveChance))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+				else
+					M.add_ion_law(message)
+
+			if(prob(shuffleLawsChance))
+				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+
+			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			M.post_lawchange()
+
+
+	//Chance to emag a Bot
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
 			if(prob(botEmagChance))

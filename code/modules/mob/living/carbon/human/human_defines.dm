@@ -45,6 +45,8 @@
 
 	var/name_override //For temporary visible name changes
 
+	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
+
 	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 

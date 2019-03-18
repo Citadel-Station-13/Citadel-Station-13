@@ -1,6 +1,5 @@
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 
-
 /datum/chemical_reaction/goldschlager
 	name = "Goldschlager"
 	id = "goldschlager"
@@ -676,7 +675,6 @@
 	results = list("fernet_cola" = 2)
 	required_reagents = list("fernet" = 1, "cola" = 1)
 
-
 /datum/chemical_reaction/fanciulli
 	name = "Fanciulli"
 	id = "fanciulli"
@@ -688,3 +686,9 @@
 	id = "branca_menta"
 	results = list("branca_menta" = 3)
 	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)
+
+/datum/chemical_reaction/pwrgame
+	name = "Power Gamer"
+	id = "pwr_game"
+	results = list("pwr_game" = 5)
+	required_reagents = list("sodawater" = 1, "blackcrayonpowder" = 1, "sodiumchloride" = 1)

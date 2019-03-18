@@ -166,6 +166,15 @@
 		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
 		return
 
+//Drying Agent 
+/obj/item/reagent_containers/spray/drying_agent
+	name = "drying agent spray"
+	desc = "A spray bottle for drying agent."
+	volume = 100
+	list_reagents = list("drying_agent" = 100)
+	amount_per_transfer_from_this = 2
+	stream_amount = 5
+
 //spray tan
 /obj/item/reagent_containers/spray/spraytan
 	name = "spray tan"

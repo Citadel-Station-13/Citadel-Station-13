@@ -90,6 +90,24 @@
 /mob/living/proc/updatearousal()
 	update_arousal_hud()
 
+/mob/living/carbon/updatearousal()
+	. = ..()
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(istype(G))
+			var/datum/sprite_accessory/S
+			switch(G.type)
+				if(/obj/item/organ/genital/penis)
+					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/vagina)
+					S = GLOB.vagina_shapes_list[G.shape]
+				if(/obj/item/organ/genital/breasts)
+					S = GLOB.breasts_shapes_list[G.shape]
+			if(S?.alt_aroused)
+				G.aroused_state = isPercentAroused(G.aroused_amount)
+			else
+				G.aroused_state = FALSE
+			G.update_appearance()
+
 /mob/living/proc/update_arousal_hud()
 	return 0
 

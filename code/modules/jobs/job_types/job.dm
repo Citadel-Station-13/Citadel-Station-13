@@ -127,6 +127,8 @@
 		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
+	if(C.prefs.db_flags & DB_FLAG_EXEMPT)
+		return 0
 	if(!isnum(C.player_age))
 		return 0 //This is only a number if the db connection is established, otherwise it is text: "Requires database", meaning these restrictions cannot be enforced
 	if(!isnum(minimal_player_age))
@@ -190,6 +192,12 @@
 	var/datum/job/J = SSjob.GetJobType(jobtype)
 	if(!J)
 		J = SSjob.GetJob(H.job)
+
+	if(H.nameless && J.dresscodecompliant)
+		if(J.title in GLOB.command_positions)
+			H.real_name = J.title
+		else
+			H.real_name = "[J.title] #[rand(10000, 99999)]"
 
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))

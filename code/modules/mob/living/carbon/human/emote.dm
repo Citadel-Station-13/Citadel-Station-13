@@ -146,4 +146,31 @@
 		var/turf/T = loc
 		T.Entered(src)
 
-//Ayy lmao
+/datum/emote/sound/human
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/sound/human/buzz
+	key = "buzz"
+	key_third_person = "buzzes"
+	message = "buzzes."
+	message_param = "buzzes at %t."
+	sound = 'sound/machines/buzz-sigh.ogg'
+
+/datum/emote/sound/human/buzz2
+	key = "buzz2"
+	message = "buzzes twice."
+	sound = 'sound/machines/buzz-two.ogg'
+
+/datum/emote/sound/human/ping
+	key = "ping"
+	key_third_person = "pings"
+	message = "pings."
+	message_param = "pings at %t."
+	sound = 'sound/machines/ping.ogg'
+
+/datum/emote/sound/human/chime
+	key = "chime"
+	key_third_person = "chimes"
+	message = "chimes."
+	sound = 'sound/machines/chime.ogg'

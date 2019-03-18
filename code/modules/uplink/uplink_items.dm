@@ -506,6 +506,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/shotgun/scatter
+	name = "12g Scatter Laser shot Slugs"
+	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
+	item = /obj/item/ammo_box/magazine/m12g/scatter
+	cost = 5 // most armor has less laser protection then bullet
+
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
 	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
@@ -982,6 +988,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
+/datum/uplink_item/device_tools/surgerybag_adv
+	name = "Syndicate Surgery Duffel Bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
+			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
+	cost = 15 //Mite be to cheap
+
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
@@ -1355,13 +1368,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/reverse_bear_trap
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/clumsyDNA
+	name = "Clumsy Clown DNA"
+	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy.. \
+	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
+	cost = 1
+	item = /obj/item/dnainjector/clumsymut
+	restricted_roles = list("Clown")
+
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
-	surplus = 0
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -1383,7 +1403,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Kitchen Gun (TM) .45 Magazine"
 	desc = "An extra eight bullets for an extra eight uses of Kitchen Gun (TM)!"
 	cost = 1
-	surplus = 0
 	restricted_roles = list("Cook", "Janitor")
 	item = /obj/item/ammo_box/magazine/m45/kitchengun
 
@@ -1392,7 +1411,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
-	surplus = 0
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
 /datum/uplink_item/role_restricted/his_grace
@@ -1412,7 +1430,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list("Clown")
-	surplus = 0 //No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
@@ -1420,7 +1437,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
 	restricted_roles = list("Assistant")
-	surplus = 0
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
@@ -1474,7 +1490,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			blast wave \"projectile\". Aspiring scientists may find this highly useful, as forcing the pressure shockwave into a narrow angle seems to be able to bypass whatever quirk of physics \
 			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield."
 	item = /obj/item/gun/blastcannon
-	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled scientist.
+	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
 
 /datum/uplink_item/device_tools/clown_bomb
@@ -1487,6 +1503,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list("Clown")
+
+/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo 
+	name = "Hilarious firing pin"
+	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
+	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
+	item = /obj/item/firing_pin/clown
+	cost = 1
+	restricted_roles = list("Clown")
+
 /*
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"

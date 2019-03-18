@@ -51,7 +51,7 @@
 
 /obj/screen/alert/status_effect/vanguard
 	name = "Vanguard"
-	desc = "You're absorbing stuns! 25% of all stuns taken will affect you after this effect ends."
+	desc = "You're absorbing stuns! Your stamina is greatly increased, but not infinite. 25% of all stuns taken will affect you after this effect ends."
 	icon_state = "vanguard"
 	alerttooltipstyle = "clockcult"
 
@@ -75,6 +75,7 @@
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0)
+	owner.setStaminaLoss(0, FALSE)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)

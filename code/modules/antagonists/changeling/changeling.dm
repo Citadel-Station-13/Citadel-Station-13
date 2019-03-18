@@ -34,6 +34,8 @@
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
+	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
+	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -71,8 +73,6 @@
 	reset_powers()
 	create_initial_profile()
 	if(give_objectives)
-		if(team_mode)
-			forge_team_objectives()
 		forge_objectives()
 	remove_clownmut()
 	. = ..()
@@ -123,6 +123,8 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
+	loudfactor = 0
+	bloodtestwarnings = 0
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -174,6 +176,13 @@
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
+	loudfactor += thepower.loudness
+	if(loudfactor >= 4 && !bloodtestwarnings)
+		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
+		bloodtestwarnings = 1
+	if(loudfactor >= 10 && bloodtestwarnings < 2)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
+		bloodtestwarnings = 2
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -182,6 +191,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1

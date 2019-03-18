@@ -11448,12 +11448,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"aAq" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "aAr" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb,
@@ -11963,13 +11957,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"aBD" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "aBE" = (
 /obj/item/clothing/under/rank/mailman,
 /obj/item/clothing/head/mailman,
@@ -12352,10 +12339,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
-"aCx" = (
-/obj/machinery/atmospherics/components/binary/valve,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "aCy" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -12961,10 +12944,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aDV" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aDW" = (
@@ -56758,6 +56739,12 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"gOZ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/fitness)
 "gWd" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -56878,6 +56865,12 @@
 /obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"jnR" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "jqv" = (
 /obj/structure/chair/wood/normal{
 	dir = 1
@@ -57260,6 +57253,12 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"rsp" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "rBq" = (
 /obj/item/clothing/head/kitty,
 /obj/item/clothing/under/maid,
@@ -57561,6 +57560,13 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"vpY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "vxh" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -96101,12 +96107,12 @@ arj
 auB
 auB
 arj
+gOZ
 arj
-arj
 anf
 anf
-anf
-awD
+rsp
+rsp
 alP
 aGB
 aIf
@@ -96355,14 +96361,14 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-aaa
+gXs
+aoV
 alP
-ayf
-aBD
-aCx
+anf
+anf
+anf
+anf
+aDW
 aDV
 alP
 aGL
@@ -96612,15 +96618,15 @@ aaa
 aaa
 aaf
 aaa
-aaa
-aaf
-aaa
-aaa
+gXs
+aoV
 alP
-aAq
-aAq
+awD
+anf
+anf
+anf
 aCy
-aCG
+jnR
 alP
 aGL
 avI
@@ -96877,7 +96883,7 @@ alP
 alP
 alP
 alP
-aDW
+vpY
 aFn
 aGP
 avI

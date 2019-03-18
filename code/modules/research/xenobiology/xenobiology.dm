@@ -840,7 +840,7 @@
 		return
 	if(isitem(C))
 		var/obj/item/I = C
-		if(I.slowdown <= 0)
+		if(I.slowdown <= 0 || I.obj_flags & IMMUTABLE_SLOW)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		I.slowdown = 0
@@ -849,10 +849,10 @@
 		var/obj/vehicle/V = C
 		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
 		if(R)
-			if(R.vehicle_move_delay <= 0 )
+			if(R.vehicle_move_delay <= 1 )
 				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 				return ..()
-			R.vehicle_move_delay = 0
+			R.vehicle_move_delay = 1
 
 	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it faster.</span>")
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)

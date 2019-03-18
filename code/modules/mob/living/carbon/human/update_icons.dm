@@ -359,7 +359,6 @@ There are several things that need to be remembered:
 	apply_overlay(BELT_LAYER)
 
 
-
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_overlay(SUIT_LAYER)
 
@@ -390,8 +389,6 @@ There are several things that need to be remembered:
 					S.alternate_worn_icon = 'modular_citadel/icons/mob/suit_digi.dmi'
 				else if(S.taurmode == NOT_TAURIC && S.adjusted == NORMAL_STYLE)
 					S.alternate_worn_icon = null
-
-
 
 		overlays_standing[SUIT_LAYER] = S.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.alternate_worn_icon) ? S.alternate_worn_icon : 'icons/mob/suit.dmi'))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
@@ -476,7 +473,6 @@ There are several things that need to be remembered:
 				continue
 			out += overlays_standing[i]
 	return out
-
 
 //human HUD updates for items in our inventory
 
@@ -614,7 +610,7 @@ generate/load female uniform sprites matching all previously decided variables
 	else if(dna.species.fixed_mut_color)
 		. += "-coloured-[dna.species.fixed_mut_color]"
 	else if(dna.features["mcolor"])
-		. += "-coloured-[dna.features["mcolor"]]"
+		. += "-coloured-[dna.features["mcolor"]]-[dna.features["mcolor2"]]-[dna.features["mcolor3"]]"
 	else
 		. += "-not_coloured"
 
@@ -644,6 +640,8 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
+		if(BP.body_markings)
+			. += "-[BP.body_markings]"
 
 	if(has_trait(TRAIT_HUSK))
 		. += "-husk"

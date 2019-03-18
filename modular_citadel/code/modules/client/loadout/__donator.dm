@@ -344,3 +344,27 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/ian_costume
 	ckeywhitelist = list("cathodetherobot")
+
+/datum/gear/sharkcloth
+	name = "Leon's Skimpy Outfit"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/leoskimpy
+	ckeywhitelist = list("spectrosis")
+
+/datum/gear/mimemask
+	name = "Mime Mask"
+	category = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/gas/mime
+	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/mimeoveralls
+	name = "Mime's Overalls"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/mimeoveralls
+	ckeywhitelist = list("pireamaineach")
+
+/datum/gear/soulneck
+	name = "Soul Necklace"
+	category = SLOT_NECK
+	path = /obj/item/clothing/neck/undertale
+	ckeywhitelist = list("twilightic")

@@ -34,11 +34,6 @@
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"ai" = (
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "aj" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -1219,12 +1214,12 @@ an
 ac
 ac
 aJ
-ag
+af
 ag
 ac
 ac
 ar
-ai
+ag
 ac
 an
 an
@@ -1269,7 +1264,7 @@ an
 an
 ac
 Dd
-ai
+ag
 ak
 ag
 af
@@ -1298,10 +1293,10 @@ aa
 ab
 ac
 ac
-ai
+ag
 ag
 at
-ai
+ag
 ac
 ag
 at
@@ -1401,7 +1396,7 @@ ab
 ac
 af
 ag
-af
+ag
 ag
 af
 ac
@@ -1807,7 +1802,7 @@ bD
 (25,1,1) = {"
 ab
 ac
-ai
+ag
 ag
 JM
 ag
@@ -1816,7 +1811,7 @@ ac
 ag
 ar
 ag
-ai
+ag
 ac
 ab
 ab
@@ -1860,7 +1855,7 @@ ab
 ac
 ac
 af
-ai
+ag
 af
 ag
 aF

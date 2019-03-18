@@ -149,16 +149,16 @@
 	icon_state = "pineapplepizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 6, "ham" = 2)
+	foodtype = PINEAPPLE //Over powering tast of gods fruit
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	name = "\improper Hawaiian pizza slice"
 	desc = "A slice of delicious controversy."
 	icon_state = "pineapplepizzaslice"
 	filling_color = "#FF4500"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 6, "ham" = 2)
+	foodtype = PINEAPPLE //Over powering tast of gods fruit
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold
 	name = "\improper Arnold pizza"

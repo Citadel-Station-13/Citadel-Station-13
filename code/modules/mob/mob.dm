@@ -76,6 +76,8 @@
 	return "a ... thing?"
 
 /mob/proc/show_message(msg, type, alt_msg, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+	if(audiovisual_redirect)
+		audiovisual_redirect.show_message(msg ? "<avredirspan class='small'>[msg]</avredirspan>" : null, type, alt_msg ? "<avredirspan class='small'>[alt_msg]</avredirspan>" : null, alt_type)
 
 	if(!client)
 		return
@@ -564,7 +566,12 @@
 			GLOB.cameranet.stat_entry()
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
-
+		if(length(GLOB.sdql2_queries))
+			if(statpanel("SDQL2"))
+				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
+				for(var/i in GLOB.sdql2_queries)
+					var/datum/SDQL2_query/Q = i
+					Q.generate_stat()
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
 			listed_turf = null

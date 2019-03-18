@@ -93,6 +93,10 @@
 /datum/weather/ash_storm/weather_act(mob/living/L)
 	if(is_ash_immune(L))
 		return
+	if(is_species(L, /datum/species/lizard/ashwalker))
+		if(L.getStaminaLoss() <= STAMINA_SOFTCRIT)
+			L.adjustStaminaLossBuffered(4)
+		return
 	L.adjustFireLoss(4)
 
 

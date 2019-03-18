@@ -465,3 +465,29 @@
 	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
 	required_temp = 200
 	is_cold_recipe = 1
+
+/datum/chemical_reaction/reagent_explosion/lingblood
+	name = "Changeling Blood Reaction"
+	id = "ling_blood_reaction"
+	results = list("ash" = 1)
+	required_reagents = list("blood" = 1)
+	strengthdiv = 4 //The explosion should be somewhat strong if a full 15u is heated within a syringe. !!fun!!
+	required_temp = 666
+	special_react = TRUE
+	mix_sound = 'sound/effects/lingbloodhiss.ogg'
+	mix_message = "The blood bubbles and sizzles violently!"
+
+/datum/chemical_reaction/reagent_explosion/lingblood/check_special_react(datum/reagents/holder)
+	if(!holder)
+		return FALSE
+	var/list/D = holder.get_data("blood")
+	if(D && D["changeling_loudness"])
+		return (D["changeling_loudness"] >= 4 ? D["changeling_loudness"] : FALSE)
+	else
+		return FALSE
+
+/datum/chemical_reaction/reagent_explosion/lingblood/on_reaction(datum/reagents/holder, created_volume, specialreact)
+	if(specialreact >= 10)
+		return ..()
+	else
+		return FALSE

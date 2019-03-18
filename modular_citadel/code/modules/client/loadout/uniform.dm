@@ -118,10 +118,42 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/pants/track
 
+// Pantsless Sweaters
+
 /datum/gear/turtleneck
 	name = "Tactitool Turtleneck"
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/syndicate/cosmetic
+
+/datum/gear/creamsweater
+	name = "Cream Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater
+
+/datum/gear/blacksweater
+	name = "Black Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater/black
+
+/datum/gear/purpsweater
+	name = "Purple Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater/purple
+
+/datum/gear/greensweater
+	name = "Green Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater/green
+
+/datum/gear/redsweater
+	name = "Red Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater/red
+
+/datum/gear/bluesweater
+	name =  "Navy Commando Sweater"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/bb_sweater/blue
 
 /datum/gear/polykilt
 	name = "Polychromic Kilt"

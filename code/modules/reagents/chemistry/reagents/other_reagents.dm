@@ -32,6 +32,12 @@
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
+	if(reac_volume >= 10 && istype(L))
+		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+
+/datum/reagent/blood/reaction_obj(obj/O, volume)
+	if(volume >= 3 && istype(O))
+		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
@@ -1280,6 +1286,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
+	no_mob_color = TRUE
 
 /datum/reagent/colorful_reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
@@ -1481,14 +1488,16 @@
 	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
-
+	var/no_mob_color = FALSE
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	if(!no_mob_color)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	if(!no_mob_color)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)

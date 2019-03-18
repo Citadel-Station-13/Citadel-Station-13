@@ -50,7 +50,7 @@
 	damage = 50
 	damage_type = BRUTE
 	flag = "bomb"
-	range = 5
+	range = 4
 	log_override = TRUE
 
 /obj/item/gun/energy/kinetic_accelerator/premiumka/update_icon()

@@ -43,7 +43,7 @@
 	pump(user)
 	recentpump = world.time + 10
 	if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
-		user.adjustStaminaLossBuffered(5) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
+		user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
 	return
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
@@ -206,7 +206,7 @@
 	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
 	icon_state = "cshotgunc"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 
 //Dual Feed Shotgun
 
