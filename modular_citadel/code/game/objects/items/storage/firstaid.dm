@@ -23,7 +23,14 @@
 
 /obj/item/storage/firstaid/o2
 	icon_state = "oxy"
-
+	
+/obj/item/storage/firstaid/radbgone
+	icon_state = "rad"
+	
+/obj/item/storage/firstaid/radbgone/Initialize(mapload)
+    . = ..()
+    icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
+	
 /obj/item/storage/firstaid/tactical
 	icon_state = "tactical"
 

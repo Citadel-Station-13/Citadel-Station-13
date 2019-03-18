@@ -369,6 +369,12 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/neck/undertale
 	ckeywhitelist = list("twilightic")
 
+/datum/gear/frenchberet
+	name = "French Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/frenchberet
+	ckeywhitelist = list("notazoltan")
+
 /datum/gear/telegramsuit
 	name = "Singing Telegram Suit"
 	category = SLOT_IN_BACKPACK
@@ -382,3 +388,4 @@ datum/gear/darksabresheath
 	cost = 0
 	path = /obj/item/clothing/under/telegramhat
 	ckeywhitelist = list("TrilbySpaseClone")
+
