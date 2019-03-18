@@ -156,6 +156,10 @@
 		dat += "<a href='?src=\ref[src];b_name=\ref[selected]'>Name:</a>"
 		dat += " '[selected.name]'"
 
+		//Belly Type button
+		dat += "<a href='?src=\ref[src];b_wetness=\ref[selected]'>Has Flesh Noises?</a>"
+		dat += "[selected.is_wet ? "Yes" : "No"]"
+
 		//Digest Mode Button
 		dat += "<br><a href='?src=\ref[src];b_mode=\ref[selected]'>Belly Mode:</a>"
 		dat += " [selected.digest_mode]"
@@ -456,6 +460,9 @@
 			return 0
 
 		selected.name = new_name
+
+	if(href_list["b_wetness"])
+		selected.is_wet = !selected.is_wet
 
 	if(href_list["b_mode"])
 		var/list/menu_list = selected.digest_modes

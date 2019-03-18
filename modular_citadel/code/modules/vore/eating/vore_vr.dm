@@ -28,7 +28,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 // The datum type bolted onto normal preferences datums for storing Vore stuff
 //
 
-#define VORE_VERSION 2
+#define VORE_VERSION 3
 
 GLOBAL_LIST_EMPTY(vore_preferences_datums)
 

@@ -26,18 +26,19 @@
 	var/escapetime = 20 SECONDS				// Deciseconds, how long to escape this belly
 	var/digestchance = 0					// % Chance of stomach beginning to digest if prey struggles
 	var/absorbchance = 0					// % Chance of stomach beginning to absorb if prey struggles
-	var/escapechance = 100 					// % Chance of prey beginning to escape if prey struggles.
+	var/escapechance = 0 					// % Chance of prey beginning to escape if prey struggles.
 	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
 	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
 	var/silent = FALSE
 
-	var/transferlocation = null				// Location that the prey is released if they struggle and get dropped off.
+	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
 	var/transferchance = 0 					// % Chance of prey being transferred to transfer location when resisting
 	var/autotransferchance = 0 				// % Chance of prey being autotransferred to transfer location
 	var/autotransferwait = 10 				// Time between trying to transfer.
 	var/swallow_time = 10 SECONDS			// for mob transfering automation
 	var/vore_capacity = 1					// simple animal nom capacity
+	var/is_wet = TRUE						// Is this belly inside slimy parts?
 
 	//I don't think we've ever altered these lists. making them static until someone actually overrides them somewhere.
 	var/tmp/static/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_NOISY,DM_ABSORB,DM_UNABSORB)	// Possible digest modes
@@ -138,7 +139,8 @@
 		"digest_messages_owner",
 		"digest_messages_prey",
 		"examine_messages",
-		"emote_lists"
+		"emote_lists",
+		"is_wet"
 		)
 
 		//ommitted list
@@ -167,7 +169,7 @@
 	to_chat(owner,"<span class='notice'>[thing] slides into your [lowertext(name)].</span>")
 
 	//Sound w/ antispam flag setting
-	if(!silent && !recent_sound)
+	if(is_wet && !recent_sound)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
 			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
 				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
@@ -268,8 +270,10 @@
 
 	prey.forceMove(src)
 	var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
-	if(!silent)
+
+	if(is_wet)
 		prey.playsound_local(loc,preyloop,70,0, channel = CHANNEL_PREYLOOP)
+
 	owner.updateVRPanel()
 
 	for(var/mob/living/M in contents)
@@ -461,6 +465,9 @@
 //Yes, it's ""safe"" to drop items here
 /obj/belly/AllowDrop()
 	return TRUE
+/*
+/obj/belly/onDropInto(var/atom/movable/AM)
+	return null */
 
 //Handle a mob struggling
 // Called from /mob/living/carbon/relaymove()
@@ -469,6 +476,23 @@
 		return  // User is not in this belly
 
 	R.setClickCooldown(50)
+
+	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
+		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")
+		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
+
+		if(do_after(R, owner, escapetime))
+			if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
+				release_specific_contents(R)
+				return
+			else if(R.loc != src) //Aren't even in the belly. Quietly fail.
+				return
+			else //Belly became inescapable or mob revived
+				to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
+				to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
+				return
+			return
+
 	var/struggle_outer_message = pick(struggle_messages_outside)
 	var/struggle_user_message = pick(struggle_messages_inside)
 
@@ -483,41 +507,33 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	if((owner.stat || !owner.client) && (R.a_intent != INTENT_HELP)) //If owner is stat (dead, KO) we can actually escape
-		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around 5 seconds.)</span>")
-		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-
-		if(!do_mob(R,owner,50))
-			return
-		if(!(R in contents)) //Aren't even in the belly. Quietly fail.
-			return
-		if(R.a_intent != INTENT_HELP) //still want to?
-			release_specific_contents(R)
-			return
-		else //Belly became inescapable or mob revived
-			to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
-			to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
-			return
-	else if(R.a_intent != INTENT_HELP) //failsafe to make sure people are able to struggle out. friendly ERP should be on help intent.
-		to_chat(R,"<span class='warning'>You attempt to climb out of [lowertext(name)]. (This will take around [escapetime] seconds.)</span>")
-		to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
-		if(!do_mob(R,owner,escapetime))
-			return
-		release_specific_contents(R)
-		return
-	else if (R.a_intent == INTENT_HELP)
-		for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
-			M.show_message(struggle_outer_message, 1) // visible
-		to_chat(R,struggle_user_message)
-
-	if(!silent)
-		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+	if(is_wet)
+		for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
 				playsound(get_turf(owner),"struggle_sound",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
 		R.stop_sound_channel(CHANNEL_PRED)
 		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
 		R.playsound_local(get_turf(R),prey_struggle,45,0)
 
+	for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
+		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES)) //Might as well censor the normies here too.
+			M.show_message(struggle_outer_message, 1) // visible
+	to_chat(R,struggle_user_message)
+
+	if(escapable) //If the stomach has escapable enabled.
+		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
+			to_chat(R,"<span class='warning'>You start to climb out of \the [lowertext(name)].</span>")
+			to_chat(owner,"<span class='warning'>Someone is attempting to climb out of your [lowertext(name)]!</span>")
+			if(do_after(R, escapetime))
+				if((owner.stat || escapable) && (R.loc == src)) //Can still escape?
+					release_specific_contents(R)
+					return
+				else if(R.loc != src) //Aren't even in the belly. Quietly fail.
+					return
+				else //Belly became inescapable or mob revived
+					to_chat(R,"<span class='warning'>Your attempt to escape [lowertext(name)] has failed!</span>")
+					to_chat(owner,"<span class='notice'>The attempt to escape from your [lowertext(name)] has failed!</span>")
+					return
 	else if(prob(transferchance) && transferlocation) //Next, let's have it see if they end up getting into an even bigger mess then when they started.
 		var/obj/belly/dest_belly
 		for(var/belly in owner.vore_organs)
@@ -525,6 +541,7 @@
 			if(B.name == transferlocation)
 				dest_belly = B
 				break
+
 		if(!dest_belly)
 			to_chat(owner, "<span class='warning'>Something went wrong with your belly transfer settings. Your <b>[lowertext(name)]</b> has had it's transfer chance and transfer location cleared as a precaution.</span>")
 			transferchance = 0
@@ -541,21 +558,10 @@
 		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] start to cling onto its contents...</span>")
 		digest_mode = DM_ABSORB
 		return
-/*
-	else if(prob(digestchance) && digest_mode != DM_ITEMWEAK && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
+
+	else if(prob(digestchance) && digest_mode != DM_DIGEST) //Finally, let's see if it should run the digest chance.
 		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get more active...</span>")
 		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become active!</span>")
-		digest_mode = DM_ITEMWEAK
-		return
-
-	else if(prob(digestchance) && digest_mode == DM_ITEMWEAK) //Oh god it gets even worse if you fail twice!
-		to_chat(R,"<span class='warning'>In response to your struggling, \the [lowertext(name)] begins to get even more active!</span>")
-		to_chat(owner,"<span class='warning'>You feel your [lowertext(name)] beginning to become even more active!</span>")
-		digest_mode = DM_DIGEST
-		return */
-	else if(prob(digestchance)) //Finally, let's see if it should run the digest chance.)
-		to_chat(R, "<span class='warning'>In response to your struggling, \the [name] begins to get more active...</span>")
-		to_chat(owner, "<span class='warning'>You feel your [name] beginning to become active!</span>")
 		digest_mode = DM_DIGEST
 		return
 
@@ -609,6 +615,7 @@
 	dupe.autotransferwait = autotransferwait
 	dupe.swallow_time = swallow_time
 	dupe.vore_capacity = vore_capacity
+	dupe.is_wet = is_wet
 
 	//// Object-holding variables
 	//struggle_messages_outside - strings

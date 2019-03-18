@@ -1,15 +1,16 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/digestable = FALSE					// Can the mob be digested inside a belly?
-	var/obj/belly/vore_selected		// Default to no vore capability.
-	var/list/vore_organs = list()		// List of vore containers inside a mob
+	var/showvoreprefs = TRUE				// Determines if the mechanical vore preferences button will be displayed on the mob or not.
+	var/obj/belly/vore_selected				// Default to no vore capability.
+	var/list/vore_organs = list()			// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
-//	var/feeding = FALSE					// Are we going to feed someone else?
-	var/vore_taste = null				// What the character tastes like
+//	var/feeding = FALSE						// Are we going to feed someone else?
+	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = 0					// Is the vore panel open?
-	var/noisy = FALSE					// tummies are rumbly?
-	var/absorbed = FALSE				//are we absorbed?
+	var/openpanel = 0						// Is the vore panel open?
+	var/noisy = FALSE						// tummies are rumbly?
+	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
 
 //
@@ -26,7 +27,8 @@
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
-		M.init_vore()
+		if(M)
+			M.init_vore()
 
 	//Return 1 to hook-caller
 	return 1
@@ -281,7 +283,7 @@
 */
 
 //
-// Custom resist catches for /mob/living
+// Our custom resist catches for /mob/living
 //
 /mob/living/proc/vore_process_resist()
 
@@ -293,7 +295,7 @@
 
 	//Other overridden resists go here
 
-	return FALSE
+	return 0
 
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
