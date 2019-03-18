@@ -114,7 +114,7 @@
 /obj/item/pda/heads/rd
 	name = "research director PDA"
 	default_cartridge = /obj/item/cartridge/rd
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fourcolor
 	icon_state = "pda-rd"
 
 /obj/item/pda/captain
