@@ -7,6 +7,8 @@
 	equip_delay_other = 40
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
+	var/muzzle_var = NORMAL_STYLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
@@ -17,6 +19,18 @@
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			IF_HAS_BLOOD_DNA(src)
 				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+
+/obj/item/clothing/head/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		if(mutantrace_variation)
+			if(("mam_snout" in H.dna.species.mutant_bodyparts) && (H.dna.features["mam_snout"] != "None"))
+				muzzle_var = ALT_STYLE
+			else if(muzzle_var == ALT_STYLE)
+				muzzle_var = NORMAL_STYLE
+			H.update_inv_wear_mask()
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
 	..()

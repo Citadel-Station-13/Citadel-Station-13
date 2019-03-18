@@ -8,12 +8,26 @@
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 	dynamic_hair_suffix = "+generic"
+	var/muzzle_var = NORMAL_STYLE
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
 	if(ishuman(loc) && dynamic_hair_suffix)
 		var/mob/living/carbon/human/H = loc
 		H.update_hair()
+
+/obj/item/clothing/head/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		if(mutantrace_variation)
+			if(("mam_snout" in H.dna.species.mutant_bodyparts) && (H.dna.features["mam_snout"] != "None"))
+				muzzle_var = ALT_STYLE
+			else if(muzzle_var == ALT_STYLE)
+				muzzle_var = NORMAL_STYLE
+			H.update_inv_head()
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
