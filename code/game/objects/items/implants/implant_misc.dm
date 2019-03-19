@@ -103,9 +103,21 @@
 	radio.name = "internal radio"
 	radio.subspace_transmission = subspace_transmission
 	radio.canhear_range = 0
+	radio.resistance_flags |= INDESTRUCTIBLE
+	radio.item_flags |= DROPDEL
 	if(radio_key)
 		radio.keyslot = new radio_key
 	radio.recalculateChannels()
+
+/obj/item/implant/radio/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
+	if(.)
+		radio.forceMove(imp_in)
+
+/obj/item/implant/radio/removed(mob/living/source, silent = FALSE, special = 0)
+	. = ..()
+	if(.)
+		radio.forceMove(src)
 
 /obj/item/implant/radio/mining
 	radio_key = /obj/item/encryptionkey/headset_cargo

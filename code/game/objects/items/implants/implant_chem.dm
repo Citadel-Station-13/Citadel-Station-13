@@ -4,6 +4,7 @@
 	icon_state = "reagents"
 	container_type = OPENCONTAINER
 	activated = FALSE
+	var/obj/item/chemholder
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -30,6 +31,21 @@
 	GLOB.tracked_chem_implants -= src
 	return ..()
 
+/obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
+	if(.)
+		chemholder = new(imp_in)
+		chemholder.resistance_flags |= INDESTRUCTIBLE //bomb-proofing.
+		chemholder.item_flags |= DROPDEL
+		reagents.trans_to(chemholder, reagents.total_volume)
+
+/obj/item/implant/chem/removed(mob/target, silent = FALSE, special = 0)
+	. = ..()
+	if(.)
+		chemholder.reagents.trans_to(src, chemholder.reagents.total_volume)
+		QDEL_NULL(chemholder)
+
+
 /obj/item/implant/chem/trigger(emote, mob/living/source)
 	if(emote == "deathgasp")
 		if(istype(source) && !(source.stat == DEAD))
@@ -46,12 +62,11 @@
 		injectamount = reagents.total_volume
 	else
 		injectamount = cause
-	reagents.trans_to(R, injectamount)
+	chemholder.reagents.trans_to(R, injectamount)
 	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
-	if(!reagents.total_volume)
+	if(!chemholder.reagents.total_volume)
 		to_chat(R, "<span class='italics'>You hear a faint click from your chest.</span>")
 		qdel(src)
-
 
 /obj/item/implantcase/chem
 	name = "implant case - 'Remote Chemical'"
