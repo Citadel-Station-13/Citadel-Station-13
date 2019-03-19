@@ -9,9 +9,10 @@
 	item_flags = NOBLUDGEON
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
-	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.
-		for(var/obj/item/implant/uplink/I in target)
-			if(I && I.imp_in)
+	if(target == user && isliving(user)) //You can't go around smacking people with crystals to find out if they have an uplink or not.
+		var/mob/living/L = user
+		for(var/obj/item/implant/uplink/I in L.implants)
+			if(I?.imp_in)
 				GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
 				if(hidden_uplink)
 					hidden_uplink.telecrystals += amount

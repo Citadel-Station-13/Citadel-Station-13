@@ -245,7 +245,7 @@
 	if(!istype(M))
 		return
 
-	var/obj/item/implant/exile/Implant = new/obj/item/implant/exile(M)
+	var/obj/item/implant/exile/Implant = new
 	Implant.implant(M)
 
 /datum/antagonist/wizard/academy/create_objectives()

@@ -124,7 +124,7 @@
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !isliving(I.loc))
+			if(!I.imp_in || !isliving(I.imp_in))
 				continue
 			else
 				var/mob/living/M = I.imp_in

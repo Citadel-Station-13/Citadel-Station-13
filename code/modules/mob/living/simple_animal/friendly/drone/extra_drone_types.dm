@@ -49,7 +49,7 @@
 	. = ..()
 	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
 	hidden_uplink.telecrystals = 30
-	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
+	var/obj/item/implant/weapons_auth/W = new
 	W.implant(src)
 
 /mob/living/simple_animal/drone/snowflake
