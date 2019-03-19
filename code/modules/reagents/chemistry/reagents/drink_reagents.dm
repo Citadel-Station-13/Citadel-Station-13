@@ -751,6 +751,7 @@
 	id = "pinkmilk"
 	description = "A drink of a bygone era of milk and artificial sweetener back on a rock."
 	color = "#f76aeb"//rgb(247, 106, 235)
+	glass_icon_state = "pinkmilk"
 	quality = DRINK_FANTASTIC //Love drink
 	taste_description = "sweet strawberry and milk cream"
 	glass_name = "tall glass of strawberry milk"
@@ -767,6 +768,7 @@
 	id = "pinktea"
 	description = "A timeless classic!"
 	color = "#f76aeb"//rgb(247, 106, 235)
+	glass_icon_state = "pinktea"
 	quality = DRINK_FANTASTIC //Love drink
 	taste_description = "sweet tea with a hint of strawberry"
 	glass_name = "mug of strawberry tea"
