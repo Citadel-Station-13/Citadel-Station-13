@@ -1,0 +1,65 @@
+"a" = (/obj/structure/lattice,/obj/machinery/satellite/meteor_shield{active = 1},/turf/open/space/basic,/area/shuttle/escape)
+"b" = (/turf/closed/wall/mineral/titanium/interior,/area/shuttle/escape)
+"c" = (/turf/closed/wall/mineral/titanium,/area/shuttle/escape)
+"d" = (/turf/template_noop,/area/template_noop)
+"e" = (/obj/structure/lattice,/turf/open/space/basic,/area/shuttle/escape)
+"f" = (/obj/machinery/door/airlock/external,/turf/open/floor/engine,/area/shuttle/escape)
+"g" = (/turf/open/floor/engine,/area/shuttle/escape)
+"h" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/engine,/area/shuttle/escape)
+"i" = (/obj/machinery/computer/communications,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"j" = (/obj/machinery/computer/sat_control,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"k" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"l" = (/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"m" = (/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"n" = (/obj/structure/chair/comfy/shuttle{dir = 1},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"o" = (/obj/machinery/door/airlock/command,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"p" = (/obj/structure/chair/comfy/shuttle,/obj/machinery/light{dir = 1},/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
+"q" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
+"r" = (/obj/structure/chair/comfy/shuttle{dir = 8},/obj/machinery/light{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"s" = (/obj/machinery/door/airlock/security,/turf/open/floor/plating,/area/shuttle/escape)
+"t" = (/turf/open/floor/mineral/plastitanium/red/brig,/area/shuttle/escape)
+"u" = (/turf/open/floor/plasteel/stairs,/area/shuttle/escape)
+"v" = (/obj/machinery/door/airlock/shuttle/glass,/turf/open/floor/engine,/area/shuttle/escape)
+"w" = (/obj/structure/chair/comfy/shuttle{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"x" = (/obj/structure/chair/comfy/shuttle{dir = 1},/obj/machinery/light{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"y" = (/obj/structure/chair/comfy/shuttle{dir = 4},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"z" = (/obj/effect/spawner/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/escape)
+"A" = (/obj/structure/closet/emcloset/anchored,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"B" = (/obj/machinery/light,/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"C" = (/obj/structure/chair/comfy/shuttle{dir = 8},/turf/open/floor/mineral/titanium,/area/shuttle/escape)
+"D" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/open/floor/engine,/area/shuttle/escape)
+"E" = (/obj/structure/shuttle/engine/propulsion,/turf/open/space/basic,/area/shuttle/escape)
+"F" = (/obj/machinery/sleeper{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"G" = (/obj/machinery/light/small,/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"H" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/escape)
+"I" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/open/floor/plating,/area/shuttle/escape)
+"J" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"K" = (/obj/machinery/light/small{brightness = 3; dir = 8},/turf/open/floor/engine,/area/shuttle/escape)
+"L" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating,/area/shuttle/escape)
+"M" = (/obj/structure/shuttle/engine/large,/turf/open/space/basic,/area/shuttle/escape)
+"N" = (/turf/open/space/basic,/area/shuttle/escape)
+
+(1,1,1) = {"
+abcccbadd
+efghgfedd
+bcccfcbdd
+bijklmbdd
+blnllmbdd
+bbbbobbdd
+bpqblrbdd
+sttslmbdd
+bbbbubbdd
+vlllllbed
+bwlnnxbee
+cyllllcee
+bylnnxbzc
+cylllllAc
+bwlnnnBAc
+vllllCcDc
+bylllCcEe
+ccFGHcbde
+dcccfceda
+dcIJKfedd
+dbLLcbedd
+ddMNddedd
+"}
