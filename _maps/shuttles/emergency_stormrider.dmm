@@ -38,18 +38,19 @@
 "L" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating,/area/shuttle/escape)
 "M" = (/obj/structure/shuttle/engine/large,/turf/open/space/basic,/area/shuttle/escape)
 "N" = (/turf/open/space/basic,/area/shuttle/escape)
+"O" = (/obj/machinery/door/airlock/shuttle/glass,/obj/docking_port/mobile/emergency{name = "Stormrider"},/turf/open/floor/engine,/area/shuttle/escape)
 
 (1,1,1) = {"
 abcccbadd
 efghgfedd
 bcccfcbdd
-bijklmbdd
-blnllmbdd
-bbbbobbdd
-bpqblrbdd
-sttslmbdd
+bijklmbcd
+blnllmbcd
+bbbbobbcd
+bpqblrbcd
+sttslmbcd
 bbbbubbdd
-vlllllbed
+Olllllbed
 bwlnnxbee
 cyllllcee
 bylnnxbzc
