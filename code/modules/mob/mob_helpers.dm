@@ -30,11 +30,13 @@
 
 /proc/ran_zone(zone, probability = 80)
 	if(prob(probability))
-
 		zone = check_zone(zone)
 	else
 		zone = pickweight(list(BODY_ZONE_HEAD = 6, BODY_ZONE_CHEST = 6, BODY_ZONE_L_ARM = 22, BODY_ZONE_R_ARM = 22, BODY_ZONE_L_LEG = 22, BODY_ZONE_R_LEG = 22))
-	
+	return zone
+
+/proc/above_neck(zone)
+	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 	if(zones.Find(zone))
 		return 1
 	else
