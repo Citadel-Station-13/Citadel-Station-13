@@ -75,7 +75,7 @@
 	reagentsAmount = 250
 
 /datum/round_event_control/vent_clog/beer
-	name = "Foamy beer stationwide"
+	name = "Clogged Vents: Beer"
 	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
 
@@ -83,12 +83,12 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/plasma_decon
-	name = "Plasma decontamination"
+	name = "Anti-Plasma Flood"
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
 
 /datum/round_event_control/vent_clog/female
-	name = "FemCum stationwide"
+	name = "Clogged Vents; Girlcum"
 	typepath = /datum/round_event/vent_clog/female
 	max_occurrences = 0
 
@@ -96,7 +96,7 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/male
-	name = "Semen stationwide"
+	name = "Clogged Vents: Semen"
 	typepath = /datum/round_event/vent_clog/male
 	max_occurrences = 0
 
