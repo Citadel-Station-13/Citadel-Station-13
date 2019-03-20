@@ -224,7 +224,7 @@
 	name = "Asteroid With Engines Strapped To It"
 	description = "A cramped, reinforced shuttle with PDS installed at key points and absolutely no windows. This shuttle was designed for extreme exfiltration through dense debris fields by small teams of well-trained EVA operatives. Comes with a sleeper, a big ass engine, two lockers with internals and access hatches to make sure the asteroid defense systems didn't mysteriously not get activated when the shuttle departed Central Command."
 	admin_notes = "An antag-bombers wet dream. But at least it stops meteors..."
-	credit_cost = 6000 // Seemed like a good idea at the time.
+	credit_cost = 3000 // Seemed like a good idea at the time.
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
