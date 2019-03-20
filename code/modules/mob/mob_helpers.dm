@@ -29,7 +29,6 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
 	if(prob(probability))
 		return zone
 
