@@ -138,27 +138,27 @@
 	GET_COMPONENT(slipper, /datum/component/slippery)
 	slipper.signal_enabled = active
 
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1)
+/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	if(active)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower
 			C.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
-/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom)
+/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(active)
-		var/caught = hit_atom.hitby(src, 0, 0)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			GET_COMPONENT(slipper, /datum/component/slippery)
-			slipper.Slip(hit_atom)
+			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
-			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
+			sleep(1)
+			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
 	else
 		return ..()
 
 
 //BOMBANANA
-
 /obj/item/reagent_containers/food/snacks/grown/banana/bombanana
 	trash = /obj/item/grown/bananapeel/bombanana
 	bitesize = 1
