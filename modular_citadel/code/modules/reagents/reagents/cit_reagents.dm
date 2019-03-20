@@ -37,10 +37,17 @@
 	..()
 	dir = pick(1,2,4,8)
 
-/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
+/* /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/semen(T)
-		reagentdecal.reagents.add_reagent("semen", reac_volume)
+		reagentdecal.reagents.add_reagent("semen", reac_volume) */
+
+/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
+	if(!isspaceturf(T))
+		var/obj/effect/decal/cleanable/semen/S = locate() in T.contents
+		if(!S)
+			S = new/obj/effect/decal/cleanable/semen(T)
+		S.reagents.add_reagent("semen", reac_volume)
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
