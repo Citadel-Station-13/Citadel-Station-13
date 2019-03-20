@@ -30,30 +30,13 @@
 
 /proc/ran_zone(zone, probability = 80)
 
-	zone = check_zone(zone)
-
 	if(prob(probability))
 		return zone
 
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
-	return zone
-
-/proc/above_neck(zone)
-	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 6, BODY_ZONE_CHEST = 6, BODY_ZONE_L_ARM = 22, BODY_ZONE_R_ARM = 22, BODY_ZONE_L_LEG = 22, BODY_ZONE_R_LEG = 22))
+	
 	if(zones.Find(zone))
 		return 1
 	else
