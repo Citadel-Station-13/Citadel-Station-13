@@ -30,7 +30,6 @@
 
 /proc/ran_zone(zone, probability = 80)
 	if(prob(probability))
-		return zone
 
 		zone = check_zone(zone)
 	else
