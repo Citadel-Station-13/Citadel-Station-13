@@ -75,7 +75,7 @@
 	min_val = 1
 
 /datum/config_entry/number/brother_scaling_coeff	//how many players per brother team
-	config_entry_value = 25
+	config_entry_value = 10
 	min_val = 1
 
 /datum/config_entry/number/changeling_scaling_coeff	//how much does the amount of players get divided by to determine changelings
