@@ -68,7 +68,7 @@
 		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000),
 		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
 		new /datum/data/mining_equipment("Spare Suit Voucher",			/obj/item/suit_voucher,												15000),
-		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining_cloned,					20000)									8000)
+		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining_cloned,					25000)									8000)
 		)
 
 /datum/data/mining_equipment
@@ -322,8 +322,11 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/mining_access_card(src)
 
-/obj/item/storage/backpack/duffelbag/mining_cloner
+/obj/item/storage/backpack/duffelbag/mining_cloned
+	name = "mining replacement kit"
+	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even as a new Id!"
 	new /obj/item/pickaxe/mini(src)
+	new /obj/item/implanter/tracking/gps(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/clothing/gloves/color/black(src)
