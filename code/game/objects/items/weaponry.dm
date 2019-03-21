@@ -224,7 +224,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 
 /obj/item/katana/cursed
-	slot_flags = null
+	slot_flags = null | NODROP
 
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
