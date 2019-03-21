@@ -1060,7 +1060,7 @@
     reagent_state = LIQUID
     metabolization_rate = 1 * REAGENTS_METABOLISM
     color = "#91D865"
-    overdose_threshold = 30
+    overdose_threshold = 22
     taste_description = "jelly"
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
