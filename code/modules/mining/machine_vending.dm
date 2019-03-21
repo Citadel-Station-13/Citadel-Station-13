@@ -24,6 +24,7 @@
 		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
+		new /datum/data/mining_equipment("Larger Ore Bag",				/obj/item/storage/bag/ore/large,									500),
 		new /datum/data/mining_equipment("500 Point Transfer Card",		/obj/item/card/mining_point_card/mp500,								500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
@@ -344,7 +345,7 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/id/miningd(src)
 	new /obj/item/storage/bag/ore(src)
-	new/obj/item/clothing/glasses/meson/prescription(src)
+	new /obj/item/clothing/glasses/meson/prescription(src)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
 	var/items = list("Exo-suit", "SEVA suit")
