@@ -34,8 +34,8 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
-	var/obj/structure/projected_forcefield/F = locate() in T
-	if(F)
+	var/obj/structure/projected_forcefield/same = locate() in T
+	if(same)
 		to_chat(user, "<span class='notice'>There is already a forcefield on [T]!</span>")
 		return
 
