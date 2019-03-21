@@ -181,9 +181,8 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		if(!o2overloadtime)
-			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
