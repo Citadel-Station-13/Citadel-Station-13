@@ -343,7 +343,7 @@
 	new /obj/item/clothing/suit/hooded/explorer(src)
 	new /obj/item/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/card/id/miningd(src)
+	new /obj/item/card/id/mining(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/clothing/glasses/meson/prescription(src)
 
