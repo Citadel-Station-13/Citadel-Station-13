@@ -50,4 +50,4 @@ GLOBAL_LIST_INIT(release_sounds, list(
 		"Pred Escape" = 'sound/vore/pred/escape.ogg',
 		"Splatter" = 'sound/effects/splat.ogg',
 		"None" = null
-		)
+		))
