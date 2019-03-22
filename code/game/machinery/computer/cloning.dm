@@ -64,19 +64,6 @@
 	if(scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
-	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
-
-		if(!pod)
-			return
-
-		if(pod.occupant)
-			continue	//how though?
-
-		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"]))
-			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-			records -= R
-
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	src.scanner = findscanner()
 	if(findfirstcloner && !LAZYLEN(pods))
