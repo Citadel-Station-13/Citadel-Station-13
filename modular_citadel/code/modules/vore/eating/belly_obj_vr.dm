@@ -15,7 +15,7 @@
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
 	var/vore_sound = "Gulp"					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
-	var/release_sound = "Splatter"
+	var/release_sound = "Splatter"			// Sound for letting someone out.
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
 	var/emote_time = 60 SECONDS				// How long between stomach emotes at prey
@@ -30,7 +30,6 @@
 	var/can_taste = FALSE					// If this belly prints the flavor of prey when it eats someone.
 	var/bulge_size = 0.25					// The minimum size the prey has to be in order to show up on examine.
 //	var/shrink_grow_size = 1				// This horribly named variable determines the minimum/maximum size it will shrink/grow prey to.
-	var/silent = FALSE
 
 	var/transferlocation					// Location that the prey is released if they struggle and get dropped off.
 	var/transferchance = 0 					// % Chance of prey being transferred to transfer location when resisting
@@ -127,7 +126,6 @@
 		"escapechance",
 		"can_taste",
 		"bulge_size",
-		"silent",
 		"transferlocation",
 		"transferchance",
 		"autotransferchance",
@@ -170,7 +168,7 @@
 
 	//Sound w/ antispam flag setting
 	if(is_wet && !recent_sound)
-		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+		for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
 				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				recent_sound = TRUE
@@ -184,7 +182,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/obj/belly/proc/release_all_contents(var/include_absorbed = FALSE)
+/obj/belly/proc/release_all_contents(var/include_absorbed = FALSE, var/silent = FALSE)
 	var/atom/destination = drop_location()
 	var/count = 0
 	for(var/thing in contents)
@@ -203,7 +201,7 @@
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "emptyprey", /datum/mood_event/emptyprey)
 		AM.forceMove(destination)  // Move the belly contents into the same location as belly's owner.
 		count++
-	for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
+	for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
 			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	if(!silent)
@@ -216,16 +214,15 @@
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-/obj/belly/proc/release_specific_contents(var/atom/movable/M)
+/obj/belly/proc/release_specific_contents(var/atom/movable/M, var/silent = FALSE)
 	if (!(M in contents))
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
 	items_preserved -= M
-	if(release_sound)
-		for(var/mob/H in get_hearers_in_view(5, get_turf(owner)))
-			if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
-				playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+	for(var/mob/H in get_hearers_in_view(2, get_turf(owner)))
+		if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
+			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
@@ -515,6 +512,11 @@
 		var/sound/prey_struggle = sound(get_sfx("prey_struggle"))
 		R.playsound_local(get_turf(R),prey_struggle,45,0)
 
+	else
+		for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
+			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
+				playsound(get_turf(owner),"rustle",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
+
 	for(var/mob/M in get_hearers_in_view(3, get_turf(owner)))
 		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES)) //Might as well censor the normies here too.
 			M.show_message(struggle_outer_message, 1) // visible
@@ -608,7 +610,6 @@
 	dupe.escapechance = escapechance
 	dupe.can_taste = can_taste
 	dupe.bulge_size = bulge_size
-	dupe.silent = silent
 	dupe.transferlocation = transferlocation
 	dupe.transferchance = transferchance
 	dupe.autotransferchance = autotransferchance
