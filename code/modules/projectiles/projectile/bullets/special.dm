@@ -5,6 +5,7 @@
 	knockdown = 60
 	forcedodge = TRUE
 	nodamage = TRUE
+	candink = FALSE
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
