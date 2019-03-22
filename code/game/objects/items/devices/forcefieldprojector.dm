@@ -63,6 +63,8 @@
 
 /obj/item/forcefield_projector/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	for(var/i in current_fields)
+		qdel(i)
 	return ..()
 
 /obj/item/forcefield_projector/process()
