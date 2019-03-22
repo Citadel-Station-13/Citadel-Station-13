@@ -380,12 +380,12 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	cost = 0
 	path = /obj/item/clothing/head/telegramhat
-	ckeywhitelist = list("TrilbySpaseClone")
+	ckeywhitelist = list("trilbyspaseclone")
 
 /datum/gear/telegramhat
 	name = "Singing Telegram Hat"
 	category = SLOT_IN_BACKPACK
 	cost = 0
 	path = /obj/item/clothing/under/telegramhat
-	ckeywhitelist = list("TrilbySpaseClone")
+	ckeywhitelist = list("trilbyspaseclone")
 
