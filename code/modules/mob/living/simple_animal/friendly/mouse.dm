@@ -63,7 +63,7 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(isbelly(loc)
+	if(isbelly(loc))
 		return
 
 	if(prob(chew_probability))
