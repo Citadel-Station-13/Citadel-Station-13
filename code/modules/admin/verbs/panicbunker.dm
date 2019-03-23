@@ -13,6 +13,7 @@
 	if (new_pb && !SSdbcore.Connect())
 		message_admins("The Database is not connected! Panic bunker will not work until the connection is reestablished.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Panic Bunker", "[new_pb ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	send2irc("Panic Bunker", "[key_name(usr)] has toggled the Panic Bunker, it is now [new_pb ? "enabled" : "disabled"].")
 
 /client/proc/addbunkerbypass(ckeytobypass as text)
 	set category = "Special Verbs"
@@ -24,7 +25,8 @@
 
 	GLOB.bunker_passthrough |= ckey(ckeytobypass)
 	log_admin("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
-	message_admins("[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
+	message_admins("[key_name_admin(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
+	send2irc("Panic Bunker", "[key_name(usr)] has added [ckeytobypass] to the current round's bunker bypass list.")
 
 /client/proc/revokebunkerbypass(ckeytobypass as text)
 	set category = "Special Verbs"
@@ -36,5 +38,5 @@
 
 	GLOB.bunker_passthrough -= ckey(ckeytobypass)
 	log_admin("[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
-	message_admins("[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
-
+	message_admins("[key_name_admin(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
+	send2irc("Panic Bunker", "[key_name(usr)] has removed [ckeytobypass] from the current round's bunker bypass list.")
