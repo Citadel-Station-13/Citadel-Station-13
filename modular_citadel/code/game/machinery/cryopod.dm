@@ -365,10 +365,8 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		if(world.time < 30 * 600)//before the 30 minute mark
-			mob_occupant.ghostize(0) // Players despawned too early may not re-enter the game
-		else
-			mob_occupant.ghostize(1)
+		mob_occupant.ghostize(0) // Players who cryo out may not re-enter the round
+
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
