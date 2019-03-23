@@ -5,7 +5,7 @@
 	var/modifier = 0
 	var/noexplosion = FALSE
 
-/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume, turf/overrde)
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume, turf/override)
 	if(!noexplosion)
 		var/turf/T = override || get_turf(holder.my_atom)
 		var/inside_msg
