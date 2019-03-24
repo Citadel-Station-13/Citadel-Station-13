@@ -5,6 +5,9 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_stat = UNCONSCIOUS
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_anatomic_panacea"
+	action_background_icon_state = "bg_ling"
 
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)

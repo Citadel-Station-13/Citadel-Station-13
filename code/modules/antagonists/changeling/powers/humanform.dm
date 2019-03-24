@@ -3,6 +3,9 @@
 	desc = "We change into a human."
 	chemical_cost = 5
 	req_dna = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_human"
+	action_background_icon_state = "bg_ling"
 
 //Transform into a human.
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
