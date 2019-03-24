@@ -518,7 +518,7 @@
 	cost = 3500
 	contains = list(/obj/item/gun/energy/e_gun/dragnet,
 					/obj/item/gun/energy/e_gun/dragnet)
-	crate_name = "anit riot net guns crate"
+	crate_name = "anti riot net guns crate"
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
@@ -553,7 +553,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -569,12 +569,12 @@
 
 /datum/supply_pack/security/armory/miniguns
 	name = "Personal Miniature Energy Guns"
-	desc = "Contains three miniature energy guns. Each gun has a dislaber and a lethal option. Requires Armory access to open."
+	desc = "Contains three miniature energy guns. Each gun has a disabler and a lethal option. Requires Armory access to open."
 	cost = 5000
 	contains = list(/obj/item/gun/energy/e_gun/mini,
 					/obj/item/gun/energy/e_gun/mini,
 					/obj/item/gun/energy/e_gun/mini)
-	crate_name = "personal engery guns crate"
+	crate_name = "personal energy guns crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laserarmor
