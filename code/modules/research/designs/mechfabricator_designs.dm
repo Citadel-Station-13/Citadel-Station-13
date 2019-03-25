@@ -768,6 +768,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_advhealth
+	name = "Cyborg Upgrade (Advance Health Scanner)"
+	id = "borg_upgrade_advhealth"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/advhealth
+	materials = list(MAT_METAL=7500, MAT_GLASS=7500, MAT_SILVER=1000, MAT_GOLD=1000, MAT_TITANIUM=2000)
+	construction_time = 100
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
