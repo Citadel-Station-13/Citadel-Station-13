@@ -5,7 +5,7 @@
 	var/obj/belly/vore_selected				// Default to no vore capability.
 	var/list/vore_organs = list()			// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
-//	var/feeding = FALSE						// Are we going to feed someone else?
+	var/feeding = FALSE						// Are we going to feed someone else?
 	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0						// Is the vore panel open?
@@ -77,13 +77,15 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey)
-	if(!user || !prey)
+/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	if(!user || !prey || !pred)
 		return
 
-	if(prey == src && user.zone_selected == "mouth") //you click your target
-//		if(!feeding(src))
-//			return
+	if(prey == src) //you click your target
+		if(!src.feeding)
+			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
+			to_chat(src, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
+			return
 		if(!is_vore_predator(prey))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
@@ -96,8 +98,14 @@
 		user.feed_grabbed_to_self(src, prey)
 
 	else // click someone other than you/prey
-//		if(!feeding(src))
-//			return
+		if(!src.feeding)
+			to_chat(user, "<span class='notice'>They aren't voracious enough to be fed.</span>")
+			to_chat(src, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
+			return
+		if(!prey.feeding)
+			to_chat(user, "<span class='notice'>They aren't able to be fed to someone.</span>")
+			to_chat(prey, "<span class='notice'>[user] tried to feed you to [src], but you aren't able to be fed to them.</span>")
+			return
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
@@ -122,7 +130,7 @@
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	return//disabled until I can make that toggle work
+//	return//disabled until I can make that toggle work
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 

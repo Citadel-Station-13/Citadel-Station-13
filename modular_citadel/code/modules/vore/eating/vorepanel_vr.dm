@@ -110,7 +110,7 @@
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
 			if(DM_HEAL)
-				spanstyle = "color:green;"
+				spanstyle = "color:darkgreen;"
 			if(DM_NOISY)
 				spanstyle = "color:purple;"
 			if(DM_ABSORB)
@@ -238,15 +238,21 @@
 	dat += "<HR>"
 	switch(user.digestable)
 		if(TRUE)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable <font color='darkgreen'>(Currently: ON)</font></a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable <font color='red'>(Currently: OFF)</font></a>"
 
 	switch(user.devourable)
 		if(TRUE)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
+			dat += "<br><a href='?src=\ref[src];toggledvor=1'>Toggle Devourable <font color='darkgreen'>(Currently: ON)</font></a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
+			dat += "<br><a href='?src=\ref[src];toggledvor=1'>Toggle Devourable <font color='red'>(Currently: OFF)</font></a>"
+
+	switch(user.feeding)
+		if(TRUE)
+			dat += "<br><a href='?src=\ref[src];toggledfeed=1'>Toggle Feeding <font color='darkgreen'>(Currently: ON)</font></a>"
+		if(FALSE)
+			dat += "<br><a href='?src=\ref[src];toggledfeed=1'>Toggle Feeding <font color='red'>(Currently: OFF)</font></a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -707,6 +713,19 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable
+
+	if(href_list["toggledfeed"])
+		var/choice = alert(user, "This button is to toggle your ability to be fed to others. Feeding predators is currently: [user.feeding ? "Allowed" : "Prevented"]", "", "Allow Feeding", "Cancel", "Prevent Feeding")
+		switch(choice)
+			if("Cancel")
+				return
+			if("Allow Feeding")
+				user.feeding = TRUE
+			if("Prevent Feeding")
+				user.feeding = FALSE
+
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.feeding = user.feeding
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1
