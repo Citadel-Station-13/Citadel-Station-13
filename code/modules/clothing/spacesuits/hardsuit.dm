@@ -712,7 +712,7 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
 	. = list()
 	if(!isinhands)
-		if(tauric == TRUE)
+		if(taurmode >= SNEK_TAURIC)
 			. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', shield_state, MOB_LAYER + 0.01)
 		else
 			. += mutable_appearance('icons/effects/effects.dmi', shield_state, MOB_LAYER + 0.01)
