@@ -510,9 +510,8 @@
 		advanced health scanner, for better readings on patients."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type list=(
+	module_type = list(
 		/obj/item/robot_module/medical,
-		/obj/item/robot_module/standerd, 
 		/obj/item/robot_module/syndicate_medical,
 		/obj/item/robot_module/medihound,
 		/obj/item/robot_module/borgi) 
