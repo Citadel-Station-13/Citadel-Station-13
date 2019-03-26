@@ -269,7 +269,7 @@
 	name = "Welding Shield Eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	id = "ci-welding"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 40
 	materials = list(MAT_METAL = 600, MAT_GLASS = 400)
 	build_path = /obj/item/organ/eyes/robotic/shield
@@ -280,7 +280,7 @@
 	name = "Luminescent Eyes"
 	desc = "A pair of cybernetic eyes that can emit multicolored light"
 	id = "ci-gloweyes"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 40
 	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
 	build_path = /obj/item/organ/eyes/robotic/glow
@@ -291,7 +291,7 @@
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	id = "ci-breather"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 35
 	materials = list(MAT_METAL = 600, MAT_GLASS = 250)
 	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
@@ -302,7 +302,7 @@
 	name = "Surgical Arm Implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	id = "ci-surgery"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
 	construction_time = 200
 	build_path = /obj/item/organ/cyberimp/arm/surgery
@@ -313,7 +313,7 @@
 	name = "Toolset Arm Implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
 	construction_time = 200
 	build_path = /obj/item/organ/cyberimp/arm/toolset
@@ -324,7 +324,7 @@
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	id = "ci-medhud"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 50
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 500, MAT_GOLD = 500)
 	build_path = /obj/item/organ/cyberimp/eyes/hud/medical
@@ -335,7 +335,7 @@
 	name = "Security HUD Implant"
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	id = "ci-sechud"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 50
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 750, MAT_GOLD = 750)
 	build_path = /obj/item/organ/cyberimp/eyes/hud/security
@@ -346,7 +346,7 @@
 	name = "X-ray Eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
 	build_path = /obj/item/organ/eyes/robotic/xray
@@ -357,7 +357,7 @@
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/organ/eyes/robotic/thermals
@@ -368,7 +368,7 @@
 	name = "Anti-Drop Implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	id = "ci-antidrop"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 400, MAT_GOLD = 400)
 	build_path = /obj/item/organ/cyberimp/brain/anti_drop
@@ -379,7 +379,7 @@
 	name = "CNS Rebooter Implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	id = "ci-antistun"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 500, MAT_GOLD = 1000)
 	build_path = /obj/item/organ/cyberimp/brain/anti_stun
@@ -390,7 +390,7 @@
 	name = "Nutriment Pump Implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 40
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 500)
 	build_path = /obj/item/organ/cyberimp/chest/nutriment
@@ -401,7 +401,7 @@
 	name = "Nutriment Pump Implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	id = "ci-nutrimentplus"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 50
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_GOLD = 500, MAT_URANIUM = 750)
 	build_path = /obj/item/organ/cyberimp/chest/nutriment/plus
@@ -412,7 +412,7 @@
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	id = "ci-reviver"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 60
 	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 300, MAT_URANIUM = 500)
 	build_path = /obj/item/organ/cyberimp/chest/reviver
@@ -423,7 +423,7 @@
 	name = "Thrusters Set Implant"
 	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
 	id = "ci-thrusters"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE
 	construction_time = 80
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/organ/cyberimp/chest/thrusters
