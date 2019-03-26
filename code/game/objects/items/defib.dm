@@ -445,7 +445,9 @@
 	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(isliving(H.pulledby))		//CLEAR!
+	if(defib.pullshocksafely && isliving(H.pulledby))
+		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
+		else
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, src))
 			M.visible_message("<span class='danger'>[M] is electrocuted by [M.p_their()] contact with [H]!</span>")
@@ -633,12 +635,6 @@
 				playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
 	busy = FALSE
 	update_icon()
-
-/obj/item/twohanded/shockpaddles/shock_touching(dmg, mob/H)
-	if(defib.pullshocksafely && isliving(H.pulledby))
-		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
-		return
-	..()
 
 /obj/item/defibrillator/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/disk/medical/defib_heal))
