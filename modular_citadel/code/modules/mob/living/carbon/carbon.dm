@@ -40,12 +40,12 @@
 	return TRUE
 
 mob/living/carbon/proc/toggle_vore_mode()
-	if(combatmode)
-		return FALSE //let's not override the main draw of the game these days
 	voremode = !voremode
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/voretoggle/selector in hud_used.static_inventory)
 			selector.rebaseintomygut(src)
+	if(combatmode)
+		return FALSE //let's not override the main draw of the game these days
 	SEND_SIGNAL(src, COMSIG_VORE_TOGGLED, src, voremode)
 	return TRUE
 

@@ -61,7 +61,7 @@
 /obj/screen/voretoggle/proc/rebaseintomygut(mob/living/carbon/C)
 	if(!C)
 		return
-	if(C.voremode)
+	if(C.voremode && !C.combatmode)
 		icon_state = "nom"
 	else
 		icon_state = "nom_off"
