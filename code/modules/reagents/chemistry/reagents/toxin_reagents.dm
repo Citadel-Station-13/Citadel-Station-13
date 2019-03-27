@@ -86,6 +86,11 @@
 		return
 	..()
 
+/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/M)
+	if(M.radiation > 0)
+		M.radiation -= min(M.radiation, 15)
+	..()
+
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
 	id = "lexorin"
