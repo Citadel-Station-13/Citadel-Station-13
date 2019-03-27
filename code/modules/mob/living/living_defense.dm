@@ -133,7 +133,7 @@
 	if(user.pulling && user.grab_state == GRAB_AGGRESSIVE && user.voremode)
 		if(ismob(user.pulling))
 			var/mob/P = user.pulling
-			user.vore_attack(user, P, src) // User, Prey, Predator
+			user.vore_attack(user, P, src) // User, Pulled, Predator target (which can be user, pulling, or src)
 			return
 
 	if(user == src) //we want to be able to self click if we're voracious
