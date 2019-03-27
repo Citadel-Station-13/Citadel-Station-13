@@ -170,7 +170,8 @@
 	if(is_wet && !recent_sound)
 		for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
-				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+				var/sound/devourments = GLOB.vore_sounds[vore_sound]
+				playsound(get_turf(owner),devourments,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 				recent_sound = TRUE
 
 	//Messages if it's a mob
@@ -207,7 +208,8 @@
 		count++
 	for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
-			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+			var/sound/releasement = GLOB.release_sounds[release_sound]
+			playsound(get_turf(owner),releasement,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	//Clean up our own business
 	items_preserved.Cut()
@@ -232,7 +234,8 @@
 	items_preserved -= M
 	for(var/mob/H in get_hearers_in_view(2, get_turf(owner)))
 		if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
-			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+			var/sound/releasement = GLOB.release_sounds[release_sound]
+			playsound(get_turf(owner),releasement,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M
@@ -315,7 +318,8 @@
 	if(!silent)
 		for(var/mob/M in get_hearers_in_view(5, get_turf(owner)))
 			if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
-				playsound(get_turf(owner),"[src.vore_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+				var/sound/devourments = GLOB.vore_sounds[vore_sound]
+				playsound(get_turf(owner),devourments,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 	owner.updateVRPanel()
 	for(var/mob/living/M in contents)
 		M.updateVRPanel()

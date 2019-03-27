@@ -116,6 +116,8 @@
 				spanstyle = "color:purple;"
 			if(DM_ABSORB)
 				spanstyle = "color:purple;"
+			if(DM_DRAGON)
+				spanstyle = "color:blue;"
 
 		dat += "<span style='[spanstyle]'> ([B.contents.len])</span></a></li>"
 
@@ -550,9 +552,9 @@
 		selected.release_sound = choice
 
 	if(href_list["b_releasesoundtest"])
-		var/soundfile = selected.release_sound
-		if(soundfile)
-			user << soundfile
+		var/sound/releasetest = GLOB.release_sounds[selected.release_sound]
+		if(releasetest)
+			user << releasetest
 
 	if(href_list["b_sound"])
 		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.vore_sounds
@@ -563,9 +565,9 @@
 		selected.vore_sound = choice
 
 	if(href_list["b_soundtest"])
-		var/soundfile = selected.vore_sound
-		if(soundfile)
-			user << soundfile
+		var/sound/voretest = GLOB.vore_sounds[selected.vore_sound]
+		if(voretest)
+			user << voretest
 
 	if(href_list["b_tastes"])
 		selected.can_taste = !selected.can_taste
