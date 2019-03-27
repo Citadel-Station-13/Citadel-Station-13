@@ -534,7 +534,6 @@
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
-
 //BLACKLISTED RACES
 /datum/reagent/mutationtoxin/skeleton
 	name = "Skeleton Mutation Toxin"
@@ -559,7 +558,6 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
-
 
 //DANGEROUS RACES
 /datum/reagent/mutationtoxin/shadow
@@ -1355,9 +1353,6 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
-
-
-
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment
@@ -1395,15 +1390,7 @@
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
 
-
-
-
-
-
-
 // GOON OTHERS
-
-
 
 /datum/reagent/oil
 	name = "Oil"
@@ -1424,6 +1411,11 @@
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/C)
 	C.adjustPlasma(10)
+	..()
+
+/datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/M)
+	if(M.radiation > 0)
+		M.radiation -= min(M.radiation, 10)
 	..()
 
 /datum/reagent/iodine
