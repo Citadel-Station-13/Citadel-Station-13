@@ -56,7 +56,8 @@
 
 /datum/vore_look/proc/gen_vui(var/mob/living/user)
 	var/dat
-
+	dat += "Remember to toggle the vore mode, it's to the left of your combat toggle. Open mouth means you're voracious!<br>"
+	dat += "<HR>"
 	var/atom/userloc = user.loc
 	if (isbelly(userloc))
 		var/obj/belly/inside_belly = userloc

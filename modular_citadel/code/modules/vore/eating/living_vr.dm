@@ -81,35 +81,38 @@
 	if(!user || !prey || !pred)
 		return
 
-	if(prey == src) //you click your target
-		if(!src.feeding)
+	if(!isliving(pred)) //no badmin, you can't feed people to ghosts or objects.
+		return
+
+	if(pred == prey) //you click your target
+		if(!pred.feeding)
 			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
-			to_chat(src, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
+			to_chat(pred, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
 			return
-		if(!is_vore_predator(prey))
+		if(!is_vore_predator(pred))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
-		feed_self_to_grabbed(user, src)
+		feed_self_to_grabbed(user, pred)
 
-	if(user == src) //you click yourself
+	else if(pred == user) //you click yourself
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return
-		user.feed_grabbed_to_self(src, prey)
+		feed_grabbed_to_self(user, prey)
 
 	else // click someone other than you/prey
-		if(!src.feeding)
+		if(!pred.feeding)
 			to_chat(user, "<span class='notice'>They aren't voracious enough to be fed.</span>")
-			to_chat(src, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
+			to_chat(pred, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
 			return
 		if(!prey.feeding)
 			to_chat(user, "<span class='notice'>They aren't able to be fed to someone.</span>")
-			to_chat(prey, "<span class='notice'>[user] tried to feed you to [src], but you aren't able to be fed to them.</span>")
+			to_chat(prey, "<span class='notice'>[user] tried to feed you to [pred], but you aren't able to be fed to them.</span>")
 			return
-		if(!is_vore_predator(src))
+		if(!is_vore_predator(pred))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
-		feed_grabbed_to_other(user, prey, src)
+		feed_grabbed_to_other(user, prey, pred)
 //
 // Eating procs depending on who clicked what
 //
@@ -330,9 +333,9 @@
 			return
 		//Actual escaping
 		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
-		if(is_blind(src) && !has_trait(TRAIT_BLIND))
-			src.adjust_blindness(-1)
+		src.cure_blind("belly_[REF(src)]")
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
 			SA.prey_excludes[src] = world.time
 
@@ -384,6 +387,7 @@
 
 	P.digestable = src.digestable
 	P.devourable = src.devourable
+	P.feeding = src.feeding
 	P.vore_taste = src.vore_taste
 
 	var/list/serialized = list()
@@ -407,6 +411,7 @@
 
 	digestable = P.digestable
 	devourable = P.devourable
+	feeding = P.feeding
 	vore_taste = P.vore_taste
 
 	release_vore_contents(silent = TRUE)

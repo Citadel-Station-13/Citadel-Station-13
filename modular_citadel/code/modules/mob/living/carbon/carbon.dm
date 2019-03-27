@@ -43,8 +43,6 @@ mob/living/carbon/proc/toggle_vore_mode()
 	if(combatmode)
 		return FALSE //let's not override the main draw of the game these days
 	voremode = !voremode
-	if(client)
-		client.show_popup_menus = !voremode // it's the RIGHT way to nom. gettit
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/voretoggle/selector in hud_used.static_inventory)
 			selector.rebaseintomygut(src)

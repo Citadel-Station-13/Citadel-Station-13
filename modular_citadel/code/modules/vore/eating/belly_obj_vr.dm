@@ -184,6 +184,10 @@
 // Returns the number of mobs so released.
 /obj/belly/proc/release_all_contents(var/include_absorbed = FALSE, var/silent = FALSE)
 	var/atom/destination = drop_location()
+	//Don't bother if we don't have contents
+	if(!contents.len)
+		return 0
+
 	var/count = 0
 	for(var/thing in contents)
 		var/atom/movable/AM = thing
@@ -204,6 +208,12 @@
 	for(var/mob/M in get_hearers_in_view(2, get_turf(owner)))
 		if(M.client && (M.client.prefs.cit_toggles & EATING_NOISES))
 			playsound(get_turf(owner),"[src.release_sound]",50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+
+	//Clean up our own business
+	items_preserved.Cut()
+	if(isanimal(owner))
+		owner.update_icons()
+
 	if(!silent)
 		owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	items_preserved.Cut()
@@ -244,6 +254,11 @@
 					if(P.absorbed)
 						absorbed_count++
 				Pred.reagents.trans_to(Prey, Pred.reagents.total_volume / absorbed_count)
+
+	//Clean up our own business
+	if(isanimal(owner))
+		owner.update_icons()
+
 	if(!silent)
 		owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 	owner.update_icons()
