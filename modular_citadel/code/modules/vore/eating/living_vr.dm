@@ -94,7 +94,7 @@
 			return
 		feed_self_to_grabbed(user, pred)
 
-	else if(pred == user) //you click yourself
+	if(pred == user) //you click yourself
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return

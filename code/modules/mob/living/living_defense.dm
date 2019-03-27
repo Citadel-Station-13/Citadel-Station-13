@@ -127,19 +127,17 @@
 	IgniteMob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored || !isturf(user.loc))
+	if(user == anchored || !isturf(user.loc))
 		return FALSE
 
 	if(user.pulling && user.grab_state == GRAB_AGGRESSIVE && user.voremode)
 		if(ismob(user.pulling))
 			var/mob/P = user.pulling
-			if(P != src)
-				to_chat(world, "<span class='notice'>grabbedby check : [user], [P], [src] (target).</span>")
-				user.vore_attack(user, P, src) //feed grabbed to other
-			else
-				to_chat(world, "<span class='notice'>grabbedby check : [user], [P], [src] (target).</span>")
-				user.vore_attack(user, P, src) //feed self to grabbed
+			user.vore_attack(user, P, src) // User, Prey, Predator
 			return
+
+	if(user == src) //we want to be able to self click if we're voracious
+		return FALSE
 
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
