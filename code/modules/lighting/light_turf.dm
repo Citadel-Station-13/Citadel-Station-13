@@ -13,7 +13,7 @@
 		lumcount = 0
 		for(var/thing in affecting_lights)
 			var/atom/movable/light/L = thing
-			lumcount += max(1,(L.light_power * max(0.1,(L.light_range - get_dist(get_turf(L), src))))/L.light_range)
+			lumcount += max(1,L.current_power - max(0,(get_dist(get_turf(L), src)-2)))
 		lumcount = CLAMP(lumcount,0,10)
 	return lumcount
 
