@@ -33,16 +33,3 @@
 	M.Scale(world.view*3)
 	transform = M
 	verbs.Cut()
-
-/obj/screen/plane/dark
-	blend_mode = BLEND_ADD
-	plane = LIGHTING_PLANE // Just below the master plane.
-	icon = 'icons/lighting/over_dark.dmi'
-	alpha = 10
-	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
-
-/obj/screen/plane/dark/New()
-	..()
-	var/matrix/M = matrix()
-	M.Scale(world.view*2.2)
-	transform = M

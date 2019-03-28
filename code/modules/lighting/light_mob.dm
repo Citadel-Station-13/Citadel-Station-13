@@ -1,14 +1,9 @@
 /mob
 	var/obj/screen/plane/master/master_plane
-	var/obj/screen/plane/dark/dark_plane
 	var/obj/screen/backdrop/backdrop
 	var/seedarkness = 1
 
 /mob/proc/create_lighting_planes()
-	if(!dark_plane)
-		dark_plane = new(client)
-	else
-		client.screen |= dark_plane
 	if(!master_plane)
 		master_plane = new(client)
 	else
