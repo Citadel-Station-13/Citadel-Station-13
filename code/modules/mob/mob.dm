@@ -882,10 +882,11 @@
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = lighting_alpha
+	return
+//	if(hud_used)
+//		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+//		if (L)
+//			L.alpha = lighting_alpha
 
 /mob/proc/update_mouse_pointer()
 	if (!client)
