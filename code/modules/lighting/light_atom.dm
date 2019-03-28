@@ -54,19 +54,29 @@
 				A.update_all_lights()
 
 /atom/var/dynamic_lighting = 0
+/area
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
-/area/proc/set_dynamic_lighting(bool)
-	dynamic_lighting = bool
-	update_dynamic_lighting()
+/area/proc/set_dynamic_lighting(var/new_dynamic_lighting = DYNAMIC_LIGHTING_ENABLED)
+	if (new_dynamic_lighting == dynamic_lighting)
+		return FALSE
 
-/area/proc/update_dynamic_lighting()
-	if(dynamic_lighting)
-		var/image/I = image(icon = 'icons/mob/screen1.dmi', icon_state = "white")
-		I.plane = LIGHTING_PLANE
-		I.blend_mode = BLEND_ADD
-		overlays += I
+	dynamic_lighting = new_dynamic_lighting
+
+	if(IS_DYNAMIC_LIGHTING(src))
+		cut_overlay(/obj/effect/fullbright)
+
 	else
-		overlays.Cut()
+		add_overlay(/obj/effect/fullbright)
+
+	return TRUE
+
+/area/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("dynamic_lighting")
+			set_dynamic_lighting(var_value)
+			return TRUE
+	return ..()
 
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
 	return

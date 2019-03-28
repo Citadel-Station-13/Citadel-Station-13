@@ -7,8 +7,8 @@
 // Ported to /vg/station by Clusterfack and Unusual Crow.
 // Thanks a ton to Bilgecrank for his wonderful sprite work.
 
-// Ported to Citadel Main by Bhijn/deathride58.
-// Thanks to my therapist for helping maintain my sanity
+// Ported to Citadel Main by Bhijn/deathride58 with some help from Poojawa.
+// Thanks to both Poojawa and my therapist for helping maintain my sanity.
 
 #define LIGHTING_PLANEMASTER_COLOR list(null,null,null,"#0000","#000F")
 
