@@ -13,8 +13,8 @@ var/light_power_multiplier = 5
 
 	temp_appearance = list()
 
-	//cap light range to 5
-	light_range = min(5, light_range)
+	//cap light range to 7
+	light_range = min(7, light_range)
 
 	alpha = min(255,max(0,round(light_power*light_power_multiplier*25)))
 
@@ -52,6 +52,10 @@ var/light_power_multiplier = 5
 				icon = 'icons/lighting/light_range_4.dmi'
 			if(5)
 				icon = 'icons/lighting/light_range_5.dmi'
+			if(6)
+				icon = 'icons/lighting/light_range_6.dmi'
+			if(7)
+				icon = 'icons/lighting/light_range_7.dmi'
 			else
 				qdel(src)
 				return
@@ -135,6 +139,16 @@ var/light_power_multiplier = 5
 				shadowicon = 'icons/lighting/light_range_5_shadows1.dmi'
 			else
 				shadowicon = 'icons/lighting/light_range_5_shadows2.dmi'
+		if(6)
+			if(num == 1)
+				shadowicon = 'icons/lighting/light_range_6_shadows1.dmi'
+			else
+				shadowicon = 'icons/lighting/light_range_6_shadows2.dmi'
+		if(7)
+			if(num == 1)
+				shadowicon = 'icons/lighting/light_range_7_shadows1.dmi'
+			else
+				shadowicon = 'icons/lighting/light_range_7_shadows2.dmi'
 
 	var/image/I = image(shadowicon)
 
