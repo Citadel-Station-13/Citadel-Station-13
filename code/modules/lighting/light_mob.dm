@@ -1,7 +1,7 @@
 /mob
-	var/obj/abstract/screen/plane/master/master_plane
-	var/obj/abstract/screen/plane/dark/dark_plane
-	var/obj/abstract/screen/backdrop/backdrop
+	var/obj/screen/plane/master/master_plane
+	var/obj/screen/plane/dark/dark_plane
+	var/obj/screen/backdrop/backdrop
 	var/seedarkness = 1
 
 /mob/proc/create_lighting_planes()

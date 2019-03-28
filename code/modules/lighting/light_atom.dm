@@ -2,7 +2,7 @@
 	var/atom/movable/light/light_obj
 	var/light_type = LIGHT_SOFT
 	var/light_power = 1
-	var/light_range = 1
+	var/light_range = 0
 	var/light_color = "#F4FFFA"
 
 /atom/Destroy()

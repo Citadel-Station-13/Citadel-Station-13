@@ -70,8 +70,8 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if (light_power && light_range)
-		set_light()
+	//if (light_power && light_range)
+		//set_light()
 
 	if (opacity && isturf(loc))
 		var/turf/T = loc

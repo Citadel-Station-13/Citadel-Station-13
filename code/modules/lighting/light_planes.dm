@@ -1,15 +1,15 @@
-/obj/abstract/screen/plane
+/obj/screen/plane
 	name = ""
 	screen_loc = "CENTER"
 	blend_mode = BLEND_MULTIPLY
 	layer = 1
 
-/obj/abstract/screen/plane/New(var/client/C)
+/obj/screen/plane/New(var/client/C)
 	..()
 	if(istype(C)) C.screen += src
 	verbs.Cut()
 
-/obj/abstract/screen/plane/master
+/obj/screen/plane/master
 	icon = 'icons/mob/screen1.dmi'
 	appearance_flags = NO_CLIENT_COLOR | PLANE_MASTER | RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	//list(null,null,null,"#0000","#000F")
@@ -18,7 +18,7 @@
 	mouse_opacity = 0
 
 //poor inheritance shitcode
-/obj/abstract/screen/backdrop
+/obj/screen/backdrop
 	blend_mode = BLEND_OVERLAY
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "black"
@@ -26,7 +26,7 @@
 	screen_loc = "CENTER"
 	plane = LIGHTING_PLANE
 
-/obj/abstract/screen/backdrop/New(var/client/C)
+/obj/screen/backdrop/New(var/client/C)
 	..()
 	if(istype(C)) C.screen += src
 	var/matrix/M = matrix()
@@ -34,14 +34,14 @@
 	transform = M
 	verbs.Cut()
 
-/obj/abstract/screen/plane/dark
+/obj/screen/plane/dark
 	blend_mode = BLEND_ADD
 	plane = LIGHTING_PLANE // Just below the master plane.
 	icon = 'icons/lighting/over_dark.dmi'
 	alpha = 10
 	appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 
-/obj/abstract/screen/plane/dark/New()
+/obj/screen/plane/dark/New()
 	..()
 	var/matrix/M = matrix()
 	M.Scale(world.view*2.2)
