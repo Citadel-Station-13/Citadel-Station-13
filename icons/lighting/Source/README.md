@@ -2,11 +2,11 @@
 
 This is a very simple recreation of the scene used to render Europalight's shadows. It was created by Bhijn for the Europalighting port on Citadel. This file should make it a lot easier to expand the lighting system's lighting range limits. It was created in Blender 2.80 beta.
 
-##License
+# License
 
 its literally just a fucking plane, a pillar, an orthographic camera, an empty node, and a point light. How in the actual fuck do you license it. Do whatever the fuck you want with it, I don't give a shit.
 
-##How 2 use???
+# How 2 use???
 
 Aight so first install Blender from https://www.blender.org/ and make sure you download the Blender 2.80 Beta (alternatively, if you're from the future, go with whatever's the latest!)
 
