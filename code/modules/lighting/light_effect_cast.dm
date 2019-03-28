@@ -59,7 +59,7 @@ var/light_power_multiplier = 5
 	icon_state = "white"
 
 	var/image/I = image(icon)
-	I.layer = ABOVE_LIGHTING_LAYER
+	I.layer = BYOND_LIGHTING_LAYER
 	I.icon_state = "overlay"
 	if(light_type == LIGHT_DIRECTIONAL)
 		var/turf/next_turf = get_step(src, dir)

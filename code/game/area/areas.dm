@@ -98,16 +98,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
-	if(requires_power)
-		luminosity = 0
-	else
+	if(!requires_power)
 		power_light = TRUE
 		power_equip = TRUE
 		power_environ = TRUE
 
 		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-			luminosity = 0
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)

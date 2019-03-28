@@ -8,7 +8,6 @@
 
 /area/shuttle/auxillary_base
 	name = "Auxillary Base"
-	luminosity = 0 //Lighting gets lost when it lands anyway
 
 
 /obj/machinery/computer/auxillary_base
