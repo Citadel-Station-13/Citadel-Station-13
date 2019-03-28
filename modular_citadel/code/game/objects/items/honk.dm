@@ -11,3 +11,7 @@
 	attack_verb = list("HONKED in bluespace", "HONKED", "quantumly HONKED")
 	icon = 'modular_citadel/icons/obj/honk.dmi'
 	icon_state = "bluespacehonker"
+
+/obj/item/bikehorn/bluespacehonker/attack(mob/living/carbon/M, mob/living/carbon/user)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "bshonk", /datum/mood_event/bshonk)
+	return ..()
