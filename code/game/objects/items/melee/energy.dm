@@ -41,7 +41,7 @@
 			set_light(brightness_on)
 		else
 			STOP_PROCESSING(SSobj, src)
-			set_light(0)
+			kill_light()
 
 /obj/item/melee/transforming/energy/is_hot()
 	return active * heat
@@ -158,7 +158,7 @@
 	if(hacked)
 		var/set_color = pick(possible_colors)
 		light_color = possible_colors[set_color]
-		update_light()
+		set_light()
 
 /obj/item/melee/transforming/energy/sword/saber/red
 	possible_colors = list("red" = LIGHT_COLOR_RED)

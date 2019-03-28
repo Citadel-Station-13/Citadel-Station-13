@@ -186,7 +186,7 @@
 	name = "judicial explosion"
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosion_distant.ogg', 100, 1, 1, 1)
-	set_light(0)
+	kill_light()
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue

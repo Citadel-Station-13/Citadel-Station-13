@@ -34,7 +34,7 @@
 	set_light(brightness_on, power_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
-	set_light(0)
+	kill_light()
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

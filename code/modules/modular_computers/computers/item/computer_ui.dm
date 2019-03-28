@@ -141,7 +141,7 @@
 			if(light_on)
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
-				set_light(0)
+				kill_light()
 
 		if("PC_light_color")
 			var/mob/user = usr
@@ -155,7 +155,7 @@
 					new_color = null
 			comp_light_color = new_color
 			light_color = new_color
-			update_light()
+			set_light()
 		else
 			return
 

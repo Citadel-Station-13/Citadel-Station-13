@@ -45,7 +45,7 @@
 	if(active)
 		set_light(2, 0.9)
 	else
-		set_light(0)
+		kill_light()
 
 /obj/structure/destructible/clockwork/powered/mania_motor/process()
 	if(!try_use_power(mania_cost))

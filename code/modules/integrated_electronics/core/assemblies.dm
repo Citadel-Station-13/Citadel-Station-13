@@ -578,8 +578,8 @@
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
-	if(light) //Update lighting objects (From light circuits).
-		update_light()
+	if(light_obj) //Update lighting objects (From light circuits).
+		set_light()
 
 /obj/item/electronic_assembly/stop_pulling()
 	for(var/I in assembly_components)

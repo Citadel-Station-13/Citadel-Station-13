@@ -77,7 +77,7 @@
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder
-		F.set_light(0)
+		F.kill_light()
 
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null

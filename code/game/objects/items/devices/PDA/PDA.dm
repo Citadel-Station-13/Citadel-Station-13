@@ -738,7 +738,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if(fon)
 		fon = FALSE
-		set_light(0)
+		kill_light()
 	else if(f_lum)
 		fon = TRUE
 		set_light(f_lum, f_pow, f_col)

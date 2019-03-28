@@ -219,7 +219,7 @@
 	return TRUE
 
 /obj/effect/hotspot/Destroy()
-	set_light(0)
+	kill_light()
 	SSair.hotspots -= src
 	var/turf/open/T = loc
 	if(istype(T) && T.active_hotspot == src)

@@ -344,7 +344,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		set_light(3)
 	else
 		to_chat(src, "<span class='notice'>You deactivate your light.</span>")
-		set_light(0)
+		kill_light()
 
 /mob/living/simple_animal/hostile/guardian/verb/ShowType()
 	set name = "Check Guardian Type"

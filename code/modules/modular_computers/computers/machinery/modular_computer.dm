@@ -55,7 +55,7 @@
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		set_light(0)
+		kill_light()
 	else
 		set_light(light_strength)
 		if(cpu.active_program)

@@ -842,7 +842,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!value)
 		set_light(1, 2)
 	else
-		set_light(0, 0)
+		kill_light(, 0)
 
 // Ghosts have no momentum, being massless ectoplasm
 /mob/dead/observer/Process_Spacemove(movement_dir)

@@ -397,7 +397,7 @@
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
-	set_light(0)
+	kill_light()
 
 /obj/item/twohanded/dualsaber/process()
 	if(wielded)

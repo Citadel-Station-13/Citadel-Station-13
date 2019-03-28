@@ -57,7 +57,7 @@
 			attack_verb = attack_verb_off
 		w_class = initial(w_class)
 		STOP_PROCESSING(SSobj, src)
-		set_light(0)
+		kill_light()
 		update_icon()
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
@@ -98,7 +98,7 @@
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		update_light()
+		set_light()
 
 /obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
 	..()
@@ -159,7 +159,7 @@
 		playsound(user, 'sound/weapons/neboff.ogg', 50, 1)
 		w_class = WEIGHT_CLASS_SMALL
 		attack_verb = list("poked", "jabbed", "hit")
-		set_light(0)
+		kill_light()
 		update_icon()
 
 	add_fingerprint(user)
@@ -194,7 +194,7 @@
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		update_light()
+		set_light()
 
 /obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -286,7 +286,7 @@
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
-	set_light(0)
+	kill_light()
 	slowdown = initial(slowdown)
 
 /obj/item/twohanded/hypereutactic/update_icon()
@@ -321,7 +321,7 @@
 		if(energy_color_input)
 			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
-		update_light()
+		set_light()
 
 /obj/item/twohanded/hypereutactic/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -448,7 +448,7 @@
 	. = ..()
 	var/set_color = pick(rainbow_colors)
 	light_color = set_color
-	update_light()
+	set_light()
 	update_icon()
 
 /obj/item/twohanded/hypereutactic/toy/rainbow/AltClick(mob/living/user)

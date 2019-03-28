@@ -66,7 +66,7 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		set_light(0)
+		kill_light()
 	else
 		set_light(brightness_on)
 	update_icon()
@@ -98,7 +98,7 @@
 			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
-			set_light(0)
+			kill_light()
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()

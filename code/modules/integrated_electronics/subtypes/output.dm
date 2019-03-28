@@ -85,7 +85,7 @@
 			assembly.set_light(l_range = light_brightness, l_power = 1, l_color = light_rgb)
 	else
 		if(assembly)
-			assembly.set_light(0)
+			assembly.kill_light()
 	power_draw_idle = light_toggled ? light_brightness * 2 : 0
 
 /obj/item/integrated_circuit/output/light/power_fail() // Turns off the flashlight if there's no power left.

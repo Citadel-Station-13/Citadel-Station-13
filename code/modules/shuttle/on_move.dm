@@ -112,8 +112,8 @@ All ShuttleMove procs go here
 	if (newT.z != oldT.z)
 		onTransitZ(oldT.z, newT.z)
 
-	if(light)
-		update_light()
+	if(light_obj)
+		set_light()
 	if(rotation)
 		shuttleRotate(rotation)
 
@@ -369,7 +369,7 @@ All ShuttleMove procs go here
 
 /************************************Misc move procs************************************/
 
-/atom/movable/lighting_object/onShuttleMove()
+/atom/movable/light/onShuttleMove()
 	return FALSE
 
 /obj/docking_port/mobile/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)

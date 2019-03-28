@@ -54,7 +54,7 @@
 
 	mode = value
 	update_icon()
-	set_light(0)
+	kill_light()
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))

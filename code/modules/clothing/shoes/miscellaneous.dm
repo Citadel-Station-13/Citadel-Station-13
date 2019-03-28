@@ -309,6 +309,6 @@
 		lightCycle += 1
 		addtimer(CALLBACK(src, .proc/lightUp), 5)
 	else
-		set_light(0)
+		kill_light()
 		lightCycle = 0
 		active = FALSE

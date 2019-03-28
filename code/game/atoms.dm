@@ -71,11 +71,11 @@
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 	if (light_power && light_range)
-		update_light()
+		set_light()
 
 	if (opacity && isturf(loc))
 		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+		T.blocks_light = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
@@ -104,7 +104,7 @@
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 
-	QDEL_NULL(light)
+	QDEL_NULL(light_obj)
 
 	return ..()
 

@@ -14,7 +14,7 @@
 	alpha = 100 //To help ghosts distinguish hidden runes
 	light_range = 0
 	light_power = 0
-	update_light()
+	set_light()
 	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/cult/proc/reveal() //for spells that reveal cult presence
@@ -24,7 +24,7 @@
 	alpha = initial(alpha)
 	light_range = initial(light_range)
 	light_power = initial(light_power)
-	update_light()
+	set_light()
 	START_PROCESSING(SSfastprocess, src)
 
 

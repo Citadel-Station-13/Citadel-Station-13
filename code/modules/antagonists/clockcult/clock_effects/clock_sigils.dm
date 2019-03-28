@@ -251,7 +251,7 @@
 	var/r = alpha * 0.02
 	var/p = max(alpha * 0.01, 0.1)
 	if(!power_charge && light_range != 0)
-		set_light(0)
+		kill_light()
 	else if(r != light_range || p != light_power)
 		set_light(r, p)
 

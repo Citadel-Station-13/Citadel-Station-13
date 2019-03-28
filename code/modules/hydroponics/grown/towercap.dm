@@ -246,7 +246,7 @@
 	if(burning)
 		icon_state = "bonfire"
 		burning = 0
-		set_light(0)
+		kill_light()
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/bonfire/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)

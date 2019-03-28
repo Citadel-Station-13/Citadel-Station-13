@@ -622,7 +622,7 @@
 				))
 
 /obj/machinery/airalarm/update_icon()
-	set_light(0)
+	kill_light()
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
@@ -664,7 +664,7 @@
 			set_light(brightness_on)
 
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-	update_light()
+	set_light()
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
@@ -844,7 +844,7 @@
 /obj/machinery/airalarm/power_change()
 	..()
 	if(stat & NOPOWER)
-		set_light(0)
+		kill_light()
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
@@ -857,7 +857,7 @@
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()
 	update_icon()
-	set_light(0)
+	kill_light()
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

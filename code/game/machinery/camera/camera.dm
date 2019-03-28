@@ -98,7 +98,7 @@
 			network = list()
 			GLOB.cameranet.removeCamera(src)
 			stat |= EMPED
-			set_light(0)
+			kill_light()
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -310,7 +310,7 @@
 		else
 			myarea = null
 	else
-		set_light(0)
+		kill_light()
 		GLOB.cameranet.removeCamera(src)
 		if (isarea(myarea))
 			LAZYREMOVE(myarea.cameras, src)
@@ -399,7 +399,7 @@
 	if(on)
 		set_light(AI_CAMERA_LUMINOSITY, 0.8)
 	else
-		set_light(0)
+		kill_light()
 
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused

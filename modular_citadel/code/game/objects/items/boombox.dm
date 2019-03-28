@@ -54,7 +54,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
-		set_light(0)
+		kill_light()
 
 /obj/item/boombox/raiq/process()
 	set_light(5,0.95,pick("#d87aff","#7a7aff","#89ecff","#b88eff","#ff59ad"))

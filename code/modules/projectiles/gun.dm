@@ -330,7 +330,7 @@
 				return
 			to_chat(user, "<span class='notice'>You click \the [S] into place on \the [src].</span>")
 			if(S.on)
-				set_light(0)
+				kill_light()
 			gun_light = S
 			update_gunlight(user)
 			alight = new /datum/action/item_action/toggle_gunlight(src)
@@ -388,7 +388,7 @@
 		if(gun_light.on)
 			set_light(gun_light.brightness_on, gun_light.flashlight_power, gun_light.light_color)
 		else
-			set_light(0)
+			kill_light()
 		cut_overlays(flashlight_overlay, TRUE)
 		var/state = "flight[gun_light.on? "_on":""]"	//Generic state.
 		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
@@ -398,7 +398,7 @@
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay, TRUE)
 	else
-		set_light(0)
+		kill_light()
 		cut_overlays(flashlight_overlay, TRUE)
 		flashlight_overlay = null
 	update_icon(TRUE)

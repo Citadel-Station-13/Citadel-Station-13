@@ -432,7 +432,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(total_users || replay_mode)
 		set_light(2)
 	else
-		set_light(0)
+		kill_light()
 	update_icon()
 
 /obj/machinery/holopad/update_icon()

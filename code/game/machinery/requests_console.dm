@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 /obj/machinery/requests_console/update_icon()
 	if(stat & NOPOWER)
-		set_light(0)
+		kill_light()
 	else
 		set_light(1.4,0.7,"#34D352")//green light
 	if(open)

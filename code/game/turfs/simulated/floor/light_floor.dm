@@ -24,7 +24,7 @@
 /turf/open/floor/light/break_tile()
 	..()
 	light_range = 0
-	update_light()
+	set_light()
 
 /turf/open/floor/light/update_icon()
 	..()
@@ -42,14 +42,14 @@
 				set_light(1)
 			if(3)
 				icon_state = "light_off"
-				set_light(0)
+				kill_light()
 	else
-		set_light(0)
+		kill_light()
 		icon_state = "light_off"
 
 
 /turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
-	set_light(0)
+	kill_light()
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)

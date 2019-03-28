@@ -30,7 +30,7 @@
 			set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		kill_light()
 
 /obj/item/flashlight/attack_self(mob/user)
 	on = !on
@@ -447,7 +447,7 @@
 	if(!fuel)
 		icon_state = "glowstick-empty"
 		cut_overlays()
-		set_light(0)
+		kill_light()
 	else if(on)
 		var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
 		glowstick_overlay.color = color

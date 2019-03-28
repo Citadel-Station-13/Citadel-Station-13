@@ -56,7 +56,7 @@
 	if(on)
 		set_light(brightness_on, 0.8, "#FFCC66")
 	else
-		set_light(0)
+		kill_light()
 
 	for(var/X in actions)
 		var/datum/action/A=X

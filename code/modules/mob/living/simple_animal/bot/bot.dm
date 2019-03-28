@@ -121,7 +121,7 @@
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
 	canmove = FALSE
-	set_light(0)
+	kill_light()
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 

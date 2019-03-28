@@ -274,7 +274,7 @@
 					return
 				to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 				if(S.on)
-					set_light(0)
+					kill_light()
 				F = S
 				update_icon()
 				update_helmlight(user)
@@ -323,11 +323,11 @@
 		if(F.on)
 			set_light(F.brightness_on, F.flashlight_power, F.light_color)
 		else
-			set_light(0)
+			kill_light()
 		update_icon()
 
 	else
-		set_light(0)
+		kill_light()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

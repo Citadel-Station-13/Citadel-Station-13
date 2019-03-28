@@ -621,9 +621,9 @@
 			else if(emergency)
 				set_light(1, 0.1, "#FFFF00")
 			else
-				set_light(0)
+				kill_light()
 		else
-			set_light(0)
+			kill_light()
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)

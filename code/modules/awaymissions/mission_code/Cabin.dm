@@ -51,7 +51,7 @@
 		set_light(8)
 		icon_state = "firepit-active"
 	else
-		set_light(0)
+		kill_light()
 		icon_state = "firepit"
 
 /obj/structure/firepit/extinguish()

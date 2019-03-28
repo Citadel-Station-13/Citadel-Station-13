@@ -40,10 +40,10 @@
 		SSair.add_to_active(src)
 
 	if (light_power && light_range)
-		update_light()
+		set_light()
 
 	if (opacity)
-		has_opaque_atom = TRUE
+		blocks_light = TRUE
 
 	ComponentInitialize()
 
@@ -78,7 +78,7 @@
 				continue
 			set_light(2)
 			return
-		set_light(0)
+		kill_light()
 
 /turf/open/space/attack_paw(mob/user)
 	return attack_hand(user)

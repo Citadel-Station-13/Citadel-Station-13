@@ -31,7 +31,7 @@
 	if(on)
 		set_light(brightness_on)
 	else
-		set_light(0)
+		kill_light()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -154,7 +154,7 @@
 			user.update_inv_wear_suit()
 			light_color = energy_color
 			emissivelights()
-			update_light()
+			set_light()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)
 	..()
