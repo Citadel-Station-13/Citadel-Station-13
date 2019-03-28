@@ -42,6 +42,11 @@
 	if(light_obj.light_power != l_power)
 		update_cast = 1
 		light_obj.light_power = l_power
+	
+	if(light_obj.light_color != l_color)
+		update_cast = 1
+		light_obj.light_color = l_color
+		light_obj.color = l_color
 
 	if(light_obj.current_power != l_range)
 		update_cast = 1

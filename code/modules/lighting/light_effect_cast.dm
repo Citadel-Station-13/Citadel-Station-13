@@ -41,6 +41,7 @@ var/light_power_multiplier = 5
 		light_range = 2.5
 	else
 		pixel_x = pixel_y = -(world.icon_size * light_range)
+		light_range = round(light_range)
 		switch(light_range)
 			if(1)
 				icon = 'icons/lighting/light_range_1.dmi'
