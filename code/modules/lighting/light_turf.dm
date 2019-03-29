@@ -19,12 +19,9 @@
 			highestlightrange = max(highestlightrange, L.light_range)
 		var/list/objectsinview = view(highestlightrange, src)
 		for(var/atom/movable/light/L in affectedlightcache)
-			if(!(L in objectsinview))
+			if(!(L in objectsinview)) //On the player's end, we don't appear to be affected by this light, so dont even bother.
 				continue
-			lumcount += max(0.1, (max(L.light_range - get_dist(get_turf(L), src), 0.1)/L.light_range)*L.light_power)
-		//for(var/thing in affecting_lights)
-			//var/atom/movable/light/L = thing
-			//lumcount += max(1,L.current_power - max(0,(get_dist(get_turf(L), src)-2)))
+			lumcount += (max(L.light_range - get_dist(get_turf(L), src), 0.1)/L.light_range)*L.light_power
 		lumcount = CLAMP(lumcount,0,10)
 	return lumcount
 

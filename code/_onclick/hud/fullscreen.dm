@@ -156,7 +156,8 @@
 /obj/screen/fullscreen/lighting_backdrop
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "flash"
-	transform = matrix(200, 0, 0, 0, 200, 0)
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	//transform = matrix(200, 0, 0, 0, 200, 0)
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_OVERLAY
 	show_when_dead = TRUE

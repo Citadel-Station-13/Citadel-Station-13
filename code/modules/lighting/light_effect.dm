@@ -7,6 +7,7 @@
 	//layer 2 = base shadow templates
 	//layer 3 = wall lighting overlays
 	//layer 4 = light falloff overlay
+	//layer 5 = subtractive light layer
 
 	appearance_flags = KEEP_TOGETHER
 	icon = null

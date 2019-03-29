@@ -14,8 +14,16 @@
 
 	//cap light range to 7
 	light_range = min(7, light_range)
+	var/effectivepow = light_power
+	if(effectivepow < 0)
+		effectivepow = -effectivepow
+		blend_mode = BLEND_SUBTRACT
+		layer = 5
+	else
+		blend_mode = BLEND_ADD
+		layer = 1
 
-	alpha = min(255,max(0,round(light_power*LIGHT_POWER_MULTIPLIER)))
+	alpha = min(255,max(0,round(effectivepow*LIGHT_POWER_MULTIPLIER)))
 
 	if(light_type == LIGHT_SOFT_FLICKER)
 		animate(src, alpha = alpha - rand(30, 60), time = rand(1,4), loop = -1, easing = SINE_EASING)
