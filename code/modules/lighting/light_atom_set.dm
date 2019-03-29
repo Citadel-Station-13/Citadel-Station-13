@@ -38,6 +38,10 @@
 	if(!light_obj)
 		update_cast = 1
 		light_obj = new(src)
+	
+	if(light_obj.light_range != l_range)
+		update_cast = 1
+		light_obj.light_range = l_range
 
 	if(light_obj.light_power != l_power)
 		update_cast = 1
