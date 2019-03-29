@@ -245,6 +245,10 @@
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
+			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
+				var/mob/living/carbon/human/H = C
+				if(!H.sprinting && H.getStaminaLoss() >= 20)
+					return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)

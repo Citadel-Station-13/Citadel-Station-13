@@ -41,6 +41,14 @@
 /turf/open/space/transit/border/east
 	dir = EAST
 
+/turf/open/space/transit/centcom
+	dir = SOUTH
+
+/turf/open/space/transit/centcom/Entered(atom/movable/AM, atom/OldLoc)
+	..()
+	if(!locate(/obj/structure/lattice) in src)
+		throw_atom(AM)
+
 /turf/open/space/transit/border/Entered(atom/movable/AM, atom/OldLoc)
 	..()
 	if(!locate(/obj/structure/lattice) in src)
