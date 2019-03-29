@@ -44,6 +44,14 @@
 	. = ..()
 	update_contained_lights()
 
+/atom/movable/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(opacity)
+		var/turf/T = OldLoc
+		if(istype(T))
+			T.blocks_light = -1
+			T.force_light_update()
+
 /atom/proc/update_contained_lights(var/list/specific_contents)
 	if(!specific_contents)
 		specific_contents = contents
