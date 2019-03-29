@@ -310,7 +310,7 @@
 					shuttle_spawns.Add(/obj/structure/closet/crate/secure/loot)
 
 				for(var/i in 1 to 5)
-					varT = pick_n_take(empty_shuttle_turfs)
+					var/turf/T = pick_n_take(empty_shuttle_turfs)
 					new /obj/structure/spider/stickyweb(T)
 					new /obj/effect/decal/cleanable/ash(T)
 
