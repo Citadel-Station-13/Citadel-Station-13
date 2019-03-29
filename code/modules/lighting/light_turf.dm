@@ -11,9 +11,20 @@
 /turf/proc/get_lumcount()
 	if(lumcount == -1)
 		lumcount = 0
-		for(var/thing in affecting_lights)
-			var/atom/movable/light/L = thing
-			lumcount += max(1,L.current_power - max(0,(get_dist(get_turf(L), src)-2)))
+		var/list/affectedlightcache = affecting_lights
+		if(!affectedlightcache || !affectedlightcache.len)
+			return lumcount //either we're null or we aren't affected by any lights
+		var/highestlightrange = 0
+		for(var/atom/movable/light/L in affectedlightcache)
+			highestlightrange = max(highestlightrange, L.light_range)
+		var/list/objectsinview = view(highestlightrange, src)
+		for(var/atom/movable/light/L in affectedlightcache)
+			if(!(L in objectsinview))
+				continue
+			lumcount += max(0.1, (max(L.light_range - get_dist(get_turf(L), src), 0.1)/L.light_range)*L.light_power)
+		//for(var/thing in affecting_lights)
+			//var/atom/movable/light/L = thing
+			//lumcount += max(1,L.current_power - max(0,(get_dist(get_turf(L), src)-2)))
 		lumcount = CLAMP(lumcount,0,10)
 	return lumcount
 
