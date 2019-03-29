@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(lighting)
 		currentrun_lights.len--
 
 		if(L && !QDELETED(L))
-			L.cast_light()
+			L.cast_light(TRUE)
 
 		if (MC_TICK_CHECK)
 			return
