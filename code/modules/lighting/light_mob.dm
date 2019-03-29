@@ -1,4 +1,4 @@
-/mob
+/*mob
 	//var/obj/screen/plane/master/master_plane
 	var/obj/screen/backdrop/backdrop
 	var/seedarkness = 1
@@ -11,13 +11,13 @@
 	if(!backdrop)
 		backdrop = new(client)
 	else
-		client.screen |= backdrop
+		client.screen |= backdrop*/
 	//if(client)
 		//update_darkness()
 
-/mob/Login()
+/*mob/Login()
 	. = ..()
-	create_lighting_planes()
+	create_lighting_planes()*/
 
 /*/mob/proc/update_darkness()
 	if(seedarkness)

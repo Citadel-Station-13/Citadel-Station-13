@@ -55,7 +55,7 @@
 	mouse_opacity = 0
 
 //poor inheritance shitcode
-/obj/screen/backdrop
+/*obj/screen/backdrop
 	blend_mode = BLEND_OVERLAY
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "black"
@@ -69,7 +69,7 @@
 	var/matrix/M = matrix()
 	M.Scale(world.view*3)
 	transform = M
-	verbs.Cut()
+	verbs.Cut()*/
 
 
 /obj/screen/plane_master/parallax
@@ -82,9 +82,9 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 
-///obj/screen/plane_master/lighting/backdrop(mob/mymob)
-//	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
-//	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
+/obj/screen/plane_master/lighting/backdrop(mob/mymob)
+	mymob.overlay_fullscreen("lighting_backdrop_lit", /obj/screen/fullscreen/lighting_backdrop/lit)
+	mymob.overlay_fullscreen("lighting_backdrop_unlit", /obj/screen/fullscreen/lighting_backdrop/unlit)
 
 /obj/screen/plane_master/camera_static
 	name = "camera static plane master"
