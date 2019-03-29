@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	if(stat & NOPOWER)
 		kill_light()
 	else
-		set_light(1.4,0.7,"#34D352")//green light
+		set_light(1.4,0.4,"#34D352")//green light
 	if(open)
 		if(!hackState)
 			icon_state="req_comp_open"
