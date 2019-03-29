@@ -53,6 +53,30 @@
 			if(A && !QDELETED(A))
 				A.update_all_lights()
 
+/atom/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("light_range")
+			set_light(l_range=var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+
+		if ("light_power")
+			set_light(l_power=var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+
+		if ("light_color")
+			set_light(l_color=var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+
+		if ("light_type")
+			set_light(l_type=var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+
+	return ..()
+
 /atom/var/dynamic_lighting = 0
 /area
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
