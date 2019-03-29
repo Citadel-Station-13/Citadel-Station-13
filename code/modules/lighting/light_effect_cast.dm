@@ -12,14 +12,22 @@
 	else if (T.opacity) { \
 		TARGV = TRUE; \
 	} \
-	else if (T.contents.len) { \
+	else if (T.blocks_light == -1) { \
+		TARGV = T.check_blocks_light(); \
+	} \
+	else if (T.blocks_light) { \
+		TARGV = TRUE; \
+	}
+
+
+	/*else if (T.contents.len) { \
 		for (var/obj/machinery/door/D in T) { \
 			if (D.opacity) { \
 				TARGV = TRUE; \
 				break; \
 			} \
 		} \
-	}
+	}*/
 
 GLOBAL_LIST_EMPTY(lighting_range_cache)
 GLOBAL_LIST_EMPTY(lighting_shadow_cache)
