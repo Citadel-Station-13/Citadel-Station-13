@@ -3,8 +3,7 @@
 #define WIDE_SHADOW_THRESHOLD 80
 #define OFFSET_MULTIPLIER_SIZE 32
 #define CORNER_OFFSET_MULTIPLIER_SIZE 16
-
-var/light_power_multiplier = 5
+#define LIGHT_POWER_MULTIPLIER 240
 
 // Casts shadows from occluding objects for a given light.
 
@@ -16,7 +15,7 @@ var/light_power_multiplier = 5
 	//cap light range to 7
 	light_range = min(7, light_range)
 
-	alpha = min(255,max(0,round(light_power*light_power_multiplier*25)))
+	alpha = min(255,max(0,round(light_power*LIGHT_POWER_MULTIPLIER)))
 
 	if(light_type == LIGHT_SOFT_FLICKER)
 		alpha = initial(alpha)
