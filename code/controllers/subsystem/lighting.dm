@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(lighting)
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	for(var/atom/movable/light/L in GLOB.init_lights)
 		if(L && !QDELETED(L))
-			L.cast_light()
+			L.cast_light(TRUE)
 	GLOB.init_lights = null
 	initialized = TRUE
 
