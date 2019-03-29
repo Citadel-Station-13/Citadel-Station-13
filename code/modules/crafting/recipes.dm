@@ -439,7 +439,7 @@
 	name = "Bluespace Bike horn"
 	result = /obj/item/bikehorn/bluespacehonker
 	time = 10
-	reqs = list(/obj/item/stack/ore/bluespace_crystalt = 1,
+	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
 				/obj/item/toy/crayon/blue = 1,
 				/obj/item/bikehorn = 1)
 	category = CAT_MISC
