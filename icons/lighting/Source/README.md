@@ -17,7 +17,7 @@ To render a shadow at a different distance from the light source, simply move th
 
 If for whatever reason you need to render a shadow from a distance larger than 14 SS13 tiles away, simply scale both the orthographic camera and plane up to match the desired distance.
 
-Once you have your massive collection of shadow images, all you have to do is crop it down to your desired size. If you're rendering shadows for a shadow1 DMI, then be sure to nudge the image one pixel down and one pixel to the left, otherwise the sprite will look a little off. The proper dimensions are:
+Once you have your massive collection of shadow images, all you have to do is crop it down to your desired size. The proper dimensions are:
 - light_range_SCALE_shadow1.dmi:  (SCALE+0.5)\*32 x (SCALE+0.5)\*32
 - light_range_SCALE_shadow2.dmi: (SCALE*2+1)\*32 x (SCALE+0.5)\*32
 

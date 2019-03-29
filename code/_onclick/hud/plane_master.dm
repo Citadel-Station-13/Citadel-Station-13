@@ -41,6 +41,37 @@
 //	blend_mode = BLEND_MULTIPLY
 //	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+#define LIGHTING_PLANEMASTER_COLOR list(null,null,null,"#0000","#000F")
+/obj/screen/plane_master/lighting
+	name = "lighting plane master"
+	icon = 'icons/mob/screen1.dmi'
+	appearance_flags = NO_CLIENT_COLOR | PLANE_MASTER// | RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	screen_loc = "CENTER"
+	//list(null,null,null,"#0000","#000F")
+//	color = LIGHTING_PLANEMASTER_COLOR  // Completely black.
+	blend_mode = BLEND_MULTIPLY
+	layer = 1
+	plane = LIGHTING_PLANE
+	mouse_opacity = 0
+
+//poor inheritance shitcode
+/obj/screen/backdrop
+	blend_mode = BLEND_OVERLAY
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "black"
+	layer = BACKGROUND_LAYER
+	screen_loc = "CENTER"
+	plane = LIGHTING_PLANE
+
+/obj/screen/backdrop/New(var/client/C)
+	..()
+	if(istype(C)) C.screen += src
+	var/matrix/M = matrix()
+	M.Scale(world.view*3)
+	transform = M
+	verbs.Cut()
+
+
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX

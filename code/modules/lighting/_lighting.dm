@@ -10,7 +10,5 @@
 // Ported to Citadel Main by Bhijn/deathride58 with some help from Poojawa.
 // Thanks to both Poojawa and my therapist for helping maintain my sanity.
 
-#define LIGHTING_PLANEMASTER_COLOR list(null,null,null,"#0000","#000F")
-
 /turf/shadow_dummy
 	opacity = 0

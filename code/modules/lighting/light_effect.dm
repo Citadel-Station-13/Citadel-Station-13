@@ -15,6 +15,7 @@
 	pixel_y = -WORLD_ICON_SIZE*2
 	glide_size = WORLD_ICON_SIZE
 	blend_mode = BLEND_ADD
+	anchored = TRUE
 
 	alpha = 180
 
@@ -79,11 +80,11 @@
 			follow_holder_dir()
 
 			if(isturf(holder))
-				forceMove(holder)
+				forceMove(holder, harderforce = TRUE)
 			else if(holder.loc.loc && ismob(holder.loc))
-				forceMove(holder.loc.loc)
+				forceMove(holder.loc.loc, harderforce = TRUE)
 			else
-				forceMove(holder.loc)
+				forceMove(holder.loc, harderforce = TRUE)
 
 			cast_light() // We don't use the subsystem queue for this since it's too slow to prevent shadows not being updated quickly enough
 	else
@@ -110,3 +111,23 @@
 
 /atom/movable/light/proc/light_off()
 	alpha = 0
+
+/atom/movable/light/ex_act(severity)
+	return 0
+
+/atom/movable/light/singularity_act()
+	return
+
+/atom/movable/light/singularity_pull()
+	return
+
+/atom/movable/light/blob_act()
+	return
+
+/atom/movable/light/onTransitZ()
+	return
+
+// Override here to prevent things accidentally moving around overlays.
+/atom/movable/light/forceMove(atom/destination, var/no_tp=FALSE, var/harderforce = FALSE)
+	if(harderforce)
+		. = ..()

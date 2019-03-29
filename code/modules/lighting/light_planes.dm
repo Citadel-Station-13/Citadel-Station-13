@@ -1,4 +1,4 @@
-/obj/screen/plane
+/*/obj/screen/plane
 	name = ""
 	screen_loc = "CENTER"
 	blend_mode = BLEND_MULTIPLY
@@ -32,4 +32,4 @@
 	var/matrix/M = matrix()
 	M.Scale(world.view*3)
 	transform = M
-	verbs.Cut()
+	verbs.Cut()*/
