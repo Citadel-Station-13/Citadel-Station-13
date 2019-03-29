@@ -18,8 +18,7 @@
 	alpha = min(255,max(0,round(light_power*LIGHT_POWER_MULTIPLIER)))
 
 	if(light_type == LIGHT_SOFT_FLICKER)
-		alpha = initial(alpha)
-		animate(src, alpha = initial(alpha) - rand(30, 60), time = 2, loop = -1, easing = SINE_EASING)
+		animate(src, alpha = alpha - rand(30, 60), time = rand(1,4), loop = -1, easing = SINE_EASING)
 
 	for(var/turf/T in range(light_range, src))
 		affecting_turfs |= T

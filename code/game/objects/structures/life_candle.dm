@@ -4,6 +4,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 
 	var/icon_state_active = "candle1_lit"
 	var/icon_state_inactive = "candle1"

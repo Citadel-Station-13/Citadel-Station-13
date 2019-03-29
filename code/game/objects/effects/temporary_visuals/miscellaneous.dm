@@ -215,6 +215,7 @@
 	icon_state = "3"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 	duration = 10
 
 /obj/effect/temp_visual/revenant

@@ -15,6 +15,7 @@
 	icon_state = "bcircuit"
 	var/icon_normal = "bcircuit"
 	light_color = LIGHT_COLOR_CYAN
+	light_type = LIGHT_SOFT_FLICKER
 	floor_tile = /obj/item/stack/tile/circuit
 	var/on = TRUE
 

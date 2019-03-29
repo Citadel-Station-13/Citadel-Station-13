@@ -260,6 +260,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
+	light_type = LIGHT_SOFT_FLICKER
 	grind_results = list("sulfur" = 15)
 
 /obj/item/flashlight/flare/New()
@@ -330,6 +331,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = LIGHT_COLOR_ORANGE
+	light_type = LIGHT_SOFT_FLICKER
 	on_damage = 10
 	slot_flags = null
 

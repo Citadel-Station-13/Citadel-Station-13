@@ -103,6 +103,7 @@
 	light_range = 3
 	light_power = 2.5
 	light_color = LIGHT_COLOR_LAVA
+	light_type = LIGHT_SOFT_FLICKER
 	projectiletype = /obj/item/projectile/temp/basilisk/magmawing
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
 	crusher_drop_mod = 60

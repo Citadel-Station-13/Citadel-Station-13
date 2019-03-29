@@ -3,6 +3,7 @@
 	set_luminosity = 4
 	set_cap = 2.5
 	light_color = LIGHT_COLOR_LAVA
+	light_type = LIGHT_SOFT_FLICKER
 
 /mob/living/simple_animal/hostile/spawner/lavaland
 	name = "necropolis tendril"

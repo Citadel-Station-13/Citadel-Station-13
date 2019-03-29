@@ -8,6 +8,7 @@
 	item_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 	heat = 1000
 	var/wax = 1000
 	var/lit = FALSE

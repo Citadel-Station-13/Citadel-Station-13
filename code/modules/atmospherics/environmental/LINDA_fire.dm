@@ -59,6 +59,7 @@
 	layer = GASFIRE_LAYER
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 	blend_mode = BLEND_ADD
 
 	var/volume = 125
@@ -255,5 +256,6 @@
 	name = "fire"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 
 #undef INSUFFICIENT

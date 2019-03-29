@@ -448,10 +448,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		light_color = color
+		light_type = LIGHT_SOFT
 		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space.<br><u>The void feels like it's trying to pull you to the [dir2text(get_dir(T, origin))]!</u></b>"
 	else
 		inner_portal.icon_state = "lava"
 		light_color = LIGHT_COLOR_FIRE
+		light_type = LIGHT_SOFT_FLICKER
 		desc += "<br><b>A tear in reality reveals a coursing river of lava... something recently teleported here from the Lavaland Mines!</b>"
 	outer_portal = new(T, 600, color)
 	light_range = 4
@@ -767,6 +769,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "4"
 	color = RUNE_COLOR_BURNTORANGE
 	light_color = LIGHT_COLOR_LAVA
+	light_type = LIGHT_SOFT_FLICKER
 	req_cultists = 3
 	invoke_damage = 10
 	construct_invoke = FALSE

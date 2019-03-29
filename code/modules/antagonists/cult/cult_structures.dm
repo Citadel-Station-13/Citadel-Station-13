@@ -114,6 +114,7 @@
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
+	light_type = LIGHT_SOFT_FLICKER
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
 
 /obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
@@ -232,6 +233,7 @@
 	icon_state = "tomealtar"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
 /obj/structure/destructible/cult/tome/attack_hand(mob/living/user)

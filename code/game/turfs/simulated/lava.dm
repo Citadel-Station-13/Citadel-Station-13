@@ -10,6 +10,7 @@
 	light_range = 1
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+	light_type = LIGHT_SOFT_FLICKER
 	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
 	footstep = FOOTSTEP_LAVA

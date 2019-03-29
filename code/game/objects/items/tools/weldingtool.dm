@@ -147,7 +147,7 @@
 		explode()
 	switched_on(user)
 	if(welding)
-		set_light(light_intensity, 0.75, LIGHT_COLOR_FIRE)
+		set_light(light_intensity, 0.75, LIGHT_COLOR_FIRE, LIGHT_SOFT_FLICKER)
 
 	update_icon()
 

@@ -106,6 +106,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
+	light_type = LIGHT_SOFT_FLICKER
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
