@@ -61,15 +61,14 @@ GLOBAL_VAR(lights)
 	if(light_type == LIGHT_SOFT_FLICKER)
 		animate(src, alpha = alpha - rand(30, 60), time = rand(1,4), loop = -1, easing = SINE_EASING)
 
-	for(var/turf/T in range(light_range, src))
-		affecting_turfs |= T
-
 	if(!isturf(loc))
 		for(var/turf/T in affecting_turfs)
 			T.lumcount = -1
 			T.affecting_lights -= src
 		affecting_turfs.Cut()
 		return
+
+	affecting_turfs = view(light_range, src)
 
 	for(var/turf/T in affecting_turfs)
 		T.affecting_lights |= src
@@ -132,7 +131,7 @@ GLOBAL_VAR(lights)
 		temp_appearance = null
 		return
 
-	for(var/turf/target_turf in view(light_range, src))
+	for(var/turf/target_turf in affecting_turfs)
 		var/occluded
 		CHECK_OCCLUSION(occluded, target_turf)
 		if(!occluded)

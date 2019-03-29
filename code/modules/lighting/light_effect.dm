@@ -47,8 +47,7 @@
 		if(holder.light_obj == src)
 			holder.light_obj = null
 		holder = null
-	for(var/thing in affecting_turfs)
-		var/turf/T = thing
+	for(var/turf/T in affecting_turfs)
 		T.lumcount = -1
 		T.affecting_lights -= src
 	affecting_turfs.Cut()
