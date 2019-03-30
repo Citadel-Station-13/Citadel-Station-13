@@ -69,9 +69,14 @@ GLOBAL_VAR(lights)
 		affecting_turfs.Cut()
 		return
 
+	for(var/turf/T in affecting_turfs)
+		T.lumcount = -1
+		T.affecting_lights -= src
+
 	affecting_turfs = view(light_range, src)
 
 	for(var/turf/T in affecting_turfs)
+		T.lumcount = -1
 		T.affecting_lights |= src
 
 
