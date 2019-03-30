@@ -201,7 +201,7 @@
 				target.status = LIGHT_EMPTY
 				target.update()
 
-			var/obj/item/light/L2 = new target.light_type()
+			var/obj/item/light/L2 = new target.bulb_type()
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
