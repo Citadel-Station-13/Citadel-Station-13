@@ -19,16 +19,6 @@
 		TARGV = TRUE; \
 	}
 
-
-	/*else if (T.contents.len) { \
-		for (var/obj/machinery/door/D in T) { \
-			if (D.opacity) { \
-				TARGV = TRUE; \
-				break; \
-			} \
-		} \
-	}*/
-
 GLOBAL_LIST_EMPTY(lighting_range_cache)
 GLOBAL_LIST_EMPTY(lighting_shadow_cache)
 GLOBAL_LIST_EMPTY(lighting_shadow_icon_cache)

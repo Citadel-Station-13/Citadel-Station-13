@@ -10,6 +10,3 @@
 // Ported to Citadel Main by Bhijn/deathride58 with some help from Poojawa.
 // Thanks to both Poojawa and my therapist for helping maintain my sanity.
 // Thanks to Lohikar for helping expand my tiny neanderthal brain
-
-/turf/shadow_dummy
-	opacity = 0
