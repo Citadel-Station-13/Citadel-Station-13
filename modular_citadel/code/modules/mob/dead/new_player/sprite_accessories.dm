@@ -36,7 +36,8 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
-/************* Lizard compatable snoots ************/
+//christ this was a mistake, but it's here just in case someone wants to selectively fix
+/************* Lizard compatable snoots ***********
 /datum/sprite_accessory/snouts/bird
 	name = "Beak"
 	icon_state = "bird"
@@ -155,6 +156,7 @@
 	icon_state = "toucan"
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	color_src = MATRIXED
+*/
 
 /******************************************
 ************ Human Ears/Tails *************
