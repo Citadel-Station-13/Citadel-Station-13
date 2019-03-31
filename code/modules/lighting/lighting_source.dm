@@ -28,6 +28,11 @@
 
 	var/needs_update = LIGHTING_NO_UPDATE    // Whether we are queued for an update.
 
+// Thanks to Lohikar for flinging this tiny bit of code at me, increasing my brain cell count from 1 to 2 in the process.
+// This macro will only offset up to 1 tile, but anything with a greater offset is an outlier and probably should handle its own lighting offsets.
+// Anything pixelshifted 16px or more will be considered on the next tile.
+#define GET_APPROXIMATE_PIXEL_DIR(PX, PY) ((!(PX) ? 0 : ((PX >= 16 ? EAST : (PX <= -16 ? WEST : 0)))) | (!PY ? 0 : (PY >= 16 ? NORTH : (PY <= -16 ? SOUTH : 0))))
+#define UPDATE_APPROXIMATE_PIXEL_TURF var/_mask = GET_APPROXIMATE_PIXEL_DIR(top_atom.pixel_x, top_atom.pixel_y); pixel_turf = _mask ? (get_step(source_turf, _mask) || source_turf) : source_turf
 
 /datum/light_source/New(var/atom/owner, var/atom/top)
 	source_atom = owner // Set our new owner.
@@ -37,7 +42,7 @@
 		LAZYADD(top_atom.light_sources, src)
 
 	source_turf = top_atom
-	pixel_turf = get_turf_pixel(top_atom) || source_turf
+	UPDATE_APPROXIMATE_PIXEL_TURF
 
 	light_power = source_atom.light_power
 	light_range = source_atom.light_range
@@ -202,17 +207,12 @@
 	if (isturf(top_atom))
 		if (source_turf != top_atom)
 			source_turf = top_atom
-			pixel_turf = source_turf
+			UPDATE_APPROXIMATE_PIXEL_TURF
 			update = TRUE
 	else if (top_atom.loc != source_turf)
 		source_turf = top_atom.loc
-		pixel_turf = get_turf_pixel(top_atom)
+		UPDATE_APPROXIMATE_PIXEL_TURF
 		update = TRUE
-	else
-		var/P = get_turf_pixel(top_atom)
-		if (P != pixel_turf)
-			pixel_turf = P
-			update = TRUE
 
 	if (!isturf(source_turf))
 		if (applied)
