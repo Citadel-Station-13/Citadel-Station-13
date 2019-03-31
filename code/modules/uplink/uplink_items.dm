@@ -121,6 +121,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Old faithful: The classic C-20r, bundled with two magazines, and a (surplus) suppressor at discount price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	cost = 14 // normally 16
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/nukeoffer/bulldog
 	name = "Bulldog bundle"
@@ -128,6 +129,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Bulldog shotgun, two 12g drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	cost = 13 // normally 16
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/nukeoffer/medical
 	name = "Medical bundle"
@@ -135,6 +137,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			a box of ammo, and a pair of magboots to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	cost = 15 // normally 20
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/nukeoffer/sniper
 	name = "Sniper bundle"
@@ -142,6 +145,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
 	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/nukeoffer/chemical
 	name = "Bioterror bundle"
@@ -149,24 +153,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Donksoft assault rifle, and some darts. Remember: Seal suit and equip internals before use."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
 	cost = 30 // normally 42
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/nukeoffer/firestarter
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 // Dangerous Items
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
 
 /datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
-			with suppressors."
+	name = "Mauser C96"
+	desc = "A small, easily concealable handgun"
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -174,7 +178,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/revolver
 	cost = 13
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -191,30 +195,28 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
 	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/smg
-	name = "C-20r Submachine Gun"
-	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
-			24-round magazine and is compatible with suppressors."
+	name = "Maschinenpistole 40"
+	desc = "A fully-loaded  submachine gun."
 	item = /obj/item/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/carbine
-	name = "M-90gl Carbine"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
-			with a togglable 40mm under-barrel grenade launcher."
+	name = "Sturmgewehr 44"
+	desc = "A fully-loaded, specialized carbine."
 	item = /obj/item/gun/ballistic/automatic/m90
 	cost = 18
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
-	name = "L6 Squad Automatic Weapon"
+	name = "Maschinengewehr 34"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
+			This deadly weapon has a massive 50-round magazine."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
@@ -227,6 +229,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 22
 	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
@@ -234,11 +237,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bolt_action
-	name = "Surplus Rifle"
-	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
+	name = "Karabiner 98k"
+	desc = "A bolt action rifle."
 	item = /obj/item/gun/ballistic/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
@@ -257,9 +260,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
+	name = "Flammenwerfer 35"
+	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins"
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
 	surplus = 40
@@ -311,11 +313,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 
 /datum/uplink_item/dangerous/syndicate_minibomb
-	name = "Syndicate Minibomb"
+	name = "Stielhandgranate"
 	desc = "The minibomb is a grenade with a five-second fuse. Upon detonation, it will create a small hull breach \
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/grenade/syndieminibomb
-	cost = 6
+	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bombanana
@@ -342,7 +344,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/foammachinegun
 	name = "Toy Machine Gun"
@@ -351,7 +353,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
@@ -419,30 +421,29 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
-			are dirt cheap but are half as effective as .357 rounds."
+	name = "Handgun Magazine"
+	desc = "An additional 8-round 10mm magazine."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolap
 	name = "10mm Armour Piercing Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are less effective at injuring the target but penetrate protective gear."
+	desc = "An additional 8-round 10mm magazine. These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolfire
 	name = "10mm Incendiary Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with incendiary rounds which ignite the target."
+	desc = "An additional 8-round 10mm magazine. Loaded with incendiary rounds which ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolhp
 	name = "10mm Hollow Point Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
+	desc = "An additional 8-round 10mm magazine. These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -452,10 +453,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
 	item = /obj/item/ammo_box/magazine/pistolm9mm
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/bolt_action
-	name = "Surplus Rifle Clip"
+	name = "Karabiner 98k clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
 	item = 	/obj/item/ammo_box/a762
 	cost = 1
@@ -467,11 +468,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shotgun/buck
 	name = "12g Buckshot Drum"
@@ -490,21 +491,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shotgun/dragon
 	name = "12g Dragon's Breath Drum"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
             Great for blasting airlocks off their frames."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shotgun/scatter
 	name = "12g Scatter Laser shot Slugs"
@@ -519,32 +520,29 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 12
 
 /datum/uplink_item/ammo/smg
-	name = ".45 SMG Magazine"
-	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun. \
-			These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
+	name = "SMG Magazine"
+	desc = "An additional 24-round magazine suitable for use with the submachine gun."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg/bag
-	name = ".45 Ammo Duffel Bag"
-	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
+	name = "SMG Ammo Duffel Bag"
+	desc = "A duffel bag filled with enough ammo to supply an entire team, at a discounted price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/carbine
-	name = "5.56mm Toploader Magazine"
-	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 1.95mm rounds, but they still offer more power than .45 ammo."
+	name = "StG 44 Magazine"
+	desc = "An additional 30-round 5.56mm magazine."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
-	desc = "A 40mm HE grenade for use with the M-90gl's under-barrel grenade launcher. \
-			Your teammates will ask you to not shoot these down small hallways."
+	desc = "A 40mm HE grenade for use with the StG 44 under-barrel grenade launcher... wait, what?"
 	item = /obj/item/ammo_casing/a40mm
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
@@ -554,34 +552,33 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/machinegun/basic
-	name = "1.95x129mm Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use with the L6 SAW. \
-			By the time you need to use this, you'll already be on a pile of corpses."
+datum/uplink_item/ammo/machinegun/basic
+	name = "MG 34 Box Magazine"
+	desc = "A 50-round magazine for use with the MG 34."
 	item = /obj/item/ammo_box/magazine/mm195x129
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "1.95x129mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "MG 34 (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine for use with the MG 34; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
 	item = /obj/item/ammo_box/magazine/mm195x129/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "1.95x129mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "MG 34 (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine for use with the MG 34; equipped with special properties \
 			to puncture even the most durable armor."
 	item = /obj/item/ammo_box/magazine/mm195x129/ap
 	cost = 9
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "1.95x129mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "MG 34 (Incendiary) Box Magazine"
+	desc = "A 50-round magazine for use with the MG 34; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
 	item = /obj/item/ammo_box/magazine/mm195x129/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/sniper/basic
 	name = ".50 Magazine"
@@ -649,12 +646,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted = TRUE
 
 /datum/uplink_item/support/gygax
-	name = "Gygax Exosuit"
-	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
-			advised to utilize the drop pod if you wish to make use of it."
+	name = "Panzerkampfwagen Tiger Ausf. B"
+	desc = "A massive and incredibly tank."
 	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80
+	cost = 88
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
@@ -662,6 +657,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/support/honker
 	name = "Dark H.O.N.K."
@@ -927,12 +923,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 
 /datum/uplink_item/suits/space_suit
-	name = "Syndicate Space Suit"
-	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
-			sightings, however."
+	name = "Schutzstaffel coat"
+	desc = "Doesn't protect you from the harsh Russian weather, but is space proof, when worn with a helmet! Better than the Red hardsuit!!!"
 	item = /obj/item/storage/box/syndie_kit/space
-	cost = 4
+	cost = 0
+	include_modes = list(/datum/game_mode/nuclear/)
 
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
@@ -951,7 +946,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			provides the user with superior armor and mobility compared to the standard syndicate hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
 
 /datum/uplink_item/suits/hardsuit/shielded
@@ -960,7 +955,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
 
 // Devices and Tools
@@ -1504,7 +1499,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo 
+/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo
 	name = "Hilarious firing pin"
 	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
 	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
