@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "stechkin pistol"
-	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	name = "Mauser C96"
+	desc = "A small, easily concealable handgun."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/m10mm
