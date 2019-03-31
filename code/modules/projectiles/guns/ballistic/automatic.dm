@@ -83,8 +83,8 @@
 	return
 
 /obj/item/gun/ballistic/automatic/c20r
-	name = "\improper C-20r SMG"
-	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	name = "Maschinenpistole 40"
+	desc = "A fully-loaded  submachine gun."
 	icon_state = "c20r"
 	item_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
@@ -138,8 +138,8 @@
 	burst_size = 2
 
 /obj/item/gun/ballistic/automatic/m90
-	name = "\improper M-90gl Carbine"
-	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
+	name = "Sturmgewehr 44"
+	desc = "A fully-loaded, specialized carbine."
 	icon_state = "m90"
 	item_state = "m90"
 	mag_type = /obj/item/ammo_box/magazine/m556
@@ -273,8 +273,8 @@
 // L6 SAW //
 
 /obj/item/gun/ballistic/automatic/l6_saw
-	name = "\improper L6 SAW"
-	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	name = "Maschinengewehr 34"
+	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. This deadly weapon has a massive 50-round magazine."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
@@ -383,8 +383,8 @@
 // Old Semi-Auto Rifle //
 
 /obj/item/gun/ballistic/automatic/surplus
-	name = "Surplus Rifle"
-	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
+	name = "Karabiner 98k"
+	desc = "A bolt action rifle."
 	icon_state = "surplus"
 	item_state = "moistnugget"
 	weapon_weight = WEAPON_HEAVY
