@@ -69,7 +69,9 @@
 		"sulfonal",
 		"frostoil",
 		"carpotoxin",
-		"histamine"
+		"histamine",
+		"space_drugs",
+		"morphine"
 	)
 
 	var/list/saved_recipes = list()
@@ -485,7 +487,10 @@
 	emagged_reagents = list(
 		"thirteenloko",
 		"morphine",
-		"uranium"
+		"uranium",
+		"whiskeycola",
+		"mindbreaker",
+		"tirizene"
 	)
 
 
@@ -536,10 +541,15 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
+		"ethanol",
 		"iron",
 		"clownstears",
 		"minttoxin",
-		"slimejelly"
+		"atomicbomb",
+		"fernet",
+		"slimejelly",
+		"aphro",
+		"aphro+"
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
