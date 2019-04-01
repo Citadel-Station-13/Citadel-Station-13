@@ -66,11 +66,11 @@
 	)
 
 	var/list/emagged_reagents = list(
+		"space_drugs",
 		"sulfonal",
 		"frostoil",
 		"carpotoxin",
 		"histamine",
-		"space_drugs",
 		"morphine"
 	)
 
