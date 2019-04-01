@@ -12,6 +12,7 @@
 #define ui_boxcraft "EAST-4:22,SOUTH+1:6"
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
+#define ui_boxvore	"EAST-4:22,SOUTH+1:6"
 
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
@@ -129,6 +130,8 @@
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
+
+#define COMSIG_VORE_TOGGLED "voremode_toggled" // totally not copypasta
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4

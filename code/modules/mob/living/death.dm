@@ -8,6 +8,8 @@
 
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
+	release_vore_contents(silent = TRUE) // return of the bomb safe internals.
+
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
 
@@ -36,6 +38,7 @@
 		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
+	release_vore_contents(silent = TRUE) //technically grief protection, I guess? if they're SM'd it doesn't matter seconds after anyway.
 	spawn_dust(just_ash)
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 

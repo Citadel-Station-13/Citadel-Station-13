@@ -213,6 +213,9 @@
 								'sound/vore/prey/death_04.ogg','sound/vore/prey/death_05.ogg','sound/vore/prey/death_06.ogg',
 								'sound/vore/prey/death_07.ogg','sound/vore/prey/death_08.ogg','sound/vore/prey/death_09.ogg',
 								'sound/vore/prey/death_10.ogg')
+			if("hunger_sounds")
+				soundin = pick(	'sound/vore/growl1.ogg','sound/vore/growl2.ogg','sound/vore/growl3.ogg','sound/vore/growl4.ogg',
+								'sound/vore/growl5.ogg')
 			if("clang")
 				soundin = pick('sound/effects/clang1.ogg', 'sound/effects/clang2.ogg')
 			if("clangsmall")

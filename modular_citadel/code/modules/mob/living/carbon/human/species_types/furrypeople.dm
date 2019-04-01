@@ -233,3 +233,5 @@
 
 /mob/living/carbon/human/vore
 	devourable = TRUE
+	digestable = TRUE
+	feeding = TRUE
