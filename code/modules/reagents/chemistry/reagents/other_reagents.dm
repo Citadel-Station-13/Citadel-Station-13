@@ -1251,7 +1251,7 @@
 	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M) 
+/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
 	current_cycle++
 	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
@@ -1863,3 +1863,8 @@
 	description = "The primary precursor for an ancient feline delicacy known as skooma. While it has no notable effects on it's own, mixing it with morphine in a chilled container may yield interesting results."
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
+
+/datum/reagent/moonsugar/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		to_chat(M, "You find yourself unable to supress the desire to meow!")
+		M.emote("nya")
