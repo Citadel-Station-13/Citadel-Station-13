@@ -376,4 +376,4 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_combined_w_class = INFINITY
-	STR.max_items = INFINITY
+	STR.max_items = 100
