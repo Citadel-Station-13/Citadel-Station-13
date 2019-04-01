@@ -62,7 +62,8 @@
 	)
 
 	var/list/upgrade_reagents3 = list(
-		"omnizine"
+		"omnizine",
+		"glycerol"
 	)
 
 	var/list/emagged_reagents = list(
