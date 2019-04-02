@@ -695,7 +695,7 @@
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
 		switch(choice)
 			if("Cancel")
-				return
+				return 0
 			if("Allow Digestion")
 				user.digestable = TRUE
 			if("Prevent Digestion")
@@ -708,7 +708,7 @@
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
 		switch(choice)
 			if("Cancel")
-				return
+				return 0
 			if("Allow Devourment")
 				user.devourable = TRUE
 			if("Prevent Devourment")
@@ -721,7 +721,7 @@
 		var/choice = alert(user, "This button is to toggle your ability to be fed to others. Feeding predators is currently: [user.feeding ? "Allowed" : "Prevented"]", "", "Allow Feeding", "Cancel", "Prevent Feeding")
 		switch(choice)
 			if("Cancel")
-				return
+				return 0
 			if("Allow Feeding")
 				user.feeding = TRUE
 			if("Prevent Feeding")
@@ -729,6 +729,16 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.feeding = user.feeding
+
+	if(href_list["togglenoisy"])
+		var/choice = alert(user, "Toggle audible hunger noises. Currently: [user.noisy ? "Enabled" : "Disabled"]", "", "Enable audible hunger", "Cancel", "Disable audible hunger")
+		switch(choice)
+			if("Cancel")
+				return 0
+			if("Enable audible hunger")
+				user.noisy = TRUE
+			if("Disable audible hunger")
+				user.noisy = FALSE
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1
