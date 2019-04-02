@@ -62,13 +62,14 @@
 	)
 
 	var/list/upgrade_reagents3 = list(
-		"omnizine",
-		"glycerol"
+		"glycerol",
+		"mine_salve",
+		"toxin"
 	)
 
 	var/list/emagged_reagents = list(
 		"space_drugs",
-		"sulfonal",
+		"plasma",
 		"frostoil",
 		"carpotoxin",
 		"histamine",
@@ -137,7 +138,6 @@
 	if(beaker)
 		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
-
 
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
@@ -487,8 +487,7 @@
 	upgrade_reagents3 = null
 	emagged_reagents = list(
 		"thirteenloko",
-		"morphine",
-		"uranium",
+		"changelingsting",
 		"whiskeycola",
 		"mindbreaker",
 		"tirizene"
@@ -544,11 +543,11 @@
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
+		"alexander",
 		"clownstears",
 		"minttoxin",
 		"atomicbomb",
 		"fernet",
-		"slimejelly",
 		"aphro",
 		"aphro+"
 	)
