@@ -1,5 +1,5 @@
 /*
- *	These absorb the functionality of the plant bag, ore satchel, etc.
+ *	These absorb the functionality of the plant bag, ore satchel, etc
  *	They use the use_to_pickup, quick_gather, and quick_empty functions
  *	that were already defined in weapon/storage, but which had been
  *	re-implemented in other classes.
