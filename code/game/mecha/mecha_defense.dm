@@ -117,24 +117,6 @@
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
 	. = ..()
 
-/obj/mecha/ex_act(severity, target)
-	log_message("Affected by explosion of severity: [severity].", color="red")
-	if(prob(deflect_chance))
-		severity++
-		log_append_to_last("Armor saved, changing severity to [severity].")
-	. = ..()
-
-/obj/mecha/contents_explosion(severity, target)
-	severity++
-	for(var/X in equipment)
-		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		ME.ex_act(severity,target)
-	for(var/Y in trackers)
-		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		MT.ex_act(severity, target)
-	if(occupant)
-		occupant.ex_act(severity,target)
-
 /obj/mecha/handle_atom_del(atom/A)
 	if(A == occupant)
 		occupant = null
