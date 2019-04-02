@@ -20,6 +20,34 @@
 	heatmod = 1
 	burnmod = 1
 
+/datum/species/jelly/roundstartslime/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/jelly/roundstartslime/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/jelly/roundstartslime/can_wag_tail(mob/living/carbon/human/H)
+	return ("mam_tail" in mutant_bodyparts) || ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/jelly/roundstartslime/is_wagging_tail(mob/living/carbon/human/H)
+	return ("mam_waggingtail" in mutant_bodyparts)
+
+/datum/species/jelly/roundstartslime/start_wagging_tail(mob/living/carbon/human/H)
+	if("mam_tail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_tail"
+		mutant_bodyparts |= "mam_waggingtail"
+	H.update_body()
+
+/datum/species/jelly/roundstartslime/stop_wagging_tail(mob/living/carbon/human/H)
+	if("mam_waggingtail" in mutant_bodyparts)
+		mutant_bodyparts -= "mam_waggingtail"
+		mutant_bodyparts |= "mam_tail"
+	H.update_body()
+
+
 /datum/action/innate/slime_change
 	name = "Alter Form"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -41,7 +69,7 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Ears", "Taur body", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Ears", "Taur body", "Cancel")
 	if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
@@ -102,6 +130,20 @@
 			H.dna.features["mam_ears"] = new_ears
 		H.update_body()
 
+	else if (select_alteration == "Snout")
+		var/list/snowflake_snouts_list = list("Normal" = null)
+		for(var/path in GLOB.mam_snouts_list)
+			var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+			if(istype(instance, /datum/sprite_accessory))
+				var/datum/sprite_accessory/S = instance
+				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
+					snowflake_snouts_list[S.name] = path
+		var/new_snout
+		new_snout = input(owner, "Choose your character's face:", "Face Alteration") as null|anything in snowflake_snouts_list
+		if(new_snout)
+			H.dna.features["mam_snouts"] = new_snout
+		H.update_body()
+
 	else if (select_alteration == "Tail")
 		var/list/snowflake_tails_list = list("Normal" = null)
 		for(var/path in GLOB.mam_tails_list)
@@ -113,7 +155,7 @@
 		var/new_tail
 		new_tail = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
 		if(new_tail)
-			H.dna.features["mam_tails"] = new_tail
+			H.dna.features["mam_tail"] = new_tail
 			if(new_tail != "None")
 				H.dna.features["taur"] = "None"
 		H.update_body()
@@ -132,7 +174,6 @@
 			H.dna.features["taur"] = new_taur
 			if(new_taur != "None")
 				H.dna.features["mam_tail"] = "None"
-				H.dna.features["xenotail"] = "None"
 		H.update_body()
 	else
 		return
