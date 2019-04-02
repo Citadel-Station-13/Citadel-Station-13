@@ -98,11 +98,11 @@
 //Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
-#define ismammal(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/mammal) )
-#define isavian(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/avian) )
-#define isaquatic(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/aquatic) )
-#define isinsect(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/insect) )
-#define isxenoperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/xeno) )
+#define ismammal(A) (is_species(A, /datum/species/mammal))
+#define isavian(A) (is_species(A, /datum/species/avian))
+#define isaquatic(A) (is_species(A, /datum/species/aquatic))
+#define isinsect(A) (is_species(A, /datum/species/insect))
+#define isxenoperson(A) (is_species(A, /datum/species/xeno))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
