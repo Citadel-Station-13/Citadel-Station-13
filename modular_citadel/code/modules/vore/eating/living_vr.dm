@@ -388,6 +388,7 @@
 	P.digestable = src.digestable
 	P.devourable = src.devourable
 	P.feeding = src.feeding
+	P.noisy = src.noisy
 	P.vore_taste = src.vore_taste
 
 	var/list/serialized = list()
@@ -412,6 +413,7 @@
 	digestable = P.digestable
 	devourable = P.devourable
 	feeding = P.feeding
+	noisy = P.noisy
 	vore_taste = P.vore_taste
 
 	release_vore_contents(silent = TRUE)
