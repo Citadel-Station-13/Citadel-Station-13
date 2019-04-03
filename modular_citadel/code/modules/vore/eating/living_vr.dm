@@ -12,6 +12,8 @@
 	var/noisy = TRUE						// tummies are rumbly?
 	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
+	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
+	var/vorepref_init = FALSE				//Has this mob's voreprefs been initialized?
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -34,6 +36,7 @@
 	return 1
 
 /mob/living/proc/init_vore()
+	vore_init = TRUE
 	//Something else made organs, meanwhile.
 	if(LAZYLEN(vore_organs))
 		return TRUE
@@ -407,6 +410,7 @@
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
 		return 0
+	vorepref_init = TRUE
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
