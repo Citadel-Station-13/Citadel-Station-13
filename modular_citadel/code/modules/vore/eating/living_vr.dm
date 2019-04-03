@@ -9,7 +9,7 @@
 	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0						// Is the vore panel open?
-	var/noisy = TRUE						// tummies are rumbly?
+	var/noisy = FALSE						// tummies are rumbly?
 	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
 
