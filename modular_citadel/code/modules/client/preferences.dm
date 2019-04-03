@@ -17,9 +17,9 @@
 	var/autostand = TRUE
 
 	//vore prefs
-	var/toggleeatingnoise = FALSE
-	var/toggledigestionnoise = FALSE
-	var/hound_sleeper = FALSE
+	var/toggleeatingnoise = TRUE
+	var/toggledigestionnoise = TRUE
+	var/hound_sleeper = TRUE
 	var/cit_toggles = TOGGLES_CITADEL
 
 	// stuff that was in base
