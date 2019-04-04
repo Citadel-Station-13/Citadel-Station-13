@@ -173,7 +173,7 @@
 	list_reagents = list("potass_iodide" = 50)
 	roundstart = 1
 
-/obj/item/reagent_containers/pill/antirad+
+/obj/item/reagent_containers/pill/antirad_plus
 	name = "prussian blue pill"
 	desc = "Used to treat heavy radition poisoning."
 	icon = 'modular_citadel/icons/obj/modularpills.dmi'
