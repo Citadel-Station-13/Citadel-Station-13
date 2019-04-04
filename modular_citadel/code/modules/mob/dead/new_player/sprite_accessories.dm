@@ -233,6 +233,14 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/tails/human/corvid
+	name = "Corvid"
+	icon_state = "crow"
+
+/datum/sprite_accessory/tails_animated/human/corvid
+	name = "Corvid"
+	icon_state = "crow"
+
 /datum/sprite_accessory/ears/human/curled
 	name = "Curled Horn"
 	icon_state = "horn1"
@@ -502,11 +510,31 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
-/datum/sprite_accessory/tails/human/shark/datashark
+/datum/sprite_accessory/tails_animated/human/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails/human/datashark
 	name = "datashark"
 	icon_state = "datashark"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails_animated/human/datashark
+	name = "datashark"
+	icon_state = "datashark"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+
+/datum/sprite_accessory/tails/human/straighttail
+	name = "Straight Tail"
+	icon_state = "straighttail"
+
+/datum/sprite_accessory/tails_animated/human/straighttail
+	name = "Straight Tail"
+	icon_state = "straighttail"
 
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
