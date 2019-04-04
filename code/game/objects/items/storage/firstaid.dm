@@ -301,7 +301,7 @@
 	name = "anti radiation deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills'."
 
-/obj/item/storage/pill_bottle/antirad+/PopulateContents()
+/obj/item/storage/pill_bottle/antirad_plus/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/antirad_plus(src)
 
