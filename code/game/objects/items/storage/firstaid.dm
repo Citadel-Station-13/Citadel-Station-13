@@ -115,7 +115,7 @@
 	if(prob(50))
 		new /obj/item/reagent_containers/pill/mutarad(src)
 	if(prob(80))
-		new /obj/item/reagent_containers/pill/antirad+(src)
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
 	new /obj/item/reagent_containers/syringe/charcoal(src)
 	new /obj/item/storage/pill_bottle/charcoal(src)
 	new /obj/item/reagent_containers/pill/mutadone(src)
@@ -297,13 +297,13 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
 
-/obj/item/storage/pill_bottle/antirad+
+/obj/item/storage/pill_bottle/antirad_plus
 	name = "anti radiation deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills'."
 
 /obj/item/storage/pill_bottle/antirad+/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/antirad+(src)
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
 
 /obj/item/storage/pill_bottle/mutarad
 	name = "radiation treatment deluxe pill bottle"
