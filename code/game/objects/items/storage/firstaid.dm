@@ -301,7 +301,7 @@
 	name = "anti radiation deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills'."
 
-/obj/item/storage/pill_bottle/anitrad+/PopulateContents()
+/obj/item/storage/pill_bottle/antirad+/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/antirad+(src)
 
@@ -309,6 +309,6 @@
 	name = "radiation treatment deluxe pill bottle"
 	desc = "The label says 'Med-Co branded pills' and below that 'Contains Mutadone in each pill!`."
 
-/obj/item/storage/pill_bottle/anitrad+/PopulateContents()
+/obj/item/storage/pill_bottle/mutarad/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutarad(src)
