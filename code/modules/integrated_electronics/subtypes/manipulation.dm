@@ -677,3 +677,140 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	.=..()
+
+
+//Hippie Ported Code--------------------------------------------------------------------------------------------------------
+
+
+// - inserter circuit - //
+/obj/item/integrated_circuit/manipulation/inserter
+	name = "inserter"
+	desc = "A nimble circuit that puts stuff inside a storage like a backpack and can take it out aswell."
+	icon_state = "grabber"
+	extended_desc = "This circuit accepts a reference to an object to be inserted or extracted depending on mode. If a storage is given for extraction, the extracted item will be put in the new storage. Modes: 1 insert, 0 to extract."
+	w_class = WEIGHT_CLASS_SMALL
+	size = 3
+	cooldown_per_use = 5
+	complexity = 10
+	inputs = list("target object" = IC_PINTYPE_REF, "target container" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
+	power_draw_per_use = 20
+	var/max_items = 10
+
+/obj/item/integrated_circuit/manipulation/inserter/do_work()
+	//There shouldn't be any target required to eject all contents
+	var/obj/item/target_obj = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(!target_obj)
+		return
+
+	var/distance = get_dist(get_turf(src),get_turf(target_obj))
+	if(distance > 1 || distance < 0)
+		return
+
+	var/obj/item/storage/container = get_pin_data_as_type(IC_INPUT, 2, /obj/item)
+	var/mode = get_pin_data(IC_INPUT, 3)
+	switch(mode)
+		if(1)	//Not working
+			if(!container || !istype(container,/obj/item/storage) || !Adjacent(container))
+				return
+
+			GET_COMPONENT_FROM(STR, /datum/component/storage, container)
+			if(!STR)
+				return
+
+			STR.attackby(src, target_obj)
+
+		else
+			GET_COMPONENT_FROM(STR, /datum/component/storage, target_obj.loc)
+			if(!STR)
+				return
+
+			if(!container || !istype(container,/obj/item/storage) || !Adjacent(container))
+				STR.remove_from_storage(target_obj,drop_location())
+			else
+				STR.remove_from_storage(target_obj,container)
+
+// Renamer circuit. Renames the assembly it is in. Useful in cooperation with telecomms-based circuits.
+/obj/item/integrated_circuit/manipulation/renamer
+	name = "renamer"
+	desc = "A small circuit that renames the assembly it is in. Useful paired with speech-based circuits."
+	icon_state = "internalbm"
+	extended_desc = "This circuit accepts a string as input, and can be pulsed to rewrite the current assembly's name with said string. On success, it pulses the default pulse-out wire."
+	inputs = list("name" = IC_PINTYPE_STRING)
+	outputs = list("current name" = IC_PINTYPE_STRING)
+	activators = list("rename" = IC_PINTYPE_PULSE_IN,"get name" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
+	power_draw_per_use = 1
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/manipulation/renamer/do_work(var/n)
+	if(!assembly)
+		return
+	switch(n)
+		if(1)
+			var/new_name = get_pin_data(IC_INPUT, 1)
+			if(new_name)
+				assembly.name = new_name
+
+		else
+			set_pin_data(IC_OUTPUT, 1, assembly.name)
+			push_data()
+
+	activate_pin(3)
+
+
+
+// - redescribing circuit - //
+/obj/item/integrated_circuit/manipulation/redescribe
+	name = "redescriber"
+	desc = "Takes any string as an input and will set it as the assembly's description."
+	extended_desc = "Strings should can be of any length."
+	icon_state = "speaker"
+	cooldown_per_use = 10
+	complexity = 3
+	inputs = list("text" = IC_PINTYPE_STRING)
+	outputs = list("description" = IC_PINTYPE_STRING)
+	activators = list("redescribe" = IC_PINTYPE_PULSE_IN,"get description" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/manipulation/redescribe/do_work(var/n)
+	if(!assembly)
+		return
+
+	switch(n)
+		if(1)
+			assembly.desc = get_pin_data(IC_INPUT, 1)
+
+		else
+			set_pin_data(IC_OUTPUT, 1, assembly.desc)
+			push_data()
+
+	activate_pin(3)
+
+// - repainting circuit - //
+/obj/item/integrated_circuit/manipulation/repaint
+	name = "auto-repainter"
+	desc = "There's an oddly high amount of spraying cans fitted right inside this circuit."
+	extended_desc = "Takes a value in hexadecimal and uses it to repaint the assembly it is in."
+	cooldown_per_use = 10
+	complexity = 3
+	inputs = list("color" = IC_PINTYPE_COLOR)
+	outputs = list("current color" = IC_PINTYPE_COLOR)
+	activators = list("repaint" = IC_PINTYPE_PULSE_IN,"get color" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/manipulation/repaint/do_work(var/n)
+	if(!assembly)
+		return
+
+	switch(n)
+		if(1)
+			assembly.detail_color = get_pin_data(IC_INPUT, 1)
+			assembly.update_icon()
+
+		else
+			set_pin_data(IC_OUTPUT, 1, assembly.detail_color)
+			push_data()
+
+	activate_pin(3)
