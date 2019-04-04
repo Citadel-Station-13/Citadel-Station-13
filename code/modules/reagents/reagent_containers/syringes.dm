@@ -259,3 +259,6 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
+
+/obj/item/reagent_containers/syringe/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
