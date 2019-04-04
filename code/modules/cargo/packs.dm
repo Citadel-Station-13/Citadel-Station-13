@@ -1351,7 +1351,7 @@
 	name = "Radiation Treatment Crate Deluxe"
 	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pill bottle, as well as a radiation treatment deluxe pill bottle!"
 	cost = 3500
-	contains = list(/obj/item/storage/pill_bottle/antirad+,
+	contains = list(/obj/item/storage/pill_bottle/antirad_plus,
 					/obj/item/storage/pill_bottle/mutarad,
 					/obj/item/storage/firstaid/radbgone,
 					/obj/item/storage/firstaid/radbgone,
