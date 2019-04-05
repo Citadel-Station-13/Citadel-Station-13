@@ -115,8 +115,10 @@
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 2,
 		/obj/item/reagent_containers/food/snacks/carpmeat = 5
 	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_pro
-			 /obj/item/reagent_containers/glass/bowl
+	result = list(
+			/obj/item/reagent_containers/food/snacks/sushie_pro = 1,
+			/obj/item/reagent_containers/glass/bowl = 1
+	)
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
