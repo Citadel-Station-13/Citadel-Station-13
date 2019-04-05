@@ -90,7 +90,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 3,
 	)
 	result = list(
-			/obj/item/reagent_containers/food/snacks/sushie_basic = 8
+			/obj/item/reagent_containers/food/snacks/sushie_basic = 8,
 			/obj/item/reagent_containers/glass/bowl = 1
 	)
 	subcategory = CAT_MEAT
@@ -103,7 +103,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = list(
-			/obj/item/reagent_containers/food/snacks/sushie_adv = 3
+			/obj/item/reagent_containers/food/snacks/sushie_adv = 3,
 			/obj/item/reagent_containers/glass/bowl = 1
 	)
 	subcategory = CAT_MEAT
