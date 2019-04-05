@@ -175,13 +175,13 @@
 								SSshuttle.shuttle_purchased = TRUE
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_and_log_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
+								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 								M.unload_preview()
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
-								message_and_log_admins("[S.name] loaded, purchased by [usr]")
+								message_admins("[S.name] loaded, purchased by [usr]")
 							else
 								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
 						else
