@@ -140,7 +140,7 @@
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 2,
 	)
-	result = =/obj/item/reagent_containers/food/snacks/tobiko = 3
+	result = /obj/item/reagent_containers/food/snacks/tobiko = 3
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
