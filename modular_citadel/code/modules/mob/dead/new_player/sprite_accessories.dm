@@ -192,14 +192,14 @@
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails/human/bee
-	name = "Bear"
-	icon_state = "bear"
+	name = "Bee"
+	icon_state = "bee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
 /datum/sprite_accessory/tails_animated/human/bee
-	name = "Bear"
-	icon_state = "bear"
+	name = "Bee"
+	icon_state = "bee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
 
