@@ -2144,31 +2144,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
-	else if("mam_tail" in pref_species.default_features)
+	if("mam_tail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "mam_tail"
-	else if("xenotail" in pref_species.default_features)
+	if("xenotail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "xenotail"
 
-	if("legs" in pref_species.default_features)
-		if(character.dna.features["legs"] == "Digitigrade Legs")
-			pref_species.species_traits += DIGITIGRADE
-			character.Digitigrade_Leg_Swap(FALSE)
-
-		if(character.dna.features["legs"] == "Normal Legs" && DIGITIGRADE in pref_species.species_traits)
-			pref_species.species_traits -= DIGITIGRADE
-			character.Digitigrade_Leg_Swap(TRUE)
-
-	else if((!"legs" in pref_species.default_features) && DIGITIGRADE in pref_species.species_traits)
+	if(("legs" in character.dna.species.mutant_bodyparts) && character.dna.features["legs"] == "Digitigrade Legs")
+		pref_species.species_traits |= DIGITIGRADE
+	else
 		pref_species.species_traits -= DIGITIGRADE
-		character.Digitigrade_Leg_Swap(TRUE)
 
 	if(DIGITIGRADE in pref_species.species_traits)
 		character.Digitigrade_Leg_Swap(FALSE)
+	else
+		character.Digitigrade_Leg_Swap(TRUE)
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
-		character.update_body_parts()
+	//let's be sure the character updates
+	character.update_body()
+	character.update_hair()
+	character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
