@@ -687,6 +687,10 @@
 	name = "WahCoon"
 	icon_state = "wah"
 
+/datum/sprite_accessory/mam_snouts/redpandaalt
+	name = "WahCoon ALT"
+	icon_state = "wahalt"
+
 /datum/sprite_accessory/mam_snouts/rhino
 	name = "Horn"
 	icon_state = "rhino"
