@@ -354,7 +354,7 @@
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = list(
-			/obj/item/reagent_containers/food/snacks/riceball
-			/obj/item/reagent_containers/glass/bowl
+			/obj/item/reagent_containers/food/snacks/riceball = 1,
+			/obj/item/reagent_containers/glass/bowl = 1
 	)
 	subcategory = CAT_MISCFOOD
