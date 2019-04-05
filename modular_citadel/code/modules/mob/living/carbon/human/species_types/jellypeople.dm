@@ -10,8 +10,8 @@
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "taur")
-	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur")
+	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 180
@@ -69,7 +69,7 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Ears", "Taur body", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Cancel")
 	if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
@@ -142,6 +142,25 @@
 		new_snout = input(owner, "Choose your character's face:", "Face Alteration") as null|anything in snowflake_snouts_list
 		if(new_snout)
 			H.dna.features["mam_snouts"] = new_snout
+		H.update_body()
+
+	else if (select_alteration == "Markings")
+		var/list/snowflake_markings_list = list()
+		for(var/path in GLOB.mam_body_markings_list)
+			var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
+			if(istype(instance, /datum/sprite_accessory))
+				var/datum/sprite_accessory/S = instance
+				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
+					snowflake_markings_list[S.name] = path
+		var/new_mam_body_markings
+		new_mam_body_markings = input(H, "Choose your character's body markings:", "Marking Alteration") as null|anything in snowflake_markings_list
+		if(new_mam_body_markings)
+			H.dna.features["mam_body_markings"] = new_mam_body_markings
+			if(new_mam_body_markings == "None")
+				H.dna.features["mam_body_markings"] = "Plain"
+		for(var/X in H.bodyparts) //propagates the markings changes
+			var/obj/item/bodypart/BP = X
+			BP.update_limb(FALSE, H)
 		H.update_body()
 
 	else if (select_alteration == "Tail")
