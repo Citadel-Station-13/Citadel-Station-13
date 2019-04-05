@@ -1143,7 +1143,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.add_trait(TRAIT_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
-
+	
+	if(H.noisy && H.nutrition <= NUTRITION_LEVEL_STARVING)
+		if(prob(10))
+			playsound(get_turf(H),"hunger_sounds",35,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
+			
+	else if(H.noisy && H.nutrition <= NUTRITION_LEVEL_HUNGRY)
+		if(prob(10))
+			playsound(get_turf(H),"hunger_sounds",15,0,-5,1,ignore_walls = FALSE,channel=CHANNEL_PRED)
+ 
 	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != DEAD && !H.has_trait(TRAIT_NOHUNGER))
 		// THEY HUNGER
@@ -1653,13 +1661,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/BP = null
 	if(isbodypart(def_zone))
-		BP = def_zone
+		if(damagetype == STAMINA && istype(def_zone, /obj/item/bodypart/head))
+			BP = H.get_bodypart(check_zone(BODY_ZONE_CHEST))
+		else
+			BP = def_zone
 	else
 		if(!def_zone)
 			def_zone = ran_zone(def_zone)
+		if(damagetype == STAMINA && def_zone == BODY_ZONE_HEAD)
+			def_zone = BODY_ZONE_CHEST
 		BP = H.get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = H.bodyparts[1]
+
+	if(!BP)
+		BP = H.bodyparts[1]
 
 	switch(damagetype)
 		if(BRUTE)

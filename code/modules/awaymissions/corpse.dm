@@ -41,6 +41,11 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
+	if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(!O.can_reenter_round)
+			to_chat(user, "<span class='warning'>You are unable to reenter the round.</span>")
+			return
 	var/ghost_role = alert(latejoinercalling ? "Latejoin as [mob_name]? (This is a ghost role, and as such, it's very likely to be off-station.)" : "Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return

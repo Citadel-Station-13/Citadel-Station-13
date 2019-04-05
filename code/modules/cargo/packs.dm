@@ -512,6 +512,14 @@
 					/obj/item/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
 
+/datum/supply_pack/security/armory/dragnetgun
+	name = "DRAGnet gun Crate"
+	desc = "Contains two DRAGnet gun. A Dynamic Rapid-Apprehension of the Guilty net the revolution in law enforcement technology that YOU Want! Requires Armory access to open."
+	cost = 3500
+	contains = list(/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet)
+	crate_name = "anti riot net guns crate"
+
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	desc = "Contains three Energy Guns, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to open."
@@ -545,7 +553,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -558,6 +566,16 @@
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+
+/datum/supply_pack/security/armory/miniguns
+	name = "Personal Miniature Energy Guns"
+	desc = "Contains three miniature energy guns. Each gun has a disabler and a lethal option. Requires Armory access to open."
+	cost = 5000
+	contains = list(/obj/item/gun/energy/e_gun/mini,
+					/obj/item/gun/energy/e_gun/mini,
+					/obj/item/gun/energy/e_gun/mini)
+	crate_name = "personal energy guns crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -620,6 +638,13 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
+/datum/supply_pack/security/armory/swattasers //Lesser AEG tbh
+	name = "SWAT tatical tasers Crate"
+	desc = "Contains two tactical energy gun, these guns are able to tase, disable and lethal as well as hold a seclight. Requires Armory access to open."
+	cost = 8000
+	contains = list(/obj/item/gun/energy/e_gun/stun,
+					/obj/item/gun/energy/e_gun/stun)
+	crate_name = "swat taser crate"
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Semi-Auto Rifle Crate"

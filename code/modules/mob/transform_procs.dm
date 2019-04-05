@@ -96,7 +96,9 @@
 			mind.transfer_to(O)
 			var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 			if(changeling)
-				changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+				var/obj/effect/proc_holder/changeling/humanform/HF = new /obj/effect/proc_holder/changeling/humanform(null)
+				changeling.purchasedpowers += HF
+				HF.action.Grant(O)
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -129,8 +131,9 @@
 		mind.transfer_to(O)
 		var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-
+			var/obj/effect/proc_holder/changeling/humanform/HF = new /obj/effect/proc_holder/changeling/humanform(null)
+			changeling.purchasedpowers += HF
+			HF.action.Grant(O)
 
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")

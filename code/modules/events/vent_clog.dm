@@ -75,7 +75,7 @@
 	reagentsAmount = 250
 
 /datum/round_event_control/vent_clog/beer
-	name = "Foamy beer stationwide"
+	name = "Clogged Vents: Beer"
 	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
 
@@ -83,12 +83,12 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/plasma_decon
-	name = "Plasma decontamination"
+	name = "Anti-Plasma Flood"
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
 
 /datum/round_event_control/vent_clog/female
-	name = "FemCum stationwide"
+	name = "Clogged Vents; Girlcum"
 	typepath = /datum/round_event/vent_clog/female
 	max_occurrences = 0
 
@@ -96,7 +96,7 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/male
-	name = "Semen stationwide"
+	name = "Clogged Vents: Semen"
 	typepath = /datum/round_event/vent_clog/male
 	max_occurrences = 0
 
@@ -118,6 +118,9 @@
 			foam.start()
 		CHECK_TICK
 
+/datum/round_event/vent_clog/male/announce()
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejaculation of contents may occur.", "Atmospherics alert")
+
 /datum/round_event/vent_clog/male/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
 		if(vent && vent.loc)
@@ -129,6 +132,9 @@
 			foam.set_up(200, get_turf(vent), R)
 			foam.start()
 		CHECK_TICK
+
+/datum/round_event/vent_clog/female/announce()
+	priority_announce("The scrubbers network is experiencing a backpressure squirt. Some ejection of contents may occur.", "Atmospherics alert")
 
 /datum/round_event/vent_clog/female/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)

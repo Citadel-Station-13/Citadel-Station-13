@@ -114,7 +114,7 @@
 /obj/item/pda/heads/rd
 	name = "research director PDA"
 	default_cartridge = /obj/item/cartridge/rd
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/fourcolor
 	icon_state = "pda-rd"
 
 /obj/item/pda/captain
@@ -184,6 +184,12 @@
 	icon_state = "pda-clear"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a special edition with a transparent case."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
+
+/obj/item/pda/neko
+	name = "neko PDA"
+	icon_state = "pda-neko"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a special edition a feline fine case."
+	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Mew Turbo Limited Edition NYA~!"
 
 /obj/item/pda/cook
 	name = "cook PDA"

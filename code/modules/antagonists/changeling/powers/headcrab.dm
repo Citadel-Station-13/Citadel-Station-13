@@ -6,6 +6,9 @@
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_explode"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	set waitfor = FALSE
