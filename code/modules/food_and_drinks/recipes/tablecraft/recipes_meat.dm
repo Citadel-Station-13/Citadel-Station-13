@@ -81,6 +81,37 @@
 	result = /obj/item/reagent_containers/food/snacks/sashimi
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/sushie_basic
+	name = "Funa Hosomaki"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 3,
+		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 2,
+		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 3,
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_basic = 8
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/sushie_adv
+	name = "Funa Nigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_adv = 3
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/sushie_pro
+	name = "Well made Funa Nigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 10,
+		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 2,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_pro
+	subcategory = CAT_MEAT
+
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/spidereggsham
@@ -91,6 +122,16 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet/spider = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/spidereggsham
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/sushie_egg
+	name = "Tobiko"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 6,
+		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
+		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_egg = 3
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
