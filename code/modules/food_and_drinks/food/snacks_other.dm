@@ -207,6 +207,16 @@
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/tobiko
+	name = "Tobiko"
+	desc = "Spider eggs wrapped in a thin salted Kudzu pod"
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "sushie_egg"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	filling_color = "#FF3333" // R225 G051 B051
+	tastes = list("seaweed" = 1, "salty" = 2)
+	foodtype = MEAT | VEGETABLES
+
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
