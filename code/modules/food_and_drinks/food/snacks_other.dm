@@ -579,3 +579,12 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/riceball
+	name = "Onigiri"
+	desc = "A ball of rice with some light salt and a wrap of Kudzu skin."
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "riceball"
+	list_reagents = list("nutriment" = 5, "sodiumchloride" = 2)
+	tastes = list("rice" = 4, "salt" = 1)
+	foodtype = GRAIN
