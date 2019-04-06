@@ -214,3 +214,5 @@
 	if(prob(20))
 		desc = pick(descs)
 
+/obj/item/reagent_containers/pill/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")

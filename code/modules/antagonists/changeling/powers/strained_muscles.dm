@@ -10,6 +10,9 @@
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
 	active = 0 //Whether or not you are a hedgehog
+	action_icon = 'icons/obj/implants.dmi'
+	action_icon_state = "adrenal"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	active = !active

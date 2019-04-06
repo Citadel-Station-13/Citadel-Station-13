@@ -6,7 +6,7 @@
 #define PIZZA_DELIVERY 6
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
-
+#define DELTA_CRATES 9
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -118,6 +118,18 @@
 						P.info = "Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it."
 						P.update_icon()
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+		if(DELTA_CRATES)
+			if(prob(50))
+				priority_announce("Cargo: We have discovered a warehouse of DELTA locked crates, we cant store any more of them at CC can you take them for us?.", "CentCom Security Division")
+			else
+				priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg') // CITADEL EDIT metabreak
+				for(var/obj/machinery/computer/communications/C in GLOB.machines)
+					if(!(C.stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
+						var/obj/item/paper/P = new(C.loc)
+						P.name = "Cargo Report"
+						P.info = "Cargo: We have discovered a warehouse of DELTA locked crates, we cant store any more of them at CC can you take them for us?."
+						P.update_icon()
+			bonus_points = 25000 //If you mess up, people die and the shuttle gets turned into swiss cheese
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
@@ -147,6 +159,8 @@
 			SSshuttle.centcom_message += "Biohazard cleanup incoming."
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
+		if(DELTA_CRATES)
+			SSshuttle.centcom_message += "DELTA Locked crates incoming. Exercise extreme caution."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -291,6 +305,15 @@
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
+			if(DELTA_CRATES) //Delta crates can stack on eacher, and are basicly a 1/3/5 bombs
+				for(var/i in 1 to 7) //7 seems fair
+					shuttle_spawns.Add(/obj/structure/closet/crate/secure/loot)
+
+				for(var/i in 1 to 5)
+					var/turf/T = pick_n_take(empty_shuttle_turfs)
+					new /obj/structure/spider/stickyweb(T)
+					new /obj/effect/decal/cleanable/ash(T)
+
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
 			var/turf/T = pick_n_take(empty_shuttle_turfs)
@@ -334,3 +357,4 @@
 #undef PIZZA_DELIVERY
 #undef ITS_HIP_TO
 #undef MY_GOD_JC
+#undef DELTA_CRATES

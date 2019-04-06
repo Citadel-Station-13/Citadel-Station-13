@@ -49,12 +49,31 @@
 		"bromine",
 		"stable_plasma"
 	)
-	var/list/emagged_reagents = list(
-		"space_drugs",
-		"morphine",
-		"carpotoxin",
+//these become available once upgraded.
+	var/list/upgrade_reagents = list(
+		"oil",
+		"ammonia"
+	)
+
+	var/list/upgrade_reagents2 = list(
+		"acetone",
+		"phenol",
+		"diethylamine"
+	)
+
+	var/list/upgrade_reagents3 = list(
+		"glycerol",
 		"mine_salve",
 		"toxin"
+	)
+
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"plasma",
+		"frostoil",
+		"carpotoxin",
+		"histamine",
+		"morphine"
 	)
 
 	var/list/saved_recipes = list()
@@ -74,7 +93,17 @@
 	..()
 	if(panel_open)
 		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
-
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>")
+		switch(macrotier)
+			if(1)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>5u</b>.<span>")
+			if(2)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>3u</b>.<span>")
+			if(3)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>2u</b>.<span>")
+			if(4)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>1u</b>.<span>")
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -109,7 +138,6 @@
 	if(beaker)
 		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
-
 
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
@@ -346,6 +374,12 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
+		if (M.rating > 1)
+			dispensable_reagents |= upgrade_reagents
+		if (M.rating > 2)
+			dispensable_reagents |= upgrade_reagents2
+		if (M.rating > 3)
+			dispensable_reagents |= upgrade_reagents3
 	powerefficiency = round(newpowereff, 0.01)
 
 
@@ -447,13 +481,18 @@
 		"tomatojuice",
 		"lemonjuice",
 		"menthol"
-	)
+	) //prevents the soda machine from obtaining chemical upgrades. .
+	upgrade_reagents = null
+	upgrade_reagents2 = null
+	upgrade_reagents3 = null
 	emagged_reagents = list(
 		"thirteenloko",
+		"changelingsting",
 		"whiskeycola",
 		"mindbreaker",
 		"tirizene"
 	)
+
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
@@ -497,13 +536,20 @@
 		"creme_de_cacao",
 		"triple_sec",
 		"sake"
-	)
+	)//prevents the booze machine from obtaining chemical upgrades.
+	upgrade_reagents = null
+	upgrade_reagents2 = null
+	upgrade_reagents3 = null
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
+		"alexander",
+		"clownstears",
 		"minttoxin",
 		"atomicbomb",
-		"fernet"
+		"fernet",
+		"aphro",
+		"aphro+"
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -528,6 +574,7 @@
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
 
@@ -550,7 +597,11 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
-	
+	//same as above.
+	upgrade_reagents = null
+	upgrade_reagents2 = null
+	upgrade_reagents3 = null
+
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
 	component_parts = list()

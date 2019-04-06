@@ -112,7 +112,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	if(user)
 		invokers += user
-	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
+	if(req_cultists > 1 || istype(src, /obj/effect/rune/narsie) || istype(src, /obj/effect/rune/convert))
 		var/list/things_in_range = range(1, src)
 		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
 		if(istype(plushsie) && plushsie.is_invoker)

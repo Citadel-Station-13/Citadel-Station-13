@@ -6,6 +6,9 @@
 	dna_cost = 1
 	loudness = 4
 	req_absorbs = 3
+	action_icon = 'icons/effects/effects.dmi'
+	action_icon_state = "spiderling"
+	action_background_icon_state = "bg_ling"
 
 //Makes some spiderlings. Good for setting traps and causing general trouble.
 /obj/effect/proc_holder/changeling/spiders/sting_action(mob/user)

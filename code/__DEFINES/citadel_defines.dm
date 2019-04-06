@@ -12,6 +12,7 @@
 #define ui_boxcraft "EAST-4:22,SOUTH+1:6"
 #define ui_boxarea "EAST-4:6,SOUTH+1:6"
 #define ui_boxlang "EAST-5:22,SOUTH+1:6"
+#define ui_boxvore	"EAST-4:22,SOUTH+1:6"
 
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, border=0, color="#04080F")
@@ -98,11 +99,11 @@
 //Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
-#define ismammal(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/mammal) )
-#define isavian(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/avian) )
-#define isaquatic(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/aquatic) )
-#define isinsect(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/insect) )
-#define isxenoperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/xeno) )
+#define ismammal(A) (is_species(A, /datum/species/mammal))
+#define isavian(A) (is_species(A, /datum/species/avian))
+#define isaquatic(A) (is_species(A, /datum/species/aquatic))
+#define isinsect(A) (is_species(A, /datum/species/insect))
+#define isxenoperson(A) (is_species(A, /datum/species/xeno))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
@@ -129,6 +130,8 @@
 
 //component stuff
 #define COMSIG_COMBAT_TOGGLED "combatmode_toggled" //called by combat mode toggle on all equipped items. args: (mob/user, combatmode)
+
+#define COMSIG_VORE_TOGGLED "voremode_toggled" // totally not copypasta
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4

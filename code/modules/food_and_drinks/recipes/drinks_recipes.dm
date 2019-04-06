@@ -692,3 +692,15 @@
 	id = "pwr_game"
 	results = list("pwr_game" = 5)
 	required_reagents = list("sodawater" = 1, "blackcrayonpowder" = 1, "sodiumchloride" = 1)
+
+/datum/chemical_reaction/pinkmilk
+	name = "Strawberry Milk"
+	id = "pinkmilk"
+	results = list("pinkmilk" = 5)
+	required_reagents = list("aphro+" = 1, "milk" = 1)
+
+/datum/chemical_reaction/pinktea
+	name = "Strawberry Tea"
+	id = "pinktea"
+	results = list("pinktea" = 5)
+	required_reagents = list("aphro" = 1, "arnold_palmer" = 1, "sugar" = 1)

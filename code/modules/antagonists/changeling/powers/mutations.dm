@@ -56,6 +56,7 @@
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
+	action.Remove(user)
 	for(var/obj/item/I in user.held_items)
 		check_weapon(user, I)
 
@@ -105,6 +106,7 @@
 /obj/effect/proc_holder/changeling/suit/on_refund(mob/user)
 	if(!ishuman(user))
 		return
+	action.Remove(user)
 	var/mob/living/carbon/human/H = user
 	check_suit(H)
 
@@ -141,6 +143,9 @@
 	req_human = 1
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_armblade"
+	action_background_icon_state = "bg_ling"
 
 /obj/item/melee/arm_blade
 	name = "arm blade"
@@ -225,6 +230,9 @@
 	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_tentacle"
+	action_background_icon_state = "bg_ling"
 
 /obj/item/gun/magic/tentacle
 	name = "tentacle"
@@ -401,6 +409,9 @@
 	dna_cost = 1
 	loudness = 1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_shield"
+	action_background_icon_state = "bg_ling"
 
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
@@ -454,6 +465,9 @@
 	dna_cost = 2
 	loudness = 1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_space_suit"
+	action_background_icon_state = "bg_ling"
 
 	suit_type = /obj/item/clothing/suit/space/changeling
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
@@ -503,6 +517,9 @@
 	loudness = 2
 	req_human = 1
 	recharge_slowdown = 0.25
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_armor"
+	action_background_icon_state = "bg_ling"
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
