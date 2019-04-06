@@ -82,7 +82,7 @@
 	name = "Funa Nigiri"
 	desc = "A well prepared pice of the best of the carp fillet placed on rice. Looks fancy and fresh!"
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
-	icon_state = "sushie_adv"
+	icon_state = "sushie_pro"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	bitesize = 1
