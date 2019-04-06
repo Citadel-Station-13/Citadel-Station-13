@@ -123,12 +123,15 @@
 			var/datum/sprite_accessory/S = instance
 			if(!S.ckeys_allowed)
 				snowflake_mam_snouts_list[S.name] = mspath
+	var/color1 = random_short_color()
+	var/color2 = random_short_color()
+	var/color3 = random_short_color()
 
 	//CIT CHANGE - changes this entire return to support cit's snowflake parts
 	return(list(
-		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"mcolor" = color1,
+		"mcolor2" = color2,
+		"mcolor3" = color3,
 		"tail_lizard" = pick(GLOB.tails_list_lizard),
 		"tail_human" = "None",
 		"wings" = "None",
