@@ -89,10 +89,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 2,
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 3,
 	)
-	result = list(
-			/obj/item/reagent_containers/food/snacks/sushie_basic = 8,
-			/obj/item/reagent_containers/glass/bowl = 1
-	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_basic
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/sushie_adv
@@ -102,10 +99,7 @@
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 1,
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
-	result = list(
-			/obj/item/reagent_containers/food/snacks/sushie_adv = 3,
-			/obj/item/reagent_containers/glass/bowl = 1
-	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_adv
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/sushie_pro
@@ -115,10 +109,7 @@
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 2,
 		/obj/item/reagent_containers/food/snacks/carpmeat = 5
 	)
-	result = list(
-			/obj/item/reagent_containers/food/snacks/sushie_pro = 1,
-			/obj/item/reagent_containers/glass/bowl = 1
-	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_pro
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
@@ -140,9 +131,7 @@
 		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 2,
 	)
-	result = list(
-			/obj/item/reagent_containers/food/snacks/tobiko = 3
-	)
+	result = /obj/item/reagent_containers/food/snacks/tobiko
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
