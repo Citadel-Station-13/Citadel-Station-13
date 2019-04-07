@@ -54,37 +54,37 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
 
-/obj/item/reagent_containers/food/snacks/sushie_basic // You get 8
+/obj/item/reagent_containers/food/snacks/sushie_basic
 	name = "Funa Hosomaki"
 	desc = "A small cylindrical filled with rice and fish."
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_basic"
 	bonus_reagents = list("vitamin" = 2)
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 4)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
 	foodtype = MEAT | VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/sushie_adv // You get 3
+/obj/item/reagent_containers/food/snacks/sushie_adv
 	name = "Funa Nigiri"
 	desc = "A pice of carp lightly placed on some rice."
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_adv"
 	bonus_reagents = list("vitamin" = 2)
-	list_reagents = list("nutriment" = 2)
+	list_reagents = list("nutriment" = 6)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
 	foodtype = MEAT | VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/sushie_pro // You get 1!
+/obj/item/reagent_containers/food/snacks/sushie_pro
 	name = "Funa Nigiri"
 	desc = "A well prepared pice of the best of the carp fillet placed on rice. Looks fancy and fresh!"
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_pro"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
-	list_reagents = list("nutriment" = 8, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 8, "vitamin" = 2)
 	bitesize = 1
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
