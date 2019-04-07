@@ -353,8 +353,5 @@
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
-	result = list(
-			/obj/item/reagent_containers/food/snacks/riceball = 1,
-			/obj/item/reagent_containers/glass/bowl = 1
-	)
+	result = /obj/item/reagent_containers/food/snacks/riceball
 	subcategory = CAT_MISCFOOD
