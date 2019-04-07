@@ -46,12 +46,11 @@
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "They look bloody and gruesome."
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-	var/fleshcolor = "#FFFFFF"
+	var/fleshcolor
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -61,18 +60,21 @@
 	return
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
-	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
-	if(!fleshcolor || fleshcolor == "rainbow")
-		fleshcolor = "#[skintone2hex[random_skin_tone()]]"
+	var/generic_skin = random_skin_tone()
+	var/ethnicity = "#[skintone2hex(generic_skin)]"
+
+	var/image/giblets = image(icon, "[icon_state]_flesh", dir)
+	if(!fleshcolor)
+		fleshcolor = ethnicity
 	giblets.color = fleshcolor
 
-	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	if(basecolor == "rainbow") basecolor = "#[skintone2hex[random_skin_tone()]]"
-	blood.Blend(basecolor,ICON_MULTIPLY)
+	for(var/datum/reagent/blood/B in reagents)
+		var/image/blood/goop = image(icon,"[icon_state]",dir)
+		goop.Blend(B.color,ICON_MULTIPLY)
 
-	icon = blood
+	icon = goop
 	overlays.Cut()
-	overlays += giblets
+	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))

@@ -5,6 +5,8 @@
 	var/list/gibtypes = list() //typepaths of the gib decals to spawn
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
+	var/fleshcolor
+	var/bloodcolor
 
 /obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA, list/datum/disease/diseases)
 	. = ..()
@@ -12,6 +14,9 @@
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		to_chat(world, "<span class='danger'>Gib list length mismatch!</span>")
 		return
+
+	if(fleshcolor) src.fleshcolor = fleshcolor
+	if(bloodcolor) src.bloodcolor = bloodcolor
 
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 
@@ -25,13 +30,24 @@
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
 				gib = new gibType(loc, diseases)
+
 				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
 				if(MobDNA)
+					var/list/blood_dna = MobDNA.get_blood_dna_list()
+					gib.add_blood_DNA(blood_dna)
 
-				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
+				// Apply human species colouration to masks.
+				if(fleshcolor)
+					gib.fleshcolor = fleshcolor
+				if(bloodcolor)
+					gib.color = bloodcolor
+
+				gib.update_icon()
+
+				if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
 					gib.add_blood_DNA(list("Non-human DNA" = "A+"))
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
@@ -72,7 +88,7 @@
 
 
 /obj/effect/gibspawner/xeno
-	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/up, /obj/effect/decal/cleanable/xenoblood/xgibs/down, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs/body, /obj/effect/decal/cleanable/xenoblood/xgibs/limb, /obj/effect/decal/cleanable/xenoblood/xgibs/core)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/gibs/up, /obj/effect/decal/cleanable/blood/xenoblood/gibs/down, /obj/effect/decal/cleanable/blood/xenoblood/gibs, /obj/effect/decal/cleanable/blood/xenoblood/gibs, /obj/effect/decal/cleanable/blood/xenoblood/gibs/body, /obj/effect/decal/cleanable/blood/xenoblood/gibs/limb, /obj/effect/decal/cleanable/blood/xenoblood/gibs/core)
 	gibamounts = list(1,1,1,1,1,1,1)
 
 /obj/effect/gibspawner/xeno/Initialize()
@@ -82,7 +98,7 @@
 
 
 /obj/effect/gibspawner/xenobodypartless //only the gibs that don't look like actual full bodyparts (except torso).
-	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs/core, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs/core, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs/torso)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/gibs, /obj/effect/decal/cleanable/blood/xenoblood/gibs/core, /obj/effect/decal/cleanable/blood/xenoblood/gibs, /obj/effect/decal/cleanable/blood/xenoblood/gibs/core, /obj/effect/decal/cleanable/blood/xenoblood/gibs, /obj/effect/decal/cleanable/blood/xenoblood/gibs/torso)
 	gibamounts = list(1, 1, 1, 1, 1, 1)
 
 
@@ -92,7 +108,7 @@
 	. = ..()
 
 /obj/effect/gibspawner/larva
-	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/gibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/gibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/gibs/larva/body, /obj/effect/decal/cleanable/blood/xenoblood/gibs/larva/body)
 	gibamounts = list(1, 1, 1, 1)
 
 /obj/effect/gibspawner/larva/Initialize()
@@ -101,7 +117,7 @@
 	. = ..()
 
 /obj/effect/gibspawner/larvabodypartless
-	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/gibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/gibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/gibs/larva)
 	gibamounts = list(1, 1, 1)
 
 /obj/effect/gibspawner/larvabodypartless/Initialize()

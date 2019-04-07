@@ -1,8 +1,8 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_color"=color, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"= BLOOD_COLOR_HUMAN, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
-	color = "#C80000" // rgb: 200, 0, 0
+	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -87,13 +87,19 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		B.color = data["bloodcolor"]
 
 /datum/reagent/blood/synthetics
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_color"=color, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"=BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	id = "syntheticblood"
-	color = "#0b0730" // rgb: 11, 7, 48
+	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 
+/datum/reagent/blood/xenomorph
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"=BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Xenomorph Blood"
+	id = "xenoblood"
+	color = BLOOD_COLOR_XENO // greenish yellow ooze
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"

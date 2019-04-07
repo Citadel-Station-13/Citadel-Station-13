@@ -3,7 +3,6 @@
 /obj/effect/decal/cleanable/blood/xenoblood
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
-	icon = 'icons/effects/blood.dmi'
 	blood_state = BLOOD_STATE_XENO
 	color = BLOOD_COLOR_XENO
 
@@ -15,18 +14,15 @@
 	name = "xeno gibs"
 	desc = "Gnarly..."
 
-/obj/effect/decal/cleanable/blood/xenoblood/xgibs/proc/streak(list/directions)
+/obj/effect/decal/cleanable/blood/xenoblood/gibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
+			new /obj/effect/decal/cleanable/blood/splatter(loc)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
-
-/obj/effect/decal/cleanable/blood/xenoblood/xgibs/ex_act()
-	return
 
 /obj/effect/decal/cleanable/blood/xenoblood/gibs/up
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
