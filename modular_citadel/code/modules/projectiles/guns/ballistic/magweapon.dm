@@ -59,6 +59,7 @@
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
+	nodamage = TRUE
 	light_range = 2
 	speed = 0.7
 	range = 25
@@ -212,6 +213,7 @@
 	icon_state = "magjectile-large-nl"
 	damage = 0
 	knockdown = 0
+	nodamage = TRUE
 	stamina = 25
 	armour_penetration = -10
 	light_range = 3
