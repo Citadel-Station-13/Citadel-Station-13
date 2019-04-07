@@ -3,8 +3,9 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
 	blood_state = BLOOD_STATE_HUMAN
+	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
@@ -50,6 +51,7 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
+	var/fleshcolor = "#FFFFFF"
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -57,6 +59,20 @@
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
+
+/obj/effect/decal/cleanable/blood/gibs/update_icon()
+	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
+	if(!fleshcolor || fleshcolor == "rainbow")
+		fleshcolor = "#[skintone2hex[random_skin_tone()]]"
+	giblets.color = fleshcolor
+
+	var/icon/blood = new(base_icon,"[icon_state]",dir)
+	if(basecolor == "rainbow") basecolor = "#[skintone2hex[random_skin_tone()]]"
+	blood.Blend(basecolor,ICON_MULTIPLY)
+
+	icon = blood
+	overlays.Cut()
+	overlays += giblets
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))

@@ -231,16 +231,16 @@
 		return
 
 	var/static/list/bloodtypes_safe = list(
-		"A-" = list("A-", "O-"),
-		"A+" = list("A-", "A+", "O-", "O+"),
-		"B-" = list("B-", "O-"),
-		"B+" = list("B-", "B+", "O-", "O+"),
-		"AB-" = list("A-", "B-", "O-", "AB-"),
-		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
-		"O-" = list("O-"),
-		"O+" = list("O-", "O+"),
-		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
+		"A-" = list("A-", "O-", "SY"),
+		"A+" = list("A-", "A+", "O-", "O+", "SY"),
+		"B-" = list("B-", "O-", "SY"),
+		"B+" = list("B-", "B+", "O-", "O+", "SY"),
+		"AB-" = list("A-", "B-", "O-", "AB-", "SY"),
+		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "SY"),
+		"O-" = list("O-","SY"),
+		"O+" = list("O-", "O+","SY"),
+		"L" = list("L","SY"),
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
