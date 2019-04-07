@@ -212,7 +212,7 @@
 	desc = "Spider eggs wrapped in a thin salted Kudzu pod"
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_egg"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#FF3333" // R225 G051 B051
 	tastes = list("seaweed" = 1, "salty" = 2)
 	foodtype = MEAT | VEGETABLES
@@ -585,6 +585,6 @@
 	desc = "A ball of rice with some light salt and a wrap of Kudzu skin."
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "riceball"
-	list_reagents = list("nutriment" = 5, "sodiumchloride" = 2)
+	list_reagents = list("nutriment" = 6, "sodiumchloride" = 4)
 	tastes = list("rice" = 4, "salt" = 1)
 	foodtype = GRAIN
