@@ -197,7 +197,7 @@
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([STATION_TIME_TIMESTAMP("hh:mm:ss")])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

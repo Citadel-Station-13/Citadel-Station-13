@@ -25,7 +25,7 @@
 	for(var/mob/living/M in contents)
 		if(isbelly(M.loc))
 			if(world.time > M.next_preyloop)
-				if(!silent)
+				if(is_wet)
 					M.stop_sound_channel(CHANNEL_PREYLOOP) // sanity just in case
 					var/sound/preyloop = sound('sound/vore/prey/loop.ogg', repeat = TRUE)
 					M.playsound_local(get_turf(src),preyloop,80,0, channel = CHANNEL_PREYLOOP)

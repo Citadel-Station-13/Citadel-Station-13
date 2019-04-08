@@ -160,6 +160,15 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 6, "ham" = 2)
 	foodtype = PINEAPPLE //Over powering tast of gods fruit
 
+/obj/item/reagent_containers/food/snacks/pizza/pineapple/anomaly
+	desc = "A anomaly made pizza with pineapple..."
+	bonus_reagents = list("nutriment" = 16, "vitamin" = 16)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 6, "ham" = 2, "good" = 10)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/pineapple/anomaly
+	desc = "A slice of good tasting pizza. But has pineapple on it, what a anomaly!"
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 6, "ham" = 2, "good" = 10)
+
 /obj/item/reagent_containers/food/snacks/pizza/arnold
 	name = "\improper Arnold pizza"
 	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni."

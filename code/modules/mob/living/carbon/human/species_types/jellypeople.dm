@@ -5,8 +5,8 @@
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "taur") //CIT CHANGE
-	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None") //CIT CHANGE
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_snouts", "taur") //CIT CHANGE
+	default_features = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None") //CIT CHANGE
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"

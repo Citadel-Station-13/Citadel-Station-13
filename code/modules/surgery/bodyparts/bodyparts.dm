@@ -306,10 +306,10 @@
 		//body marking memes
 		var/list/colorlist = list()
 		colorlist.Cut()
-		colorlist += ReadRGB(H.dna.features["mcolor"])
-		colorlist += ReadRGB(H.dna.features["mcolor2"])
-		colorlist += ReadRGB(H.dna.features["mcolor3"])
-		colorlist += list(0,0,0)
+		colorlist += ReadRGB("[H.dna.features["mcolor"]]0")
+		colorlist += ReadRGB("[H.dna.features["mcolor2"]]0")
+		colorlist += ReadRGB("[H.dna.features["mcolor3"]]0")
+		colorlist += list(0,0,0, S.hair_alpha)
 		for(var/index=1, index<=colorlist.len, index++)
 			colorlist[index] = colorlist[index]/255
 
@@ -495,7 +495,6 @@
 
 
 	if(should_draw_greyscale)
-		marking.color = null
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"

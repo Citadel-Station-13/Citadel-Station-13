@@ -184,6 +184,15 @@
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtype = MEAT | SUGAR
 
+/obj/item/reagent_containers/food/snacks/monkeycube/On_Consume(mob/living/carbon/M)
+	if(iscarbon(M))
+		M.visible_message("[src] bursts out of [M]!</span>")
+		M.emote("scream")
+		M.Knockdown(40)
+		M.adjustBruteLoss(60)
+		Expand()
+	return ..()
+
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
