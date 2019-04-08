@@ -63,7 +63,7 @@
 	list_reagents = list("nutriment" = 4)
 	bitesize = 10
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
-	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
+	tastes = list("fish" = 1, "rice" = 2, "salt" = 1)
 	foodtype = MEAT | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/sushi_adv
@@ -75,7 +75,7 @@
 	list_reagents = list("nutriment" = 6)
 	bitesize = 10
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
-	tastes = list("fish" = 1, "rice" = 1, "salt" = 1)
+	tastes = list("fish" = 2, "rice" = 2, "salt" = 1)
 	foodtype = MEAT | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/sushi_pro
