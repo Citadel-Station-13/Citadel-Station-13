@@ -33,6 +33,7 @@
 	name = "Lust's Whip"
 	desc = "A strange whip that sparks arousal from the slightest touch"
 	icon_state = "lustwhip"
+	item_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	damtype = AROUSAL
