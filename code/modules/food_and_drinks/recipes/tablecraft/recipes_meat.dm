@@ -81,7 +81,7 @@
 	result = /obj/item/reagent_containers/food/snacks/sashimi
 	subcategory = CAT_MEAT
 
-/datum/crafting_recipe/food/sushie_basic
+/datum/crafting_recipe/food/sushi_basic
 	name = "Funa Hosomaki"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 3,
@@ -89,27 +89,27 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 2,
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 3,
 	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_basic
+	result = /obj/item/reagent_containers/food/snacks/sushi_basic
 	subcategory = CAT_MEAT
 
-/datum/crafting_recipe/food/sushie_adv
+/datum/crafting_recipe/food/sushi_adv
 	name = "Funa Nigiri"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 1,
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_adv
+	result = /obj/item/reagent_containers/food/snacks/sushi_adv
 	subcategory = CAT_MEAT
 
-/datum/crafting_recipe/food/sushie_pro
+/datum/crafting_recipe/food/sushi_pro
 	name = "Well made Funa Nigiri"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 10,
 		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 2,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 5
+		/obj/item/reagent_containers/food/snacks/carpmeat = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_pro
+	result = /obj/item/reagent_containers/food/snacks/sushi_pro
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
@@ -124,7 +124,7 @@
 	result = /obj/item/reagent_containers/food/snacks/spidereggsham
 	subcategory = CAT_MEAT
 
-/datum/crafting_recipe/food/sushie_egg
+/datum/crafting_recipe/food/sushi_egg
 	name = "Tobiko"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 6,
