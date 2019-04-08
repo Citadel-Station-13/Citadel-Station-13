@@ -56,7 +56,7 @@
 
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
-	desc = "A small cylindrical filled with rice and fish."
+	desc = "A small cylindrical kudzu skin, filled with rice and fish."
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_basic"
 	bonus_reagents = list("vitamin" = 2)
@@ -84,7 +84,7 @@
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_pro"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 8, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	bitesize = 10
 	filling_color = "#F2EEEA" //rgb(242, 238, 234)
 	tastes = list("fish" = 3, "rice" = 2, "salt" = 1)
