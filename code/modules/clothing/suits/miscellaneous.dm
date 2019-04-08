@@ -498,9 +498,10 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
+	desc = "A heavy jacket made from 'synthetic' animal furs. This one is reinforced with protective materials to offer enough protection for the station's Captain."
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
-	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 40, "laser" = 50, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 90)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
