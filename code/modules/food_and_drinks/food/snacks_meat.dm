@@ -68,7 +68,7 @@
 
 /obj/item/reagent_containers/food/snacks/sushi_adv
 	name = "funa nigiri"
-	desc = "A pice of carp lightly placed on some rice."
+	desc = "A peace  of carp lightly placed on some rice."
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_adv"
 	bonus_reagents = list("vitamin" = 2)
@@ -80,7 +80,7 @@
 
 /obj/item/reagent_containers/food/snacks/sushi_pro
 	name = "funa nigiri"
-	desc = "A well prepared pice of the best of the carp fillet placed on rice. Looks fancy and fresh!"
+	desc = "A well prepared peace  of the best of the carp fillet placed on rice. Looks fancy and fresh!"
 	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_pro"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
