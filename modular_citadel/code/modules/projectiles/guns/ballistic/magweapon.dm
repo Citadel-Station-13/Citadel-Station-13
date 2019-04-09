@@ -55,9 +55,9 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 0
+	damage = 25
 	knockdown = 0
-	stamina = 25
+	damage_type = STAMINA
 	armour_penetration = -10
 	light_range = 2
 	speed = 0.7
@@ -210,9 +210,9 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 0
+	damage = 25
 	knockdown = 0
-	stamina = 25
+	damage_type = STAMINA
 	armour_penetration = -10
 	light_range = 3
 	speed = 0.65
