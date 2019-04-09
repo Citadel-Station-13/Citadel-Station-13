@@ -2,14 +2,14 @@
 	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of planetary mining."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 4 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	step_in = 3 //Move speed, lower is faster.
+	var/fast_pressure_step_in = 2
+	var/slow_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 200
-	lights_power = 7
+	lights_power = 8
 	deflect_chance = 15
-	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 30, "bullet" = 15, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -64,6 +64,9 @@
 	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
+	step_in = 4
+	fast_pressure_step_in = 2
+	slow_pressure_step_in = 4
 	max_temperature = 65000
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
