@@ -1,16 +1,19 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/digestable = FALSE					// Can the mob be digested inside a belly?
-	var/obj/belly/vore_selected		// Default to no vore capability.
-	var/list/vore_organs = list()		// List of vore containers inside a mob
+	var/showvoreprefs = TRUE				// Determines if the mechanical vore preferences button will be displayed on the mob or not.
+	var/obj/belly/vore_selected				// Default to no vore capability.
+	var/list/vore_organs = list()			// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
-//	var/feeding = FALSE					// Are we going to feed someone else?
-	var/vore_taste = null				// What the character tastes like
+	var/feeding = FALSE						// Are we going to feed someone else?
+	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = 0					// Is the vore panel open?
-	var/noisy = FALSE					// tummies are rumbly?
-	var/absorbed = FALSE				//are we absorbed?
+	var/openpanel = 0						// Is the vore panel open?
+	var/noisy = FALSE						// tummies are rumbly?
+	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
+	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
+	var/vorepref_init = FALSE				//Has this mob's voreprefs been initialized?
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -26,12 +29,14 @@
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(10 SECONDS) // long delay because the server delays in its startup. just on the safe side.
-		M.init_vore()
+		if(M)
+			M.init_vore()
 
 	//Return 1 to hook-caller
 	return 1
 
 /mob/living/proc/init_vore()
+	vore_init = TRUE
 	//Something else made organs, meanwhile.
 	if(LAZYLEN(vore_organs))
 		return TRUE
@@ -75,31 +80,42 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey)
-	if(!user || !prey)
+/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
+	if(!user || !prey || !pred)
 		return
 
-	if(prey == src && user.zone_selected == "mouth") //you click your target
-//		if(!feeding(src))
-//			return
-		if(!is_vore_predator(prey))
+	if(!isliving(pred)) //no badmin, you can't feed people to ghosts or objects.
+		return
+
+	if(pred == prey) //you click your target
+		if(!pred.feeding)
+			to_chat(user, "<span class='notice'>They aren't able to be fed.</span>")
+			to_chat(pred, "<span class='notice'>[user] tried to feed you themselves, but you aren't voracious enough to be fed.</span>")
+			return
+		if(!is_vore_predator(pred))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
-		feed_self_to_grabbed(user, src)
+		feed_self_to_grabbed(user, pred)
 
-	if(user == src) //you click yourself
+	if(pred == user) //you click yourself
 		if(!is_vore_predator(src))
 			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return
-		user.feed_grabbed_to_self(src, prey)
+		feed_grabbed_to_self(user, prey)
 
 	else // click someone other than you/prey
-//		if(!feeding(src))
-//			return
-		if(!is_vore_predator(src))
+		if(!pred.feeding)
+			to_chat(user, "<span class='notice'>They aren't voracious enough to be fed.</span>")
+			to_chat(pred, "<span class='notice'>[user] tried to feed you [prey], but you aren't voracious enough to be fed.</span>")
+			return
+		if(!prey.feeding)
+			to_chat(user, "<span class='notice'>They aren't able to be fed to someone.</span>")
+			to_chat(prey, "<span class='notice'>[user] tried to feed you to [pred], but you aren't able to be fed to them.</span>")
+			return
+		if(!is_vore_predator(pred))
 			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
-		feed_grabbed_to_other(user, prey, src)
+		feed_grabbed_to_other(user, prey, pred)
 //
 // Eating procs depending on who clicked what
 //
@@ -120,7 +136,7 @@
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	return//disabled until I can make that toggle work
+//	return//disabled until I can make that toggle work
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -281,7 +297,7 @@
 */
 
 //
-// Custom resist catches for /mob/living
+// Our custom resist catches for /mob/living
 //
 /mob/living/proc/vore_process_resist()
 
@@ -293,7 +309,7 @@
 
 	//Other overridden resists go here
 
-	return FALSE
+	return 0
 
 // internal slimy button in case the loop stops playing but the player wants to hear it
 /mob/living/proc/preyloop_refresh()
@@ -320,9 +336,9 @@
 			return
 		//Actual escaping
 		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
-		if(is_blind(src) && !has_trait(TRAIT_BLIND))
-			src.adjust_blindness(-1)
+		src.cure_blind("belly_[REF(src)]")
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
 			SA.prey_excludes[src] = world.time
 
@@ -374,6 +390,8 @@
 
 	P.digestable = src.digestable
 	P.devourable = src.devourable
+	P.feeding = src.feeding
+	P.noisy = src.noisy
 	P.vore_taste = src.vore_taste
 
 	var/list/serialized = list()
@@ -392,11 +410,14 @@
 	if(!client || !client.prefs_vr)
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>")
 		return 0
+	vorepref_init = TRUE
 
 	var/datum/vore_preferences/P = client.prefs_vr
 
 	digestable = P.digestable
 	devourable = P.devourable
+	feeding = P.feeding
+	noisy = P.noisy
 	vore_taste = P.vore_taste
 
 	release_vore_contents(silent = TRUE)

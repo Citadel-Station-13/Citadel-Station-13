@@ -82,6 +82,10 @@
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/eyes/hud/medical
 
+/obj/item/autosurgeon/gloweyes
+	desc = "A single use autosurgeon that contains a set of Luminescent Eyes augments. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/eyes/robotic/glow
 
 /obj/item/autosurgeon/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals

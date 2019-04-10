@@ -101,3 +101,22 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple
 	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/pineapplepizza/anomaly
+	name = "Anomaly Hawaiian pizza"
+	reqs = list(
+	/obj/item/assembly/signaler/anomaly = 1,
+	/obj/item/reagent_containers/food/snacks/pizza/pineapple = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/pizza/pineapple/anomaly
+	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/anomalypizzaboy
+	name = "Anomaly pizza box"
+	reqs = list(
+		/obj/item/pizzabox = 5,
+		/obj/item/assembly/signaler/anomaly = 1
+	)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	result = /obj/item/pizzabox/infinite
+	subcategory = CAT_PIZZA

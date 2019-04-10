@@ -71,7 +71,7 @@
 		return
 
 	if(timing)
-		if(world.time - activation_time >= timer_duration)
+		if(world.realtime - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
 		update_icon()
 
@@ -87,7 +87,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return 0
 
-	activation_time = world.time
+	activation_time = world.realtime
 	timing = TRUE
 
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
@@ -136,7 +136,7 @@
 
 
 /obj/machinery/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0,timer_duration - (activation_time ? world.time - activation_time : 0))
+	. = max(0,timer_duration - (activation_time ? world.realtime - activation_time : 0))
 	if(seconds)
 		. /= 10
 
@@ -240,7 +240,7 @@
 					preset_time = PRESET_LONG
 			. = set_timer(preset_time)
 			if(timing)
-				activation_time = world.time
+				activation_time = world.realtime
 		else
 			. = FALSE
 

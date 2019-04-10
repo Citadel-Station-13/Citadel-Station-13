@@ -100,7 +100,7 @@
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
 	var/target_dir = get_dir(src,target)
-	
+
 	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
 	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
 	var/chosen_dir = 0
@@ -202,6 +202,8 @@
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
+	if(isbelly(the_target.loc)) //Target's inside a gut, forget about it too
+		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
@@ -301,7 +303,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-			else 
+			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode

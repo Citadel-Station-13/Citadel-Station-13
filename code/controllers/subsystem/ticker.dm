@@ -304,6 +304,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
+	SSshuttle.realtimeofstart = world.realtime
 
 	return TRUE
 
@@ -655,7 +656,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/gondolabridge.ogg',
+		'sound/roundend/haveabeautifultime.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

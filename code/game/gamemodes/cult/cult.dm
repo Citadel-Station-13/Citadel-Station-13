@@ -37,9 +37,9 @@
 	false_report_weight = 10
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 20
-	required_enemies = 2
-	recommended_enemies = 4
+	required_players = 30
+	required_enemies = 3
+	recommended_enemies = 5
 	enemy_minimum_age = 7
 
 	announce_span = "cult"

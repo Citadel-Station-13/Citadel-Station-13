@@ -85,6 +85,7 @@
 #define ui_crafting	"EAST-5:20,SOUTH:5"//CIT CHANGE - moves this over one tile to accommodate for combat mode toggle
 #define ui_building "EAST-5:20,SOUTH:21"//CIT CHANGE - ditto
 #define ui_language_menu "EAST-5:4,SOUTH:21"//CIT CHANGE - ditto
+#define ui_voremode	"EAST-5:20,SOUTH:5"
 
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"

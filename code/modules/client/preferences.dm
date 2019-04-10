@@ -1385,48 +1385,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hair_style")
 					var/new_hair_style
-					if(gender == MALE)
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_male_list
-					else
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_female_list
+					new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_list
 					if(new_hair_style)
 						hair_style = new_hair_style
 
 				if("next_hair_style")
-					if (gender == MALE)
-						hair_style = next_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
-						hair_style = next_list_item(hair_style, GLOB.hair_styles_female_list)
+					hair_style = next_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("previous_hair_style")
-					if (gender == MALE)
-						hair_style = previous_list_item(hair_style, GLOB.hair_styles_male_list)
-					else
-						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
+					hair_style = previous_list_item(hair_style, GLOB.hair_styles_list)
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
-					if("facial_hair_style")
-						var/new_facial_hair_style
-						if(gender == MALE)
-							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_male_list
-						else
-							new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_female_list
-						if(new_facial_hair_style)
-							facial_hair_style = new_facial_hair_style
+
+				if("facial_hair_style")
+					var/new_facial_hair_style
+					new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_list
+					if(new_facial_hair_style)
+						facial_hair_style = new_facial_hair_style
 
 				if("next_facehair_style")
-					if (gender == MALE)
-						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
-						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
-					if("previous_facehair_style")
-						if (gender == MALE)
-							facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-						else
-							facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
+
+				if("previous_facehair_style")
+					facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("underwear")
 					var/new_underwear
@@ -1471,10 +1455,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
-						if("mam_tail" in pref_species.default_features)
-							features["mam_tail"] = "None"
-						if("mam_ears" in pref_species.default_features)
-							features["mam_ears"] = "None"
 						if(pref_species.id == "felinid")
 							features["mam_tail"] = "Cat"
 							features["mam_ears"] = "Cat"
@@ -1584,14 +1564,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["tail_lizard"] = "None"
 
 				if("snout")
+					var/list/snowflake_snouts_list = list()
+					for(var/path in GLOB.snouts_list)
+						var/datum/sprite_accessory/mam_snouts/instance = GLOB.snouts_list[path]
+						if(istype(instance, /datum/sprite_accessory))
+							var/datum/sprite_accessory/S = instance
+							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+								snowflake_snouts_list[S.name] = path
 					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.snouts_list
+					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
 
 				if("mam_snouts")
+					var/list/snowflake_mam_snouts_list = list()
+					for(var/path in GLOB.mam_snouts_list)
+						var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+						if(istype(instance, /datum/sprite_accessory))
+							var/datum/sprite_accessory/S = instance
+							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+								snowflake_mam_snouts_list[S.name] = path
 					var/new_mam_snouts
-					new_mam_snouts = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.mam_snouts_list
+					new_mam_snouts = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_mam_snouts_list
 					if(new_mam_snouts)
 						features["mam_snouts"] = new_mam_snouts
 
@@ -1600,12 +1594,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in GLOB.horns_list
 					if(new_horns)
 						features["horns"] = new_horns
-
-				if("ears")
-					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in GLOB.ears_list
-					if(new_ears)
-						features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
@@ -2152,31 +2140,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
-	else if("mam_tail" in pref_species.default_features)
+	if("mam_tail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "mam_tail"
-	else if("xenotail" in pref_species.default_features)
+	if("xenotail" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "xenotail"
 
-	if("legs" in pref_species.default_features)
-		if(character.dna.features["legs"] == "Digitigrade Legs")
-			pref_species.species_traits += DIGITIGRADE
-			character.Digitigrade_Leg_Swap(FALSE)
-
-		if(character.dna.features["legs"] == "Normal Legs" && DIGITIGRADE in pref_species.species_traits)
-			pref_species.species_traits -= DIGITIGRADE
-			character.Digitigrade_Leg_Swap(TRUE)
-
-	else if((!"legs" in pref_species.default_features) && DIGITIGRADE in pref_species.species_traits)
+	if(("legs" in character.dna.species.mutant_bodyparts) && character.dna.features["legs"] == "Digitigrade Legs")
+		pref_species.species_traits |= DIGITIGRADE
+	else
 		pref_species.species_traits -= DIGITIGRADE
-		character.Digitigrade_Leg_Swap(TRUE)
 
 	if(DIGITIGRADE in pref_species.species_traits)
 		character.Digitigrade_Leg_Swap(FALSE)
+	else
+		character.Digitigrade_Leg_Swap(TRUE)
 
-	if(icon_updates)
-		character.update_body()
-		character.update_hair()
-		character.update_body_parts()
+	//let's be sure the character updates
+	character.update_body()
+	character.update_hair()
+	character.update_body_parts()
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
