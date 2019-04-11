@@ -55,7 +55,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 5
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -210,7 +210,7 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 5
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
