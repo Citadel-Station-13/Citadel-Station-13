@@ -1,8 +1,5 @@
 //LISTMOS
 //indices of values in gas lists.
-#define MOLES			1
-#define ARCHIVE			2
-#define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
 #define META_GAS_MOLES_VISIBLE	3
@@ -243,7 +240,7 @@
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
-#define ADD_GAS(gas_id, out_list) out_list[gas_id] = 0;
+#define ADD_GAS(gas_id, out_list) out_list[gas_id] = 0
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
