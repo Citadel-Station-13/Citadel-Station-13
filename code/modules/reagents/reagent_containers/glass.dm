@@ -167,12 +167,12 @@
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
-	desc = "An extra-large beaker. Can hold up to 120 units."
+	desc = "An extra-large beaker. Can hold up to 150 units."
 	icon_state = "beakerwhite"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
-	volume = 120
+	volume = 150
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120, 150)
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -181,12 +181,12 @@
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
-	desc = "A large beaker. Can hold up to 180 units."
+	desc = "A large beaker. Can hold up to 200 units."
 	icon_state = "beakergold"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
-	volume = 180
+	volume = 200
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,150,200)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
