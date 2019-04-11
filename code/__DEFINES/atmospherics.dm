@@ -243,8 +243,7 @@
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
-#define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
+#define ADD_GAS(gas_id, out_list) out_list[gas_id] = 0;
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
@@ -253,9 +252,10 @@
 #define TOTAL_MOLES(cached_gases, out_var)\
 	out_var = 0;\
 	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
+		out_var += cached_gases[total_moles_id];\
 	}
 
+#define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

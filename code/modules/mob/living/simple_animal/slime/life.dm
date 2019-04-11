@@ -132,7 +132,7 @@
 	if(stat != DEAD)
 		var/bz_percentage =0
 		if(environment.gases[/datum/gas/bz])
-			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
+			bz_percentage = environment.gases[/datum/gas/bz] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)

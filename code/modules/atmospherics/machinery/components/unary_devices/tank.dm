@@ -18,8 +18,8 @@
 	air_contents.temperature = T20C
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = AIR_CONTENTS
-		name = "[name] ([air_contents.gases[gas_type][GAS_META][META_GAS_NAME]])"
+		air_contents.gases[gas_type] = AIR_CONTENTS
+		name = "[name] ([GLOB.meta_gas_info[gas_type][META_GAS_NAME]])"
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
@@ -45,5 +45,5 @@
 	..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = AIR_CONTENTS * 0.2
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = AIR_CONTENTS * 0.8
+	air_contents.gases[/datum/gas/oxygen] = AIR_CONTENTS * 0.2
+	air_contents.gases[/datum/gas/nitrogen] = AIR_CONTENTS * 0.8

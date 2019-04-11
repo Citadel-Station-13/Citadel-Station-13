@@ -144,7 +144,7 @@
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
 	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
+	var/fuel_moles = air_contents.gases[/datum/gas/plasma] + air_contents.gases[/datum/gas/oxygen]/6
 	air_contents.garbage_collect()
 	var/datum/gas_mixture/bomb_mixture = air_contents.copy()
 	var/strength = 1

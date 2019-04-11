@@ -14,9 +14,6 @@
 	temperature_archived = initial_temperature
 	gases.Cut()
 
-/datum/gas_mixture/immutable/archive()
-	return 1 //nothing changes, so we do nothing and the archive is successful
-
 /datum/gas_mixture/immutable/merge()
 	return 0 //we're immutable.
 
@@ -65,7 +62,7 @@
 /datum/gas_mixture/immutable/cloner/garbage_collect()
 	..()
 	ADD_GAS(/datum/gas/nitrogen, gases)
-	gases[/datum/gas/nitrogen][MOLES] = MOLES_O2STANDARD + MOLES_N2STANDARD
+	gases[/datum/gas/nitrogen] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()
 	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20

@@ -160,9 +160,9 @@
 
 			filtered_out.temperature = removed.temperature
 			filtered_out.add_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			filtered_out.gases[filter_type] = removed.gases[filter_type]
 
-			removed.gases[filter_type][MOLES] = 0
+			removed.gases[filter_type] = 0
 			removed.garbage_collect()
 
 			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1

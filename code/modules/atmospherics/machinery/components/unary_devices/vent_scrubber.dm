@@ -198,8 +198,8 @@
 
 			for(var/gas in filter_types & removed_gases)
 				filtered_out.add_gas(gas)
-				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
-				removed_gases[gas][MOLES] = 0
+				filtered_gases[gas] = removed_gases[gas]
+				removed_gases[gas] = 0
 
 			removed.garbage_collect()
 

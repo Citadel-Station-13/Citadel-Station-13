@@ -14,9 +14,9 @@
 	if(!air_contents)
 		return 0
 
-	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
-	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
+	var/oxy = air_contents.gases[/datum/gas/oxygen]
+	var/tox = air_contents.gases[/datum/gas/plasma]
+	var/trit = air_contents.gases[/datum/gas/tritium]
 	if(active_hotspot)
 		if(soh)
 			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
@@ -162,7 +162,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (location.air.gases[path] < 0.5)
 /obj/effect/hotspot/process()
 	if(just_spawned)
 		just_spawned = FALSE
@@ -184,7 +184,7 @@
 		return
 
 	//Not enough to burn
-	if(((!location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5) && (!location.air.gases[/datum/gas/tritium] || location.air.gases[/datum/gas/tritium][MOLES] < 0.5)) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	if((location.air.gases[/datum/gas/plasma] < 0.5 && location.air.gases[/datum/gas/tritium] < 0.5) || location.air.gases[/datum/gas/oxygen] < 0.5)
 		qdel(src)
 		return
 

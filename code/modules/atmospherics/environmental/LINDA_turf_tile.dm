@@ -88,7 +88,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	air.archive()
+	ARCHIVE_TEMPERATURE(air)
 	archived_cycle = SSair.times_fired
 	temperature_archived = temperature
 
@@ -121,10 +121,10 @@
 		if (nonoverlaying_gases[id])
 			continue
 		var/gas = gases[id]
-		var/gas_meta = gas[GAS_META]
+		var/gas_meta = GLOB.meta_gas_info[id]
 		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+		if(gas_overlay && gas > gas_meta[META_GAS_MOLES_VISIBLE])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()
@@ -215,7 +215,7 @@
 	if (planet_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
-		G.archive()
+		ARCHIVE_TEMPERATURE(G)
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
@@ -327,7 +327,7 @@
 		A.merge(T.air)
 
 	for(var/id in A_gases)
-		A_gases[id][MOLES] /= turflen
+		A_gases[id] /= turflen
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
