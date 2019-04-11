@@ -8,8 +8,6 @@
 	var/obj/belly/megafauna/dragon/maw/maw = new(src)
 	var/obj/belly/megafauna/dragon/gullet/gullet = new(src)
 	var/obj/belly/megafauna/dragon/gut/gut = new(src)
-//	for(var/obj/belly/X in list(maw, gullet, gut))
-//		vore_organs[X.name] = X
 	// Connect 'stomachs' together
 	maw.transferlocation = gullet
 	gullet.transferlocation = gut
