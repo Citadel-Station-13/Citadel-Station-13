@@ -62,7 +62,7 @@
 	)
 
 	var/list/upgrade_reagents3 = list(
-		"glycerol",
+		"saltpetre",
 		"mine_salve",
 		"toxin"
 	)
