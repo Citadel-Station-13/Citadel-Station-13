@@ -17,6 +17,12 @@
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
+	//FermiChem!
+	var/FermiChem = FALSE //If the chemical uses the Fermichem reaction mechanics
+	var/FermiExplode = FALSE //If the chemical explodes in a special way as a result of
+	var/ExplodeTemp = 900 //If any reaction is this hot, it explodes!
+	var/ImpureChem = "toxin" //What chemical is produced with an inpure reaction
+
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
 	return
 	//I recommend you set the result amount to the total volume of all components.

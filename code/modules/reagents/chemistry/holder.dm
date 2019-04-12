@@ -380,7 +380,7 @@
 						matching_container = 1
 
 					else
-						if(cached_my_atom.type == C.required_container)//if the container requires a certain type, and if it equals what it needs?
+						if(cached_my_atom.type == C.required_container)//if the suspected container is a container
 							matching_container = 1
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 						return
@@ -393,7 +393,7 @@
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 							matching_other = 1
 				else
-					if(!C.required_container)//I'm not sure why this is here twice, I think if it's not a beaker?
+					if(!C.required_container)//I'm not sure why this is here twice, I think if it's not a beaker? Oh, cyro.
 						matching_container = 1
 					if(!C.required_other)
 						matching_other = 1
@@ -429,9 +429,10 @@
 				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
 				//FermiChem
-				if (purity != 1)//if purity of reaction isn't 1
-					multiplierProd = multiplier * purity //adjusts multiplier to be in line with purity
-					multiplierTox = multiplier - multiplierProd //
+
+				//if (purity != 1)//if purity of reaction isn't 1
+				//	multiplierProd = multiplier * purity //adjusts multiplier to be in line with purity
+				//	multiplierTox = multiplier - multiplierProd //
 
 
 			for(var/B in cached_required_reagents)
