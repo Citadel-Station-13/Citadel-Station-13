@@ -49,6 +49,7 @@
 	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
 	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/setdirtiness = TRUE
 
 /obj/effect/decal/cleanable/dirt/Initialize()
 	. = ..()
@@ -59,10 +60,20 @@
 		icon_state = ""
 		queue_smooth(src)
 	queue_smooth_neighbors(src)
+	if(setdirtiness && istype(T, /turf/open/floor))
+		var/turf/open/floor/F = T
+		F.dirtlevel = 510
 
 /obj/effect/decal/cleanable/dirt/Destroy()
 	queue_smooth_neighbors(src)
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/open/floor))
+		var/turf/open/floor/F = T
+		F.dirtlevel = 0
 	return ..()
+
+/obj/effect/decal/cleanable/dirt/natural
+	setdirtiness = FALSE
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
