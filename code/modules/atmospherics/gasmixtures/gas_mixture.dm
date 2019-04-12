@@ -9,23 +9,23 @@ What are the archived variables for?
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture
-	var/list/gases
+	var/list/gases = list()
 	var/temperature = 0 //kelvins
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
-	var/list/reaction_results
+	var/list/reaction_results = list()
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 
 /datum/gas_mixture/New(volume)
-	gases = new
 	if (!isnull(volume))
 		src.volume = volume
-	reaction_results = new
 
 //listmos procs
 //use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
+
+//UNOMOS - whoever originally wrote this is a sadist that just wants to see byond suffer.
 
 	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 	//Must be used before adding to a gas. May be used before reading from a gas.
@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	//Must be used after subtracting from a gas. Must be used after assert_gas()
 		//if assert_gas() was called only to read from the gas.
 	//By removing empty gases, processing speed is increased.
+	//UNOMOS - above comment right above this line is now fairly inaccurate, as the system no longer makes gracious abuse of lists for storing gasses moles.
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
