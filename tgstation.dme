@@ -2777,6 +2777,7 @@
 #include "modular_citadel\code\datums\mood_events\generic_positive_events.dm"
 #include "modular_citadel\code\datums\mood_events\moodular.dm"
 #include "modular_citadel\code\datums\mutations\hulk.dm"
+#include "modular_citadel\code\datums\status_effects\chems.dm"
 #include "modular_citadel\code\datums\status_effects\debuffs.dm"
 #include "modular_citadel\code\datums\traits\neutral.dm"
 #include "modular_citadel\code\datums\wires\airlock.dm"

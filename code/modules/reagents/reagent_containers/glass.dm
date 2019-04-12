@@ -172,7 +172,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
 	volume = 150
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,60,120, 150)
+	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,150)
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states

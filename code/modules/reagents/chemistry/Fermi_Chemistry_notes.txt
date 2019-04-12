@@ -3,6 +3,7 @@ Cit/main/Chemistry notes
 SEE README.MD FOR FUNCTIONS
 
 ~Main folder: \ss13\Citadel-Station-13\code\modules\reagents\chemistry~
+~ADD NEW FILES TO tgstation.dme~
 
 ~Recipies: \ss13\Citadel-Station-13\code\modules\reagents\chemistry\recipes~
 This contains the reaction recipies and thats it.
@@ -48,6 +49,9 @@ How the end state should look:{
 ~\ss13\Citadel-Station-13\code/modules/reagents/chemistry/holder.dm~
 Where the actual reaction takes place, main edit location.
 About half way where I've commented (WHY IS THERE NO LINE NUMBERS?!)
+
+~\ss13\Citadel-Station-13\code/modules/reagents/chemistry/reagents~
+Where what the reactions do, the code that sets what they do.
 
 
 ~\ss13\Citadel-Station-13\tgui\src\interfaces~
