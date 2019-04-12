@@ -329,7 +329,7 @@
 /obj/item/storage/backpack/duffelbag/mining_cloned
 	name = "mining replacement kit"
 	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even as a new Id!"
-	
+
 /obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
@@ -356,10 +356,10 @@
 	var/drop_location = drop_location()
 	switch(selection)
 		if("Exo-suit")
-			new /obj/item/clothing/suit/hooded/exo(drop_location)
+			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
 			new /obj/item/clothing/mask/gas/exo(drop_location)
 		if("SEVA suit")
-			new /obj/item/clothing/suit/hooded/seva(drop_location)
+			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
 			new /obj/item/clothing/mask/gas/seva(drop_location)
 
 	SSblackbox.record_feedback("tally", "suit_voucher_redeemed", 1, selection)

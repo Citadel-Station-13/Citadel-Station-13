@@ -329,7 +329,7 @@ There are several things that need to be remembered:
 		var/obj/item/clothing/head/H = head
 		if(H.mutantrace_variation)
 			if(H.muzzle_var == ALT_STYLE)
-				H.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_mask.dmi'
+				H.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_helmet.dmi'
 			else
 				H.alternate_worn_icon = null
 
