@@ -1455,10 +1455,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
-						if("mam_tail" in pref_species.default_features)
-							features["mam_tail"] = "None"
-						if("mam_ears" in pref_species.default_features)
-							features["mam_ears"] = "None"
 						if(pref_species.id == "felinid")
 							features["mam_tail"] = "Cat"
 							features["mam_ears"] = "Cat"

@@ -1256,7 +1256,7 @@ datum/sprite_accessory/mam_tails/insect
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
 	icon_state = "none"
-	color_src = MUTCOLORS
+	ckeys_allowed = list("yousshouldnteverbeseeingthisyoumeme")
 
 /datum/sprite_accessory/mam_body_markings/plain
 	name = "Plain"

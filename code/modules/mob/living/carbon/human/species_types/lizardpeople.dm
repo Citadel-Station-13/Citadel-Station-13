@@ -95,3 +95,8 @@
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	burnmod = 0.9
 	brutemod = 0.9
+
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
+	if((C.dna.features["spines"] != "None" ) && (C.dna.features["tail"] == "None")) //tbh, it's kinda ugly for them not to have a tail yet have floating spines
+		C.dna.features["tail"] = "Smooth"
+	return ..()
