@@ -85,7 +85,7 @@
 				OpenFire()
 			if(L.Adjacent(src) && (L.stat != CONSCIOUS))
 				if(vore_active && L.devourable == TRUE)
-					dragon_feeding(src,L)
+					vore_attack(src,L,src)
 					LoseTarget()
 		else
 			devour(L)
