@@ -5,8 +5,9 @@
 	icon_state = "floor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
 	blood_state = BLOOD_STATE_HUMAN
-	color = BLOOD_COLOR_HUMAN
+	var/basecolor = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	var/drytime
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
@@ -14,6 +15,10 @@
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
 	return ..()
+
+/obj/effect/decal/cleanable/blood/update_icon()
+	if(basecolor == "rainbow") basecolor = "#[get_random_colour(1)]"
+	color = basecolor
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -33,12 +38,13 @@
 	desc = "They look like tracks left by wheels."
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
+/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
 	name = "blood"
-	icon_state = "ltrails_1"
+	icon_state = "trails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
+	var/basecolor = BLOOD_COLOR_HUMAN //We'll still need to make sure we're colored at least.
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
@@ -68,13 +74,13 @@
 		fleshcolor = ethnicity
 	giblets.color = fleshcolor
 
-	for(var/datum/reagent/blood/B in reagents)
-		var/image/blood/goop = image(icon,"[icon_state]",dir)
-		goop.Blend(B.color,ICON_MULTIPLY)
+	var/icon/blood = new(base_icon,"[icon_state]",dir)
+	if(basecolor == "rainbow") basecolor = "#[random_short_color()]"
+	blood.Blend(basecolor,ICON_MULTIPLY)
 
-	icon = goop
+	icon = blood
 	overlays.Cut()
-	add_overlay(giblets)
+	overlays += giblets
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
@@ -154,6 +160,7 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
+			S.blood_color = basecolor
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
