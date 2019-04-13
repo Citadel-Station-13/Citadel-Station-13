@@ -127,6 +127,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	//backgrounds
+	var/mutable_appearance/character_background
+	var/icon/bgstate = "steel"
+	var/list/bgstate_options = list("000", "midgrey", "FFF", "white", "steel", "techmaint", "dark", "plating", "reinforced")
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -266,6 +271,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
+			dat += "<br><b>Cycle background:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cycle_bg;task=input'>[bgstate]</a><BR>"
 
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
@@ -1411,6 +1417,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("previous_facehair_style")
 					facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
+
+				if("cycle_bg")
+					bgstate = next_list_item(bgstate, bgstate_options)
 
 				if("underwear")
 					var/new_underwear
