@@ -53,6 +53,9 @@
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
+	//FermiChem
+	var/purity = 1
+	var/ammoReacted = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -367,6 +370,11 @@
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
 
+				//FermiChem
+				var/deltaT = 0
+				var/deltapH = 0
+				var/stepChemAmmount = 0
+
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
 						break
@@ -400,6 +408,10 @@
 
 				//FermiChem
 				if (chem_temp > C.ExplodeTemp)//Check to see if reaction is too hot!
+					if (C.FermiExplode == TRUE)
+						//To be added!
+					else
+						FermiExplode()
 					//explode function!!
 
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))//Temperature check!!
@@ -425,29 +437,104 @@
 			var/list/cached_required_reagents = selected_reaction.required_reagents//update reagents list
 			var/list/cached_results = selected_reaction.results//resultant chemical list
 			var/list/multiplier = INFINITY //Wat
+
 			for(var/B in cached_required_reagents) //
 				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
-				//FermiChem
+			//Splits reactions into two types; FermiChem is advanced reaction mechanics, Other is default reaction.
+			//FermiChem relies on two additional properties; pH and impurity
+			//Temperature plays into a larger role too.
+			if (C.FermiChem == TRUE)
+				message_admins("Hee!!!! Someone is doing a Fermi reaction!!! I'm so excited!!")
+				//FermiReact(C)
+				//B is Beaker
+				//P is product
+				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
-				//if (purity != 1)//if purity of reaction isn't 1
-				//	multiplierProd = multiplier * purity //adjusts multiplier to be in line with purity
-				//	multiplierTox = multiplier - multiplierProd //
+				while (ammoReacted < multiplier)
+					//Begin Parse
+
+					//Check extremes first
+					if (chem_temp > C.ExplodeTemp)
+						//go to explode proc
+						ChemExplosion()
+
+					if (pH > 14) OR (pH < 0)
+						//Create chemical sludge eventually(for now just destroy the beaker I guess?)
+						//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
+						pHExplosion()
+
+					//For now, purity is handled elsewhere
+
+					//Calculate DeltaT (Deviation of T from optimal)
+					if (chem_temp < C.OptimalTempMax)
+						deltaT = ((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT)
+					else if
+					(chem_temp >= C.OptimalTempMax)
+						deltaT = 1
+					else
+						deltaT = 0
+
+					//Calculate DeltapH (Deviation of pH from optimal)
+					//Lower range
+					if (pH < C.OptimalpHMin)
+						if (pH < (C.OptimalpHMin - C.ReactpHLim))
+							deltapH = 0
+						else
+							deltapH = ((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharp)/(C.ReactpHLim**C.CurveSharppH)
+					//Upper range
+					else if (pH > C.OptimalpHMin)
+						if (pH > (C.OptimalpHMin + C.ReactpHLim))
+							deltapH = 0
+						else
+							deltapH = (C.ReactpHLim -((pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH)
+
+					//Within mid range
+					else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
+						deltapH = 0
+
+					else
+						message_admins("Fermichem's pH broke!! Please let Fermis know!!")
+					//TODO Add CatalystFact
+
+					stepChemAmmount = multiplier * deltaT
+					P.purity = (P.purity + deltapH) /2 //This should add the purity to the product
+
+					//Apply pH changes and thermal output of reaction to beaker
+					chem_temp += (C.ThermicConstant * stepChemAmmount)
+					pH += (C.HIonRelease * stepChemAmmount)
+
+					// End
+
+					selected_reaction.on_reaction(src, multiplier, special_react_result)
+
+					for(var/B in cached_required_reagents)
+						remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+
+					for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+						multiplier = max(multiplier, 1) //this shouldnt happen ...
+						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
+						add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
 
 
-			for(var/B in cached_required_reagents)
-				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+					ammoReacted = ammoReacted + stepChemAmmount
 
-			for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
-				multiplier = max(multiplier, 1) //this shouldnt happen ...
-				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)//log
-				//add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!! I THINK I can do this:
-				//FermiChem
-				if (purity != 1)//if purity of reaction isn't 1
-					add_reagent(P, cached_results[P]*multiplierProd, null, chem_temp)//add reagent function for product
-					add_reagent(P, cached_results[P]*multiplierTox, null, chem_temp)//add reagent function for product
-				else
-					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!!
+				reaction_occurred = 1
+				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", cached_results[P]*ammoReacted, P)//log
+			//Standard reaction mechanics:
+			else:
+
+				for(var/B in cached_required_reagents) //
+					multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+
+				for(var/B in cached_required_reagents)
+					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+
+				for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+					multiplier = max(multiplier, 1) //this shouldnt happen ...
+					SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)//log
+					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!! I THINK I can do this:
+
 
 			var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
 			var/iconhtml = icon2html(cached_my_atom, seen)
@@ -474,6 +561,12 @@
 	while(reaction_occurred)//while do nothing?
 	update_total()//Don't know waht this does.
 	return 0//end!
+
+/datum/reagents/proc/FermiReact()
+	return
+
+/datum/reagents/proc/FermiExplode()
+	return
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list

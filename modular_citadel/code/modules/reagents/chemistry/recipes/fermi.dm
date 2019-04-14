@@ -13,11 +13,14 @@
 	OptimalpHMax = 9.5 // Higest value for above
 	ReactpHLim = 2 // How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact = 0 // How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharp = 4 // How sharp the exponential curve is (to the power of value)
+	CurveSharpT = 4 // How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant = -2.5 //Temperature change per 1u produced
 	HIonRelease = 0.01 //pH change per 1u reaction
 	RateUpLim = 50 //Optimal/max rate possible if all conditions are perfect
-	FermiChem = 1
+	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
+	var/FermiExplode = FALSE //If the chemical explodes in a special way
+	var/ImpureChem = "toxin" //What chemical is produced with an inpure reaction
 
 //serum
 /datum/chemical_reaction/SDGF
@@ -43,4 +46,4 @@
 	ThermicConstant = -2.5 //Temperature change per 1u produced
 	HIonRelease = 0.01 //pH change per 1u reaction
 	RateUpLim = 50 //Optimal/max rate possible if all conditions are perfect
-	FermiChem = 1
+	FermiChem = TRUE
