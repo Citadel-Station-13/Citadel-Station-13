@@ -370,6 +370,22 @@
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
 
+				var/datum/chemical_reaction/C/OptimalTempMin = OptimalTempMin // Lower area of bell curve for determining heat based rate reactions
+				var/OptimalTempMax = C.OptimalTempMax
+				var/ExplodeTemp = C.ExplodeTemp
+				var/OptimalpHMin = C.OptimalpHMin
+				var/OptimalpHMax = C.OptimalpHMax
+				var/ReactpHLim = C.ReactpHLim
+				//var/CatalystFact = C.CatalystFact
+				var/CurveSharpT = C.CurveSharpT
+				var/CurveSharppH = C.CurveSharppH
+				var/ThermicConstant = C.ThermicConstant
+				var/HIonRelease = C.HIonRelease
+				var/RateUpLim = C.RateUpLim
+				var/FermiChem = C.FermiChem
+				var/FermiExplod = C.FermiExplod
+				var/ImpureChem = C.ImpureChem
+
 				//FermiChem
 				var/deltaT = 0
 				var/deltapH = 0
@@ -407,8 +423,8 @@
 						matching_other = 1
 
 				//FermiChem
-				if (chem_temp > C.ExplodeTemp)//Check to see if reaction is too hot!
-					if (C.FermiExplode == TRUE)
+				if (chem_temp > ExplodeTemp)//Check to see if reaction is too hot!
+					if (FermiExplode == TRUE)
 						//To be added!
 					else
 						FermiExplode()
@@ -455,11 +471,11 @@
 					//Begin Parse
 
 					//Check extremes first
-					if (chem_temp > C.ExplodeTemp)
+					if (chem_temp > ExplodeTemp)
 						//go to explode proc
 						FermiExplode()
 
-					if (pH > 14) OR (pH < 0)
+					if (pH > 14 || pH < 0)
 						//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 						//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 						FermiExplode()
@@ -467,8 +483,8 @@
 					//For now, purity is handled elsewhere
 
 					//Calculate DeltaT (Deviation of T from optimal)
-					if (chem_temp < C.OptimalTempMax)
-						deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT))
+					if (chem_temp < OptimalTempMax)
+						deltaT = (((OptimalTempMin - chem_temp)**CurveSharpT)/((OptimalTempMax - OptimalTempMax)**CurveSharpT))
 					else if (chem_temp >= C.OptimalTempMax)
 						deltaT = 1
 					else

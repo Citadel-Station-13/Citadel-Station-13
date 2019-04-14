@@ -22,6 +22,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage3_end = 40
 	addiction_stage4_end = 55 //Incase it's too long
+	
 
 /obj/item/reagent/fermi/eigenstate/Initialize()
 	//. = ..() Unneeded?
@@ -29,7 +30,9 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
-	if (holder.!has_reagent("eigenstate"))
+	if (holder.has_reagent("eigenstate"))
+		do_sparks(5,FALSE,src)
+	else
 		var/turf/open/T2 = get_turf(src)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		do_sparks(5,FALSE,src)

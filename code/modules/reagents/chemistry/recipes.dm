@@ -18,9 +18,21 @@
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
 	//FermiChem!
+
+	var/OptimalTempMin = 200 // Lower area of bell curve for determining heat based rate reactions
+	var/OptimalTempMax = 800
+	var/ExplodeTemp = 900 //If any reaction is this hot, it explodes!
+	var/OptimalpHMin = 5
+	var/OptimalpHMax = 10
+	var/ReactpHLim = 3
+	//var/CatalystFact = C.CatalystFact
+	var/CurveSharpT = 2
+	var/CurveSharppH = 2
+	var/ThermicConstant = 1
+	var/HIonRelease = 0.1
+	var/RateUpLim = 10
 	var/FermiChem = FALSE //If the chemical uses the Fermichem reaction mechanics
 	var/FermiExplode = FALSE //If the chemical explodes in a special way as a result of
-	var/ExplodeTemp = 900 //If any reaction is this hot, it explodes!
 	var/ImpureChem = "toxin" //What chemical is produced with an inpure reaction
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
