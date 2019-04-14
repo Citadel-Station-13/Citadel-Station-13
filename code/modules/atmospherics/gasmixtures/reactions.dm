@@ -228,7 +228,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy = 0
 
-	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma]*GLOB.meta_gas_info[/datum/gas/plasma][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma]) //This is the average specific heat of the mixture,not including plasma.
+	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma]*GLOB.meta_gas_specific_heats[/datum/gas/plasma]))/(air.total_moles()-cached_gases[/datum/gas/plasma]) //This is the average specific heat of the mixture,not including plasma.
 
 	var/gases_fused = air.total_moles() - cached_gases[/datum/gas/plasma]
 	var/plasma_differential = (cached_gases[/datum/gas/plasma] - gases_fused) / air.total_moles()
@@ -236,7 +236,7 @@
 
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
-		gas_power += reaction_efficiency * (GLOB.meta_gas_info[gas_id][META_GAS_FUSION_POWER]*cached_gases[gas_id])
+		gas_power += reaction_efficiency * (GLOB.meta_gas_fusions[gas_id]*cached_gases[gas_id])
 
 	var/power_ratio = gas_power/mediation
 	cached_scan_results[id] = power_ratio //used for analyzer feedback

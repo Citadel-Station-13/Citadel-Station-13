@@ -11,7 +11,7 @@
 	for(var/id in env_gases)
 		var/moles = env_gases[id]
 		if (moles >= 0.00001)
-			lines += "[GLOB.meta_gas_info[id][META_GAS_NAME]]: [moles] mol"
+			lines += "[GLOB.meta_gas_names[id]]: [moles] mol"
 	to_chat(usr, lines.Join("\n"))
 
 /client/proc/air_status(turf/target)

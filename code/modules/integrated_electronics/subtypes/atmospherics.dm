@@ -371,7 +371,7 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	for(var/filtered_gas in removed.gases)
 		//Get the name of the gas and see if it is in the list
-		if(GLOB.meta_gas_info[filtered_gas][META_GAS_NAME] in wanted)
+		if(GLOB.meta_gas_names[filtered_gas] in wanted)
 			//The gas that is put in all the filtered out gases
 			filtered_out.temperature = removed.temperature
 			filtered_out.gases[filtered_gas] = removed.gases[filtered_gas]

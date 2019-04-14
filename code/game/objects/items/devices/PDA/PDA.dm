@@ -360,7 +360,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id]/total_moles
 							if(gas_level > 0)
-								dat += "[GLOB.meta_gas_info[id][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
+								dat += "[GLOB.meta_gas_names[id]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"

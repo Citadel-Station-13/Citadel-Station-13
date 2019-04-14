@@ -121,9 +121,8 @@
 		if (nonoverlaying_gases[id])
 			continue
 		var/gas = gases[id]
-		var/gas_meta = GLOB.meta_gas_info[id]
-		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-		if(gas_overlay && gas > gas_meta[META_GAS_MOLES_VISIBLE])
+		var/gas_overlay = GLOB.meta_gas_overlays[id]
+		if(gas_overlay && gas > GLOB.meta_gas_visibility[id])
 			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()

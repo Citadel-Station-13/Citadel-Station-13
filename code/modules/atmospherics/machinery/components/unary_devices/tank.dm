@@ -18,7 +18,7 @@
 	air_contents.temperature = T20C
 	if(gas_type)
 		air_contents.gases[gas_type] = AIR_CONTENTS
-		name = "[name] ([GLOB.meta_gas_info[gas_type][META_GAS_NAME]])"
+		name = "[name] ([GLOB.meta_gas_names[gas_type]])"
 
 /obj/machinery/atmospherics/components/unary/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide

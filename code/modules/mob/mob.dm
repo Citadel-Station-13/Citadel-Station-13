@@ -68,7 +68,7 @@
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas)
-			t+="<span class='notice'>[GLOB.meta_gas_info[id][META_GAS_NAME]]: [gas] \n</span>"
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [gas] \n</span>"
 
 	to_chat(usr, t)
 

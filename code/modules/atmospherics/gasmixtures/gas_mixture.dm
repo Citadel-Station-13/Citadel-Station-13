@@ -5,7 +5,16 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
+
+//Unomos - global list inits for all of the meta gas lists.
+//This setup allows procs to only look at one list instead of trying to dig around in lists-within-lists
+GLOBAL_LIST_INIT(meta_gas_specific_heats, meta_gas_heat_list())
+GLOBAL_LIST_INIT(meta_gas_names, meta_gas_name_list())
+GLOBAL_LIST_INIT(meta_gas_visibility, meta_gas_visibility_list())
+GLOBAL_LIST_INIT(meta_gas_overlays, meta_gas_overlay_list())
+GLOBAL_LIST_INIT(meta_gas_dangers, meta_gas_danger_list())
+GLOBAL_LIST_INIT(meta_gas_ids, meta_gas_id_list())
+GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture
 	var/list/gases = list()
 	var/temperature = 0 //kelvins
@@ -24,10 +33,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
-	var/list/cached_gasinfo = GLOB.meta_gas_info
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id] * cached_gasinfo[id][META_GAS_SPECIFIC_HEAT] //TODO - itll absolutely be worth splitting the meta_gas_info list into multiple lists to bypass the overhead associated with accessing lists within lists
+		. += cached_gases[id] * cached_gasheats[id]
 
 /datum/gas_mixture/turf/heat_capacity()
 	. = ..()
@@ -228,13 +237,15 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	//we're gonna define these vars outside of this for loop because as it turns out, var declaration is pricy
 	var/delta
 	var/gas_heat_capacity
+	//and also cache this shit rq because that results in sanic speed for reasons byond explanation
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
 	//GAS TRANSFER
 	for(var/id in cached_gases | sharer_gases) // transfer gases
 
 		delta = QUANTIZE(cached_gases[id] - sharer_gases[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			gas_heat_capacity = delta * GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]
+			gas_heat_capacity = delta * cached_gasheats[id]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
