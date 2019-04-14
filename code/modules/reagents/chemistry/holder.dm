@@ -184,8 +184,9 @@
 		if(preserve_data)
 			trans_data = copy_data(T)
 
-			//fermichem Added ph and T.purity
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, T.purity, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			//fermichem Added ph TODO: add T.purity
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+		//R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, T.purity, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
@@ -245,7 +246,8 @@
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, current_reagent.purity, no_react = TRUE) //Fermichem edit
+			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, no_react = TRUE) //Fermichem edit TODO: add purity
+			//R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, current_reagent.purity, no_react = TRUE) //Fermichem edit
 			remove_reagent(current_reagent.id, amount, 1)
 			break
 
@@ -690,7 +692,7 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, pH = 7, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
 	if(!isnum(amount) || !amount)
 		return FALSE
 
