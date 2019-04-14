@@ -457,20 +457,19 @@
 					//Check extremes first
 					if (chem_temp > C.ExplodeTemp)
 						//go to explode proc
-						ChemExplosion()
+						FermiExplode()
 
 					if (pH > 14) OR (pH < 0)
 						//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 						//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
-						pHExplosion()
+						FermiExplode()
 
 					//For now, purity is handled elsewhere
 
 					//Calculate DeltaT (Deviation of T from optimal)
 					if (chem_temp < C.OptimalTempMax)
-						deltaT = ((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT)
-					else if
-					(chem_temp >= C.OptimalTempMax)
+						deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT))
+					else if (chem_temp >= C.OptimalTempMax)
 						deltaT = 1
 					else
 						deltaT = 0
@@ -481,13 +480,13 @@
 						if (pH < (C.OptimalpHMin - C.ReactpHLim))
 							deltapH = 0
 						else
-							deltapH = ((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharp)/(C.ReactpHLim**C.CurveSharppH)
+							deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharp)/(C.ReactpHLim**C.CurveSharppH))
 					//Upper range
 					else if (pH > C.OptimalpHMin)
 						if (pH > (C.OptimalpHMin + C.ReactpHLim))
 							deltapH = 0
 						else
-							deltapH = (C.ReactpHLim -((pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH)
+							deltapH = ((C.ReactpHLim -(pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH))
 					//Within mid range
 					else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
 						deltapH = 1
