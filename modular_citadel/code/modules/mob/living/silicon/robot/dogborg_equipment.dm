@@ -89,7 +89,6 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(GLOB.hardcoded_gases))
 		var/o2_concentration = env_gases[/datum/gas/oxygen]/total_moles
 		var/n2_concentration = env_gases[/datum/gas/nitrogen]/total_moles
 		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide]/total_moles

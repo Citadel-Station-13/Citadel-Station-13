@@ -197,7 +197,6 @@
 			filtered_out.temperature = removed.temperature
 
 			for(var/gas in filter_types & removed_gases)
-				filtered_out.add_gas(gas)
 				filtered_gases[gas] = removed_gases[gas]
 				removed_gases[gas] = 0
 

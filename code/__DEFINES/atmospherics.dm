@@ -240,14 +240,6 @@
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
-
-//REMOVE REMOVE REMOVE REMOVE
-#define ADD_GAS(gas_id, out_list) out_list[gas_id] = 0
-
-//REMOVEREMOVEREMOVE
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
-
-
 //prefer this to gas_mixture/total_moles in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
 	out_var = 0;\

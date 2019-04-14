@@ -45,7 +45,6 @@
 
 	filtered.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
 		filtered.gases[gas] = filtering.gases[gas] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.

@@ -150,7 +150,6 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
 	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma]/breath.total_moles())*breath_pressure
 	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide]/breath.total_moles())*breath_pressure
@@ -345,7 +344,6 @@
 
 	var/list/cached_gases = miasma_turf.air.gases
 
-	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
 	cached_gases[/datum/gas/miasma] += 0.02
 
 /mob/living/carbon/proc/handle_blood()

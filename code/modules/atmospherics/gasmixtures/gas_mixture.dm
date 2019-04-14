@@ -27,34 +27,12 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 //UNOMOS - whoever originally wrote this is a sadist that just wants to see byond suffer.
 
-	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-	//Must be used before adding to a gas. May be used before reading from a gas.
-/datum/gas_mixture/proc/assert_gas(gas_id)
-	ASSERT_GAS(gas_id, src)
-
-	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
-/datum/gas_mixture/proc/assert_gases()
-	for(var/id in args)
-		ASSERT_GAS(id, src)
-
-	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
-		//gas list for this id. This can clobber existing gases.
-	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
-/datum/gas_mixture/proc/add_gas(gas_id)
-	ADD_GAS(gas_id, gases)
-
-	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
-/datum/gas_mixture/proc/add_gases()
-	var/cached_gases = gases
-	for(var/id in args)
-		ADD_GAS(id, cached_gases)
-
 	//garbage_collect() - removes any gas list which is empty.
 	//If called with a list as an argument, only removes gas lists with IDs from that list.
 	//Must be used after subtracting from a gas. Must be used after assert_gas()
 		//if assert_gas() was called only to read from the gas.
 	//By removing empty gases, processing speed is increased.
-	//UNOMOS - above comment right above this line is now fairly inaccurate, as the system no longer makes gracious abuse of lists for storing gasses moles.
+	//UNOMOS - i have no idea exactly what the fuck or how the fuck it's the case, but removing this proc can and will completely nullify all of the performance gain from removing add_gas and assert_gas. so uh, dont remove it i guess. Why this shit isn't a define is beyond me.
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
@@ -156,7 +134,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id] += giver_gases[giver_id]
 
 	return 1
@@ -173,7 +150,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		ADD_GAS(id, removed.gases)
 		removed_gases[id] = QUANTIZE((cached_gases[id] / sum) * amount)
 		cached_gases[id] -= removed_gases[id]
 	garbage_collect()
@@ -191,7 +167,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
-		ADD_GAS(id, removed.gases)
 		removed_gases[id] = QUANTIZE(cached_gases[id] * ratio)
 		cached_gases[id] -= removed_gases[id]
 
@@ -206,7 +181,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	copy.temperature = temperature
 	for(var/id in cached_gases)
-		ADD_GAS(id, copy.gases)
 		copy_gases[id] = cached_gases[id]
 
 	return copy
@@ -218,7 +192,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		ASSERT_GAS(id,src)
 		cached_gases[id] = sample_gases[id]
 
 	//remove all gases not in the sample
@@ -247,7 +220,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, gases)
 		gases[path] = text2num(gas[id])
 	return 1
 
@@ -271,16 +243,16 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	var/moved_moles = 0
 	var/abs_moved_moles = 0
 
+	//we're gonna define these vars outside of this for loop because as it turns out, var declaration is pricy
+	var/delta
+	var/gas_heat_capacity
 	//GAS TRANSFER
-	for(var/id in sharer_gases - cached_gases) // create gases not in our cache
-		ADD_GAS(id, gases)
-	for(var/id in cached_gases) // transfer gases
-		ASSERT_GAS(id, sharer)
+	for(var/id in cached_gases | sharer_gases) // transfer gases
 
-		var/delta = QUANTIZE(cached_gases[id] - sharer_gases[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
+		delta = QUANTIZE(cached_gases[id] - sharer_gases[id])/(atmos_adjacent_turfs+1) //the amount of gas that gets moved between the mixtures
 
 		if(delta && abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]
+			gas_heat_capacity = delta * GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else

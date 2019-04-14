@@ -99,7 +99,6 @@
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
 
 		cached_results["fire"] += burned_fuel
@@ -169,10 +168,8 @@
 			cached_gases[/datum/gas/plasma] = QUANTIZE(cached_gases[/datum/gas/plasma] - plasma_burn_rate)
 			cached_gases[/datum/gas/oxygen] = QUANTIZE(cached_gases[/datum/gas/oxygen] - (plasma_burn_rate * oxygen_burn_rate))
 			if (super_saturation)
-				ASSERT_GAS(/datum/gas/tritium,air)
 				cached_gases[/datum/gas/tritium] += plasma_burn_rate
 			else
-				ASSERT_GAS(/datum/gas/carbon_dioxide,air)
 				cached_gases[/datum/gas/carbon_dioxide] += plasma_burn_rate
 
 			energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
@@ -262,7 +259,6 @@
 
 	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
-		air.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
 		cached_gases[/datum/gas/stimulum] += gases_fused * FUSION_GAS_CREATION_FACTOR_STIM //40% of the gas is converted to energy, 60% to stim and pluox
 		cached_gases[/datum/gas/pluoxium] += gases_fused * FUSION_GAS_CREATION_FACTOR_PLUOX
 		fusion_prepare_to_die_edition_rng = power_ratio //Now we're getting into dangerous territory
@@ -271,7 +267,6 @@
 
 	else if (power_ratio > FUSION_MID_TIER_THRESHOLD) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
-		air.assert_gases(/datum/gas/nitryl,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/nitryl] += gases_fused * FUSION_GAS_CREATION_FACTOR_NITRYL //20% of the gas is converted to energy, 80% to nitryl and N2O
 		cached_gases[/datum/gas/nitrous_oxide] += gases_fused * FUSION_GAS_CREATION_FACTOR_N2O
 		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR //Still unlikely, but don't stand next to the reaction unprotected
@@ -279,7 +274,6 @@
 
 	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
-		air.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide)
 		cached_gases[/datum/gas/bz] += gases_fused * FUSION_GAS_CREATION_FACTOR_BZ //10% of the gas is converted to energy, 90% to BZ and CO2
 		cached_gases[/datum/gas/carbon_dioxide] += gases_fused * FUSION_GAS_CREATION_FACTOR_CO2
 		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR //Low, but still something to look out for
@@ -324,7 +318,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100),cached_gases[/datum/gas/oxygen],cached_gases[/datum/gas/nitrogen])
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/nitryl,air)
 	if ((cached_gases[/datum/gas/oxygen] - heat_efficency < 0 )|| (cached_gases[/datum/gas/nitrogen] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/oxygen] -= heat_efficency
@@ -359,7 +352,6 @@
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	ASSERT_GAS(/datum/gas/bz,air)
 	cached_gases[/datum/gas/bz] += reaction_efficency
 	cached_gases[/datum/gas/nitrous_oxide] -= reaction_efficency
 	cached_gases[/datum/gas/plasma]  -= 2*reaction_efficency
@@ -391,7 +383,6 @@
 	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE,cached_gases[/datum/gas/tritium],cached_gases[/datum/gas/plasma],cached_gases[/datum/gas/nitryl])
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 
-	ASSERT_GAS(/datum/gas/stimulum,air)
 	if ((cached_gases[/datum/gas/tritium] - heat_scale < 0 )|| (cached_gases[/datum/gas/plasma] - heat_scale < 0) || (cached_gases[/datum/gas/nitryl] - heat_scale < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/stimulum]+= heat_scale/10
@@ -418,7 +409,6 @@
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
-	air.assert_gases(/datum/gas/hypernoblium,/datum/gas/bz)
 	var/old_heat_capacity = air.heat_capacity()
 	var/nob_formed = min((cached_gases[/datum/gas/nitrogen]+cached_gases[/datum/gas/tritium])/100,cached_gases[/datum/gas/tritium]/10,cached_gases[/datum/gas/nitrogen]/20)
 	var/energy_taken = nob_formed*(NOBLIUM_FORMATION_ENERGY/(max(cached_gases[/datum/gas/bz],1)))
@@ -455,7 +445,6 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	cached_gases[/datum/gas/miasma] -= cleaned_air
-	ASSERT_GAS(/datum/gas/oxygen,air)
 	cached_gases[/datum/gas/oxygen] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable

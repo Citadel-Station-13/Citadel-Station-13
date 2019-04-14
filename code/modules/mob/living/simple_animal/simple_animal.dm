@@ -207,7 +207,6 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases[/datum/gas/plasma]
 			var/oxy = ST_gases[/datum/gas/oxygen]

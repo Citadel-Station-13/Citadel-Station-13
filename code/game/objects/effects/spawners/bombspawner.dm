@@ -19,11 +19,9 @@
 	var/obj/item/tank/internals/plasma/PT = new(V)
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
-	PT.air_contents.assert_gas(/datum/gas/plasma)
 	PT.air_contents.gases[/datum/gas/plasma] = pressure_p*PT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_p))
 	PT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_p)
 
-	OT.air_contents.assert_gas(/datum/gas/oxygen)
 	OT.air_contents.gases[/datum/gas/oxygen] = pressure_o*OT.volume/(R_IDEAL_GAS_EQUATION*CELSIUS_TO_KELVIN(temp_o))
 	OT.air_contents.temperature = CELSIUS_TO_KELVIN(temp_o)
 

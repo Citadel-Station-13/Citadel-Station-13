@@ -45,7 +45,6 @@
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
 			loaded_tank.air_contents.gases[/datum/gas/plasma] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 			loaded_tank.air_contents.gases[/datum/gas/tritium] += gasdrained
 			loaded_tank.air_contents.garbage_collect()
 
@@ -60,7 +59,6 @@
 			var/gasdrained = bitcoinproduction_drain*drainratio
 			loaded_tank.air_contents.gases[/datum/gas/tritium] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT

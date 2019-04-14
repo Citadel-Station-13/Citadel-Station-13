@@ -374,7 +374,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 		if(GLOB.meta_gas_info[filtered_gas][META_GAS_NAME] in wanted)
 			//The gas that is put in all the filtered out gases
 			filtered_out.temperature = removed.temperature
-			filtered_out.add_gas(filtered_gas)
 			filtered_out.gases[filtered_gas] = removed.gases[filtered_gas]
 
 			//The filtered out gas is entirely removed from the currently filtered gases

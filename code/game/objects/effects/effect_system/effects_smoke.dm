@@ -172,7 +172,6 @@
 				qdel(H)
 			var/list/G_gases = G.gases
 			if(G_gases[/datum/gas/plasma])
-				G.assert_gas(/datum/gas/nitrogen)
 				G_gases[/datum/gas/nitrogen] += (G_gases[/datum/gas/plasma])
 				G_gases[/datum/gas/plasma] = 0
 				G.garbage_collect()

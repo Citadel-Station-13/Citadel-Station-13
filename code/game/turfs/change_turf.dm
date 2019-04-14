@@ -297,7 +297,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
-			ASSERT_GAS(id, total)
 			total_gases[id] += S_gases[id]
 		total.temperature += S.air.temperature
 

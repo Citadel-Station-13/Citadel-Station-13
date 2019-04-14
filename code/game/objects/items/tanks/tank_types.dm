@@ -21,7 +21,6 @@
 
 /obj/item/tank/internals/oxygen/New()
 	..()
-	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -49,7 +48,6 @@
 
 /obj/item/tank/internals/anesthetic/New()
 	..()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
 	air_contents.gases[/datum/gas/oxygen] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
@@ -67,7 +65,6 @@
 
 /obj/item/tank/internals/air/New()
 	..()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrogen] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
@@ -87,7 +84,6 @@
 
 /obj/item/tank/internals/plasma/New()
 	..()
-	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -124,7 +120,6 @@
 
 /obj/item/tank/internals/plasmaman/New()
 	..()
-	air_contents.assert_gas(/datum/gas/plasma)
 	air_contents.gases[/datum/gas/plasma] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
@@ -166,7 +161,6 @@
 
 /obj/item/tank/internals/emergency_oxygen/New()
 	..()
-	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
