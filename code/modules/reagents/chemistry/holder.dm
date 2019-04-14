@@ -488,13 +488,13 @@
 							deltapH = 0
 						else
 							deltapH = (C.ReactpHLim -((pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH)
-
 					//Within mid range
 					else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
-						deltapH = 0
-
+						deltapH = 1
+					//This should never proc:
 					else
 						message_admins("Fermichem's pH broke!! Please let Fermis know!!")
+						WARNING("[my_atom] attempted to determine FermiChem pH for '[reagent]' which broke for some reason! ([usr])")
 					//TODO Add CatalystFact
 
 					stepChemAmmount = multiplier * deltaT
