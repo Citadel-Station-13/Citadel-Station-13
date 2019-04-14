@@ -24,9 +24,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
 	var/list/cached_gases = gases
+	var/list/cached_gasinfo = GLOB.meta_gas_info
 	. = 0
 	for(var/id in cached_gases)
-		. += cached_gases[id] * GLOB.meta_gas_info[id][META_GAS_SPECIFIC_HEAT]
+		. += cached_gases[id] * cached_gasinfo[id][META_GAS_SPECIFIC_HEAT] //TODO - itll absolutely be worth splitting the meta_gas_info list into multiple lists to bypass the overhead associated with accessing lists within lists
 
 /datum/gas_mixture/turf/heat_capacity()
 	. = ..()
