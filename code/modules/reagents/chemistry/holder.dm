@@ -53,9 +53,6 @@
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
-	//FermiChem
-	var/purity = 1
-	var/ammoReacted = 0
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -369,8 +366,28 @@
 				var/meets_temp_requirement = 0
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
+				//FermiChem WHY ARE VARIBLES SO ESTRANGED it makes me sad
+				var/OptimalTempMin = C.OptimalTempMin // Lower area of bell curve for determining heat based rate reactions
+				var/OptimalTempMax = C.OptimalTempMax
+				var/ExplodeTemp = C.ExplodeTemp
+				var/OptimalpHMin = C.OptimalpHMin
+				var/OptimalpHMax = C.OptimalpHMax
+				var/ReactpHLim = C.ReactpHLim
+				//var/CatalystFact = C.CatalystFact
+				var/CurveSharpT = C.CurveSharpT
+				var/CurveSharppH = C.CurveSharppH
+				var/ThermicConstant = C.ThermicConstant
+				var/HIonRelease = C.HIonRelease
+				var/RateUpLim = C.RateUpLim
+				var/FermiChem = C.FermiChem
+				var/FermiExplod = C.FermiExplod
+				var/ImpureChem = C.ImpureChem
+
 
 				//FermiChem
+				var/purity = 1
+				var/ammoReacted = 0
+
 				var/deltaT = 0
 				var/deltapH = 0
 				var/stepChemAmmount = 0
@@ -459,7 +476,7 @@
 						//go to explode proc
 						FermiExplode()
 
-					if (pH > 14) OR (pH < 0)
+					if (pH > 14 || pH < 0)
 						//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 						//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 						FermiExplode()
