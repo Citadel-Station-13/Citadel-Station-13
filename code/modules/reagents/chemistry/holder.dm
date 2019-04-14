@@ -382,7 +382,7 @@
 				var/HIonRelease = C.HIonRelease
 				var/RateUpLim = C.RateUpLim
 				var/FermiChem = C.FermiChem
-				var/FermiExplod = C.FermiExplod
+				var/FermiExplode = C.FermiExplode
 				var/ImpureChem = C.ImpureChem
 
 				//FermiChem
