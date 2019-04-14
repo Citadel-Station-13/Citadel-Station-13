@@ -505,7 +505,7 @@
 					chem_temp += (C.ThermicConstant * stepChemAmmount)
 					pH += (C.HIonRelease * stepChemAmmount)
 
-					// End
+					// End.
 
 					selected_reaction.on_reaction(src, multiplier, special_react_result)
 
