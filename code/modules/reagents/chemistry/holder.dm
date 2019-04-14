@@ -385,23 +385,6 @@
 				var/FermiExplod = C.FermiExplod
 				var/ImpureChem = C.ImpureChem
 
-
-				var/datum/chemical_reaction/C/OptimalTempMin = OptimalTempMin // Lower area of bell curve for determining heat based rate reactions
-				var/OptimalTempMax = C.OptimalTempMax
-				var/ExplodeTemp = C.ExplodeTemp
-				var/OptimalpHMin = C.OptimalpHMin
-				var/OptimalpHMax = C.OptimalpHMax
-				var/ReactpHLim = C.ReactpHLim
-				//var/CatalystFact = C.CatalystFact
-				var/CurveSharpT = C.CurveSharpT
-				var/CurveSharppH = C.CurveSharppH
-				var/ThermicConstant = C.ThermicConstant
-				var/HIonRelease = C.HIonRelease
-				var/RateUpLim = C.RateUpLim
-				var/FermiChem = C.FermiChem
-				var/FermiExplod = C.FermiExplod
-				var/ImpureChem = C.ImpureChem
-
 				//FermiChem
 				var/purity = 1
 				var/ammoReacted = 0
