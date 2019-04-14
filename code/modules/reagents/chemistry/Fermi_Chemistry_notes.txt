@@ -33,7 +33,7 @@ How the end state should look:{
     OptimalpHMin = 4 // Lowest value of pH determining pH a 1 value for pH based rate reations (Plateu phase)
     OptimalpHMax = 9.5 // Higest value for above
     ReactpHLim = 2 // How far out pH wil react, giving impurity place (Exponential phase)
-    CatalystFact = 0 // How much the catalyst affects the reaction (0 = no catalyst)
+    //CatalystFact = 0 // How much the catalyst affects the reaction (0 = no catalyst)
     CurveSharp = 4 // How sharp the exponential curve is (to the power of value)
     ThermicConstant = -2.5 //Temperature change per 1u produced
     HIonRelease = 0.01 //pH change per 1u reaction

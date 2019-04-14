@@ -4,6 +4,8 @@
 //MCchem
 //BE PE chemical
 //Angel/astral chemical
+//And tips their hat
+//Naninte chem
 
 //eigenstate Chem
 //Teleports you to chemistry and back
@@ -109,6 +111,8 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	..()
 
+/datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
+
 //eigenstate END
 
 //Clone serum #chemClone
@@ -136,7 +140,7 @@
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
-		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independance, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
+		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
 		to_chat(O, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 		visible_message("[O] suddenly shudders, and splits into two identical twins!")
 		SM.copy_known_languages_from(user, FALSE)
