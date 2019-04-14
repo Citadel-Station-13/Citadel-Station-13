@@ -184,7 +184,7 @@
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
 				air1.gases[/datum/gas/oxygen] -= max(0,air1.gases[/datum/gas/oxygen] - 2 / efficiency) //Let's use gas for this
-				air1.garbage_collect()
+				GAS_GARBAGE_COLLECT(air1.gases)
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
@@ -221,7 +221,7 @@
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen] = max(0,air1.gases[/datum/gas/oxygen] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
-		air1.garbage_collect()
+		GAS_GARBAGE_COLLECT(air1.gases)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()

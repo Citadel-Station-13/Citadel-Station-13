@@ -5,8 +5,6 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture
 	var/list/gases = list()
@@ -21,23 +19,6 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/New(volume)
 	if (!isnull(volume))
 		src.volume = volume
-
-//listmos procs
-//use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
-
-//UNOMOS - whoever originally wrote this is a sadist that just wants to see byond suffer.
-
-	//garbage_collect() - removes any gas list which is empty.
-	//If called with a list as an argument, only removes gas lists with IDs from that list.
-	//Must be used after subtracting from a gas. Must be used after assert_gas()
-		//if assert_gas() was called only to read from the gas.
-	//By removing empty gases, processing speed is increased.
-	//UNOMOS - i have no idea exactly what the fuck or how the fuck it's the case, but removing this proc can and will completely nullify all of the performance gain from removing add_gas and assert_gas. so uh, dont remove it i guess. Why this shit isn't a define is beyond me.
-/datum/gas_mixture/proc/garbage_collect(list/tocheck)
-	var/list/cached_gases = gases
-	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id]) <= 0)
-			cached_gases -= id
 
 	//PV = nRT
 
@@ -152,7 +133,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	for(var/id in cached_gases)
 		removed_gases[id] = QUANTIZE((cached_gases[id] / sum) * amount)
 		cached_gases[id] -= removed_gases[id]
-	garbage_collect()
+	GAS_GARBAGE_COLLECT(gases)
 
 	return removed
 
@@ -170,7 +151,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 		removed_gases[id] = QUANTIZE(cached_gases[id] * ratio)
 		cached_gases[id] -= removed_gases[id]
 
-	garbage_collect()
+	GAS_GARBAGE_COLLECT(gases)
 
 	return removed
 
@@ -282,11 +263,8 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
 	if (initial(sharer.gc_share))
-		sharer.garbage_collect()
+		GAS_GARBAGE_COLLECT(sharer.gases)
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
@@ -391,7 +369,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 			if (. & STOP_REACTIONS)
 				break
 	if(.)
-		garbage_collect()
+		GAS_GARBAGE_COLLECT(gases)
 		if(temperature < TCMB) //just for safety
 			temperature = TCMB
 

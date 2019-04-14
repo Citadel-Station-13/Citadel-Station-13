@@ -46,7 +46,7 @@
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
 			loaded_tank.air_contents.gases[/datum/gas/plasma] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/tritium] += gasdrained
-			loaded_tank.air_contents.garbage_collect()
+			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT
 			add_avail(power_produced)
@@ -60,7 +60,7 @@
 			loaded_tank.air_contents.gases[/datum/gas/tritium] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
-			loaded_tank.air_contents.garbage_collect()
+			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			stored_power-=bitcoins_mined

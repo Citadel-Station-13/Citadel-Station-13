@@ -174,7 +174,7 @@
 			if(G_gases[/datum/gas/plasma])
 				G_gases[/datum/gas/nitrogen] += (G_gases[/datum/gas/plasma])
 				G_gases[/datum/gas/plasma] = 0
-				G.garbage_collect()
+				GAS_GARBAGE_COLLECT(G.gases)
 		if (weldvents)
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.

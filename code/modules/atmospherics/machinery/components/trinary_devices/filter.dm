@@ -162,7 +162,7 @@
 			filtered_out.gases[filter_type] = removed.gases[filter_type]
 
 			removed.gases[filter_type] = 0
-			removed.garbage_collect()
+			GAS_GARBAGE_COLLECT(removed.gases)
 
 			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 			target.merge(filtered_out)

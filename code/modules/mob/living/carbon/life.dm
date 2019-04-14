@@ -291,7 +291,7 @@
 
 
 
-	breath.garbage_collect()
+	GAS_GARBAGE_COLLECT(breath.gases)
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)

@@ -7,9 +7,6 @@
 
 /datum/gas_mixture/immutable/New()
 	..()
-	garbage_collect()
-
-/datum/gas_mixture/immutable/garbage_collect()
 	temperature = initial_temperature
 	temperature_archived = initial_temperature
 	gases.Cut()
@@ -19,7 +16,9 @@
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
-	garbage_collect()
+	temperature = initial_temperature
+	temperature_archived = initial_temperature
+	gases.Cut()
 
 /datum/gas_mixture/immutable/react()
 	return 0 //we're immutable.
@@ -59,8 +58,12 @@
 /datum/gas_mixture/immutable/cloner
 	initial_temperature = T20C
 
-/datum/gas_mixture/immutable/cloner/garbage_collect()
+/datum/gas_mixture/immutable/cloner/New()
 	..()
+	gases[/datum/gas/nitrogen] = MOLES_O2STANDARD + MOLES_N2STANDARD
+
+/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+	. = ..(sharer, 0)
 	gases[/datum/gas/nitrogen] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()

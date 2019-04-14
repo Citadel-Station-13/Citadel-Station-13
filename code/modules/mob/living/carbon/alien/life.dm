@@ -31,7 +31,7 @@
 	breath_gases[/datum/gas/plasma] -= toxins_used
 	breath_gases[/datum/gas/oxygen] += toxins_used
 
-	breath.garbage_collect()
+	GAS_GARBAGE_COLLECT(breath.gases)
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)

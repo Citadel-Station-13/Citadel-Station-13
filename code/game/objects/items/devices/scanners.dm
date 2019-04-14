@@ -444,7 +444,7 @@ SLIME SCANNER
 		else
 			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma], 0.01)] mol)</span>")
 
-		environment.garbage_collect()
+		GAS_GARBAGE_COLLECT(environment.gases)
 
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)

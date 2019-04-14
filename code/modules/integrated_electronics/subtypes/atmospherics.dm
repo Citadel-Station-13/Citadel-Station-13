@@ -378,7 +378,7 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 			//The filtered out gas is entirely removed from the currently filtered gases
 			removed.gases[filtered_gas] = 0
-			removed.garbage_collect()
+			GAS_GARBAGE_COLLECT(removed.gases)
 
 	//Check if the pressure is high enough to put stuff in filtered, or else just put it back in the source
 	var/datum/gas_mixture/target = (filtered_air.return_pressure() < target_pressure ? filtered_air : source_air)

@@ -213,7 +213,7 @@
 			var/n2  = ST_gases[/datum/gas/nitrogen]
 			var/co2 = ST_gases[/datum/gas/carbon_dioxide]
 
-			ST.air.garbage_collect()
+			GAS_GARBAGE_COLLECT(ST.air.gases)
 
 			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 				. = FALSE

@@ -93,7 +93,7 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		var/n2_concentration = env_gases[/datum/gas/nitrogen]/total_moles
 		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide]/total_moles
 		var/plasma_concentration = env_gases[/datum/gas/plasma]/total_moles
-		environment.garbage_collect()
+		GAS_GARBAGE_COLLECT(environment.gases)
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
