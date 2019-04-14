@@ -498,8 +498,10 @@
 					//TODO Add CatalystFact
 
 					stepChemAmmount = multiplier * deltaT
-					P.purity = (P.purity + deltapH) /2 //This should add the purity to the product
-
+					if (ammoReacted > 0)
+						P.purity = ((P.purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
+					else
+						P.purity = deltapH
 					//Apply pH changes and thermal output of reaction to beaker
 					chem_temp += (C.ThermicConstant * stepChemAmmount)
 					pH += (C.HIonRelease * stepChemAmmount)
