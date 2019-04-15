@@ -22,9 +22,10 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage3_end = 40
 	addiction_stage4_end = 55 //Incase it's too long
-	
 
-/obj/item/reagent/fermi/eigenstate/Initialize()
+
+///obj/item/reagent/fermi/eigenstate/Initialize()
+/datum/reagent/fermi/eigenstate/Initialize()
 	//. = ..() Unneeded?
 	var/turf/open/T = get_turf(src)//Sets up coordinate of where it was created
 	..()
@@ -73,7 +74,7 @@
 	to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
 	M.Jitter(50)
 	M.AdjustKnockdown(-40, 0)
-	for(var/obj/item/I in mob.get_contents()); do_teleport(I, get_turf(I), 5, no_effects=TRUE);
+	for(var/obj/item/I in M.get_contents()); do_teleport(I, get_turf(I), 5, no_effects=TRUE);
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
@@ -84,9 +85,9 @@
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	if(1)
 		var/typepath = M.type
-		clone = new typepath(M.loc)
+		fermi_Tclone = new typepath(M.loc)
 		//var/mob/living/carbon/O = M
-		var/mob/living/carbon/C = clone
+		var/mob/living/carbon/C = fermi_Tclone
 		C.appearance = M.appearance
 
 		//Incase Kevin breaks my code:
@@ -110,11 +111,12 @@
 	M.Jitter(50)
 	M.AdjustKnockdown(0, 0)
 	to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your pervious self, sent to god knows what universe.</span>")
-	mob.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
+	M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	..()
 
 /datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
+	return
 
 //eigenstate END
 
@@ -129,13 +131,13 @@
 		//var/typepath = owner.type
 		//clone = new typepath(owner.loc)
 		var/typepath = M.type
-		clone = new typepath(M.loc)
-		//var/mob/living/carbon/O = owner
-		var/mob/living/carbon/O = M
-		var/mob/living/carbon/SM = clone
-		if(istype(SM) && istype(O))
-			SM.real_name = O.real_name
-			O.dna.transfer_identity(SM)
+		fermi_Gclone = new typepath(M.loc)
+		//var/mob/living/carbon/SM = owner
+		//var/mob/living/carbon/M = M
+		var/mob/living/carbon/SM = fermi_Gclone
+		if(istype(SM) && istype(M))
+			SM.real_name = M.real_name
+			M.dna.transfer_identity(SM)
 			SM.updateappearance(mutcolor_update=1)
 
 		var/mob/dead/observer/C = pick(candidates)
@@ -144,8 +146,8 @@
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
-		to_chat(O, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
-		visible_message("[O] suddenly shudders, and splits into two identical twins!")
+		to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+		visible_message("[M] suddenly shudders, and splits into two identical twins!")
 		SM.copy_known_languages_from(user, FALSE)
 		//after_success(user, SM)
 		//qdel(src)
