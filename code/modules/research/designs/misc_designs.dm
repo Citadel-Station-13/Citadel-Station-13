@@ -228,16 +228,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/forcefield_projector
-	name = "Forcefield Projector"
-	desc = "A device which can project temporary forcefields to seal off an area."
-	id = "forcefield_projector"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
-	build_path = /obj/item/forcefield_projector
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/sci_goggles
 	name = "Science Goggles"
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
@@ -312,6 +302,11 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/////////////////////////////////////////
+////////////Holosign Designs//////////////
+/////////////////////////////////////////
+
+
 /datum/design/holosign
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
@@ -349,6 +344,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
 	build_path = /obj/item/holosign_creator/atmos
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/forcefield_projector
+	name = "Forcefield Projector"
+	desc = "A device which can project temporary forcefields to seal off an area."
+	id = "forcefield_projector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
+	build_path = /obj/item/forcefield_projector
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -457,7 +462,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
-////////////Armour//////////////
+////////////Armour///////////////////////
 /////////////////////////////////////////
 
 /datum/design/reactive_armour
@@ -469,3 +474,28 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+////////////Meteor///////////////////////
+/////////////////////////////////////////
+
+/datum/design/meteor_defence
+	name = "Meteor Defence"
+	desc = "A blue print of a early model of the Meteor defence turret."
+	id = "meteor_defence"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 150000, MAT_GLASS = 150000, MAT_SILVER = 7500, MAT_GOLD = 10000, MAT_TITANIUM = 35000) //Station goal
+	build_path = /obj/machinery/satellite/meteor_shield/sci
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/meteor_disk
+	name = "Meteor Defence Upgrade Disk"
+	desc = "A disk containing debugging programming to solve and monitor meteors more effectively."
+	id = "meteor_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 2500, MAT_GOLD = 1000)
+	build_path = /obj/item/disk/meteor
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
