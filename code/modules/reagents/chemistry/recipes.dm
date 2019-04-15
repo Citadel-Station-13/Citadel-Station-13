@@ -26,6 +26,7 @@
 	var/OptimalpHMax = 10
 	var/ReactpHLim = 3
 	//var/CatalystFact = C.CatalystFact
+	var/CatalystFact = 0
 	var/CurveSharpT = 2
 	var/CurveSharppH = 2
 	var/ThermicConstant = 1
