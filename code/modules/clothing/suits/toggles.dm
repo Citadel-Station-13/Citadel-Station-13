@@ -180,6 +180,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
 	var/mob/living/carbon/human/H = src.loc
+	var/datum/species/pref_species = H.dna.species
 	if(!helmettype)
 		return
 	if(!helmet)
@@ -193,6 +194,18 @@
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
+				if(helmet.mutantrace_variation)
+					if("mam_snouts" in pref_species.default_features)
+						if(H.dna.features["mam_snouts"] != "None")
+							helmet.muzzle_var = ALT_STYLE
+
+					else if("snout" in pref_species.default_features)
+						if(H.dna.features["snout"] != "None")
+							helmet.muzzle_var = ALT_STYLE
+					else
+						helmet.muzzle_var = NORMAL_STYLE
+					H.update_inv_head()
+
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()

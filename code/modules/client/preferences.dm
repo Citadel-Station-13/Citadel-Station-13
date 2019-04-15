@@ -1584,6 +1584,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
+						features["mam_snouts"] = "None"
+
 
 				if("mam_snouts")
 					var/list/snowflake_mam_snouts_list = list()
@@ -1597,6 +1599,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_mam_snouts = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_mam_snouts_list
 					if(new_mam_snouts)
 						features["mam_snouts"] = new_mam_snouts
+						features["snout"] = "None"
 
 				if("horns")
 					var/new_horns
