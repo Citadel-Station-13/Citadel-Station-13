@@ -127,7 +127,7 @@
 	else
 		return ..()
 
-/obj/machinery/satellite
+/obj/machinery/satellite/meteor_shield
 	name = "\improper Meteor Shield Satellite"
 	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
