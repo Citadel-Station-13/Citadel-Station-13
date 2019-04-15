@@ -474,7 +474,7 @@
 					//FermiReact(C)
 					//B is Beaker
 					//P is product
-					multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+					//multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
 					while (ammoReacted < multiplier)
 						//Begin Parse
@@ -522,10 +522,6 @@
 						//TODO Add CatalystFact
 
 						stepChemAmmount = multiplier * deltaT
-						if (ammoReacted > 0)
-							P.purity = ((P.purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
-						else
-							P.purity = deltapH
 						//Apply pH changes and thermal output of reaction to beaker
 						chem_temp += (C.ThermicConstant * stepChemAmmount)
 						pH += (C.HIonRelease * stepChemAmmount)
@@ -538,15 +534,20 @@
 							remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
 						for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+							if (ammoReacted > 0)
+								P.purity = ((P.purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
+							else
+								P.purity = deltapH
 							multiplier = max(multiplier, 1) //this shouldnt happen ...
 							SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
+							SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", cached_results[P]*ammoReacted, P)//log
 							add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
 
 
 						ammoReacted = ammoReacted + stepChemAmmount
 
 					reaction_occurred = 1
-					SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", cached_results[P]*ammoReacted, P)//log
+
 			//Standard reaction mechanics:
 			else:
 
