@@ -147,7 +147,6 @@
 	if(istype(I, /obj/item/disk/meteor))
 		to_chat(user, "<span class='notice'>The disk uploads better tracking and rang modification software.</span>")
 		kill_range = 17
-		change_meteor_chance(0.5)
 	else
 		return ..()
 
@@ -158,7 +157,7 @@
 		if(active)
 			change_meteor_chance(8)
 		else
-			change_meteor_chance(1.5)
+			change_meteor_chance(1.25)
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
