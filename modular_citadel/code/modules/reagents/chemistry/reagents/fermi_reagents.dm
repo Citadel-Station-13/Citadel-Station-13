@@ -22,29 +22,30 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage3_end = 40
 	addiction_stage4_end = 55 //Incase it's too long
+	var/turf/open/location_created = null
+	var/turf/open/location_return = null
 
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
-/datum/reagent/fermi/eigenstate/Initialize()
-	//. = ..() Unneeded?
-	var/turf/open/T = get_turf(src)//Sets up coordinate of where it was created
-	..()
+/datum/reagent/fermi/eigenstate/New()
+	. = ..() //Unneeded?
+	location_created = get_turf(src) //Sets up coordinate of where it was created
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	if (holder.has_reagent("eigenstate"))
 		do_sparks(5,FALSE,src)
 	else
-		var/turf/open/T2 = get_turf(src)	//sets up return point
+		location_return = get_turf(src)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		do_sparks(5,FALSE,src)
-		src.forceMove(T) //Teleports to creation location
+		M.forceMove(location_created) //Teleports to creation location
 		do_sparks(5,FALSE,src)
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,src)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	src.forceMove(T2) //Teleports home
+	M.forceMove(location_return) //Teleports home
 	do_sparks(5,FALSE,src)
 	..()
 
@@ -74,7 +75,9 @@
 	to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
 	M.Jitter(50)
 	M.AdjustKnockdown(-40, 0)
-	for(var/obj/item/I in M.get_contents()); do_teleport(I, get_turf(I), 5, no_effects=TRUE);
+	for(var/item in M.get_contents())
+		var/obj/item/I = item
+		do_teleport(I, get_turf(I), 5, no_effects=TRUE);
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
@@ -85,7 +88,7 @@
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	if(1)
 		var/typepath = M.type
-		fermi_Tclone = new typepath(M.loc)
+		var/fermi_Tclone = new typepath(M.loc)
 		//var/mob/living/carbon/O = M
 		var/mob/living/carbon/C = fermi_Tclone
 		C.appearance = M.appearance
@@ -143,7 +146,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
-		SM.sentience_act()
+		//SM.sentience_act()
 		to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
 		to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
