@@ -1458,6 +1458,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						//let's ensure that no weird shit happens on species swapping.
+						custom_species = null
 						if(!("body_markings" in pref_species.default_features))
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
