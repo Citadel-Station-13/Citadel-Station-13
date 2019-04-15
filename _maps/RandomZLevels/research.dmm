@@ -245,23 +245,9 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
-"aS" = (
-/turf/open/floor/plasteel{
-	icon_state = "damaged4"
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/awaymission/research/interior/engineering)
 "aT" = (
 /mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plating,
-/area/awaymission/research/interior/engineering)
-"aU" = (
-/turf/open/floor/plasteel{
-	icon_state = "damaged1"
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4
-	},
 /area/awaymission/research/interior/engineering)
 "aV" = (
 /obj/item/stack/sheet/plasteel,
@@ -339,12 +325,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/area/awaymission/research/interior/engineering)
-"bc" = (
-/turf/open/floor/plasteel{
-	icon_state = "damaged5"
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "bd" = (
 /turf/open/floor/plasteel{
@@ -43716,7 +43696,7 @@ al
 al
 al
 al
-aS
+al
 bb
 bo
 bG
@@ -43974,7 +43954,7 @@ ap
 an
 aJ
 nf
-bc
+al
 bp
 bH
 ar
@@ -45001,7 +44981,7 @@ al
 al
 al
 al
-aU
+al
 bg
 bt
 bL
