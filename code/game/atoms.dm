@@ -336,6 +336,15 @@
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
 
+//to add blood dna info to the object's blood_DNA list
+/atom/proc/transfer_blood_dna(list/blood_dna)
+	if(!blood_DNA)
+		blood_DNA = list()
+	var/old_length = blood_DNA.len
+	blood_DNA |= blood_dna
+	if(blood_DNA.len > old_length)
+		return TRUE//some new blood DNA was added
+
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already

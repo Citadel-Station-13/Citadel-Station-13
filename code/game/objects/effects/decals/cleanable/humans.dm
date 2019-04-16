@@ -4,21 +4,20 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	blood_state = BLOOD_STATE_HUMAN
+	blood_state = BLOOD_STATE_BLOOD
+	color = BLOOD_COLOR_HUMAN
 	blood_DNA = list()
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
-/obj/effect/cleanable/blood/Initialize()
-	. = ..()
-	update_icon()
-
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	C.add_blood_DNA(return_blood_DNA())
-	if (bloodiness)
-		if (C.bloodiness < MAX_SHOE_BLOODINESS)
-			C.bloodiness += bloodiness
+	if (C.blood_DNA)
+		blood_DNA |= C.blood_DNA.Copy()
 	update_icon()
-	return ..()
+	..()
+
+/obj/effect/decal/cleanable/blood/transfer_blood_dna()
+	..()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
 	. = ..()
@@ -29,13 +28,13 @@
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
-	desc = "Looks like it's been here a while.  Eew."
+	desc = "Looks like it's been here a while. Eew."
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("Non-human DNA" = "A+")) // Needs to happen before ..()
-	return ..()
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -47,7 +46,7 @@
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
 	name = "blood"
-	icon_state = "trails_1"
+	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
@@ -63,7 +62,7 @@
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
 
-/obj/effect/decal/cleanable/trail_holder/transfer_mob_blood_dna()
+/obj/effect/decal/cleanable/trail_holder/transfer_blood_dna()
 	..()
 	update_icon()
 
@@ -162,7 +161,7 @@
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
-	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
+	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
@@ -191,7 +190,6 @@
 				exited_dirs |= H.dir
 				update_icon()
 
-
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	..()
 	cut_overlays()
@@ -210,13 +208,14 @@
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
 
+
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
 	if(shoe_types.len)
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
+			. += "some <B>[initial(S.name)]</B> [icon2html(initial(S.icon), user)]\n"
 
 	to_chat(user, .)
 

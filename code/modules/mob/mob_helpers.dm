@@ -490,15 +490,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	. = BLOOD_COLOR_HUMAN
 	switch(type)
 		if("U")//Universal blood; a bit orange
-			. = "#DB3300"
+			. = "#db3300"
 		if("SY")//Synthetics blood; blue
 			. = BLOOD_COLOR_SYNTHETIC
 		if("L")//lizard, a bit pink/purple
-			. = "#DB004D"
+			. = BLOOD_COLOR_LIZARD
 		if("X*")//xeno blood; greenish yellow
 			. = BLOOD_COLOR_XENO
 		if("HF")// Oil/Hydraulic blood. something something why not. reee
 			. = BLOOD_COLOR_OIL
 		if("GEL")// slimepeople blood, rgb 0, 255, 144
-			. = "#00FF90"
+			. = BLOOD_COLOR_SLIME
 		//add more stuff to the switch if you have more blood colors for different types

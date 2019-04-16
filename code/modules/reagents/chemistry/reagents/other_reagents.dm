@@ -123,7 +123,7 @@
 	name = "Slime Jelly Blood"
 	id = "jellyblood"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
-	color = "#00FF90"
+	color = BLOOD_COLOR_SLIME
 	taste_description = "slime"
 	taste_mult = 1.3
 
