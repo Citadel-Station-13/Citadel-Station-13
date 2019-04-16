@@ -1,5 +1,3 @@
-#define fermiClone = null
-
 /datum/status_effect/chem/SGDF
 	id = "SGDF"
 	//var/mob/living/fermi_Clone

@@ -28,7 +28,7 @@
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
 /datum/reagent/fermi/eigenstate/New()
-	. = ..() //Unneeded?
+	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
@@ -124,6 +124,15 @@
 //eigenstate END
 
 //Clone serum #chemClone
+/datum/reagent/fermi/SDGF
+	name = "synthetic-derived growth factor"
+	id = "SDGF"
+	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
+	color = "#60A584" // rgb: 96, 0, 255
+	var/fClone_current_controller = OWNER
+	var/mob/living/split_personality/clone//there's two so they can swap without overwriting
+	var/mob/living/split_personality/owner
+
 /datum/reagent/fermi/SGDF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 

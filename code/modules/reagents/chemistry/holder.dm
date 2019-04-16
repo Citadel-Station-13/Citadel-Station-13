@@ -369,6 +369,7 @@
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
 				//FermiChem WHY ARE VARIBLES SO ESTRANGED it makes me sad
+				/*
 				var/OptimalTempMin = C.OptimalTempMin // Lower area of bell curve for determining heat based rate reactions
 				var/OptimalTempMax = C.OptimalTempMax
 				var/ExplodeTemp = C.ExplodeTemp
@@ -384,14 +385,8 @@
 				var/FermiChem = C.FermiChem
 				var/FermiExplode = C.FermiExplode
 				var/ImpureChem = C.ImpureChem
-
+				*/
 				//FermiChem
-				var/purity = 1
-				var/ammoReacted = 0
-
-				var/deltaT = 0
-				var/deltapH = 0
-				var/stepChemAmmount = 0
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -425,8 +420,8 @@
 						matching_other = 1
 
 				//FermiChem
-				if (chem_temp > ExplodeTemp)//Check to see if reaction is too hot!
-					if (FermiExplode == TRUE)
+				if (chem_temp > C.ExplodeTemp)//Check to see if reaction is too hot!
+					if (C.FermiExplode == TRUE)
 						//To be added!
 					else
 						FermiExplode()
@@ -454,6 +449,7 @@
 						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents//update reagents list
 			var/list/cached_results = selected_reaction.results//resultant chemical list
+			var/special_react_result = selected_reaction.check_special_react(src)
 			var/list/multiplier = INFINITY //Wat
 
 			for(var/B in cached_required_reagents) //
@@ -462,84 +458,92 @@
 			//Splits reactions into two types; FermiChem is advanced reaction mechanics, Other is default reaction.
 			//FermiChem relies on two additional properties; pH and impurity
 			//Temperature plays into a larger role too.
-			if (C.FermiChem == TRUE)
-				message_admins("Hee!!!! Someone is doing a Fermi reaction!!! I'm so excited!!")
-				//FermiReact(C)
-				//B is Beaker
-				//P is product
-				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+			if(selected_reaction)
+				var/datum/chemical_reaction/C = selected_reaction
+				if (C.FermiChem == TRUE)
+					message_admins("Hee!!!! Someone is doing a Fermi reaction!!! I'm so excited!!")
+					//FermiReact(C)
+					//B is Beaker
+					//P is product
+					//multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+					var/deltaT = 0
+					var/deltapH = 0
+					var/stepChemAmmount = 0
+					var/ammoReacted = 0
 
-				while (ammoReacted < multiplier)
-					//Begin Parse
+					var/purity = 1
 
-					//Check extremes first
-					if (chem_temp > ExplodeTemp)
-						//go to explode proc
-						FermiExplode()
 
-					if (pH > 14 || pH < 0)
-						//Create chemical sludge eventually(for now just destroy the beaker I guess?)
-						//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
-						FermiExplode()
+					while (ammoReacted < multiplier)
+						//Begin Parse
 
-					//For now, purity is handled elsewhere
+						//Check extremes first
+						if (chem_temp > C.ExplodeTemp)
+							//go to explode proc
+							FermiExplode()
 
-					//Calculate DeltaT (Deviation of T from optimal)
-					if (chem_temp < OptimalTempMax)
-						deltaT = (((OptimalTempMin - chem_temp)**CurveSharpT)/((OptimalTempMax - OptimalTempMax)**CurveSharpT))
-					else if (chem_temp >= C.OptimalTempMax)
-						deltaT = 1
-					else
-						deltaT = 0
+						if (pH > 14 || pH < 0)
+							//Create chemical sludge eventually(for now just destroy the beaker I guess?)
+							//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
+							FermiExplode()
 
-					//Calculate DeltapH (Deviation of pH from optimal)
-					//Lower range
-					if (pH < C.OptimalpHMin)
-						if (pH < (C.OptimalpHMin - C.ReactpHLim))
-							deltapH = 0
+						//For now, purity is handled elsewhere
+
+						//Calculate DeltaT (Deviation of T from optimal)
+						if (chem_temp < C.OptimalTempMax)
+							deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT))
+						else if (chem_temp >= C.OptimalTempMax)
+							deltaT = 1
 						else
-							deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharp)/(C.ReactpHLim**C.CurveSharppH))
-					//Upper range
-					else if (pH > C.OptimalpHMin)
-						if (pH > (C.OptimalpHMin + C.ReactpHLim))
-							deltapH = 0
+							deltaT = 0
+
+						//Calculate DeltapH (Deviation of pH from optimal)
+						//Lower range
+						if (pH < C.OptimalpHMin)
+							if (pH < (C.OptimalpHMin - C.ReactpHLim))
+								deltapH = 0
+							else
+								deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))
+						//Upper range
+						else if (pH > C.OptimalpHMin)
+							if (pH > (C.OptimalpHMin + C.ReactpHLim))
+								deltapH = 0
+							else
+								deltapH = ((C.ReactpHLim -(pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH))
+						//Within mid range
+						else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
+							deltapH = 1
+						//This should never proc:
 						else
-							deltapH = ((C.ReactpHLim -(pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH))
-					//Within mid range
-					else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
-						deltapH = 1
-					//This should never proc:
-					else
-						message_admins("Fermichem's pH broke!! Please let Fermis know!!")
-						WARNING("[my_atom] attempted to determine FermiChem pH for '[reagent]' which broke for some reason! ([usr])")
-					//TODO Add CatalystFact
+							message_admins("Fermichem's pH broke!! Please let Fermis know!!")
+							WARNING("[my_atom] attempted to determine FermiChem pH for '[C.id]' which broke for some reason! ([usr])")
+						//TODO Add CatalystFact
 
-					stepChemAmmount = multiplier * deltaT
-					if (ammoReacted > 0)
-						purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
-					else
-						purity = deltapH
-					//Apply pH changes and thermal output of reaction to beaker
-					chem_temp += (C.ThermicConstant * stepChemAmmount)
-					pH += (C.HIonRelease * stepChemAmmount)
+						stepChemAmmount = multiplier * deltaT
+						if (ammoReacted > 0)
+							purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
+						else
+							purity = deltapH
+						//Apply pH changes and thermal output of reaction to beaker
+						chem_temp += (C.ThermicConstant * stepChemAmmount)
+						pH += (C.HIonRelease * stepChemAmmount)
 
-					// End.
+						// End.
 
-					selected_reaction.on_reaction(src, multiplier, special_react_result)
+						selected_reaction.on_reaction(src, multiplier, special_react_result)
 
-					for(var/B in cached_required_reagents)
-						remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+						for(var/B in cached_required_reagents)
+							remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
-					for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
-						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
-						add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
+						for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+							multiplier = max(multiplier, 1) //this shouldnt happen ...
+							SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
+							add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
 
+						ammoReacted = ammoReacted + stepChemAmmount
 
-					ammoReacted = ammoReacted + stepChemAmmount
-
-				reaction_occurred = 1
-				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", cached_results[P]*ammoReacted, P)//log
+					reaction_occurred = 1
+					SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", ammoReacted, C.id)//log
 			//Standard reaction mechanics:
 			else:
 
