@@ -461,7 +461,6 @@
 			if(selected_reaction)
 				var/datum/chemical_reaction/C = selected_reaction
 				if (C.FermiChem == TRUE)
-					message_admins("Hee!!!! Someone is doing a Fermi reaction!!! I'm so excited!!")
 					//FermiReact(C)
 					//B is Beaker
 					//P is product
@@ -475,27 +474,32 @@
 
 
 					while (ammoReacted < multiplier)
+						message_admins("Loop beginning")
 						//Begin Parse
 
 						//Check extremes first
 						if (chem_temp > C.ExplodeTemp)
 							//go to explode proc
+							message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [chem_temp]")
 							FermiExplode()
 
 						if (pH > 14 || pH < 0)
 							//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 							//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
+							message_admins("pH is lover limit, cur pH: [pH]")
 							FermiExplode()
 
 						//For now, purity is handled elsewhere
 
 						//Calculate DeltaT (Deviation of T from optimal)
-						if (chem_temp < C.OptimalTempMax)
-							deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMax)**C.CurveSharpT))
+						if (chem_temp < C.OptimalTempMax || chem_temp >= C.OptimalTempMin)
+							deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
+							//							350							300
 						else if (chem_temp >= C.OptimalTempMax)
 							deltaT = 1
 						else
 							deltaT = 0
+						message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
 
 						//Calculate DeltapH (Deviation of pH from optimal)
 						//Lower range
@@ -518,21 +522,27 @@
 							message_admins("Fermichem's pH broke!! Please let Fermis know!!")
 							WARNING("[my_atom] attempted to determine FermiChem pH for '[C.id]' which broke for some reason! ([usr])")
 						//TODO Add CatalystFact
+						message_admins("calculating pH factor(purity), pH: [pH], min: [C.OptimalpHMin]-[C.ReactpHLim], max: [C.OptimalpHMax]+[C.ReactpHLim], deltapH: [deltapH]")
 
 						stepChemAmmount = multiplier * deltaT
 						if (ammoReacted > 0)
-							purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /(2 * (ammoReacted + stepChemAmmount)) //This should add the purity to the product
+							purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /((ammoReacted + stepChemAmmount)) //This should add the purity to the product
 						else
 							purity = deltapH
+						message_admins("purity: [purity], purity of beaker")
+						message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 						//Apply pH changes and thermal output of reaction to beaker
 						chem_temp += (C.ThermicConstant * stepChemAmmount)
 						pH += (C.HIonRelease * stepChemAmmount)
+						message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
 						// End.
 
 						selected_reaction.on_reaction(src, multiplier, special_react_result)
 
+						message_admins("cached_results: [cached_results], multiplier: [multiplier], stepChemAmmount [stepChemAmmount]")
 						for(var/B in cached_required_reagents)
+							message_admins("cached_results: [cached_results], multiplier: [multiplier], stepChemAmmount [stepChemAmmount]")
 							remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
 						for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?

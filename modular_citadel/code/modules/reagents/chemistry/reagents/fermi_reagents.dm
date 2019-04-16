@@ -44,6 +44,7 @@
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
+	..()
 
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
