@@ -206,7 +206,7 @@
 /datum/techweb_node/basic_meteor_defense
 	id = "basic_meteor_defense"
 	display_name = "Meteor Defense Research"
-	description = "Unlock the potential of the mysterious of why CC desided to not build these around the staition themselfs."
+	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
 	prereq_ids = list("adv_engi", "high_efficiency")
 	design_ids = list("meteor_defence", "meteor_console")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
