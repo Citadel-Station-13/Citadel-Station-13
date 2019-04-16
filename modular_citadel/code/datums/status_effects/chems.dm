@@ -1,16 +1,16 @@
 /datum/status_effect/chem/SGDF
 	id = "SGDF"
-	//var/mob/living/fermi_Clone
+	var/mob/living/carbon/human/fermi_Clone = null
 
 /datum/status_effect/chem/SGDF/on_apply(mob/living/M)
 	var/typepath = M.type
-	fermiClone = new typepath(M.loc)
+	fermi_Clone = new typepath(M.loc)
 	//var/mob/living/carbon/M = owner
-	var/mob/living/carbon/C = fermi_Clone
-	if(istype(C) && istype(M))
-		C.real_name = O.real_name
-		M.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	//var/mob/living/carbon/C = fermi_Clone
+	if(istype(fermi_Clone) && istype(M))
+		fermi_Clone.real_name = M.real_name
+		M.dna.transfer_identity(fermi_Clone, transfer_SE=1)
+		fermi_Clone.updateappearance(mutcolor_update=1)
 	return ..()
 
 /datum/status_effect/chem/SGDF/tick(mob/living/M)

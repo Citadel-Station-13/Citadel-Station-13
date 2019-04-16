@@ -36,13 +36,15 @@
 	addiction_stage4_end = 55 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
-	addictCyc3 = 1
+	var/addictCyc3 = 1
+	var/mob/living/fermi_Tclone = null
 
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
+
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	if (holder.has_reagent("eigenstate"))
@@ -73,7 +75,7 @@
 			do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,src)
 			M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
-		..()
+	..()
 
 
 	//..() //loop function
@@ -103,10 +105,10 @@
 	switch(src.addictCyc3)
 		if(1)
 			var/typepath = M.type
-			var/fermi_Tclone = new typepath(M.loc)
+			fermi_Tclone = new typepath(M.loc)
 			//var/mob/living/carbon/O = M
-			var/mob/living/carbon/C = fermi_Tclone
-			C.appearance = M.appearance
+			//var/mob/living/carbon/C = fermi_Tclone
+			fermi_Tclone.appearance = M.appearance
 
 			//Incase Kevin breaks my code:
 			//if(istype(C) && istype(O))
@@ -114,13 +116,14 @@
 			//	O.dna.transfer_identity(C)
 			//	C.updateappearance(mutcolor_update=1)
 
-			visible_message("[M] collapses in from an alternative reality!")
+			M.visible_message("[M] collapses in from an alternative reality!")
 		if(2)
-			do_teleport(C, get_turf(C), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_teleport(fermi_Tclone, get_turf(fermi_Tclone), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		if(3)
-			qdel(C) //Deletes CLONE, or at least I hope it is.
-			visible_message("[M] is snapped across to a different alternative reality!")
+			qdel(fermi_Tclone) //Deletes CLONE, or at least I hope it is.
+			M.visible_message("[M] is snapped across to a different alternative reality!")
 			src.addictCyc3 = 1 //counter
+			fermi_Tclone = null
 
 	do_teleport(src, get_turf(src), 3, no_effects=TRUE) //Teleports player randomly
 	..() //loop function
@@ -133,8 +136,8 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	..()
 
-/datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
-	return
+///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
+//	return
 
 //eigenstate END
 
@@ -144,21 +147,22 @@
 	id = "SDGF"
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
 	color = "#60A584" // rgb: 96, 0, 255
-	var/fClone_current_controller = OWNER
+	//var/fClone_current_controller = OWNER
 	var/mob/living/split_personality/clone//there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner
+	//var/mob/living/carbon/SM
 
 /datum/reagent/fermi/SGDF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 
 
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 	if(LAZYLEN(candidates))
 
 		//var/typepath = owner.type
 		//clone = new typepath(owner.loc)
 		var/typepath = M.type
-		fermi_Gclone = new typepath(M.loc)
+		var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
 		//var/mob/living/carbon/SM = owner
 		//var/mob/living/carbon/M = M
 		var/mob/living/carbon/SM = fermi_Gclone
@@ -169,18 +173,18 @@
 
 		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
-		SM.mind.enslave_mind_to_creator(user)
+		SM.mind.enslave_mind_to_creator(M)
 		//SM.sentience_act()
 		to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
 		to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
-		visible_message("[M] suddenly shudders, and splits into two identical twins!")
-		SM.copy_known_languages_from(user, FALSE)
+		M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
+		SM.copy_known_languages_from(M, FALSE)
 		//after_success(user, SM)
 		//qdel(src)
 	else
 		if(20)
-			O.apply_status_effect(var/datum/status_effect/chem/SGDF)
+			M.apply_status_effect(/datum/status_effect/chem/SGDF)
 
 	..()
 
@@ -196,8 +200,8 @@
 /datum/reagent/fermi/BElarger/overdose_start(mob/living/M) //Turns you into a female if male and ODing
 	if(M.gender == MALE)
 		M.gender = FEMALE
-		M.visible_message("<span class='boldnotice'>[user] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(M.gender == FEMALE)
 		M.gender = FEMALE
-		M.visible_message("<span class='boldnotice'>[user] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
