@@ -391,8 +391,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
-					if (!silent)
-						playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Toggle_Font")
 				//CODE REVISION 2
