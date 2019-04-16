@@ -7,6 +7,18 @@
 //And tips their hat
 //Naninte chem
 
+/datum/reagent/fermi
+	name = "Fermi"
+	id = "fermi"
+	taste_description = "If a petpat had a taste, this would be it."
+
+/datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
+	current_cycle++
+	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //fermi reagents stay longer if you have a better metabolism
+
+/datum/reagent/fermi/overdose_start(mob/living/carbon/M)
+	current_cycle++
+
 //eigenstate Chem
 //Teleports you to chemistry and back
 //OD teleports you randomly around the Station
@@ -24,6 +36,7 @@
 	addiction_stage4_end = 55 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
+	addictCyc3 = 1
 
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
@@ -50,16 +63,17 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
-	if(10)
-		to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to hurl.</span>")
-		M.Jitter(10)
+	switch(current_cycle)
+		if(10)
+			to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to hurl.</span>")
+			M.Jitter(10)
 
-	if(15 to INFINITY)
-		do_sparks(5,FALSE,src)
-		do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
-		do_sparks(5,FALSE,src)
-		M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
-	..()
+		if(15 to INFINITY)
+			do_sparks(5,FALSE,src)
+			do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
+			do_sparks(5,FALSE,src)
+			M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
+		..()
 
 
 	//..() //loop function
@@ -86,26 +100,27 @@
 	to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
 
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
-	if(1)
-		var/typepath = M.type
-		var/fermi_Tclone = new typepath(M.loc)
-		//var/mob/living/carbon/O = M
-		var/mob/living/carbon/C = fermi_Tclone
-		C.appearance = M.appearance
+	switch(src.addictCyc3)
+		if(1)
+			var/typepath = M.type
+			var/fermi_Tclone = new typepath(M.loc)
+			//var/mob/living/carbon/O = M
+			var/mob/living/carbon/C = fermi_Tclone
+			C.appearance = M.appearance
 
-		//Incase Kevin breaks my code:
-		//if(istype(C) && istype(O))
-		//	C.real_name = O.real_name
-		//	O.dna.transfer_identity(C)
-		//	C.updateappearance(mutcolor_update=1)
+			//Incase Kevin breaks my code:
+			//if(istype(C) && istype(O))
+			//	C.real_name = O.real_name
+			//	O.dna.transfer_identity(C)
+			//	C.updateappearance(mutcolor_update=1)
 
-		visible_message("[M] collapses in from an alternative reality!")
-	if(2)
-		do_teleport(C, get_turf(C), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
-	if(3)
-		qdel(C) //Deletes CLONE, or at least I hope it is.
-		visible_message("[M] is snapped across to a different alternative reality!")
-		.=1 //counter
+			visible_message("[M] collapses in from an alternative reality!")
+		if(2)
+			do_teleport(C, get_turf(C), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+		if(3)
+			qdel(C) //Deletes CLONE, or at least I hope it is.
+			visible_message("[M] is snapped across to a different alternative reality!")
+			src.addictCyc3 = 1 //counter
 
 	do_teleport(src, get_turf(src), 3, no_effects=TRUE) //Teleports player randomly
 	..() //loop function

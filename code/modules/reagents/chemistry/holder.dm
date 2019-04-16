@@ -470,7 +470,7 @@
 					var/deltapH = 0
 					var/stepChemAmmount = 0
 					var/ammoReacted = 0
-
+					//get purity from combined beaker reactant purities.
 					var/purity = 1
 
 
