@@ -1,6 +1,6 @@
 /obj/item/integrated_circuit/manipulation/electric_stimulator
 	name = "electronic stimulation module"
-	desc = "Used to induce a target with sexual stimulation with electricity."
+	desc = "Used to induce sexual stimulation in a target via electricity."
 	icon_state = "power_relay"
 	extended_desc = "The circuit accepts a reference to a person, as well as a number representing the strength of the shock, and upon activation, attempts to stimulate them to orgasm. The number ranges from -35 to 35, with negative numbers reducing arousal and positive numbers increasing it by that amount."
 	complexity = 15
