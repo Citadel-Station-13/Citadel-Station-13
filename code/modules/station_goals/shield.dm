@@ -157,7 +157,7 @@
 		if(active)
 			change_meteor_chance(8)
 		else
-			change_meteor_chance(1.25)
+			change_meteor_chance(0.125)
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in getline(src,meteor))
