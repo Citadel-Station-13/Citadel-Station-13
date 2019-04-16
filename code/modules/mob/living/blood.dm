@@ -138,17 +138,27 @@
 
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
-			if(blood_id == "blood") //normal blood
-				if(blood_data["viruses"])
-					for(var/thing in blood_data["viruses"])
-						var/datum/disease/D = thing
-						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-							continue
-						C.ForceContractDisease(D)
-				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-					C.reagents.add_reagent("toxin", amount * 0.5)
-					return 1
+		for(var/bluhduh in GLOB.blood_types[blood_id])
+			if(blood_id == C.get_blood_id())//both mobs have the same blood substance
+				if(bluhduh) //actual blood reagent
+					if(blood_data["viruses"])
+						for(var/thing in blood_data["viruses"])
+							var/datum/disease/D = thing
+							if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+								continue
+							C.ForceContractDisease(D)
+					if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+						if((blood_data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
+							C.reagents.add_reagent("toxin", amount * 1.5) //filthy xenos bloooood
+						else if((blood_data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
+							C.reagents.add_reagent("toxin", amount * 1)	//don't fucking put oil in people
+						else if((blood_data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
+							C.reagents.add_reagent("toxin", amount * 1.5) //acid blooood
+						else
+							C.reagents.add_reagent("toxin", amount * 0.5)
+					else
+						C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
+						return 1
 
 			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
 			return 1
@@ -161,49 +171,50 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood") //actual blood reagent
-		var/blood_data = list()
-		//set the blood data
-		blood_data["donor"] = src
-		blood_data["viruses"] = list()
+	for(var/bluhduh in GLOB.blood_types[blood_id])
+		if(bluhduh) //actual blood reagent
+			var/blood_data = list()
+			//set the blood data
+			blood_data["donor"] = src
+			blood_data["viruses"] = list()
 
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			blood_data["viruses"] += D.Copy()
+			for(var/thing in diseases)
+				var/datum/disease/D = thing
+				blood_data["viruses"] += D.Copy()
 
-		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
-		if(disease_resistances && disease_resistances.len)
-			blood_data["resistances"] = disease_resistances.Copy()
-		var/list/temp_chem = list()
-		for(var/datum/reagent/R in reagents.reagent_list)
-			temp_chem[R.id] = R.volume
-		blood_data["trace_chem"] = list2params(temp_chem)
-		if(mind)
-			blood_data["mind"] = mind
-		else if(last_mind)
-			blood_data["mind"] = last_mind
-		if(ckey)
-			blood_data["ckey"] = ckey
-		else if(last_mind)
-			blood_data["ckey"] = ckey(last_mind.key)
+			blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+			if(disease_resistances && disease_resistances.len)
+				blood_data["resistances"] = disease_resistances.Copy()
+			var/list/temp_chem = list()
+			for(var/datum/reagent/R in reagents.reagent_list)
+				temp_chem[R.id] = R.volume
+			blood_data["trace_chem"] = list2params(temp_chem)
+			if(mind)
+				blood_data["mind"] = mind
+			else if(last_mind)
+				blood_data["mind"] = last_mind
+			if(ckey)
+				blood_data["ckey"] = ckey
+			else if(last_mind)
+				blood_data["ckey"] = ckey(last_mind.key)
 
-		if(!suiciding)
-			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
-		blood_data["gender"] = gender
-		blood_data["real_name"] = real_name
-		blood_data["features"] = dna.features
-		blood_data["factions"] = faction
-		blood_data["quirks"] = list()
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			blood_data["quirks"] += T.type
-		blood_data["changeling_loudness"] = 0
-		if(mind)
-			var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(istype(ling))
-				blood_data["changeling_loudness"] = ling.loudfactor
-		return blood_data
+			if(!suiciding)
+				blood_data["cloneable"] = 1
+			blood_data["blood_type"] = copytext(dna.blood_type,1,0)
+			blood_data["gender"] = gender
+			blood_data["real_name"] = real_name
+			blood_data["features"] = dna.features
+			blood_data["factions"] = faction
+			blood_data["quirks"] = list()
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				blood_data["quirks"] += T.type
+			blood_data["changeling_loudness"] = 0
+			if(mind)
+				var/datum/antagonist/changeling/ling = mind.has_antag_datum(/datum/antagonist/changeling)
+				if(istype(ling))
+					blood_data["changeling_loudness"] = ling.loudfactor
+			return blood_data
 
 //get the id of the substance this mob use as blood.
 /mob/proc/get_blood_id()
@@ -221,7 +232,7 @@
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
-		return
+		return null
 	return "blood"
 
 // This is has more potential uses, and is probably faster than the old proc.
@@ -241,9 +252,10 @@
 		"O+" = list("O-", "O+","SY"),
 		"L" = list("L","SY"),
 		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY"),
-		"oil" = list("oil", "SY"),
+		"HF" = list("HF", "SY"),
 		"X*" = list("X*", "SY"),
-		"SY" = list("SY")
+		"SY" = list("SY"),
+		"GEL" = list("GEL","SY")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
@@ -252,7 +264,7 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
-	if(get_blood_id() != "blood")
+	if(get_blood_id() == null)
 		return
 	if(!T)
 		T = get_turf(src)

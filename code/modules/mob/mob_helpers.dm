@@ -495,8 +495,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			. = BLOOD_COLOR_SYNTHETIC
 		if("L")//lizard, a bit pink/purple
 			. = "#DB004D"
-		if("X*")//xeno blood; not actually used in many spots
+		if("X*")//xeno blood; greenish yellow
 			. = BLOOD_COLOR_XENO
-		if("OI")// Oil blood. something something why not
+		if("HF")// Oil/Hydraulic blood. something something why not. reee
 			. = BLOOD_COLOR_OIL
+		if("GEL")// slimepeople blood, rgb 0, 255, 144
+			. = "#00FF90"
 		//add more stuff to the switch if you have more blood colors for different types

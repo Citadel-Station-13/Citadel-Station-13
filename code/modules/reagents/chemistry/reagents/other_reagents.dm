@@ -29,6 +29,12 @@
 		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
+			if(data && (data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
+				C.reagents.add_reagent("toxin", reac_volume * 1.5) //filthy xenos bloooood
+			if(data && (data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
+				C.reagents.add_reagent("toxin", reac_volume * 1)	//don't fucking put oil in people
+			if(data && (data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
+				C.reagents.add_reagent("toxin", reac_volume * 1.5) //acid blooood
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
@@ -106,11 +112,30 @@
 	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/blood/oil
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="oil","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Hydraulic Blood"
 	id = "oilblood"
 	taste_description = "burnt oil"
 	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
+
+/datum/reagent/blood/jellyblood
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Slime Jelly Blood"
+	id = "jellyblood"
+	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
+	color = "#00FF90"
+	taste_description = "slime"
+	taste_mult = 1.3
+
+/datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
+		M.adjustToxLoss(rand(20,60)*REM, 0)
+		. = 1
+	else if(prob(40))
+		M.heal_bodypart_damage(5*REM)
+		. = 1
+	..()
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
