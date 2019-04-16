@@ -62,7 +62,7 @@
 	..()
 	gases[/datum/gas/nitrogen] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
-/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+/datum/gas_mixture/immutable/cloner/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	gases[/datum/gas/nitrogen] = MOLES_O2STANDARD + MOLES_N2STANDARD
 
