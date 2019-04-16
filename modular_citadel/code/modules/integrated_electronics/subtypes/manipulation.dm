@@ -2,7 +2,7 @@
 	name = "electronic stimulation module"
 	desc = "Used to induce a target with sexual stimulation with electricity."
 	icon_state = "power_relay"
-	extended_desc = "The circuit accepts a reference to a person, as well as a number representing the strength of the shock, and upon activation, attempts to stimulate them to orgasm. The number ranges from -100 to 100, with negative numbers reducing arousal and positive numbers increasing it."
+	extended_desc = "The circuit accepts a reference to a person, as well as a number representing the strength of the shock, and upon activation, attempts to stimulate them to orgasm. The number ranges from -35 to 35, with negative numbers reducing arousal and positive numbers increasing it by that amount."
 	complexity = 15
 	size = 2
 	inputs = list("target" = IC_PINTYPE_REF, "strength" = IC_PINTYPE_NUMBER)
@@ -20,7 +20,7 @@
 	if(!check_target(M))
 		return
 
-	var/arousal_gain = CLAMP(get_pin_data(IC_INPUT, 2)*(35/100),-35,35)
+	var/arousal_gain = CLAMP(get_pin_data(IC_INPUT, 2),-35,35)
 	set_pin_data(IC_OUTPUT, 1, arousal_gain)
 
 	if(ismob(M) && M.canbearoused && arousal_gain != 0)
@@ -52,8 +52,3 @@
 		visible_message("<span class='warning'>\The [assembly] electrodes fail to shock [M]!</span>")
 		push_data()
 		activate_pin(3)
-
-
-/*
-{"assembly":{"type":"type-a electronic mechanism"},"components":[{"type":"bonermeter"},{"type":"electronic stimulation module"},{"type":"number pad"},{"type":"local locator"},{"type":"text-to-speech circuit","inputs":[[1,0,"Orgasm"]]},{"type":"text-to-speech circuit","inputs":[[1,0,"Scanned"]]},{"type":"text-to-speech circuit"}],"wires":[[[1,"I",1],[4,"O",1]],[[1,"A",1],[2,"A",2]],[[1,"A",2],[6,"A",1]],[[2,"I",1],[4,"O",1]],[[2,"I",2],[3,"O",1]],[[2,"A",1],[4,"A",2]],[[2,"A",4],[5,"A",1]],[[3,"A",1],[4,"A",1]]]}
-/*
