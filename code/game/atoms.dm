@@ -35,6 +35,8 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	var/list/blood_DNA //reee dirty hack till Kevin tells me how to inherit this shit
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -352,6 +354,31 @@
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)
+
+/atom/proc/blood_DNA_to_color(mob/living/M)
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	var/list/blood_DNA = M.get_blood_dna_list()
+	for(var/bloop in blood_DNA)
+		if(colors[blood_DNA[bloop]])
+			colors[blood_DNA[bloop]]++
+		else
+			colors[blood_DNA[bloop]] = 1
+
+	var/final_rgb = "#940000"
+
+	if(colors.len)
+		var/sum = 0 //this is all shitcode, but it works; trust me
+		final_rgb = bloodtype_to_color(colors[1])
+		sum = colors[colors[1]]
+		if(colors.len > 1)
+			var/i = 2
+			while(i <= colors.len)
+				var/tmp = colors[colors[i]]
+				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				sum += tmp
+				i++
+
+	return final_rgb
 
 /atom/proc/wash_cream()
 	return TRUE

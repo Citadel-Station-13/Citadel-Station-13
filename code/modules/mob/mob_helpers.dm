@@ -485,3 +485,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+
+/proc/bloodtype_to_color(var/type)
+	. = BLOOD_COLOR_HUMAN
+	switch(type)
+		if("U")//Universal blood; a bit orange
+			. = "#DB3300"
+		if("SY")//Synthetics blood; blue
+			. = BLOOD_COLOR_SYNTHETIC
+		if("L")//lizard, a bit pink/purple
+			. = "#DB004D"
+		if("X*")//xeno blood; not actually used in many spots
+			. = BLOOD_COLOR_XENO
+		if("OI")// Oil blood. something something why not
+			. = BLOOD_COLOR_OIL
+		//add more stuff to the switch if you have more blood colors for different types

@@ -1,24 +1,31 @@
 /obj/effect/decal/cleanable/blood
 	name = "blood"
-	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
+	desc = "It's gooey. Perhaps it's the chef's cooking?"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
-	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_HUMAN
-	var/basecolor = BLOOD_COLOR_HUMAN
+	blood_DNA = list()
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/drytime
+
+/obj/effect/cleanable/blood/Initialize()
+	. = ..()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
 	if (bloodiness)
 		if (C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
+	update_icon()
 	return ..()
 
+/obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
+	. = ..()
+	update_icon()
+
 /obj/effect/decal/cleanable/blood/update_icon()
-	if(basecolor == "rainbow") basecolor = "#[get_random_colour(1)]"
-	color = basecolor
+	color = blood_DNA_to_color()
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -44,10 +51,25 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	var/basecolor = BLOOD_COLOR_HUMAN //We'll still need to make sure we're colored at least.
+	blood_DNA = list()
+
+/obj/effect/decal/cleanable/trail_holder/update_icon()
+	color = blood_DNA_to_color()
+
+/obj/effect/cleanable/trail_holder/Initialize()
+	. = ..()
+	update_icon()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
+
+/obj/effect/decal/cleanable/trail_holder/transfer_mob_blood_dna()
+	..()
+	update_icon()
+
+/obj/effect/decal/cleanable/trail_holder/transfer_mob_blood_dna()
+	. = ..()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -56,31 +78,17 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-	var/fleshcolor
+	var/gib_overlay = FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(gib_overlay)
+		var/icon/gibz = new(icon, icon_state + "-overlay")
+		add_overlay(gibz)
 	reagents.add_reagent("liquidgibs", 5)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
-
-/obj/effect/decal/cleanable/blood/gibs/update_icon()
-	var/generic_skin = random_skin_tone()
-	var/ethnicity = "#[skintone2hex(generic_skin)]"
-
-	var/image/giblets = image(icon, "[icon_state]_flesh", dir)
-	if(!fleshcolor)
-		fleshcolor = ethnicity
-	giblets.color = fleshcolor
-
-	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	if(basecolor == "rainbow") basecolor = "#[random_short_color()]"
-	blood.Blend(basecolor,ICON_MULTIPLY)
-
-	icon = blood
-	overlays.Cut()
-	overlays += giblets
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
@@ -93,31 +101,34 @@
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			var/list/datum/disease/diseases
-			GET_COMPONENT(infective, /datum/component/infective)
-			if(infective)
-				diseases = infective.diseases
-			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			var/obj/effect/decal/cleanable/blood/splatter/splat = new(loc)
+			splat.transfer_mob_blood_dna(blood_DNA)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/down
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/body
 	random_icon_states = list("gibhead", "gibtorso")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/torso
 	random_icon_states = list("gibtorso")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/limb
 	random_icon_states = list("gibleg", "gibarm")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+	gib_overlay = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
@@ -132,7 +143,7 @@
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
-	desc = "It's red."
+	desc = "It's gooey."
 	icon_state = "1"
 	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
@@ -155,12 +166,12 @@
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
-	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			S.blood_color = basecolor
+			if(color != bloodtype_to_color(S.last_bloodtype))
+				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
@@ -168,11 +179,12 @@
 				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
-	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
+			if(color != bloodtype_to_color(S.last_bloodtype))//last entry - we check its color
+				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
@@ -181,6 +193,7 @@
 
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
+	..()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
@@ -195,8 +208,7 @@
 				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
-	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
-
+	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
@@ -210,6 +222,8 @@
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+		return
+	if(color != C.color)
 		return
 	..()
 

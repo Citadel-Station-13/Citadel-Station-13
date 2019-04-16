@@ -15,9 +15,6 @@
 		to_chat(world, "<span class='danger'>Gib list length mismatch!</span>")
 		return
 
-	if(fleshcolor) src.fleshcolor = fleshcolor
-	if(bloodcolor) src.bloodcolor = bloodcolor
-
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
 
 	if(sparks)
@@ -29,30 +26,20 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(loc, diseases)
-
+				gib = new gibType(loc)
 				if(iscarbon(loc))
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
 				if(MobDNA)
-					var/list/blood_dna = MobDNA.get_blood_dna_list()
-					gib.add_blood_DNA(blood_dna)
-
-				// Apply human species colouration to masks.
-				if(fleshcolor)
-					gib.fleshcolor = fleshcolor
-				if(bloodcolor)
-					gib.color = bloodcolor
-
-				gib.update_icon()
-
-				if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
-					gib.add_blood_DNA(list("Non-human DNA" = "A+"))
+					gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.blood_type
+				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
+					gib.blood_DNA["Non-human DNA"] = "A+"
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
 						gib.streak(directions)
+				gib.update_icon()
 
 	return INITIALIZE_HINT_QDEL
 

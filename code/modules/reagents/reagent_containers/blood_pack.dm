@@ -6,6 +6,8 @@
 	volume = 200
 	var/blood_type = null
 	var/labelled = 0
+	var/color_to_apply = "#FFFFFF"
+	var/mutable_appearance/fill_overlay
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
@@ -18,6 +20,7 @@
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B && B.data && B.data["blood_type"])
 			blood_type = B.data["blood_type"]
+			color_to_apply = bloodtype_to_color(blood_type)
 		else
 			blood_type = null
 	update_pack_name()

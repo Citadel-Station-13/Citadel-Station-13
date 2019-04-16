@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"= BLOOD_COLOR_HUMAN, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
@@ -42,6 +42,7 @@
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
+		color = bloodtype_to_color(data["blood_type"])
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -90,16 +91,26 @@
 		B.color = data["bloodcolor"]
 
 /datum/reagent/blood/synthetics
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"=BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	id = "syntheticblood"
+	taste_description = "oily"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 
 /datum/reagent/blood/xenomorph
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"bloodcolor"=BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Xenomorph Blood"
 	id = "xenoblood"
+	taste_description = "acidic heresy"
 	color = BLOOD_COLOR_XENO // greenish yellow ooze
+	shot_glass_icon_state = "shotglassgreen"
+
+/datum/reagent/blood/oil
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="oil","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Hydraulic Blood"
+	id = "oilblood"
+	taste_description = "burnt oil"
+	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"

@@ -190,7 +190,6 @@
 		if(!suiciding)
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
-		blood_data["bloodcolor"] = blood_id.color
 		blood_data["gender"] = gender
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
@@ -241,7 +240,10 @@
 		"O-" = list("O-","SY"),
 		"O+" = list("O-", "O+","SY"),
 		"L" = list("L","SY"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY")
+		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U","SY"),
+		"oil" = list("oil", "SY"),
+		"X*" = list("X*", "SY"),
+		"SY" = list("SY")
 	)
 
 	var/safe = bloodtypes_safe[bloodtype]
