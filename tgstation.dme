@@ -2897,6 +2897,7 @@
 #include "modular_citadel\code\modules\events\blob.dm"
 #include "modular_citadel\code\modules\events\wizard\magicarp.dm"
 #include "modular_citadel\code\modules\food_and_drinks\snacks\meat.dm"
+#include "modular_citadel\code\modules\integrated_electronics\subtypes\input.dm"
 #include "modular_citadel\code\modules\integrated_electronics\subtypes\manipulation.dm"
 #include "modular_citadel\code\modules\jobs\dresscode_values.dm"
 #include "modular_citadel\code\modules\jobs\job_types\captain.dm"
