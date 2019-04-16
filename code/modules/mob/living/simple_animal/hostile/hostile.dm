@@ -345,15 +345,7 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	in_melee = TRUE
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.Adjacent(src) && vore_active && L.devourable) // aggressive check to ensure vore attacks can be made
-			if(prob(voracious_chance))
-				vore_attack(src,L,src)
-			else
-				return L.attack_animal(src)
-	else
-		return target.attack_animal(src)
+	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
