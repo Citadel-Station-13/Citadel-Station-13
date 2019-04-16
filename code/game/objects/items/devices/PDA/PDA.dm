@@ -391,7 +391,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
-				playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
+					if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Toggle_Font")
 				//CODE REVISION 2
@@ -451,7 +452,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					cartridge = null
 					update_icon()
 				if (!silent)
-					playsound(src, 'sound/machines/terminal_eject_disc.ogg', 15, 1)
+					playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 
 //MENU FUNCTIONS===================================
 
@@ -514,12 +515,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(src, 'sound/items/bikehorn.ogg', 15, 1)
+					playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 					last_noise = world.time
 
 			if("Trombone")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(src, 'sound/misc/sadtrombone.ogg', 15, 1)
+					playsound(src, 'sound/misc/sadtrombone.ogg', 50, 1)
 					last_noise = world.time
 
 			if("Gas Scan")
@@ -716,7 +717,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
-		playsound(src, 'sound/machines/twobeep.ogg', 15, 1)
+		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
@@ -753,11 +754,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(id)
 		remove_id()
 		if (!silent)
-			playsound(src, 'sound/machines/terminal_eject_disc.ogg', 15, 1)
+			playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 	else
 		remove_pen()
 		if (!silent)
-			playsound(src, 'sound/machines/button4.ogg', 15, 1)
+			playsound(src, 'sound/machines/button4.ogg', 50, 1)
 
 /obj/item/pda/CtrlClick()
 	..()
@@ -890,7 +891,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			inserted_item = C
 			update_icon()
 			if (!silent)
-				playsound(src, 'sound/machines/button.ogg', 15, 1)
+				playsound(src, 'sound/machines/button.ogg', 50, 1)
 
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C
