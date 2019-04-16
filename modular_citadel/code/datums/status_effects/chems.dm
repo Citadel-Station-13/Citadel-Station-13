@@ -2,7 +2,7 @@
 	id = "SGDF"
 	var/mob/living/carbon/human/fermi_Clone = null
 
-/datum/status_effect/chem/SGDF/on_apply(mob/living/M)
+/datum/status_effect/chem/SGDF/on_apply(mob/living/carbon/M)
 	var/typepath = M.type
 	fermi_Clone = new typepath(M.loc)
 	//var/mob/living/carbon/M = owner
