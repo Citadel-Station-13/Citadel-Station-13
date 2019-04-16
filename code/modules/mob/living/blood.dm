@@ -304,7 +304,7 @@
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)
 	if(!T)
 		T = get_turf(src)
-	var/obj/effect/decal/cleanable/blood/xenoblood/B = locate() in T.contents
+	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
 	if(!B)
 		B = new(T)
 	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))

@@ -104,6 +104,7 @@
 #define isaquatic(A) (is_species(A, /datum/species/aquatic))
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
+#define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 

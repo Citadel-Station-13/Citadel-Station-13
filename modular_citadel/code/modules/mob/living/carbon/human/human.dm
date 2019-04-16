@@ -13,6 +13,12 @@
 /mob/living/carbon/human/species/xeno
 	race = /datum/species/xeno
 
+/mob/living/carbon/human/species/ipc
+	race = /datum/species/ipc
+
+/mob/living/carbon/human/species/roundstartslime
+	race = /datum/species/jelly/roundstartslime
+
 /mob/living/carbon/human/resist()
 	. = ..()
 	if(wear_suit && wear_suit.breakouttime)//added in human cuff breakout proc

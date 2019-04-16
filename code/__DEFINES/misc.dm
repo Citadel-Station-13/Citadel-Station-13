@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_COLOR_HUMAN			"#dc0000"
 #define BLOOD_COLOR_XENO			"#94a83c"
 #define BLOOD_COLOR_OIL				"#301d02"
-#define BLOOD_COLOR_SYNTHETIC		"#0b0730"
+#define BLOOD_COLOR_SYNTHETIC		"#3f48aa"
 #define BLOOD_COLOR_SLIME			"#00ff90"
 #define BLOOD_COLOR_LIZARD			"#db004D"
 

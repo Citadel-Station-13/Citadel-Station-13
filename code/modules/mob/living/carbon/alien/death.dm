@@ -2,7 +2,7 @@
 	if(with_bodyparts)
 		new /obj/effect/gibspawner/xeno(drop_location())
 	else
-		new /obj/effect/gibspawner/xenobodypartless(drop_location())
+		new /obj/effect/gibspawner/xeno/bodypartless(drop_location())
 
 /mob/living/carbon/alien/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-a")

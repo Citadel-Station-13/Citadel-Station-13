@@ -15,9 +15,8 @@
 	update_icon()
 	..()
 
-/obj/effect/decal/cleanable/blood/transfer_blood_dna()
-	..()
-	update_icon()
+/obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
+	return TRUE
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
 	. = ..()
@@ -30,6 +29,7 @@
 	name = "dried blood"
 	desc = "Looks like it's been here a while. Eew."
 	bloodiness = 0
+	color = "#3a0505"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -62,10 +62,6 @@
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
 	return TRUE
 
-/obj/effect/decal/cleanable/trail_holder/transfer_blood_dna()
-	..()
-	update_icon()
-
 /obj/effect/decal/cleanable/trail_holder/transfer_mob_blood_dna()
 	. = ..()
 	update_icon()
@@ -82,7 +78,8 @@
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if(gib_overlay)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
+		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", layer = -LOW_OBJ_LAYER)
+		gibz.color = null
 		add_overlay(gibz)
 	reagents.add_reagent("liquidgibs", 5)
 

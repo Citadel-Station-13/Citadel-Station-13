@@ -191,7 +191,7 @@
 		)
 
 	if(blood)
-		target_types += /obj/effect/decal/cleanable/blood/xenoblood
+		target_types += /obj/effect/decal/cleanable/xenoblood
 		target_types += /obj/effect/decal/cleanable/blood
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
