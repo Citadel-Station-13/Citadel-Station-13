@@ -47,6 +47,7 @@
 /datum/outfit/ert/commander/alert
 	name = "ERT Commander - High Alert"
 
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
@@ -81,6 +82,7 @@
 /datum/outfit/ert/security/alert
 	name = "ERT Security - High Alert"
 
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/sec
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
@@ -117,6 +119,7 @@
 /datum/outfit/ert/medic/alert
 	name = "ERT Medic - High Alert"
 
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/med
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
@@ -153,6 +156,7 @@
 /datum/outfit/ert/engineer/alert
 	name = "ERT Engineer - High Alert"
 
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/engi
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
