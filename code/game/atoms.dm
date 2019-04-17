@@ -321,7 +321,7 @@
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != "blood")
 		return
-	return list("ANIMAL DNA" = "Y-")
+	return list("blood_DNA"= "ANIMAL", "blood_type"="Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	if(get_blood_id() != "blood")
