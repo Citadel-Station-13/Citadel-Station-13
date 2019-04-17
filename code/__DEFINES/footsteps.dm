@@ -7,6 +7,14 @@
 #define FOOTSTEP_WATER "water"
 #define FOOTSTEP_LAVA "lava"
 
+#define FOOTPRINT_SHOE	"shoe"
+#define FOOTPRINT_PAW	"paw"
+#define FOOTPRINT_CLAW	"claw"
+#define FOOTPRINT_WHEEL	"wheels"
+#define FOOTPRINT_TRAIL	"trails_"
+#define FOOTPRINT_SNAKE	"snake"
+#define FOOTPRINT_DRAG	"drag"
+
 /*
 
 id = list(

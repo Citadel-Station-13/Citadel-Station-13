@@ -680,6 +680,8 @@
 	px_y = 12
 	stam_heal_tick = 2
 	max_stamina_damage = 50
+	var/blood_state = BLOOD_STATE_NOT_BLOODY
+	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
 	..()
@@ -727,6 +729,8 @@
 	px_y = 12
 	max_stamina_damage = 50
 	stam_heal_tick = 2
+	var/blood_state = BLOOD_STATE_NOT_BLOODY
+	var/list/bloody_legs = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
 	..()

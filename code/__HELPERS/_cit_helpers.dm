@@ -92,6 +92,26 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		"Purple"	= "#e300ff"//purple
 		))
 
+GLOBAL_LIST_INIT(noodle_taurs, list(
+		"Naga",
+		"Tentacle"
+		))
+
+GLOBAL_LIST_INIT(paw_taurs, list(
+		"Fox",
+		"Wolf",
+		"Otie",
+		"Drake",
+		"Lab",
+		"Shepherd",
+		"Husky",
+		"Eevee",
+		"Panther",
+		"Horse",
+		"Cow",
+		"Tiger"
+		))
+
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 

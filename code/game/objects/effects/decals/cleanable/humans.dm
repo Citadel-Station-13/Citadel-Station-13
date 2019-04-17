@@ -39,11 +39,6 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
-/obj/effect/decal/cleanable/blood/tracks
-	icon_state = "tracks"
-	desc = "They look like tracks left by wheels."
-	random_icon_states = null
-
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
 	name = "blood"
 	icon_state = "ltrails_1"
@@ -150,19 +145,18 @@
 
 
 //BLOODY FOOTPRINTS
-/obj/effect/decal/cleanable/blood/footprints
-	name = "footprints"
-	icon = 'icons/effects/footprints.dmi'
+/obj/effect/decal/cleanable/blood/tracks
+	name = "tracks"
+	icon = 'icons/effects/fluidtracks.dmi'
 	icon_state = "nothingwhatsoever"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
-	var/foot_state
-	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
+	var/print_state = FOOTPRINT_SHOE //the icon state to load images from
 	var/list/shoe_types = list()
 
-/obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
+/obj/effect/decal/cleanable/blood/tracks/Crossed(atom/movable/O)
 	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
@@ -174,7 +168,7 @@
 				entered_dirs |= H.dir
 				update_icon()
 
-/obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
+/obj/effect/decal/cleanable/blood/tracks/Uncrossed(atom/movable/O)
 	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
@@ -187,24 +181,24 @@
 				update_icon()
 
 
-/obj/effect/decal/cleanable/blood/footprints/update_icon()
+/obj/effect/decal/cleanable/blood/tracks/update_icon()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
 
-/obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
+/obj/effect/decal/cleanable/blood/tracks/examine(mob/user)
 	. = ..()
 	if(shoe_types.len)
 		. += "You recognise the footprints as belonging to:\n"
@@ -214,14 +208,51 @@
 
 	to_chat(user, .)
 
-/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
+/obj/effect/decal/cleanable/blood/tracks/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
 		return
 	if(color != C.color)
 		return
 	..()
 
-/obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
+/obj/effect/decal/cleanable/blood/tracks/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
+
+/obj/effect/decal/cleanable/blood/tracks/footprints
+	name = "footprints"
+	desc = "They look like tracks left by footwear."
+	icon_state = FOOTPRINT_SHOE
+	print_state = FOOTPRINT_SHOE
+
+/obj/effect/decal/cleanable/blood/tracks/snake
+	name = "tracks"
+	desc = "They look like tracks left by a giant snake."
+	icon_state = FOOTPRINT_SNAKE
+	print_state = FOOTPRINT_SNAKE
+
+/obj/effect/decal/cleanable/blood/tracks/paw
+	name = "tracks"
+	desc = "They look like tracks left by mammalian paws."
+	icon_state = FOOTPRINT_PAW
+	print_state = FOOTPRINT_PAW
+
+/obj/effect/decal/cleanable/blood/tracks/claw
+	name = "tracks"
+	desc = "They look like tracks left by reptilian claws."
+	icon_state = FOOTPRINT_CLAW
+	print_state = FOOTPRINT_CLAW
+
+/obj/effect/decal/cleanable/blood/tracks/wheels
+	name = "tracks"
+	desc = "They look like tracks left by wheels."
+	gender = PLURAL
+	icon_state = FOOTPRINT_WHEEL
+	print_state = FOOTPRINT_WHEEL
+
+/obj/effect/decal/cleanable/blood/tracks/body
+	name = "trails"
+	desc = "A trail left by something being dragged."
+	icon_state = FOOTPRINT_DRAG
+	print_state = FOOTPRINT_DRAG

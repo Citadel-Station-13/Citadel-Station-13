@@ -62,7 +62,7 @@
 					//No oldFP or they're all a different kind of blood
 					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state] - BLOOD_LOSS_PER_STEP)
 					if (S.bloody_shoes[S.blood_state] > BLOOD_LOSS_IN_SPREAD)
-						var/obj/effect/decal/cleanable/blood/tracks/FP = new /obj/effect/decal/cleanable/blood/tracks(T)
+						var/obj/effect/decal/cleanable/blood/tracks/FP = new /obj/effect/decal/cleanable/blood/tracks/footprints(T)
 						FP.blood_state = S.blood_state
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
@@ -72,6 +72,69 @@
 					update_inv_shoes()
 				//End bloody footprints
 				S.step_action()
+	else
+		if(!buckled)
+
+			if(!lying)
+				if(loc == NewLoc)
+					if(!has_gravity(loc))
+						return
+					var/turf/T = get_turf(src)
+					if(blood_smear && blood_smear[blood_state])
+						for(var/obj/effect/decal/cleanable/blood/tracks/oldFP in T)
+							if (oldFP.blood_state == blood_state)
+								return
+						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
+						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
+							var/obj/effect/decal/cleanable/blood/tracks/FP = new /obj/effect/decal/cleanable/blood/tracks/footprints(T)
+							if(DIGITIGRADE in dna.species.species_traits)
+								if(dna.species.id == ("lizard" || "ashwalker" || "xeno"))
+									FP.icon_state = FOOTPRINT_CLAW
+									FP.print_state = FOOTPRINT_CLAW
+								else if(dna.species.id == "Mammal")
+									FP.icon_state = FOOTPRINT_PAW
+									FP.print_state = FOOTPRINT_PAW
+								else
+									FP.icon_state = FOOTPRINT_SHOE
+									FP.print_state = FOOTPRINT_SHOE
+							else if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None"))
+								if(dna.features["taur"] in GLOB.noodle_taurs)
+									FP.icon_state = FOOTPRINT_SNAKE
+									FP.print_state = FOOTPRINT_SNAKE
+								else if(dna.features["taur"] in GLOB.paw_taurs)
+									FP.icon_state = FOOTPRINT_PAW
+									FP.print_state = FOOTPRINT_PAW
+							else
+								FP.icon_state = FOOTPRINT_SHOE
+								FP.print_state = FOOTPRINT_SHOE
+							FP.blood_state = blood_state
+							FP.entered_dirs |= dir
+							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
+							FP.transfer_blood_dna(blood_DNA)
+							FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
+							FP.update_icon()
+
+			else //we're on the floor, smear some stuff around
+				if(loc == NewLoc)
+					if(!has_gravity(loc))
+						return
+					var/turf/T = get_turf(src)
+					if(blood_smear && blood_smear[blood_state])
+						for(var/obj/effect/decal/cleanable/blood/tracks/oldFP in T)
+							if (oldFP.blood_state == blood_state)
+								return
+						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
+						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
+							var/obj/effect/decal/cleanable/blood/tracks/FP = new /obj/effect/decal/cleanable/blood/tracks/footprints(T)
+							FP.icon_state = FOOTPRINT_DRAG
+							FP.print_state = FOOTPRINT_DRAG
+							FP.blood_state = blood_state
+							FP.entered_dirs |= dir
+							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
+							FP.transfer_blood_dna(blood_DNA)
+							FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
+							FP.update_icon()
+
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
