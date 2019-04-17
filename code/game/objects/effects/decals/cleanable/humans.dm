@@ -39,6 +39,11 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
+/obj/effect/decal/cleanable/blood/tracks
+	icon_state = "tracks"
+	desc = "They look like tracks left by wheels."
+	random_icon_states = null
+
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
 	name = "blood"
 	icon_state = "ltrails_1"
