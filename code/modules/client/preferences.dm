@@ -816,10 +816,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/donoritem
