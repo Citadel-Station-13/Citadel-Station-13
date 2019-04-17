@@ -324,18 +324,14 @@
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	for(var/bluhduh in GLOB.blood_types)
-		if(get_blood_id() != bluhduh) //are we a null for blood type?
-			var/list/dna_to_add
-			dna_to_add = list("Non-human DNA" = random_blood_type()) //generate a random bloodtype for it.
-			return dna_to_add
-
-		var/list/blood_dna = list()
-		if(dna)
-			blood_dna[dna.unique_enzymes] = dna.blood_type
-		else
-			blood_dna["UNKNOWN DNA"] = "X*"
-		return blood_dna
+	if(get_blood_id() != "blood")
+		return
+	var/list/blood_dna = list()
+	if(dna)
+		blood_dna[dna.unique_enzymes] = dna.blood_type
+	else
+		blood_dna["UNKNOWN DNA"] = "X*"
+	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
@@ -343,7 +339,7 @@
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
 	// Returns 0 if we have that blood already
-	var/list/new_blood_dna = L.get_blood_dna_list()
+	var/new_blood_dna = L.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
 	var/old_length = blood_DNA_length()
@@ -351,6 +347,15 @@
 	if(blood_DNA_length() == old_length)
 		return FALSE
 	return TRUE
+
+//to add blood dna info to the object's blood_DNA list
+/atom/proc/transfer_blood_dna(list/blood_dna)
+	if(!blood_DNA)
+		blood_DNA = list()
+	var/old_length = blood_DNA_length()
+	blood_DNA |= blood_dna
+	if(blood_DNA_length() > old_length)
+		return TRUE//some new blood DNA was added
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)

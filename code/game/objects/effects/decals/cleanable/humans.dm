@@ -98,7 +98,7 @@
 		sleep(2)
 		if(i > 0)
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new(loc)
-			splat.transfer_mob_blood_dna(blood_DNA)
+			splat.transfer_blood_dna(blood_DNA)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -158,16 +158,16 @@
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
+	var/foot_state
 	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			if(color != bloodtype_to_color(S.last_bloodtype))
-				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
@@ -175,20 +175,19 @@
 				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.bloody_shoes[blood_state])
-			if(color != bloodtype_to_color(S.last_bloodtype))//last entry - we check its color
-				return
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
 
+
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
-	..()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
@@ -203,8 +202,7 @@
 				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
-	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
-
+	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
 
 /obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
