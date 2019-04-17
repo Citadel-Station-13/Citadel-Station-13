@@ -753,12 +753,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(id)
 		remove_id()
-		if (!silent)
-			playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
+		playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 	else
 		remove_pen()
-		if (!silent)
-			playsound(src, 'sound/machines/button4.ogg', 50, 1)
+		playsound(src, 'sound/machines/button4.ogg', 50, 1)
 
 /obj/item/pda/CtrlClick()
 	..()
@@ -834,8 +832,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
-		if (!silent)
-			playsound(src, 'sound/machines/button.ogg', 15, 1)
+		playsound(src, 'sound/machines/button.ogg', 50, 1)
 	return TRUE
 
 // access to status display signals
@@ -847,8 +844,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		update_icon()
-		if (!silent)
-			playsound(src, 'sound/machines/button.ogg', 15, 1)
+		playsound(src, 'sound/machines/button.ogg', 50, 1)
 
 	else if(istype(C, /obj/item/card/id))
 		var/obj/item/card/id/idcard = C
@@ -890,8 +886,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
-			if (!silent)
-				playsound(src, 'sound/machines/button.ogg', 50, 1)
+			playsound(src, 'sound/machines/button.ogg', 50, 1)
 
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C
