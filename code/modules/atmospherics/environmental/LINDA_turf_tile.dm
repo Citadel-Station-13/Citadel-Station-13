@@ -231,6 +231,11 @@
 
 	atmos_cooldown = cached_atmos_cooldown
 
+/turf/open/space/process_cell(fire_count) //dumb hack to prevent space pollution
+	. = ..()
+	var/datum/gas_mixture/immutable/I = space_gas
+	I.after_process_cell()
+
 /turf/proc/process_cell_reaction()
 	SSair.remove_from_react_queue(src)
 

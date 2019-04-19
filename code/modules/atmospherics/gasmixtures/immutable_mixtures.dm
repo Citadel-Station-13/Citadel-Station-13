@@ -39,6 +39,10 @@
 	. = ..()
 	temperature = initial_temperature
 
+/datum/gas_mixture/immutable/proc/after_process_cell()
+	temperature = initial_temperature
+	temperature_archived = initial_temperature
+	gases.Cut()
 
 //used by space tiles
 /datum/gas_mixture/immutable/space
