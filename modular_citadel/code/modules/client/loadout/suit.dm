@@ -80,13 +80,6 @@
 	path = /obj/item/clothing/suit/flakjack
 	cost = 2
 
-//Polychromic
-/datum/gear/polychromiccloak
-	name = "Polychromic Cloak"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/neck/cloak/polychromic
-	cost = 4
-
 /datum/gear/trekds9_coat
 	name = "DS9 Overcoat (use uniform)"
 	category = SLOT_WEAR_SUIT
