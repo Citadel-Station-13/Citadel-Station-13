@@ -237,11 +237,11 @@ Contains:
 	icon_state = "hardsuit0-ert_commander-alert"
 	item_state = "hardsuit0-ert_commander-alert"
 	item_color = "ert_commander-alert"
-	armor = list("melee" = 75, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80)
-	strip_delay = 150
+	armor = list("melee" = 75, "bullet" = 60, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80)
+	strip_delay = 130
 	item_flags = NODROP
 	brightness_on = 8
-	resistance_flags = ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert/alert
 	name = "emergency response team suit"
@@ -250,10 +250,10 @@ Contains:
 	item_state = "ert_command-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 75, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80)
+	armor = list("melee" = 75, "bullet" = 60, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80)
 	slowdown = 0
-	strip_delay = 150
-	resistance_flags = ACID_PROOF
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
