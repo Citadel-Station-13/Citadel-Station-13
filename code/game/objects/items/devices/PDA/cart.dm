@@ -580,6 +580,7 @@ Code:
 			host_pda.mode = 441
 			if(!active2)
 				active1 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Security Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
@@ -588,19 +589,23 @@ Code:
 			host_pda.mode = 451
 			if(!active3)
 				active1 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Send Signal")
 			INVOKE_ASYNC(radio, /obj/item/integrated_signaler.proc/send_activation)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Signal Frequency")
 			var/new_frequency = sanitize_frequency(radio.frequency + text2num(href_list["sfreq"]))
 			radio.set_frequency(new_frequency)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Signal Code")
 			radio.code += text2num(href_list["scode"])
 			radio.code = round(radio.code)
 			radio.code = min(100, radio.code)
 			radio.code = max(1, radio.code)
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -616,16 +621,21 @@ Code:
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
 			host_pda.mode = 433
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Supply Orders")
 			host_pda.mode =47
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Newscaster Access")
 			host_pda.mode = 53
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Newscaster Message")
 			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
@@ -641,11 +651,13 @@ Code:
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 		if("Newscaster Switch Channel")
 			current_channel = host_pda.msg_input()
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])
@@ -656,10 +668,13 @@ Code:
 
 			if("botlist")
 				active_bot = null
+
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
 				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
+
 			else //Forward all other bot commands to the bot itself!
 				active_bot.bot_control(command= href_list["op"], user= usr)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
 
 	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
 

@@ -6,6 +6,9 @@
 	dna_cost = 1
 	loudness = 1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_resonant"
+	action_background_icon_state = "bg_ling"
 
 //A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
@@ -36,6 +39,9 @@
 	chemical_cost = 20
 	dna_cost = 1
 	loudness = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_dissonant"
+	action_background_icon_state = "bg_ling"
 
 //A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)

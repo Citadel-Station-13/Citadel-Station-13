@@ -202,7 +202,7 @@
 				state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
 			if(authenticated)
-				if(world.time > SSshuttle.auto_call) //Citadel Edit Removing auto_call caused recall.
+				if((world.realtime - SSshuttle.realtimeofstart) > SSshuttle.auto_call) //Citadel Edit Removing auto_call caused recall.
 					say("Warning: Emergency shuttle recalls have been blocked by Central Command due to ongoing crew transfer procedures.")
 				else
 					SSshuttle.cancelEvac(usr)

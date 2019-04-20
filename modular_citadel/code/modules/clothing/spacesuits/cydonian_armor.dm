@@ -86,6 +86,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	actions_types = list(/datum/action/item_action/toggle_helmet)
 	var/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/linkedhelm
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	var/energy_color = "#35FFF0"
 
@@ -101,7 +102,14 @@
 	update_icon()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/suit_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/suit_overlay
+
+	if(taurmode == SNEK_TAURIC)
+		suit_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	else if(taurmode == PAW_TAURIC)
+		suit_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	else
+		suit_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
 
 	if(energy_color)
 		suit_overlay.color = energy_color
@@ -122,7 +130,14 @@
 	emissivelightsoff()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/proc/emissivelights(mob/user = usr)
-	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/energy_overlay
+	if(taurmode == SNEK_TAURIC)
+		energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	else if(taurmode == PAW_TAURIC)
+		energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	else
+		energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+
 	energy_overlay.color = energy_color
 	energy_overlay.plane = LIGHTING_PLANE + 1
 	user.cut_overlay(energy_overlay)	//honk

@@ -20,10 +20,12 @@
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user, is_respec)
+	action.Grant(user)
 	if(!is_respec)
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, name)
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
+	action.Remove(user)
 	return
 
 /obj/effect/proc_holder/changeling/Click()

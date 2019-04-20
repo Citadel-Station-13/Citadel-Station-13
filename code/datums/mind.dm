@@ -752,6 +752,11 @@
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		S.action.Grant(new_character)
+	var/datum/antagonist/changeling/changeling = new_character.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(changeling &&(ishuman(new_character) || ismonkey(new_character)))
+		for(var/P in changeling.purchasedpowers)
+			var/obj/effect/proc_holder/changeling/I = P
+			I.action.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
 	for(var/X in spell_list)

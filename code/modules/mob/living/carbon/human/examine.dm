@@ -341,8 +341,13 @@
 	else if(isobserver(user) && traitstring)
 		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
 
-	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
-		msg += "[print_flavor_text()]\n"
+	if(print_flavor_text())
+		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+			msg += "...?<br>"
+		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
+			msg += "...?<br>"
+		else
+			msg += "[print_flavor_text()]\n"
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

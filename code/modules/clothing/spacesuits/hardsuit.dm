@@ -443,6 +443,7 @@
 	icon_state = "hardsuit0-medical"
 	item_state = "medical_helm"
 	item_color = "medical"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	flash_protect = 0
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	scan_reagents = 1
@@ -712,7 +713,10 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
 	. = list()
 	if(!isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_state, MOB_LAYER + 0.01)
+		if(taurmode >= SNEK_TAURIC)
+			. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', shield_state, MOB_LAYER + 0.01)
+		else
+			. += mutable_appearance('icons/effects/effects.dmi', shield_state, MOB_LAYER + 0.01)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

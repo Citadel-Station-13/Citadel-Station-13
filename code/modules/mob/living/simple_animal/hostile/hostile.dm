@@ -100,7 +100,7 @@
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
 		return
 	var/target_dir = get_dir(src,target)
-	
+
 	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
 	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
 	var/chosen_dir = 0
@@ -202,6 +202,8 @@
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
+	if(isbelly(the_target.loc)) //Target's inside a gut, forget about it too
+		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
@@ -301,7 +303,7 @@
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				MeleeAction()
-			else 
+			else
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
@@ -343,7 +345,16 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	in_melee = TRUE
-	return target.attack_animal(src)
+	if(vore_active)
+		if(isliving(target))
+			var/mob/living/L = target
+			if(L.Adjacent(src) && L.devourable) // aggressive check to ensure vore attacks can be made
+				if(prob(voracious_chance))
+					vore_attack(src,L,src)
+				else
+					return L.attack_animal(src)
+	else
+		return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range

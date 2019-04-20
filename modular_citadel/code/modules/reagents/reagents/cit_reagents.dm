@@ -36,11 +36,10 @@
 /obj/effect/decal/cleanable/semen/New()
 	..()
 	dir = pick(1,2,4,8)
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
-/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
-	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/semen(T)
-		reagentdecal.reagents.add_reagent("semen", reac_volume)
+/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
+	S.add_blood_DNA(return_blood_DNA())
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"

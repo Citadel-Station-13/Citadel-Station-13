@@ -36,7 +36,7 @@
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in list("Fox",  "Wolf",  "Otie",  "Drake",  "Lab",  "Shepherd",  "Husky",  "Eevee",  "Panther",  "Tajaran",  "Horse",  "Cow"))
+			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger"))
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
@@ -61,7 +61,10 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		IF_HAS_BLOOD_DNA(src)
-			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+			if(taurmode >= SNEK_TAURIC)
+				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood")
+			else
+				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform

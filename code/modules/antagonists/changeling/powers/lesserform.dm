@@ -5,6 +5,9 @@
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_lesser"
+	action_background_icon_state = "bg_ling"
 
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)

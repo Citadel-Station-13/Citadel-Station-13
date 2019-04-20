@@ -34,6 +34,10 @@
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, "<span class='notice'>[src] cannot sustain any more forcefields!</span>")
 		return
+	var/obj/structure/projected_forcefield/same = locate() in T
+	if(same)
+		to_chat(user, "<span class='notice'>There is already a forcefield on [T]!</span>")
+		return
 
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 	user.visible_message("<span class='warning'>[user] projects a forcefield!</span>","<span class='notice'>You project a forcefield.</span>")
@@ -59,6 +63,8 @@
 
 /obj/item/forcefield_projector/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	for(var/i in current_fields)
+		qdel(i)
 	return ..()
 
 /obj/item/forcefield_projector/process()

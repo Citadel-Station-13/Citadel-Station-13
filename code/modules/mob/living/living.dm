@@ -170,6 +170,9 @@
 		var/mob/living/L = M
 		if(L.has_trait(TRAIT_PUSHIMMUNE))
 			return 1
+	//If they're a human, and they're not in help intent, block pushing
+	if(ishuman(M) && (M.a_intent != INTENT_HELP))
+		return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
@@ -309,7 +312,8 @@
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
-	set hidden = TRUE
+	set name = "Succumb"
+	set category = "IC"
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)

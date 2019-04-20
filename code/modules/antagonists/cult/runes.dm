@@ -112,7 +112,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/list/invokers = list() //people eligible to invoke the rune
 	if(user)
 		invokers += user
-	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
+	if(req_cultists > 1 || istype(src, /obj/effect/rune/narsie) || istype(src, /obj/effect/rune/convert))
 		var/list/things_in_range = range(1, src)
 		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
 		if(istype(plushsie) && plushsie.is_invoker)
@@ -185,6 +185,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
 	rune_in_use = FALSE
+	var/mob/living/currentconversionman
+	var/conversiontimeout
+	var/conversionresult
 
 /obj/effect/rune/convert/do_invoke_glow()
 	return
@@ -241,6 +244,25 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
 		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
+	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
+	and something evil takes root.</b></span>")
+	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to stop resisting the truth.</a> Or you could choose to continue resisting...</span>")
+	currentconversionman = convertee
+	conversiontimeout = world.time + (10 SECONDS)
+	convertee.Stun(100)
+	convertee.add_trait(TRAIT_MUTE, "conversionrune")
+	conversionresult = FALSE
+	while(world.time < conversiontimeout && convertee && !conversionresult)
+		stoplag(1)
+	currentconversionman = null
+	if(!convertee)
+		return FALSE
+	convertee.remove_trait(TRAIT_MUTE, "conversionrune")
+	if(get_turf(convertee) != get_turf(src))
+		return FALSE
+	if(!conversionresult)
+		do_sacrifice(convertee, invokers, TRUE)
+		return FALSE
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
 	if(brutedamage || burndamage)
@@ -252,8 +274,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.special_role = ROLE_CULTIST
-	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>")
 	to_chat(convertee, "<span class='cult italic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
 	</b></span>")
 	if(ishuman(convertee))
@@ -263,7 +283,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 	return 1
 
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, force_a_sac)
 	var/mob/living/first_invoker = invokers[1]
 	if(!first_invoker)
 		return FALSE
@@ -273,7 +293,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 
 	var/big_sac = FALSE
-	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if(!force_a_sac && (((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cult italic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -313,6 +333,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 			sacrificial.gib()
 	return TRUE
 
+/obj/effect/rune/convert/Topic(href, href_list)
+	if(href_list["signmeup"])
+		if(currentconversionman == usr)
+			conversionresult = TRUE
+		else
+			to_chat(usr, "<span class='cult italic'><b>Your fate has already been set in stone.</b></span>")
 
 
 /obj/effect/rune/empower
@@ -442,9 +468,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar'Sie upon the station.
 /obj/effect/rune/narsie
 	cultist_name = "Nar'Sie"
-	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
+	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers, minus one for every 3 sacrifices."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
-	req_cultists = 9
+	req_cultists = 1
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
@@ -471,6 +497,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!is_station_level(z))
 		return
 	var/mob/living/user = invokers[1]
+	if(invokers.len < 9 - (GLOB.sacrificed.len * 0.35))
+		to_chat(user, "<span class='danger'>You need at least [(9 - (GLOB.sacrificed.len * 0.35)) - invokers.len] more adjacent cultists to use this rune in such a manner.</span>")
+		fail_invoke()
+		return
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)

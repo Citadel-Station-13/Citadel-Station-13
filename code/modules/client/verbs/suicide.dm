@@ -198,11 +198,13 @@
 
 		death(0)
 
-/mob/living/proc/suicide_log()
-	log_game("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
+/mob/living/proc/suicide_log(ghosting)
+	log_game("[key_name(src)] [ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)] as [src.type].")
+	message_admins("[key_name(src)] [ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)].")
 
-/mob/living/carbon/human/suicide_log()
-	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
+/mob/living/carbon/human/suicide_log(ghosting)
+	log_game("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) [is_special_character(src) ? "(ANTAG!) " : ""][ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)].")
+	message_admins("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) [is_special_character(src) ? "(ANTAG!) " : ""][ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
 	switch(stat)

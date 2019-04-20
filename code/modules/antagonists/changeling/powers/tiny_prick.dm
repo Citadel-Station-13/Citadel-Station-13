@@ -70,6 +70,9 @@
 	dna_cost = 3
 	loudness = 1
 	var/datum/changelingprofile/selected_dna = null
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_transform"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
@@ -117,6 +120,9 @@
 	chemical_cost = 20
 	dna_cost = 1
 	loudness = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_fake"
+	action_background_icon_state = "bg_ling"
 
 /obj/item/melee/arm_blade/false
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
@@ -169,6 +175,9 @@
 	sting_icon = "sting_extract"
 	chemical_cost = 25
 	dna_cost = 0
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_extract"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
@@ -190,6 +199,9 @@
 	chemical_cost = 20
 	dna_cost = 2
 	loudness = 2
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_mute"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "mute sting")
@@ -204,6 +216,9 @@
 	chemical_cost = 25
 	dna_cost = 1
 	loudness = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_blind"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "blind sting")
@@ -220,6 +235,9 @@
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_lsd"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	log_combat(user, target, "stung", "LSD sting")
@@ -238,6 +256,9 @@
 	chemical_cost = 15
 	dna_cost = 2
 	loudness = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_sting_cryo"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "cryo sting")

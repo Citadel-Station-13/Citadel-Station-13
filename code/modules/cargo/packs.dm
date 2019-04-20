@@ -81,6 +81,21 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/radiatione_emergency
+	name = "Emergenc Radiation Protection Crate"
+	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a few pill bottles that are able to handles radiation and the affects of the poisoning."
+	cost = 2500
+	contains = list(/obj/item/clothing/head/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
 	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
@@ -512,6 +527,14 @@
 					/obj/item/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
 
+/datum/supply_pack/security/armory/dragnetgun
+	name = "DRAGnet gun Crate"
+	desc = "Contains two DRAGnet gun. A Dynamic Rapid-Apprehension of the Guilty net the revolution in law enforcement technology that YOU Want! Requires Armory access to open."
+	cost = 3500
+	contains = list(/obj/item/gun/energy/e_gun/dragnet,
+					/obj/item/gun/energy/e_gun/dragnet)
+	crate_name = "anti riot net guns crate"
+
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	desc = "Contains three Energy Guns, capable of firing both nonlethal and lethal blasts of light. Requires Armory access to open."
@@ -545,7 +568,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -558,6 +581,16 @@
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+
+/datum/supply_pack/security/armory/miniguns
+	name = "Personal Miniature Energy Guns"
+	desc = "Contains three miniature energy guns. Each gun has a disabler and a lethal option. Requires Armory access to open."
+	cost = 5000
+	contains = list(/obj/item/gun/energy/e_gun/mini,
+					/obj/item/gun/energy/e_gun/mini,
+					/obj/item/gun/energy/e_gun/mini)
+	crate_name = "personal energy guns crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -620,9 +653,16 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
+/datum/supply_pack/security/armory/swattasers //Lesser AEG tbh
+	name = "SWAT tatical tasers Crate"
+	desc = "Contains two tactical energy gun, these guns are able to tase, disable and lethal as well as hold a seclight. Requires Armory access to open."
+	cost = 8000
+	contains = list(/obj/item/gun/energy/e_gun/stun,
+					/obj/item/gun/energy/e_gun/stun)
+	crate_name = "swat taser crate"
 
 /datum/supply_pack/security/armory/wt550
-	name = "WT-550 Auto Rifle Crate"
+	name = "WT-550 Semi-Auto Rifle Crate"
 	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
 	cost = 3500
 	contains = list(/obj/item/gun/ballistic/automatic/wt550,
@@ -630,8 +670,8 @@
 	crate_name = "auto rifle crate"
 
 /datum/supply_pack/security/armory/wt550ammo
-	name = "WT-550 Auto Rifle Ammo Crate"
-	desc = "Contains four 20-round magazines for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	name = "WT-550 Semi-Auto SMG Ammo Crate"
+	desc = "Contains four 20-round magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = 2500
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
@@ -639,9 +679,9 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/wt550ammo_nonlethal // Takes around 11 shots to stun crit someone
-	name = "WT-550 Auto Rifle Non-Lethal Ammo Crate"
-	desc = "Contains four 20-round magazines for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+/datum/supply_pack/security/armory/wt550ammo_nonlethal // Takes around 12 shots to stun crit someone
+	name = "WT-550 Semi-Auto SMG Non-Lethal Ammo Crate"
+	desc = "Contains four 20-round magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = 1500
 	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
@@ -650,8 +690,8 @@
 	crate_name = "auto rifle ammo crate"
 
 /datum/supply_pack/security/armory/wt550ammo_special
-	name = "WT-550 Auto Rifle Special Ammo Crate"
-	desc = "Contains 2 20-round Armour Piercing and Incendiary magazines for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
+	name = "WT-550 Semi-Auto SMG Special Ammo Crate"
+	desc = "Contains 2 20-round Armour Piercing and Incendiary magazines for the WT-550 Semi-Auto SMG. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
 	cost = 4500
 	contains = list(/obj/item/ammo_box/magazine/wt550m9/wtap,
 					/obj/item/ammo_box/magazine/wt550m9/wtap,
@@ -1331,6 +1371,19 @@
 					/obj/item/storage/firstaid/o2,
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
+
+/datum/supply_pack/medical/advrad
+	name = "Radiation Treatment Crate Deluxe"
+	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pill bottle, as well as a radiation treatment deluxe pill bottle!"
+	cost = 3500
+	contains = list(/obj/item/storage/pill_bottle/antirad_plus,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
 
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"

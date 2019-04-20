@@ -38,6 +38,12 @@
 
 	dog_fashion = null
 
+/obj/item/clothing/head/caphat/beret
+	name = "captain's beret"
+	desc = "A beret fit for a leader."
+	icon_state = "capberet"
+
+	dog_fashion = null
 
 //Head of Personnel
 /obj/item/clothing/head/hopcap
@@ -46,6 +52,13 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	dog_fashion = /datum/dog_fashion/head/hop
+
+/obj/item/clothing/head/hopcap/beret
+	name = "head of personnel's beret"
+	desc = "The symbol of true bureaucratic micromanagement, although in a fancy form."
+	icon_state = "hopberet"
+
+	dog_fashion = null
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
@@ -139,7 +152,7 @@
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "beret_badge"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
 	dog_fashion = null
 
@@ -152,7 +165,7 @@
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
@@ -164,3 +177,27 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+//Chief Medical Officer
+/obj/item/clothing/head/beret/cmo
+	name = "chief medical officer's beret"
+	desc = "A fancy beret with a green cross, signifying your status in the station's medbay."
+	icon_state = "cmoberet"
+
+//Research Director
+/obj/item/clothing/head/beret/rd
+	name = "research director's beret"
+	desc = "A beret worn only by highly intelligent people."
+	icon_state = "rdberet"
+
+//Chief Engineer
+/obj/item/clothing/head/beret/ce
+	name = "chief engineer's beret"
+	desc = "A beret that will surely make you look way cooler than a hard hat, although lack of protection is the price."
+	icon_state = "ceberet"
+
+//Quartermaster
+/obj/item/clothing/head/beret/qm
+	name = "quartermaster's beret"
+	desc = "This headwear shows off your Cargonian leadership"
+	icon_state = "qmberet"
