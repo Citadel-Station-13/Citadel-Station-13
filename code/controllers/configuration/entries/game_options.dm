@@ -362,5 +362,5 @@
 /datum/config_entry/flag/disable_stambuffer
 
 /datum/config_entry/number/auto_transfer_delay
-	config_entry = 72000
+	config_entry_value = 72000
 	min_val = 0
