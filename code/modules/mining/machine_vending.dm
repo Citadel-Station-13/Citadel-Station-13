@@ -22,6 +22,7 @@
 		new /datum/data/mining_equipment("Alien Toy",					/obj/item/clothing/mask/facehugger/toy,								300),
 		new /datum/data/mining_equipment("Fulton Beacon",				/obj/item/fulton_core,												400),
 		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
+		new /datum/data/mining_equipment("Survival Knife",				/obj/item/kitchen/knife/combat/survival,							450),
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
 		new /datum/data/mining_equipment("Larger Ore Bag",				/obj/item/storage/bag/ore/large,									500),
@@ -33,6 +34,7 @@
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
 		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/twohanded/required/kinetic_crusher,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",			/obj/item/gun/energy/kinetic_accelerator,							750),
+		new /datum/data/mining_equipment("GPS implanter",				/obj/item/implanter/tracking/gps,									750),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									800),
 		new /datum/data/mining_equipment("Burn First-Aid Kit",			/obj/item/storage/firstaid/fire,									800),
 		new /datum/data/mining_equipment("First-Aid Kit",				/obj/item/storage/firstaid/regular,									800),
@@ -45,6 +47,7 @@
 		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining_conscript,				1000),
 		new /datum/data/mining_equipment("1000 Point Transfer Card",	/obj/item/card/mining_point_card/mp1000,							1000),
 		new /datum/data/mining_equipment("1500 Point Transfer Card",	/obj/item/card/mining_point_card/mp1500,							1500),
+		new /datum/data/mining_equipment("Spare Suit Voucher",			/obj/item/suit_voucher,												1500),
 		new /datum/data/mining_equipment("2000 Point Transfer Card",	/obj/item/card/mining_point_card/mp2000,							2000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",				/obj/item/tank/jetpack/suit,										2000),
 		new /datum/data/mining_equipment("Space Cash",					/obj/item/stack/spacecash/c1000,									2000),
@@ -67,9 +70,7 @@
 		new /datum/data/mining_equipment("KA Damage Increase",			/obj/item/borg/upgrade/modkit/damage,								1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease",		/obj/item/borg/upgrade/modkit/cooldown,								1000),
 		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000),
-		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
-		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining_cloned,					12000),
-		new /datum/data/mining_equipment("Spare Suit Voucher",			/obj/item/suit_voucher,												15000)
+		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000)
 
 		)
 
@@ -325,27 +326,6 @@
 	new /obj/item/card/mining_access_card(src)
 
 //CITADEL ADDITIONS BELOW
-
-/obj/item/storage/backpack/duffelbag/mining_cloned
-	name = "mining replacement kit"
-	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even as a new Id!"
-
-/obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
-	new /obj/item/pickaxe/mini(src)
-	new /obj/item/clothing/under/rank/miner/lavaland(src)
-	new /obj/item/clothing/shoes/workboots/mining(src)
-	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/implanter/tracking/gps(src)
-	new /obj/item/kitchen/knife/combat/survival(src)
-	new /obj/item/storage/firstaid/regular(src)
-	new /obj/item/reagent_containers/hypospray/medipen/survival(src)
-	new /obj/item/t_scanner/adv_mining_scanner(src)
-	new /obj/item/clothing/suit/hooded/explorer(src)
-	new /obj/item/encryptionkey/headset_cargo(src)
-	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/card/id/mining(src)
-	new /obj/item/storage/bag/ore(src)
-	new /obj/item/clothing/glasses/meson/prescription(src)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
 	var/items = list("Exo-suit", "SEVA suit")
