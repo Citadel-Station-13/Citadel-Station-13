@@ -88,6 +88,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
+	w_class = WEIGHT_CLASS_SMALL
 	caliber = "mags"
 	max_ammo = 15
 	multiple_sprites = 2
@@ -97,15 +98,17 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amags
+	w_class = WEIGHT_CLASS_SMALL
 
 //////the gun itself//////
 
 /obj/item/gun/ballistic/automatic/pistol/mag
 	name = "magpistol"
-	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
+	desc = "A large handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magpistol"
 	force = 10
+	w_class = WEIGHT_CLASS_NORMAL
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
@@ -242,6 +245,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
+	w_class = WEIGHT_CLASS_NORMAL
 	caliber = "magm"
 	max_ammo = 24
 	multiple_sprites = 2
@@ -251,6 +255,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
+	w_class = WEIGHT_CLASS_NORMAL
 	max_ammo = 24
 
 ///the gun itself///
@@ -262,6 +267,7 @@
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
+	w_class = WEIGHT_CLASS_BULKY
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
