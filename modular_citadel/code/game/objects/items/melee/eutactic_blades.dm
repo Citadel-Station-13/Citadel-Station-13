@@ -117,6 +117,11 @@
 	desc = "The Non-Eutactic Blade utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. This one seems to have a damaged handle and misaligned components, causing the blade to be unstable at best"
 	force_on = 15 //As strong a survival knife/bone dagger
 
+/obj/item/melee/transforming/energy/sword/cx/chaplain
+	name = "divine lightblade"
+	force_on = 20		//haha i'll regret this
+	block_chance = 50
+
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
 /obj/item/toy/sword/cx
