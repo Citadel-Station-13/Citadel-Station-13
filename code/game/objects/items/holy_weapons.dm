@@ -438,6 +438,7 @@
 		if(get_dist(src, L) < 14)
 			L.forceMove(get_turf(src))
 			L.visible_message("<span class='boldwarning'>[L] jaunts in with a shower of light!</span>")
+			L.put_in_hands(src)
 		else
 			visible_message("<span class='boldwarning'>[src] disappears with a crack!</span>")
 			forceMove(L.loc)
