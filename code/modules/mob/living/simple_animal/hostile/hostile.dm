@@ -345,15 +345,18 @@
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	in_melee = TRUE
-	if(isliving(target))
+	if(vore_active)
+		if(isliving(target))
 		var/mob/living/L = target
-		if(L.Adjacent(src) && vore_active && L.devourable) // aggressive check to ensure vore attacks can be made
-			if(prob(voracious_chance))
-				vore_attack(src,L,src)
+			if(L.Adjacent(src) && L.devourable) // aggressive check to ensure vore attacks can be made
+				if(prob(voracious_chance))
+					vore_attack(src,L,src)
+				else
+					return L.attack_animal(src)
 			else
-				return L.attack_animal(src)
+				return L.attack_animal(src) //literally every single fucking one of these need this I guess.
 		else
-			return L.attack_animal(src) //literally every single fucking one of these need this I guess.
+			return target.attack_animal(src)
 	else
 		return target.attack_animal(src)
 
