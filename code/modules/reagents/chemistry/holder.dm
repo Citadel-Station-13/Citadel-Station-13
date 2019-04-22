@@ -345,6 +345,10 @@
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
+	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
+	var/targetVol = 0
+	var/reactedVol = 0
+
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
 		var/list/possible_reactions = list() //init list
 		reaction_occurred = 0 // sets it back to 0?
@@ -368,8 +372,7 @@
 				var/meets_temp_requirement = 0
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
-				var/reactedVol = 0
-				va/continue_reacting = FALSE
+
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -452,10 +455,10 @@
 				reaction_occurred = 1
 
 				for(var/P in selected_reaction.results)
-					var/targetVol = cached_results[P]*multiplier
+					targetVol = cached_results[P]*multiplier
 
 				while (reactedVol < targetVol)
-					reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol cached_required_reagents, cached_results)
+					reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 
 
 				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
@@ -510,7 +513,7 @@
 	var/ammoReacted = 0
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
-	var/tempVol = totalVol
+	//var/tempVol = totalVol
 	//var/list/multiplier = INFINITY
 
 	message_admins("Loop beginning")
@@ -596,7 +599,7 @@
 		message_admins("cached_required_reagents(B): [cached_required_reagents[B]], reactedVol: [reactedVol], base stepChemAmmount [stepChemAmmount]")
 		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
-	for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
 		reactedVol = max(reactedVol, 1) //this shouldnt happen ...
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
 		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
