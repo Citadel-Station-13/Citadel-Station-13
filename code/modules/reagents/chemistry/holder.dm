@@ -53,8 +53,8 @@
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
-	//var/targetVol = 0
-	//var/reactedVol = 0
+	var/targetVol = 0
+	var/reactedVol = 0
 	var/fermiIsReacting = FALSE
 	var/fermiReactID = null
 
@@ -352,8 +352,8 @@
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
 
 	if(fermiIsReacting == TRUE)
-		if (reactedVol >= targetVol)
-			STOP_PROCESSING(SSprocessing, src)
+		if (reactedVol >= targetVol && targetVol != 0)
+			STOP_PROCESSING(SSfastprocess, src)
 			fermiIsReacting = FALSE
 			message_admins("FermiChem processing stopped")
 			reaction_occurred = 1
@@ -472,13 +472,12 @@
 				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
 					if (reactedVol < targetVol)
 						reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-						START_PROCESSING(SSprocessing, src)
+						START_PROCESSING(SSfastprocess, src)
 						message_admins("FermiChem processing started")
 						fermiIsReacting = TRUE
 					else
 						fermiIsReacting = FALSE
-						STOP_PROCESSING(SSprocessing, src)
-						message_admins("FermiChem processing stopped, 2nd catch, this shouldn't appear.")
+						STOP_PROCESSING(SSfastprocess, src)
 
 
 
