@@ -457,8 +457,9 @@
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
 
-				while (reactedVol < targetVol)
-					reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+					if (chem_temp > C.C.OptimalTempMin)//To prevent pointless reactions
+						while (reactedVol < targetVol)
+							reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 
 
 				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
