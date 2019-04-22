@@ -578,6 +578,7 @@
 	for(var/B in cached_required_reagents) //
 		tempVol = min(totalVol, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
+
 	message_admins("cached_results: [cached_results], totalVol: [totalVol], stepChemAmmount [stepChemAmmount]")
 	for(var/B in cached_required_reagents)
 		message_admins("cached_required_reagents(B): [cached_required_reagents[B]], totalVol: [totalVol], base stepChemAmmount [stepChemAmmount]")

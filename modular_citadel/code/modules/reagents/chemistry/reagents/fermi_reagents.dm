@@ -49,13 +49,13 @@
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	if (holder.has_reagent("eigenstate"))
-		do_sparks(5,FALSE,src)
+		do_sparks(5,FALSE,M)
 	else
 		location_return = get_turf(src)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		do_sparks(5,FALSE,src)
+		do_sparks(5,FALSE,M)
 		M.forceMove(location_created) //Teleports to creation location
-		do_sparks(5,FALSE,src)
+		do_sparks(5,FALSE,M)
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
@@ -66,16 +66,17 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
-	switch(current_cycle)
-		if(10)
-			to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to hurl.</span>")
-			M.Jitter(10)
+	. = ..()
+	//switch(current_cycle)
+	//	if(1)
+	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to hurl.</span>")
+	M.Jitter(10)
 
-		if(15 to INFINITY)
-			do_sparks(5,FALSE,src)
-			do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
-			do_sparks(5,FALSE,src)
-			M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
+	//if(3 to INFINITY)
+	do_sparks(5,FALSE,src)
+	do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
+	do_sparks(5,FALSE,src)
+	//M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
 	..()
 
 
@@ -132,7 +133,7 @@
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
 	M.Jitter(50)
 	M.AdjustKnockdown(0, 0)
-	to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your pervious self, sent to god knows what universe.</span>")
+	to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 	M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	..()
@@ -192,8 +193,8 @@
 
 //Breast englargement
 /datum/reagent/fermi/BElarger
-	name = "Eigenstasium"
-	id = "eigenstate"
+	name = "Sucubus Draft"
+	id = "BEenlager"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#60A584" // rgb: 96, 0, 255
 	overdose_threshold = 12
@@ -204,5 +205,5 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(M.gender == FEMALE)
-		M.gender = FEMALE
+		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
