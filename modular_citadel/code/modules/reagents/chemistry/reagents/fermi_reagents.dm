@@ -32,15 +32,22 @@
 	overdose_threshold = 20
 	addiction_threshold = 30
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	addiction_stage3_end = 40
-	addiction_stage4_end = 55 //Incase it's too long
+	addiction_stage2_end = 20
+	addiction_stage3_end = 22
+	addiction_stage4_end = 24 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
 	var/addictCyc3 = 1
 	var/mob/living/fermi_Tclone = null
+	var/teleBool = FALSE
 
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
+/datum/reagent/fermi/eigenstate/on_new()
+	. = ..() //Needed!
+	location_created = get_turf(src) //Sets up coordinate of where it was created
+	..()
+
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
@@ -48,7 +55,7 @@
 
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
-	if (holder.has_reagent("eigenstate"))
+	if (teleBool == TRUE)
 		do_sparks(5,FALSE,M)
 	else
 		location_return = get_turf(src)	//sets up return point
@@ -56,6 +63,7 @@
 		do_sparks(5,FALSE,M)
 		M.forceMove(location_created) //Teleports to creation location
 		do_sparks(5,FALSE,M)
+		teleBool = TRUE
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
@@ -63,6 +71,7 @@
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
 	M.forceMove(location_return) //Teleports home
 	do_sparks(5,FALSE,src)
+	teleBool = FALSE
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
@@ -95,8 +104,9 @@
 	M.AdjustKnockdown(-40, 0)
 	for(var/item in M.get_contents())
 		var/obj/item/I = item
+		M.dropItemToGround(I, TRUE)
 		do_teleport(I, get_turf(I), 5, no_effects=TRUE);
-	..()
+	//..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
 	M.Jitter(100)
@@ -119,6 +129,7 @@
 			//	C.updateappearance(mutcolor_update=1)
 
 			M.visible_message("[M] collapses in from an alternative reality!")
+			message_admins("Fermi T Clone: [fermi_Tclone]")
 		if(2)
 			do_teleport(fermi_Tclone, get_turf(fermi_Tclone), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		if(3)
@@ -136,7 +147,7 @@
 	to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 	M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
-	..()
+	//..()
 
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
 //	return

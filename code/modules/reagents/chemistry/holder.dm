@@ -53,6 +53,10 @@
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
+	//var/targetVol = 0
+	//var/reactedVol = 0
+	var/fermiIsReacting = FALSE
+	var/fermiReactID = null
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -346,8 +350,16 @@
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
-	var/targetVol = 0
-	var/reactedVol = 0
+
+	if(fermiIsReacting == TRUE)
+		if (reactedVol >= targetVol)
+			STOP_PROCESSING(SSprocessing, src)
+			fermiIsReacting = FALSE
+			message_admins("FermiChem processing stopped")
+			reaction_occurred = 1
+			return
+
+
 
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
 		var/list/possible_reactions = list() //init list
@@ -450,16 +462,24 @@
 			//if(selected_reaction)
 			var/datum/chemical_reaction/C = selected_reaction
 
-			if (C.FermiChem == TRUE && !continue_reacting == TRUE)
+			if (C.FermiChem == TRUE && !continue_reacting)
 				message_admins("FermiChem Proc'd")
 				reaction_occurred = 1
 
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
 
-					if (chem_temp > C.C.OptimalTempMin)//To prevent pointless reactions
-						while (reactedVol < targetVol)
-							reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
+					if (reactedVol < targetVol)
+						reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+						START_PROCESSING(SSprocessing, src)
+						message_admins("FermiChem processing started")
+						fermiIsReacting = TRUE
+					else
+						fermiIsReacting = FALSE
+						STOP_PROCESSING(SSprocessing, src)
+						message_admins("FermiChem processing stopped, 2nd catch, this shouldn't appear.")
+
 
 
 				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
@@ -506,12 +526,15 @@
 	update_total()//Don't know waht this does.
 	return 0//end!
 
+/datum/reagents/process()
+	handle_reactions()
+
 /datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
 	var/stepChemAmmount = 0
-	var/ammoReacted = 0
+	//var/ammoReacted = 0
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
 	//var/tempVol = totalVol
@@ -577,7 +600,7 @@
 		message_admins("target volume reached. Reaction should stop after this loop")
 
 	if (reactedVol > 0)
-		purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /((ammoReacted + stepChemAmmount)) //This should add the purity to the product
+		purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
 	else
 		purity = deltapH
 	message_admins("purity: [purity], purity of beaker")
@@ -608,7 +631,7 @@
 	reactedVol = reactedVol + stepChemAmmount
 
 
-	return (reactedVol)
+	return //(reactedVol)
 
 /datum/reagents/proc/FermiExplode()
 	return
