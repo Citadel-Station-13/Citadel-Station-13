@@ -53,7 +53,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -306,7 +305,6 @@
 ////////////Holosign Designs//////////////
 /////////////////////////////////////////
 
-
 /datum/design/holosign
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
@@ -484,7 +482,7 @@
 	desc = "A blue print of a early model of the Meteor defence turret."
 	id = "meteor_defence"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 150000, MAT_GLASS = 150000, MAT_SILVER = 7500, MAT_GOLD = 10000, MAT_TITANIUM = 35000) //Station goal
+	materials = list(MAT_METAL = 100000, MAT_GLASS = 100000, MAT_SILVER = 17500, MAT_GOLD = 15000, MAT_TITANIUM = 75000, MAT_URANIUM = 18000) //Station goal
 	build_path = /obj/machinery/satellite/meteor_shield/sci
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
