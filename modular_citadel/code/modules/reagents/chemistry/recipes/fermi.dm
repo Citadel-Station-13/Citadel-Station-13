@@ -81,7 +81,7 @@
 	OptimalpHMin = 6
 	OptimalpHMax = 8
 	ReactpHLim = 1
-	CatalystFact = 1
+	CatalystFact = 0 //To do 1
 	CurveSharpT = 4
 	CurveSharppH = 2
 	ThermicConstant = -2.5
