@@ -186,42 +186,85 @@
 	//Setup clone
 
 	message_admins("SGDF ingested")
-	var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-	if(LAZYLEN(candidates))
-		message_admins("Candidate found!")
-		//var/typepath = owner.type
-		//clone = new typepath(owner.loc)
-		var/typepath = M.type
-		var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
-		//var/mob/living/carbon/SM = owner
-		//var/mob/living/carbon/M = M
-		var/mob/living/carbon/SM = fermi_Gclone
-		if(istype(SM) && istype(M))
-			SM.real_name = M.real_name
-			M.dna.transfer_identity(SM)
-			SM.updateappearance(mutcolor_update=1)
+	switch(current_cycle)
+		if(1)
+			var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+		if(10 to INFINITY)
+			if(LAZYLEN(candidates))
+				message_admins("Candidate found!")
+				//var/typepath = owner.type
+				//clone = new typepath(owner.loc)
+				var/typepath = M.type
+				var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
+				//var/mob/living/carbon/SM = owner
+				//var/mob/living/carbon/M = M
+				var/mob/living/carbon/SM = fermi_Gclone
+				if(istype(SM) && istype(M))
+					SM.real_name = M.real_name
+					M.dna.transfer_identity(SM)
+					SM.updateappearance(mutcolor_update=1)
 
-		var/mob/dead/observer/C = pick(candidates)
-		SM.key = C.key
-		SM.mind.enslave_mind_to_creator(M)
-		//SM.sentience_act()
-		to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
-		to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
-		to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
-		M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
-		SM.copy_known_languages_from(M, FALSE)
-		//after_success(user, SM)
-		//qdel(src)
-	else
-		message_admins("Failed to find clone Candidate")
-		if(M.has_status_effect(/datum/status_effect/chem/SGDF)
+				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it.
+					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
+					ZI.Remove(M)
+					ZI.Insert(C)
 
-		else
-			switch(20)
-				if(1)
-			M.apply_status_effect(/datum/status_effect/chem/SGDF)
+				var/mob/dead/observer/C = pick(candidates)
+				SM.key = C.key
+				SM.mind.enslave_mind_to_creator(M)
+				//SM.sentience_act()
+				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
+				to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
+				to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
+				SM.copy_known_languages_from(M, FALSE)
+				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
+
+				//after_success(user, SM)
+				//qdel(src)
+
+			else
+				message_admins("Failed to find clone Candidate")
+				if(M.has_status_effect(/datum/status_effect/chem/SGDF))
+					to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
+					M.adjustCloneLoss(-0.5, 0)
+					M.adjustBruteLoss(-0.5, 0)
+					M.adjustFireLoss(-0.5, 0)
+					M.heal_bodypart_damage(1,1)
+					M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+				else
+					switch(current_cycle)
+						message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
+						if(10)
+							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+							M.nutrition = M.nutrition + (M.nutrition/30)
+						if(15)
+							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+							M.nutrition = M.nutrition + (M.nutrition/20)
+						if(20)
+							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
+							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+							M.nutrition = M.nutrition + (M.nutrition/10)
+						if(28)
+							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
+							M.nutrition = 200
+						if(30)
+							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
+							M.next_move_modifier = 1
+							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving your with a drained and hollow feeling inside.</span>")
+							M.apply_status_effect(/datum/status_effect/chem/SGDF)
+							M.reagents.del_reagent("SGDF")//removes SGDF on completion.
 
 	..()
+
+/datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //returns back to original location
+	if !(M.has_status_effect(/datum/status_effect/chem/SGDF) && M.next_move_modifier == 4)
+		to_chat(M, "<span class='notice'>You feel the cells begin to merge with your body, unable to reach nucleation, they instead merge with your body, healing any wounds.</span>")
+		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
+		M.adjustBruteLoss(-50, 0)
+		M.adjustFireLoss(-50, 0)
+		M.heal_bodypart_damage(1,1)
+		M.next_move_modifier = 1
 
 
 //Breast englargement

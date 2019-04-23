@@ -3,6 +3,7 @@
 	var/mob/living/carbon/human/fermi_Clone = null
 
 /datum/status_effect/chem/SGDF/on_apply(mob/living/carbon/M)
+	message_admins("SGDF status appied")
 	var/typepath = M.type
 	fermi_Clone = new typepath(M.loc)
 	//var/mob/living/carbon/M = owner
@@ -14,7 +15,9 @@
 	return ..()
 
 /datum/status_effect/chem/SGDF/tick(mob/living/M)
+	message_admins("SDGF ticking")
 	if(M.stat == DEAD)
+		message_admins("SGDF status swapping")
 		if(fermi_Clone && fermi_Clone.stat != DEAD)
 			if(M.mind)
 				M.mind.transfer_to(fermi_Clone)
