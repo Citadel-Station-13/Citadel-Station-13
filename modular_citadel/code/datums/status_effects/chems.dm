@@ -4,8 +4,8 @@
 
 /datum/status_effect/chem/SGDF/on_apply(mob/living/carbon/M)
 	message_admins("SGDF status appied")
-	var/typepath = M.type
-	fermi_Clone = new typepath(M.loc)
+	var/typepath
+	fermi_Clone = new typepath(get_turf(M.loc))
 	//var/mob/living/carbon/M = owner
 	//var/mob/living/carbon/C = fermi_Clone
 	if(istype(fermi_Clone) && istype(M))

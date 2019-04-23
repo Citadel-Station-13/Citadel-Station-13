@@ -35,8 +35,8 @@
 	addiction_threshold = 30
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
-	addiction_stage3_end = 40
-	addiction_stage4_end = 45 //Incase it's too long
+	addiction_stage3_end = 41
+	addiction_stage4_end = 43 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
 	var/addictCyc1 = 1
@@ -110,8 +110,9 @@
 			M.Jitter(50)
 			M.Knockdown(100)
 			M.Stun(40)
+
 	var/items = M.get_contents()
-  var/obj/item/I = pick(items)
+	var/obj/item/I = pick(items)
 	M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
@@ -136,6 +137,9 @@
 			message_admins("Fermi T Clone: [fermi_Tclone]")
 			do_teleport(C, get_turf(C), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5,FALSE,C)
+			C.emote("spin")
+			M.emote("spin")
+			C.visible_message("[C] [pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")] [pick(""Bugger me, whats all this then?"", "Hot damn, where is this?", "sacre bleu! Où suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta är sista gången jag dricker beepsky smash.")]")
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(3)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -145,19 +149,23 @@
 			M.visible_message("[M] is snapped across to a different alternative reality!")
 			src.addictCyc3 = 1 //counter
 			fermi_Tclone = null
-	message_admins("[src.addictCyc3]")
 	src.addictCyc3++
+	message_admins("[src.addictCyc3]")
 	do_teleport(M, get_turf(M), 2, no_effects=TRUE) //Teleports player randomly
+	do_sparks(5,FALSE,M)
 	..() //loop function
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
 	switch(src.addictCyc4)
 		if(1)
-			M.Sleeping(20, 0)
+			do_sparks(5,FALSE,M)
+			do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_sparks(5,FALSE,M)
+			M.Sleeping(50, 0)
 			M.Jitter(50)
 			M.Knockdown(0)
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
-			M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
+			M.emote("me",1,"flashes into reality suddenly, gasping as she gazes around in a bewildered and highly confused fashion!",TRUE)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -172,25 +180,29 @@
 //eigenstate END
 
 //Clone serum #chemClone
-/datum/reagent/fermi/SDGF
+/datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
 	name = "synthetic-derived growth factor"
 	id = "SDGF"
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a hostâ€™s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
 	color = "#60A584" // rgb: 96, 0, 255
+	var/playerClone = FALSE
+	var/unitCheck = FALSE
+	var/list/candidates
+
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
 
-/datum/reagent/fermi/SGDF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
+/datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 
-	message_admins("SGDF ingested")
+	message_admins("SDGF ingested")
 	switch(current_cycle)
-		if(1)
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+		if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
+			src.candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 		if(10 to INFINITY)
-			if(LAZYLEN(candidates))
+			if(LAZYLEN(src.candidates)) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
@@ -203,107 +215,124 @@
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
-
-				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it.
-					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
-					ZI.Remove(M)
-					ZI.Insert(C)
-
-				var/mob/dead/observer/C = pick(candidates)
+				var/mob/dead/observer/C = pick(src.candidates)
 				SM.key = C.key
 				SM.mind.enslave_mind_to_creator(M)
+
+				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it. Doesn't always work as well; needs a ghost.
+					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
+					ZI.Remove(M)
+					ZI.Insert(SM)
+
 				//SM.sentience_act()
 				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 				to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
 				to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_known_languages_from(M, FALSE)
+				src.playerClone =  TRUE
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 				//after_success(user, SM)
 				//qdel(src)
 
-			else
+			else //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
 				message_admins("Failed to find clone Candidate")
-				if(M.has_status_effect(/datum/status_effect/chem/SGDF))
+				src.unitCheck = TRUE
+				if(M.has_status_effect(/datum/status_effect/chem/SGDF)) // Heal the user if they went to all this trouble to make it and can't get a clone, the poor fellow.
 					to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
-					M.adjustCloneLoss(-0.5, 0)
-					M.adjustBruteLoss(-0.5, 0)
-					M.adjustFireLoss(-0.5, 0)
+					M.adjustCloneLoss(-2, 0)
+					M.adjustBruteLoss(-2, 0)
+					M.adjustFireLoss(-2, 0)
 					M.heal_bodypart_damage(1,1)
 					M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-				else
+				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
-						message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 						if(10)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
-							M.nutrition = M.nutrition + (M.nutrition/30)
-						if(15)
-							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
-							M.nutrition = M.nutrition + (M.nutrition/20)
-						if(20)
-							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
 							M.nutrition = M.nutrition + (M.nutrition/10)
-						if(28)
+						if(20)
+							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+							M.nutrition = M.nutrition + (M.nutrition/5)
+						if(40)
+							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
+							M.next_move_modifier = 2//If this makes you fast then please fix it, it should make you slow!!
+							M.nutrition = M.nutrition + (M.nutrition/2)
+						if(65)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
-							M.nutrition = 200
-						if(30)
+							M.nutrition = 2000
+						if(75)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 							M.reagents.del_reagent("SGDF")//removes SGDF on completion.
+					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 30")
 
-	..()
 
-/datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //returns back to original location
-	if !(M.has_status_effect(/datum/status_effect/chem/SGDF) && M.next_move_modifier == 4)
+	//..()
+
+/datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //When the chem is removed, a few things can happen.
+	if (playerClone == TRUE)//If the player made a clone with it, then thats all they get.
+		playerClone = FALSE
+		return
+	if (M.next_move_modifier == 4 && !M.has_status_effect(/datum/status_effect/chem/SGDF))//checks if they're ingested over 20u of the stuff, but fell short of the required 30u to make a clone.
 		to_chat(M, "<span class='notice'>You feel the cells begin to merge with your body, unable to reach nucleation, they instead merge with your body, healing any wounds.</span>")
 		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
-		M.adjustBruteLoss(-50, 0)
-		M.adjustFireLoss(-50, 0)
+		M.adjustBruteLoss(-25, 0)// Note that this takes a long time to apply and makes you fat and useless when it's in you, I don't think this small burst of healing will be useful considering how long it takes to get there.
+		M.adjustFireLoss(-25, 0)
+		M.blood_volume += 250
 		M.heal_bodypart_damage(1,1)
 		M.next_move_modifier = 1
+		if (M.nutrition < 1500)
+			M.nutrition += 250
+	else if (src.unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
+		src.unitCheck = FALSE
+		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system instead. you can fee</span>")
+		M.adjustBruteLoss(-10, 0)
+		M.adjustFireLoss(-10, 0)
+		M.blood_volume += 100
+		if (M.nutrition < 1500)
+			M.nutrition += 500
 
 /datum/reagent/fermi/SDZF
 	name = "synthetic-derived zombie factor"
-	id = "SDGF"
+	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
+	var/fermi_Zombie
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	message_admins("SGZF ingested")
 	switch(current_cycle)//Pretends to be normal
-		message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 		if(10)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
-			M.nutrition = M.nutrition + (M.nutrition/30)
-		if(15)
-			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
-			M.nutrition = M.nutrition + (M.nutrition/20)
-		if(20)
-			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
 			M.nutrition = M.nutrition + (M.nutrition/10)
-		if(28)
+		if(20)
+			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+			M.nutrition = M.nutrition + (M.nutrition/5)
+		if(40)
+			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
+			M.next_move_modifier = 2//If this makes you fast then please fix it, it should make you slow!!
+			M.nutrition = M.nutrition + (M.nutrition/2)
+		if(65)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
-			M.nutrition = 200
-			M.adjustToxLoss(10, 0)
-		if(30)
+			M.nutrition = 2000
+			M.adjustToxLoss(1, 0)
+		if(75)
 			message_admins("Zombie spawned at [M.loc]")
 			M.nutrition = 15//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 			M.next_move_modifier = 1
-			to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
-			/datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
+			to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 			M.visible_message("[M] suddenly shudders, and splits herself into a funky smelling copy of themselves!")
 			M.emote("scream")
 			M.adjustToxLoss(30, 0)
-			fermi_Zombie = new typepath(M.loc)
-			var/mob/living/simple_animal/hostile/zombie/ZI = fermi_Zombie
-			ZI.damage_coeff = list(BRUTE = ((1 / M.reagents.volume)**0.5) , BURN = ((1 / M.reagents.volume)**0.25), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+			//fermi_Zombie = new typepath(M.loc)
+			var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
+			ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			ZI.real_name = M.real_name//Give your offspring a big old kiss.
 			M.reagents.del_reagent("SGZF")//removes SGZF on completion.
+	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
 
 

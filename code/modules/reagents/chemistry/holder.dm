@@ -662,10 +662,6 @@
 		purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
 	else
 		purity = deltapH
-	message_admins("purity: [purity], purity of beaker")
-	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
-	//Apply pH changes and thermal output of reaction to beaker
-	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
 	// End.
 	/*
@@ -685,8 +681,13 @@
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
 		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
 
+	message_admins("purity: [purity], purity of beaker")
+	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
+	//Apply pH changes and thermal output of reaction to beaker
 	chem_temp += (C.ThermicConstant * stepChemAmmount)
 	pH += (C.HIonRelease * stepChemAmmount)
+	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
+
 
 	reactedVol = reactedVol + stepChemAmmount
 
