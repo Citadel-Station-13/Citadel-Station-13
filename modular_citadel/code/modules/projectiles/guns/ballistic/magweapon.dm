@@ -88,9 +88,8 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
-	w_class = WEIGHT_CLASS_SMALL
 	caliber = "mags"
-	max_ammo = 15
+	max_ammo = 10
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
@@ -98,7 +97,6 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amags
-	w_class = WEIGHT_CLASS_SMALL
 
 //////the gun itself//////
 
@@ -108,7 +106,6 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magpistol"
 	force = 10
-	w_class = WEIGHT_CLASS_NORMAL
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
@@ -143,7 +140,7 @@
 
 /datum/design/mag_magpistol
 	name = "Magpistol Magazine"
-	desc = "A 14 round magazine for the Magpistol."
+	desc = "A 10 round magazine for the Magpistol."
 	id = "mag_magpistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
@@ -153,7 +150,7 @@
 
 /datum/design/mag_magpistol/nl
 	name = "Magpistol Magazine (Non-Lethal)"
-	desc = "A 14 round non-lethal magazine for the Magpistol."
+	desc = "A 10 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
@@ -245,9 +242,8 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
-	w_class = WEIGHT_CLASS_NORMAL
 	caliber = "magm"
-	max_ammo = 24
+	max_ammo = 18
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
@@ -255,8 +251,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
-	w_class = WEIGHT_CLASS_NORMAL
-	max_ammo = 24
+	max_ammo = 18
 
 ///the gun itself///
 
@@ -295,7 +290,7 @@
 
 /datum/design/mag_magrifle
 	name = "Magrifle Magazine (Lethal)"
-	desc = "A 24-round magazine for the Magrifle."
+	desc = "A 18-round magazine for the Magrifle."
 	id = "mag_magrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
@@ -305,7 +300,7 @@
 
 /datum/design/mag_magrifle/nl
 	name = "Magrifle Magazine (Non-Lethal)"
-	desc = "A 24- round non-lethal magazine for the Magrifle."
+	desc = "A 18- round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
