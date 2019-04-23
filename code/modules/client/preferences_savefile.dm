@@ -236,6 +236,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	S["real_name"]			>> real_name
 	S["nameless"]			>> nameless
+	S["custom_species"]		>> custom_species
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
 	S["gender"]				>> gender
@@ -350,7 +351,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	gender = sanitize_gender(gender, TRUE, TRUE)
 	if(!real_name)
 		real_name = random_unique_name(gender)
-
+	custom_species = reject_bad_name(custom_species)
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
 		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
@@ -427,6 +428,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["nameless"]			, nameless)
+	WRITE_FILE(S["custom_species"]		, custom_species)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
 	WRITE_FILE(S["gender"]				, gender)
