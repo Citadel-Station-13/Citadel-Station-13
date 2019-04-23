@@ -130,9 +130,11 @@
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	switch(src.addictCyc3)
 		if(0)
+		if(1)
 			M.Jitter(100)
 			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
 		if(1)
+		if(2)
 			var/typepath = M.type
 			fermi_Tclone = new typepath(M.loc)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -200,18 +202,19 @@
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
 
+/datum/reagent/fermi/SDGF/New(mob/living/carbon/M)
+	candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	message_admins("Attempting to poll")
+
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 	switch(current_cycle)
-		if(0) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
-			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+		if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
+			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 			message_admins("Attempting to poll")
-		if(15)
-			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-			message_admins("Attempting to poll2")
 		if(10 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(src.candidates)]")
-			if(LAZYLEN(src.candidates) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
+			if(LAZYLEN(candidates) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
@@ -224,7 +227,7 @@
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
-				var/mob/dead/observer/C = pick(src.candidates)
+				var/mob/dead/observer/C = pick(candidates)
 				SM.key = C.key
 				SM.mind.enslave_mind_to_creator(M)
 
@@ -239,7 +242,7 @@
 				to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_known_languages_from(M, FALSE)
-				src.playerClone =  TRUE
+				playerClone =  TRUE
 
 				M.next_move_modifier = 1
 				M.nutrition = 150
@@ -271,6 +274,7 @@
 						if(40)
 							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+							candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(41 to 69)
 							M.nutrition = M.nutrition + (M.nutrition/2)
 						if(70)
@@ -283,7 +287,7 @@
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(77 to INFINITY)
-							holder.remove_reagent("SGDF", 5)//removes SGDF on completion.
+							holder.remove_reagent("SGDF", 1)//removes SGDF on completion.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
