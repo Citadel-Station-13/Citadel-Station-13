@@ -198,7 +198,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/reticence
-	cost = 120000 //Still a "Combat class" mech - Has cloking and lethal weaponds. Admin spawn for admin credits!
+	cost = 12000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
 	unit_name = "working reticence"
 	export_types = list(/obj/mecha/combat/reticence)
 	include_subtypes = FALSE
@@ -210,7 +210,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/mauler
-	cost = 120000 //Still a Combat class mech - CC lethal weaponds. Admin spawn for admin credits!
+	cost = 12000 //Still a Combat class mech - CC lethal weaponds.
 	unit_name = "working legally modified marauder"
 	export_types = list(/obj/mecha/combat/marauder/mauler)
 	include_subtypes = FALSE
