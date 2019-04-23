@@ -37,8 +37,8 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 40
 	addiction_stage4_end = 45 //Incase it's too long
-	//var/turf/open/location_created = null
-	var/turf/location_return = null
+	var/turf/open/location_created = null
+	var/turf/open/location_return = null
 	var/addictCyc1 = 1
 	var/addictCyc2 = 1
 	var/addictCyc3 = 1
@@ -46,36 +46,29 @@
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
 
-/mob/living/carbon
-	var/turf/location_spawn = null
-
-/mob/living/carbon/Initialize()
-	. = ..()
-	location_spawn = get_turf(src)
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
-/*/datum/reagent/fermi/eigenstate/on_new()
+/datum/reagent/fermi/eigenstate/on_new()
 	. = ..() //Needed!
-	//location_created = get_turf(src) //Sets up coordinate of where it was created
-	//message_admins("Attempting to get creation location from on_new() [location_created]")
+	location_created = get_turf(src) //Sets up coordinate of where it was created
+	message_admins("Attempting to get creation location from on_new() [location_created]")
 	//..()s
 
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	//if(holder && holder.my_atom)
-	//location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
-	//message_admins("Attempting to get creation location from New() [location_created]")
+	location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
+	message_admins("Attempting to get creation location from New() [location_created]")
 	//..()
-*/
+
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	switch(current_cycle)
 		if(1)
-			location_return = get_turf(M)	//sets up return point
+			location_return = get_turf(M.loc)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
-			//M.forceMove(location_created) //Teleports to creation location
-			M.forceMove(M.location_spawn)
+			M.forceMove(location_created) //Teleports to creation location
 			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -84,7 +77,7 @@
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,src)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	M.forceMove(location_return) //Teleports home
+	M.forceMove(location_return.loc) //Teleports home
 	do_sparks(5,FALSE,src)
 	..()
 
@@ -118,7 +111,7 @@
 			M.Knockdown(100)
 			M.Stun(40)
 	var/items = M.get_contents()
-	var/obj/item/I = pick(items)
+  var/obj/item/I = pick(items)
 	M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
@@ -192,10 +185,10 @@
 /datum/reagent/fermi/SGDF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 
-
+	message_admins("SGDF ingested")
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 	if(LAZYLEN(candidates))
-
+		message_admins("Candidate found!")
 		//var/typepath = owner.type
 		//clone = new typepath(owner.loc)
 		var/typepath = M.type
@@ -220,7 +213,12 @@
 		//after_success(user, SM)
 		//qdel(src)
 	else
-		if(20)
+		message_admins("Failed to find clone Candidate")
+		if(M.has_status_effect(/datum/status_effect/chem/SGDF)
+
+		else
+			switch(20)
+				if(1)
 			M.apply_status_effect(/datum/status_effect/chem/SGDF)
 
 	..()
