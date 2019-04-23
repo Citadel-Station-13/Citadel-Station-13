@@ -38,7 +38,7 @@
 	addiction_stage3_end = 40
 	addiction_stage4_end = 45 //Incase it's too long
 	//var/turf/open/location_created = null
-	var/turf/open/location_return = null
+	var/turf/location_return = null
 	var/addictCyc1 = 1
 	var/addictCyc2 = 1
 	var/addictCyc3 = 1
@@ -49,12 +49,12 @@
 /mob/living/carbon
 	var/turf/location_spawn = null
 
-/mob/living/carbon/New()
+/mob/living/carbon/Initialize()
 	. = ..()
 	location_spawn = get_turf(src)
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
-/datum/reagent/fermi/eigenstate/on_new()
+/*/datum/reagent/fermi/eigenstate/on_new()
 	. = ..() //Needed!
 	//location_created = get_turf(src) //Sets up coordinate of where it was created
 	//message_admins("Attempting to get creation location from on_new() [location_created]")
@@ -66,7 +66,7 @@
 	//location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
 	//message_admins("Attempting to get creation location from New() [location_created]")
 	//..()
-
+*/
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	switch(current_cycle)
@@ -84,7 +84,7 @@
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,src)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	M.forceMove(location_return.loc) //Teleports home
+	M.forceMove(location_return) //Teleports home
 	do_sparks(5,FALSE,src)
 	..()
 
