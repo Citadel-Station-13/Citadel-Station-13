@@ -543,11 +543,11 @@
 	var/list/cached_results = C.results//resultant chemical list
 
 
-	if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
+	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
 		if (reactedVol < targetVol)
 
 			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
-			message_admins("FermiChem tick activated started")
+			message_admins("FermiChem tick activated started, Reacted vol: [reactedVol] of [targetVol]")
 		else
 			STOP_PROCESSING(SSprocessing, src)
 			fermiIsReacting = FALSE
