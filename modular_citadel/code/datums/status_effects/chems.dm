@@ -2,10 +2,10 @@
 	id = "SGDF"
 	var/mob/living/carbon/human/fermi_Clone = null
 
-/datum/status_effect/chem/SGDF/on_apply(mob/living/carbon/M)
+/datum/status_effect/chem/SGDF/on_apply(mob/living/M)
 	message_admins("SGDF status appied")
 	var/typepath
-	fermi_Clone = new typepath(get_turf(M.loc))
+	fermi_Clone = new typepath(get_turf(M))
 	//var/mob/living/carbon/M = owner
 	//var/mob/living/carbon/C = fermi_Clone
 	if(istype(fermi_Clone) && istype(M))

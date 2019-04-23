@@ -31,8 +31,8 @@
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
 	taste_description = "."
 	color = "#60A584" // rgb: 96, 0, 255
-	overdose_threshold = 20
-	addiction_threshold = 30
+	overdose_threshold = 15
+	addiction_threshold = 20
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
@@ -57,12 +57,12 @@
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	//if(holder && holder.my_atom)
-	location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
+	location_created = get_turf(mob/living/M) //Sets up coordinate of where it was created
 	message_admins("Attempting to get creation location from New() [location_created]")
 	//..()
 
 
-/datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
+/datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
 		if(1)
 			location_return = get_turf(M)	//sets up return point
@@ -71,7 +71,7 @@
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			//M.forceMove(location_created) //Teleports to creation location
 			do_sparks(5,FALSE,M)
-	if(prob(20))
+	if(prob(20))s
 		do_sparks(5,FALSE,M)
 	message_admins("eigenstate state: [current_cycle]")
 	..()
@@ -142,7 +142,7 @@
 			C.emote("spin")
 			M.emote("spin")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta �r sista g�ngen jag dricker beepsky smash.")]\"")
+			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta �r sista g�ngen jag dricker beepsky smash.", "Now neither of us will be virgins!")]\"")
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(3)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -190,7 +190,7 @@
 	color = "#60A584" // rgb: 96, 0, 255
 	var/playerClone = FALSE
 	var/unitCheck = FALSE
-	var/list/candidates
+	var/list/candidates = list()
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
@@ -200,16 +200,18 @@
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 
-	message_admins("SDGF ingested")
+
 	switch(current_cycle)
 		if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
-			src.candidates = pollCandidatesForMob("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, M, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+			message_admins("Attempting to poll")
 		if(10 to INFINITY)
+			message_admins("Number of candidates [LAZYLEN(src.candidates)]")
 			if(LAZYLEN(src.candidates)) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
-				var/typepath = M.type
+				//var/typepath = M.type
 				var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
 				//var/mob/living/carbon/SM = owner
 				//var/mob/living/carbon/M = M
@@ -266,16 +268,17 @@
 							M.nutrition = M.nutrition + (M.nutrition/2)
 						if(70)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
-						if M.nutrition < 20000
-							M.nutrition = 20000
+							if (M.nutrition < 20000)
+								M.nutrition = 20000
 						if(76)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
-						if(71 to INFINITY)
+						if(77 to INFINITY)
 							M.reagents.remove_reagent("SGDF", 5)//removes SGDF on completion.
-					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 30")
+							message_admins("Purging SGDF [volume]")
+					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
 
 	..()
@@ -324,29 +327,32 @@
 		if(40)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
-		if(41 to 61)
+		if(41 to 63)
 			M.nutrition = M.nutrition + (M.nutrition/2)
-		if(62)
+		if(64)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
-			if M.nutrition < 20000
+			if (M.nutrition < 20000)
 				M.nutrition = 20000
-		if(63 to 75)
+		if(65 to 75)
 			M.adjustToxLoss(1, 0)// the warning!
-		if(76 && if (!holder.has_reagent("pen_acid")))//Counterplay is pent.
-			message_admins("Zombie spawned at [M.loc]")
-			M.nutrition -= 10000//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
-			M.next_move_modifier = 1
-			to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
-			M.visible_message("[M] suddenly shudders, and splits herself into a funky smelling copy of themselves!")
-			M.emote("scream")
-			M.adjustToxLoss(30, 0)
-			//fermi_Zombie = new typepath(M.loc)
-			var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
-			ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			ZI.real_name = M.real_name//Give your offspring a big old kiss.
-			M.reagents.remove_reagent("SGZF", 20)
+		if(76)
+			if (!holder.has_reagent("pen_acid"))//Counterplay is pent.)
+				message_admins("Zombie spawned at [M.loc]")
+				M.nutrition -= 18500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+				M.next_move_modifier = 1
+				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
+				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
+				M.emote("scream")
+				M.adjustToxLoss(30, 0)
+				//fermi_Zombie = new typepath(M.loc)
+				var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
+				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+				ZI.real_name = M.real_name//Give your offspring a big old kiss.
+				M.reagents.remove_reagent("SGZF", 50)
+			else
+				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
 		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
-			M.nutrition -= 1000
+			M.nutrition -= 100
 			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
 			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			S.real_name = "rotting tumour."
