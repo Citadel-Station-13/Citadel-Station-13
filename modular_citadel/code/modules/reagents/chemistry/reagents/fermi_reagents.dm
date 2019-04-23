@@ -178,8 +178,8 @@
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
 	color = "#60A584" // rgb: 96, 0, 255
 	//var/fClone_current_controller = OWNER
-	var/mob/living/split_personality/clone//there's two so they can swap without overwriting
-	var/mob/living/split_personality/owner
+	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
+	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
 
 /datum/reagent/fermi/SGDF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
@@ -251,7 +251,7 @@
 						if(30)
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
-							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving your with a drained and hollow feeling inside.</span>")
+							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 							M.reagents.del_reagent("SGDF")//removes SGDF on completion.
 
@@ -265,6 +265,46 @@
 		M.adjustFireLoss(-50, 0)
 		M.heal_bodypart_damage(1,1)
 		M.next_move_modifier = 1
+
+/datum/reagent/fermi/SDZF
+	name = "synthetic-derived zombie factor"
+	id = "SDGF"
+	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
+	color = "#60A584" // rgb: 96, 0, 255
+
+/datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
+	message_admins("SGZF ingested")
+	switch(current_cycle)//Pretends to be normal
+		message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
+		if(10)
+			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+			M.nutrition = M.nutrition + (M.nutrition/30)
+		if(15)
+			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+			M.nutrition = M.nutrition + (M.nutrition/20)
+		if(20)
+			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
+			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+			M.nutrition = M.nutrition + (M.nutrition/10)
+		if(28)
+			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
+			M.nutrition = 200
+			M.adjustToxLoss(10, 0)
+		if(30)
+			message_admins("Zombie spawned at [M.loc]")
+			M.nutrition = 15//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+			M.next_move_modifier = 1
+			to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
+			/datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
+			M.visible_message("[M] suddenly shudders, and splits herself into a funky smelling copy of themselves!")
+			M.emote("scream")
+			M.adjustToxLoss(30, 0)
+			fermi_Zombie = new typepath(M.loc)
+			var/mob/living/simple_animal/hostile/zombie/ZI = fermi_Zombie
+			ZI.damage_coeff = list(BRUTE = ((1 / M.reagents.volume)**0.5) , BURN = ((1 / M.reagents.volume)**0.25), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+			ZI.real_name = M.real_name//Give your offspring a big old kiss.
+			M.reagents.del_reagent("SGZF")//removes SGZF on completion.
+	..()
 
 
 //Breast englargement
