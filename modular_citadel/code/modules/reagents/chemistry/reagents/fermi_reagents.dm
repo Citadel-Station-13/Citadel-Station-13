@@ -13,7 +13,7 @@
 	taste_description = "If affection had a taste, this would be it."
 
 /datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
-	current_cycle++
+	//current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	return ..()
 
@@ -65,19 +65,21 @@
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	switch(current_cycle)
 		if(1)
-			location_return = get_turf(M.loc)	//sets up return point
+			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
-			M.forceMove(location_created) //Teleports to creation location
+			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+			//M.forceMove(location_created) //Teleports to creation location
 			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
+	message_admins("eigenstate state: [current_cycle]")
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,src)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	M.forceMove(location_return.loc) //Teleports home
+	do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 	do_sparks(5,FALSE,src)
 	..()
 
@@ -139,7 +141,8 @@
 			do_sparks(5,FALSE,C)
 			C.emote("spin")
 			M.emote("spin")
-			C.visible_message("[C] [pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")] [pick(""Bugger me, whats all this then?"", "Hot damn, where is this?", "sacre bleu! Où suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta är sista gången jag dricker beepsky smash.")]")
+			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
+			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! Oï¿½ suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta ï¿½r sista gï¿½ngen jag dricker beepsky smash.")]\"")
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(3)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -165,7 +168,7 @@
 			M.Jitter(50)
 			M.Knockdown(0)
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
-			M.emote("me",1,"flashes into reality suddenly, gasping as she gazes around in a bewildered and highly confused fashion!",TRUE)
+			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -250,27 +253,32 @@
 					switch(current_cycle)
 						if(10)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+						if(11 to 19)
 							M.nutrition = M.nutrition + (M.nutrition/10)
 						if(20)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+						if(21 to 39)
 							M.nutrition = M.nutrition + (M.nutrition/5)
 						if(40)
 							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier = 2//If this makes you fast then please fix it, it should make you slow!!
+							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+						if(41 to 69)
 							M.nutrition = M.nutrition + (M.nutrition/2)
-						if(65)
+						if(70)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
-							M.nutrition = 2000
-						if(75)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
+						if M.nutrition < 20000
+							M.nutrition = 20000
+						if(76)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
-							M.reagents.del_reagent("SGDF")//removes SGDF on completion.
+						if(71 to INFINITY)
+							M.reagents.remove_reagent("SGDF", 5)//removes SGDF on completion.
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 30")
 
 
-	//..()
+	..()
 
 /datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //When the chem is removed, a few things can happen.
 	if (playerClone == TRUE)//If the player made a clone with it, then thats all they get.
@@ -307,21 +315,26 @@
 	switch(current_cycle)//Pretends to be normal
 		if(10)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+		if(11 to 19)
 			M.nutrition = M.nutrition + (M.nutrition/10)
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
+		if(21 to 39)
 			M.nutrition = M.nutrition + (M.nutrition/5)
 		if(40)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-			M.next_move_modifier = 2//If this makes you fast then please fix it, it should make you slow!!
+			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+		if(41 to 61)
 			M.nutrition = M.nutrition + (M.nutrition/2)
-		if(65)
+		if(62)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
-			M.nutrition = 2000
-			M.adjustToxLoss(1, 0)
-		if(75)
+			if M.nutrition < 20000
+				M.nutrition = 20000
+		if(63 to 75)
+			M.adjustToxLoss(1, 0)// the warning!
+		if(76 && if (!holder.has_reagent("pen_acid")))//Counterplay is pent.
 			message_admins("Zombie spawned at [M.loc]")
-			M.nutrition = 15//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+			M.nutrition -= 10000//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 			M.next_move_modifier = 1
 			to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 			M.visible_message("[M] suddenly shudders, and splits herself into a funky smelling copy of themselves!")
@@ -331,7 +344,15 @@
 			var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
 			ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			ZI.real_name = M.real_name//Give your offspring a big old kiss.
-			M.reagents.del_reagent("SGZF")//removes SGZF on completion.
+			M.reagents.remove_reagent("SGZF", 20)
+		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
+			M.nutrition -= 1000
+			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
+			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+			S.real_name = "rotting tumour."
+			M.reagents.remove_reagent("SGZF", 50)
+			M.adjustToxLoss(10, 0)
+			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
 
