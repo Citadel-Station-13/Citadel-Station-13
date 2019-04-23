@@ -10,11 +10,12 @@
 /datum/reagent/fermi
 	name = "Fermi"
 	id = "fermi"
-	taste_description = "If a petpat had a taste, this would be it."
+	taste_description = "If affection had a taste, this would be it."
 
 /datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //fermi reagents stay longer if you have a better metabolism
+	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
+	return ..()
 
 /datum/reagent/fermi/overdose_start(mob/living/carbon/M)
 	current_cycle++
@@ -28,16 +29,20 @@
 	name = "Eigenstasium"
 	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
+	taste_description = "."
 	color = "#60A584" // rgb: 96, 0, 255
 	overdose_threshold = 20
 	addiction_threshold = 30
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	addiction_stage2_end = 20
-	addiction_stage3_end = 22
-	addiction_stage4_end = 24 //Incase it's too long
+	addiction_stage2_end = 30
+	addiction_stage3_end = 40
+	addiction_stage4_end = 45 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
+	var/addictCyc1 = 1
+	var/addictCyc2 = 1
 	var/addictCyc3 = 1
+	var/addictCyc4 = 1
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
 
@@ -46,24 +51,27 @@
 /datum/reagent/fermi/eigenstate/on_new()
 	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
-	..()
+	message_admins("Attempting to get creation location from on_new() [location_created]")
+	//..()s
 
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
-	location_created = get_turf(src) //Sets up coordinate of where it was created
-	..()
+	//if(holder && holder.my_atom)
+	location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
+	message_admins("Attempting to get creation location from New() [location_created]")
+	//..()
 
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
-	if (teleBool == TRUE)
+	switch(current_cycle)
+		if(1)
+			location_return = get_turf(M.loc)	//sets up return point
+			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
+			do_sparks(5,FALSE,M)
+			M.forceMove(location_created) //Teleports to creation location
+			do_sparks(5,FALSE,M)
+	if(prob(20))
 		do_sparks(5,FALSE,M)
-	else
-		location_return = get_turf(src)	//sets up return point
-		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		do_sparks(5,FALSE,M)
-		M.forceMove(location_created.loc) //Teleports to creation location
-		do_sparks(5,FALSE,M)
-		teleBool = TRUE
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
@@ -71,83 +79,88 @@
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
 	M.forceMove(location_return.loc) //Teleports home
 	do_sparks(5,FALSE,src)
-	teleBool = FALSE
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
 	. = ..()
-	//switch(current_cycle)
-	//	if(1)
-	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to hurl.</span>")
+	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
 	M.Jitter(10)
 
-	//if(3 to INFINITY)
+/datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly
 	do_sparks(5,FALSE,src)
-	do_teleport(src, get_turf(src), 50, asoundin = 'sound/effects/phasein.ogg')
+	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	//M.reagents.remove_reagent("eigenstate",1)//So you're not stuck for 10 minutes teleporting
-	..()
-
-
-	//..() //loop function
+	M.reagents.remove_reagent("eigenstate",0.5)//So you're not stuck for 10 minutes teleporting
+	..() //loop function
 
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
-	to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
-	M.Jitter(10)
-	M.nutrition = M.nutrition - (M.nutrition/10)
+	switch(src.addictCyc1)
+		if(1)
+			to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+			M.Jitter(10)
+	M.nutrition = M.nutrition - (M.nutrition/15)
+	src.addictCyc1++
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
-	M.Jitter(50)
-	M.AdjustKnockdown(-40, 0)
-	for(var/item in M.get_contents())
-		var/obj/item/I = item
-		M.dropItemToGround(I, TRUE)
-		do_teleport(I, get_turf(I), 5, no_effects=TRUE);
-	//..()
+	switch(src.addictCyc2)
+		if(1)
+			to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
+			M.Jitter(50)
+			M.Knockdown(100)
+			M.Stun(40)
+	var/items = M.get_contents()
+  var/obj/item/I = pick(items)
+	M.dropItemToGround(I, TRUE)
+	do_sparks(5,FALSE,I)
+	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
+	do_sparks(5,FALSE,I)
+	src.addictCyc2++
+	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
-	M.Jitter(100)
-	M.AdjustKnockdown(-40, 0)
-	to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
 
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	switch(src.addictCyc3)
 		if(1)
+			M.Jitter(100)
+			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
+		if(2)
 			var/typepath = M.type
 			fermi_Tclone = new typepath(M.loc)
-			//var/mob/living/carbon/O = M
-			//var/mob/living/carbon/C = fermi_Tclone
+			var/mob/living/carbon/C = fermi_Tclone
 			fermi_Tclone.appearance = M.appearance
-
-			//Incase Kevin breaks my code:
-			//if(istype(C) && istype(O))
-			//	C.real_name = O.real_name
-			//	O.dna.transfer_identity(C)
-			//	C.updateappearance(mutcolor_update=1)
-
+			C.real_name = M.real_name
 			M.visible_message("[M] collapses in from an alternative reality!")
 			message_admins("Fermi T Clone: [fermi_Tclone]")
-		if(2)
-			do_teleport(fermi_Tclone, get_turf(fermi_Tclone), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_teleport(C, get_turf(C), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_sparks(5,FALSE,C)
+			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(3)
-			qdel(fermi_Tclone) //Deletes CLONE, or at least I hope it is.
+			var/mob/living/carbon/C = fermi_Tclone
+			do_sparks(5,FALSE,C)
+			qdel(C) //Deletes CLONE, or at least I hope it is.
+			message_admins("Fermi T Clone: [fermi_Tclone] deletion attempt")
 			M.visible_message("[M] is snapped across to a different alternative reality!")
 			src.addictCyc3 = 1 //counter
 			fermi_Tclone = null
-
-	do_teleport(src, get_turf(src), 3, no_effects=TRUE) //Teleports player randomly
+	message_admins("[src.addictCyc3]")
+	src.addictCyc3++
+	do_teleport(M, get_turf(M), 3, no_effects=TRUE) //Teleports player randomly
 	..() //loop function
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
-	M.Jitter(50)
-	M.AdjustKnockdown(0, 0)
-	to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
-	M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
-	//..()
+	switch(src.addictCyc4)
+		if(1)
+			M.Jitter(50)
+			M.Knockdown(0)
+			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
+			M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
+	src.addictCyc4++
+	..()
+	. = 1
 
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
 //	return

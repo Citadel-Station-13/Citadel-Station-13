@@ -5,6 +5,7 @@
 	id = "eigenstate"
 	results = list("eigenstate" = 1)
 	required_reagents = list("bluespace" = 1, "stable_plasma" = 1, "sugar" = 1)
+	mix_message = "zaps brightly into existance, diffusing the energy from the localised gravity well as light"
 	//FermiChem vars:
 	OptimalTempMin = 350 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax = 500 // Upper end for above
