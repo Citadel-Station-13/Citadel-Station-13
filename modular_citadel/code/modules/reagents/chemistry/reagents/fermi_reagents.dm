@@ -386,3 +386,23 @@
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+
+//Nanite removal
+/datum/reagent/fermi/naninte_b_gone
+	name = "Naninte bain"
+	id = "naninte_b_gone"
+	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
+	color = "#5a7267" // rgb: 90, 114, 103
+	overdose_threshold = 25
+
+/datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
+	if(C./datum/component/nanites)
+		regen_rate = -5.0
+	else
+		retrun
+
+/datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
+	if(C./datum/component/nanites)
+		regen_rate = -7.5
+	else
+		retrun
