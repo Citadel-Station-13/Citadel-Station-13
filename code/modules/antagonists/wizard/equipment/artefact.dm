@@ -378,8 +378,6 @@
 	return FALSE
 
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
-	user.invisibility = initial(user.invisibility)
-	user.status_flags &= ~GODMODE
 	user.canmove = TRUE
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
@@ -394,8 +392,6 @@
 	sleep(20)
 	if(interrupted(user))
 		return
-	user.invisibility = INVISIBILITY_MAXIMUM
-	user.status_flags |= GODMODE
 	sleep(20)
 	if(interrupted(user))
 		end_effect(user)
