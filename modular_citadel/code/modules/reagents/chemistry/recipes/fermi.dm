@@ -45,7 +45,7 @@
 	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
-	ImpureChem = "toxin" //What chemical is produced with an inpure reaction
+	ImpureChem = "SDZF" //What chemical is produced with an inpure reaction
 
 
 /datum/chemical_reaction/BElarger
