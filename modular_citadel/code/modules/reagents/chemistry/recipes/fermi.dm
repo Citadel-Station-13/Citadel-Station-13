@@ -66,3 +66,27 @@
 	HIonRelease = 0.01 //pH change per 1u reaction
 	RateUpLim = 50 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE
+
+//Nano-b-gone
+/datum/chemical_reaction/naninte_b_gone
+	name = "Naninte bain"
+	id = "naninte_b_gone"
+	results = list("naninte_b_gone" = 5)
+	required_reagents = list("synthflesh" = 5, "blood" = 3, "sugar" = 1, "salglu_solution" = 3)
+	mix_message = "the blood and sugar mixes catalysting a hard coating around the synth flesh"
+	//FermiChem vars:
+	OptimalTempMin = 450
+	OptimalTempMax = 600
+	ExplodeTemp = 700
+	OptimalpHMin = 6
+	OptimalpHMax = 8
+	ReactpHLim = 1
+	CatalystFact = 0 //To do 1
+	CurveSharpT = 4
+	CurveSharppH = 2
+	ThermicConstant = -2.5
+	HIonRelease = 0.01
+	RateUpLim = 5
+	FermiChem = TRUE
+	FermiExplode = FALSE
+	ImpureChem = "carpotoxin"
