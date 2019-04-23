@@ -134,7 +134,7 @@
 			C.real_name = M.real_name
 			M.visible_message("[M] collapses in from an alternative reality!")
 			message_admins("Fermi T Clone: [fermi_Tclone]")
-			do_teleport(C, get_turf(C), 3, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+			do_teleport(C, get_turf(C), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5,FALSE,C)
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(3)
@@ -147,18 +147,22 @@
 			fermi_Tclone = null
 	message_admins("[src.addictCyc3]")
 	src.addictCyc3++
-	do_teleport(M, get_turf(M), 3, no_effects=TRUE) //Teleports player randomly
+	do_teleport(M, get_turf(M), 2, no_effects=TRUE) //Teleports player randomly
 	..() //loop function
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
 	switch(src.addictCyc4)
 		if(1)
+			M.Sleeping(20, 0)
 			M.Jitter(50)
 			M.Knockdown(0)
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 			M.emote("me",1,"gasps and gazes around in a bewildered and highly confused fashion!",TRUE)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
+	if(prob(20))
+		do_sparks(5,FALSE,M)
 	src.addictCyc4++
+
 	..()
 	. = 1
 
