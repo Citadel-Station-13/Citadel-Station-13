@@ -61,7 +61,7 @@
 		location_return = get_turf(src)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		do_sparks(5,FALSE,M)
-		M.forceMove(location_created) //Teleports to creation location
+		M.forceMove(location_created.loc) //Teleports to creation location
 		do_sparks(5,FALSE,M)
 		teleBool = TRUE
 	..()
@@ -69,7 +69,7 @@
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
 	do_sparks(5,FALSE,src)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
-	M.forceMove(location_return) //Teleports home
+	M.forceMove(location_return.loc) //Teleports home
 	do_sparks(5,FALSE,src)
 	teleBool = FALSE
 	..()

@@ -342,9 +342,6 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
-	if(fermiIsReacting == TRUE)
-		//reagents_holder_flags |= REAGENT_NOREACT unsure if this is needed
-		return
 	var/list/cached_reagents = reagent_list //a list of the reagents?
 	var/list/cached_reactions = GLOB.chemical_reactions_list //a list of the whole reactions?
 	var/datum/cached_my_atom = my_atom //It says my atom, but I didn't bring one with me!!
@@ -354,17 +351,14 @@
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
 
-	//if(fermiIsReacting == TRUE)
-	/*	if (reactedVol >= targetVol && targetVol != 0)
-			STOP_PROCESSING(SSprocessing, src)
+	if(fermiIsReacting == TRUE)
+		if (reactedVol >= targetVol && targetVol != 0)
+			STOP_PROCESSING(SSfastprocess, src)
 			fermiIsReacting = FALSE
-			message_admins("FermiChem processing stopped in reaction handler")
+			message_admins("FermiChem processing stopped")
 			reaction_occurred = 1
 			return
-		else
-			message_admins("FermiChem processing passed in reaction handler")
-			return
-	*/
+
 
 
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
@@ -474,21 +468,17 @@
 
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
-					message_admins("FermiChem target volume: [targetVol]")
 
 				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
 					if (reactedVol < targetVol)
-						if (fermiIsReacting == TRUE)
-							return
-						else
-							//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-							START_PROCESSING(SSprocessing, src)
-							message_admins("FermiChem processing started")
-							fermiIsReacting = TRUE
-							fermiReactID = selected_reaction
-					//else
-					//	fermiIsReacting = FALSE
-					//	STOP_PROCESSING(SSfastprocess, src)
+						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+						START_PROCESSING(SSfastprocess, src)
+						message_admins("FermiChem processing started")
+						fermiIsReacting = TRUE
+						fermiReactID = selected_reaction
+					else
+						fermiIsReacting = FALSE
+						STOP_PROCESSING(SSfastprocess, src)
 				else
 					return
 
@@ -538,28 +528,14 @@
 	return 0//end!
 
 /datum/reagents/process()
-	var/datum/chemical_reaction/C = fermiReactID
-	var/list/cached_required_reagents = C.required_reagents//update reagents list
-	var/list/cached_results = C.results//resultant chemical list
-
-
 	if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
 		if (reactedVol < targetVol)
-
-			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
-			message_admins("FermiChem tick activated started")
+			reactedVol = FermiReact(fermiReactID, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 		else
-			STOP_PROCESSING(SSprocessing, src)
-			fermiIsReacting = FALSE
-			return
-	else
-		STOP_PROCESSING(SSprocessing, src)
-		fermiIsReacting = FALSE
-		reactedVol = 0
-		targetVol = 0
+			STOP_PROCESSING(SSfastprocess, src)
 	//handle_reactions()
 
-/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
+/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -568,6 +544,7 @@
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
 	//var/tempVol = totalVol
+	//var/list/multiplier = INFINITY
 
 	message_admins("Loop beginning")
 	//Begin Parse
