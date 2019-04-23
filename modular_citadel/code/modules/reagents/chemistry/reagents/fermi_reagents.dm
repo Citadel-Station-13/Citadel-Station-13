@@ -201,11 +201,12 @@
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
-
-/datum/reagent/fermi/SDGF/New(mob/living/carbon/M)
-	candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+/*
+/datum/reagent/fermi/SDGF/New()
+	candidates = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 	message_admins("Attempting to poll")
-
+^^^breaks everything
+*/
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 	switch(current_cycle)
@@ -274,13 +275,13 @@
 						if(40)
 							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
-							candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(41 to 69)
 							M.nutrition = M.nutrition + (M.nutrition/2)
 						if(70)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
-								M.nutrition = 20000
+								M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(76)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
@@ -343,7 +344,7 @@
 		if(64)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
 			if (M.nutrition < 20000)
-				M.nutrition = 20000
+				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
 		if(65 to 75)
 			M.adjustToxLoss(1, 0)// the warning!
 		if(76)
@@ -390,7 +391,7 @@
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
-
+/*
 //Nanite removal
 /datum/reagent/fermi/naninte_b_gone
 	name = "Naninte bain"
@@ -403,10 +404,11 @@
 	if(C./datum/component/nanites)
 		regen_rate = -5.0
 	else
-		retrun
+		return
 
 /datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
 	if(C./datum/component/nanites)
 		regen_rate = -7.5
 	else
-		retrun
+		return
+*/

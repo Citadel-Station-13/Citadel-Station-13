@@ -72,7 +72,7 @@
 	name = "Naninte bain"
 	id = "naninte_b_gone"
 	results = list("naninte_b_gone" = 5)
-	required_reagents = list("synthflesh" = 5, "blood" = 3, "sugar" = 1, "salglu_solution" = 3)
+	required_reagents = list("synthflesh" = 5, "blood" = 3, "uranium" = 1, "salglu_solution" = 3)
 	mix_message = "the blood and sugar mixes catalysting a hard coating around the synth flesh"
 	//FermiChem vars:
 	OptimalTempMin = 450
