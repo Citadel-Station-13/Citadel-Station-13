@@ -38,9 +38,9 @@ How the end state should look:{
     ThermicConstant = -2.5 //Temperature change per 1u produced
     HIonRelease = 0.01 //pH change per 1u reaction
     RateUpLim = 50 //Optimal/max rate possible if all conditions are perfect
-	optional:
-	mix_message = "The mixture yields a fine black powder."
-	required_catalysts = list("plasma" = 5)
+		//optional:
+		mix_message = "The mixture yields a fine black powder."
+		required_catalysts = list("plasma" = 5)
 
 	edit:
 	required_temp = 380

@@ -35,7 +35,7 @@
 	addiction_threshold = 20
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
-	addiction_stage3_end = 41
+	addiction_stage3_end = 40
 	addiction_stage4_end = 43 //Incase it's too long
 	var/turf/open/location_created = null
 	var/turf/open/location_return = null
@@ -45,33 +45,36 @@
 	var/addictCyc4 = 1
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
+	mob/living/carbon/purgeBody
 
 
-///obj/item/reagent/fermi/eigenstate/Initialize()
-/datum/reagent/fermi/eigenstate/on_new()
+/*
+/datum/reagent/fermi/eigenstate/oew()
 	. = ..() //Needed!
 	location_created = get_turf(src) //Sets up coordinate of where it was created
 	message_admins("Attempting to get creation location from on_new() [location_created]")
 	//..()s
-
-/datum/reagent/fermi/eigenstate/New()
+*/
+/datum/reagent/fermi/eigenstate/on_new()
+//obj/item/reagent/fermi/eigenstate/Initialize()
+//datum/reagent/fermi/eigenstate/Initialize()
 	. = ..() //Needed!
 	//if(holder && holder.my_atom)
-	location_created = get_turf(mob/living/M) //Sets up coordinate of where it was created
-	message_admins("Attempting to get creation location from New() [location_created]")
+	location_created = get_turf(holder) //Sets up coordinate of where it was created
+	message_admins("Attempting to get creation location from init() [location_created]")
 	//..()
 
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
-		if(1)
+		if(0)
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			//M.forceMove(location_created) //Teleports to creation location
 			do_sparks(5,FALSE,M)
-	if(prob(20))s
+	if(prob(20))
 		do_sparks(5,FALSE,M)
 	message_admins("eigenstate state: [current_cycle]")
 	..()
@@ -92,7 +95,7 @@
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	M.reagents.remove_reagent("eigenstate",0.5)//So you're not stuck for 10 minutes teleporting
+	holder.remove_reagent("eigenstate",0.5)//So you're not stuck for 10 minutes teleporting
 	..() //loop function
 
 
@@ -126,10 +129,10 @@
 
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	switch(src.addictCyc3)
-		if(1)
+		if(0)
 			M.Jitter(100)
 			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
-		if(2)
+		if(1)
 			var/typepath = M.type
 			fermi_Tclone = new typepath(M.loc)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -144,13 +147,13 @@
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta �r sista g�ngen jag dricker beepsky smash.", "Now neither of us will be virgins!")]\"")
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
-		if(3)
+		if(2)
 			var/mob/living/carbon/C = fermi_Tclone
 			do_sparks(5,FALSE,C)
 			qdel(C) //Deletes CLONE, or at least I hope it is.
 			message_admins("Fermi T Clone: [fermi_Tclone] deletion attempt")
 			M.visible_message("[M] is snapped across to a different alternative reality!")
-			src.addictCyc3 = 1 //counter
+			src.addictCyc3 = 0 //counter
 			fermi_Tclone = null
 	src.addictCyc3++
 	message_admins("[src.addictCyc3]")
@@ -197,21 +200,26 @@
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
 
+/datum/reagent/fermi/SDGF/on_mob_add(mob/living/carbon/M)
+	src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	message_admins("Attempting to poll")
+
+
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 
 
 	switch(current_cycle)
-		if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
-			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-			message_admins("Attempting to poll")
+		//if(0) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
+		//	src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 300, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+		//	message_admins("Attempting to poll")
 		if(10 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(src.candidates)]")
-			if(LAZYLEN(src.candidates)) //If there's candidates, clone the person and put them in there!
+			if(LAZYLEN(src.candidates) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
-				//var/typepath = M.type
+				var/typepath = M.type
 				var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
 				//var/mob/living/carbon/SM = owner
 				//var/mob/living/carbon/M = M
@@ -276,7 +284,7 @@
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(77 to INFINITY)
-							M.reagents.remove_reagent("SGDF", 5)//removes SGDF on completion.
+							holder.remove_reagent("SGDF", 5)//removes SGDF on completion.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
@@ -348,7 +356,7 @@
 				var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
 				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
-				M.reagents.remove_reagent("SGZF", 50)
+				holder.remove_reagent("SGZF", 50)
 			else
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
 		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
@@ -356,7 +364,7 @@
 			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
 			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			S.real_name = "rotting tumour."
-			M.reagents.remove_reagent("SGZF", 50)
+			holder.remove_reagent("SGZF", 50)
 			M.adjustToxLoss(10, 0)
 			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
