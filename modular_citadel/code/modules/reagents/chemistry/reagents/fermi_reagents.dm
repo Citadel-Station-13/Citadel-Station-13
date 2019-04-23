@@ -37,7 +37,7 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 40
 	addiction_stage4_end = 45 //Incase it's too long
-	var/turf/open/location_created = null
+	//var/turf/open/location_created = null
 	var/turf/open/location_return = null
 	var/addictCyc1 = 1
 	var/addictCyc2 = 1
@@ -46,29 +46,36 @@
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
 
+/mob/living/carbon
+	var/turf/location_spawn = null
+
+/mob/living/carbon/New()
+	. = ..()
+	location_spawn = get_turf(src)
 
 ///obj/item/reagent/fermi/eigenstate/Initialize()
 /datum/reagent/fermi/eigenstate/on_new()
 	. = ..() //Needed!
-	location_created = get_turf(src) //Sets up coordinate of where it was created
-	message_admins("Attempting to get creation location from on_new() [location_created]")
+	//location_created = get_turf(src) //Sets up coordinate of where it was created
+	//message_admins("Attempting to get creation location from on_new() [location_created]")
 	//..()s
 
 /datum/reagent/fermi/eigenstate/New()
 	. = ..() //Needed!
 	//if(holder && holder.my_atom)
-	location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
-	message_admins("Attempting to get creation location from New() [location_created]")
+	//location_created = get_turf(holder.my_atom) //Sets up coordinate of where it was created
+	//message_admins("Attempting to get creation location from New() [location_created]")
 	//..()
 
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/carbon/M) //Teleports to chemistry!
 	switch(current_cycle)
 		if(1)
-			location_return = get_turf(M.loc)	//sets up return point
+			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
-			M.forceMove(location_created) //Teleports to creation location
+			//M.forceMove(location_created) //Teleports to creation location
+			M.forceMove(M.location_spawn)
 			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -111,7 +118,7 @@
 			M.Knockdown(100)
 			M.Stun(40)
 	var/items = M.get_contents()
-  var/obj/item/I = pick(items)
+	var/obj/item/I = pick(items)
 	M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
