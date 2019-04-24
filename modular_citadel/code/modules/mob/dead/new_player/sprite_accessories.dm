@@ -201,7 +201,7 @@
 	name = "Elf"
 	icon_state = "elf"
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
-	color_src = MATRIXED
+	color_src = SKINTONE
 
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
