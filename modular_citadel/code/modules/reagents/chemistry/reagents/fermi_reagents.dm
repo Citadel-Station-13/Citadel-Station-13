@@ -130,11 +130,9 @@
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	switch(src.addictCyc3)
 		if(0)
-		if(1)
 			M.Jitter(100)
 			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
 		if(1)
-		if(2)
 			var/typepath = M.type
 			fermi_Tclone = new typepath(M.loc)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -174,7 +172,12 @@
 			M.Knockdown(0)
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
+			M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+			for(var/i in M.mood_events)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i.id)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
+
+
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	src.addictCyc4++
