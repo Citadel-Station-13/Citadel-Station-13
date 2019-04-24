@@ -228,12 +228,12 @@
 	//Setup clone
 	switch(current_cycle)
 		if(1)
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			group += G
-		for(var/m in group)
-			var/mob/W = m
-		message_admins("Attempting to poll")
-		showCandidatePollWindow(M, 190, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
+			for(var/mob/dead/observer/G in GLOB.player_list)
+				group += G
+			for(var/m in group)
+				var/mob/W = m
+			message_admins("Attempting to poll")
+			showCandidatePollWindow(M, 190, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
 		if(19)
 			for(var/mob/W in result)
 				if(!W.key || !W.client)
