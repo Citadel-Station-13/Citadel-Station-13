@@ -33,3 +33,12 @@
 				owner.remove_status_effect(src)
 		//	to_chat(owner, "<span class='notice'>[linked_extract] desperately tries to move your soul to a living body, but can't find one!</span>")
 	..()
+
+/datum/status_effect/chem/SDGF/candidates
+	id = "SGDFCandi"
+	var/mob/living/fermi_Clone
+	var/list/candies = list()
+
+/datum/status_effect/chem/SDGF/candidates/on_apply()
+	candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	return ..()

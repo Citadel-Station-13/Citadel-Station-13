@@ -195,7 +195,12 @@
 	color = "#60A584" // rgb: 96, 0, 255
 	var/playerClone = FALSE
 	var/unitCheck = FALSE
-	var/list/candidates = list()
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	//var/datum/status_effect/chem/SDGF/candidates/candies
+	var/list/candies = list()
+	var/polling = FALSE
+	var/list/result = list()
+	var/list/group = null
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
@@ -207,15 +212,37 @@
 	message_admins("Attempting to poll")
 ^^^breaks everything
 */
+/datum/reagent/fermi/proc/sepPoll()
+	var/list/procCandies = list()
+	procCandies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 20) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	return procCandies
+
+	/*if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
+		M.apply_status_effect(/datum/status_effect/chem/SDGF/candidates)
+		/datum/status_effect/chem/SDGF/candidates/candies = new /datum/status_effect/chem/SDGF/candidates
+		///datum/status_effect/chem/SDGF/candidates/candies = M.apply_status_effect(/datum/status_effect/chem/SDGF/candidates)
+		//candies = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+		message_admins("Attempting to poll")*/
+
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
+	if(polling == FALSE)
+		for(var/mob/dead/observer/G in GLOB.player_list)
+			group += G
+		for(var/m in group)
+			var/mob/W = m
+		message_admins("Attempting to poll")
+		polling = TRUE
+		showCandidatePollWindow(M, 20, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
 	switch(current_cycle)
-		if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
-			src.candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-			message_admins("Attempting to poll")
-		if(10 to INFINITY)
-			message_admins("Number of candidates [LAZYLEN(src.candidates)]")
-			if(LAZYLEN(candidates) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
+		if(19)
+			for(var/mob/W in result)
+				if(!W.key || !W.client)
+					result -= W
+			candies = result
+		if(20 to INFINITY)
+			message_admins("Number of candidates [LAZYLEN(candies)]")
+			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
@@ -228,7 +255,7 @@
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
-				var/mob/dead/observer/C = pick(candidates)
+				var/mob/dead/observer/C = pick(candies)
 				SM.key = C.key
 				SM.mind.enslave_mind_to_creator(M)
 
@@ -273,7 +300,7 @@
 						if(21 to 39)
 							M.nutrition = M.nutrition + (M.nutrition/5)
 						if(40)
-							to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
+							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(41 to 69)
@@ -323,6 +350,7 @@
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	var/fermi_Zombie
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
@@ -360,14 +388,18 @@
 				var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
 				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
+				ZI.name = M.real_name
+				//ZI.updateappearance(mutcolor_update=1)
 				holder.remove_reagent("SGZF", 50)
 			else
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
 		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
 			M.nutrition -= 100
 			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
-			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			S.real_name = "rotting tumour."
+			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+			S.name = "Living teratoma"
+			S.real_name = "Living teratoma"
+			//S.updateappearance(mutcolor_update=1)
 			holder.remove_reagent("SGZF", 50)
 			M.adjustToxLoss(10, 0)
 			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
