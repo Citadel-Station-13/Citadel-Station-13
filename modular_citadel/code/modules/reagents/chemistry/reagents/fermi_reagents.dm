@@ -198,7 +198,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	//var/datum/status_effect/chem/SDGF/candidates/candies
 	var/list/candies = list()
-	var/polling = FALSE
+	//var/polling = FALSE
 	var/list/result = list()
 	var/list/group = null
 
@@ -226,15 +226,14 @@
 
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
-	if(polling == FALSE)
+	switch(current_cycle)
+		if(1)
 		for(var/mob/dead/observer/G in GLOB.player_list)
 			group += G
 		for(var/m in group)
 			var/mob/W = m
 		message_admins("Attempting to poll")
-		polling = TRUE
-		showCandidatePollWindow(M, 20, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
-	switch(current_cycle)
+		showCandidatePollWindow(M, 190, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
 		if(19)
 			for(var/mob/W in result)
 				if(!W.key || !W.client)
