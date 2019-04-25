@@ -73,7 +73,7 @@
 	var/obj/machinery/atmospherics/components/unary/vent = pick(vents)
 	vents -= vent
 
-	if(!vent)
+	if(!vent || vent.welded)
 		return
 
 	var/turf/T = get_turf(vent)
@@ -150,7 +150,7 @@
 
 /datum/round_event/vent_clog/beer/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("beer", reagentsAmount)
@@ -165,7 +165,7 @@
 
 /datum/round_event/vent_clog/male/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("semen", reagentsAmount)
@@ -180,7 +180,7 @@
 
 /datum/round_event/vent_clog/female/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("femcum", reagentsAmount)
@@ -195,7 +195,7 @@
 
 /datum/round_event/vent_clog/plasma_decon/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/effect_system/smoke_spread/freezing/decon/smoke = new
 			smoke.set_up(7, get_turf(vent), 7)
 			smoke.start()
