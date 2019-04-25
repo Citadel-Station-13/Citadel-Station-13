@@ -343,6 +343,7 @@
 		return PROCESS_KILL
 
 /datum/reagents/proc/handle_reactions(fermi_chem_react = FALSE)//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
+	return
 	if(reagents_holder_flags & REAGENT_NOREACT)
 		return			//don't react
 	//cache things for performance
@@ -356,48 +357,54 @@
 		reaction_occurred = FALSE
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
-			check_possible_reaction:
-				for(var/reaction in cached_reactions[R.id])
-					if(!reaction)
+			for(var/reaction in cached_reactions[R.id])
+				if(!reaction)
+					continue
+				var/datum/chemical_reaction/C = reaction
+				var/list/cached_required_reagents = C.required_reagents
+				var/list/cached_required_catalysts = C.required_catalysts
+				var/required_temp = C.required_temp
+				var/is_cold_recipe = C.is_cold_recipe
+				var/has_special_react = C.special_react
+				var/fail = FALSE
+				for(var/B in cached_required_reagents)
+					if(!has_reagent(B, cached_required_reagents[B]))
+						fail = TRUE
+						break
+				if(fail)
+					continue
+				for(var/B in cached_required_catalysts)
+					if(!has_reagent(B, cached_required_catalysts[B]))
+						fail = TRUE
+						break
+				if(fail)
+					continue
+				if(cached_my_atom)
+					if(C.required_container && C.required_container != cached_my_atom.type)
 						continue
-					var/datum/chemical_reaction/C = reaction
-					var/list/cached_required_reagents = C.required_reagents
-					var/list/cached_required_catalysts = C.required_catalysts
-					var/required_temp = C.required_temp
-					var/is_cold_recipe = C.is_cold_recipe
-					var/has_special_react = C.special_react
-					for(var/B in cached_required_reagents)
-						if(!has_reagent(B, cached_required_reagents[B]))
-							continue check_possible_reaction
-					for(var/B in cached_required_catalysts)
-						if(!has_reagent(B, cached_required_catalysts[B]))
-							continue check_possible_reaction
-					if(cached_my_atom)
-						if(C.required_container && C.required_container != cached_my_atom.type)
-							continue check_possible_reaction
-						if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-							continue check_possible_reaction
-						if(C.required_other)	//Checks for other things required
-							if(istype(cached_my_atom, /obj/item/slime_extract))//if the object is a slime_extract. This might be complicated as to not break them via fermichem
-								var/obj/item/slime_extract/M = cached_my_atom
-								if(M.Uses <= 0) // added a limit to slime cores -- Muskets requested this
-									continue check_possible_reaction
-					else
-						if(C.required_container || C.required_other)
-							continue check_possible_reaction
-					if(required_temp && (is_cold_recipe? (chem_temp > required_temp) : (chem_temp < required_temp)))
-						continue check_possible_reaction
-					if(has_special_react && !C.check_special_react(src))
-						continue check_possible_reaction
-					if(C.FermiChem)		//fermichem checks
-						if(chem_temp < C.OptimalTempMin)		//too low temperature
-							continue check_possible_reaction
-						if(LAZYACCESS(fermichem_reacted, C))		//fermichems don't keep reacting instantly
-							continue check_possible_reaction
-						START_PROCESSING(SSchemistry, src)		//start processing
-						if(!fermi_chem_react)		//only react fermichems on process icks
-							continue check_possible_reaction
-					LAZYADD(possible_reactions, C)
+					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+						continue
+					if(C.required_other)	//Checks for other things required
+						if(istype(cached_my_atom, /obj/item/slime_extract))//if the object is a slime_extract. This might be complicated as to not break them via fermichem
+							var/obj/item/slime_extract/M = cached_my_atom
+							if(M.Uses <= 0) // added a limit to slime cores -- Muskets requested this
+								continue
+				else
+					if(C.required_container || C.required_other)
+						continue
+				if(required_temp && (is_cold_recipe? (chem_temp > required_temp) : (chem_temp < required_temp)))
+					continue
+				if(has_special_react && !C.check_special_react(src))
+					continue
+				if(C.FermiChem)		//fermichem checks
+					if(chem_temp < C.OptimalTempMin)		//too low temperature
+						continue
+					if(LAZYACCESS(fermichem_reacted, C))		//fermichems don't keep reacting instantly
+						continue
+					START_PROCESSING(SSchemistry, src)		//start processing
+					if(!fermi_chem_react)		//only react fermichems on process icks
+						continue
+				LAZYADD(possible_reactions, C)
 		if(length(possible_reactions))	//does list exist?
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
 			for(var/I in possible_reactions)
