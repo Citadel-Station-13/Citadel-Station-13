@@ -707,6 +707,13 @@
 	surgery = /datum/surgery/advanced/brainwashing
 	research_icon_state = "surgery_head"
 
+/datum/design/surgery/laser_eye_surgery
+	name = "Laser Eye Surgery"
+	desc = "A surgical procedure which will correct a subjects eye's. This surgery dose NOT repair the eyes"
+	id = "laser_eye_surgery"
+	surgery = /datum/surgery/advanced/bioware/laser_eye_surgery
+	research_icon_state = "surgery_head"
+
 /datum/design/surgery/nerve_splicing
 	name = "Nerve Splicing"
 	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
