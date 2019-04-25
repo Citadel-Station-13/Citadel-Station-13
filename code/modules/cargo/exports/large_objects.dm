@@ -55,7 +55,6 @@
 	contents_cost = 700
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
-
 /datum/export/large/pipedispenser
 	cost = 500
 	unit_name = "pipe dispenser"
@@ -122,7 +121,6 @@
 	unit_name = "packaged antimatter reactor section"
 	export_types = list(/obj/item/am_shielding_container)
 
-
 /datum/export/large/iv
 	cost = 50
 	unit_name = "iv drip"
@@ -133,3 +131,86 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
+/datum/export/large/odysseus
+	cost = 5500
+	unit_name = "working odysseus"
+	export_types = list(/obj/mecha/medical/odysseus)
+	include_subtypes = FALSE
+
+/datum/export/large/ripley
+	cost = 6500
+	unit_name = "working ripley"
+	export_types = list(/obj/mecha/working/ripley)
+	include_subtypes = FALSE
+
+/datum/export/large/firefighter
+	cost = 9000
+	unit_name = "working firefighter"
+	export_types = list(/obj/mecha/working/ripley/firefighter)
+	include_subtypes = FALSE
+
+/datum/export/large/gygax
+	cost = 19000
+	unit_name = "working gygax"
+	export_types = list(/obj/mecha/combat/gygax)
+	include_subtypes = FALSE
+
+/datum/export/large/durand
+	cost = 10000
+	unit_name = "working durand"
+	export_types = list(/obj/mecha/combat/durand)
+	include_subtypes = FALSE
+
+/datum/export/large/phazon
+	cost = 25000 //Little over half do to needing a core
+	unit_name = "working phazon"
+	export_types = list(/obj/mecha/combat/phazon)
+	include_subtypes = FALSE
+
+/datum/export/large/marauder
+	cost = 15000 //Still a Combat class mech - CC tech as well! 150% "normal" boundy price.
+	unit_name = "working marauder"
+	export_types = list(/obj/mecha/combat/marauder)
+	include_subtypes = FALSE
+
+/datum/export/large/deathripley
+	cost = 8500 //Still a "Combat class" mech - Illegal tech as well! 165% "normal" boundy price.
+	unit_name = "working illegally modified"
+	export_types = list(/obj/mecha/working/ripley/deathripley)
+	include_subtypes = FALSE
+
+/datum/export/large/gygaxdark
+	cost = 28500 //Still a Combat class mech - Illegal tech as well! 150% "normal" boundy price.
+	unit_name = "working illegally modified gygax"
+	export_types = list(/obj/mecha/combat/gygax/dark)
+	include_subtypes = FALSE
+
+/datum/export/large/oldripley
+	cost = 6250 //old mech - Scrap metal ! 50% "normal" boundy price.
+	unit_name = "working miner ripley"
+	export_types = list(/obj/mecha/working/ripley/mining)
+	include_subtypes = FALSE
+
+/datum/export/large/honk
+	cost = 12000 //Still a "Combat class" mech - Comats bordem honk!
+	unit_name = "working honker"
+	export_types = list(/obj/mecha/combat/honker)
+	include_subtypes = FALSE
+
+/datum/export/large/reticence
+	cost = 12000 //Still a "Combat class" mech - Has cloking and lethal weaponds.
+	unit_name = "working reticence"
+	export_types = list(/obj/mecha/combat/reticence)
+	include_subtypes = FALSE
+
+/datum/export/large/seraph
+	cost = 25500 //Still a Combat class mech - CC tech as well! 150% "normal" boundy price.
+	unit_name = "working seraph"
+	export_types = list(/obj/mecha/combat/marauder/seraph)
+	include_subtypes = FALSE
+
+/datum/export/large/mauler
+	cost = 12000 //Still a Combat class mech - CC lethal weaponds.
+	unit_name = "working legally modified marauder"
+	export_types = list(/obj/mecha/combat/marauder/mauler)
+	include_subtypes = FALSE
