@@ -50,6 +50,7 @@
 	light_range = 2
 	speed = 0.6
 	range = 25
+	e_cost = 50
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
@@ -62,8 +63,8 @@
 	light_range = 2
 	speed = 0.7
 	range = 25
+	e_cost = 50
 	light_color = LIGHT_COLOR_BLUE
-
 
 /////actual ammo/////
 
@@ -98,6 +99,13 @@
 	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/amags
 
+//////the cell////////////
+
+/obj/item/stock_parts/cell/magpistal
+	name = "magpistal hyper power cell"
+	desc = "A small hyper cell, used in the mag pistal"
+	maxcharge = 3500 //70 shots before recharge
+
 //////the gun itself//////
 
 /obj/item/gun/ballistic/automatic/pistol/mag
@@ -106,12 +114,16 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magpistol"
 	force = 10
+	cell_type = /obj/item/stock_parts/cell/magpistal
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 2
 	recoil = 0.2
+
+/obj/item/gun/ballistic/automatic/pistol/mag/examine(mob/user)
+        to_chat(user, "The charge meter reads [round(.percent() )]%.")
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -205,6 +217,7 @@
 	light_range = 3
 	speed = 0.7
 	range = 35
+	e_cost = 50
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
@@ -217,6 +230,7 @@
 	light_range = 3
 	speed = 0.65
 	range = 35
+	e_cost = 50
 	light_color = LIGHT_COLOR_BLUE
 
 ///ammo casings///
@@ -253,6 +267,13 @@
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
 	max_ammo = 18
 
+//////the cell////////////
+
+/obj/item/stock_parts/cell/magrifle
+	name = "magrifle hyper power cell"
+	desc = "A small hyper cell, used in the mag rifle"
+	maxcharge = 2400 //48 shots before recharge
+
 ///the gun itself///
 
 /obj/item/gun/ballistic/automatic/magrifle
@@ -262,7 +283,7 @@
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
-	w_class = WEIGHT_CLASS_BULKY
+	cell_type = /obj/item/stock_parts/cell/magrifle
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
@@ -271,6 +292,9 @@
 	spread = 5
 	recoil = 0.15
 	casing_ejector = 0
+
+/obj/item/gun/ballistic/automatic/magrifle/examine(mob/user)
+        to_chat(user, "The charge meter reads [round(.percent() )]%.")
 
 ///research///
 
