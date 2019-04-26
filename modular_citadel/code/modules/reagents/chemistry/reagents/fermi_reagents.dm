@@ -292,10 +292,11 @@
 						if(21)
 							to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
 							M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-						M.adjustCloneLoss(-1, 0)
-						M.adjustBruteLoss(-1, 0)
-						M.adjustFireLoss(-1, 0)
-						M.heal_bodypart_damage(1,1)
+						if(22 to INFINITY)
+							M.adjustCloneLoss(-1, 0)
+							M.adjustBruteLoss(-1, 0)
+							M.adjustFireLoss(-1, 0)
+							M.heal_bodypart_damage(1,1)
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
 						if(21)
@@ -414,7 +415,7 @@
 
 //breast englargement
 //Honestly the most requested chems
-/datum/reagent/fermi/BElarger()
+/datum/reagent/fermi/BElarger
 	name = "Sucubus Draft"
 	id = "BEenlager"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
@@ -422,12 +423,14 @@
 	taste_description = "melted ice cream"
 	overdose_threshold = 12
 	var/mob/living/carbon/M
+	var/mob/living/carbon/human/H = M
+	var/species/S
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
 	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
 	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
-	var/mob/living/carbon/human/H = M
+
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!M.getorganslot("breasts")) //If they don't have breasts, give them breasts.
@@ -435,7 +438,7 @@
 		nB.Insert(M)
 		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
-				nB.color = skintone2hex(M.skin_tone)
+				nB.color = skintone2hex(H.skin_tone)
 			else
 				nB.color = "#[M.dna.features["breasts_color"]]"
 			nB.size = 0
@@ -447,14 +450,14 @@
 			to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 			M.adjustOxyLoss(10, 0)
 			M.adjustBruteLoss(2, 0)
-		if (B.size > (9 + M.armour))
-			M.adjustOxyLoss((-50 - (M.armour * 10)), 0)
+		if (B.size > 9)
+			//M.adjustOxyLoss((-50, 0)
 			if(H.w_uniform || H.wear_suit)
 				M.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
 				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
 				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-				M.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-			M.physical/speed += 0.1//big breasts are cumbersome
+				S.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			M.physical.speed += 0.1//big breasts are cumbersome
 			M.next_move_modifier += 0.1
 	M.update()
 	..()
@@ -469,10 +472,10 @@
 		if (P.size < 0.5)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
 			qdel(P)
-		else if (P.size > (9 + M.armour))
-			M.physical/speed -= 0.1//Liberation from comical size
+		else if (P.size > 9 )
+			M.physical.speed -= 0.1//Liberation from comical size
 			M.next_move_modifier -= 0.1
-			M.no_equip -= list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			S.no_equip -= list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 
 
 	if(T)
@@ -487,7 +490,7 @@
 	M.update()
 	..()
 
-/datum/reagent/fermi/PElarger() // Due to popular demand...!
+/datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Bluespace Viagra"
 	id = "PElarger"
 	description = "A volatile collodial mixture derived from toxic masculinity that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
@@ -495,6 +498,7 @@
 	taste_description = "meaty oil"
 	overdose_threshold = 12
 	var/mob/living/carbon/M
+	var/species/S
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
 	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
@@ -507,26 +511,25 @@
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
 		if(nP)
-			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
-				nP.color = skintone2hex(M.skin_tone)
+			if(M.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
+				nP.color = skintone2hex(H.skin_tone)
 			else
 				nP.color = "#[M.dna.features["cock_color"]]"
 			nP.size = 0
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a new bulge down below.</b></span>")
 			P = nP
 	else
-		var/obj/item/organ/genital/penis/P = M.getorganslot("breasts")
 		P.size += 0.1
 		if (P.size > 8.5)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
 			M.adjustBruteLoss(5, 0)
-		if (P.size > (9 + M.armour))
+		if (P.size > 9)
 			if(H.w_uniform || H.wear_suit)
 				M.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
 				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-				M.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-			M.physical/speed += 0.1//big breasts are cumbersome
+				S.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			M.physical.speed += 0.1//big breasts are cumbersome
 			M.next_move_modifier += 0.1
 	M.update()
 	..()
@@ -553,6 +556,16 @@
 		if (B.size < 0.1)
 			to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 			qdel(B)
+
+
+/*
+/mob/living/simple_animal/hostile/retaliate/ghost
+incorporeal_move = 1
+name
+alpha = 20
+reduce viewrange?
+*/
+
 /*
 //Nanite removal
 /datum/reagent/fermi/naninte_b_gone
