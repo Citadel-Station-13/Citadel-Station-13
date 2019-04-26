@@ -1,73 +1,52 @@
-/datum/component/storage/concrete/pockets
-	max_items = 2
-	max_w_class = WEIGHT_CLASS_SMALL
-	max_combined_w_class = 50
-	rustle_sound = FALSE
 
-/datum/component/storage/concrete/pockets/handle_item_insertion(obj/item/I, prevent_warning, mob/user)
+///////////
+//COLLARS//
+///////////
+
+/obj/item/clothing/neck/petcollar
+	name = "pet collar"
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
+	var/tagname = null
+
+/obj/item/clothing/neck/petcollar/attack_self(mob/user)
+	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	name = "[initial(name)] - [tagname]"
+
+
+/obj/item/clothing/neck/petcollar/locked
+	name = "locked collar"
+	desc = "A collar that has a small lock on it to keep it from being removed."
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar/locked
+	var/lock = FALSE
+
+/obj/item/clothing/neck/petcollar/locked/attackby(obj/item/key/collar, mob/user, params)
+	if(lock != FALSE)
+		to_chat(user, "<span class='warning'>With a click the collar unlocks!</span>")
+		lock = FALSE
+		item_flags = NONE
+	else
+		to_chat(user, "<span class='warning'>With a click the collar locks!</span>")
+		lock = TRUE
+		item_flags = NODROP
+	return
+
+/obj/item/clothing/neck/petcollar/locked/attack_hand(mob/user)
+	if(loc == user && user.get_item_by_slot(SLOT_NECK) && lock != FALSE)
+		to_chat(user, "<span class='warning'>The collar is locked! You'll need unlock the collar before you can take it off!</span>")
+		return
+	..()
+
+/obj/item/key/collar
+	name = "Collar Key"
+	desc = "A key for a tiny lock on a collar or bag."
+
+/obj/item/clothing/neck/petcollar/Initialize()
 	. = ..()
-	if(. && silent && !prevent_warning)
-		if(quickdraw)
-			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent]. Alt-click [parent] to remove it.</span>")
-		else
-			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent].</span>")
+	new /obj/item/reagent_containers/food/snacks/cookie(src)
 
-/datum/component/storage/concrete/pockets
-	max_w_class = WEIGHT_CLASS_NORMAL
-
-/datum/component/storage/concrete/pockets/small
-	max_items = 1
-	attack_hand_interact = FALSE
-
-/datum/component/storage/concrete/pockets/tiny
-	max_items = 1
-	max_w_class = WEIGHT_CLASS_TINY
-	attack_hand_interact = FALSE
-
-/datum/component/storage/concrete/pockets/small/detective
-	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
-
-/datum/component/storage/concrete/pockets/shoes
-	attack_hand_interact = FALSE
-	quickdraw = TRUE
-	silent = TRUE
-
-/datum/component/storage/concrete/pockets/shoes/Initialize()
+/obj/item/clothing/neck/petcollar/locked/Initialize()
 	. = ..()
-	cant_hold = typecacheof(list(/obj/item/screwdriver/power))
-	can_hold = typecacheof(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin
-		))
-
-/datum/component/storage/concrete/pockets/shoes/clown/Initialize()
-	. = ..()
-	cant_hold = typecacheof(list(/obj/item/screwdriver/power))
-	can_hold = typecacheof(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
-		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
-		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
-		/obj/item/firing_pin, /obj/item/bikehorn))
-
-/datum/component/storage/concrete/pockets/pocketprotector
-	max_items = 3
-	max_w_class = WEIGHT_CLASS_TINY
-	var/atom/original_parent
-
-/datum/component/storage/concrete/pockets/pocketprotector/Initialize()
-	original_parent = parent
-	. = ..()
-	can_hold = typecacheof(list( //Same items as a PDA
-		/obj/item/pen,
-		/obj/item/toy/crayon,
-		/obj/item/lipstick,
-		/obj/item/flashlight/pen,
-		/obj/item/clothing/mask/cigarette))
-
-/datum/component/storage/concrete/pockets/pocketprotector/real_location()
-	// if the component is reparented to a jumpsuit, the items still go in the protector
-	return original_parent
+	new /obj/item/key/collar(src)
