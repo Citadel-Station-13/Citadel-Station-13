@@ -4,6 +4,7 @@
 
 	if(!ninjacost(0,N_ADRENALINE))
 		var/mob/living/carbon/human/H = affecting
+		H.SetSleeping(0)
 		H.SetStun(0)
 		H.SetKnockdown(0)
 		H.SetUnconscious(0)
