@@ -37,7 +37,11 @@
 	imp_in.SetStun(0)
 	imp_in.SetKnockdown(0)
 	imp_in.SetUnconscious(0)
-	imp_in.adjustStaminaLoss(-75)
+	imp_in.adjustStaminaLoss(-200)
+	imp_in.updatehealth()
+	imp_in.update_stamina()
+	imp_in.stuttering = 0
+	imp_in.resting = 0
 	imp_in.lying = 0
 	imp_in.update_canmove()
 
