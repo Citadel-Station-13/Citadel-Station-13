@@ -95,7 +95,7 @@
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	holder.remove_reagent("eigenstate",0.5)//So you're not stuck for 10 minutes teleporting
+	holder.remove_reagent("eigenstate", 0.5, FALSE)//So you're not stuck for 10 minutes teleporting
 	..() //loop function
 
 
@@ -172,9 +172,9 @@
 			M.Knockdown(0)
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
-			for(var/i in M.mood_events)
-				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i.id)
+			M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
+			for(var/datum/mood_event/i)
+				clear_event(null, i)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 
 
@@ -230,6 +230,7 @@
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 	switch(current_cycle)
+		/*
 		if(1)
 			for(var/mob/dead/observer/G in GLOB.player_list)
 				group += G
@@ -242,6 +243,8 @@
 				if(!W.key || !W.client)
 					result -= W
 			candies = result
+		*/
+		candies = pollGhostCandidates()
 		if(20 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
@@ -285,39 +288,41 @@
 				message_admins("Failed to find clone Candidate")
 				src.unitCheck = TRUE
 				if(M.has_status_effect(/datum/status_effect/chem/SGDF)) // Heal the user if they went to all this trouble to make it and can't get a clone, the poor fellow.
-					to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
-					M.adjustCloneLoss(-2, 0)
-					M.adjustBruteLoss(-2, 0)
-					M.adjustFireLoss(-2, 0)
-					M.heal_bodypart_damage(1,1)
-					M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+					switch(current_cycle)
+						if(21)
+							to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
+							M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+						M.adjustCloneLoss(-1, 0)
+						M.adjustBruteLoss(-1, 0)
+						M.adjustFireLoss(-1, 0)
+						M.heal_bodypart_damage(1,1)
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
-						if(10)
+						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
-						if(11 to 19)
+						if(21 to 29)
 							M.nutrition = M.nutrition + (M.nutrition/10)
-						if(20)
+						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
-						if(21 to 39)
+						if(30 to 49)
 							M.nutrition = M.nutrition + (M.nutrition/5)
-						if(40)
+						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-						if(41 to 69)
+						if(50 to 79)
 							M.nutrition = M.nutrition + (M.nutrition/2)
-						if(70)
+						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
 								M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
-						if(76)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
+						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier = 1
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
-						if(77 to INFINITY)
-							holder.remove_reagent("SGDF", 1)//removes SGDF on completion.
+						if(87 to INFINITY)
+							holder.remove_reagent("SGDF", 1, FALSE)//removes SGDF on completion.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
@@ -392,7 +397,7 @@
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				//ZI.updateappearance(mutcolor_update=1)
-				holder.remove_reagent("SGZF", 50)
+				holder.remove_reagent("SGZF", 50, FALSE)
 			else
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
 		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
@@ -402,7 +407,7 @@
 			S.name = "Living teratoma"
 			S.real_name = "Living teratoma"
 			//S.updateappearance(mutcolor_update=1)
-			holder.remove_reagent("SGZF", 50)
+			holder.remove_reagent("SGZF", 50, FALSE)
 			M.adjustToxLoss(10, 0)
 			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
@@ -416,6 +421,32 @@
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#60A584" // rgb: 96, 0, 255
 	overdose_threshold = 12
+
+/datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
+	if(!M.getorganslot("breasts"))
+		var/obj/item/organ/genital/breasts/B = new
+		B.insert(M)
+		if(B)
+			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
+				B.color = skintone2hex(skin_tone)
+			else
+				B.color = "#[dna.features["breasts_color"]]"
+			B.size = 0
+			B.update()
+			to_chat(user, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
+	else
+		var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+		B.size += 0.1
+		if (B.size > 8.5)
+			to_chat(user, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
+			M.adjustOxyLoss(10, 0)
+			M.adjustBruteLoss(2, 0)
+		if B.size > 9
+			M.adjustOxyLoss(-50, 0)
+			to_chat(user, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts!</b></span>")
+			playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+			
+
 
 /datum/reagent/fermi/BElarger/overdose_start(mob/living/M) //Turns you into a female if male and ODing
 	if(M.gender == MALE)
