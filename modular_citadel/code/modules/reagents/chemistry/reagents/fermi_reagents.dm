@@ -29,7 +29,7 @@
 	name = "Eigenstasium"
 	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
-	taste_description = "."
+	taste_description = "wiggly"
 	color = "#60A584" // rgb: 96, 0, 255
 	overdose_threshold = 15
 	addiction_threshold = 20
@@ -308,7 +308,7 @@
 							M.nutrition = M.nutrition + (M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(50 to 79)
 							M.nutrition = M.nutrition + (M.nutrition/2)
@@ -318,7 +318,7 @@
 								M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
-							M.next_move_modifier = 1
+							M.next_move_modifier -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
@@ -419,8 +419,13 @@
 	name = "Sucubus Draft"
 	id = "BEenlager"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
-	color = "#60A584" // rgb: 96, 0, 255
+	color = "#E60584" // rgb: 96, 0, 255
 	overdose_threshold = 12
+	var/obj/item/organ/genital/penis/B = M.getorganslot("breasts")
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/penis/T = M.getorganslot("testicles")
+	var/obj/item/organ/genital/penis/V = M.getorganslot("vagina")
+	var/obj/item/organ/genital/penis/W = M.getorganslot("womb")
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!M.getorganslot("breasts"))
@@ -443,15 +448,35 @@
 			M.adjustBruteLoss(2, 0)
 		if B.size > 9
 			M.adjustOxyLoss(-50, 0)
-			to_chat(user, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts!</b></span>")
+			to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts!</b></span>")
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-			
+			M.physical/speed += 0.1//big breasts are cumbersome
+			M.next_move_modifier += 0.1
+			..()
 
 
-/datum/reagent/fermi/BElarger/overdose_start(mob/living/M) //Turns you into a female if male and ODing
+
+/datum/reagent/fermi/BElarger/overdose_start(mob/living/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 	if(M.gender == MALE)
 		M.gender = FEMALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+
+	if(P)
+		P.size -= 0.2
+		if (P.size < 0.5)
+			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
+			qdel(P)
+	if(T)
+		if (P.size < 0.5 || !P)
+			qdel(T)
+	if(!V)
+		var/obj/item/organ/genital/vagina/V = new
+		V.Insert(M)
+	if(!W)
+		var/obj/item/organ/genital/womb/W = new
+		W.Insert(M)
+	update()
+
 
 	if(M.gender == FEMALE)
 		M.gender = MALE
