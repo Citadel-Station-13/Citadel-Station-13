@@ -173,8 +173,8 @@
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
-			for(var/datum/mood_event/i)
-				clear_event(null, i)
+			for (var/datum/mood_event/i in M)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 
 
@@ -230,8 +230,8 @@
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 	switch(current_cycle)
-		/*
 		if(1)
+		/*
 			for(var/mob/dead/observer/G in GLOB.player_list)
 				group += G
 			for(var/m in group)
@@ -244,7 +244,7 @@
 					result -= W
 			candies = result
 		*/
-		candies = pollGhostCandidates()
+			candies = pollGhostCandidates()
 		if(20 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
@@ -358,31 +358,30 @@
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	var/fermi_Zombie
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	message_admins("SGZF ingested")
 	switch(current_cycle)//Pretends to be normal
-		if(10)
-			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
-		if(11 to 19)
-			M.nutrition = M.nutrition + (M.nutrition/10)
 		if(20)
+			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+		if(21 to 29)
+			M.nutrition = M.nutrition + (M.nutrition/10)
+		if(30)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
-		if(21 to 39)
+		if(31 to 49)
 			M.nutrition = M.nutrition + (M.nutrition/5)
-		if(40)
+		if(50)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
-		if(41 to 63)
+		if(51 to 73)
 			M.nutrition = M.nutrition + (M.nutrition/2)
-		if(64)
+		if(74)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
 			if (M.nutrition < 20000)
 				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
-		if(65 to 75)
+		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
-		if(76)
+		if(86)
 			if (!holder.has_reagent("pen_acid"))//Counterplay is pent.)
 				message_admins("Zombie spawned at [M.loc]")
 				M.nutrition -= 18500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
@@ -391,7 +390,6 @@
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
 				M.emote("scream")
 				M.adjustToxLoss(30, 0)
-				//fermi_Zombie = new typepath(M.loc)
 				var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
 				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
@@ -414,49 +412,54 @@
 	..()
 
 
-//Breast englargement
-/datum/reagent/fermi/BElarger
+//breast englargement
+//Honestly the most requested chems
+/datum/reagent/fermi/BElarger()
 	name = "Sucubus Draft"
 	id = "BEenlager"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
+	taste_description = "melted ice cream"
 	overdose_threshold = 12
-	var/obj/item/organ/genital/penis/B = M.getorganslot("breasts")
+	var/mob/living/carbon/M
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
-	var/obj/item/organ/genital/penis/T = M.getorganslot("testicles")
-	var/obj/item/organ/genital/penis/V = M.getorganslot("vagina")
-	var/obj/item/organ/genital/penis/W = M.getorganslot("womb")
+	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
+	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
+	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+	var/mob/living/carbon/human/H = M
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
-	if(!M.getorganslot("breasts"))
-		var/obj/item/organ/genital/breasts/B = new
-		B.insert(M)
-		if(B)
+	if(!M.getorganslot("breasts")) //If they don't have breasts, give them breasts.
+		var/obj/item/organ/genital/breasts/nB = new
+		nB.Insert(M)
+		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
-				B.color = skintone2hex(skin_tone)
+				nB.color = skintone2hex(M.skin_tone)
 			else
-				B.color = "#[dna.features["breasts_color"]]"
-			B.size = 0
-			B.update()
-			to_chat(user, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-	else
-		var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+				nB.color = "#[M.dna.features["breasts_color"]]"
+			nB.size = 0
+			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
+			B = nB
+	else //If they have them, increase size. If size is comically big, limit movement and rip clothes.
 		B.size += 0.1
 		if (B.size > 8.5)
-			to_chat(user, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
+			to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 			M.adjustOxyLoss(10, 0)
 			M.adjustBruteLoss(2, 0)
-		if B.size > 9
-			M.adjustOxyLoss(-50, 0)
-			to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts!</b></span>")
-			playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		if (B.size > (9 + M.armour))
+			M.adjustOxyLoss((-50 - (M.armour * 10)), 0)
+			if(H.w_uniform || H.wear_suit)
+				M.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
+				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
+				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+				M.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 			M.physical/speed += 0.1//big breasts are cumbersome
 			M.next_move_modifier += 0.1
-			..()
+	M.update()
+	..()
 
-
-
-/datum/reagent/fermi/BElarger/overdose_start(mob/living/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/BElarger/overdose_start(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 	if(M.gender == MALE)
 		M.gender = FEMALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
@@ -466,21 +469,90 @@
 		if (P.size < 0.5)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
 			qdel(P)
+		else if (P.size > (9 + M.armour))
+			M.physical/speed -= 0.1//Liberation from comical size
+			M.next_move_modifier -= 0.1
+			M.no_equip -= list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+
+
 	if(T)
-		if (P.size < 0.5 || !P)
+		if (P.size < 0.1 || !P)
 			qdel(T)
 	if(!V)
-		var/obj/item/organ/genital/vagina/V = new
-		V.Insert(M)
+		var/obj/item/organ/genital/vagina/nV = new
+		nV.Insert(M)
 	if(!W)
-		var/obj/item/organ/genital/womb/W = new
-		W.Insert(M)
-	update()
+		var/obj/item/organ/genital/womb/nW = new
+		nW.Insert(M)
+	M.update()
+	..()
 
+/datum/reagent/fermi/PElarger() // Due to popular demand...!
+	name = "Bluespace Viagra"
+	id = "PElarger"
+	description = "A volatile collodial mixture derived from toxic masculinity that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
+	color = "#E60584" // rgb: 96, 0, 255
+	taste_description = "meaty oil"
+	overdose_threshold = 12
+	var/mob/living/carbon/M
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
+	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
+	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	var/mob/living/carbon/human/H = M
+
+/datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
+	if(!M.getorganslot("penis"))
+		var/obj/item/organ/genital/penis/nP = new
+		nP.Insert(M)
+		if(nP)
+			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
+				nP.color = skintone2hex(M.skin_tone)
+			else
+				nP.color = "#[M.dna.features["cock_color"]]"
+			nP.size = 0
+			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a new bulge down below.</b></span>")
+			P = nP
+	else
+		var/obj/item/organ/genital/penis/P = M.getorganslot("breasts")
+		P.size += 0.1
+		if (P.size > 8.5)
+			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
+			M.adjustBruteLoss(5, 0)
+		if (P.size > (9 + M.armour))
+			if(H.w_uniform || H.wear_suit)
+				M.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
+				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
+				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+				M.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			M.physical/speed += 0.1//big breasts are cumbersome
+			M.next_move_modifier += 0.1
+	M.update()
+	..()
+
+/datum/reagent/fermi/PElarger/overdose_start(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+
+	if(!P)
+		var/obj/item/organ/genital/penis/nP = new
+		nP.Insert(M)
+	if(!T)
+		var/obj/item/organ/genital/testicles/nT = new
+		nT.Insert(M)
+	M.update()
+	..()
+
+
+
+	if(B)
+		B.size -= 0.2
+		if (B.size < 0.1)
+			to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
+			qdel(B)
 /*
 //Nanite removal
 /datum/reagent/fermi/naninte_b_gone
