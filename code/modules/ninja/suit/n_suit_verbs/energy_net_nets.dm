@@ -59,8 +59,39 @@ It is possible to destroy the net by the occupant or someone else.
 				continue
 			H.dropItemToGround(W)
 
-	if(affecting in GLOB.alive_mob_list) //Feel free to suggest a better check if it's alive.
+	if(affecting.stat != DEAD)
 		affecting.revive(1, 1) //Basically a full heal, including limbs/organs.
+
+	var/datum/antagonist/antag_datum
+	for(antag_datum in GLOB.antagonists)
+		if(antag_datum.owner == master)
+			break
+
+	for(var/datum/objective/capture/capture in antag_datum)
+		if(istype(affecting, /mob/living/carbon/human)) //Humans.
+			if(affecting.stat == DEAD)//Dead folks are worth less.
+				capture.captured_amount+=0.5
+				continue
+			capture.captured_amount+=1
+		if(istype(affecting, /mob/living/carbon/monkey)) //Monkeys are almost worthless, you failure.
+			capture.captured_amount+=0.1
+		if(istype(affecting, /mob/living/carbon/alien/larva)) //Larva are important for research.
+			if(affecting.stat == DEAD)
+				capture.captured_amount+=0.5
+				continue
+			capture.captured_amount+=1
+		if(istype(affecting, /mob/living/carbon/alien/humanoid)) //Aliens are worth twice as much as humans.
+			if(istype(affecting, /mob/living/carbon/alien/humanoid/royal/queen)) //Queens are worth three times as much as humans.
+				if(affecting.stat == DEAD)
+					capture.captured_amount+=1.5
+				else
+					capture.captured_amount+=3
+				continue
+			if(affecting.stat == DEAD)
+				capture.captured_amount+=1
+				continue
+			capture.captured_amount+=2
+
 
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
