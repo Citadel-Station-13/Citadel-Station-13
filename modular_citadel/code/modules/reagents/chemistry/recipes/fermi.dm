@@ -23,6 +23,10 @@
 	FermiExplode = FALSE //If the chemical explodes in a special way
 	ImpureChem = "toxin" //What chemical is produced with an inpure reaction
 
+/datum/chemical_reaction/eigenstate/on_reaction(datum/reagents/holder)
+	var/location = get_turf(holder.my_atom)
+	var/reagent/fermi/eigenstate/location_created = location
+
 //serum
 /datum/chemical_reaction/SDGF
 	name = "synthetic-derived growth factor"

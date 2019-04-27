@@ -12,10 +12,10 @@
 	id = "fermi"
 	taste_description = "If affection had a taste, this would be it."
 
-/datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
+///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	//current_cycle++
-	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
-	return ..()
+	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
+	//return ..()
 
 /datum/reagent/fermi/overdose_start(mob/living/carbon/M)
 	current_cycle++
@@ -37,7 +37,7 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 40
 	addiction_stage4_end = 43 //Incase it's too long
-	var/turf/open/location_created = null
+	var/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 1
 	var/addictCyc2 = 1
@@ -48,26 +48,17 @@
 	mob/living/carbon/purgeBody
 
 
+
 /*
-/datum/reagent/fermi/eigenstate/oew()
-	. = ..() //Needed!
-	location_created = get_turf(src) //Sets up coordinate of where it was created
-	message_admins("Attempting to get creation location from on_new() [location_created]")
-	//..()s
-*/
 /datum/reagent/fermi/eigenstate/on_new()
-//obj/item/reagent/fermi/eigenstate/Initialize()
-//datum/reagent/fermi/eigenstate/Initialize()
-	. = ..() //Needed!
-	//if(holder && holder.my_atom)
 	location_created = get_turf(loc) //Sets up coordinate of where it was created
 	message_admins("Attempting to get creation location from init() [location_created]")
 	//..()
-
+*/
 
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
-		if(0)
+		if(1)
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
@@ -216,13 +207,14 @@
 	message_admins("Attempting to poll")
 ^^^breaks everything
 */
+/*
 /datum/reagent/fermi/proc/sepPoll()
 	//var/list/procCandies = list()
 	//if (pollStarted == FALSE)
 	//	procCandies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 	sleep(300)
 	return procCandies
-
+*/
 	/*if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
 		M.apply_status_effect(/datum/status_effect/chem/SDGF/candidates)
 		/datum/status_effect/chem/SDGF/candidates/candies = new /datum/status_effect/chem/SDGF/candidates
@@ -234,7 +226,7 @@
 	//Setup clone
 	switch(current_cycle)
 		if(1)
-			if(pollStarted = FALSE)
+			if(pollStarted == FALSE)
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 
@@ -258,6 +250,7 @@
 			message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Candidate found!")
+				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
 				var/typepath = M.type
@@ -281,14 +274,16 @@
 				//SM.sentience_act()
 				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 				to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
-				to_chat(M, "<span class='notice'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_known_languages_from(M, FALSE)
 				playerClone =  TRUE
 
 				M.next_move_modifier = 1
 				M.nutrition = 150
-				holder.remove_reagent("SGDF", 999, FALSE)
+
+				reaction_mob(SM, )
+				holder.remove_reagent("SDGF", 999)
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 				//after_success(user, SM)
@@ -333,7 +328,7 @@
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
-							holder.remove_reagent("SGDF", 1, FALSE)//removes SGDF on completion.
+							holder.remove_reagent("SGDF", 1)//removes SGDF on completion.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
@@ -407,17 +402,18 @@
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				//ZI.updateappearance(mutcolor_update=1)
-				holder.remove_reagent("SGZF", 20, FALSE)
+				M.reagents.remove_reagent("SDZF", 20)
 			else
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
-		if(77 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
+		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
 			M.nutrition -= 100
 			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
 			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			S.name = "Living teratoma"
 			S.real_name = "Living teratoma"
+			S.rabid = 1
 			//S.updateappearance(mutcolor_update=1)
-			holder.remove_reagent("SGZF", 20, FALSE)
+			M.reagents.remove_reagent("SDZF", 20)
 			M.adjustToxLoss(10, 0)
 			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
@@ -434,7 +430,7 @@
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 2
 	//var/mob/living/carbon/M
 	var/mob/living/carbon/human/H
 	//var/mob/living/carbon/human/species/S
@@ -467,51 +463,48 @@
 				nB.color = skintone2hex(H.skin_tone)
 			nB.size = "a"
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
+			M.reagents.remove_reagent(src.id, 5)
 	else //If they have them, increase size. If size is comically big, limit movement and rip clothes.
-		message_admins("Breast size: [B.size]")
+		message_admins("Breast size: [B.size], [holder]")
 		if(B.size == "a")
 			B.size = "b"
 			to_chat(M, "<span class='warning'>You feel your breasts grow to a modest size.</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
-			sleep(20)
-		if(B.size == "b")
+			M.reagents.remove_reagent(src.id, 5)
+			sleep(500)
+		else if(B.size == "b")
 			B.size = "c"
 			to_chat(M, "<span class='warning'>Your breasts swell up to a substancial size.</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
-			sleep(20)
-		if(B.size == "c")
+			M.reagents.remove_reagent(src.id, 5)
+			sleep(500)
+		else if(B.size == "c")
 			B.size = "d"
 			to_chat(M, "<span class='warning'>Your breasts flourish into a full pair.</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
-			sleep(20)
-		if(B.size == "d")
+			M.reagents.remove_reagent(src.id, 5)
+			sleep(500)
+		else if(B.size == "d")
 			B.size = "e"
 			to_chat(M, "<span class='warning'>Your breasts expand into a large voluptuous pair!</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
-			sleep(20)
-		if(B.size == "e")
+			M.reagents.remove_reagent(src.id, 5)
+			sleep(500)
+		else if(B.size == "e")
 			B.size = 7
-			to_chat(M, "<span class='warning'>Your breasts expand into a large voluptuous pair!</b></span>")
-			holder.remove_reagent("BElarger", 2, FALSE)
-			sleep(20)
-		if(B.size > 7)
-			B.size += 0.2
+			to_chat(M, "<span class='warning'>Your breasts burst forth into [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "big old tonhongerekoogers", "giant bonkhonagahoogs", "humongous hungolomghnonoloughongous")].</b></span>")
+			M.reagents.remove_reagent(src.id, 5)
+			sleep(500)
+		if(B.size >= 7)
+			B.size = B.size + 0.1
 			if (B.size > 9)
 				//M.adjustOxyLoss((-50, 0)
-				if(H.w_uniform || H.wear_suit)
-					M.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
-					to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
-					playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-					H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-				M.add_movespeed_modifier("hugebreasts", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (B.size - 8.1))
+				M.apply_status_effect(/datum/status_effect/chem/BElarger)
+				M.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (B.size - 8.1))
 				M.next_move_modifier += 0.1
 			else if (B.size > 8.5)
 				to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 				M.adjustOxyLoss(10, 0)
 				M.adjustBruteLoss(2, 0)
+			sleep(500)
 
-	//M.update()
+	B.update_appearance()
 	..()
 
 /datum/reagent/fermi/BElarger/overdose_start(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
@@ -526,17 +519,18 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
-		P.size -= 0.2
-		if (P.size <= 0.1)
+		P.length -= 0.1
+		if (P.length <= 0.1)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
 			P.Remove(P)
 			if(T)
 				T.Remove(M)
-		else if (P.size > 9 )
-			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.size - 8.1))//Via la liberation
+		else if (P.length > 7)
+			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))//Via la liberation
 			M.next_move_modifier -= 0.1
 			H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-
+		else
+			M.remove_status_effect(/datum/status_effect/chem/PElarger)
 	if(!V)
 		var/obj/item/organ/genital/vagina/nV = new
 		nV.Insert(M)
@@ -545,7 +539,7 @@
 		var/obj/item/organ/genital/womb/nW = new
 		nW.Insert(M)
 		W = nW
-	//M.update()
+	P.update_appearance()
 	..()
 
 /datum/reagent/fermi/PElarger // Due to popular demand...!
@@ -574,7 +568,7 @@
 	*/
 
 
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis)")
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found!")
 		var/obj/item/organ/genital/penis/nP = new
@@ -586,26 +580,23 @@
 			else if(M.dna.features["cock_color"])
 				nP.color = "#[M.dna.features["cock_color"]]"
 			else*/
-			nP.color = skintone2hex(H.skin_tone)
-			nP.size = 0
+			//nP.color = skintone2hex(H.skin_tone)
+			nP.length = 0.2
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a new bulge down below.</b></span>")
 			P = nP
+			P.update_size()
 	else
-		P.size += 0.2
-		if (P.size > 9)
-			if(H.w_uniform || H.wear_suit)
-				M.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
-				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
-				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-				H.dna.species.no_equip = list()
-			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.size - 8.1))
+		P.length = P.length + 0.1
+		if (P.length > 9)
+			M.apply_status_effect(/datum/status_effect/chem/BElarger)
+			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))
 			M.next_move_modifier += 0.1
-		else if (P.size > 8.5)
+		else if (P.length > 8.5)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
 			M.adjustBruteLoss(5, 0)
 
-	//H.update()
-	message_admins("P size: [P.size]")
+	P.update_appearance()
+	message_admins("P size: [P.length]")
 	..()
 
 /datum/reagent/fermi/PElarger/overdose_start(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
@@ -620,19 +611,27 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
-		B.size -= 0.2
+		B.size -= 0.1
 		if (B.size < 0.1)
 			to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 			B.Remove(M)
+		else if (B.size >= 9)
+			M.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (B.size - 8.1))//Via la liberation
+			M.next_move_modifier -= 0.1
+			H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 			if(V)
 				V.Remove(M)
 			if(W)
 				W.Remove(M)
+			B.update_appearance()
+		else
+			M.remove_status_effect(/datum/status_effect/chem/BElarger)
+
 
 	if(!T)
 		var/obj/item/organ/genital/testicles/nT = new
 		nT.Insert(M)
-	//H.update()
+
 	..()
 
 
