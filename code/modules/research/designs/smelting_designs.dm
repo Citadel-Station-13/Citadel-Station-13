@@ -10,7 +10,6 @@
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 	maxstack = 50
 
-
 /datum/design/plastitanium_alloy
 	name = "Plasma + Titanium alloy"
 	id = "plastitanium"
