@@ -2,7 +2,7 @@
 
 /datum/design/board
 	name = "Computer Design ( NULL ENTRY )"
-	desc = "I promise this doesn't give you syndicate goodies!"
+	desc = "A blank compurter board!"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
 
@@ -22,6 +22,26 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/board/slot_machine
+	name = "Computer Design (Slot Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new slot machine."
+	id = "slotmachine"
+	build_path = /obj/item/circuitboard/computer/slot_machine
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/board/libraryconsole
+	name = "Computer Design (Library Console)"
+	desc = "Allows for the construction of circuit boards used to build a new library console."
+	id = "libraryconsole"
+	build_path = /obj/item/circuitboard/computer/libraryconsole
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+///////////////////
+///SECURITY Boards/
+///////////////////
+
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"
 	desc = "Allows for the construction of circuit boards used to build security camera computers."
@@ -29,6 +49,42 @@
 	build_path = /obj/item/circuitboard/computer/security
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/comconsole
+	name = "Computer Design (Communications)"
+	desc = "Allows for the construction of circuit boards used to build a communications console."
+	id = "comconsole"
+	build_path = /obj/item/circuitboard/computer/communications
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY		//Honestly should have a bridge techfab for this sometime.
+
+/datum/design/board/idcardconsole
+	name = "Computer Design (ID Console)"
+	desc = "Allows for the construction of circuit boards used to build an ID computer."
+	id = "idcardconsole"
+	build_path = /obj/item/circuitboard/computer/card
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY		//Honestly should have a bridge techfab for this sometime.
+
+/datum/design/board/secdata
+	name = "Computer Design (Security Records Console)"
+	desc = "Allows for the construction of circuit boards used to build a security records console."
+	id = "secdata"
+	build_path = /obj/item/circuitboard/computer/secure_data
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/prisonmanage
+	name = "Computer Design (Prisoner Management Console)"
+	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
+	id = "prisonmanage"
+	build_path = /obj/item/circuitboard/computer/prisoner
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+///////////////////
+///SCI Boards//////
+///////////////////
 
 /datum/design/board/rdcamera
 	name = "Computer Design (Research Monitor)"
@@ -64,6 +120,66 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/robocontrol
+	name = "Computer Design (Robotics Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
+	id = "robocontrol"
+	build_path = /obj/item/circuitboard/computer/robotics
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/mechacontrol
+	name = "Computer Design (Exosuit Control Console)"
+	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
+	id = "mechacontrol"
+	build_path = /obj/item/circuitboard/computer/mecha_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/mechapower
+	name = "Computer Design (Mech Bay Power Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
+	id = "mechapower"
+	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/rdconsole
+	name = "Computer Design (R&D Console)"
+	desc = "Allows for the construction of circuit boards used to build a new R&D console."
+	id = "rdconsole"
+	build_path = /obj/item/circuitboard/computer/rdconsole
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/nanite_chamber_control
+	name = "Computer Design (Nanite Chamber Control)"
+	desc = "Allows for the construction of circuit boards used to build a new nanite chamber control console."
+	id = "nanite_chamber_control"
+	build_path = /obj/item/circuitboard/computer/nanite_chamber_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/nanite_cloud_control
+	name = "Computer Design (Nanite Cloud Control)"
+	desc = "Allows for the construction of circuit boards used to build a new nanite cloud control console."
+	id = "nanite_cloud_control"
+	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/aifixer
+	name = "Computer Design (AI Integrity Restorer)"
+	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
+	id = "aifixer"
+	build_path = /obj/item/circuitboard/computer/aifixer
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+///////////////////
+///MEDICAL Boards//
+///////////////////
+
 /datum/design/board/med_data
 	name = "Computer Design (Medical Records)"
 	desc = "Allows for the construction of circuit boards used to build a medical records console."
@@ -96,117 +212,17 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/comconsole
-	name = "Computer Design (Communications)"
-	desc = "Allows for the construction of circuit boards used to build a communications console."
-	id = "comconsole"
-	build_path = /obj/item/circuitboard/computer/communications
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
-
-/datum/design/board/idcardconsole
-	name = "Computer Design (ID Console)"
-	desc = "Allows for the construction of circuit boards used to build an ID computer."
-	id = "idcardconsole"
-	build_path = /obj/item/circuitboard/computer/card
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
-
 /datum/design/board/crewconsole
 	name = "Computer Design (Crew monitoring computer)"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
 	build_path = /obj/item/circuitboard/computer/crew
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/board/secdata
-	name = "Computer Design (Security Records Console)"
-	desc = "Allows for the construction of circuit boards used to build a security records console."
-	id = "secdata"
-	build_path = /obj/item/circuitboard/computer/secure_data
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/board/atmosalerts
-	name = "Computer Design (Atmosphere Alert)"
-	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
-	id = "atmosalerts"
-	build_path = /obj/item/circuitboard/computer/atmos_alert
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/atmos_control
-	name = "Computer Design (Atmospheric Monitor)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
-	id = "atmos_control"
-	build_path = /obj/item/circuitboard/computer/atmos_control
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/robocontrol
-	name = "Computer Design (Robotics Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
-	id = "robocontrol"
-	build_path = /obj/item/circuitboard/computer/robotics
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/slot_machine
-	name = "Computer Design (Slot Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new slot machine."
-	id = "slotmachine"
-	build_path = /obj/item/circuitboard/computer/slot_machine
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
-/datum/design/board/powermonitor
-	name = "Computer Design (Power Monitor)"
-	desc = "Allows for the construction of circuit boards used to build a new power monitor."
-	id = "powermonitor"
-	build_path = /obj/item/circuitboard/computer/powermonitor
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/solarcontrol
-	name = "Computer Design (Solar Control)"
-	desc = "Allows for the construction of circuit boards used to build a solar control console."
-	id = "solarcontrol"
-	build_path = /obj/item/circuitboard/computer/solar_control
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/board/prisonmanage
-	name = "Computer Design (Prisoner Management Console)"
-	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
-	id = "prisonmanage"
-	build_path = /obj/item/circuitboard/computer/prisoner
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/board/mechacontrol
-	name = "Computer Design (Exosuit Control Console)"
-	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
-	id = "mechacontrol"
-	build_path = /obj/item/circuitboard/computer/mecha_control
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/mechapower
-	name = "Computer Design (Mech Bay Power Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
-	id = "mechapower"
-	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/rdconsole
-	name = "Computer Design (R&D Console)"
-	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
-	build_path = /obj/item/circuitboard/computer/rdconsole
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+///////////////////
+///CARGO Boards////
+///////////////////
 
 /datum/design/board/cargo
 	name = "Computer Design (Supply Console)"
@@ -240,6 +256,10 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
 
+///////////////////
+///ENGINE Boards///
+///////////////////
+
 /datum/design/board/comm_monitor
 	name = "Computer Design (Telecommunications Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
@@ -264,22 +284,6 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/aifixer
-	name = "Computer Design (AI Integrity Restorer)"
-	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
-	id = "aifixer"
-	build_path = /obj/item/circuitboard/computer/aifixer
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/board/libraryconsole
-	name = "Computer Design (Library Console)"
-	desc = "Allows for the construction of circuit boards used to build a new library console."
-	id = "libraryconsole"
-	build_path = /obj/item/circuitboard/computer/libraryconsole
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
-
 /datum/design/board/apc_control
 	name = "Computer Design (APC Control)"
 	desc = "Allows for the construction of circuit boards used to build a new APC control console."
@@ -288,18 +292,42 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/nanite_chamber_control
-	name = "Computer Design (Nanite Chamber Control)"
-	desc = "Allows for the construction of circuit boards used to build a new nanite chamber control console."
-	id = "nanite_chamber_control"
-	build_path = /obj/item/circuitboard/computer/nanite_chamber_control
+/datum/design/board/meteor_console
+	name = "Computer Design (Meteor Satellite Console)"
+	desc = "Allows for the construction of circuit boards used to build a new Meteor Satellite monitor console."
+	id = "meteor_console"
+	build_path = /obj/item/circuitboard/computer/sat_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/nanite_cloud_control
-	name = "Computer Design (Nanite Cloud Control)"
-	desc = "Allows for the construction of circuit boards used to build a new nanite cloud control console."
-	id = "nanite_cloud_control"
-	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
+/datum/design/board/atmosalerts
+	name = "Computer Design (Atmosphere Alert)"
+	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
+	id = "atmosalerts"
+	build_path = /obj/item/circuitboard/computer/atmos_alert
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/atmos_control
+	name = "Computer Design (Atmospheric Monitor)"
+	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
+	id = "atmos_control"
+	build_path = /obj/item/circuitboard/computer/atmos_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/powermonitor
+	name = "Computer Design (Power Monitor)"
+	desc = "Allows for the construction of circuit boards used to build a new power monitor."
+	id = "powermonitor"
+	build_path = /obj/item/circuitboard/computer/powermonitor
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/solarcontrol
+	name = "Computer Design (Solar Control)"
+	desc = "Allows for the construction of circuit boards used to build a solar control console."
+	id = "solarcontrol"
+	build_path = /obj/item/circuitboard/computer/solar_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
