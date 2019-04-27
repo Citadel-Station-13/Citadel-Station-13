@@ -713,6 +713,13 @@
 	surgery = /datum/surgery/advanced/bioware/nerve_splicing
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/nerve_grounding
+	name = "Nerve Grounding"
+	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
+	id = "surgery_nerve_ground"
+	surgery = /datum/surgery/advanced/bioware/nerve_grounding
+	research_icon_state = "surgery_chest"
+
 /datum/design/surgery/vein_threading
 	name = "Vein Threading"
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
