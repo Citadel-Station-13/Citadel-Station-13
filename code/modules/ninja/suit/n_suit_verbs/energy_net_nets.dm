@@ -108,9 +108,19 @@ It is possible to destroy the net by the occupant or someone else.
 	playsound(affecting, 'sound/effects/sparks2.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
 
-/obj/structure/energy_net/attack_paw(mob/user)
-	//return attack_hand() //How about no barehanded breaking of the net?
-	return
+/obj/structure/energy_net/attackby(obj/item/I, mob/user, params)
+
+	if(istype(user, /mob/living/carbon/alien/humanoid)) //so that aliums aren't completely cucked by nets
+		return attack_hand(user)
+	if(!I)
+		return
+	if(!I.force)
+		return
+
+	return attack_hand(user)
+
+/*/obj/structure/energy_net/attack_paw(mob/user)
+	return attack_hand()*/ //How about no barehanded breaking of the net?
 
 /obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/living/user)
 	return//We only want our target to be buckled
