@@ -204,6 +204,7 @@
 	//var/polling = FALSE
 	var/list/result = list()
 	var/list/group = null
+	var/pollStarted = FALSE
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
@@ -216,8 +217,9 @@
 ^^^breaks everything
 */
 /datum/reagent/fermi/proc/sepPoll()
-	var/list/procCandies = list()
-	procCandies = pollGhostCandidates(, "FermiClone", null, ROLE_SENTIENCE, 20) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	//var/list/procCandies = list()
+	//if (pollStarted == FALSE)
+	//	procCandies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 	sleep(300)
 	return procCandies
 
@@ -232,7 +234,10 @@
 	//Setup clone
 	switch(current_cycle)
 		if(1)
-			candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
+			if(pollStarted = FALSE)
+				pollStarted = TRUE
+				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
+
 
 		/*
 			for(var/mob/dead/observer/G in GLOB.player_list)
@@ -335,7 +340,8 @@
 
 	..()
 
-/datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //When the chem is removed, a few things can happen.
+/datum/reagent/fermi/SDGF/on_mob_delete(mob/living/M) //When the chem is removed, a few things can happen, mostly consolation prizes.
+	pollStarted = FALSE
 	if (playerClone == TRUE)//If the player made a clone with it, then thats all they get.
 		playerClone = FALSE
 		return
@@ -463,7 +469,7 @@
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
 			holder.remove_reagent("BElarger", 2, FALSE)
 	else //If they have them, increase size. If size is comically big, limit movement and rip clothes.
-
+		message_admins("Breast size: [B.size]")
 		if(B.size == "a")
 			B.size = "b"
 			to_chat(M, "<span class='warning'>You feel your breasts grow to a modest size.</b></span>")
@@ -523,9 +529,9 @@
 		P.size -= 0.2
 		if (P.size <= 0.1)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
-			qdel(P)
+			P.Remove(P)
 			if(T)
-				qdel(T)
+				T.Remove(M)
 		else if (P.size > 9 )
 			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.size - 8.1))//Via la liberation
 			M.next_move_modifier -= 0.1
@@ -617,11 +623,11 @@
 		B.size -= 0.2
 		if (B.size < 0.1)
 			to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
-			qdel(B)
+			B.Remove(M)
 			if(V)
-				qdel(V)
+				V.Remove(M)
 			if(W)
-				qdel(W)
+				W.Remove(M)
 
 	if(!T)
 		var/obj/item/organ/genital/testicles/nT = new
