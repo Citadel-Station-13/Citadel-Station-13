@@ -1165,7 +1165,7 @@
 	id = "changelingadrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C8A5DC"
-	overdose_threshold = 20
+	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
 	M.AdjustUnconscious(-20, 0)

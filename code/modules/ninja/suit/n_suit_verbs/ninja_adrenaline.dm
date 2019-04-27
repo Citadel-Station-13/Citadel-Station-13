@@ -8,12 +8,10 @@
 		H.SetStun(0)
 		H.SetKnockdown(0)
 		H.SetUnconscious(0)
-		H.adjustStaminaLoss(-200)
-		H.updatehealth()
-		H.update_stamina()
+		H.adjustStaminaLoss(-150)
 		H.stuttering = 0
-		H.resting = 0
 		H.lying = 0
+		H.resting = 0
 		H.update_canmove()
 
 		H.reagents.add_reagent("synaptizine", 10)
