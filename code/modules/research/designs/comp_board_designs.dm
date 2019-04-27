@@ -2,7 +2,7 @@
 
 /datum/design/board
 	name = "Computer Design ( NULL ENTRY )"
-	desc = "A blank compurter board!"
+	desc = "A blank computer board!"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000)
 
