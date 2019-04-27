@@ -39,7 +39,7 @@
 	var/list/items = list()
 
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/M)
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/human/H = M
 	if(H.w_uniform || H.wear_suit)
 		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 		items |= M.get_equipped_items(TRUE)
@@ -49,31 +49,47 @@
 		M.dropItemToGround(H.w_uniform)
 
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/M)
-	var/mob/living/carbon/human/H
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	var/mob/living/carbon/human/H = M
 	if(H.w_uniform || H.wear_suit)
 		items |= M.get_equipped_items(TRUE)
 		to_chat(M, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
 		M.dropItemToGround(H.wear_suit)
 		M.dropItemToGround(H.w_uniform)
+	switch(round(B.cached_size))
+		if(9)
+			if (!(B.breast_sizes[B.prev_size] == B.size))
+				M.remove_movespeed_modifier("megamilk")
+				M.next_move_modifier = 1
+		if(10 to INFINITY)
+			if (!(B.breast_sizes[B.prev_size] == B.size))
+				to_chat(M, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
+				M.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (round(B.cached_size) - 8))
+				M.next_move_modifier = (round(B.cached_size) - 8)
+
+/datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
+	M.remove_movespeed_modifier("megamilk")
+	M.next_move_modifier = 1
 
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
-	var/list/items = list()
+	//var/list/items = list()
+
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/M)
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/human/H = M
 	if(H.w_uniform || H.wear_suit)
 		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		items |= M.get_equipped_items(TRUE)
+		//items |= M.get_equipped_items(TRUE)
 		M.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
 		to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 		M.dropItemToGround(H.wear_suit)
 		M.dropItemToGround(H.w_uniform)
 
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/human/H = M
 	if(H.w_uniform || H.wear_suit)
-		items |= M.get_equipped_items(TRUE)
+		//items |= M.get_equipped_items(TRUE)
 		to_chat(M, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 		M.dropItemToGround(H.wear_suit)
 		M.dropItemToGround(H.w_uniform)
