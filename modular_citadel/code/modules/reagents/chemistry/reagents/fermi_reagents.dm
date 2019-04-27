@@ -217,7 +217,8 @@
 */
 /datum/reagent/fermi/proc/sepPoll()
 	var/list/procCandies = list()
-	procCandies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 20) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	procCandies = pollGhostCandidates(, "FermiClone", null, ROLE_SENTIENCE, 20) // see poll_ignore.dm, should allow admins to ban greifers or bullies
+	sleep
 	return procCandies
 
 	/*if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
@@ -231,6 +232,8 @@
 	//Setup clone
 	switch(current_cycle)
 		if(1)
+			candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
+			sleep(300)
 		/*
 			for(var/mob/dead/observer/G in GLOB.player_list)
 				group += G
@@ -244,7 +247,8 @@
 					result -= W
 			candies = result
 		*/
-			candies = pollGhostCandidates()
+
+
 		if(20 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
@@ -279,6 +283,7 @@
 
 				M.next_move_modifier = 1
 				M.nutrition = 150
+				holder.remove_reagent("SGDF", 999, FALSE)
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 				//after_success(user, SM)
@@ -422,25 +427,35 @@
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "melted ice cream"
 	overdose_threshold = 12
-	var/mob/living/carbon/M
-	var/mob/living/carbon/human/H = M
-	var/species/S
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
-	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
-	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
-	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+	//var/mob/living/carbon/M
+	var/mob/living/carbon/human/H
+	//var/mob/living/carbon/human/species/S
+	/*
+	var/obj/item/organ/genital/breasts/B
+	var/obj/item/organ/genital/penis/P
+	var/obj/item/organ/genital/testicles/T
+	var/obj/item/organ/genital/vagina/V
+	var/obj/item/organ/genital/womb/W
+	*/
 
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
-	if(!M.getorganslot("breasts")) //If they don't have breasts, give them breasts.
+	switch(current_cycle)
+		if(0)
+
+
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	if(!B) //If they don't have breasts, give them breasts.
+		message_admins("No breasts found!")
 		var/obj/item/organ/genital/breasts/nB = new
 		nB.Insert(M)
 		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
 				nB.color = skintone2hex(H.skin_tone)
-			else
+			else if(M.dna.features["breasts_color"])
 				nB.color = "#[M.dna.features["breasts_color"]]"
+			else
+				nB.color = skintone2hex(H.skin_tone)
 			nB.size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
 			B = nB
@@ -456,38 +471,44 @@
 				M.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
 				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
 				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-				S.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-			M.physical.speed += 0.1//big breasts are cumbersome
+				H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			M.add_movespeed_modifier("hugebreasts", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (B.size - 8.1))
 			M.next_move_modifier += 0.1
-	M.update()
+	//M.update()
 	..()
 
 /datum/reagent/fermi/BElarger/overdose_start(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
+
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
+	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
+	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
+
 	if(M.gender == MALE)
 		M.gender = FEMALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
 		P.size -= 0.2
-		if (P.size < 0.5)
+		if (P.size <= 0.1)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
 			qdel(P)
+			if(T)
+				qdel(T)
 		else if (P.size > 9 )
-			M.physical.speed -= 0.1//Liberation from comical size
+			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.size - 8.1))//Via la liberation
 			M.next_move_modifier -= 0.1
-			S.no_equip -= list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 
-
-	if(T)
-		if (P.size < 0.1 || !P)
-			qdel(T)
 	if(!V)
 		var/obj/item/organ/genital/vagina/nV = new
 		nV.Insert(M)
+		V = nV
 	if(!W)
 		var/obj/item/organ/genital/womb/nW = new
 		nW.Insert(M)
-	M.update()
+		W = nV
+	//M.update()
 	..()
 
 /datum/reagent/fermi/PElarger // Due to popular demand...!
@@ -497,24 +518,35 @@
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "meaty oil"
 	overdose_threshold = 12
-	var/mob/living/carbon/M
-	var/species/S
-	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
-	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
-	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
-	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-	var/mob/living/carbon/human/H = M
+	//var/mob/living/carbon/M
+	//var/mob/living/carbon/human/species/S
+	/*
+	var/obj/item/organ/genital/penis/P
+	var/obj/item/organ/genital/testicles/T
+	var/obj/item/organ/genital/vagina/V
+	var/obj/item/organ/genital/womb/W
+	var/obj/item/organ/genital/breasts/B
+	*/
+	var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
-	if(!M.getorganslot("penis"))
+	switch(current_cycle)
+		if(0)
+			var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+
+
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis)")
+	if(!P)
+		message_admins("No penis found!")
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
 		if(nP)
 			if(M.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
 				nP.color = skintone2hex(H.skin_tone)
-			else
+			else if(M.dna.features["cock_color"])
 				nP.color = "#[M.dna.features["cock_color"]]"
+			else
+				nP.color = skintone2hex(H.skin_tone)
 			nP.size = 0
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a new bulge down below.</b></span>")
 			P = nP
@@ -528,10 +560,11 @@
 				M.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
 				to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 				playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-				S.no_equip += list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
-			M.physical.speed += 0.1//big breasts are cumbersome
+				H.dna.species.no_equip = list()
+			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.size - 8.1))
 			M.next_move_modifier += 0.1
-	M.update()
+	//H.update()
+	message_admins("P size: [P.size]")
 	..()
 
 /datum/reagent/fermi/PElarger/overdose_start(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
@@ -540,22 +573,21 @@
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
-	if(!P)
-		var/obj/item/organ/genital/penis/nP = new
-		nP.Insert(M)
-	if(!T)
-		var/obj/item/organ/genital/testicles/nT = new
-		nT.Insert(M)
-	M.update()
-	..()
-
-
-
 	if(B)
 		B.size -= 0.2
 		if (B.size < 0.1)
 			to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 			qdel(B)
+
+	if(!T)
+		var/obj/item/organ/genital/testicles/nT = new
+		nT.Insert(M)
+	//H.update()
+	..()
+
+
+
+
 
 
 /*

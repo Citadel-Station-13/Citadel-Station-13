@@ -44,7 +44,7 @@
 			desc = "You see a pair of breasts."
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
-	if (size <= 8.5)
+	if (size >= 8.5)
 		desc += " You estimate that they're [uppertext(size)]-cups."
 	else if (size > 8.5)
 		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "big old tonhongerekoogers", "giant bonkhonagahoogs", "humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [size]cm in diameter."
