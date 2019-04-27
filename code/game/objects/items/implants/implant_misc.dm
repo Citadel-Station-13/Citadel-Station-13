@@ -41,7 +41,6 @@
 	imp_in.adjustStaminaLoss(-150)
 	imp_in.stuttering = 0
 	imp_in.resting = 0
-	imp_in.lying = 0
 	imp_in.update_canmove()
 
 	imp_in.reagents.add_reagent("synaptizine", 10)

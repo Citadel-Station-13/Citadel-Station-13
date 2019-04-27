@@ -22,7 +22,6 @@
 	user.adjustStaminaLoss(-150)
 	user.stuttering = 0
 	user.resting = 0
-	user.lying = 0
 	user.update_canmove()
 	return TRUE
 

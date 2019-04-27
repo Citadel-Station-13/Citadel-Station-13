@@ -10,7 +10,6 @@
 		H.SetUnconscious(0)
 		H.adjustStaminaLoss(-150)
 		H.stuttering = 0
-		H.lying = 0
 		H.resting = 0
 		H.update_canmove()
 
