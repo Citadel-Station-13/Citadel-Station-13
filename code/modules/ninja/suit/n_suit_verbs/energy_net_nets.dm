@@ -14,7 +14,7 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
-	max_integrity = 25 //How much health it has.
+	max_integrity = 45 //How much health it has.
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
@@ -63,8 +63,9 @@ It is possible to destroy the net by the occupant or someone else.
 		affecting.revive(1, 1) //Basically a full heal, including limbs/organs.
 
 	var/datum/antagonist/antag_datum
-	for(antag_datum in GLOB.antagonists)
-		if(antag_datum.owner == master)
+	for(var/datum/antagonist/AD in GLOB.antagonists)
+		if(AD.owner == master)
+			antag_datum = AD
 			break
 
 	for(var/datum/objective/capture/capture in antag_datum)
@@ -108,7 +109,8 @@ It is possible to destroy the net by the occupant or someone else.
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
 
 /obj/structure/energy_net/attack_paw(mob/user)
-	return attack_hand()
+	//return attack_hand() //How about no barehanded breaking of the net?
+	return
 
 /obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/living/user)
 	return//We only want our target to be buckled
