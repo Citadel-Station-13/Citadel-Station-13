@@ -39,6 +39,7 @@
 	var/list/items = list()
 
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/M)//Removes clothes, they're too small to contain you. You belong to space now.
+	message_admins("BElarge started!")
 	var/mob/living/carbon/human/H = M
 	for(var/obj/item/W in H)
 		if(W == H.w_uniform || W == H.wear_suit)
@@ -51,6 +52,7 @@
 		//owner.dropItemToGround(owner.w_uniform)
 
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/M)//If you try to wear clothes, you fail. Slows you down if you're comically huge
+	message_admins("BElarge tick!")
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	var/mob/living/carbon/human/H = M
 	message_admins("M: [M]")

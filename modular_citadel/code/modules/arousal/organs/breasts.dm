@@ -56,7 +56,6 @@
 			desc += " They're very small and flatchested, however."
 		else
 			desc += " You estimate that they're [uppertext(size)]-cups."
-	else
 
 	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."
@@ -96,11 +95,16 @@
 			size = breast_sizes[round(cached_size)]
 			//if(!H.has_status_effect(/datum/status_effect/chem/BElarger))
 			H.apply_status_effect(/datum/status_effect/chem/BElarger)
+			message_admins("Attempting to apply.")
 		if(16 to INFINITY)
 			size = cached_size
 	message_admins("Breast size: [size], [cached_size], [owner]")
+	if(size == 0)//Bloody byond with it's counting from 1
+		size = 17
 	message_admins("[breast_values[prev_size]] vs [breast_values[size]]")
 	if (!(prev_size == breast_values[size]))
+		if(prev_size == 0)//rabble rabble
+			prev_size = 17
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 			prev_size = cached_size
