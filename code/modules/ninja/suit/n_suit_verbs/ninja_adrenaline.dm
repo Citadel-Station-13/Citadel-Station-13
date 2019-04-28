@@ -16,6 +16,7 @@
 		H.lying = 0
 		H.update_canmove()
 
+		H.reagents.add_reagent("inaprovaline", 3) //let's give another chance to dumb fucks who forget to breathe
 		H.reagents.add_reagent("synaptizine", 10)
 		H.reagents.add_reagent("omnizine", 10)
 		H.reagents.add_reagent("stimulants", 10)

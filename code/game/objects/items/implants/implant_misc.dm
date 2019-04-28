@@ -46,6 +46,7 @@
 	imp_in.lying = 0
 	imp_in.update_canmove()
 
+	imp_in.reagents.add_reagent("inaprovaline", 3) //let's give another chance to dumb fucks who forget to breathe
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
 	imp_in.reagents.add_reagent("stimulants", 10)
