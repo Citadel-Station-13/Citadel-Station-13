@@ -150,7 +150,7 @@
 	return ..()
 
 /obj/item/gun/mag/can_shoot()
-	var/obj/item/ammo_casing/mag/ = ammo_type
+	var/obj/item/ammo_casing/mag/mag = ammo_type
 	return !QDELETED(cell) ? (cell.charge >= mag.e_cost) : FALSE
 
 /obj/item/gun/mag/recharge_newshot(no_cyborg_drain)
@@ -165,7 +165,7 @@
 
 /obj/item/gun/mag/process_chamber()
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
-		var/obj/item/ammo_casing/mag/ = chambered
+		var/obj/item/ammo_casing/mag/mag = chambered
 		cell.use(mag.e_cost)//... drain the cell cell
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
