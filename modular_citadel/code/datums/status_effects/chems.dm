@@ -37,31 +37,33 @@
 /datum/status_effect/chem/BElarger
 	id = "BElarger"
 	//var/list/items = list()
-	var/mob/living/carbon/human/o = owner
-	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	//var/items = o.get_contents()
 
 //mob/living/carbon/M = M tried, no dice
 //owner, tried, no dice
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
-	message_admins("BElarge started!")
+	var/mob/living/carbon/human/o = owner
 	if(o.w_uniform)
-    	o.dropItemToGround(H.w_uniform, TRUE)
+		o.dropItemToGround(H.w_uniform, TRUE)
+		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	if(o.wear_suit)
-    	o.dropItemToGround(H.wear_suit, TRUE)
-	playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		o.dropItemToGround(H.wear_suit, TRUE)
+		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	message_admins("BElarge started!")
 	o.visible_message("<span class='boldnotice'>[H]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
 	to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
 	return ..()
 
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
-	message_admins("BElarge tick!")
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	if(o.w_uniform)
-    	o.dropItemToGround(H.w_uniform, TRUE)
+		o.dropItemToGround(H.w_uniform, TRUE)
 		to_chat(owner, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
 	if(o.wear_suit)
-    	o.dropItemToGround(H.wear_suit, TRUE)
+		o.dropItemToGround(H.wear_suit, TRUE)
 		to_chat(owner, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
+	message_admins("BElarge tick!")
 	/*
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -91,41 +93,42 @@
 
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
-	var/mob/living/carbon/human/o = owner
-	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	message_admins("PElarge started!")
+	var/mob/living/carbon/human/o = owner
 	if(o.w_uniform)
-    	o.dropItemToGround(H.w_uniform, TRUE)
+		o.dropItemToGround(H.w_uniform, TRUE)
 		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	if(o.wear_suit)
-    	o.dropItemToGround(H.wear_suit, TRUE)
+		o.dropItemToGround(H.wear_suit, TRUE)
 		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-	owner.visible_message("<span class='boldnotice'>[M]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
-	to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
+	owner.visible_message("<span class='boldnotice'>[o]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
+	to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 	return ..()
 
 
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 	message_admins("PElarge tick!")
 	if(o.w_uniform)
-		o.dropItemToGround(H.w_uniform, TRUE)
+		o.dropItemToGround(o.w_uniform, TRUE)
 		to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 	if(o.wear_suit)
-		o.dropItemToGround(H.wear_suit, TRUE)
+		o.dropItemToGround(o.wear_suit, TRUE)
 		to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
-	switch(round(P.cached_size))
+	switch(round(P.cached_length))
 		if(11)
 			if (!(P.prev_size == P.size))
-				to_chat(H, "<span class='warning'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+				to_chat(o, "<span class='warning'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 				o.remove_movespeed_modifier("hugedick")
 				o.next_move_modifier = 1
 		if(12 to INFINITY)
 			if (!(P.prev_size == P.size))
-				to_chat(H, "<span class='warning'>Your indulgent johnson is so substantial, it's affecting your movements!</b></span>")
+				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's affecting your movements!</b></span>")
 				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 11.1))
-				o.next_move_modifier = (round(B.cached_size) - 8)
+				o.next_move_modifier = (round(P.length) - 11)
 	..()
 
 

@@ -18,13 +18,12 @@
 	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags 		= list()
 	var/list/knotted_types 	= list("knotted", "barbed, knotted")
-	var/mob/living/carbon/human/o = owner
 	var/statuscheck			= FALSE
 	var/prev_size			= 6
 
 
 /obj/item/organ/genital/penis/update_size()
-
+	var/mob/living/carbon/human/o = owner
 	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		var/obj/item/organ/genital/penis/P = o.getorganslot("breasts")
 		to_chat(o, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
@@ -60,10 +59,11 @@
 	prev_size = length
 	icon_state = sanitize_text("penis_[shape]_[size]")
 	o.update_body()
-	P.update_icon()
+	//P.update_icon()
 	girth = (length * girth_ratio)
 
 /obj/item/organ/genital/penis/update_appearance()
+	var/mob/living/carbon/human/o = owner
 	var/string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
@@ -75,7 +75,7 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
-	H.update_body()
+	o.update_body()
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

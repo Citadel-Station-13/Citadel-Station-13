@@ -76,9 +76,9 @@
 //Should I turn someone with meter wide... assets into a blob?
 //this is far too lewd wah
 /obj/item/organ/genital/breasts/update_size()//wah
+	var/obj/item/organ/genital/breasts/B = owner.getorganslot("breasts")
 	message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
-		var/obj/item/organ/genital/breasts/B = owner.getorganslot("breasts")
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		B.Remove(owner)
 	switch(round(cached_size))
@@ -105,10 +105,10 @@
 			size = cached_size
 	message_admins("Breast size: [size], [cached_size], [owner]")
 	if(round(cached_size) < 16)//Because byond doesn't count from 0, I have to do this.
-		if (!isnum(prev_size))
-			breast_values[prev_size]
-		if(!isnum(prev_size)//Bloody byond with it's counting from 1
-			breast_values[prev_size]
+		if (isnum(prev_size))
+			prev_size = breast_values[prev_size]//make numbers letters
+		if(isnum(size))//Bloody byond with it's counting from 1
+			size = breast_values[size] //make numbers letters
 		message_admins("2. [breast_values[size]] vs [breast_values[prev_size]]")
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
@@ -117,7 +117,7 @@
 		prev_size = size
 		icon_state = sanitize_text("breasts_[shape]_[size]")
 
-	else (cached_size == 16.2)
-			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
+	else if (cached_size == 16.2)
+		to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
 	owner.update_body()
 	B.update_icon()

@@ -484,7 +484,7 @@
 
 	if(P)
 		P.length = P.length - 0.1
-		message_admins("Breast size: [P.size], [P.cached_size], [holder]")
+		message_admins("Breast size: [P.size], [P.cached_length], [holder]")
 		P.update()
 	if(T)
 		T.Remove(M)
@@ -518,30 +518,6 @@
 	var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
-
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-	if(!B) //If they don't have breasts, give them breasts.
-		message_admins("No breasts found!")
-		var/obj/item/organ/genital/breasts/nB = new
-		nB.Insert(M)
-		if(nB)
-			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
-				nB.color = skintone2hex(H.skin_tone)
-			else if(M.dna.features["breasts_color"])
-				nB.color = "#[M.dna.features["breasts_color"]]"
-			else
-				nB.color = skintone2hex(H.skin_tone)
-			nB.size = "flat"
-
-			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-
-			B = nB
-	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
-	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
-	B.cached_size = B.cached_size + 0.1
-
-	B.update()
-
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found!")//They do have a preponderance for escapism, or so I've heard.
@@ -556,14 +532,12 @@
 			P = nP
 	else
 		P.length = P.length + 0.1
-		if (P.cached_size >= 10.5 && P.cached_length < 11) //too low?
-			M.apply_damage(2, BRUTE, target)
+		if (P.cached_length >= 10.5 && P.cached_length < 11) //too low?
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
 			M.apply_damage(5, BRUTE, target)
 
 	P.update_appearance()
-	message_admins("P size: [P.length]")
 	..()
 
 /datum/reagent/fermi/PElarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
