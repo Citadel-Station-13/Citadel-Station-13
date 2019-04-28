@@ -41,15 +41,17 @@
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/M)//Removes clothes, they're too small to contain you. You belong to space now.
 	message_admins("BElarge started!")
 	var/mob/living/carbon/human/H = M
-	for(var/obj/item/W in H)
+	var/items = M.get_contents()
+	for(W in items)
 		if(W == H.w_uniform || W == H.wear_suit)
-			H.dropItemToGround(W)
-		playsound(owner.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		//items |= owner.get_equipped_items(TRUE)
-		owner.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
-		to_chat(owner, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
-		//owner.dropItemToGround(owner.wear_suit)
-		//owner.dropItemToGround(owner.w_uniform)
+			M.dropItemToGround(W, TRUE)
+			message_admins("Dropping [W]")
+	playsound(owner.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	//items |= owner.get_equipped_items(TRUE)
+	owner.visible_message("<span class='boldnotice'>[M]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
+	to_chat(owner, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
+	//owner.dropItemToGround(owner.wear_suit)
+	//owner.dropItemToGround(owner.w_uniform)
 
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/M)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	message_admins("BElarge tick!")

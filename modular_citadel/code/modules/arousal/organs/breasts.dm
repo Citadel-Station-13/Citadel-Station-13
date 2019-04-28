@@ -93,24 +93,34 @@
 			H.remove_status_effect(/datum/status_effect/chem/BElarger)
 		if(9 to 15)
 			size = breast_sizes[round(cached_size)]
-			//if(!H.has_status_effect(/datum/status_effect/chem/BElarger))
-			H.apply_status_effect(/datum/status_effect/chem/BElarger)
+			if(!H.has_status_effect(/datum/status_effect/chem/BElarger))
+				H.apply_status_effect(/datum/status_effect/chem/BElarger)
 			message_admins("Attempting to apply.")
 		if(16 to INFINITY)
 			size = cached_size
-	message_admins("Breast size: [size], [cached_size], [owner]")
-	if(size == 0)//Bloody byond with it's counting from 1
-		size = 17
-	message_admins("[breast_values[prev_size]] vs [breast_values[size]]")
-	if (!(prev_size == breast_values[size]))
-		if(prev_size == 0)//rabble rabble
-			prev_size = 17
-		if (breast_values[size] > breast_values[prev_size])
-			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
-			prev_size = cached_size
-		else if (breast_values[size] < breast_values[prev_size])
-			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "shrivels into")] a [uppertext(size)]-cup.</b></span>")
-			prev_size = cached_size
-	icon_state = "breasts_[shape]_[size]"
-	H.update_body()
+
+	if(round(cached_size) < 16)//Because byond doesn't count from 0, I have to do this.
+		if (prev_size == 0)
+			prev_size = "flat"
+		message_admins("Breast size: [size], [cached_size], [owner]")
+		if(size == 0)//Bloody byond with it's counting from 1
+			size = "flat"
+		message_admins("[prev_size] vs [breast_values[size]]")
+				message_admins("breast_values[size] vs [breast_values[prev_size]]")
+				if (breast_values[size] > breast_values[prev_size])
+					to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
+					//prev_size = cached_size
+				else if (breast_values[size] < breast_values[prev_size])
+					to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "shrivels into")] a [uppertext(size)]-cup.</b></span>")
+					//prev_size = cached_size
+		prev_size = size
+		icon_state = "breasts_[shape]_[size]"
+		H.update_body()
+	else
+		if(!isnum(prev_size))
+			prev_size = breast_values[prev_size]
+		if(size > prev_size)
+			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
+		else if (size < prev_size)
+			to_chat(owner, "<span class='warning'>Your breasts do something crazy that the big Fermis in the sky didn't account for.</b></span>")
 	//breasts.icon_state = "breasts_[shape]_[size]_0_FRONT"
