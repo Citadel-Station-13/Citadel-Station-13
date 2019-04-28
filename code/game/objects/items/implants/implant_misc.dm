@@ -40,12 +40,16 @@
 	imp_in.SetUnconscious(0)
 	imp_in.adjustStaminaLoss(-150)
 	imp_in.stuttering = 0
+	imp_in.updatehealth()
+	imp_in.update_stamina()
 	imp_in.resting = 0
+	imp_in.lying = 0
 	imp_in.update_canmove()
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
 	imp_in.reagents.add_reagent("stimulants", 10)
+
 	if(!uses)
 		qdel(src)
 
