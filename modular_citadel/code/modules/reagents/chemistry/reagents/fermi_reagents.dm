@@ -306,17 +306,17 @@
 					switch(current_cycle)
 						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
-						if(21 to 29)
+						if(22 to 29)
 							M.nutrition = M.nutrition + (M.nutrition/10)
 						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
-						if(30 to 49)
+						if(31 to 49)
 							M.nutrition = M.nutrition + (M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
 							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-						if(50 to 79)
+						if(51 to 79)
 							M.nutrition = M.nutrition + (M.nutrition/2)
 						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
@@ -622,7 +622,7 @@
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(prob(50))
+	if(prob(65))
 		M.alpha = M.alpha - 1
 	switch(M.alpha)
 		if(245)
