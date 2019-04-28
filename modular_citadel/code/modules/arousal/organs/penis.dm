@@ -48,6 +48,7 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
+	owner.update_body()
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

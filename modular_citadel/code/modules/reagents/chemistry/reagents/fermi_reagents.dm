@@ -405,13 +405,13 @@
 				holder.remove_reagent(src.id, 20)
 			else
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
-		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire.
+		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.nutrition -= 100
 			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
 			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			S.name = "Living teratoma"
-			S.real_name = "Living teratoma"
-			S.rabid = 1
+			S.real_name = "Living teratoma"//horrifying!!
+			S.rabid = 1//Make them an angery boi
 			//S.updateappearance(mutcolor_update=1)
 			holder.remove_reagent(src.id, 20)
 			M.adjustToxLoss(10, 0)
@@ -431,17 +431,9 @@
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
-	metabolization_rate = 2
-	//var/mob/living/carbon/M
+	metabolization_rate = 0.5
 	var/mob/living/carbon/human/H
-	//var/mob/living/carbon/human/species/S
-	/*
-	var/obj/item/organ/genital/breasts/B
-	var/obj/item/organ/genital/penis/P
-	var/obj/item/organ/genital/testicles/T
-	var/obj/item/organ/genital/vagina/V
-	var/obj/item/organ/genital/womb/W
-	*/
+
 
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
@@ -464,13 +456,14 @@
 				nB.color = skintone2hex(H.skin_tone)
 			nB.size = "flat"
 			nB.cached_size = 0
+			nB.prev_size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
 			M.reagents.remove_reagent(src.id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 	B.cached_size = B.cached_size + 0.1
-	if (B.cached_size >= 8 && B.cached_size < 8.5)
+	if (B.cached_size >= 8.5 && B.cached_size < 9)
 		to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 		M.adjustOxyLoss(10, 0)
 		M.adjustBruteLoss(2, 0)
@@ -502,6 +495,7 @@
 			H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 		else
 			M.remove_status_effect(/datum/status_effect/chem/PElarger)
+			P.update()
 	if(!V)
 		var/obj/item/organ/genital/vagina/nV = new
 		nV.Insert(M)
@@ -510,7 +504,6 @@
 		var/obj/item/organ/genital/womb/nW = new
 		nW.Insert(M)
 		W = nW
-	P.update()
 	..()
 
 /datum/reagent/fermi/PElarger // Due to popular demand...!
@@ -520,7 +513,7 @@
 	color = "#H60584" // rgb: 96, 0, 255
 	taste_description = "a salty and sticky substance."
 	overdose_threshold = 12
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5
 	//var/mob/living/carbon/M
 	//var/mob/living/carbon/human/species/S
 	/*
@@ -582,7 +575,8 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
-		B.cached_size = B.cached_size - B.cached_size
+		B.cached_size = B.cached_size - 0.1
+		message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 		B.update()
 	if(V)
 		V.Remove(M)
