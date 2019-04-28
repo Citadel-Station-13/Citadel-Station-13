@@ -1,3 +1,185 @@
+//Stollen vars so this all work for real - Copy pasted addtion
+
+/obj/item/ammo_casing/mag/
+	var/e_cost = 50
+
+/obj/item/gun/mag
+	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
+	var/cell_type = /obj/item/stock_parts/cell
+	var/modifystate = 0
+	var/list/ammo_type = list(/obj/item/ammo_casing/mag)
+	var/can_charge = 1 //Can it be charged in a recharger?
+	var/charge_sections = 4
+	ammo_x_offset = 2
+	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated iconn
+	var/charge_tick = 0
+	var/charge_delay = 4
+	var/dead_cell = FALSE //set to true so the gun is given an empty cell
+	var/spawnwithmagazine = TRUE
+	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
+	var/obj/item/ammo_box/magazine/magazine
+	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
+
+/obj/item/gun/mag/Initialize()
+	. = ..()
+	if(!spawnwithmagazine)
+		update_icon()
+		return
+	if (!magazine)
+		magazine = new mag_type(src)
+	chamber_round()
+	update_icon()
+
+/obj/item/gun/mag/process_chamber(empty_chamber = 1)
+	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	if(istype(AC)) //there's a chambered round
+		if(casing_ejector)
+			AC.forceMove(drop_location()) //Eject casing onto ground.
+			AC.bounce_away(TRUE)
+			chambered = null
+		else if(empty_chamber)
+			chambered = null
+	chamber_round()
+
+/obj/item/gun/mag/proc/chamber_round()
+	if (chambered || !magazine)
+		return
+	else if (magazine.ammo_count())
+		chambered = magazine.get_round()
+		chambered.forceMove(src)
+
+/obj/item/gun/mag/can_shoot()
+	if(!magazine || !magazine.ammo_count(0))
+		return 0
+	return 1
+
+/obj/item/gun/mag/attackby(obj/item/A, mob/user, params)
+	..()
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			if(user.transferItemToLoc(AM, src))
+				magazine = AM
+				to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+				if(magazine.ammo_count())
+					playsound(src, "gun_insert_full_magazine", 70, 1)
+					if(!chambered)
+						chamber_round()
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/gun_chamber_round.ogg', 100, 1), 3)
+				else
+					playsound(src, "gun_insert_empty_magazine", 70, 1)
+				A.update_icon()
+				update_icon()
+				return 1
+			else
+				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
+				return
+		else if (magazine)
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+
+/obj/item/gun/mag/attack_self(mob/living/user)
+	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	if(magazine)
+		magazine.forceMove(drop_location())
+		user.put_in_hands(magazine)
+		magazine.update_icon()
+		if(magazine.ammo_count())
+			playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, 1)
+		else
+			playsound(src, "gun_remove_empty_magazine", 70, 1)
+		magazine = null
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
+	else if(chambered)
+		AC.forceMove(drop_location())
+		AC.bounce_away()
+		chambered = null
+		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
+		playsound(src, "gun_slide_lock", 70, 1)
+	else
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+	update_icon()
+	return
+
+
+/obj/item/gun/mag/examine(mob/user)
+	..()
+	to_chat(user, "It has [get_ammo()] round\s remaining.")
+
+/obj/item/gun/mag/proc/get_ammo(countchambered = 1)
+	var/boolets = 0 //mature var names for mature people
+	if (chambered && countchambered)
+		boolets++
+	if (magazine)
+		boolets += magazine.ammo_count()
+	return boolets
+
+/obj/item/gun/mag/emp_act(severity)
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+		recharge_newshot() //and try to charge a new shot
+
+/obj/item/gun/mag/get_cell()
+	return cell
+
+/obj/item/gun/mag/Initialize()
+	. = ..()
+	if(cell_type)
+		cell = new cell_type(src)
+	else
+		cell = new(src)
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
+	update_ammo_types()
+	recharge_newshot(TRUE)
+
+/obj/item/gun/mag/proc/update_ammo_types()
+	var/obj/item/ammo_casing/mag/shot
+	for (var/i = 1, i <= ammo_type.len, i++)
+		var/shottype = ammo_type[i]
+		shot = new shottype(src)
+		ammo_type[i] = shot
+	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
+
+/obj/item/gun/mag/Destroy()
+	QDEL_NULL(cell)
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/gun/mag/can_shoot()
+	var/obj/item/ammo_casing/mag/ = ammo_type
+	return !QDELETED(cell) ? (cell.charge >= mag.e_cost) : FALSE
+
+/obj/item/gun/mag/recharge_newshot(no_cyborg_drain)
+	if (!ammo_type || !cell)
+		return
+	if(!chambered)
+		var/obj/item/ammo_casing/energy/AC = ammo_type
+		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
+			chambered = AC //...prepare a new shot based on the current ammo type selected
+			if(!chambered.BB)
+				chambered.newshot()
+
+/obj/item/gun/mag/process_chamber()
+	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+		var/obj/item/ammo_casing/mag/ = chambered
+		cell.use(mag.e_cost)//... drain the cell cell
+	chambered = null //either way, released the prepared shot
+	recharge_newshot() //try to charge a new shot
+
+/obj/item/gun/mag/update_icon(force_update)
+	if(QDELETED(src))
+		return
+	..()
+	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
+	if(ratio == old_ratio && !force_update)
+		return
+	old_ratio = ratio
+	cut_overlays()
+
 ///////XCOM X9 AR///////
 
 /obj/item/gun/ballistic/automatic/x9	//will be adminspawn only so ERT or something can use them
@@ -55,7 +237,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 0
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -67,18 +249,20 @@
 
 /////actual ammo/////
 
-/obj/item/ammo_casing/caseless/amags
+/obj/item/ammo_casing/mag/amags
 	desc = "A ferromagnetic slug intended to be launched out of a compatible weapon."
 	caliber = "mags"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
+	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/mags
 
-/obj/item/ammo_casing/caseless/anlmags
+/obj/item/ammo_casing/mag/anlmags
 	desc = "A specialized ferromagnetic slug designed with a less-than-lethal payload."
 	caliber = "mags"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
+	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/nlmags
 
 //////magazines/////
@@ -87,7 +271,7 @@
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
-	ammo_type = /obj/item/ammo_casing/caseless/anlmags
+	ammo_type = /obj/item/ammo_casing/mag/anlmags
 	caliber = "mags"
 	max_ammo = 15
 	multiple_sprites = 2
@@ -96,11 +280,11 @@
 	name = "magpistol magazine (lethal)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
-	ammo_type = /obj/item/ammo_casing/caseless/amags
+	ammo_type = /obj/item/ammo_casing/mag/amags
 
 //////the gun itself//////
 
-/obj/item/gun/ballistic/automatic/pistol/mag
+/obj/item/gun/ballistic/mag/pistol/mag
 	name = "magpistol"
 	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
@@ -108,12 +292,13 @@
 	force = 10
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
+//	cell_type = /obj/item/stock_parts/cell/magpistal
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 2
 	recoil = 0.2
 
-/obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
+/obj/item/gun/mag/automatic/pistol/mag/update_icon()
 	..()
 	if(magazine)
 		cut_overlays()
@@ -122,9 +307,16 @@
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
+//////the cell////////////
+
+/obj/item/stock_parts/cell/magpistal
+	name = "magpistal hyper power cell"
+	desc = "A small hyper cell, used in the mag pistal"
+	maxcharge = 3500 //70 shots before recharge
+
 ///research memes///
 
-/obj/item/gun/ballistic/automatic/pistol/mag/nopin
+/obj/item/gun/mag/automatic/pistol/mag/nopin
 	pin = null
 	spawnwithmagazine = FALSE
 
@@ -134,7 +326,7 @@
 	id = "magpisol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
-	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
+	build_path = /obj/item/gun/mag/automatic/pistol/mag/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -210,7 +402,7 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 0
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -221,18 +413,20 @@
 
 ///ammo casings///
 
-/obj/item/ammo_casing/caseless/amagm
+/obj/item/ammo_casing/energy/mag/amagm
 	desc = "A large ferromagnetic slug intended to be launched out of a compatible weapon."
 	caliber = "magm"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
+	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/magrifle
 
-/obj/item/ammo_casing/caseless/anlmagm
+/obj/item/ammo_casing/energy/mag/anlmagm
 	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
 	caliber = "magm"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
+	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
 
 ///magazines///
@@ -241,7 +435,7 @@
 	name = "magrifle magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
+	ammo_type = /obj/item/ammo_casing/energy/mag/anlmagm
 	caliber = "magm"
 	max_ammo = 24
 	multiple_sprites = 2
@@ -250,18 +444,19 @@
 	name = "magrifle magazine (lethal)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	ammo_type = /obj/item/ammo_casing/caseless/amagm
+	ammo_type = /obj/item/ammo_casing/energy/mag/amagm
 	max_ammo = 24
 
 ///the gun itself///
 
-/obj/item/gun/ballistic/automatic/magrifle
+/obj/item/gun/mag/automatic/magrifle
 	name = "\improper Magnetic Rifle"
 	desc = "A simple upscalling of the technologies used in the magpistol, the magrifle is capable of firing slightly larger slugs in bursts. Compatible with the magpistol's slugs."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
+	cell_type = /obj/item/stock_parts/cell/magrifle
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
@@ -270,6 +465,13 @@
 	spread = 5
 	recoil = 0.15
 	casing_ejector = 0
+
+//////the cell////////////
+
+/obj/item/stock_parts/cell/magrifle
+	name = "magrifle hyper power cell"
+	desc = "A small hyper cell, used in the mag rifle"
+	maxcharge = 2400 //48 shots before recharge
 
 ///research///
 
