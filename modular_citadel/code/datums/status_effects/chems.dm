@@ -36,84 +36,97 @@
 
 /datum/status_effect/chem/BElarger
 	id = "BElarger"
-	var/list/items = list()
+	//var/list/items = list()
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
+	//var/items = o.get_contents()
 
 //mob/living/carbon/M = M tried, no dice
 //owner, tried, no dice
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	message_admins("BElarge started!")
-	//var/mob/living/carbon/human/H = M
-	var/items = H.get_contents()
-	for(var/obj/item/W in items)
-		if(W == H.w_uniform || W == H.wear_suit)
-			owner.dropItemToGround(W, TRUE)
-			message_admins("Dropping [W]")
-	playsound(owner.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-	//items |= owner.get_equipped_items(TRUE)
-	owner.visible_message("<span class='boldnotice'>[H]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
-	to_chat(owner, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
-	//owner.dropItemToGround(owner.wear_suit)
-	//owner.dropItemToGround(owner.w_uniform)
+	if(o.w_uniform)
+    	o.dropItemToGround(H.w_uniform, TRUE)
+	if(o.wear_suit)
+    	o.dropItemToGround(H.wear_suit, TRUE)
+	playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	o.visible_message("<span class='boldnotice'>[H]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
+	to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
 	return ..()
 
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	message_admins("BElarge tick!")
-	var/mob/living/carbon/human/o = owner
-	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
-	//var/mob/living/carbon/human/H = M
-	message_admins("M: [H]")
-	message_admins("H: [H]")
-	message_admins("owner: [owner]")
+	if(o.w_uniform)
+    	o.dropItemToGround(H.w_uniform, TRUE)
+		to_chat(owner, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
+	if(o.wear_suit)
+    	o.dropItemToGround(H.wear_suit, TRUE)
+		to_chat(owner, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
+	/*
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
 		if(W == o.w_uniform || W == o.wear_suit)
 			o.dropItemToGround(W)
 		//items |= owner.get_equipped_items(TRUE)
-			to_chat(owner, "<span class='warning'>Your enormous breasts are way to large to fit anything over!</b></span>")
+
 		//owner.dropItemToGround(owner.wear_suit)
 		//owner.dropItemToGround(owner.w_uniform)
+	*/
 	switch(round(B.cached_size))
 		if(9)
 			if (!(B.breast_sizes[B.prev_size] == B.size))
-				owner.remove_movespeed_modifier("megamilk")
-				owner.next_move_modifier = 1
+				o.remove_movespeed_modifier("megamilk")
+				o.next_move_modifier = 1
 		if(10 to INFINITY)
 			if (!(B.breast_sizes[B.prev_size] == B.size))
 				to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
-				owner.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (round(B.cached_size) - 8))
-				owner.next_move_modifier = (round(B.cached_size) - 8)
+				o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (round(B.cached_size) - 8))
+				o.next_move_modifier = (round(B.cached_size) - 8)
 	..()
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
 	owner.remove_movespeed_modifier("megamilk")
 	owner.next_move_modifier = 1
 
+
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
-	//var/list/items = list()
+	var/mob/living/carbon/human/o = owner
+	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 
+/datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+	message_admins("PElarge started!")
+	if(o.w_uniform)
+    	o.dropItemToGround(H.w_uniform, TRUE)
+		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	if(o.wear_suit)
+    	o.dropItemToGround(H.wear_suit, TRUE)
+		playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	owner.visible_message("<span class='boldnotice'>[M]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
+	to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
+	return ..()
 
-/datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/M)
-	var/mob/living/carbon/human/H = M
-	for(var/obj/item/W in H)
-		if(W == H.w_uniform || W == H.wear_suit)
-			H.dropItemToGround(W)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1)
-		//items |= M.get_equipped_items(TRUE)
-		owner.visible_message("<span class='boldnotice'>[M]'s penis suddenly bursts forth, ripping their clothes off!'</span>")
-		to_chat(M, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling penis! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
-		//owner.dropItemToGround(owner.wear_suit)
-		//owner.dropItemToGround(owner.w_uniform)
 
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
-	var/mob/living/carbon/human/H = M
-	for(var/obj/item/W in H)
-		if(W == H.w_uniform || W == H.wear_suit)
-			H.dropItemToGround(W)
-		//items |= M.get_equipped_items(TRUE)
+	message_admins("PElarge tick!")
+	if(o.w_uniform)
+		o.dropItemToGround(H.w_uniform, TRUE)
 		to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
-		//owner.dropItemToGround(owner.wear_suit)
-		//owner.dropItemToGround(owner.w_uniform)
+	if(o.wear_suit)
+		o.dropItemToGround(H.wear_suit, TRUE)
+		to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
+	switch(round(P.cached_size))
+		if(11)
+			if (!(P.prev_size == P.size))
+				to_chat(H, "<span class='warning'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+				o.remove_movespeed_modifier("hugedick")
+				o.next_move_modifier = 1
+		if(12 to INFINITY)
+			if (!(P.prev_size == P.size))
+				to_chat(H, "<span class='warning'>Your indulgent johnson is so substantial, it's affecting your movements!</b></span>")
+				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 11.1))
+				o.next_move_modifier = (round(B.cached_size) - 8)
+	..()
 
 
 /*Doesn't work

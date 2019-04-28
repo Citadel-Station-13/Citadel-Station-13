@@ -433,7 +433,6 @@
 	overdose_threshold = 12
 	metabolization_rate = 0.5
 	var/mob/living/carbon/human/H
-	var/target = get_bodypart(BODY_ZONE_CHEST)
 
 
 
@@ -465,10 +464,10 @@
 	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 	B.cached_size = B.cached_size + 0.1
 	if (B.cached_size >= 8.5 && B.cached_size < 9)
+		var/target = M.get_bodypart(BODY_ZONE_CHEST)
 		to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 		M.adjustOxyLoss(10, 0)
-		M.apply_damage(5, BRUTE, target)
-
+		M.apply_damage(2, BRUTE, target)
 	B.update()
 	..()
 
@@ -485,17 +484,10 @@
 
 	if(P)
 		P.length = P.length - 0.1
-		if (P.length <= 0.1)
-			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
-			P.Remove(P)
-			if(T)
-				T.Remove(M)
-		else if (P.length > 7)
-			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))//Via la liberation
-			M.next_move_modifier -= 0.1
-		else
-			M.remove_status_effect(/datum/status_effect/chem/PElarger)
-			P.update()
+		message_admins("Breast size: [P.size], [P.cached_size], [holder]")
+		P.update()
+	if(T)
+		T.Remove(M)
 	if(!V)
 		var/obj/item/organ/genital/vagina/nV = new
 		nV.Insert(M)
@@ -514,7 +506,6 @@
 	taste_description = "a salty and sticky substance."
 	overdose_threshold = 12
 	metabolization_rate = 0.5
-	var/target get_bodypart(BODY_ZONE_CHEST)
 	//var/mob/living/carbon/M
 	//var/mob/living/carbon/human/species/S
 	/*
@@ -527,36 +518,47 @@
 	var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
-	/*
-	switch(current_cycle)
-		if(0)
-	*/
 
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	if(!B) //If they don't have breasts, give them breasts.
+		message_admins("No breasts found!")
+		var/obj/item/organ/genital/breasts/nB = new
+		nB.Insert(M)
+		if(nB)
+			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
+				nB.color = skintone2hex(H.skin_tone)
+			else if(M.dna.features["breasts_color"])
+				nB.color = "#[M.dna.features["breasts_color"]]"
+			else
+				nB.color = skintone2hex(H.skin_tone)
+			nB.size = "flat"
+
+			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
+
+			B = nB
+	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
+	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
+	B.cached_size = B.cached_size + 0.1
+
+	B.update()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
-		message_admins("No penis found!")
+		message_admins("No penis found!")//They do have a preponderance for escapism, or so I've heard.
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
 		if(nP)
-			/*
-			if(M.dna.species.use_skintones && H.dna.features["genitals_use_skintone"])
-				nP.color = skintone2hex(H.skin_tone)
-			else if(M.dna.features["cock_color"])
-				nP.color = "#[M.dna.features["cock_color"]]"
-			else*/
-			//nP.color = skintone2hex(H.skin_tone)
 			nP.length = 0.2
-			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a new bulge down below.</b></span>")
+			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
+			nP.cached_length = 0
+			nP.prev_size = 0
+			M.reagents.remove_reagent(src.id, 5)
 			P = nP
-			P.update_size()
 	else
 		P.length = P.length + 0.1
-		if (P.length > 9)
-			M.apply_status_effect(/datum/status_effect/chem/PElarger)
-			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))
-			M.next_move_modifier += 0.1
-		else if (P.length > 8.5)
+		if (P.cached_size >= 10.5 && P.cached_length < 11) //too low?
+			M.apply_damage(2, BRUTE, target)
+			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
 			M.apply_damage(5, BRUTE, target)
 
@@ -586,13 +588,22 @@
 	if(!T)
 		var/obj/item/organ/genital/testicles/nT = new
 		nT.Insert(M)
-
+		T = nT
 	..()
 
 
 /datum/reagent/fermi/Astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
-	id = "PElarger"
+	id = "astral"
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
+	color = "#H60584" // rgb: 96, 0, 255
+	taste_description = "a salty and sticky substance."
+	overdose_threshold = 12
+	metabolization_rate = 0.5
+
+/datum/reagent/fermi/Astral // Gives you the ability to astral project for a moment!
+	name = "Astrogen"
+	id = "astral"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
 	color = "#H60584" // rgb: 96, 0, 255
 	taste_description = "a salty and sticky substance."
