@@ -4,7 +4,7 @@
 	icon_state = "generic" //Shows up as the action button icon
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
-	var/mob/living/carbon/imp_in = null //It's not like simplemobs or silicons can use implants anyway.
+	var/mob/living/imp_in = null
 	item_color = "b"
 	var/allow_multiple = FALSE
 	var/uses = -1

@@ -11,7 +11,7 @@
 	action_background_icon_state = "bg_ling"
 
 //Recover from stuns.
-/obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>Energy rushes through us.[user.lying ? " We arise." : ""]</span>")
 	user.SetSleeping(0)
 	user.SetUnconscious(0)
