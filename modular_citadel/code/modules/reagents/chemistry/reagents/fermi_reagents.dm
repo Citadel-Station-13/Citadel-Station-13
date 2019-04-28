@@ -576,6 +576,8 @@
 	addiction_stage1_end = 9999//Should never end.
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
+	var/ODing = FALSE
+	var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255//Reset addiction
@@ -605,11 +607,13 @@
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	G.mind.transfer_to(origin)
 	qdel(G)
-	if(overdose)
-		M.Sleeping(10*volume, 0)
+	if(ODing = TRUE)
+		M.Sleeping(10*Svol, 0)
+		ODing = FALSE
 	..()
 
 /datum/reagent/fermi/astral/overdose_start(mob/living/carbon/M)
+	ODing = TRUE
 	if (!G == null)
 		if(prob(70))
 			to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
@@ -628,7 +632,7 @@
 			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
 			M.alpha = M.alpha - 1
 		if(180)
-			to_chat(M, "<span class='notice'>You're starting to get scared as more and more of your body and conciousness begins to fade.</b></span>")
+			to_chat(M, "<span class='notice'>You're starting to get scared as more and more of your body and consciousness begins to fade.</b></span>")
 			M.alpha = M.alpha - 1
 		if(120)
 			to_chat(M, "<span class='notice'>As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b></span>")
@@ -644,9 +648,9 @@
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
 			M.alpha = M.alpha - 1
 	if(M.alpha <= 30)
-		to_chat(M, "<span class='warning'>Your body disperses from exisitance, as you become one with the universe.</b></span>")
-		to_chat(M, "<span class='userdanger'>As your body disappears, your conciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable I will propose the idea that the player can retain living memories across lives if they die in this way only.
-		M.visible_message("[M] suddenly disappears, their body evaporatting from exisitance, freeing [M] from their mortal coil.")
+		to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
+		to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+		M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
 		qdel(M)
 	..()
 
@@ -659,7 +663,7 @@ alpha = 20
 reduce viewrange?
 */
 
-
+/*
 //Nanite removal
 //Writen by Trilby!!
 /datum/reagent/fermi/naninte_b_gone
@@ -668,16 +672,17 @@ reduce viewrange?
 	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
 	color = "#5a7267" // rgb: 90, 114, 103
 	overdose_threshold = 25
-	var/component/nanites/nan
+	v/component/nanites/nan
 
 /datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
-	if(nan in C)
-		regen_rate = -5.0
-	else
+	var/component/nanites/nane = C.GetComponent(/component/nanites)
+	if(isnull(nane))
 		return
+	nane.regen_rate = -5.0
 
 /datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
-	if(nan in C)
-		regen_rate = -7.5
-	else
+	var/component/nanites/nane = C.GetComponent(/component/nanites)
+	if(isnull(nane))
 		return
+	nane.regen_rate = -7.5
+*/
