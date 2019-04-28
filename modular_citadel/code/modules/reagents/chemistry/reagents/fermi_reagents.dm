@@ -578,10 +578,11 @@
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
+	M.alpha = 255//Reset addiction
 	switch(current_cycle)
-		if(1)
+		if(1)//Require a minimum
 			//var/mob/living/carbon/H = M
-			M.alpha = 255
+			//M.alpha = 255
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -604,13 +605,15 @@
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	G.mind.transfer_to(origin)
 	qdel(G)
+	if(overdose)
+		M.Sleeping(10*volume, 0)
 	..()
 
 /datum/reagent/fermi/astral/overdose_start(mob/living/carbon/M)
-	M.Sleeping(100, 0)
-	if(prob(25))
-		to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
-		G.forcemove(M.loc)
+	if (!G == null)
+		if(prob(70))
+			to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
+			do_teleport(G, M.loc)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
@@ -635,7 +638,7 @@
 			M.alpha = M.alpha - 1
 			M.add_trait(TRAIT_NOCLONE)
 		if(80)
-			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the coming oblivion of your self.</b></span>")
+			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the forthcoming oblivion.</b></span>")
 			M.alpha = M.alpha - 1
 		if(45)
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
@@ -656,7 +659,7 @@ alpha = 20
 reduce viewrange?
 */
 
-/*
+
 //Nanite removal
 //Writen by Trilby!!
 /datum/reagent/fermi/naninte_b_gone
@@ -665,16 +668,16 @@ reduce viewrange?
 	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
 	color = "#5a7267" // rgb: 90, 114, 103
 	overdose_threshold = 25
+	var/component/nanites/nan
 
 /datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
-	if(C./datum/component/nanites)
+	if(nan in C)
 		regen_rate = -5.0
 	else
 		return
 
 /datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
-	if(C./datum/component/nanites)
+	if(nan in C)
 		regen_rate = -7.5
 	else
 		return
-*/
