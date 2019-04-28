@@ -16,7 +16,7 @@
 	var/charge_delay = 4
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 	var/spawnwithmagazine = TRUE
-	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
+	var/mag_type = /obj/item/ammo_box/magazine/mmag //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 
@@ -284,7 +284,7 @@
 
 //////the gun itself//////
 
-/obj/item/gun/ballistic/mag/pistol/mag
+/obj/item/gun/mag/pistol/mag
 	name = "magpistol"
 	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
@@ -292,13 +292,13 @@
 	force = 10
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
-//	cell_type = /obj/item/stock_parts/cell/magpistal
+	cell_type = /obj/item/stock_parts/cell/magpistal
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 2
 	recoil = 0.2
 
-/obj/item/gun/mag/automatic/pistol/mag/update_icon()
+/obj/item/gun/mag/pistol/mag/update_icon()
 	..()
 	if(magazine)
 		cut_overlays()
@@ -316,7 +316,7 @@
 
 ///research memes///
 
-/obj/item/gun/mag/automatic/pistol/mag/nopin
+/obj/item/gun/mag/pistol/mag/nopin
 	pin = null
 	spawnwithmagazine = FALSE
 
@@ -326,7 +326,7 @@
 	id = "magpisol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
-	build_path = /obj/item/gun/mag/automatic/pistol/mag/nopin
+	build_path = /obj/item/gun/mag/pistol/mag/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -449,7 +449,7 @@
 
 ///the gun itself///
 
-/obj/item/gun/mag/automatic/magrifle
+/obj/item/gun/mag/magrifle
 	name = "\improper Magnetic Rifle"
 	desc = "A simple upscalling of the technologies used in the magpistol, the magrifle is capable of firing slightly larger slugs in bursts. Compatible with the magpistol's slugs."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
@@ -475,7 +475,7 @@
 
 ///research///
 
-/obj/item/gun/ballistic/automatic/magrifle/nopin
+/obj/item/gun/mag/magrifle/nopin
 	pin = null
 	spawnwithmagazine = FALSE
 
@@ -485,7 +485,7 @@
 	id = "magrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
-	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
+	build_path = /obj/item/gun/mag/magrifle/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
