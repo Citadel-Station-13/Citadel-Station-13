@@ -30,7 +30,7 @@
 	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
 	taste_description = "wiggly"
-	color = "#60A584" // rgb: 96, 0, 255
+	color = "#5020H4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 20
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -434,8 +434,6 @@
 	metabolization_rate = 0.5
 	var/mob/living/carbon/human/H
 
-
-
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	/*
 	switch(current_cycle)
@@ -526,18 +524,18 @@
 		if(nP)
 			nP.length = 0.2
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
-			nP.cached_length = 0
-			nP.prev_size = 0
+			nP.cached_length = 0.1
+			nP.prev_size = 0.1
 			M.reagents.remove_reagent(src.id, 5)
 			P = nP
-	else
-		P.length = P.length + 0.1
-		if (P.cached_length >= 10.5 && P.cached_length < 11) //too low?
-			var/target = M.get_bodypart(BODY_ZONE_CHEST)
-			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
-			M.apply_damage(5, BRUTE, target)
 
-	P.update_appearance()
+	P.cached_length = P.cached_length + 0.1
+	if (P.cached_length >= 10.5 && P.cached_length < 11) //too low?
+		var/target = M.get_bodypart(BODY_ZONE_CHEST)
+		to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
+		M.apply_damage(5, BRUTE, target)
+
+	P.update()
 	..()
 
 /datum/reagent/fermi/PElarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
@@ -566,24 +564,85 @@
 	..()
 
 
-/datum/reagent/fermi/Astral // Gives you the ability to astral project for a moment!
+/datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
 	id = "astral"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
-	color = "#H60584" // rgb: 96, 0, 255
+	description = "An opalescent murky liquid that is said to distort your soul from your being."
+	color = "#6600A4" // rgb: 96, 0, 255
 	taste_description = "a salty and sticky substance."
-	overdose_threshold = 12
-	metabolization_rate = 0.5
+	metabolization_rate = 2.5
+	overdose_threshold = 20
+	addiction_threshold = 30
+	addiction_stage1_end = 9999//Should never end.
+	var/mob/living/carbon/origin
+	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 
-/datum/reagent/fermi/Astral // Gives you the ability to astral project for a moment!
-	name = "Astrogen"
-	id = "astral"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
-	color = "#H60584" // rgb: 96, 0, 255
-	taste_description = "a salty and sticky substance."
-	overdose_threshold = 12
-	metabolization_rate = 0.5
+/datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
+	switch(current_cycle)
+		if(1)
+			//var/mob/living/carbon/H = M
+			M.alpha = 255
+			origin = M
+			if (G == null)
+				G = new(get_turf(M.loc))
+			G.attacktext = "raises the hairs on the neck of"
+			G.response_harm = "disrupts the concentration of"
+			G.response_disarm = "wafts"
+			G.loot = null
+			G.maxHealth = 5
+			G.health = 5
+			G.melee_damage_lower = 0
+			G.melee_damage_upper = 0
+			G.deathmessage = "disappears as if it was never really there to begin with"
+			G.incorporeal_move = 1
+			G.alpha = 25
+			G.name = "[M]'s astral ghost"
+			M.mind.transfer_to(G)
+	..()
 
+/datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
+	G.mind.transfer_to(origin)
+	qdel(G)
+	..()
+
+/datum/reagent/fermi/astral/overdose_start(mob/living/carbon/M)
+	origin.Sleeping(100, 0)
+	G.Sleeping(100, 0)
+	..()
+
+//Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body (cloning only..?).
+/datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
+	if(prob(50))
+		M.alpha = M.alpha - 1
+	switch(M.alpha)
+		if(245)
+			to_chat(M, "<span class='warning'>You notice your body starting to disappear, maybe you took too much Astrogen...?</b></span>")
+			M.alpha = M.alpha - 1
+		if(220)
+			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
+			M.alpha = M.alpha - 1
+		if(180)
+			to_chat(M, "<span class='notice'>You're starting to get scared as more and more of your body and conciousness begins to fade.</b></span>")
+			M.alpha = M.alpha - 1
+		if(120)
+			to_chat(M, "<span class='notice'>As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b></span>")
+			M.alpha = M.alpha - 1
+		if(100)
+			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
+			M.alpha = M.alpha - 1
+			M.add_trait(TRAIT_NOCLONE)
+		if(80)
+			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the coming oblivion of your self.</b></span>")
+			M.alpha = M.alpha - 1
+		if(45)
+			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
+			M.alpha = M.alpha - 1
+	if(M.alpha <= 30)
+		to_chat(M, "<span class='warning'>Your body disperses from exisitance, as you become one with the universe.</b></span>")
+		to_chat(M, "<span class='userdanger'>As your body disappears, your conciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable I will propose the idea that the player can retain living memories across lives if they die in this way only.
+		M.visible_message("[M] suddenly disappears, their body evaporatting from exisitance, freeing [M] from their mortal coil.")
+		qdel(M)
+	..()
 
 
 /*

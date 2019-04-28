@@ -76,11 +76,12 @@
 //Should I turn someone with meter wide... assets into a blob?
 //this is far too lewd wah
 /obj/item/organ/genital/breasts/update_size()//wah
-	var/obj/item/organ/genital/breasts/B = owner.getorganslot("breasts")
+	//var/mob/living/carbon/human/o = owner
+	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
-		B.Remove(owner)
+		src.Remove(owner)
 	switch(round(cached_size))
 		if(0) //If flatchested
 			size = "flat"
@@ -103,21 +104,25 @@
 
 		if(16 to INFINITY) //if Rediculous
 			size = cached_size
-	message_admins("Breast size: [size], [cached_size], [owner]")
+	//message_admins("1. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
+	//message_admins("1. [prev_size] vs [breast_values[size]]")
 	if(round(cached_size) < 16)//Because byond doesn't count from 0, I have to do this.
-		if (isnum(prev_size))
-			prev_size = breast_values[prev_size]//make numbers letters
-		if(isnum(size))//Bloody byond with it's counting from 1
-			size = breast_values[size] //make numbers letters
-		message_admins("2. [breast_values[size]] vs [breast_values[prev_size]]")
+		if (prev_size == 0)
+			prev_size = "flat"
+		if(size == 0)//Bloody byond with it's counting from 1
+			size = "flat"
+		if(isnum(prev_size))
+			prev_size = breast_sizes[prev_size]
+		message_admins("2. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 		else if (breast_values[size] < breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "contracts into")] a [uppertext(size)]-cup.</b></span>")
 		prev_size = size
-		icon_state = sanitize_text("breasts_[shape]_[size]")
 
 	else if (cached_size == 16.2)
 		to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
+
+	icon_state = sanitize_text("breasts_[shape]_[size]")
 	owner.update_body()
-	B.update_icon()
+	update_icon()

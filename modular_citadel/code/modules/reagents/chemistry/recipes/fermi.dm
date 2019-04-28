@@ -25,7 +25,7 @@
 
 /datum/chemical_reaction/eigenstate/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
-	var/reagent/fermi/eigenstate/location_created = location
+	var/datum/reagent/fermi/eigenstate/location_created = location
 
 //serum
 /datum/chemical_reaction/SDGF
