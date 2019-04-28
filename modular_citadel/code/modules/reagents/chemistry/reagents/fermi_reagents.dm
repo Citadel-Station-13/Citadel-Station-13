@@ -568,9 +568,9 @@
 	name = "Astrogen"
 	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
-	color = "#6600A4" // rgb: 96, 0, 255
-	taste_description = "a salty and sticky substance."
-	metabolization_rate = 2.5
+	color = "#A080H4" // rgb: , 0, 255
+	taste_description = "velvety brambles	"
+	metabolization_rate = 0
 	overdose_threshold = 20
 	addiction_threshold = 30
 	addiction_stage1_end = 9999//Should never end.
@@ -595,9 +595,10 @@
 			G.melee_damage_upper = 0
 			G.deathmessage = "disappears as if it was never really there to begin with"
 			G.incorporeal_move = 1
-			G.alpha = 25
-			G.name = "[M]'s astral ghost"
+			G.alpha = 35
+			G.name = "[M]'s astral projection"
 			M.mind.transfer_to(G)
+	holder.remove_reagent(src.id, current_cycle, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -606,11 +607,13 @@
 	..()
 
 /datum/reagent/fermi/astral/overdose_start(mob/living/carbon/M)
-	origin.Sleeping(100, 0)
-	G.Sleeping(100, 0)
+	M.Sleeping(100, 0)
+	if(prob(25))
+		to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
+		G.forcemove(M.loc)
 	..()
 
-//Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body (cloning only..?).
+//Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
 	if(prob(50))
 		M.alpha = M.alpha - 1
