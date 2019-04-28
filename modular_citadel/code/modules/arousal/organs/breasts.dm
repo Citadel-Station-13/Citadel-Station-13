@@ -49,12 +49,12 @@
 			desc = "You see a pair of breasts."
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
-	if (size == "huge")
+	if(isnum(size))
+		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "big old tonhongerekoogers", "giant bonkhonagahoogs", "humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [size]cm in diameter."
+	else if (!size == "huge")
 		desc += " You estimate that they're [uppertext(size)]-cups."
 	else
-		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "big old tonhongerekoogers", "giant bonkhonagahoogs", "humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [size]cm in diameter."
-	//else
-	//	desc += " You wouldn't measure them in cup sizes."
+		desc += " They're very small and flatchested, however."
 	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."
 	if(owner)
@@ -65,20 +65,21 @@
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
 
-/obj/item/organ/genital/breasts/update_size(mob/living/carbon/M)
 
+//Allows breasts to grow and change size, with sprite changes too.
+/obj/item/organ/genital/breasts/update_size(mob/living/carbon/M)//wah
 	switch(round(cached_size))
 		if(0)
 			size = "flat"
-			if(!M.has_status_effect(/datum/status_effect/chem/BElarger))
+			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 		if(1 to 8)
 			size = breast_sizes[round(cached_size)]
-			if(!M.has_status_effect(/datum/status_effect/chem/BElarger))
+			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 		if(9 to 15)
 			size = breast_sizes[round(cached_size)]
-			if(M.has_status_effect(/datum/status_effect/chem/BElarger))
+			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.apply_status_effect(/datum/status_effect/chem/BElarger)
 		if(16 to INFINITY)
 			size = "huge"
@@ -93,3 +94,6 @@
 		var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 		to_chat(M, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		B.Remove(M)
+	var/S = GLOB.breasts_shapes_list[shape]
+	var/mutable_appearance/genital_overlay = mutable_appearance(S.icon)
+	genital_overlay.icon_state = "breasts_[shape]_[size]_0_FRONT"

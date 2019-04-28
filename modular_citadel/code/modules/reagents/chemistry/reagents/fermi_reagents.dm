@@ -466,6 +466,7 @@
 			nB.cached_size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
 			M.reagents.remove_reagent(src.id, 5)
+			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 	B.cached_size = B.cached_size + 0.1
@@ -509,7 +510,7 @@
 		var/obj/item/organ/genital/womb/nW = new
 		nW.Insert(M)
 		W = nW
-	P.update_appearance()
+	P.update()
 	..()
 
 /datum/reagent/fermi/PElarger // Due to popular demand...!
