@@ -433,6 +433,7 @@
 	overdose_threshold = 12
 	metabolization_rate = 0.5
 	var/mob/living/carbon/human/H
+	var/target = get_bodypart(BODY_ZONE_CHEST)
 
 
 
@@ -466,12 +467,12 @@
 	if (B.cached_size >= 8.5 && B.cached_size < 9)
 		to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
 		M.adjustOxyLoss(10, 0)
-		M.adjustBruteLoss(2, 0)
+		M.apply_damage(5, BRUTE, target)
 
 	B.update()
 	..()
 
-/datum/reagent/fermi/BElarger/overdose_start(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/BElarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
@@ -483,7 +484,7 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
-		P.length -= 0.1
+		P.length = P.length - 0.1
 		if (P.length <= 0.1)
 			to_chat(M, "<span class='warning'>You feel your penis shink, disappearing from your loins, leaving a strange smoothness in your pants.</b></span>")
 			P.Remove(P)
@@ -492,7 +493,6 @@
 		else if (P.length > 7)
 			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))//Via la liberation
 			M.next_move_modifier -= 0.1
-			H.dna.species.no_equip = list(SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
 		else
 			M.remove_status_effect(/datum/status_effect/chem/PElarger)
 			P.update()
@@ -514,6 +514,7 @@
 	taste_description = "a salty and sticky substance."
 	overdose_threshold = 12
 	metabolization_rate = 0.5
+	var/target get_bodypart(BODY_ZONE_CHEST)
 	//var/mob/living/carbon/M
 	//var/mob/living/carbon/human/species/S
 	/*
@@ -552,24 +553,24 @@
 	else
 		P.length = P.length + 0.1
 		if (P.length > 9)
-			M.apply_status_effect(/datum/status_effect/chem/BElarger)
+			M.apply_status_effect(/datum/status_effect/chem/PElarger)
 			M.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 10.1))
 			M.next_move_modifier += 0.1
 		else if (P.length > 8.5)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
-			M.adjustBruteLoss(5, 0)
+			M.apply_damage(5, BRUTE, target)
 
 	P.update_appearance()
 	message_admins("P size: [P.length]")
 	..()
 
-/datum/reagent/fermi/PElarger/overdose_start(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/PElarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
 	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
 	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
 
-
+	message_admins("PE Breast status: [B]")
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
@@ -589,7 +590,14 @@
 	..()
 
 
-
+/datum/reagent/fermi/Astral // Gives you the ability to astral project for a moment!
+	name = "Astrogen"
+	id = "PElarger"
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
+	color = "#H60584" // rgb: 96, 0, 255
+	taste_description = "a salty and sticky substance."
+	overdose_threshold = 12
+	metabolization_rate = 0.5
 
 
 
