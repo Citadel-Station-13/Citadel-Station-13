@@ -59,9 +59,6 @@ It is possible to destroy the net by the occupant or someone else.
 				continue
 			H.dropItemToGround(W)
 
-	if(affecting.stat != DEAD)
-		affecting.revive(1, 1) //Basically a full heal, including limbs/organs.
-
 	var/datum/antagonist/antag_datum
 	for(var/datum/antagonist/AD in GLOB.antagonists)
 		if(AD.owner == master)
@@ -93,6 +90,9 @@ It is possible to destroy the net by the occupant or someone else.
 				continue
 			capture.captured_amount+=2
 
+
+	affecting.revive(1, 1)	//Basically a revive and full heal, including limbs/organs
+							//In case people who have been captured dead want to hang out at the holding area
 
 	playsound(affecting, 'sound/effects/sparks4.ogg', 50, 1)
 	new /obj/effect/temp_visual/dir_setting/ninja/phase/out(affecting.drop_location(), affecting.dir)
