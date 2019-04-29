@@ -361,7 +361,42 @@
 	build_path = /obj/item/ammo_box/magazine/mmag_e/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-///magrifle///
+/obj/item/projectile/bullet/reusable/foam_dart/mag
+	name = "magfoam dart"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-toy"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	light_range = 2
+	light_color = LIGHT_COLOR_YELLOW
+
+/obj/item/ammo_casing/caseless/foam_dart/mag
+	name = "magfoam dart"
+	desc = "A foam dart with fun light-up projectiles powered by magnets!"
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag
+
+/obj/item/ammo_box/magazine/internal/shot/toy/mag
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 14
+
+/obj/item/gun/ballistic/shotgun/toy/mag
+	name = "foam force magpistol"
+	desc = "A fancy toy sold alongside light-up foam force darts. Ages 8 and up."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toymag"
+	item_state = "gun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/mag
+	fire_sound = 'sound/weapons/magpistol.ogg'
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/ammo_box/foambox/mag
+	name = "ammo box (Magnetic Foam Darts)"
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "foambox"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 42
+ 
+///////////////// Mag rifle/////////////////
 
 /obj/item/gun/ballistic/automatic/magrifle_e
 	name = "\improper Magnetic Rifle"

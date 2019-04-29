@@ -25,7 +25,6 @@
 //	var/wide_icon = FALSE //CITDEL THINGS
 //	if(features["taur"] != "None")
 //		wide_icon = TRUE
-
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
@@ -37,6 +36,8 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	mannequin.cut_overlays()
+	mannequin.add_overlay(mutable_appearance('modular_citadel/icons/ui/backgrounds.dmi', bgstate, layer = SPACE_LAYER))
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
