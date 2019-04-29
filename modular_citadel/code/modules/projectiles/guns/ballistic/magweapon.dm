@@ -196,29 +196,6 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
-///toy memes///
-
-/obj/item/ammo_box/magazine/toy/x9
-	name = "foam force X9 magazine"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "toy9magazine"
-	max_ammo = 30
-	multiple_sprites = 2
-	materials = list(MAT_METAL = 200)
-
-/obj/item/gun/ballistic/automatic/x9/toy
-	name = "\improper Foam Force X9"
-	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "toy9"
-	can_suppress = 0
-	obj_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/toy/x9
-	casing_ejector = 0
-	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
-	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
-
 ///ammo///
 
 /obj/item/ammo_casing/caseless/mag_e
@@ -336,17 +313,17 @@
 /datum/design/magpistol_e
 	name = "Magpistol"
 	desc = "A weapon which fires ferromagnetic slugs."
-	id = "magpisol"
+	id = "magpisol_e"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag_e/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/mag_magpistol
+/datum/design/mag_magpistol_e
 	name = "Magpistol Magazine"
 	desc = "A 14 round magazine for the Magpistol."
-	id = "mag_magpistol"
+	id = "mag_magpistol_e"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag_e/small/lethal
@@ -356,46 +333,11 @@
 /datum/design/mag_magpistol/nl
 	name = "Magpistol Magazine (Non-Lethal)"
 	desc = "A 14 round non-lethal magazine for the Magpistol."
-	id = "mag_magpistol_nl"
+	id = "mag_magpistol_nl_e"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag_e/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/obj/item/projectile/bullet/reusable/foam_dart/mag
-	name = "magfoam dart"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile-toy"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	light_range = 2
-	light_color = LIGHT_COLOR_YELLOW
-
-/obj/item/ammo_casing/caseless/foam_dart/mag
-	name = "magfoam dart"
-	desc = "A foam dart with fun light-up projectiles powered by magnets!"
-	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag
-
-/obj/item/ammo_box/magazine/internal/shot/toy/mag
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 14
-
-/obj/item/gun/ballistic/shotgun/toy/mag
-	name = "foam force magpistol"
-	desc = "A fancy toy sold alongside light-up foam force darts. Ages 8 and up."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "toymag"
-	item_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/mag
-	fire_sound = 'sound/weapons/magpistol.ogg'
-	slot_flags = SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/ammo_box/foambox/mag
-	name = "ammo box (Magnetic Foam Darts)"
-	icon = 'icons/obj/guns/toy.dmi'
-	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 42
- 
 ///////////////// Mag rifle/////////////////
 
 /obj/item/gun/ballistic/automatic/magrifle_e
@@ -528,7 +470,7 @@
 	display_name = "Magnetic Weapons"
 	description = "Weapons using magnetic technology"
 	prereq_ids = list("weaponry", "adv_weaponry", "emp_adv")
-	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
+	design_ids = list("magrifle_e", "magpisol_e", "mag_magrifle_e", "mag_magrifle_nl_e", "mag_magpistol_e", "mag_magpistol_nl_e")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -656,3 +598,83 @@
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
 	maxcharge = 4000
+
+///foamagrifles///
+
+/obj/item/gun/ballistic/automatic/magrifle/toy
+	name = "foamag rifle"
+	desc = "A foam launching magnetic rifle. Ages 8 and up."
+	icon_state = "foamagrifle"
+	obj_flags = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/foamag
+	casing_ejector = FALSE
+	spread = 60
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/ballistic/shotgun/toy/mag
+	name = "foam force magpistol"
+	desc = "A fancy toy sold alongside light-up foam force darts. Ages 8 and up."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toymag"
+	item_state = "gun"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/mag
+	fire_sound = 'sound/weapons/magpistol.ogg'
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/gun/ballistic/automatic/x9/toy
+	name = "\improper Foam Force X9"
+	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9"
+	can_suppress = 0
+	obj_flags = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/x9
+	casing_ejector = 0
+	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
+
+//Toy bullet-things
+
+/obj/item/projectile/bullet/reusable/foam_dart/mag
+	name = "magfoam dart"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-toy"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	light_range = 2
+	light_color = LIGHT_COLOR_YELLOW
+
+/obj/item/ammo_casing/caseless/foam_dart/mag
+	name = "magfoam dart"
+	desc = "A foam dart with fun light-up projectiles powered by magnets!"
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag
+
+/obj/item/ammo_box/magazine/internal/shot/toy/mag
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 14
+
+/obj/item/ammo_box/magazine/toy/foamag
+	name = "foam force magrifle magazine"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamagmag"
+	max_ammo = 24
+	multiple_sprites = 2
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	materials = list(MAT_METAL = 200)
+
+/obj/item/ammo_box/foambox/mag
+	name = "ammo box (Magnetic Foam Darts)"
+	icon = 'icons/obj/guns/toy.dmi'
+	icon_state = "foambox"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	max_ammo = 42
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+	materials = list(MAT_METAL = 200)
