@@ -411,6 +411,8 @@
 			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
 		return
 
+	user.stop_pulling() //User has hands full, and we don't care about anyone else pulling on it, their problem. CLEAR!!
+
 	if(user.a_intent == INTENT_DISARM)
 		do_disarm(M, user)
 		return

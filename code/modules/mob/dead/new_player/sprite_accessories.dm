@@ -1267,7 +1267,7 @@
 /datum/sprite_accessory/tails_animated/human/none
 	name = "None"
 	icon_state = "none"
-
+/*
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
@@ -1276,7 +1276,7 @@
 /datum/sprite_accessory/tails_animated/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	color_src = HAIR
+	color_src = HAIR*/
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
