@@ -305,7 +305,7 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-/*
+*/
 ///foamagrifle///
 
 /obj/item/ammo_box/magazine/toy/foamag
