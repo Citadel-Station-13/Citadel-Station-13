@@ -1,7 +1,6 @@
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
-
-////////////////////////////////////////////FISH////////////////////////////////////////////
+///////////////////////////////////////////FISH////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/cubancarp
 	name = "\improper Cuban carp"
@@ -251,16 +250,6 @@
 	filling_color = "#7FFF00"
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtype = MEAT
-
-/obj/item/reagent_containers/food/snacks/sashimi
-	name = "carp sashimi"
-	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
-	icon_state = "sashimi"
-	bonus_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
-	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
-	filling_color = "#FA8072"
-	tastes = list("fish" = 1, "hot peppers" = 1)
-	foodtype = MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/nugget
 	name = "chicken nugget"
