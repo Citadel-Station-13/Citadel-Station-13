@@ -117,7 +117,7 @@
 
 /obj/item/stock_parts/cell/pumpaction	//nice number to achieve the amount of shots wanted
 	name = "pump action particle blaster power supply"
-	maxcharge = 1200
+	maxcharge = 1200 // 6 weak disable 2 lethal 3 taser shot 4 over charged disabler shot
 
 //PUMP ACTION DISABLER
 
@@ -149,7 +149,7 @@
 
 /obj/item/ammo_casing/energy/laser/scatter/disabler/pump
 	projectile_type = /obj/item/projectile/beam/disabler/weak
-	e_cost = 150
+	e_cost = 200
 	pellets = 4
 	variance = 30
 	fire_sound = 'modular_citadel/sound/weapons/ParticleBlaster.ogg'
@@ -158,12 +158,12 @@
 /obj/item/ammo_casing/energy/disabler/slug
 	projectile_type = /obj/item/projectile/beam/disabler/slug
 	select_name  = "overdrive"
-	e_cost = 200
+	e_cost = 300
 	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
 	projectile_type = /obj/item/projectile/beam/weak
-	e_cost = 200
+	e_cost = 600
 	select_name = "kill"
 	pellets = 3
 	variance = 15
@@ -173,7 +173,7 @@
 	projectile_type = /obj/item/projectile/energy/electrode/pump
 	select_name = "stun"
 	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
-	e_cost = 300
+	e_cost = 400
 	pellets = 3
 	variance = 20
 
@@ -187,7 +187,7 @@
 
 /obj/item/projectile/beam/disabler/slug
 	name = "positron blast"
-	damage = 80
+	damage = 40
 	range = 14
 	speed = 0.6
 	icon_state = "disablerslug"
@@ -200,8 +200,38 @@
 	color = null
 	nodamage = 1
 	knockdown = 100
-	stamina = 5
+	stamina = 25
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
+
+//Rnd implantation 
+
+/datum/techweb_node/e_shotguns
+	id = "e_shotguns"
+	display_name = "Particle Blaster Weapons"
+	description = "Weapons using a mix of shotguns and laser weapon technology"
+	prereq_ids = list("adv_weaponry", "adv_power", "emp_super", "magnetic_weapons")
+	design_ids = list("lethal_pump", "non_lethal_pump")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	export_price = 5000
+
+/datum/design/lethal_pump
+	name = "pump-action lethal particle blaste"
+	desc = "A engery gun that has been basically placed into a shotgun frame for spread of weaker shots, with less ammo."
+	id = "lethal_pump"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 3500, MAT_TITANIUM = 5000, MAT_SILVER = 2000, MAT_GOLD = 2500, MAT_DIAMOND = 1500)
+	build_path = /obj/item/gun/energy/pumpaction/defender
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/non_lethal_pump
+	name = "pump-action non-lethal particle blaster"
+	desc = "A taser that has been basicly basically into a shotgun frame for spread of weaker shots, with less ammo."
+	id = "non_lethal_pump"
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2500, MAT_TITANIUM = 3500, MAT_SILVER = 2500, MAT_GOLD = 3500)
+	build_path = /obj/item/gun/energy/pumpaction/blaster
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
