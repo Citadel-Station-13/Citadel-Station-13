@@ -102,7 +102,6 @@
 	update_icon()
 	return
 
-
 /obj/item/gun/mag/examine(mob/user)
 	..()
 	to_chat(user, "It has [get_ammo()] round\s remaining.")
@@ -220,113 +219,127 @@
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 
-////////XCOM2 Magpistol/////////
+///ammo///
 
-//////projectiles//////
+/obj/item/ammo_casing/caseless/mag_e
+	var/energy_cost = 0
 
-/obj/item/projectile/bullet/mags
+/obj/item/ammo_casing/caseless/mag_e/amagm_e
+	desc = "A large ferromagnetic slug intended to be launched out of a compatible weapon."
+	caliber = "magm"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile"
-	damage = 15
-	armour_penetration = 10
-	light_range = 2
-	speed = 0.6
-	range = 25
-	light_color = LIGHT_COLOR_RED
+	icon_state = "mag-casing-live"
+	projectile_type = /obj/item/projectile/bullet/magrifle
+	energy_cost = 300
 
-/obj/item/projectile/bullet/nlmags //non-lethal boolets
+/obj/item/ammo_casing/caseless/mag_e/anlmagm_e
+	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
+	caliber = "magm"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile-nl"
-	damage = 2
-	knockdown = 0
-	stamina = 25
-	armour_penetration = -10
-	light_range = 2
-	speed = 0.7
-	range = 25
-	light_color = LIGHT_COLOR_BLUE
+	icon_state = "mag-casing-live"
+	projectile_type = /obj/item/projectile/bullet/nlmagrifle
+	energy_cost = 300
 
-
-/////actual ammo/////
-
-/obj/item/ammo_casing/mag/amags
+/obj/item/ammo_casing/caseless/mag_e/amags
 	desc = "A ferromagnetic slug intended to be launched out of a compatible weapon."
 	caliber = "mags"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
-	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/mags
+	energy_cost = 200
 
-/obj/item/ammo_casing/mag/anlmags
+/obj/item/ammo_casing/caseless/mag_e/anlmags
 	desc = "A specialized ferromagnetic slug designed with a less-than-lethal payload."
 	caliber = "mags"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
-	e_cost = 50
 	projectile_type = /obj/item/projectile/bullet/nlmags
+	energy_cost = 200
 
-//////magazines/////
+///magazines///
 
-/obj/item/ammo_box/magazine/mmag/small
+/obj/item/ammo_box/magazine/mmag_e/
+	name = "magrifle magazine (non-lethal disabler)"
+	desc = "A 24-round magazine for the non-lethal Magrifle."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "mediummagmag"
+	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmagm_e
+	caliber = "magm"
+	max_ammo = 24
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/mmag_e/lethal
+	name = "magrifle magazine (lethal)"
+	desc = "A 24-round magazine for the lethal Magrifle."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "mediummagmag"
+	ammo_type = /obj/item/ammo_casing/caseless/mag_e/amagm_e
+	max_ammo = 24
+
+/obj/item/ammo_box/magazine/mmag_e/small
 	name = "magpistol magazine (non-lethal disabler)"
+	desc = "A 15-round magazine for the non-lethal Magpistol."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
-	ammo_type = /obj/item/ammo_casing/mag/anlmags
+	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmags
 	caliber = "mags"
 	max_ammo = 15
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/mmag/small/lethal
+/obj/item/ammo_box/magazine/mmag_e/small/lethal
 	name = "magpistol magazine (lethal)"
+	desc = "A 15-round magazine for the lethal Magpistol."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
-	ammo_type = /obj/item/ammo_casing/mag/amags
+	ammo_type = /obj/item/ammo_casing/caseless/mag_e/amags
 
-//////the gun itself//////
+///cells///
 
-/obj/item/gun/mag/pistol/mag
-	name = "magpistol"
-	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magpistol"
-	force = 10
-	fire_sound = 'sound/weapons/magpistol.ogg'
-	mag_type = /obj/item/ammo_box/magazine/mmag/small
-	cell_type = /obj/item/stock_parts/cell/magpistal
-	can_suppress = 0
-	casing_ejector = 0
-	fire_delay = 2
-	recoil = 0.2
+/obj/item/stock_parts/cell/magrifle_e
+	name = "magrifle power supply"
+	maxcharge = 14400
 
-/obj/item/gun/mag/pistol/mag/update_icon()
-	..()
-	if(magazine)
-		cut_overlays()
-		add_overlay("magpistol-magazine")
-	else
-		cut_overlays()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+/obj/item/stock_parts/cell/magpistol_e
+	name = "magpistol power supply"
+	maxcharge = 6000
 
-//////the cell////////////
+///sci designs///
 
-/obj/item/stock_parts/cell/magpistal
-	name = "magpistal hyper power cell"
-	desc = "A small hyper cell, used in the mag pistal"
-	maxcharge = 3500 //70 shots before recharge
+/datum/design/magrifle_e
+	name = "Magrifle"
+	desc = "An upscaled Magpistol in rifle form."
+	id = "magrifle_e"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle_e/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-///research memes///
+/datum/design/mag_magrifle_e
+	name = "Magrifle Magazine (Lethal)"
+	desc = "A 24-round magazine for the Magrifle."
+	id = "mag_magrifle_e"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
+	build_path = /obj/item/ammo_box/magazine/mmag_e/lethal
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/obj/item/gun/mag/pistol/mag/nopin
-	pin = null
-	spawnwithmagazine = FALSE
+/datum/design/mag_magrifle_e/nl
+	name = "Magrifle Magazine (Non-Lethal)"
+	desc = "A 24- round non-lethal magazine for the Magrifle."
+	id = "mag_magrifle_nl_e"
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
+	build_path = /obj/item/ammo_box/magazine/mmag_e
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/magpistol
+/datum/design/magpistol_e
 	name = "Magpistol"
 	desc = "A weapon which fires ferromagnetic slugs."
 	id = "magpisol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
-	build_path = /obj/item/gun/mag/pistol/mag/nopin
+	build_path = /obj/item/gun/ballistic/automatic/pistol/mag_e/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -336,7 +349,7 @@
 	id = "mag_magpistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
-	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
+	build_path = /obj/item/ammo_box/magazine/mmag_e/small/lethal
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -345,119 +358,19 @@
 	desc = "A 14 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
-	build_path = /obj/item/ammo_box/magazine/mmag/small
+	build_path = /obj/item/ammo_box/magazine/mmag_e/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-//////toy memes/////
+///magrifle///
 
-/obj/item/projectile/bullet/reusable/foam_dart/mag
-	name = "magfoam dart"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile-toy"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	light_range = 2
-	light_color = LIGHT_COLOR_YELLOW
-
-/obj/item/ammo_casing/caseless/foam_dart/mag
-	name = "magfoam dart"
-	desc = "A foam dart with fun light-up projectiles powered by magnets!"
-	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag
-
-/obj/item/ammo_box/magazine/internal/shot/toy/mag
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 14
-
-/obj/item/gun/ballistic/shotgun/toy/mag
-	name = "foam force magpistol"
-	desc = "A fancy toy sold alongside light-up foam force darts. Ages 8 and up."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "toymag"
-	item_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/mag
-	fire_sound = 'sound/weapons/magpistol.ogg'
-	slot_flags = SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/ammo_box/foambox/mag
-	name = "ammo box (Magnetic Foam Darts)"
-	icon = 'icons/obj/guns/toy.dmi'
-	icon_state = "foambox"
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	max_ammo = 42
-
-//////Magrifle//////
-
-///projectiles///
-
-/obj/item/projectile/bullet/magrifle
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile-large"
-	damage = 20
-	armour_penetration = 25
-	light_range = 3
-	speed = 0.7
-	range = 35
-	light_color = LIGHT_COLOR_RED
-
-/obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile-large-nl"
-	damage = 2
-	knockdown = 0
-	stamina = 25
-	armour_penetration = -10
-	light_range = 3
-	speed = 0.65
-	range = 35
-	light_color = LIGHT_COLOR_BLUE
-
-///ammo casings///
-
-/obj/item/ammo_casing/energy/mag/amagm
-	desc = "A large ferromagnetic slug intended to be launched out of a compatible weapon."
-	caliber = "magm"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "mag-casing-live"
-	e_cost = 50
-	projectile_type = /obj/item/projectile/bullet/magrifle
-
-/obj/item/ammo_casing/energy/mag/anlmagm
-	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
-	caliber = "magm"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "mag-casing-live"
-	e_cost = 50
-	projectile_type = /obj/item/projectile/bullet/nlmagrifle
-
-///magazines///
-
-/obj/item/ammo_box/magazine/mmag/
-	name = "magrifle magazine (non-lethal disabler)"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "mediummagmag"
-	ammo_type = /obj/item/ammo_casing/energy/mag/anlmagm
-	caliber = "magm"
-	max_ammo = 24
-	multiple_sprites = 2
-
-/obj/item/ammo_box/magazine/mmag/lethal
-	name = "magrifle magazine (lethal)"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "mediummagmag"
-	ammo_type = /obj/item/ammo_casing/energy/mag/amagm
-	max_ammo = 24
-
-///the gun itself///
-
-/obj/item/gun/mag/magrifle
+/obj/item/gun/ballistic/automatic/magrifle_e
 	name = "\improper Magnetic Rifle"
 	desc = "A simple upscalling of the technologies used in the magpistol, the magrifle is capable of firing slightly larger slugs in bursts. Compatible with the magpistol's slugs."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
-	cell_type = /obj/item/stock_parts/cell/magrifle
-	mag_type = /obj/item/ammo_box/magazine/mmag
+	mag_type = /obj/item/ammo_box/magazine/mmag_e
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
 	burst_size = 3
@@ -465,69 +378,111 @@
 	spread = 5
 	recoil = 0.15
 	casing_ejector = 0
+	var/obj/item/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell/magrifle_e
+	var/dead_cell = FALSE
 
-//////the cell////////////
+/obj/item/gun/ballistic/automatic/magrifle_e/can_shoot()
+	if(QDELETED(cell))
+		return 0
 
-/obj/item/stock_parts/cell/magrifle
-	name = "magrifle hyper power cell"
-	desc = "A small hyper cell, used in the mag rifle"
-	maxcharge = 2400 //48 shots before recharge
+	var/obj/item/ammo_casing/caseless/mag_e/shot = chambered
+	if(!shot)
+		return 0
+	if(cell.charge < shot.energy_cost*burst_size)
+		return 0
+	. = ..()
 
-///research///
+/obj/item/gun/ballistic/automatic/magrifle_e/shoot_live_shot()
+	var/obj/item/ammo_casing/caseless/mag_e/shot = chambered
+	cell.use(shot.energy_cost)
+	. = ..()
 
-/obj/item/gun/mag/magrifle/nopin
+/obj/item/gun/ballistic/automatic/magrifle_e/emp_act(severity)
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+
+/obj/item/gun/ballistic/automatic/magrifle_e/get_cell()
+	return cell
+
+/obj/item/gun/ballistic/automatic/magrifle_e/Initialize()
+	. = ..()
+	if(cell_type)
+		cell = new cell_type(src)
+	else
+		cell = new(src)
+
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
+
+/obj/item/gun/ballistic/automatic/magrifle_e/nopin
 	pin = null
 	spawnwithmagazine = FALSE
 
-/datum/design/magrifle
-	name = "Magrifle"
-	desc = "An upscaled Magpistol in rifle form."
-	id = "magrifle"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
-	build_path = /obj/item/gun/mag/magrifle/nopin
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+///magpistol///
 
-/datum/design/mag_magrifle
-	name = "Magrifle Magazine (Lethal)"
-	desc = "A 24-round magazine for the Magrifle."
-	id = "mag_magrifle"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
-	build_path = /obj/item/ammo_box/magazine/mmag/lethal
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/mag_magrifle/nl
-	name = "Magrifle Magazine (Non-Lethal)"
-	desc = "A 24- round non-lethal magazine for the Magrifle."
-	id = "mag_magrifle_nl"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
-	build_path = /obj/item/ammo_box/magazine/mmag
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-///foamagrifle///
-
-/obj/item/ammo_box/magazine/toy/foamag
-	name = "foam force magrifle magazine"
+/obj/item/gun/ballistic/automatic/pistol/mag_e
+	name = "magpistol"
+	desc = "A handgun utilizing maglev technologies to propel a ferromagnetic slug to extreme velocities."
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "foamagmag"
-	max_ammo = 24
-	multiple_sprites = 2
-	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
-	materials = list(MAT_METAL = 200)
+	icon_state = "magpistol"
+	force = 10
+	fire_sound = 'sound/weapons/magpistol.ogg'
+	mag_type = /obj/item/ammo_box/magazine/mmag_e/small
+	can_suppress = 0
+	casing_ejector = 0
+	fire_delay = 2
+	recoil = 0.2
+	var/obj/item/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell/magpistol_e
+	var/dead_cell = FALSE
 
-/obj/item/gun/ballistic/automatic/magrifle/toy
-	name = "foamag rifle"
-	desc = "A foam launching magnetic rifle. Ages 8 and up."
-	icon_state = "foamagrifle"
-	obj_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/toy/foamag
-	casing_ejector = FALSE
-	spread = 60
-	w_class = WEIGHT_CLASS_BULKY
-	weapon_weight = WEAPON_HEAVY
+/obj/item/gun/ballistic/automatic/pistol/mag_e/can_shoot()
+	if(QDELETED(cell))
+		return 0
+
+	var/obj/item/ammo_casing/caseless/mag_e/shot = chambered
+	if(!shot)
+		return 0
+	if(cell.charge < shot.energy_cost)
+		return 0
+	. = ..()
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/shoot_live_shot()
+	var/obj/item/ammo_casing/caseless/mag_e/shot = chambered
+	cell.use(shot.energy_cost)
+	. = ..()
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/emp_act(severity)
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/get_cell()
+	return cell
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/Initialize()
+	. = ..()
+	if(cell_type)
+		cell = new cell_type(src)
+	else
+		cell = new(src)
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("magpistol-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+/obj/item/gun/ballistic/automatic/pistol/mag_e/nopin
+	pin = null
+	spawnwithmagazine = FALSE 
 
 /*
 // TECHWEBS IMPLEMENTATION
@@ -542,93 +497,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-
-//////Hyper-Burst Rifle//////
-
-///projectiles///
-
-/obj/item/projectile/bullet/mags/hyper
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "magjectile"
-	damage = 10
-	armour_penetration = 10
-	stamina = 10
-	forcedodge = TRUE
-	range = 6
-	light_range = 1
-	light_color = LIGHT_COLOR_RED
-
-/obj/item/projectile/bullet/mags/hyper/inferno
-	icon_state = "magjectile-large"
-	stamina = 0
-	forcedodge = FALSE
-	range = 25
-	light_range = 4
-
-/obj/item/projectile/bullet/mags/hyper/inferno/on_hit(atom/target, blocked = FALSE)
-	..()
-	explosion(target, -1, 1, 2, 4, 5)
-	return 1
-
-///ammo casings///
-
-/obj/item/ammo_casing/caseless/ahyper
-	desc = "A large block of speciallized ferromagnetic material designed to be fired out of the experimental Hyper-Burst Rifle."
-	caliber = "hypermag"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "hyper-casing-live"
-	projectile_type = /obj/item/projectile/bullet/mags/hyper
-	pellets = 12
-	variance = 40
-
-/obj/item/ammo_casing/caseless/ahyper/inferno
-	projectile_type = /obj/item/projectile/bullet/mags/hyper/inferno
-	pellets = 1
-	variance = 0
-
-///magazines///
-
-/obj/item/ammo_box/magazine/mhyper
-	name = "hyper-burst rifle magazine"
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "hypermag-4"
-	ammo_type = /obj/item/ammo_casing/caseless/ahyper
-	caliber = "hypermag"
-	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that fragments into 12 smaller shards which can absolutely puncture anything, but has rather short effective range."
-	max_ammo = 4
-
-/obj/item/ammo_box/magazine/mhyper/update_icon()
-	..()
-	icon_state = "hypermag-[ammo_count() ? "4" : "0"]"
-
-/obj/item/ammo_box/magazine/mhyper/inferno
-	name = "hyper-burst rifle magazine (inferno)"
-	ammo_type = /obj/item/ammo_casing/caseless/ahyper/inferno
-	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that violently reacts with whatever surface it strikes, generating a massive amount of heat and light."
-
-///gun itself///
-
-/obj/item/gun/ballistic/automatic/hyperburst
-	name = "\improper Hyper-Burst Rifle"
-	desc = "An extremely beefed up version of a stolen Nanotrasen weapon prototype, this 'rifle' is more like a cannon, with an extremely large bore barrel capable of generating several smaller magnetic 'barrels' to simultaneously launch multiple projectiles at once."
-	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
-	icon_state = "hyperburst"
-	item_state = "arg"
-	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/mhyper
-	fire_sound = 'sound/weapons/magburst.ogg'
-	can_suppress = 0
-	burst_size = 1
-	fire_delay = 40
-	recoil = 2
-	casing_ejector = 0
-	weapon_weight = WEAPON_HEAVY
-
-/obj/item/gun/ballistic/automatic/hyperburst/update_icon()
-	..()
-	icon_state = "hyperburst[magazine ? "-[get_ammo()]" : ""][chambered ? "" : "-e"]"
-
-///toy memes///
+//Toy Memes
 
 /obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
