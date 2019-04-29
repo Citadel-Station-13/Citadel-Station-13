@@ -271,7 +271,8 @@
 	recoil = 0.15
 	casing_ejector = 0
 
-/*//research///
+/*
+//research///
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
@@ -326,7 +327,6 @@
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-
 /*
 // TECHWEBS IMPLEMENTATION
 //
