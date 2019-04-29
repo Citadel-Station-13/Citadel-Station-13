@@ -532,6 +532,92 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+
+//////Hyper-Burst Rifle//////
+
+///projectiles///
+
+/obj/item/projectile/bullet/mags/hyper
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile"
+	damage = 10
+	armour_penetration = 10
+	stamina = 10
+	forcedodge = TRUE
+	range = 6
+	light_range = 1
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/mags/hyper/inferno
+	icon_state = "magjectile-large"
+	stamina = 0
+	forcedodge = FALSE
+	range = 25
+	light_range = 4
+
+/obj/item/projectile/bullet/mags/hyper/inferno/on_hit(atom/target, blocked = FALSE)
+	..()
+	explosion(target, -1, 1, 2, 4, 5)
+	return 1
+
+///ammo casings///
+
+/obj/item/ammo_casing/caseless/ahyper
+	desc = "A large block of speciallized ferromagnetic material designed to be fired out of the experimental Hyper-Burst Rifle."
+	caliber = "hypermag"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "hyper-casing-live"
+	projectile_type = /obj/item/projectile/bullet/mags/hyper
+	pellets = 12
+	variance = 40
+
+/obj/item/ammo_casing/caseless/ahyper/inferno
+	projectile_type = /obj/item/projectile/bullet/mags/hyper/inferno
+	pellets = 1
+	variance = 0
+
+///magazines///
+
+/obj/item/ammo_box/magazine/mhyper
+	name = "hyper-burst rifle magazine"
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "hypermag-4"
+	ammo_type = /obj/item/ammo_casing/caseless/ahyper
+	caliber = "hypermag"
+	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that fragments into 12 smaller shards which can absolutely puncture anything, but has rather short effective range."
+	max_ammo = 4
+
+/obj/item/ammo_box/magazine/mhyper/update_icon()
+	..()
+	icon_state = "hypermag-[ammo_count() ? "4" : "0"]"
+
+/obj/item/ammo_box/magazine/mhyper/inferno
+	name = "hyper-burst rifle magazine (inferno)"
+	ammo_type = /obj/item/ammo_casing/caseless/ahyper/inferno
+	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that violently reacts with whatever surface it strikes, generating a massive amount of heat and light."
+
+///gun itself///
+
+/obj/item/gun/ballistic/automatic/hyperburst
+	name = "\improper Hyper-Burst Rifle"
+	desc = "An extremely beefed up version of a stolen Nanotrasen weapon prototype, this 'rifle' is more like a cannon, with an extremely large bore barrel capable of generating several smaller magnetic 'barrels' to simultaneously launch multiple projectiles at once."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "hyperburst"
+	item_state = "arg"
+	slot_flags = 0
+	mag_type = /obj/item/ammo_box/magazine/mhyper
+	fire_sound = 'sound/weapons/magburst.ogg'
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 40
+	recoil = 2
+	casing_ejector = 0
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/ballistic/automatic/hyperburst/update_icon()
+	..()
+	icon_state = "hyperburst[magazine ? "-[get_ammo()]" : ""][chambered ? "" : "-e"]"
+
 //Toy Memes
 
 /obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
