@@ -16,7 +16,7 @@
 	var/charge_delay = 4
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 	var/spawnwithmagazine = TRUE
-	var/mag_type = /obj/item/ammo_box/magazine/mmag //Removes the need for max_ammo and caliber info
+	var/mag_type = /obj/item/ammo_box/magazine/mmag_e //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 
