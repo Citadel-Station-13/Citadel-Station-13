@@ -566,7 +566,7 @@ SUBSYSTEM_DEF(ticker)
 		send2otherserver(news_source, news_message,"News_Report")
 		return news_message
 	else
-		return "We reget to inform you that shit be whack, yo. And none of our reporters have any idea of what may or may not have gone on."
+		return "We regret to inform you that shit be whack, yo. None of our reporters have any idea of what may or may not have gone on."
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
