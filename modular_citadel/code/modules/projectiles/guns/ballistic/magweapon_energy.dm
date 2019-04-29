@@ -5,7 +5,7 @@
 
 /obj/item/ammo_casing/caseless/mag_e/amagm_e
 	desc = "A large ferromagnetic slug intended to be launched out of a compatible weapon."
-	caliber = "magm"
+	caliber = "mag_e"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/magrifle
@@ -13,7 +13,7 @@
 
 /obj/item/ammo_casing/caseless/mag_e/anlmagm_e
 	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
-	caliber = "magm"
+	caliber = "mag_e"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
@@ -21,7 +21,7 @@
 
 /obj/item/ammo_casing/caseless/mag_e/amags
 	desc = "A ferromagnetic slug intended to be launched out of a compatible weapon."
-	caliber = "mags"
+	caliber = "mag_e"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/mags
@@ -29,7 +29,7 @@
 
 /obj/item/ammo_casing/caseless/mag_e/anlmags
 	desc = "A specialized ferromagnetic slug designed with a less-than-lethal payload."
-	caliber = "mags"
+	caliber = "mag_e"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmags
@@ -42,7 +42,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmagm_e
-	caliber = "magm"
+	caliber = "mag_e"
 	max_ammo = 24
 	multiple_sprites = 2
 
@@ -59,7 +59,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmags
-	caliber = "mags"
+	caliber = "mag_e"
 	max_ammo = 15
 	multiple_sprites = 2
 
