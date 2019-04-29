@@ -1,6 +1,6 @@
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
-////////////////////////////////////////////FISH////////////////////////////////////////////
+///////////////////////////////////////////FISH////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/cubancarp
 	name = "\improper Cuban carp"
@@ -288,4 +288,3 @@
 	icon_state = "doubleratkebab"
 	tastes = list("rat meat" = 2, "metal" = 1)
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 2)
-
