@@ -60,8 +60,7 @@
 		"femcum",
 		"tearjuice",
 		"strange_reagent",
-		"spraytan",
-		"bluespace"
+		"spraytan"
 
 	)
 	//needs to be chemid unit checked at some point
