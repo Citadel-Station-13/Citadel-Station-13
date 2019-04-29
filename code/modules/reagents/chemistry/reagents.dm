@@ -130,3 +130,7 @@
 		rs += "[R.name], [R.volume]"
 
 	return rs.Join(" | ")
+
+//Handler for explosion reaction
+/datum/reagents/proc/FermiExplode(turf/T, obj/O, mob/living/M, volume)
+	return

@@ -537,9 +537,6 @@
 	update_total()
 	return reaction_occurred
 
-/datum/reagents/proc/FermiExplode()
-	return
-
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)

@@ -47,15 +47,13 @@
 	var/teleBool = FALSE
 	mob/living/carbon/purgeBody
 
-
-
 /*
 /datum/reagent/fermi/eigenstate/on_new()
 	location_created = get_turf(loc) //Sets up coordinate of where it was created
 	message_admins("Attempting to get creation location from init() [location_created]")
 	//..()
 */
-
+//Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
 		if(1)
@@ -89,7 +87,7 @@
 	holder.remove_reagent(src.id, 0.5)//So you're not stuck for 10 minutes teleporting
 	..() //loop function
 
-
+//Addiction
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
 	switch(src.addictCyc1)
 		if(1)
@@ -196,31 +194,12 @@
 	var/list/result = list()
 	var/list/group = null
 	var/pollStarted = FALSE
+	var/location_created
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
-/*
-/datum/reagent/fermi/SDGF/New()
-	candidates = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-	message_admins("Attempting to poll")
-^^^breaks everything
-*/
-/*
-/datum/reagent/fermi/proc/sepPoll()
-	//var/list/procCandies = list()
-	//if (pollStarted == FALSE)
-	//	procCandies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
-	sleep(300)
-	return procCandies
-*/
-	/*if(1) //I'm not sure how pollCanditdates works, so I did this. Gives a chance for people to say yes.
-		M.apply_status_effect(/datum/status_effect/chem/SDGF/candidates)
-		/datum/status_effect/chem/SDGF/candidates/candies = new /datum/status_effect/chem/SDGF/candidates
-		///datum/status_effect/chem/SDGF/candidates/candies = M.apply_status_effect(/datum/status_effect/chem/SDGF/candidates)
-		//candies = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
-		message_admins("Attempting to poll")*/
 
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
@@ -358,20 +337,33 @@
 		M.blood_volume += 100
 		if (M.nutrition < 1500)
 			M.nutrition += 500
+//If the reaction explodes
+/datum/reagent/fermi/SDGF/FermiExplode(turf/open/T)//Spawns an angery teratoma!! Spooky..! be careful!!
+	//var/mob/living/simple_animal/slime/S = new(get_turf(location_created),"grey")
+	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
+	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	S.name = "Living teratoma"
+	S.real_name = "Living teratoma"//horrifying!!
+	S.rabid = 1//Make them an angery boi
+	to_chat(M, "<span class='notice'>The cells clump up into a horrifying tumour.</span>")
 
+//Fail state of SDGF
 /datum/reagent/fermi/SDZF
 	name = "synthetic-derived zombie factor"
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	var/startHunger
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	message_admins("SGZF ingested")
 	switch(current_cycle)//Pretends to be normal
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
+			startHunger = M.nutrition
 		if(21 to 29)
+
 			M.nutrition = M.nutrition + (M.nutrition/10)
 		if(30)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
@@ -391,7 +383,7 @@
 		if(86)
 			if (!holder.has_reagent("pen_acid"))//Counterplay is pent.)
 				message_admins("Zombie spawned at [M.loc]")
-				M.nutrition -= 18500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
@@ -403,21 +395,24 @@
 				ZI.name = M.real_name
 				//ZI.updateappearance(mutcolor_update=1)
 				holder.remove_reagent(src.id, 20)
-			else
+			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
+				M.nutrition = startHunger - 500
+				var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey") //TODO: replace slime as own simplemob/add tumour slime cores for science/chemistry interplay
+				S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+				S.name = "Living teratoma"
+				S.real_name = "Living teratoma"//horrifying!!
+				S.rabid = 1//Make them an angery boi
+				//S.updateappearance(mutcolor_update=1)
+				holder.remove_reagent(src.id, 20)
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
-			M.nutrition -= 100
-			var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey")
-			S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-			S.name = "Living teratoma"
-			S.real_name = "Living teratoma"//horrifying!!
-			S.rabid = 1//Make them an angery boi
-			//S.updateappearance(mutcolor_update=1)
-			holder.remove_reagent(src.id, 20)
-			M.adjustToxLoss(10, 0)
-			to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
+			M.adjustToxLoss(1, 0)
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
+
+
+
+	to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 
 
 //breast englargement
