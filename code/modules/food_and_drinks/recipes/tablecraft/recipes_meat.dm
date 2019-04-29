@@ -1,5 +1,3 @@
-
-
 ////////////////////////////////////////////////KEBABS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/humankebab
@@ -69,67 +67,6 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fishfingers
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/sashimi
-	name = "Sashimi"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sashimi
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/riceball
-	name = "Onigiri"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 1,
-		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/riceball
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/sushie_egg
-	name = "Tobiko"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 6,
-		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 2,
-	)
-	result = /obj/item/reagent_containers/food/snacks/tobiko
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/sushie_basic
-	name = "Funa Hosomaki"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 3,
-		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 2,
-		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 3,
-	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_basic
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/sushie_adv
-	name = "Funa Nigiri"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_adv
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/sushie_pro
-	name = "Well made Funa Nigiri"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 10,
-		/obj/item/reagent_containers/food/snacks/salad/ricebowl = 2,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 5
-	)
-	result = /obj/item/reagent_containers/food/snacks/sushie_pro
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
