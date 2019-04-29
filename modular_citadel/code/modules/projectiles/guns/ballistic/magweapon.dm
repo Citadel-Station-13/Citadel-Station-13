@@ -196,6 +196,76 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
+////bullets///
+
+/obj/item/projectile/bullet/mags
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile"
+	damage = 15
+	armour_penetration = 10
+	light_range = 2
+	speed = 0.6
+	range = 25
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/nlmags //non-lethal boolets
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-nl"
+	damage = 2
+	knockdown = 0
+	stamina = 25
+	armour_penetration = -10
+	light_range = 2
+	speed = 0.7
+	range = 25
+	light_color = LIGHT_COLOR_BLUE
+
+////bullets///
+
+/obj/item/projectile/bullet/mags
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile"
+	damage = 15
+	armour_penetration = 10
+	light_range = 2
+	speed = 0.6
+	range = 25
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/nlmags //non-lethal boolets
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-nl"
+	damage = 2
+	knockdown = 0
+	stamina = 25
+	armour_penetration = -10
+	light_range = 2
+	speed = 0.7
+	range = 25
+	light_color = LIGHT_COLOR_BLUE
+
+/obj/item/projectile/bullet/magrifle
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-large"
+	damage = 20
+	armour_penetration = 25
+	light_range = 3
+	speed = 0.7
+	range = 35
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-large-nl"
+	damage = 2
+	knockdown = 0
+	stamina = 25
+	armour_penetration = -10
+	light_range = 3
+	speed = 0.65
+	range = 35
+	light_color = LIGHT_COLOR_BLUE
+
 ///ammo///
 
 /obj/item/ammo_casing/caseless/mag_e
