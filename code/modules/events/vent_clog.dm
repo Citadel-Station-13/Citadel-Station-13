@@ -47,7 +47,22 @@
 		"hair_dye",
 		"sugar",
 		"white_glitter",
-		"growthserum"
+		"growthserum",
+
+		"cooking_oil",
+		"frostoil",
+		"sodiumchloride",
+		"cornoil",
+		"uranium",
+		"carpet",
+		"firefighting_foam",
+		"semen",
+		"femcum",
+		"tearjuice",
+		"strange_reagent",
+		"spraytan",
+		"bluespace"
+
 	)
 	//needs to be chemid unit checked at some point
 
@@ -87,8 +102,8 @@
 	else
 		R.add_reagent(pick(saferChems), reagentsAmount)
 
-	var/datum/effect_system/smoke_spread/chem/C = new
-	C.set_up(R,16,T,TRUE)
+	var/datum/effect_system/smoke_spread/chem/smoke_machine/C = new
+	C.set_up(R,16,1,T)
 	C.start()
 	playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
 
