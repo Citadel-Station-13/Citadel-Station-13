@@ -122,8 +122,8 @@
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
-///*research memes///
-
+///research memes///
+/*
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
 	spawnwithmagazine = FALSE
