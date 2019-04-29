@@ -122,7 +122,7 @@
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
-///research memes///
+///*research memes///
 
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
@@ -155,7 +155,7 @@
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+*/
 //////toy memes/////
 
 /obj/item/projectile/bullet/reusable/foam_dart/mag
@@ -271,7 +271,7 @@
 	recoil = 0.15
 	casing_ejector = 0
 
-///research///
+/*//research///
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
@@ -304,7 +304,7 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+/*
 ///foamagrifle///
 
 /obj/item/ammo_box/magazine/toy/foamag
