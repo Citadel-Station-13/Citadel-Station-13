@@ -129,6 +129,25 @@
 				o.next_move_modifier = (round(P.length) - 11)
 	..()
 
+/datum/status_effect/chem/OwO
+	id = "OwO"
+
+/datum/status_effect/chem/PElarger/tick(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "ne", "nye")
+		message = replacetext(message, "nu", "nyu")
+		message = replacetext(message, "na", "nya")
+		message = replacetext(message, "no", "nyo")
+		message = replacetext(message, "ove", "uv")
+		message = replacetext(message, "ove", "uv")
+		message = replacetext(message, "th", "ff")
+		message = replacetext(message, "l", "w")
+		message = replacetext(message, "r", "w")
+		if(prob(20))
+			message = replacetext(message, ".", "OwO.")
+		else if(prob(30))
+			message = replacetext(message, ".", "uwu.")
+		message = lowertext(message)
 
 /*Doesn't work
 /datum/status_effect/chem/SDGF/candidates

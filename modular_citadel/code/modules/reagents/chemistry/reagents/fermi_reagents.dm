@@ -569,15 +569,15 @@
 	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
-	taste_description = "velvety brambles	"
-	metabolization_rate = 0
+	taste_description = "velvety brambles"
+	metabolization_rate = 0//Removal is exponential, see code
 	overdose_threshold = 20
 	addiction_threshold = 30
 	addiction_stage1_end = 9999//Should never end.
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/ODing = FALSE
-	var/Svol = volume
+	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255//Reset addiction
@@ -607,8 +607,8 @@
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	G.mind.transfer_to(origin)
 	qdel(G)
-	if(ODing = TRUE)
-		M.Sleeping(10*Svol, 0)
+	if(ODing == TRUE)
+		M.Sleeping(10*volume, 0)
 		ODing = FALSE
 	..()
 
@@ -651,10 +651,32 @@
 		to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 		to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
 		M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
-		qdel(M)
+		qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
+/datum/reagent/fermi/mindControl
+	name = "Astrogen"
+	id = "astral"
+	description = "An opalescent murky liquid that is said to distort your soul from your being."
+	color = "#A080H4" // rgb: , 0, 255
+	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+	metabolization_rate = 0
+	overdose_threshold = 20
+	addiction_threshold = 30
+	addiction_stage1_end = 9999//Should never end.
 
+/datum/reagent/fermi/furranium
+	name = "Furranium"
+	id = "furranium"
+	description = "OwO whats this?"
+	color = "#H04044" // rgb: , 0, 255
+	taste_description = "dewicious degenyewacy"
+
+/datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/chem/OwO)
+
+/datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
+	M.remove_status_effect(/datum/status_effect/chem/OwO)
 /*
 /mob/living/simple_animal/hostile/retaliate/ghost
 incorporeal_move = 1
@@ -686,3 +708,21 @@ reduce viewrange?
 		return
 	nane.regen_rate = -7.5
 */
+
+/*
+ _________________________________________
+||Fermichem toxic / impure chems here.   ||
+||										 ||
+||_______________________________________||
+*/
+
+/datum/reagent/fermi/SDGFTox
+	name = "Impure synthetic cells"
+	id = "SDGFtox"
+	description = "A chem that makes Fermis angry at you if you're reading this, how did you get this??."
+	color = "#A080H4" // rgb: , 0, 255
+	taste_description = "Forbidden chemistry" //Check to make sure this doesn't proc taste when added to mobs
+	metabolization_rate = 1 //1u = 2clone damage (too much?)
+
+/datum/reagent/fermi/SDGFTox/on_mob_life(mob/living/M)
+	M.adjustCloneLoss(2, 0)

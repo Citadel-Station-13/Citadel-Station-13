@@ -7,8 +7,8 @@
 	slot 					= "breasts"
 	w_class 				= 3
 	size 					= BREASTS_SIZE_DEF
-	var/cached_size			= 3//for enlargement
-	var/prev_size			= 3//For flavour texts
+	var/cached_size			= null//for enlargement
+	var/prev_size			= BREASTS_SIZE_DEF//For flavour texts
 	var/breast_sizes 		= list ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "huge", "flat")
 	var/breast_values 		= list ("A" =  1, "B" = 2, "C" = 3, "D" = 4, "E" = 5, "F" = 6, "G" = 7, "H" = 8, "I" = 9, "J" = 10, "K" = 11, "L" = 12, "M" = 13, "N" = 14, "O" = 15, "huge" = 16, "flat" = 0)
 	var/statuscheck			= FALSE
@@ -78,6 +78,9 @@
 /obj/item/organ/genital/breasts/update_size()//wah
 	//var/mob/living/carbon/human/o = owner
 	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
+	if (cached_size == null)
+		prev_size = size
+		return
 	message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
@@ -123,6 +126,6 @@
 	else if (cached_size == 16.2)
 		to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
 
-	icon_state = sanitize_text("breasts_[shape]_[size]")
-	owner.update_body()
-	update_icon()
+	//icon_state = sanitize_text("breasts_[shape]_[size]")
+	//owner.update_body()
+	//update_icon()
