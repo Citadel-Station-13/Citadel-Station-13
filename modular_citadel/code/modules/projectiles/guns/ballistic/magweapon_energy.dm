@@ -104,7 +104,7 @@
 /datum/design/mag_magrifle_e/nl
 	name = "Magrifle Magazine (Non-Lethal)"
 	desc = "A 24- round non-lethal magazine for the Magrifle."
-	id = "mag_magrifle_nl"
+	id = "mag_magrifle_e_nl"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag_e
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
