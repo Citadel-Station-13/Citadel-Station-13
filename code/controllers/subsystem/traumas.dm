@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats"
+						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate"
 						)
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
@@ -36,7 +36,8 @@ SUBSYSTEM_DEF(traumas)
 						"falling" = strings(PHOBIA_FILE, "falling"),
 						"anime" = strings(PHOBIA_FILE, "anime"),
 						"mimes" = strings(PHOBIA_FILE, "mimes"),
-						"cats" = strings(PHOBIA_FILE, "cats")
+						"cats" = strings(PHOBIA_FILE, "cats",
+						"syndicate"= strings(PHOBIA_FILE, "syndicate")
             )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -57,6 +58,7 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/pet/penguin)),
 					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 					   "cats"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/hostile/cat_butcherer))
+					   "syndicate" = typecacheof(list(/mob/living/simple_animal/hostile/syndicate, /mob/living/simple_animal/hostile/viscerator, /mob/living/simple_animal/hostile/carp/cayenne)),
 					   )
 
 
@@ -158,6 +160,9 @@ SUBSYSTEM_DEF(traumas)
 						
 					"cats" = typecacheof(list(/obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat))
+						
+					"syndicate"   = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/item/aiModule/, /obj/machinery/recharge_station,
+						/obj/item/aicard, /obj/item/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
@@ -165,18 +170,19 @@ SUBSYSTEM_DEF(traumas)
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
 						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor)),
-						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
+						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit)),
+						"syndicate" = typecacheof(list(/turf/closed/wall/mineral/plastitanium, /turf/open/floor/mineral/plastitanium))
 						)
 
 	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
-						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
-						  "robots" = typecacheof(list(/datum/species/android)),
+						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth, /datum/species/corporate)),
+						  "robots" = typecacheof(list(/datum/species/android, /datum/species/synth)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
-						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
-						  /datum/species/shadow)),
+						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod, /datum/species/shadow)),
 						  "anime" = typecacheof(list(/datum/species/human/felinid)),
-						  "cats" = typecacheof(list(/datum/species/human/felinid))
+						  "cats" = typecacheof(list(/datum/species/human/felinid)),
+						  "syndicate" = typecacheof(list(/datum/species/corporate, /datum/species/zombie/infectious))
 						 )				 
 
 	return ..()
