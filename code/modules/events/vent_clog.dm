@@ -50,8 +50,6 @@
 		"growthserum",
 
 		"cooking_oil",
-		"frostoil",
-		"sodiumchloride",
 		"cornoil",
 		"uranium",
 		"carpet",
@@ -59,8 +57,7 @@
 		"semen",
 		"femcum",
 		"tearjuice",
-		"strange_reagent",
-		"spraytan"
+		"strange_reagent"
 
 	)
 	//needs to be chemid unit checked at some point
