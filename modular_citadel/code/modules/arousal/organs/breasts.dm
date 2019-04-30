@@ -81,7 +81,7 @@
 	if (cached_size == null)
 		prev_size = size
 		return
-	message_admins("Breast size at start: [size], [cached_size], [owner]")
+	//message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		src.Remove(owner)
@@ -116,7 +116,7 @@
 			size = "flat"
 		if(isnum(prev_size))
 			prev_size = breast_sizes[prev_size]
-		message_admins("2. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
+		//message_admins("2. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 		else if (breast_values[size] < breast_values[prev_size])
@@ -129,3 +129,9 @@
 	//icon_state = sanitize_text("breasts_[shape]_[size]")
 	//owner.update_body()
 	//update_icon()
+	message_admins("attempting to update sprite")
+	var/mob/living/carbon/human/H = owner
+	H.update_genitals()
+	//owner.update_genitals()
+	//if(src.is_exposed())
+	//	update_icon()

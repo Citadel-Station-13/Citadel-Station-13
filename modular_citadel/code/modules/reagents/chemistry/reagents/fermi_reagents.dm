@@ -179,6 +179,42 @@
 
 //eigenstate END
 
+/*SDGF
+////////////////////////////////////////////////////
+// 		synthetic-derived growth factor			 //
+//////////////////////////////////////////////////
+WHAT IT DOES
+
+Several outcomes are possible (in priority order):
+
+Before the chem is even created, there is a risk of the reaction "exploding", which produces an angry teratoma that attacks the player.
+0. Before the chem is activated, the purity is checked, if the purity of the reagent is less than 0.5, then sythetic-derived zombie factor is metabolised instead
+	0.1 If SDZF is injected, the chem appears to act the same as normal, with nutrition gain, until the end, where it becomes toxic instead, giving a short window of warning to the player
+		0.1.2 If the player can take pent in time, the player will spawn a hostile teratoma on them (less damaging), if they don't, then a zombie is spawned instead, with a small defence increase propotional to the volume
+	0.2 If the purity is above 0.5, then the remaining impure volume created SDGFtox instead, which reduces blood volume and causes clone damage
+1.Normal function creates a (another)player controlled clone of the player, which is spawned nude, with damage to the clone
+	1.1 The remaining volume is transferred to the clone, which heals it over time, thus the player has to make a substantial ammount of the chem in order to produce a healthy clone
+	1.2 If the player is infected with a zombie tumor, the tumor is transferred to the ghost controlled clone ONLY.
+2. If no player can be found, a brainless clone is created over a long period of time, this body has no controller.
+	2.1 If the player dies with a clone, then they play as the clone instead. However no memories are retained after splitting.
+3. If there is already a clone, then SDGF heals clone, fire and brute damage slowly. This shouldn't normalise this chem as the de facto clone healing chem, as it will always try to make a ghost clone, and then a brainless clone first.
+4. If there is insuffient volume to complete the cloning process, there are two outcomes
+	4.1 At lower volumes, the players nutrition and blood is refunded, with light healing
+	4.2 At higher volumes a stronger heal is applied to the user
+
+IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
+1. The most important factor is the required volume, this is easily edited with the metabolism rate, this chem is HARD TO MAKE, You need to make a lot of it and it's a substantial effort on the players part. There is also a substantial risk; you could spawn a hotile teratoma during the reation, you could damage yourself with clone damage, you could accidentally spawn a zombie... Basically, you've a good chance of killing yourself.
+	1.1 Additionally, if you're trying to make SDZF purposely, you've no idea if you have or not, and that reaction is even harder to do. Plus, the player has a huge time window to get to medical to deal with it. If you take pent while it's in you, it'll be removed before it can spawn, and only spawns a teratoma if it's late stage.
+2. The rate in which the clone is made, This thing takes time to produce fruits, it slows you down and makes you useless in combat/working. Basically you can't do anything during it. It will only get you killed if you use it in combat, If you do use it and you spawn a player clone, they're gimped for a long time, as they have to heal off the clone damage.
+3. The healing - it's pretty low and a cyropod is more Useful
+4. If you're an antag, you've a 50% chance of making a clone that will help you with your efforts, and you've no idea if they will or not. While clones can't directly harm you and care for you, they can hinder your efforts.
+5. If people are being arses when they're a clone, slap them for it, they are told to NOT bugger around with someone else character, if it gets bad I'll add a blacklist, or do a check to see if you've played X amount of hours.
+	5.1 Another solution I'm okay with is to rename the clone to [M]'s clone, so it's obvious, this obviously ruins anyone trying to clone themselves to get an alibi however. I'd prefer this to not be the case.
+	5.2 Additionally, this chem is a soft buff to changelings, which apparently need a buff!
+	5.3 Other similar things exist though; impostors, split personalites, abductors, ect.
+6. Giving this to someone without concent is against space law and gets you sent to gulag.
+*/
+
 //Clone serum #chemClone
 /datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
 	name = "synthetic-derived growth factor"
@@ -195,16 +231,19 @@
 	var/list/group = null
 	var/pollStarted = FALSE
 	var/location_created
+	var/startHunger
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
 	//var/mob/living/split_personality/owner
 	//var/mob/living/carbon/SM
 
+//Main SDGF chemical
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
 	switch(current_cycle)
 		if(1)
+			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
@@ -233,10 +272,10 @@
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
 				var/typepath = M.type
-				var/mob/living/carbon/fermi_Gclone = new typepath(M.loc)
+				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
 				//var/mob/living/carbon/SM = owner
 				//var/mob/living/carbon/M = M
-				var/mob/living/carbon/SM = fermi_Gclone
+				var/mob/living/carbon/human/SM = fermi_Gclone
 				if(istype(SM) && istype(M))
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
@@ -245,6 +284,7 @@
 				SM.key = C.key
 				SM.mind.enslave_mind_to_creator(M)
 
+				//If they're a zombie, they can try to negate it with this.
 				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it. Doesn't always work as well; needs a ghost.
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
 					ZI.Remove(M)
@@ -257,18 +297,29 @@
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_known_languages_from(M, FALSE)
 				playerClone =  TRUE
-
 				M.next_move_modifier = 1
-				M.nutrition = 150
-
-				reaction_mob(SM, )
+				M.nutrition -= 500
+				//reaction_mob(SM, )I forget what this is for
+				//Damage the clone
+				SM.blood_volume = BLOOD_VOLUME_NORMAL/2
+				SM.adjustCloneLoss(80, 0)
+				SM.setBrainLoss(20)
+				SM.nutrition = startHunger/2
+				var/datum/reagents/SMR = SM
+				///datum/reagents
+				//var/mob/living/carbon/human has a holder, carbon does not
+				// You need to add to a holder.
+				// reagentS not reagent (?)
+				//SM.create_reagents()
+				SMR = locate(/datum/reagents) in SM
+				SMR.add_reagent("SDGFheal", volume)
 				holder.remove_reagent(src.id, 999)
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 				//after_success(user, SM)
 				//qdel(src)
 
-			else //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
+			else if(src.playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
 				message_admins("Failed to find clone Candidate")
 				src.unitCheck = TRUE
 				if(M.has_status_effect(/datum/status_effect/chem/SGDF)) // Heal the user if they went to all this trouble to make it and can't get a clone, the poor fellow.
@@ -331,13 +382,15 @@
 			M.nutrition += 250
 	else if (src.unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
 		src.unitCheck = FALSE
-		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system instead. you can fee</span>")
+		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
 		M.blood_volume += 100
+		M.next_move_modifier = 1
 		if (M.nutrition < 1500)
 			M.nutrition += 500
 //If the reaction explodes
+/*
 /datum/reagent/fermi/SDGF/FermiExplode(turf/open/T)//Spawns an angery teratoma!! Spooky..! be careful!!
 	//var/mob/living/simple_animal/slime/S = new(get_turf(location_created),"grey")
 	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
@@ -345,11 +398,36 @@
 	S.name = "Living teratoma"
 	S.real_name = "Living teratoma"//horrifying!!
 	S.rabid = 1//Make them an angery boi
-	to_chat(M, "<span class='notice'>The cells clump up into a horrifying tumour.</span>")
+	to_chat("<span class='notice'>The cells clump up into a horrifying tumour.</span>")
+*/
+
+//Unobtainable, used in clone spawn.
+/datum/reagent/fermi/SDGFheal
+	name = "synthetic-derived growth factor"
+	id = "SDGFheal"
+	metabolization_rate = 1
+
+/datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume += 10
+	M.adjustCloneLoss(-2.5, 0)
+	M.setBrainLoss(-1)
+	M.nutrition += 10
+
+//Unobtainable, used if SDGF is impure but not too impure
+/datum/reagent/fermi/SDGFtox
+	name = "synthetic-derived growth factor"
+	id = "SDGFtox"
+	description = "A chem that makes Fermis angry at you if you're reading this, how did you get this???"
+	metabolization_rate = 1
+
+/datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting - the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
+	M.blood_volume -= 10
+	M.adjustCloneLoss(2, 0)
 
 //Fail state of SDGF
 /datum/reagent/fermi/SDZF
-	name = "synthetic-derived zombie factor"
+	name = "synthetic-derived growth factor"
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
@@ -363,7 +441,6 @@
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 			startHunger = M.nutrition
 		if(21 to 29)
-
 			M.nutrition = M.nutrition + (M.nutrition/10)
 		if(30)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
@@ -393,10 +470,12 @@
 				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
+				ZI.desc = "[M]'s clone, gone horribly wrong."
+				ZI.zombiejob = null
 				//ZI.updateappearance(mutcolor_update=1)
 				holder.remove_reagent(src.id, 20)
 			else//easier to deal with
-				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour.</span>")
+				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
 				M.nutrition = startHunger - 500
 				var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey") //TODO: replace slime as own simplemob/add tumour slime cores for science/chemistry interplay
 				S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -430,11 +509,7 @@
 	var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
-	/*
-	switch(current_cycle)
-		if(0)
-	*/
-
+	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
 		message_admins("No breasts found!")
@@ -457,10 +532,11 @@
 	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 	B.cached_size = B.cached_size + 0.1
 	if (B.cached_size >= 8.5 && B.cached_size < 9)
-		var/target = M.get_bodypart(BODY_ZONE_CHEST)
-		to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
-		M.adjustOxyLoss(10, 0)
-		M.apply_damage(2, BRUTE, target)
+		if(H.w_uniform || H.wear_suit)
+			var/target = M.get_bodypart(BODY_ZONE_CHEST)
+			to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
+			M.adjustOxyLoss(10, 0)
+			M.apply_damage(2, BRUTE, target)
 	B.update()
 	..()
 
@@ -511,6 +587,7 @@
 	var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
+	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found!")//They do have a preponderance for escapism, or so I've heard.
@@ -526,9 +603,10 @@
 
 	P.cached_length = P.cached_length + 0.1
 	if (P.cached_length >= 10.5 && P.cached_length < 11) //too low?
-		var/target = M.get_bodypart(BODY_ZONE_CHEST)
-		to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
-		M.apply_damage(5, BRUTE, target)
+		if(H.w_uniform || H.wear_suit)
+			var/target = M.get_bodypart(BODY_ZONE_CHEST)
+			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
+			M.apply_damage(5, BRUTE, target)
 
 	P.update()
 	..()
@@ -557,7 +635,6 @@
 		nT.Insert(M)
 		T = nT
 	..()
-
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
@@ -668,10 +745,42 @@
 	taste_description = "dewicious degenyewacy"
 
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
-	M.apply_status_effect(/datum/status_effect/chem/OwO)
 
-/datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
-	M.remove_status_effect(/datum/status_effect/chem/OwO)
+	switch(current_cycle)
+		if(1 to 9)
+			if(prob(20))
+				to_chat(M, "<span class='notice'>Your tongue feels... fluffy</span>")
+		if(10 to 20)
+			if(prob(20))
+				to_chat(M, "You find yourself unable to supress the desire to meow!")
+				M.emote("nya")
+			if(prob(20))
+				to_chat(M, "You find yourself unable to supress the desire to howl!")
+				M.emote("awoo")
+			if(prob(20))
+				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
+				for(var/victim in seen)
+					to_chat(M, "You notice [victim]'s bulge, OwO!")
+		if(21)
+			message_admins("holder define: [holder]")
+			var/obj/item/organ/tongue/T = M.getorganslot(BODY_ZONE_PRECISE_MOUTH)
+			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
+			T.Remove(M)
+			nT.Insert(M)
+			qdel(T)
+		if(22 to INFINITY)
+			if(prob(20))
+				to_chat(M, "You find yourself unable to supress the desire to meow!")
+				M.emote("nya")
+			if(prob(20))
+				to_chat(M, "You find yourself unable to supress the desire to howl!")
+				M.emote("awoo")
+			if(prob(20))
+				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
+				for(var/victim in seen)
+					to_chat(M, "You notice [victim]'s bulge, OwO!")
+	..()
+
 /*
 /mob/living/simple_animal/hostile/retaliate/ghost
 incorporeal_move = 1
@@ -710,14 +819,3 @@ reduce viewrange?
 ||										 ||
 ||_______________________________________||
 */
-
-/datum/reagent/fermi/SDGFTox
-	name = "Impure synthetic cells"
-	id = "SDGFtox"
-	description = "A chem that makes Fermis angry at you if you're reading this, how did you get this??."
-	color = "#A080H4" // rgb: , 0, 255
-	taste_description = "Forbidden chemistry" //Check to make sure this doesn't proc taste when added to mobs
-	metabolization_rate = 1 //1u = 2clone damage (too much?)
-
-/datum/reagent/fermi/SDGFTox/on_mob_life(mob/living/M)
-	M.adjustCloneLoss(2, 0)

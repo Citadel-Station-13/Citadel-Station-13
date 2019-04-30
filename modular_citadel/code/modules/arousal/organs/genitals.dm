@@ -348,3 +348,71 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
+/*
+/datum/species/proc/handle_breasts(mob/living/carbon/human/H)
+	//check for breasts first!
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	if(!B)
+		return
+
+	///obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) Where did this come from?
+	//Variables:
+	var/size = B.size
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[B.shape]
+	var/list/standing = list()
+
+	if(!S || S.icon_state == "none")
+		return
+	for(var/layer in relevant_layers)
+		var/layertext = genitals_layertext(layer)
+		S = GLOB.breasts_shapes_list[B.shape]
+
+		var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
+
+		//If breasts are hueg (larger than 5 only have one sprite atm)
+		if (size > 5)
+			genital_overlay.icon_state = "[B.slot]_pair_[size]_0_[layertext]"//I haven't done around sizes above 5, I dunno how..!
+		else
+			genital_overlay.icon_state = "[B.slot]_[S.icon_state]_[size]_[B.aroused_state]_[layertext]"
+
+		//center icon
+		if(S.center)
+			genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
+
+		//Check skin colour
+		if(use_skintones && H.dna.features["genitals_use_skintone"])
+			genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+		else
+			switch(S.color_src)
+				if("cock_color")
+					genital_overlay.color = "#[H.dna.features["cock_color"]]"
+				if("breasts_color")
+					genital_overlay.color = "#[H.dna.features["breasts_color"]]"
+				if("vag_color")
+					genital_overlay.color = "#[H.dna.features["vag_color"]]"
+				if(MUTCOLORS)
+					if(fixed_mut_color)
+						genital_overlay.color = "#[fixed_mut_color]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor"]]"
+				if(MUTCOLORS2)
+					if(fixed_mut_color2)
+						genital_overlay.color = "#[fixed_mut_color2]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor2"]]"
+				if(MUTCOLORS3)
+					if(fixed_mut_color3)
+						genital_overlay.color = "#[fixed_mut_color3]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+
+						standing += genital_overlay
+		//Standing..?
+		if(LAZYLEN(standing))
+			H.overlays_standing[layer] = standing.Copy()
+			standing = list()
+
+	for(var/L in relevant_layers)
+		H.apply_overlay(L)
+*/
