@@ -402,8 +402,7 @@
 	taste_description = "mushroom"
 
 /datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
-	if(!M.slurring)
-		M.slurring = 1
+	M.slurring = max(M.slurring,50)
 	switch(current_cycle)
 		if(1 to 5)
 			M.Dizzy(5)
