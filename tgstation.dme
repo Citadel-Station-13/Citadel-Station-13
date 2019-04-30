@@ -2954,6 +2954,7 @@
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\flechette.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\handguns.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\magweapon.dm"
+#include "modular_citadel\code\modules\projectiles\guns\ballistic\magweapon_energy.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\revolver.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\rifles.dm"
 #include "modular_citadel\code\modules\projectiles\guns\ballistic\spinfusor.dm"
