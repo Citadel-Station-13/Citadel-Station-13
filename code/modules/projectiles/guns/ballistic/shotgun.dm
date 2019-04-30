@@ -88,6 +88,9 @@
 	icon_state = "riotshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
+	unique_reskin = list("Tatical" = "riotshotgun",
+						"Wood Stock" = "wood_riotshotgun"
+						)
 
 /obj/item/gun/ballistic/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()
@@ -200,6 +203,10 @@
 	icon_state = "cshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+	unique_reskin = list("Tatical" = "cshotgun",
+						"Slick" = "cshotgun_slick"
+						)
+
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
@@ -207,6 +214,10 @@
 	icon_state = "cshotgunc"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_NORMAL
+	unique_reskin = list("Tatical" = "cshotgunc",
+						"Slick" = "cshotgunc_slick"
+						)
+
 
 //Dual Feed Shotgun
 
