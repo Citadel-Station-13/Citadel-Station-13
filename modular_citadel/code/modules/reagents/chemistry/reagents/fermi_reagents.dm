@@ -247,23 +247,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
-
-
-		/*
-			for(var/mob/dead/observer/G in GLOB.player_list)
-				group += G
-			for(var/m in group)
-				var/mob/W = m
-			message_admins("Attempting to poll")
-			showCandidatePollWindow(M, 190, "Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.", result, null, current_cycle, TRUE)
-		if(19)
-			for(var/mob/W in result)
-				if(!W.key || !W.client)
-					result -= W
-			candies = result
-		*/
-
-
 		if(20 to INFINITY)
 			message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
@@ -303,17 +286,23 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Damage the clone
 				SM.blood_volume = BLOOD_VOLUME_NORMAL/2
 				SM.adjustCloneLoss(80, 0)
-				SM.setBrainLoss(20)
+				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
-				var/datum/reagents/SMR = SM
+				//var/datum/reagents/SMR = SM
 				///datum/reagents
 				//var/mob/living/carbon/human has a holder, carbon does not
 				// You need to add to a holder.
 				// reagentS not reagent (?)
 				//SM.create_reagents()
-				SMR = locate(/datum/reagents) in SM
-				SMR.add_reagent("SDGFheal", volume)
+
+				//Really hacky way to deal with this stupid problem I have
+				SM.reagents.add_reagent("SDGFheal", volume)
+				//holder.add_reagent("SDGFheal", volume)
 				holder.remove_reagent(src.id, 999)
+				//SMR = locate(/datum/reagents in SM)
+				//holder.trans_to(SMR, volume)
+
+				return
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 				//after_success(user, SM)
@@ -410,7 +399,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
 		M.blood_volume += 10
-	M.adjustCloneLoss(-2.5, 0)
+	M.adjustCloneLoss(-2, 0)
 	M.setBrainLoss(-1)
 	M.nutrition += 10
 
@@ -424,6 +413,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting - the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
 	M.blood_volume -= 10
 	M.adjustCloneLoss(2, 0)
+	..()
 
 //Fail state of SDGF
 /datum/reagent/fermi/SDZF
@@ -508,6 +498,16 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5
 	var/mob/living/carbon/human/H
 
+/datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
+	if(!B)
+		return
+	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
+	B.prev_size = B.size
+	B.cached_size = [sizeConv[B.size]]
+	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]")
+
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
@@ -529,7 +529,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.reagents.remove_reagent(src.id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
-	message_admins("Breast size: [B.size], [B.cached_size], [holder]")
+	//message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 	B.cached_size = B.cached_size + 0.1
 	if (B.cached_size >= 8.5 && B.cached_size < 9)
 		if(H.w_uniform || H.wear_suit)
@@ -553,7 +553,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 	if(P)
 		P.length = P.length - 0.1
-		message_admins("Breast size: [P.size], [P.cached_length], [holder]")
+		message_admins("lewdsnek size: [P.size], [P.cached_length], [holder]")
 		P.update()
 	if(T)
 		T.Remove(M)
@@ -760,10 +760,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					to_chat(M, "You notice [victim]'s bulge, OwO!")
+					to_chat(M, "You notice [victim]'s bulge [pick("OwO!", "UwU!")]")
 		if(21)
-			message_admins("holder define: [holder]")
-			var/obj/item/organ/tongue/T = M.getorganslot(BODY_ZONE_PRECISE_MOUTH)
+			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
 			T.Remove(M)
 			nT.Insert(M)

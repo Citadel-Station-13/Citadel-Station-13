@@ -68,9 +68,11 @@
 	//update_body()
 	//P.update_icon()  //Either of these don't work, why???
 	girth = (length * girth_ratio)
-	var/mob/living/carbon/human/H = owner
-	H.update_genitals()
+	//var/mob/living/carbon/human/H = owner
+	//H.update_genitals()
 	//owner.update_genitals()
+
+	//I have no idea on how to update sprites and I hate it
 
 /obj/item/organ/genital/penis/update_appearance()
 	//var/mob/living/carbon/o = owner
@@ -85,7 +87,7 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
-	owner.update_body()
+	//owner.update_body()
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

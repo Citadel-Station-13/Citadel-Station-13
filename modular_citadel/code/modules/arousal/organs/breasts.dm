@@ -8,9 +8,9 @@
 	w_class 				= 3
 	size 					= BREASTS_SIZE_DEF
 	var/cached_size			= null//for enlargement
-	var/prev_size			= BREASTS_SIZE_DEF//For flavour texts
-	var/breast_sizes 		= list ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "huge", "flat")
-	var/breast_values 		= list ("A" =  1, "B" = 2, "C" = 3, "D" = 4, "E" = 5, "F" = 6, "G" = 7, "H" = 8, "I" = 9, "J" = 10, "K" = 11, "L" = 12, "M" = 13, "N" = 14, "O" = 15, "huge" = 16, "flat" = 0)
+	var/prev_size			//For flavour texts
+	var/breast_sizes 		= list ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "huge", "flat")
+	var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	var/statuscheck			= FALSE
 	fluid_id				= "milk"
 	var/amount				= 2
@@ -119,19 +119,13 @@
 		//message_admins("2. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
+			var/mob/living/carbon/human/H = owner
+			H.Force_update_genitals()
 		else if (breast_values[size] < breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "contracts into")] a [uppertext(size)]-cup.</b></span>")
+			var/mob/living/carbon/human/H = owner
+			H.Force_update_genitals()
 		prev_size = size
 
 	else if (cached_size == 16.2)
-		to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom, taking both of your hands to hold!.</b></span>")
-
-	//icon_state = sanitize_text("breasts_[shape]_[size]")
-	//owner.update_body()
-	//update_icon()
-	message_admins("attempting to update sprite")
-	var/mob/living/carbon/human/H = owner
-	H.update_genitals()
-	//owner.update_genitals()
-	//if(src.is_exposed())
-	//	update_icon()
+		to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom.</b></span>")// taking both of your hands to hold!.</b></span>")

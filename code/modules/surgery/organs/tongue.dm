@@ -212,11 +212,12 @@
 		message = replacetext(message, "no", "nyo")
 		message = replacetext(message, "ove", "uv")
 		message = replacetext(message, "ove", "uv")
-		message = replacetext(message, "th", "ff")
+		//message = replacetext(message, "th", "ff") //too incoherent in practice
 		message = replacetext(message, "l", "w")
 		message = replacetext(message, "r", "w")
 	if(prob(20))
-		message = replacetext(message, ".", "OwO.")
+		message +=  "OwO"
 	else if(prob(30))
-		message = replacetext(message, ".", "uwu.")
-		message = lowertext(message)
+		message +=  "uwu"
+	message = lowertext(message)
+	return message
