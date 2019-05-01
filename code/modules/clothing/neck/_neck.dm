@@ -193,15 +193,14 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar/locked
 	var/lock = FALSE
 
-/obj/item/clothing/neck/petcollar/locked/attackby(obj/item/key/collar, mob/user, params)
-	if(lock != FALSE)
-		to_chat(user, "<span class='warning'>With a click the collar unlocks!</span>")
-		lock = FALSE
-		item_flags = NONE
-	else
-		to_chat(user, "<span class='warning'>With a click the collar locks!</span>")
-		lock = TRUE
-		item_flags = NODROP
+/obj/item/clothing/neck/petcollar/locked/attackby(obj/item/K, mob/user, params)
+	if(istype(K, /obj/item/key/collar))
+		if(lock != FALSE)
+			to_chat(user, "<span class='warning'>With a click the collar unlocks!</span>")
+			lock = FALSE
+		else
+			to_chat(user, "<span class='warning'>With a click the collar locks!</span>")
+			lock = TRUE
 	return
 
 /obj/item/clothing/neck/petcollar/locked/attack_hand(mob/user)
