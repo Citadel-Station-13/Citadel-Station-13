@@ -42,6 +42,7 @@
 /obj/item/gun/energy/laser/carbine
 	name = "laser carbine"
 	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal laser gun."
+	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "lasernew"
 	item_state = "laser"
 	force = 10
