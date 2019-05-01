@@ -65,6 +65,7 @@
 	return sanitize(t)
 
 /proc/slur(n,var/strength=50)
+	strength = min(strength,50)
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)
