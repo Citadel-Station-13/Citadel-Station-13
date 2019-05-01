@@ -145,7 +145,7 @@
 	id = "lasercarbine"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
-	build_path = /obj/item/gun/energy/laser/carbine
+	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
