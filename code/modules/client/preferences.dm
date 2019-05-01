@@ -908,9 +908,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
 					if(gear.restricted_roles.len)
-						dat += "<font size=2>"
-						dat += gear.restricted_roles.Join(";")
-						dat += "</font>"
+						if(gear.restricted_desc)
+							dat += "<font size=2>"
+							dat += gear.restricted_desc
+							dat += "</font>"
+						else
+							dat += "<font size=2>"
+							dat += gear.restricted_roles.Join(";")
+							dat += "</font>"
 				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 			dat += "</table>"
 
