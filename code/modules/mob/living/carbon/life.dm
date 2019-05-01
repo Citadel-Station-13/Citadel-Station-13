@@ -531,7 +531,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
 
-	if(slurring)
+	if(slurring || drunkenness)
 		slurring = max(slurring-1,0,drunkenness)
 
 	if(cultslurring)

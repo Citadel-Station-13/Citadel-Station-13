@@ -72,7 +72,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,100)<=strength)
+		if(rand(1,100)<=strength*0.5)
 			if(lowertext(newletter)=="o")
 				newletter="u"
 			if(lowertext(newletter)=="s")
@@ -83,12 +83,12 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter="k"
-		if(rand(1,100) <= strength*0.5)
+		if(rand(1,100) <= strength*0.25)
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
 				newletter=" *BURP*."
-		if(rand(1,100) <= strength)
+		if(rand(1,100) <= strength*0.5)
 			if(rand(1,5) == 1)
 				newletter+="'"
 			if(rand(1,5) == 1)
