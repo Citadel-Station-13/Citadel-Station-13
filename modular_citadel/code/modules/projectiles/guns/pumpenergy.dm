@@ -132,6 +132,9 @@
 	ammo_x_offset = 2
 	modifystate = 1
 
+/obj/item/gun/energy/pumpaction/blaster/nopin
+	pin = null
+
 //WARDEN'S SPECIAL vERSION
 
 /obj/item/gun/energy/pumpaction/defender
@@ -144,6 +147,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/pump, /obj/item/ammo_casing/energy/laser/pump)
 	ammo_x_offset = 2
 	modifystate = 1
+
+/obj/item/gun/energy/pumpaction/defender/nopin
+	pin = null
 
 //AMMO CASINGS (fire modes)
 
@@ -223,7 +229,7 @@
 	id = "lethal_pump"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 3500, MAT_TITANIUM = 5000, MAT_SILVER = 2000, MAT_GOLD = 2500, MAT_DIAMOND = 1500)
-	build_path = /obj/item/gun/energy/pumpaction/defender
+	build_path = /obj/item/gun/energy/pumpaction/defender/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -232,6 +238,6 @@
 	desc = "A taser that has been basicly basically into a shotgun frame for spread of weaker shots, with less ammo."
 	id = "non_lethal_pump"
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2500, MAT_TITANIUM = 3500, MAT_SILVER = 2500, MAT_GOLD = 3500)
-	build_path = /obj/item/gun/energy/pumpaction/blaster
+	build_path = /obj/item/gun/energy/pumpaction/blaster/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
