@@ -120,6 +120,10 @@
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
+	if(!P)
+		o.remove_movespeed_modifier("hugedick")
+		o.next_move_modifier = 1
+		owner.remove_status_effect(src)
 	message_admins("PElarge tick!")
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -140,6 +144,42 @@
 				o.next_move_modifier = (round(P.length) - 11)
 	..()
 
+
+/*//////////////////////////////////////////
+		Mind control functions
+///////////////////////////////////////////
+*/
+
+/datum/status_effect/chem/enthral
+	id = "enthral"
+	var/mob/living/E //E for enchanter
+	//var/mob/living/V = list() //V for victims
+	var/resistance = 0
+	var/phase = 0
+	var/enthralID
+
+/datum/status_effect/chem/enthra/on_apply(mob/living/carbon/M)
+	if(M.ID == )
+
+
+/datum/status_effect/chem/enthral/tick(mob/living/carbon/M)
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist))))
+	switch(phase)
+		if(0)
+			return
+		if(1)
+			
+
+
+
+/datum/status_effect/chem/enthral/proc/owner_resist(mob/living/carbon/M)
+	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
+	if (M.canbearoused)
+		resistance += ((100 - M.arousalloss/100)/100)
+	else
+		resistance += 0.2
+
+/*
 /datum/status_effect/chem/OwO
 	id = "OwO"
 
@@ -159,7 +199,7 @@
 		else if(prob(30))
 			message = replacetext(message, ".", "uwu.")
 		message = lowertext(message)
-
+*/
 /*Doesn't work
 /datum/status_effect/chem/SDGF/candidates
 	id = "SGDFCandi"

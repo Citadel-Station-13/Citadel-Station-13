@@ -211,7 +211,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 5. If people are being arses when they're a clone, slap them for it, they are told to NOT bugger around with someone else character, if it gets bad I'll add a blacklist, or do a check to see if you've played X amount of hours.
 	5.1 Another solution I'm okay with is to rename the clone to [M]'s clone, so it's obvious, this obviously ruins anyone trying to clone themselves to get an alibi however. I'd prefer this to not be the case.
 	5.2 Additionally, this chem is a soft buff to changelings, which apparently need a buff!
-	5.3 Other similar things exist though; impostors, split personalites, abductors, ect.
+	5.3 Other similar things exist already though in the codebase; impostors, split personalites, abductors, ect.
 6. Giving this to someone without concent is against space law and gets you sent to gulag.
 */
 
@@ -268,6 +268,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SM.mind.enslave_mind_to_creator(M)
 
 				//If they're a zombie, they can try to negate it with this.
+				//I seriously wonder if anyone will ever use this function.
 				if(M.getorganslot(ORGAN_SLOT_ZOMBIE))//sure, it "treats" it, but "you've" still got it. Doesn't always work as well; needs a ghost.
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
 					ZI.Remove(M)
@@ -402,6 +403,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	M.adjustCloneLoss(-2, 0)
 	M.setBrainLoss(-1)
 	M.nutrition += 10
+	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
 /datum/reagent/fermi/SDGFtox
@@ -410,7 +412,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	description = "A chem that makes Fermis angry at you if you're reading this, how did you get this???"
 	metabolization_rate = 1
 
-/datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting - the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
+/datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10
 	M.adjustCloneLoss(2, 0)
 	..()
@@ -722,23 +724,35 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
-/datum/reagent/fermi/mindControl
-	name = "Astrogen"
-	id = ""
-	description = "An opalescent murky liquid that is said to distort your soul from your being."
+/datum/reagent/fermi/enthral
+	name = "Need a name"
+	id = "enthral"
+	description = "Need a description."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	metabolization_rate = 0
 	overdose_threshold = 20
 	addiction_threshold = 30
 	addiction_stage1_end = 9999//Should never end.
-	creatorID = //add here
+	var/creatorID  //add here
+
+/datum/reagent/fermi/enthral/on_mob_life(mob/living/carbon/M)
+	if(!creatorID)
+		CRASH("Something went wrong in enthral creation")
+	if(M.ID == creatorID)
+		var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/silver
+		T.Remove(M)
+		nT.Insert(M)
+		qdel(T)
 
 //Requires player to be within vicinity of creator
 //bonuses to mood
 //gives creator a silver(velvet?) tongue
 //Addiction is applied when creator is out of viewer
 //
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
