@@ -60,6 +60,10 @@
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
+	if(!B)
+		o.remove_movespeed_modifier("megamilk")
+		o.next_move_modifier = 1
+		owner.remove_status_effect(src)
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
 		if(W == o.w_uniform || W == o.wear_suit)

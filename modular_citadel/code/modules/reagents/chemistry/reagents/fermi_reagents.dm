@@ -56,7 +56,7 @@
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
-		if(1)
+		if(0)
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			do_sparks(5,FALSE,M)
@@ -99,7 +99,7 @@
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
 	switch(src.addictCyc2)
-		if(1)
+		if(0)
 			to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
 			M.Jitter(50)
 			M.Knockdown(100)
@@ -163,7 +163,7 @@
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
 			for (var/datum/mood_event/i in M)
-				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i) //Why does this not work?
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 
 
@@ -172,7 +172,7 @@
 	src.addictCyc4++
 
 	..()
-	. = 1
+	//. = 1
 
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
 //	return
@@ -223,7 +223,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	color = "#60A584" // rgb: 96, 0, 255
 	var/playerClone = FALSE
 	var/unitCheck = FALSE
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	//var/datum/status_effect/chem/SDGF/candidates/candies
 	var/list/candies = list()
 	//var/polling = FALSE
@@ -421,7 +421,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
 	color = "#60A584" // rgb: 96, 0, 255
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
@@ -474,15 +474,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.rabid = 1//Make them an angery boi
 				//S.updateappearance(mutcolor_update=1)
 				holder.remove_reagent(src.id, 20)
+				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
-
-
-
-	to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
-
 
 //breast englargement
 //Honestly the most requested chems
@@ -654,7 +650,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255//Reset addiction
 	switch(current_cycle)
-		if(1)//Require a minimum
+		if(0)//Require a minimum
 			//var/mob/living/carbon/H = M
 			//M.alpha = 255
 			origin = M
@@ -684,7 +680,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		ODing = FALSE
 	..()
 
-/datum/reagent/fermi/astral/overdose_start(mob/living/carbon/M)
+/datum/reagent/fermi/astral/overdose_process(mob/living/carbon/M)
 	ODing = TRUE
 	if (!G == null)
 		if(prob(70))
@@ -719,16 +715,16 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		if(45)
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
 			M.alpha = M.alpha - 1
-	if(M.alpha <= 30)
-		to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
-		to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
-		M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
-		qdel(M) //Approx 60minutes till death from initial addiction
+		if(0 to 30)
+			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
+			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
+			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
 /datum/reagent/fermi/mindControl
 	name = "Astrogen"
-	id = "astral"
+	id = ""
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
@@ -736,6 +732,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 20
 	addiction_threshold = 30
 	addiction_stage1_end = 9999//Should never end.
+	creatorID = //add here
+
+//Requires player to be within vicinity of creator
+//bonuses to mood
+//gives creator a silver(velvet?) tongue
+//Addiction is applied when creator is out of viewer
+//
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
@@ -759,8 +762,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.emote("awoo")
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
-				for(var/victim in seen)
-					to_chat(M, "You notice [victim]'s bulge [pick("OwO!", "UwU!")]")
+				//for(var/victim in seen)
+				to_chat(M, "You notice [pick([victim])]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
 			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
@@ -777,7 +780,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					to_chat(M, "You notice [victim]'s bulge, OwO!")
+					to_chat(M, "You notice [pick([victim])]'s bulge [pick("OwO!", "uwu!")]")
 	..()
 
 /*
