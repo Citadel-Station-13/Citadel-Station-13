@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(traumas)
 						"anime" = strings(PHOBIA_FILE, "anime"),
 						"mimes" = strings(PHOBIA_FILE, "mimes"),
 						"cats" = strings(PHOBIA_FILE, "cats",
-						"syndicate"= strings(PHOBIA_FILE, "syndicate")
+						"syndicate"= strings(PHOBIA_FILE, "syndicate"),
 						"eye" = strings(PHOBIA_FILE, "eye")
             )
 
