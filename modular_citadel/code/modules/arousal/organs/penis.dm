@@ -4,7 +4,7 @@
 	icon_state 				= "penis"
 	icon 					= 'modular_citadel/icons/obj/genitals/penis.dmi'
 	zone 					= "groin"
-	slot 					= "penis"
+	slot 					= ORGAN_SLOT_PENIS
 	w_class 				= 3
 	can_masturbate_with 	= TRUE
 	masturbation_verb 		= "stroke"
