@@ -14,7 +14,8 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate"
+						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate",
+						"eye"
 						)
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
@@ -38,6 +39,7 @@ SUBSYSTEM_DEF(traumas)
 						"mimes" = strings(PHOBIA_FILE, "mimes"),
 						"cats" = strings(PHOBIA_FILE, "cats",
 						"syndicate"= strings(PHOBIA_FILE, "syndicate")
+						"eye" = strings(PHOBIA_FILE, "eye")
             )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -59,6 +61,7 @@ SUBSYSTEM_DEF(traumas)
 					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 					   "cats"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/hostile/cat_butcherer))
 					   "syndicate" = typecacheof(list(/mob/living/simple_animal/hostile/syndicate, /mob/living/simple_animal/hostile/viscerator, /mob/living/simple_animal/hostile/carp/cayenne, /mob/living/silicon/robot/modules/syndicate)),
+					   "eye" = typecacheof(list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher, /mob/living/simple_animal/hostile/carp/eyeball))
 					   )
 
 
@@ -159,9 +162,9 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
 						
 					"cats" = typecacheof(list(/obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty,
-						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat))
+						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat)),
 						
-					"syndicate"   = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/machinery/computer/shuttle/syndicate, /obj/machinery/computer/shuttle/syndicate/recall, /obj/machinery/computer/shuttle/syndicate/drop_pod, /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate, /obj/machinery/recharge_station,
+					"syndicate" = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/machinery/computer/shuttle/syndicate, /obj/machinery/computer/shuttle/syndicate/recall, /obj/machinery/computer/shuttle/syndicate/drop_pod, /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate, /obj/machinery/recharge_station,
 						/obj/machinery/porta_turret/syndicate, /obj/structure/closet/syndicate, /obj/machinery/suit_storage_unit/syndicate, /obj/item/clothing/under/syndicate, /obj/item/folder/syndicate, /obj/item/documents/syndicate, obj/item/clothing/glasses/phantomthief/syndicate, /obj/item/antag_spawner/nuke_ops, /obj/item/storage/box/syndicate
 						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver/syndie,
 						/obj/item/gun/ballistic/automatic/shotgun/bulldog, /obj/item/gun/ballistic/automatic/c20r, /obj/item/gun/ballistic/automatic/m90, /obj/item/gun/ballistic/automatic/l6_saw, /obj/item/storage/belt/grenade/full, /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate, /obj/item/gun/energy/kinetic_accelerator/crossbow,
@@ -174,6 +177,8 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/radio/headset/syndicate, /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate, /obj/item/pda/syndicate, /obj/item/clothing/suit/armor/vest/capcarapace/syndicate, /obj/item/gun/ballistic/automatic/flechette, /obj/item/ammo_box/magazine/flechette, /obj/item/clothing/suit/toggle/lawyer/black/syndie, /obj/item/melee/transforming/energy/sword/cx/traitor, 
 						/obj/structure/sign/poster/contraband/syndicate_pistol, /obj/structure/sign/poster/contraband/syndicate_recruitment, /obj/item/bedsheet/syndie, /obj/item/borg/upgrade/syndicate, /obj/item/tank/jetpack/oxygen/harness, /obj/item/firing_pin/implant/pindicate, /obj/item/reagent_containers/glass/bottle/traitor, /obj/item/storage/belt/military, 
 						/obj/item/twohanded/shockpaddles/syndicate, /obj/item/clothing/mask/cigarette/syndicate, /obj/item/toy/plush/nukeplushie)),
+
+					"eye" = typecacheof(list(/obj/item/organ/eyes, /obj/item/reagent_containers/syringe))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
