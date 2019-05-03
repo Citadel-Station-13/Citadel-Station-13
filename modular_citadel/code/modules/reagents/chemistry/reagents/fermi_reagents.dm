@@ -739,12 +739,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/enthral/on_mob_life(mob/living/carbon/M)
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
-	if(M.ID == creatorID)
+	else if(M.ID == creatorID)
 		var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 		var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/silver
 		T.Remove(M)
 		nT.Insert(M)
 		qdel(T)
+	else
 
 //Requires player to be within vicinity of creator
 //bonuses to mood

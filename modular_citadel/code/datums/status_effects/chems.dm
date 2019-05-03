@@ -154,7 +154,8 @@
 	id = "enthral"
 	var/mob/living/E //E for enchanter
 	//var/mob/living/V = list() //V for victims
-	var/resistance = 0
+	var/enthralTally = 10
+	var/resistanceTally = 0
 	var/phase = 0
 	var/enthralID
 
@@ -168,16 +169,16 @@
 		if(0)
 			return
 		if(1)
-			
+
 
 
 
 /datum/status_effect/chem/enthral/proc/owner_resist(mob/living/carbon/M)
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
 	if (M.canbearoused)
-		resistance += ((100 - M.arousalloss/100)/100)
+		resistance *= ((100 - M.arousalloss/100)/100)
 	else
-		resistance += 0.2
+		resistance *= 0.2
 
 /*
 /datum/status_effect/chem/OwO
