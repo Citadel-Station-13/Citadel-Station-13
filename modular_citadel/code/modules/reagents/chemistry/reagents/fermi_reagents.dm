@@ -39,10 +39,10 @@
 	addiction_stage4_end = 43 //Incase it's too long
 	var/location_created
 	var/turf/open/location_return = null
-	var/addictCyc1 = 1
-	var/addictCyc2 = 1
-	var/addictCyc3 = 1
-	var/addictCyc4 = 1
+	var/addictCyc1 = 0
+	var/addictCyc2 = 0
+	var/addictCyc3 = 0
+	var/addictCyc4 = 0
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
 	mob/living/carbon/purgeBody
@@ -152,7 +152,7 @@
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
 	switch(src.addictCyc4)
-		if(1)
+		if(0)
 			do_sparks(5,FALSE,M)
 			do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5,FALSE,M)
@@ -172,7 +172,7 @@
 	src.addictCyc4++
 
 	..()
-	//. = 1
+	. = 1
 
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
 //	return

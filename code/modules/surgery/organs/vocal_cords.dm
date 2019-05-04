@@ -762,19 +762,19 @@
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.real_name
-			power_multiplier *= 2
+			power_multiplier += 0.5
 
 		else if(dd_hasprefix(message, L.first_name()))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.first_name()
-			power_multiplier *= 2
+			power_multiplier += 0.5
 
 		else if(L.mind && L.mind.assigned_role && dd_hasprefix(message, L.mind.assigned_role))
 			specific_listeners += L //focus on those with the specified job
 			//Cut out the job so it doesn't trigger commands
 			found_string = L.mind.assigned_role
-			power_multiplier *= 2
+			power_multiplier += 0.25
 
 	if(specific_listeners.len)
 		listeners = specific_listeners
@@ -782,7 +782,7 @@
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	//phase 1
-	var/static/regex/enthral_words = regex("relax|obey|give in|love|serve|docile")
+	var/static/regex/enthral_words = regex("relax|obey|give in|love|serve|docile|so easy")
 	var/static/regex/reward_words = regex("good boy|good girl|good pet")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
@@ -838,16 +838,81 @@
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	//var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
 
+	var/distancelist = list(1.5,1.5,1.3,1.2,1.1,1,0.8,0.6,0.5,0.25)
 
+	var/static/regex/reward_words = regex("good boy|good girl|good pet")
+	var/static/regex/silence_words = regex("silence|be silent|ssh|quiet|hush")
+	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet")
+	var/static/regex/resist_words = regex("resist|snap out of it|come to your senses")//useful if two enthrallers are fighting
+	var/static/regex/forget_words = regex("forget|muddled|")
 
 	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
 	//ENTHRAL
 	if(findtext(message, enthral_words))
-		cooldown = COOLDOWN_VTHRAL
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
-			E.enthralTally += power_multiplier
+			power_multiplier *= distancelist[get_dist(user, V)+1]
+			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
+			if(message.len > 50)
+				E.enthralTally += (power_multiplier*((message.len/200) + 1) //encourage players to say more than one word.
+			else
+				E.enthralTally += power_multiplier*1.25
+		cooldown = COOLDOWN_VTHRAL
+
+	//REWARD
+	if(findtext(message, reward_words))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			power_multiplier *= distancelist[get_dist(user, V)+1]
+			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
+			if (L.canbearoused)
+				//E.resistanceTally -= 1
+				L.adjustArousalLoss(1*power_multiplier)
+			else
+				E.resistanceTally /= 2*power_multiplier
+		cooldown = COOLDOWN_VTHRAL
+
+	//PUNISH
+	if(findtext(message, punish_words))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			power_multiplier *= distancelist[get_dist(user, V)+1]
+			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
+			if (L.canbearoused)
+				E.resistanceTally /= 1*power_multiplier
+				L.adjustArousalLoss(-2*power_multiplier)
+			else
+				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
+		cooldown = COOLDOWN_VTHRAL
+
+	//SILENCE
+	else if((findtext(message, silence_words)))
+		cooldown = COOLDOWN_VSTUN
+		for(var/mob/living/carbon/C in listeners)
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			if L.phase == 3 //If target is fully enthralled,
+				C.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+			else
+				C.silent += ((10 * power_multiplier) * E.phase
+
+	//RESIST
+	else if((findtext(message, silence_words)))
+		cooldown = COOLDOWN_VSTUN
+		for(var/mob/living/carbon/C in listeners)
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			E.deltaResist += (power_multiplier)
+
+	//FORGET
+	else if((findtext(message, silence_words)))
+		cooldown = COOLDOWN_VSTUN
+		for(var/mob/living/carbon/C in listeners)
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			E.deltaResist += (power_multiplier)
+
 
 	var/i = 0
 	//STUN
@@ -877,13 +942,6 @@
 		for(var/mob/living/carbon/C in listeners)
 			C.vomit(10 * power_multiplier, distance = power_multiplier)
 
-	//SILENCE
-	else if((findtext(message, silence_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
-				power_multiplier *= 3
-			C.silent += (10 * power_multiplier)
 
 	//HALLUCINATE
 	else if((findtext(message, hallucinate_words)))

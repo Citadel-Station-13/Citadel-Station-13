@@ -150,21 +150,24 @@
 ///////////////////////////////////////////
 */
 
-/datum/status_effect/chem/enthral
-	id = "enthral"
+/datum/status_effect/chem/enthrall
+	id = "enthrall"
 	var/mob/living/E //E for enchanter
 	//var/mob/living/V = list() //V for victims
-	var/enthralTally = 10
+	var/enthrallTally = 10
 	var/resistanceTally = 0
-	var/phase = 0
+	var/deltaResist
+	var/deltaEnthrall
+	var/phase = 1 //1: initial, 2: 2nd stage - more commands, 3rd: fully enthralled
+	var/command
 	var/enthralID
 
-/datum/status_effect/chem/enthra/on_apply(mob/living/carbon/M)
+/datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
 	if(M.ID == )
 
 
-/datum/status_effect/chem/enthral/tick(mob/living/carbon/M)
-	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist))))
+/datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed
 	switch(phase)
 		if(0)
 			return
@@ -173,7 +176,7 @@
 
 
 
-/datum/status_effect/chem/enthral/proc/owner_resist(mob/living/carbon/M)
+/datum/status_effect/chem/enthrall/proc/owner_resist(mob/living/carbon/M)
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
 	if (M.canbearoused)
 		resistance *= ((100 - M.arousalloss/100)/100)
