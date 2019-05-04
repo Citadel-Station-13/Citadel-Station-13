@@ -1,0 +1,94 @@
+//////////////////////////Sushi Components///////////////////////
+
+/datum/crafting_recipe/food/sushi_rice
+	name = "Sushi Rice"
+	reqs = list(
+		/datum/reagent/water  = 40,
+		/datum/reagent/consumable/rice = 10
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushi_rice
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/sea_weed
+	name = "Sea Weed Sheet"
+	reqs = list(
+		/datum/reagent/water = 30,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/sea_weed
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/tuna_can
+	name = "Can of Tuna"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 15,
+		/datum/reagent/consumable/cooking_oil = 5,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/tuna
+	subcategory = CAT_SUSHI
+
+//////////////////////////Sushi/////////////////////////////////
+
+/datum/crafting_recipe/food/sashimi
+	name = "Sashimi"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sashimi
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/riceball
+	name = "Onigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 1,
+		/obj/item/reagent_containers/food/snacks/sea_weed = 1,
+		/obj/item/reagent_containers/food/snacks/sushi_rice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/riceball
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/sushie_egg
+	name = "Tobiko"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 6,
+		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
+		/obj/item/reagent_containers/food/snacks/sea_weed = 2,
+	)
+	result = /obj/item/reagent_containers/food/snacks/tobiko
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/sushie_basic
+	name = "Funa Hosomaki"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 3,
+		/obj/item/reagent_containers/food/snacks/sushi_rice = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 2,
+		/obj/item/reagent_containers/food/snacks/sea_weed = 3,
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_basic
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/sushie_adv
+	name = "Funa Nigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/reagent_containers/food/snacks/sushi_rice = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_adv
+	subcategory = CAT_SUSHI
+
+/datum/crafting_recipe/food/sushie_pro
+	name = "Well made Funa Nigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 10,
+		/obj/item/reagent_containers/food/snacks/sushi_rice = 2,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 5,
+		/obj/item/reagent_containers/food/snacks/sea_weed = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/sushie_pro
+	subcategory = CAT_SUSHI

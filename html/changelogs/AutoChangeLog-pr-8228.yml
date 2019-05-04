@@ -1,0 +1,4 @@
+author: "Coolgat3"
+delete-after: True
+changes: 
+  - tweak: "Raised the ripley's movement speed and lights range by 1, also lowered its armor to compensate."
