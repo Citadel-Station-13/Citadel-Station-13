@@ -192,6 +192,14 @@
 	opened = FALSE
 	gun_charger = TRUE
 
+/obj/item/inducer/sci/combat/dry
+	cell_type = null
+	opened = TRUE
+
+/obj/item/inducer/sci/combat/dry/Initialize() //Just in case
+	. = ..()
+	update_icon()
+
 /obj/item/inducer/sci/combat/Initialize()
 	. = ..()
 	update_icon()
