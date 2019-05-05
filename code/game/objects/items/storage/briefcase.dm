@@ -77,7 +77,7 @@
 
 /obj/item/storage/briefcase/lasergun/PopulateContents()
 	new /obj/item/gun/ballistic/automatic/laser(src)
-	new /obj/item/ammo_box/magazine/recharged(src)
+	new /obj/item/ammo_box/magazine/recharge(src)
 	new /obj/item/ammo_box/magazine/recharge(src)
 
 /obj/item/storage/briefcase/lasergun_plus
@@ -86,7 +86,7 @@
 
 /obj/item/storage/briefcase/lasergun_plus/PopulateContents()
 	new /obj/item/gun/ballistic/automatic/laser(src)
-	new /obj/item/ammo_box/magazine/recharged(src)
+	new /obj/item/ammo_box/magazine/recharge(src)
 	new /obj/item/ammo_box/magazine/recharge(src)
 	new /obj/item/ammo_box/magazine/recharge(src)
 	new /obj/item/gun/energy/e_gun/mini(src)
