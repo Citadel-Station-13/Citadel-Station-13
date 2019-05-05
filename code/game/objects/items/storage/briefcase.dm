@@ -71,3 +71,23 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
 
+/obj/item/storage/briefcase/lasergun
+	desc = "The case is made of stronger leather and feels more hefty."
+	force = 10
+
+/obj/item/storage/briefcase/lasergun/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/laser(src)
+	new /obj/item/ammo_box/magazine/recharged(src)
+	new /obj/item/ammo_box/magazine/recharge(src)
+
+/obj/item/storage/briefcase/lasergun_plus
+	desc = "It's case eage has metal enforcements and feels light but strong."
+	force = 12
+
+/obj/item/storage/briefcase/lasergun_plus/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/laser(src)
+	new /obj/item/ammo_box/magazine/recharged(src)
+	new /obj/item/ammo_box/magazine/recharge(src)
+	new /obj/item/ammo_box/magazine/recharge(src)
+	new /obj/item/gun/energy/e_gun/mini(src)
+	new /obj/item/inducer(src) // So we can recharge are ammo
