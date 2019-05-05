@@ -724,27 +724,27 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
-/datum/reagent/fermi/enthral
-	name = "Need a name"
+/datum/reagent/fermi/enthrall
+	name = "MKUltra"
 	id = "enthral"
 	description = "Need a description."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	metabolization_rate = 0
-	overdose_threshold = 20
-	addiction_threshold = 30
-	addiction_stage1_end = 9999//Should never end.
+	//overdose_threshold = 20
+	//addiction_threshold = 30
+	//addiction_stage1_end = 9999//Should never end.
 	var/creatorID  //add here
 
-/datum/reagent/fermi/enthral/on_mob_life(mob/living/carbon/M)
+/datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
 	else if(M.ID == creatorID)
-		var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
-		var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/silver
-		T.Remove(M)
-		nT.Insert(M)
-		qdel(T)
+		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
+		Vc.Remove(M)
+		nVc.Insert(M)
+		qdel(Vc)
 	else
 
 //Requires player to be within vicinity of creator

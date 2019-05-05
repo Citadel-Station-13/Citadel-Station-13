@@ -1,7 +1,14 @@
 /datum/status_effect/chem/SGDF
 	id = "SGDF"
 	var/mob/living/fermi_Clone
+	alert_type = null
 
+/*
+/obj/screen/alert/status_effect/SDGF
+	name = "SDGF"
+	desc = "You've cloned yourself! How cute."
+	icon_state = "SDGF"
+*/
 
 /datum/status_effect/chem/SGDF/on_apply()
 	message_admins("SGDF status appied")
@@ -36,6 +43,7 @@
 
 /datum/status_effect/chem/BElarger
 	id = "BElarger"
+	alert_type = null
 	//var/list/items = list()
 	//var/items = o.get_contents()
 
@@ -100,6 +108,7 @@
 
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
+	alert_type = null
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	message_admins("PElarge started!")
@@ -152,37 +161,134 @@
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
+	alert_type = null
 	var/mob/living/E //E for enchanter
 	//var/mob/living/V = list() //V for victims
 	var/enthrallTally = 10
 	var/resistanceTally = 0
 	var/deltaResist
 	var/deltaEnthrall
-	var/phase = 1 //1: initial, 2: 2nd stage - more commands, 3rd: fully enthralled
-	var/command
-	var/enthralID
+	var/phase = 1 //-1: resisted state, due to be removed.0: sleeper agent, no effects unless triggered 1: initial, 2: 2nd stage - more commands, 3rd: fully enthralled, 4th Mindbroken
+	var/status = null
+	var/statusStrength = 0
+	var/enthrallID
+	var/mindbroken = FALSE
+	var/datum/weakref/redirect_component1
+	var/datum/weakref/redirect_component2
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
-	if(M.ID == )
+	if(M.ID == enthralID)
+		owner.remove_status_effect(src)//This should'nt happen, but just in case
+	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
+	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
 
 
 /datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
-	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed
+	if(M.has_trait(TRAIT_MINDSHIELD))
+		resistanceTally += 5
+		if(prob(20))
+			to_chat(owner, "You feel your lucidity returning as the mindshield fights")
+
 	switch(phase)
-		if(0)
+		if(-1)//fully removed
+			owner.remove_status_effect(src)
+		if(0)// sleeper agent
 			return
-		if(1)
+		if(1)//Initial enthrallment
+			if (enthrallTally > 100)
+				phase += 1
+				return
+			if (resistanceTally > 100)
+
+			if resist
 
 
+/datum/status_effect/chem/enthrall/on_remove(mob/living/carbon/M)
+	qdel(redirect_component1.resolve())
+	redirect_component1 = null
+	qdel(redirect_component2.resolve())
+	redirect_component2 = null
 
+/*
+/datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+		    if(enthralID.name in message || enthralID.first_name in message)
+		        return
+		    else
+		        . = ..()
+*/
+
+/datum/status_effect/chem/enthrall/proc/owner_withdrawal(mob/living/carbon/M)
+	//3 stages, each getting worse
 
 /datum/status_effect/chem/enthrall/proc/owner_resist(mob/living/carbon/M)
+	if(prob(10))
+		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
+	//base resistance
 	if (M.canbearoused)
-		resistance *= ((100 - M.arousalloss/100)/100)
+		deltaResist*= ((100 - M.arousalloss/100)/100)//more aroused you are, the weaker resistance you can give
 	else
-		resistance *= 0.2
+		deltaResist *= 0.2
+	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
+	if (user.has_reagent("mannitol"))
+		deltaResist *= 1.25
+	if (user.has_reagent("neurine"))
+		deltaResist *= 1.5
+	if (!H.has_trait(TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
+		if (user.has_reagent("anaphro"))
+			deltaResist *= 1.5
+		if (user.has_reagent("anaphro+"))
+			deltaResist *= 2
+		if (user.has_reagent("aphro"))
+			deltaResist *= 0.75
+		if (user.has_reagent("aphro+"))
+			deltaResist *= 0.5
 
+	//Antag resistance
+	//cultists are already brainwashed by their god
+	if(iscultist(owner))
+		deltaResist *= 2
+	else if (is_servant_of_ratvar(user))
+		deltaResist *= 2
+	//antags should be able to resist, so they can do their other objectives. This chem does frustrate them, but they've all the tools to break free when an oportunity presents itself.
+	else if (owner.mind.assigned_role in GLOB.antagonists)
+		deltaResist *= 1.8
+
+	//role resistance
+	//Chaplains are already brainwashed by their god
+	if(owner.mind.assigned_role == "Chaplain")
+		deltaResist *= 1.5
+	//Command staff has authority,
+	if(owner.mind.assigned_role in GLOB.command_positions)
+		deltaResist *= 1.4
+		//if(owner.first_name == "skylar"); power_multiplier *= 0.8 //for skylar //I'm kidding
+	//Chemists should be familiar with drug effects
+	if(owner.mind.assigned_role == "Chemist")
+		deltaResist *= 1.3
+
+	//Happiness resistance
+	//Your Thralls are like pets, you need to keep them happy.
+	if(owner.nutrition < 250)
+		deltaResist += (250-owner.nutrition)/100
+	if(owner.health < 120)//Harming your thrall will make them rebel harder.
+		deltaResist *= ((120-owner.health)/100)+1
+	//Add cold/hot, oxygen, sanity, happiness? (happiness might be moot, since the mood effects are so strong)
+	//Mental health could play a role too in the other direction
+
+	//If master gives you a collar, you get a sense of pride
+	if(istype(owner.neck, /obj/item/clothing/neck/petcollar))
+		deltaResist *= 0.8
+
+/datum/status_effect/chem/enthrall/proc/owner_say(mob/living/carbon/M) //I can only hope this works
+	var/static/regex/owner_words = regex("[enthralID.real_name]|[enthralID.first_name()]")
+	if(findtext(message, enthral_words))
+		if(enthralID.gender == FEMALE)
+			message = replacetext(message, enthralID.real_name, "Mistress")
+			message = replacetext(message, enthralID.first_name(, "Mistress")
+		else
+			message = replacetext(message, enthralID.real_name, "Master")
+			message = replacetext(message, enthralID.first_name(, "Master")
+	return message
 /*
 /datum/status_effect/chem/OwO
 	id = "OwO"

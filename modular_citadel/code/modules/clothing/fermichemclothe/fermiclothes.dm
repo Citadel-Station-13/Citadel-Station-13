@@ -1,8 +1,8 @@
 //Fermiclothes!
 //Clothes made from FermiChem
 
-/obj/item/clothing/head/hattip	//Actually the M1 Helmet
-	name = "flak helmet"
+/obj/item/clothing/head/hattip	//I wonder if anyone else has played cryptworlds
+	name = "Sythetic hat"
     con = 'icons/obj/clothing/hats.dmi'
 	icon_state = "top_hat"
 	desc = "A sythesized hat, you can't seem to take it off. And tips their hat."

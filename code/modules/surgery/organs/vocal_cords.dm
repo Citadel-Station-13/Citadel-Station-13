@@ -613,7 +613,7 @@
 	return cooldown
 
 //////////////////////////////////////
-///////ENTHRAL SILVER TONGUE//////////
+///////ENTHRAL VELVET CHORDS//////////
 //////////////////////////////////////
 
 //Heavily modified voice of god code
@@ -674,8 +674,8 @@
 */
 
 /obj/item/organ/vocal_cords/velvet/handle_speech(message)
-	var/cooldown = velvetspeec(hmessage, owner, spans, base_multiplier)
-	return //voice of god speaks for us
+	var/cooldown = velvetspeech(message, owner, spans, base_multiplier)
+	return //velvetspeech should handle speech
 
 
 
@@ -718,7 +718,7 @@
 					if(istype(H.neck, /obj/item/clothing/neck/petcollar))
 						power_multiplier *= 1.5 //Collaring players makes them more docile and accepting of their place as a pet
 					if(H.has_trait(TRAIT_CROCRIN_IMMUNE) || !M.canbearoused)
-						power_multiplier *= 1.5//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected.
+						power_multiplier *= 1.5//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
 			listeners += L
 
 	if(!listeners.len)
@@ -739,7 +739,7 @@
 		if(user.mind.assigned_role == "Mime")
 			power_multiplier *= 0.5
 
-	//Cultists are closer to their gods and are more better at indoctrinating
+	//Cultists are closer to their gods and are better at indoctrinating
 	if(iscultist(user))
 		power_multiplier *= 2
 	else if (is_servant_of_ratvar(user))
@@ -778,7 +778,7 @@
 
 	if(specific_listeners.len)
 		listeners = specific_listeners
-		//power_multiplier *= (1 + (1/specific_listeners.len)) //Put this is if it becomes OP
+		//power_multiplier *= (1 + (1/specific_listeners.len)) //Put this is if it becomes OP, power is judged internally on a thrall, so shouldn't be nessicary.
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	//phase 1
@@ -789,8 +789,11 @@
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet")
 	var/static/regex/desire_words = regex("good boy|good girl|good pet")
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
-	var/static/regex/forget_words = regex("forget|muddled|")
+	var/static/regex/forget_words = regex("forget|muddled")
 	//phase 2
+	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE
+	var/static/regex/awoo_words = regex("howl|awoo|bark")
+	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
@@ -808,7 +811,7 @@
 	var/static/regex/whoareyou_words = regex("who are you|say your name|state your name|identify")
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
 	var/static/regex/knockknock_words = regex("knock knock")
-	var/static/regex/statelaws_words = regex("state laws|state your laws")
+	//var/static/regex/statelaws_words = regex("state laws|state your laws")
 	var/static/regex/move_words = regex("move|walk")
 	var/static/regex/left_words = regex("left|west|port")
 	var/static/regex/right_words = regex("right|east|starboard")
@@ -831,23 +834,19 @@
 	var/static/regex/salute_words = regex("salute")
 	var/static/regex/deathgasp_words = regex("play dead")
 	var/static/regex/clap_words = regex("clap|applaud")
-	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
-	var/static/regex/multispin_words = regex("like a record baby|right round")
-	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE
-	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
-	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
+	//var/static/regex/honk_words = regex("ho+nk") //hooooooonk
+	//var/static/regex/multispin_words = regex("like a record baby|right round")
+
+	//var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
+	//var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	//var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
 
 	var/distancelist = list(1.5,1.5,1.3,1.2,1.1,1,0.8,0.6,0.5,0.25)
 
-	var/static/regex/reward_words = regex("good boy|good girl|good pet")
-	var/static/regex/silence_words = regex("silence|be silent|ssh|quiet|hush")
-	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet")
-	var/static/regex/resist_words = regex("resist|snap out of it|come to your senses")//useful if two enthrallers are fighting
-	var/static/regex/forget_words = regex("forget|muddled|")
 
 	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
+
+	//Tier 1
 	//ENTHRAL
 	if(findtext(message, enthral_words))
 		for(var/V in listeners)
@@ -859,7 +858,7 @@
 				E.enthralTally += (power_multiplier*((message.len/200) + 1) //encourage players to say more than one word.
 			else
 				E.enthralTally += power_multiplier*1.25
-		cooldown = COOLDOWN_VTHRAL
+		cooldown = 100
 
 	//REWARD
 	if(findtext(message, reward_words))
@@ -893,26 +892,70 @@
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_VSTUN
 		for(var/mob/living/carbon/C in listeners)
-			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			var/datum/status_effect/chem/enthral/C = C.has_status_effect(/datum/status_effect/chem/enthral)
+			power_multiplier *= distancelist[get_dist(user, V)+1]
 			if L.phase == 3 //If target is fully enthralled,
 				C.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 			else
-				C.silent += ((10 * power_multiplier) * E.phase
+				C.silent += ((10 * power_multiplier) * E.phase)
 
 	//RESIST
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_VSTUN
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			power_multiplier *= distancelist[get_dist(user, V)+1]
 			E.deltaResist += (power_multiplier)
 
-	//FORGET
+	//FORGET (A way to cancel the process)
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_VSTUN
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
-			E.deltaResist += (power_multiplier)
+			C.Sleeping(40)
+			to_chat(C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>")
+			E.phase = 0
 
+	//ATTRACT
+	else if((findtext(message, attract_words)))
+		cooldown = COOLDOWN_DAMAGE
+		for(var/V in listeners)
+			var/mob/living/L = V
+			L.throw_at(get_step_towards(user,L), 3 * power_multiplier, 1 * power_multiplier)
+
+	//teir 2
+
+	//ORGASM
+	else if((findtext(message, orgasm_words)))
+		cooldown = COOLDOWN_MEME
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
+				H.mob_climax(forced_climax=TRUE)
+				H.setArousalLoss(H.min_arousal)
+				L.resistance = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
+
+	//awoo
+	else if((findtext(message, awoo_words)))
+		cooldown = 0
+		for(var/V in listeners)
+			var/mob/living/M = V
+			M.say("*awoo")
+
+	//Nya
+	else if((findtext(message, nya_words)))
+		cooldown = 0
+		for(var/V in listeners)
+			var/mob/living/M = V
+			playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/merowr.ogg', 'modular_citadel/sound/voice/nya.ogg'), , 50, 1, -1)
+			M.emote("me","lets out a nya!")
+
+	//SLEEP
+	else if((findtext(message, sleep_words)))
+		cooldown = COOLDOWN_STUN
+		for(var/mob/living/carbon/C in listeners)
+			C.Sleeping(40 * power_multiplier)
 
 	var/i = 0
 	//STUN
@@ -930,11 +973,7 @@
 			var/mob/living/L = V
 			L.Knockdown(60 * power_multiplier)
 
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(40 * power_multiplier)
+
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
@@ -1006,12 +1045,7 @@
 			var/throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(L, user)))
 			L.throw_at(throwtarget, 3 * power_multiplier, 1 * power_multiplier)
 
-	//ATTRACT
-	else if((findtext(message, attract_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.throw_at(get_step_towards(user,L), 3 * power_multiplier, 1 * power_multiplier)
+
 
 	//WHO ARE YOU?
 	else if((findtext(message, whoareyou_words)))
@@ -1171,38 +1205,12 @@
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "dance"), 5 * i)
 			i++
 
-	//JUMP
-	else if((findtext(message, jump_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			if(prob(25))
-				addtimer(CALLBACK(L, /atom/movable/proc/say, "HOW HIGH?!!"), 5 * i)
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "jump"), 5 * i)
-			i++
-
-	//SALUTE
-	else if((findtext(message, salute_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "salute"), 5 * i)
-			i++
-
 	//PLAY DEAD
 	else if((findtext(message, deathgasp_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
-			i++
-
-	//PLEASE CLAP
-	else if((findtext(message, clap_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "clap"), 5 * i)
 			i++
 
 	//HONK
@@ -1221,34 +1229,6 @@
 			var/mob/living/L = V
 			L.SpinAnimation(speed = 10, loops = 5)
 
-	//CITADEL CHANGES
-	//ORGASM
-	else if((findtext(message, orgasm_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/carbon/human/H = V
-			if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
-				H.mob_climax(forced_climax=TRUE)
-
-	//DAB
-	else if((findtext(message, dab_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/M = V
-			M.say("*dab")
-
-	//SNAP
-	else if((findtext(message, snap_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/M = V
-			M.say("*snap")
-
-	//BWOINK
-	else if((findtext(message, bwoink_words)))
-		cooldown = COOLDOWN_MEME
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/effects/adminhelp.ogg', 300, 1), 25)
-	//END CITADEL CHANGES
 
 	else
 		cooldown = COOLDOWN_NONE

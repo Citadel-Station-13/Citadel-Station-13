@@ -216,8 +216,6 @@
 		message = replacetext(message, "l", "w")
 		message = replacetext(message, "r", "w")
 	if(prob(20))
-		message +=  " OwO"
-	else if(prob(30))
-		message +=  " uwu"
+		message +=  pick(" OwO", " uwu")
 	message = lowertext(message)
 	return message

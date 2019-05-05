@@ -107,6 +107,7 @@
 	id = "enthral"
 	results = list("enthral" = 3)
 	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
+	required_catalysts = list("blood" = 1)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 		= 350 		// Lower area of bell curve for determining heat based rate reactions
