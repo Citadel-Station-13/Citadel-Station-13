@@ -9,7 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
-	var/recharge_coeff = 1
+	var/recharge_coeff = 1.50
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
