@@ -48,11 +48,13 @@
 	name = "ERT Commander - High Alert"
 
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	r_hand = /obj/item/storage/briefcase/lasergun_plus
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1)
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
+	r_pocket = /obj/item/gun/energy/e_gun/mini
 
 /datum/outfit/ert/security
 	name = "ERT Security"
@@ -62,6 +64,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/storage/backpack/security
 	belt = /obj/item/storage/belt/security/full
+	r_hand = /obj/item/storage/briefcase/lasergun
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
@@ -122,7 +125,8 @@
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/reagent_containers/hypospray/combat/nanites=1,\
-		/obj/item/gun/medbeam=1)
+		/obj/item/gun/medbeam=1,\
+		/obj/item/gun/energy/e_gun/mini=1)
 
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"
@@ -138,6 +142,7 @@
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun=1,\
+		/obj/item/inducer=1,\
 		/obj/item/construction/rcd/loaded=1)
 
 /datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -157,7 +162,10 @@
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/construction/rcd/combat=1)
+		/obj/item/construction/rcd/combat=1,\
+		/obj/item/gun/energy/e_gun/mini=1,\
+		/obj/item/rcd_ammo/large=2,\
+		/obj/item/inducer=1)
 
 
 /datum/outfit/centcom_official
@@ -171,6 +179,8 @@
 	belt = /obj/item/gun/energy/e_gun
 	l_pocket = /obj/item/pen
 	back = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+			/obj/item/gun/energy/e_gun/mini=1)
 	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
 	id = /obj/item/card/id
