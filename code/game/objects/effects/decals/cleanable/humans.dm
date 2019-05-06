@@ -78,8 +78,7 @@
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if(gib_overlay)
-		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", layer = -LOW_OBJ_LAYER)
-		gibz.color = null
+		var/icon/gibz = new(icon, icon_state + "-overlay")
 		add_overlay(gibz)
 	reagents.add_reagent("liquidgibs", 5)
 
