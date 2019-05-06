@@ -82,6 +82,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
+	var/custom_species = null
 
 		//Quirk list
 	var/list/positive_quirks = list()
@@ -269,6 +270,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
 			dat += "<br><b>Cycle background:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cycle_bg;task=input'>[bgstate]</a><BR>"
@@ -816,10 +818,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/donoritem
@@ -1456,6 +1458,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						//let's ensure that no weird shit happens on species swapping.
+						custom_species = null
 						if(!("body_markings" in pref_species.default_features))
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
@@ -1476,6 +1479,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = pref_species.default_color
 						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
+
+				if("custom_species")
+					var/new_species = reject_bad_name(input(user, "Choose your species subtype, if unique. This will show up on examinations and health scans. Do not abuse this:", "Character Preference", custom_species) as null|text)
+					if(new_species)
+						custom_species = new_species
+					else
+						custom_species = null
 
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
@@ -2115,6 +2125,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = nameless ? "[real_name] #[rand(10000, 99999)]" : real_name
 	character.name = character.real_name
 	character.nameless = nameless
+	character.custom_species = custom_species
 
 	character.gender = gender
 	character.age = age
@@ -2149,6 +2160,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
+	character.dna.custom_species = character.custom_species
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"

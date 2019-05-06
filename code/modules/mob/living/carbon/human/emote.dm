@@ -39,6 +39,19 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/mawp
+	key = "mawp"
+	key_third_person = "mawps"
+	message = "mawps annoyingly."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/mawp/run_emote(mob/living/user, params)
+	. = ..()
+	if(.)
+		if(ishuman(user))
+			if(prob(10))
+				user.adjustEarDamage(-5, -5)
+
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"

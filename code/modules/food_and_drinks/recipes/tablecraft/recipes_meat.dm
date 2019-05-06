@@ -1,5 +1,3 @@
-
-
 ////////////////////////////////////////////////KEBABS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/humankebab
@@ -69,16 +67,6 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/fishfingers
-	subcategory = CAT_MEAT
-
-/datum/crafting_recipe/food/sashimi
-	name = "Sashimi"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
-		/obj/item/reagent_containers/food/snacks/carpmeat = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sashimi
 	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////MR SPIDER////////////////////////////////////////////////
