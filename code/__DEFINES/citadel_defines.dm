@@ -95,6 +95,7 @@
 #define NOAROUSAL		37 //Stops all arousal effects
 #define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
 #define MATRIXED		39	//if icon is color matrix'd
+#define SKINTONE		40	//uses skin tones
 
 //Citadel istypes
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
