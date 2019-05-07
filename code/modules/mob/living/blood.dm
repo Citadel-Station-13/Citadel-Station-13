@@ -201,6 +201,7 @@
 			if(!suiciding)
 				blood_data["cloneable"] = 1
 			blood_data["blood_type"] = copytext(dna.blood_type,1,0)
+			blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 			blood_data["gender"] = gender
 			blood_data["real_name"] = real_name
 			blood_data["features"] = dna.features
@@ -304,7 +305,7 @@
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)
 	if(!T)
 		T = get_turf(src)
-	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
+	var/obj/effect/decal/cleanable/blood/xenoblood/B = locate() in T.contents
 	if(!B)
 		B = new(T)
 	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))

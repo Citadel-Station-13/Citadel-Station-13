@@ -1,5 +1,5 @@
 /datum/reagent/blood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Blood"
 	id = "blood"
 	color = BLOOD_COLOR_HUMAN // rgb: 200, 0, 0
@@ -97,14 +97,14 @@
 		B.color = data["bloodcolor"]
 
 /datum/reagent/blood/synthetics
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Synthetic Blood"
 	id = "syntheticblood"
 	taste_description = "oily"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
 
 /datum/reagent/blood/xenomorph
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Xenomorph Blood"
 	id = "xenoblood"
 	taste_description = "acidic heresy"
@@ -112,14 +112,14 @@
 	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/blood/oil
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Hydraulic Blood"
 	id = "oilblood"
 	taste_description = "burnt oil"
 	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
 
 /datum/reagent/blood/jellyblood
-	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Slime Jelly Blood"
 	id = "jellyblood"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."

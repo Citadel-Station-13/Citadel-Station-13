@@ -56,14 +56,17 @@
 				//Bloody footprints
 				var/turf/T = get_turf(src)
 				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
-					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
+					var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
 					if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == bloodtype_to_color(S.last_bloodtype)))
 						return
 					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
-					var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
+					var/obj/effect/decal/cleanable/blood/footprints/tracks/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/footprints(T)
+					FP.icon_state = FOOTPRINT_SHOE
+					FP.print_state = FOOTPRINT_SHOE
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
+					FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
 					if(S.last_blood_DNA && S.last_bloodtype)
 						FP.blood_DNA += list(S.last_blood_DNA = S.last_bloodtype)
 						//hacky as heck; we need to move the LAST entry to there, otherwise we mix all the blood
@@ -80,12 +83,12 @@
 						return
 					var/turf/T = get_turf(src)
 					if(blood_smear && blood_smear[blood_state])
-						for(var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP in T)
-							if (oldFP.blood_state == blood_state)
-								return
+						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
+						if (oldFP.blood_state == blood_state)
+							return
 						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
 						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
-							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/footprints(T)
+							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks(T)
 							if(DIGITIGRADE in dna.species.species_traits)
 								if(dna.species.id == ("lizard" || "ashwalker" || "xeno"))
 									FP.icon_state = FOOTPRINT_CLAW
@@ -119,9 +122,9 @@
 						return
 					var/turf/T = get_turf(src)
 					if(blood_smear && blood_smear[blood_state])
-						for(var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP in T)
-							if (oldFP.blood_state == blood_state)
-								return
+						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
+						if (oldFP.blood_state == blood_state)
+							return
 						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
 						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
 							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/body(T)

@@ -34,7 +34,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("donor"= "Non-human DNA", "blood_type"= "A+", "bloodcolor" = color))
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -74,11 +74,18 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
+	var/fleshcolor
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if(gib_overlay)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
+		var/generic_skin = random_skin_tone()
+		var/ethnicity = "#[skintone2hex(generic_skin)]"
+		var/image/gibz = image(icon, icon_state + "-overlay", layer = LOW_OBJ_LAYER-0.1)
+		if(!fleshcolor)
+			gibz.color = ethnicity
+		else
+			gibz.color = fleshcolor
 		add_overlay(gibz)
 	reagents.add_reagent("liquidgibs", 5)
 

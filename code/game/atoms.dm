@@ -321,7 +321,7 @@
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != "blood")
 		return
-	return list("blood_DNA"= "ANIMAL", "blood_type"="Y-")
+	return list("donor"= "ANIMAL","bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	if(get_blood_id() != "blood")
@@ -334,7 +334,7 @@
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	return list("donor"= "UNKNOWN DNA","bloodcolor" = BLOOD_COLOR_XENO, "blood_type"= "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -372,7 +372,7 @@
 		else
 			colors[blood_DNA[bloop]] = 1
 
-	var/final_rgb = "#940000"
+	var/final_rgb = color
 
 	if(colors.len)
 		var/sum = 0 //this is all shitcode, but it works; trust me
