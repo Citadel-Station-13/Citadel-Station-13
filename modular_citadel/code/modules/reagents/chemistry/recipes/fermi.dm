@@ -131,6 +131,6 @@
 
 /datum/chemical_reaction/enthral/on_reaction(datum/reagents/holder)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/enthralID = B.get_blood_id()
+	var/enthrallID = B.get_blood_id()
 	var/datum/reagent/fermi/enthral/E = locate(/datum/reagent/fermi/enthral) in holder.reagent_list
-	E.enthralID = enthralID
+	E.enthrallID = enthrallID

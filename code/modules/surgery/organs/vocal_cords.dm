@@ -715,10 +715,6 @@
 					var/mob/living/carbon/human/H = L
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
-					if(istype(H.neck, /obj/item/clothing/neck/petcollar))
-						power_multiplier *= 1.5 //Collaring players makes them more docile and accepting of their place as a pet
-					if(H.has_trait(TRAIT_CROCRIN_IMMUNE) || !M.canbearoused)
-						power_multiplier *= 1.5//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
 			listeners += L
 
 	if(!listeners.len)
@@ -781,6 +777,17 @@
 		//power_multiplier *= (1 + (1/specific_listeners.len)) //Put this is if it becomes OP, power is judged internally on a thrall, so shouldn't be nessicary.
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
+	var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
+	if (T.name == "fluffy tongue") //If you sound hillarious, it's hard to take you seriously. This is a way for other players to combat/reduce their effectiveness.
+		power_multiplier*0.75
+
+	/* CHECK THIS STUFF IN THE CHEM STATUS INSTEAD.
+	if(istype(H.neck, /obj/item/clothing/neck/petcollar))
+		power_multiplier *= 1.5 //Collaring players makes them more docile and accepting of their place as a pet
+	if(H.has_trait(TRAIT_CROCRIN_IMMUNE) || !M.canbearoused)
+		power_multiplier *= 1.5//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
+	*/
+
 	//phase 1
 	var/static/regex/enthral_words = regex("relax|obey|give in|love|serve|docile|so easy")
 	var/static/regex/reward_words = regex("good boy|good girl|good pet")
@@ -789,9 +796,9 @@
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet")
 	var/static/regex/desire_words = regex("good boy|good girl|good pet")
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
-	var/static/regex/forget_words = regex("forget|muddled")
+	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	//phase 2
-	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE
+	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //lewd
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
@@ -800,7 +807,7 @@
 	var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	//phase 3
 	//var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
-	var/static/regex/wakeup_words = regex("wake up|awaken")
+	var/static/regex/wakeup_words = regex("revert|awaken|*snap")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|heroes never die")
 	var/static/regex/hurt_words = regex("die|suffer|hurt|pain|death")
 	var/static/regex/bleed_words = regex("bleed|there will be blood")
@@ -847,7 +854,7 @@
 	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
 
 	//Tier 1
-	//ENTHRAL
+	//ENTHRAL mixable
 	if(findtext(message, enthral_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -860,7 +867,7 @@
 				E.enthralTally += power_multiplier*1.25
 		cooldown = 100
 
-	//REWARD
+	//REWARD mixable
 	if(findtext(message, reward_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -874,7 +881,7 @@
 				E.resistanceTally /= 2*power_multiplier
 		cooldown = COOLDOWN_VTHRAL
 
-	//PUNISH
+	//PUNISH mixable
 	if(findtext(message, punish_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -948,14 +955,47 @@
 		cooldown = 0
 		for(var/V in listeners)
 			var/mob/living/M = V
-			playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/merowr.ogg', 'modular_citadel/sound/voice/nya.ogg'), , 50, 1, -1)
+			playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/merowr.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
 			M.emote("me","lets out a nya!")
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(40 * power_multiplier)
+			C.Sleeping(20 * power_multiplier *)
+
+	//WAKE UP
+	else if((findtext(message, wakeup_words)))
+		cooldown = COOLDOWN_DAMAGE
+		for(var/V in listeners)
+			var/mob/living/L = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			switch(E.phase)
+				if(0)
+					E.phase = 3
+					E.status = null
+					to_chat(C, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>")
+			L.SetSleeping(0)
+
+
+	//TO ADD
+	//progam triggers and responses with mental costs
+	//Antiresist
+	//Figure out cooldown
+
+	//STRIP
+	else if((findtext(message, strip_words)))
+		for(var/V in listeners)
+			var/mob/living/L = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			switch(E.phase)
+				if(2 to INFINITY)//Tier 2 only
+					E.phase = 1
+					var/items = M.get_contents()
+					for(var/I in items)
+						M.dropItemToGround(I, TRUE)
+
+	/
 
 	var/i = 0
 	//STUN
@@ -964,7 +1004,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthral/E = has_status_effect(/datum/status_effect/chem/enthral)
-			L.Stun(60 * power_multiplier)
+			L.Stun(30 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
@@ -988,12 +1028,7 @@
 		for(var/mob/living/carbon/C in listeners)
 			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
-	//WAKE UP
-	else if((findtext(message, wakeup_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.SetSleeping(0)
+
 
 	//HEAL
 	else if((findtext(message, heal_words)))

@@ -730,8 +730,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	description = "Need a description."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	metabolization_rate = 0
-	//overdose_threshold = 20
+	metabolization_rate = 0.5
+	overdose_threshold = 200
 	//addiction_threshold = 30
 	//addiction_stage1_end = 9999//Should never end.
 	var/creatorID  //add here
@@ -778,7 +778,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				//for(var/victim in seen)
-				to_chat(M, "You notice [pick([victim])]'s bulge [pick("OwO!", "uwu!")]")
+				to_chat(M, "You notice [pick([seen])]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
 			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
@@ -794,8 +794,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.emote("awoo")
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
-				for(var/victim in seen)
-					to_chat(M, "You notice [pick([victim])]'s bulge [pick("OwO!", "uwu!")]")
+				//for(var/victim in seen)
+				to_chat(M, "You notice [pick([seen])]'s bulge [pick("OwO!", "uwu!")]")
 	..()
 
 /*

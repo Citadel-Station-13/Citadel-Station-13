@@ -172,23 +172,31 @@
 	var/status = null
 	var/statusStrength = 0
 	var/enthrallID
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
 	var/mindbroken = FALSE
 	var/datum/weakref/redirect_component1
 	var/datum/weakref/redirect_component2
+	var/distancelist = list(4,3,2,1.5,1,0.8,0.6,0.4,0.2)
+	var/withdrawal = FALSE
+	var/withdrawalTick = 0
+	var/customTriggers
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
-	if(M.ID == enthralID)
+	if(M.ID == enthrallID)
 		owner.remove_status_effect(src)//This should'nt happen, but just in case
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
-
+	//Might need to add recirect component for listening too.
+	mental_capacity = 500 - B.get_brain_damage()
 
 /datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_MINDSHIELD))
 		resistanceTally += 5
 		if(prob(20))
-			to_chat(owner, "You feel your lucidity returning as the mindshield fights")
+			to_chat(owner, "<span class='notice'><i>You feel your lucidity returning as the mindshield attempts to return your brain to normal function.</i></span>")
 
+	//phase specific events
 	switch(phase)
 		if(-1)//fully removed
 			owner.remove_status_effect(src)
@@ -197,11 +205,66 @@
 		if(1)//Initial enthrallment
 			if (enthrallTally > 100)
 				phase += 1
+				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
+				enthrallTally = 0
 				return
 			if (resistanceTally > 100)
+				enthrallTally *= 0.5
+				phase -= 1
+				resistanceTally = 0
+				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
+				return
+			if(prob(10))
+				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [enthrallID.name]", "[enthrallID.name]", "")].</i></span>")
 
-			if resist
+	//distance calculations
+	switch(get_dist(enthrallID, owner))
+		if(0 to 8)//If the enchanter is within range, increase enthrallTally, remove withdrawal subproc and undo withdrawal effects.
+			enthrallTally += distancelist[get_dist(enthrallID, owner)+1]
+			var/withdrawal = FALSE
+			if(withdrawalTick > 0)
+				withdrawalTick -= 2
+		if(9 to INFINITY)//If
+			var/withdrawal = TRUE
 
+	//chem calculations
+	if (user.has_reagent("MKUltra"))
+		enthrallTally += 2
+	else
+		if (phase < 3)
+			resistance
+	if (mental_capacity <= 500)
+		if (user.has_reagent("mannitol"))
+			mental_capacity += 1
+		if (user.has_reagent("neurine"))
+			mental_capacity += 2
+
+	//Withdrawal subproc:
+	if (withdrawal == TRUE)//Your minions are really REALLY needy.
+		switch(withdrawalTick)
+			if(20 to 40)//Gives wiggle room, so you're not SUPER needy
+				prob(10)
+					to_chat(owner, "You're starting to miss your Master/Mistress.")
+				prob(5)
+					M.adjustBrainLoss(1)
+			if(41)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing1", /datum/mood_event/enthrallmissing1)
+			if(42 to 65)
+			prob(10)
+				to_chat(owner, "You're starting to miss your Master/Mistress.")
+			if(66)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1") //Why does this not work?
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing2", /datum/mood_event/enthrallmissing2)
+			if(67 to 90)
+				M.emote("cry")//does this exist?
+
+
+
+		withdrawalTick++
+
+//Check for proximity of master DONE
+//Place triggerreacts here - create a dictionary of triggerword and effect.
+//message enthrallID "name appears to have mentally processed their last command."
 
 /datum/status_effect/chem/enthrall/on_remove(mob/living/carbon/M)
 	qdel(redirect_component1.resolve())
@@ -211,16 +274,27 @@
 
 /*
 /datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-		    if(enthralID.name in message || enthralID.first_name in message)
+		    if(enthrallID.name in message || enthrallID.first_name in message)
 		        return
 		    else
 		        . = ..()
 */
 
+/datum/status_effect/chem/enthrall/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	return
+/*
 /datum/status_effect/chem/enthrall/proc/owner_withdrawal(mob/living/carbon/M)
 	//3 stages, each getting worse
-
+*/
 /datum/status_effect/chem/enthrall/proc/owner_resist(mob/living/carbon/M)
+	if (status == "Sleeper")
+		return
+	else if (status == "Antiresist")//If ordered to not resist
+		if (statusStrength > 0)
+			statusStrength -= 2
+			return
+		else
+			status = null
 	if(prob(10))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
@@ -279,15 +353,18 @@
 	if(istype(owner.neck, /obj/item/clothing/neck/petcollar))
 		deltaResist *= 0.8
 
+	if (deltaResist>0)//just in case
+		deltaResist /= phase//later phases require more resistance
+
 /datum/status_effect/chem/enthrall/proc/owner_say(mob/living/carbon/M) //I can only hope this works
-	var/static/regex/owner_words = regex("[enthralID.real_name]|[enthralID.first_name()]")
+	var/static/regex/owner_words = regex("[enthrallID.real_name]|[enthrallID.first_name()]")
 	if(findtext(message, enthral_words))
-		if(enthralID.gender == FEMALE)
-			message = replacetext(message, enthralID.real_name, "Mistress")
-			message = replacetext(message, enthralID.first_name(, "Mistress")
+		if(enthrallID.gender == FEMALE)
+			message = replacetext(message, enthrallID.real_name, "Mistress")
+			message = replacetext(message, enthrallID.first_name(, "Mistress")
 		else
-			message = replacetext(message, enthralID.real_name, "Master")
-			message = replacetext(message, enthralID.first_name(, "Master")
+			message = replacetext(message, enthrallID.real_name, "Master")
+			message = replacetext(message, enthrallID.first_name(, "Master")
 	return message
 /*
 /datum/status_effect/chem/OwO

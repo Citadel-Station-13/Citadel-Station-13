@@ -211,7 +211,6 @@
 		message = replacetext(message, "na", "nya")
 		message = replacetext(message, "no", "nyo")
 		message = replacetext(message, "ove", "uv")
-		message = replacetext(message, "ove", "uv")
 		//message = replacetext(message, "th", "ff") //too incoherent in practice
 		message = replacetext(message, "l", "w")
 		message = replacetext(message, "r", "w")
