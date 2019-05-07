@@ -120,6 +120,7 @@
 		set_pin_data(IC_INPUT, 3, FALSE)
 		is_running = FALSE
 		soundloop.stop()
+		return
 
 	if(is_running)
 		addtimer(CALLBACK(src, .proc/tick), delay)
