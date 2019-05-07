@@ -263,13 +263,13 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		visible_message("<span class='danger'>[H] electrocutes [src] with [H.p_their()] touch!</span>", "<span class='userdanger'>[H] electrocutes you with [H.p_their()] touch!</span>")
 		electrocute_act(15, H)
 
-		src.Knockdown(G.stunforce)
-		src.adjustStaminaLoss(G.stunforce*0.1, affected_zone = (istype(H) ? H.zone_selected : BODY_ZONE_CHEST))
-		src.apply_effect(EFFECT_STUTTER, G.stunforce)
+		Knockdown(G.stunforce)
+		adjustStaminaLoss(G.stunforce*0.1, affected_zone = (istype(H) ? H.zone_selected : BODY_ZONE_CHEST))
+		apply_effect(EFFECT_STUTTER, G.stunforce)
 		SEND_SIGNAL(src, COMSIG_LIVING_MINOR_SHOCK)
 
-		src.lastattacker = H.real_name
-		src.lastattackerckey = H.ckey
+		lastattacker = H.real_name
+		lastattackerckey = H.ckey
 		log_combat(H, src, "stunned")
 
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
