@@ -55,7 +55,7 @@
 
 
 /obj/item/integrated_circuit/manipulation/vibe
-	name = "vibrating module"
+	name = "vibrator module"
 	desc = "Used to induce sexual stimulation in a target via vibrations."
 	icon_state = "power_relay"
 	extended_desc = "The circuit accepts a reference to a person, as well as a number representing the strength of the vibration, and when enabled, will continue stimulating them to orgasm. The intensity ranges from 0 to 10."
