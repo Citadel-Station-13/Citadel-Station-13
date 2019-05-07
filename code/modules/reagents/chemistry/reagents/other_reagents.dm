@@ -26,26 +26,34 @@
 
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
-			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
-				C.reagents.add_reagent("toxin", reac_volume * 0.5)
-			if(data && (data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
-				C.reagents.add_reagent("toxin", reac_volume * 1.5) //filthy xenos bloooood
-			if(data && (data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
-				C.reagents.add_reagent("toxin", reac_volume * 1)	//don't fucking put oil in people
-			if(data && (data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
-				C.reagents.add_reagent("toxin", reac_volume * 1.5) //acid blooood
-			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+		for(var/bluhduh in GLOB.blood_types)
+			if(C.get_blood_id() == bluhduh)
+				if(method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits)))
+					if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+						C.reagents.add_reagent("toxin", reac_volume * 0.5)
+					if(data && (data["blood_type"] == "GEL") && (C.dna.species.exotic_blood != "jellyblood"))
+						C.reagents.add_reagent("toxin", reac_volume * 1.5) //filthy xenos bloooood
+					if(data && (data["blood_type"] == "HF") && (C.dna.species.exotic_blood != "oilblood"))
+						C.reagents.add_reagent("toxin", reac_volume * 1)	//don't fucking put oil in people
+					if(data && (data["blood_type"] == "X*") && (C.dna.species.exotic_blood != "xenoblood"))
+						C.reagents.add_reagent("toxin", reac_volume * 1.5) //acid blooood
+					else
+						C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 
 	if(reac_volume >= 10 && istype(L))
 		L.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		L.color = bloodtype_to_color(data["blood_type"])
 
 /datum/reagent/blood/reaction_obj(obj/O, volume)
 	if(volume >= 3 && istype(O))
 		O.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		O.color = bloodtype_to_color(data["blood_type"])
 
 /datum/reagent/blood/on_new(list/data)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		var/blood_id = C.get_blood_id()
+		data = C.get_blood_data(blood_id)
 	if(istype(data))
 		SetViruses(src, data)
 		color = bloodtype_to_color(data["blood_type"])
@@ -92,9 +100,11 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
 	if(!B)
 		B = new(T)
-	if(data["blood_DNA"])
+	if(data)
 		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 		B.color = data["bloodcolor"]
+
+/datum/reagent/blood/human
 
 /datum/reagent/blood/synthetics
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)

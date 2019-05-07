@@ -74,6 +74,14 @@
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness && !H.has_trait(TRAIT_LIGHT_STEP))
 			var/obj/item/clothing/shoes/S = H.shoes
+			for(var/datum/reagent/R in reagents.reagent_list)
+				// Get blood data from the blood reagent.
+				if(istype(R, /datum/reagent/blood))
+					if(R.data)
+						var/blood_type_meme = R.data["blood_type"]
+						color = bloodtype_to_color(blood_type_meme) //Color the blood with our dna stuff
+						if(blood_type_meme)
+							S.last_bloodtype = blood_type_meme
 			var/add_blood = 0
 			if(bloodiness >= BLOOD_GAIN_PER_STEP)
 				add_blood = BLOOD_GAIN_PER_STEP
@@ -85,6 +93,26 @@
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
+
+		else if(H && blood_state && bloodiness && !H.has_trait(TRAIT_LIGHT_STEP))
+			for(var/datum/reagent/R in reagents.reagent_list)
+				// Get blood data from the blood reagent.
+				if(istype(R, /datum/reagent/blood))
+					if(R.data["blood_type"])
+						var/blood_type_meme = R.data["blood_type"]
+						color = bloodtype_to_color(blood_type_meme) //Color the blood with our dna stuff
+						if(blood_type_meme)
+							H.last_bloodtype = blood_type_meme
+			var/add_blood = 0
+			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+				add_blood = BLOOD_GAIN_PER_STEP
+			else
+				add_blood = bloodiness
+			bloodiness -= add_blood
+			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
+			H.add_blood_DNA(return_blood_DNA())
+			H.blood_state = blood_state
+			update_icon()
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

@@ -45,6 +45,8 @@
 
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/last_bloodtype = ""//used to track the last bloodtype to have graced this smelly person. for smears on the floor
+	var/last_blood_DNA = ""//same as last one
 
 	var/name_override //For temporary visible name changes
 

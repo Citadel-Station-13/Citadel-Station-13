@@ -9,7 +9,6 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_XENO
-	blood_DNA = list()
 
 /obj/effect/decal/cleanable/blood/xenoblood/Initialize()
 	. = ..()

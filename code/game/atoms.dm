@@ -35,7 +35,7 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
-	var/list/blood_DNA //reee dirty hack till Kevin tells me how to inherit this shit
+	var/icon/blood_splatter_icon
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -319,22 +319,24 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != "blood")
-		return
-	return list("donor"= "ANIMAL","bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"="Y-")
+	for(var/bluhduh in GLOB.blood_types)
+		if(get_blood_id() != bluhduh)
+			return
+	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != "blood")
-		return
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = "X*"
-	return blood_dna
+	for(var/bluhduh in GLOB.blood_types)
+		if(get_blood_id() != bluhduh)
+			return
+		var/list/blood_dna = list()
+		if(dna)
+			blood_dna = get_blood_data(bluhduh)
+		else
+			blood_dna["UNKNOWN DNA"] = "X*"
+		return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("donor"= "UNKNOWN DNA","bloodcolor" = BLOOD_COLOR_XENO, "blood_type"= "X*")
+	return list("UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -348,15 +350,6 @@
 		return FALSE
 	return TRUE
 
-//to add blood dna info to the object's blood_DNA list
-/atom/proc/transfer_blood_dna(list/blood_dna)
-	if(!blood_DNA)
-		blood_DNA = list()
-	var/old_length = blood_DNA_length()
-	blood_DNA |= blood_dna
-	if(blood_DNA_length() > old_length)
-		return TRUE//some new blood DNA was added
-
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
@@ -364,15 +357,37 @@
 		return FALSE
 	return add_blood_DNA(blood_dna)
 
+//to add blood onto something, with blood dna info to include.
+/atom/proc/add_blood(list/blood_dna)
+	return FALSE
+
+/obj/item/add_blood(list/blood_dna)
+	if(!..())
+		return FALSE
+	add_blood_overlay()
+	return TRUE //we applied blood to the item
+
+/obj/item/proc/add_blood_overlay()
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(!D.blood_DNA.len)
+		return
+	if(initial(icon) && initial(icon_state))
+		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
+		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
+		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
+		add_overlay(blood_splatter_icon)
+
 /atom/proc/blood_DNA_to_color()
 	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/bloop in blood_DNA)
-		if(colors[blood_DNA[bloop]])
-			colors[blood_DNA[bloop]]++
+	GET_COMPONENT(D, /datum/component/forensics)
+	for(var/bloop in D.blood_DNA)
+		if(colors[D.blood_DNA[bloop]])
+			colors[D.blood_DNA[bloop]]++
 		else
-			colors[blood_DNA[bloop]] = 1
+			colors[D.blood_DNA[bloop]] = 1
 
-	var/final_rgb = color
+	var/final_rgb = "#940000"
 
 	if(colors.len)
 		var/sum = 0 //this is all shitcode, but it works; trust me

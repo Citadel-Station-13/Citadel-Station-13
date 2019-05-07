@@ -11,6 +11,7 @@
 	blood_DNA = blood_DNA | F.blood_DNA
 	fibers = fibers | F.fibers
 	check_blood()
+	blood_DNA_to_color()
 	return ..()
 
 /datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers)
@@ -21,6 +22,7 @@
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
 	check_blood()
+	blood_DNA_to_color()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
 /datum/component/forensics/proc/wipe_fingerprints()
@@ -32,8 +34,6 @@
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
-	if(isitem(parent))
-		qdel(parent.GetComponent(/datum/component/decal/blood))
 	return TRUE
 
 /datum/component/forensics/proc/wipe_fibers()
@@ -149,6 +149,7 @@
 	for(var/i in dna)
 		blood_DNA[i] = dna[i]
 	check_blood()
+	blood_DNA_to_color()
 	return TRUE
 
 /datum/component/forensics/proc/check_blood()
@@ -156,4 +157,27 @@
 		return
 	if(!length(blood_DNA))
 		return
-	parent.LoadComponent(/datum/component/decal/blood)
+
+/datum/component/forensics/proc/blood_DNA_to_color()
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	for(var/bloop in blood_DNA)
+		if(colors[blood_DNA[bloop]])
+			colors[blood_DNA[bloop]]++
+		else
+			colors[blood_DNA[bloop]] = 1
+
+	var/final_rgb = "#940000"
+
+	if(colors.len)
+		var/sum = 0 //this is all shitcode, but it works; trust me
+		final_rgb = bloodtype_to_color(colors[1])
+		sum = colors[colors[1]]
+		if(colors.len > 1)
+			var/i = 2
+			while(i <= colors.len)
+				var/tmp = colors[colors[i]]
+				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
+				sum += tmp
+				i++
+
+	return final_rgb

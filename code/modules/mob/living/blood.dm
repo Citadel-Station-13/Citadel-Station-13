@@ -138,7 +138,7 @@
 
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
-		for(var/bluhduh in GLOB.blood_types[blood_id])
+		for(var/datum/reagent/blood/bluhduh in GLOB.blood_types[blood_id])
 			if(blood_id == C.get_blood_id())//both mobs have the same blood substance
 				if(bluhduh) //actual blood reagent
 					if(blood_data["viruses"])
@@ -171,7 +171,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	for(var/bluhduh in GLOB.blood_types[blood_id])
+	for(var/datum/reagent/blood/bluhduh in GLOB.blood_types[blood_id])
 		if(bluhduh) //actual blood reagent
 			var/blood_data = list()
 			//set the blood data
@@ -183,6 +183,7 @@
 				blood_data["viruses"] += D.Copy()
 
 			blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+			blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 			if(disease_resistances && disease_resistances.len)
 				blood_data["resistances"] = disease_resistances.Copy()
 			var/list/temp_chem = list()
@@ -201,7 +202,6 @@
 			if(!suiciding)
 				blood_data["cloneable"] = 1
 			blood_data["blood_type"] = copytext(dna.blood_type,1,0)
-			blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
 			blood_data["gender"] = gender
 			blood_data["real_name"] = real_name
 			blood_data["features"] = dna.features
@@ -234,7 +234,8 @@
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
 		return null
-	return "blood"
+	else
+		return "blood"
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)

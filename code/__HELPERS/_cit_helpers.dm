@@ -112,6 +112,15 @@ GLOBAL_LIST_INIT(paw_taurs, list(
 		"Tiger"
 		))
 
+GLOBAL_LIST_INIT(blood_id_types, list(
+		"blood" = /datum/reagent/blood/human,
+		"syntheticblood" = /datum/reagent/blood/synthetics,
+		"xenoblood" = /datum/reagent/blood/xenomorph,
+		"oilblood" = /datum/reagent/blood/oil,
+		"jellyblood" = /datum/reagent/blood/jellyblood
+		))
+
+
 //Crew objective and miscreants stuff
 GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 

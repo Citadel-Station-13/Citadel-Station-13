@@ -28,8 +28,8 @@
 		var/icon/blood_splatter_icon = icon(initial(I.icon), initial(I.icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon(_icon, _icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-		blood_splatter_icon.Blend(I.blood_DNA_to_color(), ICON_MULTIPLY) //Color the blood with our dna stuff
-		pic = mutable_appearance(blood_splatter_icon, initial(I.icon_state))
+		GET_COMPONENT(D, /datum/component/forensics)
+		blood_splatter_icon.Blend(D.blood_DNA_to_color(), ICON_MULTIPLY)
 		blood_splatter_appearances[index] = pic
 	return TRUE
 

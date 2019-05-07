@@ -44,12 +44,6 @@
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
 		return(BRUTELOSS)
 
-/obj/item/clothing/shoes/transfer_mob_blood_dna(list/blood_dna)
-	..()
-	if(blood_dna.len)
-		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
-		last_blood_DNA = blood_dna[blood_dna.len]
-
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
@@ -63,9 +57,9 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
 			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color())
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = bloodtype_to_color(last_bloodtype))
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_DNA_to_color())
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = bloodtype_to_color(last_bloodtype))
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()

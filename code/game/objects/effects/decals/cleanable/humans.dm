@@ -6,12 +6,14 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
-	blood_DNA = list()
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
+/obj/effect/decal/cleanable/blood/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/forensics)
+	update_icon()
+
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if (C.blood_DNA)
-		blood_DNA |= C.blood_DNA.Copy()
 	update_icon()
 	..()
 
@@ -23,7 +25,11 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	color = blood_DNA_to_color()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		// Get blood data from the blood reagent.
+		if(istype(R, /datum/reagent/blood))
+			if(R.data["blood_type"])
+				color = bloodtype_to_color(R.data["blood_type"]) //Color the blood with our dna stuff
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -34,7 +40,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("donor"= "Non-human DNA", "blood_type"= "A+", "bloodcolor" = color))
+	add_blood_DNA(list("blood_type"= "A+", "bloodcolor" = color))
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -50,13 +56,17 @@
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	blood_DNA = list()
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
-	color = blood_DNA_to_color()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		// Get blood data from the blood reagent.
+		if(istype(R, /datum/reagent/blood))
+			if(R.data["blood_type"])
+				color = bloodtype_to_color(R.data["blood_type"]) //Color the blood with our dna stuff
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
+	AddComponent(/datum/component/forensics)
 	update_icon()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
@@ -103,8 +113,11 @@
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			var/obj/effect/decal/cleanable/blood/splatter/splat = new(loc)
-			splat.transfer_blood_dna(blood_DNA)
+			var/list/datum/disease/diseases
+			GET_COMPONENT(infective, /datum/component/infective)
+			if(infective)
+				diseases = infective.diseases
+			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -172,9 +185,19 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
+		if(S)
+			color = bloodtype_to_color(S.last_bloodtype)
+		else
+			color = bloodtype_to_color(H.last_bloodtype)
+
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
+			if (!(entered_dirs & H.dir))
+				entered_dirs |= H.dir
+				update_icon()
+		else
+			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
@@ -184,9 +207,19 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
+		if(S)
+			color = bloodtype_to_color(S.last_bloodtype)
+		else
+			color = bloodtype_to_color(H.last_bloodtype)
+
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
+			if (!(exited_dirs & H.dir))
+				exited_dirs |= H.dir
+				update_icon()
+		else
+			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()

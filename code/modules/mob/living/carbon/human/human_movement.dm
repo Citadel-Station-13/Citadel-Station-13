@@ -66,10 +66,7 @@
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
-					FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
-					if(S.last_blood_DNA && S.last_bloodtype)
-						FP.blood_DNA += list(S.last_blood_DNA = S.last_bloodtype)
-						//hacky as heck; we need to move the LAST entry to there, otherwise we mix all the blood
+					FP.color = bloodtype_to_color(S.last_bloodtype)
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
@@ -112,8 +109,7 @@
 							FP.blood_state = blood_state
 							FP.entered_dirs |= dir
 							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
-							FP.transfer_blood_dna(blood_DNA)
-							FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
+							FP.color = bloodtype_to_color(last_bloodtype)
 							FP.update_icon()
 
 			else //we're on the floor, smear some stuff around
@@ -133,8 +129,7 @@
 							FP.blood_state = blood_state
 							FP.entered_dirs |= dir
 							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
-							FP.transfer_blood_dna(blood_DNA)
-							FP.color = blood_DNA_to_color() //Color the blood with our dna stuff
+							FP.color = bloodtype_to_color(last_bloodtype)
 							FP.update_icon()
 
 

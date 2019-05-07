@@ -11,6 +11,7 @@
 
 /obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
 	. = ..()
+	AddComponent(/datum/component/forensics)
 
 	if(gibtypes.len != gibamounts.len)
 		stack_trace("Gib list amount length mismatch!")
