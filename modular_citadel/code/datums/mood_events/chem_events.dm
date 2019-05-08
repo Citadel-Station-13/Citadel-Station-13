@@ -13,7 +13,7 @@
 
 /datum/mood_event/enthrallscold
     mood_change = -12
-    description = "<span class='warning'>I've failed my Master... I feel like crying.</span>\n"//aaa I'm not kinky enough for this
+    description = "<span class='warning'>I've failed Master... What a bad, bad pet!</span>\n"//aaa I'm not kinky enough for this
     timeout = 600
 
 /datum/mood_event/enthrallmissing1

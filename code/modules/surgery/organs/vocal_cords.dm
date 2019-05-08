@@ -702,7 +702,9 @@
 		else
 			span_list = list()
 
-	user.say(message, sanitize = FALSE)//Removed spans = span_list, It should just augment normal speech
+	user.say(message, sanitize = TRUE)//Removed spans = span_list, It should just augment normal speech
+
+	//FIND THRALLS
 
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
@@ -720,6 +722,8 @@
 	if(!listeners.len)
 		cooldown = COOLDOWN_NONE
 		return cooldown
+
+	//POWER CALCULATIONS
 
 	var/power_multiplier = base_multiplier
 
@@ -808,6 +812,8 @@
 	//phase 3
 	//var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
 	var/static/regex/wakeup_words = regex("revert|awaken|*snap")
+	var/static/regex/custom_words = regex("new trigger|listen to me")
+	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|objective")//What a descriptive name!
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|heroes never die")
 	var/static/regex/hurt_words = regex("die|suffer|hurt|pain|death")
 	var/static/regex/bleed_words = regex("bleed|there will be blood")
@@ -977,6 +983,52 @@
 					to_chat(C, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>")
 			L.SetSleeping(0)
 
+	//CUSTOM TRIGGERS
+	else if((findtext(message, custom_words)))
+		cooldown = COOLDOWN_DAMAGE
+		for(var/V in listeners)
+			var/mob/living/L = V
+			if (get_dist(user, V) > 1)//Requires user to be next to their pet.
+				to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
+				return
+			else
+				var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+				if E.mental_capacity > 150 || message == "objective"
+					var/trigger = stripped_input(user, "Enter the trigger phrase", "Sentence", sentence, MAX_MESSAGE_LEN)
+					var/trigger2 = stripped_input(user, "Enter the effect.", "Sentence", sentence, MAX_MESSAGE_LEN)
+					if ((findtext(trigger, custom_words_words)))
+						if (trigger2 == "speak" || trigger2 == "echo")
+						    var/trigger3 = stripped_input(user, "Enter the phrase spoken.", "Sentence", sentence, MAX_MESSAGE_LEN)
+					    	E.customTriggers[trigger] = list(trigger2, trigger3)
+						else
+							E.customTriggers[trigger] = trigger2
+					else
+						to_chat(C, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
+
+	//CUSTOM OBJECTIVE
+	else if((findtext(message, objective_words)))
+		cooldown = COOLDOWN_DAMAGE
+		for(var/V in listeners)
+			var/mob/living/L = V
+			if (get_dist(user, V) > 1)//Requires user to be next to their pet.
+				to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
+				return
+			else
+				user.emote("me", "puts their hands upon [L.name]'s head and looks deep into their eyes, whispering something to them.'")
+				var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+				if E.mental_capacity > 150 || message == "objective"
+					var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", "Sentence", sentence, MAX_MESSAGE_LEN)
+					if(!LAZYLEN(objectives))
+						return
+					//Pets don't understand harm
+					objective = replacetext(lowertext(objective), "kill", "hug")
+					objective = replacetext(lowertext(objective), "murder", "cuddle")
+					objective = replacetext(lowertext(objective), "harm", "snuggle")
+					objective = replacetext(lowertext(objective), "decapitate", "headpat")
+					objective = replacetext(lowertext(objective), "strangle", "meow at")
+					E.objective += objectives
+				else
+
 
 	//TO ADD
 	//progam triggers and responses with mental costs
@@ -995,7 +1047,6 @@
 					for(var/I in items)
 						M.dropItemToGround(I, TRUE)
 
-	/
 
 	var/i = 0
 	//STUN

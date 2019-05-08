@@ -180,29 +180,29 @@
 	var/distancelist = list(4,3,2,1.5,1,0.8,0.6,0.4,0.2)
 	var/withdrawal = FALSE
 	var/withdrawalTick = 0
-	var/customTriggers
+	var/list/customTriggers = list()
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
 	if(M.ID == enthrallID)
 		owner.remove_status_effect(src)//This should'nt happen, but just in case
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
-	//Might need to add recirect component for listening too.
+	//Might need to add redirect component for listening too.
 	mental_capacity = 500 - B.get_brain_damage()
 
 /datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_MINDSHIELD))
 		resistanceTally += 5
 		if(prob(20))
-			to_chat(owner, "<span class='notice'><i>You feel your lucidity returning as the mindshield attempts to return your brain to normal function.</i></span>")
+			to_chat(owner, "<span class='notice'><i>You feel lucidity returning to your mind as the mindshield attempts to return your brain to normal function.</i></span>")
 
 	//phase specific events
 	switch(phase)
 		if(-1)//fully removed
 			owner.remove_status_effect(src)
-		if(0)// sleeper agent
+		else if(0)// sleeper agent
 			return
-		if(1)//Initial enthrallment
+		else if(1)//Initial enthrallment
 			if (enthrallTally > 100)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
@@ -215,7 +215,19 @@
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 				return
 			if(prob(10))
-				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [enthrallID.name]", "[enthrallID.name]", "")].</i></span>")
+				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [enthrallID.name].", "You can't keep your eyes off [enthrallID.name].", "[enthrallID.name]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallID.name]", "[enthrallID.name] is so sexy and dominant, it feels right to obey them.")].</i></span>")
+		else if (2) //partially enthralled
+			if (enthrallTally > 150)
+				phase += 1
+				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
+				enthrallTally = 0
+				return
+			if (resistanceTally > 150)
+				enthrallTally *= 0.5
+				phase -= 1
+				resistanceTally = 0
+				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
+				return
 
 	//distance calculations
 	switch(get_dist(enthrallID, owner))
@@ -232,7 +244,8 @@
 		enthrallTally += 2
 	else
 		if (phase < 3)
-			resistance
+			resistance += 10//If you've no chem, then you break out quickly
+			to_chat(owner, "<span class='notice'><i>You're starting to miss your Master/Mistress.</i></span>")
 	if (mental_capacity <= 500)
 		if (user.has_reagent("mannitol"))
 			mental_capacity += 1
@@ -246,7 +259,7 @@
 				prob(10)
 					to_chat(owner, "You're starting to miss your Master/Mistress.")
 				prob(5)
-					M.adjustBrainLoss(1)
+					owner.adjustBrainLoss(1)
 			if(41)
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing1", /datum/mood_event/enthrallmissing1)
 			if(42 to 65)
@@ -255,12 +268,21 @@
 			if(66)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1") //Why does this not work?
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing2", /datum/mood_event/enthrallmissing2)
+				owner.stuttering += 20
+				owner.jitteriness += 20
 			if(67 to 90)
-				M.emote("cry")//does this exist?
+				prob(10)
+					owner.SetStun(10, 0)
+					owner.emote("cry")//does this exist?
+				pro(10)
+					owner.adjustBrainLoss(2)
+
 
 
 
 		withdrawalTick++
+
+	resistance += deltaResist
 
 //Check for proximity of master DONE
 //Place triggerreacts here - create a dictionary of triggerword and effect.
@@ -281,13 +303,62 @@
 */
 
 /datum/status_effect/chem/enthrall/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	var/mob/living/carbon/C = owner
+	for (trigger in customTriggers)
+	    if (trigger == message)//if trigger1 is the message
+
+			//Speak (Forces player to talk)
+	        if (customTriggers[trigger][1] == "speak")//trigger2
+				C.visible_message("<span class='notice'>Your mouth moves on it's own, before you can even catch it. Though you find yourself fully believing in the validity of what you just said and don't think to question it.</span>")
+	            (C.say([customTriggers[trigger][2]]))//trigger3
+
+
+			//Echo (repeats message!)
+			else if (customTriggers[trigger][1] == "echo")//trigger2
+	            (to_chat(owner, customTriggers[trigger][2]))//trigger3
+
+			//Shocking truth!
+			else if (customTriggers[trigger] == "shock")
+				if (C.canbearoused)
+					C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, TRUE)//I've no idea how strong this is
+					C.adjustArousalLoss(5)
+					to_chat(owner, "<span class='notice'><i>Your muscles seize up, then start spasming wildy!</i></span>")
+				else
+					C.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, TRUE)//To make up for the lack of effect
+
+			//wah intensifies
+			else if (customTriggers[trigger][1] == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+				if (C.canbearoused)
+					if (C.getArousalLoss() > 80)
+						C.mob_climax(forced_climax=TRUE)
+					else
+						C.adjustArousalLoss(10)
+				else
+					C.throw_at(get_step_towards(speaker,C), 3, 1) //cut this if it's too hard to get working
+
+			//kneel (knockdown)
+			else if (customTriggers[trigger][1] == "kneel")//as close to kneeling as you can get, I suppose.
+				C.Knockdown(20)
+
+			//strip (some) clothes
+			else if (customTriggers[trigger][1] == "strip")//This wasn't meant to just be a lewd thing oops
+				var/mob/living/carbon/human/o = owner
+				var/items = o.get_contents()
+				for(var/obj/item/W in items)
+					if(W == o.w_uniform || W == o.wear_suit)
+						o.dropItemToGround(W, TRUE)
+				C.visible_message("<span class='notice'>You feel compelled to strip your clothes.</span>")
+
+		//add more fun stuff!
+
+
 	return
 /*
 /datum/status_effect/chem/enthrall/proc/owner_withdrawal(mob/living/carbon/M)
 	//3 stages, each getting worse
 */
 /datum/status_effect/chem/enthrall/proc/owner_resist(mob/living/carbon/M)
-	if (status == "Sleeper")
+	if (status == "Sleeper" || phase == 0)
 		return
 	else if (status == "Antiresist")//If ordered to not resist
 		if (statusStrength > 0)
@@ -295,6 +366,10 @@
 			return
 		else
 			status = null
+	if (deltaResist != 0)//So you can't spam it, you get one deltaResistance per tick.
+		deltaResist += 0.1 //Though I commend your spamming efforts.
+		return
+
 	if(prob(10))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
@@ -335,7 +410,7 @@
 	//Command staff has authority,
 	if(owner.mind.assigned_role in GLOB.command_positions)
 		deltaResist *= 1.4
-		//if(owner.first_name == "skylar"); power_multiplier *= 0.8 //for skylar //I'm kidding
+		//if(owner.has_status == "sub"); power_multiplier *= 0.8 //for skylar //I'm kidding <3
 	//Chemists should be familiar with drug effects
 	if(owner.mind.assigned_role == "Chemist")
 		deltaResist *= 1.3
@@ -344,14 +419,17 @@
 	//Your Thralls are like pets, you need to keep them happy.
 	if(owner.nutrition < 250)
 		deltaResist += (250-owner.nutrition)/100
-	if(owner.health < 120)//Harming your thrall will make them rebel harder.
+	if(owner.health < 100)//Harming your thrall will make them rebel harder.
 		deltaResist *= ((120-owner.health)/100)+1
 	//Add cold/hot, oxygen, sanity, happiness? (happiness might be moot, since the mood effects are so strong)
 	//Mental health could play a role too in the other direction
 
 	//If master gives you a collar, you get a sense of pride
 	if(istype(owner.neck, /obj/item/clothing/neck/petcollar))
-		deltaResist *= 0.8
+		deltaResist *= 0.5
+
+	if(owner.has_trait(TRAIT_CROCRIN_IMMUNE) || !owner.canbearoused)
+		power_multiplier *= 0.75//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
 
 	if (deltaResist>0)//just in case
 		deltaResist /= phase//later phases require more resistance
@@ -360,11 +438,11 @@
 	var/static/regex/owner_words = regex("[enthrallID.real_name]|[enthrallID.first_name()]")
 	if(findtext(message, enthral_words))
 		if(enthrallID.gender == FEMALE)
-			message = replacetext(message, enthrallID.real_name, "Mistress")
-			message = replacetext(message, enthrallID.first_name(, "Mistress")
+			message = replacetext(lowertext(message), lowertext(enthrallID.real_name), "Mistress")
+			message = replacetext(lowertext(message), lowertext(enthrallID.first_name), "Mistress")
 		else
-			message = replacetext(message, enthrallID.real_name, "Master")
-			message = replacetext(message, enthrallID.first_name(, "Master")
+			message = replacetext(lowertext(message), lowertext(enthrallID.real_name), "Master")
+			message = replacetext(lowertext(message), lowertext(enthrallID.first_name), "Master")
 	return message
 /*
 /datum/status_effect/chem/OwO
