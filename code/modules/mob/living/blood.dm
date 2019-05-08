@@ -229,13 +229,16 @@
 	if(!(has_trait(TRAIT_NOCLONE)))
 		return "blood"
 
-/mob/living/carbon/human/get_blood_id()
-	if(dna.species.exotic_blood)
-		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
-		return null
-	else
-		return "blood"
+/mob/living/carbon/get_blood_id()
+	var/mob/living/carbon/human/H = src
+	for(var/bluhduh in GLOB.blood_types[H.dna.species.exotic_blood])
+		if(!bluhduh)
+			to_chat(world, "[H] has [H.dna.species.exotic_blood] for blood")
+			return H.dna.species.exotic_blood
+		else if((NOBLOOD in H.dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
+			return null
+		else
+			return bluhduh
 
 // This is has more potential uses, and is probably faster than the old proc.
 /proc/get_safe_blood(bloodtype)

@@ -11,6 +11,10 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 
+/obj/effect/decal/cleanable/robot_debris/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	reagents.add_reagent("liquidoilgibs", 5)
+
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)

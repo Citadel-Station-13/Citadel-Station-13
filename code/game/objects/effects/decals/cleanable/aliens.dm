@@ -26,13 +26,22 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	mergeable_decal = FALSE
 
+/obj/effect/decal/cleanable/blood/xenoblood/xgibs/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	reagents.add_reagent("liquidxenogibs", 5)
+
 /obj/effect/decal/cleanable/blood/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/xenoblood/xsplatter(loc)
+			var/list/datum/disease/diseases
+			GET_COMPONENT(infective, /datum/component/infective)
+			if(infective)
+				diseases = infective.diseases
+			var/obj/effect/decal/cleanable/blood/xenoblood/xsplatter/splat = new /obj/effect/decal/cleanable/blood/xenoblood/xsplatter(loc, diseases)
+			splat.color = color
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -63,10 +72,10 @@
 /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva/body
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
 
-/obj/effect/decal/cleanable/blood/blood/xtracks
+/obj/effect/decal/cleanable/blood/xenoblood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
 
-/obj/effect/decal/cleanable/blood/blood/xtracks/Initialize()
+/obj/effect/decal/cleanable/blood/xenoblood/xtracks/Initialize()
 	. = ..()
-	add_blood_DNA(list("donor"= "UNKNOWN DNA","bloodcolor" = BLOOD_COLOR_XENO, "blood_type"= "X*"))
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))

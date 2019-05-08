@@ -7,29 +7,29 @@
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-
-/obj/effect/decal/cleanable/blood/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/forensics)
-	update_icon()
+	var/bloodmeme = ""
+	var/data = ""
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
+	if(!data)
+		C.data = add_blood_DNA(return_blood_DNA())
+	if (bloodiness)
+		if (C.bloodiness < MAX_SHOE_BLOODINESS)
+			C.bloodiness += bloodiness
+	if(!bloodmeme)
+		C.bloodmeme = add_blood_DNA(return_blood_DNA())
 	update_icon()
-	..()
+	return ..()
 
-/obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
-	return TRUE
+//obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
+//	return TRUE
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
 	. = ..()
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		// Get blood data from the blood reagent.
-		if(istype(R, /datum/reagent/blood))
-			if(R.data["blood_type"])
-				color = bloodtype_to_color(R.data["blood_type"]) //Color the blood with our dna stuff
+	color = blood_DNA_to_color()
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -40,7 +40,7 @@
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("blood_type"= "A+", "bloodcolor" = color))
+	add_blood_DNA(list("blood_type"= "A+"))
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -84,20 +84,22 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
-	var/fleshcolor
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if(gib_overlay)
-		var/generic_skin = random_skin_tone()
-		var/ethnicity = "#[skintone2hex(generic_skin)]"
 		var/image/gibz = image(icon, icon_state + "-overlay", layer = LOW_OBJ_LAYER-0.1)
-		if(!fleshcolor)
-			gibz.color = ethnicity
-		else
-			gibz.color = fleshcolor
 		add_overlay(gibz)
-	reagents.add_reagent("liquidgibs", 5)
+	if(!reagents)
+		reagents.add_reagent("liquidgibs", 5)
+	for(var/datum/reagent/R in reagents.reagent_list)
+		// Get blood data from the blood reagent.
+		if(istype(R, /datum/reagent/blood))
+			if(R.data["blood_type"])
+				bloodmeme = R.data["blood_type"]
+		if(istype(R, /datum/reagent/liquidgibs))
+			if(R.data["blood_type"])
+				bloodmeme = R.data["blood_type"]
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -117,7 +119,9 @@
 			GET_COMPONENT(infective, /datum/component/infective)
 			if(infective)
 				diseases = infective.diseases
-			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			splat.color = color
+			splat.bloodmeme = bloodmeme
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -167,6 +171,54 @@
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
 	return TRUE
 
+/obj/effect/decal/cleanable/blood/gibs/slime
+	desc = "They look gooey and gruesome."
+
+/obj/effect/decal/cleanable/blood/gibs/slime/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	if(gib_overlay)
+		var/image/gibz = image(icon, icon_state + "-overlay", layer = LOW_OBJ_LAYER-0.1)
+		add_overlay(gibz)
+	reagents.add_reagent("liquidslimegibs", 5)
+	for(var/datum/reagent/R in reagents.reagent_list)
+		// Get blood data from the blood reagent.
+		if(istype(R, /datum/reagent/blood))
+			if(R.data["blood_type"])
+				bloodmeme = R.data["blood_type"]
+		if(istype(R, /datum/reagent/liquidgibs))
+			if(R.data["blood_type"])
+				bloodmeme = R.data["blood_type"]
+
+/obj/effect/decal/cleanable/blood/gibs/slime/up
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
+	gib_overlay = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/slime/down
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
+	gib_overlay = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/slime/body
+	random_icon_states = list("gibhead", "gibtorso")
+	gib_overlay = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/slime/torso
+	random_icon_states = list("gibtorso")
+	gib_overlay = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/slime/limb
+	random_icon_states = list("gibleg", "gibarm")
+	gib_overlay = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/slime/core
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+	gib_overlay = TRUE
+/obj/effect/decal/cleanable/blood/gibs/synth
+	desc = "They look sludgy and disgusting."
+
+/obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	reagents.add_reagent("liquidsyntheticgibs", 5)
+
 
 //BLOODY FOOTPRINTS
 /obj/effect/decal/cleanable/blood/footprints
@@ -186,9 +238,16 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S)
-			color = bloodtype_to_color(S.last_bloodtype)
+			if(S.last_bloodtype)
+				color = bloodtype_to_color(S.last_bloodtype)
+			else
+				color = bloodtype_to_color(bloodmeme)
 		else
-			color = bloodtype_to_color(H.last_bloodtype)
+			if(H.last_bloodtype)
+				color = bloodtype_to_color(H.last_bloodtype)
+			else
+				color = bloodtype_to_color(bloodmeme)
+
 
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
@@ -208,9 +267,15 @@
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S)
-			color = bloodtype_to_color(S.last_bloodtype)
+			if(S.last_bloodtype)
+				color = bloodtype_to_color(S.last_bloodtype)
+			else
+				color = bloodtype_to_color(bloodmeme)
 		else
-			color = bloodtype_to_color(H.last_bloodtype)
+			if(H.last_bloodtype)
+				color = bloodtype_to_color(H.last_bloodtype)
+			else
+				color = bloodtype_to_color(bloodmeme)
 
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
@@ -233,11 +298,13 @@
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
 				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
+			bloodstep_overlay.color = bloodtype_to_color(bloodmeme)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
 				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
+			bloodstep_overlay.color = bloodtype_to_color(bloodmeme)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness

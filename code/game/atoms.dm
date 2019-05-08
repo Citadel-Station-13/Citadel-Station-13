@@ -319,23 +319,29 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
+	to_chat(world, "living's get_blood_dna_list called")
 	for(var/bluhduh in GLOB.blood_types)
-		if(get_blood_id() != bluhduh)
+		var/datum/reagent/blood/B = bluhduh
+		if(get_blood_id() != B)
 			return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
+	to_chat(world, "carbon's get_blood_dna_list called by [src]")
 	for(var/bluhduh in GLOB.blood_types)
-		if(get_blood_id() != bluhduh)
+		var/datum/reagent/blood/B = bluhduh
+		if(get_blood_id() != B)
+			to_chat(world, "[src] apparently doesn't have a valid blood type of [B]")
 			return
 		var/list/blood_dna = list()
 		if(dna)
-			blood_dna = get_blood_data(bluhduh)
+			blood_dna = get_blood_data(B)
 		else
 			blood_dna["UNKNOWN DNA"] = "X*"
 		return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
+	to_chat(world, "alien's get_blood_dna_list called")
 	return list("UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
@@ -380,12 +386,12 @@
 
 /atom/proc/blood_DNA_to_color()
 	var/list/colors = list()//first we make a list of all bloodtypes present
-	GET_COMPONENT(D, /datum/component/forensics)
-	for(var/bloop in D.blood_DNA)
-		if(colors[D.blood_DNA[bloop]])
-			colors[D.blood_DNA[bloop]]++
+	var/list/blood = return_blood_DNA()
+	for(var/bloop in blood)
+		if(colors[blood[bloop]])
+			colors[blood[bloop]]++
 		else
-			colors[D.blood_DNA[bloop]] = 1
+			colors[blood[bloop]] = 1
 
 	var/final_rgb = "#940000"
 

@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(paw_taurs, list(
 		))
 
 GLOBAL_LIST_INIT(blood_id_types, list(
-		"blood" = /datum/reagent/blood/human,
+		"blood" = /datum/reagent/blood,
 		"syntheticblood" = /datum/reagent/blood/synthetics,
 		"xenoblood" = /datum/reagent/blood/xenomorph,
 		"oilblood" = /datum/reagent/blood/oil,

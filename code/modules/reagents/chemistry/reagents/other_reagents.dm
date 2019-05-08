@@ -100,11 +100,16 @@
 	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
 	if(!B)
 		B = new(T)
-	if(data)
-		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-		B.color = data["bloodcolor"]
-
-/datum/reagent/blood/human
+	if(!B.reagents)
+		B.reagents.add_reagent("blood", reac_volume)
+	for(var/datum/reagent/R in B.reagents.reagent_list)
+		// Get blood data from the blood reagent.
+		if(istype(R, /datum/reagent/blood))
+			if(R.data["blood_type"])
+				B.bloodmeme = R.data["blood_type"]
+		if(istype(R, /datum/reagent/liquidgibs))
+			if(R.data["blood_type"])
+				B.bloodmeme = R.data["blood_type"]
 
 /datum/reagent/blood/synthetics
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -112,6 +117,11 @@
 	id = "syntheticblood"
 	taste_description = "oily"
 	color = BLOOD_COLOR_SYNTHETIC // rgb: 11, 7, 48
+
+/datum/reagent/blood/synthetics/reaction_turf(turf/T, reac_volume)
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	B.reagents.add_reagent("syntheticblood", reac_volume)
+	. = ..()
 
 /datum/reagent/blood/xenomorph
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -121,12 +131,22 @@
 	color = BLOOD_COLOR_XENO // greenish yellow ooze
 	shot_glass_icon_state = "shotglassgreen"
 
+/datum/reagent/blood/xenomorph/reaction_turf(turf/T, reac_volume)
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	B.reagents.add_reagent("xenoblood", reac_volume)
+	. = ..()
+
 /datum/reagent/blood/oil
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
 	name = "Hydraulic Blood"
 	id = "oilblood"
 	taste_description = "burnt oil"
 	color = BLOOD_COLOR_OIL // dark, y'know, expected batman colors.
+
+/datum/reagent/blood/oil/reaction_turf(turf/T, reac_volume)
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	B.reagents.add_reagent("oilblood", reac_volume)
+	. = ..()
 
 /datum/reagent/blood/jellyblood
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
@@ -136,6 +156,21 @@
 	color = BLOOD_COLOR_SLIME
 	taste_description = "slime"
 	taste_mult = 1.3
+
+/datum/reagent/blood/jellyblood/on_new(list/data)
+	.=..()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/datum/species/slimecolor = H.dna.species
+		if("mcolor" in slimecolor.default_features)
+			color = H.dna.features["mcolor"]
+		else
+			color = bloodtype_to_color(data["blood_type"])
+
+/datum/reagent/blood/jellyblood/reaction_turf(turf/T, reac_volume)
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	B.reagents.add_reagent("jellyblood", reac_volume)
+	. = ..()
 
 /datum/reagent/blood/jellyblood/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -150,10 +185,42 @@
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
 	id = "liquidgibs"
-	color = "#FF9966"
+	color = BLOOD_COLOR_HUMAN
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_HUMAN, "blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
+/datum/reagent/liquidgibs/xeno
+	name = "Liquid xeno gibs"
+	id = "liquidxenogibs"
+	color = BLOOD_COLOR_XENO
+	taste_description = "blended heresy"
+	shot_glass_icon_state = "shotglassgreen"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_XENO, "blood_type"="X*","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
+/datum/reagent/liquidgibs/slime
+	name = "Slime sludge"
+	id = "liquidslimegibs"
+	color = BLOOD_COLOR_SLIME
+	taste_description = "slime"
+	shot_glass_icon_state = "shotglassgreen"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SLIME, "blood_type"="GEL","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
+/datum/reagent/liquidgibs/synth
+	name = "Synthetic sludge"
+	id = "liquidsyntheticgibs"
+	color = BLOOD_COLOR_SYNTHETIC
+	taste_description = "jellied plastic"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
+/datum/reagent/liquidgibs/oil
+	name = "Hydraulic sludge"
+	id = "liquidoilgibs"
+	color = BLOOD_COLOR_OIL
+	taste_description = "chunky burnt oil"
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_OIL, "blood_type"="HF","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+
 
 /datum/reagent/vaccine
 	//data must contain virus type

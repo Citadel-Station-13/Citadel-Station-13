@@ -66,7 +66,6 @@
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
-					FP.color = bloodtype_to_color(S.last_bloodtype)
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
@@ -109,7 +108,6 @@
 							FP.blood_state = blood_state
 							FP.entered_dirs |= dir
 							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
-							FP.color = bloodtype_to_color(last_bloodtype)
 							FP.update_icon()
 
 			else //we're on the floor, smear some stuff around
@@ -129,7 +127,6 @@
 							FP.blood_state = blood_state
 							FP.entered_dirs |= dir
 							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
-							FP.color = bloodtype_to_color(last_bloodtype)
 							FP.update_icon()
 
 
