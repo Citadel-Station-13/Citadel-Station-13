@@ -311,7 +311,7 @@
 		if(10 to 20)
 			M.confused += 1
 			M.drowsyness += 1
-			M.adjustStaminaLossBuffered(5)
+			M.adjustStaminaLoss(5)
 		if(20 to INFINITY)
 			M.Sleeping(40, 0)
 	..()
