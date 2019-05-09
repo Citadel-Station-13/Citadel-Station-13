@@ -52,6 +52,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/geargroupID //defines the ID that the gear inherits from the config
 	var/list/restricted_roles
 	var/list/ckeywhitelist
+	var/restricted_desc
 
 /datum/gear/New()
 	..()
