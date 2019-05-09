@@ -5598,7 +5598,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "kK" = (
 /obj/effect/decal/cleanable/blood/xeno,
-/obj/effect/decal/cleanable/blood/xeno/gibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
