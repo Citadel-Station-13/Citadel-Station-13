@@ -9,7 +9,10 @@
 /mob/living/brain/Initialize()
 	. = ..()
 	create_dna(src)
-	stored_dna.initialize_dna(random_blood_type())
+	if(stored_dna.blood_type)
+		stored_dna.initialize_dna(stored_dna.blood_type)
+	else
+		stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
@@ -20,6 +23,14 @@
 	if(!stored_dna.species)
 		var/rando_race = pick(GLOB.roundstart_races)
 		stored_dna.species = new rando_race()
+		if(isjellyperson(stored_dna.species))
+			stored_dna.blood_type = "GEL"
+		if(isipcperson(stored_dna.species))
+			stored_dna.blood_type = "HF"
+		if(isxenoperson(stored_dna.species))
+			stored_dna.blood_type = "X*"
+		if(islizard(stored_dna.species))
+			stored_dna.blood_type = "L"
 
 /mob/living/brain/Destroy()
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.

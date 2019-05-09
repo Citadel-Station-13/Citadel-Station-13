@@ -30,8 +30,6 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 			GLOB.whitelisted_species_list[S.id] = S.type
 
 	return GLOB.whitelisted_species_list
-	//blood types
-GLOBAL_LIST_INIT(blood_types, list("blood","syntheticblood","xenoblood","oilblood","jellyblood"))
 
 	//Mammal Species
 GLOBAL_LIST_EMPTY(mam_body_markings_list)
@@ -110,6 +108,15 @@ GLOBAL_LIST_INIT(paw_taurs, list(
 		"Horse",
 		"Cow",
 		"Tiger"
+		))
+
+	//blood types
+GLOBAL_LIST_INIT(blood_types, list(
+		"blood",
+		"syntheticblood",
+		"xenoblood",
+		"oilblood",
+		"jellyblood"
 		))
 
 GLOBAL_LIST_INIT(blood_id_types, list(

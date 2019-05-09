@@ -54,6 +54,7 @@
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()
 	reagents.add_reagent("oil", 30)
+	reagents.add_reagent("liquidoilgibs", 5)
 
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")

@@ -7,18 +7,18 @@
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(isjellyperson(src))
 		if(with_bodyparts)
-			new /obj/effect/gibspawner/slimeperson(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/human/slimeperson(drop_location(), dna, get_static_viruses())
 		else
-			new /obj/effect/gibspawner/slimeperson/bodypartless(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/human/slimeperson/bodypartless(drop_location(), dna, get_static_viruses())
 
 	if(isipcperson(src))
-		new /obj/effect/gibspawner/ipc(drop_location(), dna, get_static_viruses())
+		new /obj/effect/gibspawner/robot/ipc(drop_location(), dna, get_static_viruses())
 
 	if(isxenoperson(src))
 		if(with_bodyparts)
-			new /obj/effect/gibspawner/xeno(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/xeno/xenoperson(drop_location(), dna, get_static_viruses())
 		else
-			new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), dna, get_static_viruses())
+			new /obj/effect/gibspawner/xeno/xenoperson/bodypartless(drop_location(), dna, get_static_viruses())
 
 	else
 		if(with_bodyparts)

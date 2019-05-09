@@ -33,16 +33,36 @@
 
 
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
+	to_chat(world, "Attempting to add DNA to pass to gibs")
 	if(source_mob)
+		to_chat(world, "We got a source mob, [source_mob]")
 		dna_to_add = source_mob.get_blood_dna_list() //ez pz
 	else if(gib_mob_type)
+		to_chat(world, "We got a mob type, [gib_mob_type]")
 		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
 		if(gib_mob_species)
+			to_chat(world, "We got a mob species too, [gib_mob_species]")
 			if(ishuman(temp_mob))
+				to_chat(world, "it's a human type mob for sure")
 				var/mob/living/carbon/human/H = temp_mob
 				H.set_species(gib_mob_species)
-		dna_to_add = temp_mob.get_blood_dna_list()
-		qdel(temp_mob)
+				if(isjellyperson(H))
+					H.dna.blood_type = "GEL"
+				if(isipcperson(H))
+					H.dna.blood_type = "HF"
+				if(isxenoperson(H))
+					H.dna.blood_type = "X*"
+				if(islizard(H))
+					H.dna.blood_type = "L"
+				to_chat(world, "temp_mob is a [H.dna.species]")
+				dna_to_add = temp_mob.get_blood_dna_list()
+				qdel(H)
+			else
+				dna_to_add = temp_mob.get_blood_dna_list()
+				qdel(temp_mob)
+		else
+			dna_to_add = temp_mob.get_blood_dna_list()
+			qdel(temp_mob)
 	else
 		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
 
@@ -57,6 +77,8 @@
 					digester.stomach_contents += gib
 
 				gib.add_blood_DNA(dna_to_add)
+				// color them properly, please.
+				gib.update_icon()
 
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
@@ -82,7 +104,7 @@
 
 
 /obj/effect/gibspawner/human
-	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/up, /obj/effect/decal/cleanable/blood/gibs/down, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/body, /obj/effect/decal/cleanable/blood/gibs/limb, /obj/effect/decal/cleanable/blood/gibs/core)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/human/up, /obj/effect/decal/cleanable/blood/gibs/human/down, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human/body, /obj/effect/decal/cleanable/blood/gibs/human/limb, /obj/effect/decal/cleanable/blood/gibs/human/core)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
 	gib_mob_type = /mob/living/carbon/human
 	gib_mob_species = /datum/species/human
@@ -95,7 +117,7 @@
 
 
 /obj/effect/gibspawner/human/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).
-	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/core, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/core, /obj/effect/decal/cleanable/blood/gibs, /obj/effect/decal/cleanable/blood/gibs/torso)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human/core, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human/core, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human/torso)
 	gibamounts = list(1, 1, 1, 1, 1, 1)
 
 /obj/effect/gibspawner/human/bodypartless/Initialize()
@@ -104,58 +126,43 @@
 	return ..()
 
 /obj/effect/gibspawner/human/lizard
-	gib_mob_type = /mob/living/carbon/human
 	gib_mob_species = /datum/species/lizard
 
-/obj/effect/gibspawner/slimeperson
+/obj/effect/gibspawner/human/lizard/bodypartless
+
+/obj/effect/gibspawner/human/slimeperson
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/slime/up, /obj/effect/decal/cleanable/blood/gibs/slime/down, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/body, /obj/effect/decal/cleanable/blood/gibs/slime/limb, /obj/effect/decal/cleanable/blood/gibs/slime/core)
-	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
-	sound_vol = 50
-	gib_mob_type = /mob/living/carbon/human
+
 	gib_mob_species = /datum/species/jelly
 
-/obj/effect/gibspawner/slimeperson/Initialize()
-	if(!gibdirections.len)
-		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs, list())
-	return ..()
-
-
-/obj/effect/gibspawner/slimeperson/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).
-	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/torso)
-	gibamounts = list(1, 1, 1, 1, 1, 1)
-
-/obj/effect/gibspawner/slimeperson/bodypartless/Initialize()
-	if(!gibdirections.len)
-		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, list())
-	return ..()
-
+/obj/effect/gibspawner/human/slimeperson/bodypartless
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/torso)
+	gibamounts = list(2, 0, 1, 1, 2, 0)
 
 /obj/effect/gibspawner/xeno
 	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs/up, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/down, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/body, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/limb, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
 	gib_mob_type = /mob/living/carbon/alien
 
-/obj/effect/gibspawner/xeno/xenoperson
-	gib_mob_type = /mob/living/carbon/human
-	gib_mob_species = /datum/species/xeno
-
 /obj/effect/gibspawner/xeno/Initialize()
 	if(!gibdirections.len)
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs, list())
 	return ..()
 
-
 /obj/effect/gibspawner/xeno/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).
 	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/torso)
 	gibamounts = list(1, 1, 1, 1, 1, 1)
-
 
 /obj/effect/gibspawner/xeno/bodypartless/Initialize()
 	if(!gibdirections.len)
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, list())
 	return ..()
 
+/obj/effect/gibspawner/xeno/xenoperson
+	gib_mob_type = /mob/living/carbon/human
+	gib_mob_species = /datum/species/xeno
 
+/obj/effect/gibspawner/xeno/xenoperson/bodypartless
 
 /obj/effect/gibspawner/larva
 	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva/body)
@@ -176,8 +183,6 @@
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST), list())
 	return ..()
 
-
-
 /obj/effect/gibspawner/robot
 	sparks = 1
 	gibtypes = list(/obj/effect/decal/cleanable/robot_debris/up, /obj/effect/decal/cleanable/robot_debris/down, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris/limb)
@@ -190,15 +195,6 @@
 	gibamounts[6] = pick(0, 1, 2)
 	return ..()
 
-/obj/effect/gibspawner/ipc
-	sparks = 1
-	gibtypes = list(/obj/effect/decal/cleanable/robot_debris/up, /obj/effect/decal/cleanable/robot_debris/down, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris/limb)
-	gibamounts = list(1, 1, 1, 1, 1, 1)
+/obj/effect/gibspawner/robot/ipc
 	gib_mob_type = /mob/living/carbon/human
 	gib_mob_species = /datum/species/ipc
-
-/obj/effect/gibspawner/ipc/Initialize()
-	if(!gibdirections.len)
-		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
-	gibamounts[6] = pick(0, 1, 2)
-	return ..()

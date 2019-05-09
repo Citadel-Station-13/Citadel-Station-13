@@ -319,29 +319,34 @@
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	to_chat(world, "living's get_blood_dna_list called")
-	for(var/bluhduh in GLOB.blood_types)
-		var/datum/reagent/blood/B = bluhduh
-		if(get_blood_id() != B)
-			return
+	if(get_blood_id() != "blood")
+		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	to_chat(world, "carbon's get_blood_dna_list called by [src]")
-	for(var/bluhduh in GLOB.blood_types)
-		var/datum/reagent/blood/B = bluhduh
-		if(get_blood_id() != B)
-			to_chat(world, "[src] apparently doesn't have a valid blood type of [B]")
+	var/blood_id = get_blood_id()
+	to_chat(world, "We got [blood_id] for a return")
+	for(var/B in GLOB.blood_id_types)
+		to_chat(world, "checking blood_id_types")
+		var/list/bluhduh = typecacheof(B)
+		to_chat(world, "We bluhduh now, let's compare with [blood_id] now")
+		if(!blood_id in bluhduh)
+			to_chat(world, "[src] apparently doesn't have a valid blood type of blood, we're returning null due to [bluhduh]")
 			return
+		to_chat(world, "[src] has an approved type of blood.")
 		var/list/blood_dna = list()
+		to_chat(world, "blood_dna list made.")
 		if(dna)
-			blood_dna = get_blood_data(B)
+			to_chat(world, "[src] has dna, we know the bloodtype to be [dna.blood_type].")
+			blood_dna[dna.unique_enzymes] = dna.blood_type
 		else
+			to_chat(world, "[src] doesn't have dna I guess.")
 			blood_dna["UNKNOWN DNA"] = "X*"
+		to_chat(world, "blood_dna is [blood_dna]")
 		return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	to_chat(world, "alien's get_blood_dna_list called")
 	return list("UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.

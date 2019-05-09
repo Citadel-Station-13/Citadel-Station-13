@@ -27,8 +27,8 @@
 	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/blood/xenoblood/xgibs/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
 	reagents.add_reagent("liquidxenogibs", 5)
+	. = ..()
 
 /obj/effect/decal/cleanable/blood/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0
