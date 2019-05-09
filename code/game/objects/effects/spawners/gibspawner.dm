@@ -101,8 +101,6 @@
 /obj/effect/gibspawner/generic/animal
 	gib_mob_type = /mob/living/simple_animal/pet
 
-
-
 /obj/effect/gibspawner/human
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/human/up, /obj/effect/decal/cleanable/blood/gibs/human/down, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human, /obj/effect/decal/cleanable/blood/gibs/human/body, /obj/effect/decal/cleanable/blood/gibs/human/limb, /obj/effect/decal/cleanable/blood/gibs/human/core)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
@@ -140,7 +138,7 @@
 	gibamounts = list(2, 0, 1, 1, 2, 0)
 
 /obj/effect/gibspawner/xeno
-	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs/up, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/down, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/body, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/limb, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xeno/up/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/down/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/body/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/limb/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/core/xeno)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
 	gib_mob_type = /mob/living/carbon/alien
 
@@ -150,7 +148,7 @@
 	return ..()
 
 /obj/effect/gibspawner/xeno/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).
-	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/core, /obj/effect/decal/cleanable/blood/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/torso)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/core/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/core/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/torso/xeno)
 	gibamounts = list(1, 1, 1, 1, 1, 1)
 
 /obj/effect/gibspawner/xeno/bodypartless/Initialize()
@@ -165,7 +163,7 @@
 /obj/effect/gibspawner/xeno/xenoperson/bodypartless
 
 /obj/effect/gibspawner/larva
-	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva/body)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xeno/larva, /obj/effect/decal/cleanable/blood/gibs/xeno/larva, /obj/effect/decal/cleanable/blood/gibs/xeno/larva/body, /obj/effect/decal/cleanable/blood/gibs/xeno/larva/body)
 	gibamounts = list(1, 1, 1, 1)
 	gib_mob_type = /mob/living/carbon/alien/larva
 
@@ -175,7 +173,7 @@
 	return ..()
 
 /obj/effect/gibspawner/larva/bodypartless
-	gibtypes = list(/obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/blood/xenoblood/xgibs/larva)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xeno/larva, /obj/effect/decal/cleanable/blood/gibs/xeno/larva, /obj/effect/decal/cleanable/blood/gibs/xeno/larva)
 	gibamounts = list(1, 1, 1)
 
 /obj/effect/gibspawner/larva/bodypartless/Initialize()

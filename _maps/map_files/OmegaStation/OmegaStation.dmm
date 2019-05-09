@@ -43060,7 +43060,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "vsf" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/xeno/gibs,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

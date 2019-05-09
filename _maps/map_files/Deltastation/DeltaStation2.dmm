@@ -89150,7 +89150,7 @@
 /area/maintenance/port)
 "cTz" = (
 /obj/effect/decal/remains/xeno,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cTA" = (

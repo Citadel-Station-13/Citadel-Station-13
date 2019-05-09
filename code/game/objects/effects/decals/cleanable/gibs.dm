@@ -9,7 +9,9 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/guts()
 	if(gib_overlay)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
+		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay")
+		if(bloodmeme != "GEL")
+			gibz.appearance_flags = RESET_COLOR
 		add_overlay(gibz)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)

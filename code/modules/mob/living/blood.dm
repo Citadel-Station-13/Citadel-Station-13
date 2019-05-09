@@ -308,19 +308,17 @@
 		B.bloodiness += BLOOD_AMOUNT_PER_DECAL
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
-		B.add_blood_DNA(temp_blood_DNA)
+		if(isalien(src))
+			B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+		else
+			B.add_blood_DNA(temp_blood_DNA)
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)
-	if(!T)
-		T = get_turf(src)
-	var/obj/effect/decal/cleanable/blood/xenoblood/B = locate() in T.contents
-	if(!B)
-		B = new(T)
-	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	.=..()
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
 	if(!T)
