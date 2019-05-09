@@ -66,11 +66,13 @@
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.bloody_shoes[S.blood_state]
+					FP.bloodmeme = S.bloodmeme
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
 
 				S.step_action()
+
 	else
 		if(!buckled)
 			if(!lying)
@@ -78,12 +80,11 @@
 					if(!has_gravity(loc))
 						return
 					var/turf/T = get_turf(src)
-					if(blood_smear && blood_smear[blood_state])
+					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
-						if (oldFP.blood_state == blood_state)
+						if (oldFP.color == color)
 							return
-						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
-						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
+						else
 							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks(T)
 							if(DIGITIGRADE in dna.species.species_traits)
 								if(dna.species.id == ("lizard" || "ashwalker" || "xeno"))
@@ -105,30 +106,49 @@
 							else
 								FP.icon_state = FOOTPRINT_SHOE
 								FP.print_state = FOOTPRINT_SHOE
-							FP.blood_state = blood_state
-							FP.entered_dirs |= dir
-							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
+							FP.add_blood_DNA(return_blood_DNA())
+							FP.bloodmeme = bloodmeme
 							FP.update_icon()
+							var/newdir = get_dir(T, loc)
+							if(newdir == dir)
+								B.setDir(newdir)
+							else
+								newdir = newdir | dir
+								if(newdir == 3)
+									newdir = 1
+								else if(newdir == 12)
+									newdir = 4
+							B.setDir(newdir)
+							bloodiness--
 
 			else //we're on the floor, smear some stuff around
 				if(loc == NewLoc)
 					if(!has_gravity(loc))
 						return
 					var/turf/T = get_turf(src)
-					if(blood_smear && blood_smear[blood_state])
+					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
-						if (oldFP.blood_state == blood_state)
+						if (oldFP.color == color)
 							return
-						blood_smear[blood_state] = max(0, blood_smear[blood_state] - BLOOD_LOSS_PER_STEP)
-						if(blood_smear[blood_state] > BLOOD_LOSS_IN_SPREAD)
+						else
 							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/body(T)
 							FP.icon_state = FOOTPRINT_DRAG
 							FP.print_state = FOOTPRINT_DRAG
-							FP.blood_state = blood_state
-							FP.entered_dirs |= dir
-							FP.bloodiness = blood_smear - BLOOD_LOSS_IN_SPREAD
+							FP.add_blood_DNA(return_blood_DNA())
+							FP.bloodtrack = bloodtrack
+							FP.bloodmeme = bloodmeme
 							FP.update_icon()
-
+							var/newdir = get_dir(T, loc)
+							if(newdir == dir)
+								B.setDir(newdir)
+							else
+								newdir = newdir | dir
+								if(newdir == 3)
+									newdir = 1
+								else if(newdir == 12)
+									newdir = 4
+							B.setDir(newdir)
+							bloodiness--
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
