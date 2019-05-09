@@ -50,6 +50,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/simple,
 		/obj/item/electronic_assembly/hook,
 		/obj/item/electronic_assembly/pda,
+		/obj/item/electronic_assembly/small/implant,
 		/obj/item/electronic_assembly/small/default,
 		/obj/item/electronic_assembly/small/cylinder,
 		/obj/item/electronic_assembly/small/scanner,
@@ -89,4 +90,4 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/card/data/full_color,
 		/obj/item/card/data/disk
 		)
-		
+

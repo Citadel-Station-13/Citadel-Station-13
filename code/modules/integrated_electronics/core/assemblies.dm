@@ -651,6 +651,24 @@
 	max_components = IC_MAX_SIZE_BASE / 2
 	max_complexity = IC_COMPLEXITY_BASE / 2
 
+/obj/item/electronic_assembly/small/implant
+	name = "electronic implant"
+	icon_state = "setup_implant"
+	desc = "It's a case, for building tiny-sized, implantable electronics with."
+	var/obj/item/implant/integrated_circuit/implant = null
+
+/obj/item/electronic_assembly/small/implant/New()
+	implant = new
+	implant.IC = src
+	implant.icon_state = icon_state
+	..(implant)
+	usr.put_in_hands(implant)
+
+/obj/item/electronic_assembly/small/implant/update_icon()
+	..()
+	implant.icon_state = icon_state
+
+
 /obj/item/electronic_assembly/small/default
 	name = "type-a electronic device"
 
