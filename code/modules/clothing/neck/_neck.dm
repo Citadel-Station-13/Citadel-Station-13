@@ -223,7 +223,6 @@
 	item_color = "choker"
 
 	hasprimary = TRUE
-	hassecondary = TRUE
 	primary_color = "#000000"
 
 /obj/item/clothing/neck/petcollar/locked
@@ -265,7 +264,6 @@
 	item_color = "choker"
 
 	hasprimary = TRUE
-	hassecondary = TRUE
 	primary_color = "#000000"
 
 /obj/item/key/collar
