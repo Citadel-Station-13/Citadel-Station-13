@@ -24,7 +24,7 @@
 	. = ..()
 	reagents.add_reagent("liquidxenogibs", 5)
 
-/obj/effect/decal/cleanable/blood/gibs/xeno/proc/streak(list/directions)
+/obj/effect/decal/cleanable/blood/gibs/xeno/streak(list/directions)
 	set waitfor = 0
 	var/direction = pick(directions)
 	for(var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
@@ -39,6 +39,7 @@
 			splat.bloodmeme = bloodmeme
 		if(!step_to(src, get_step(src, direction), 0))
 			break
+
 /obj/effect/decal/cleanable/blood/gibs/xeno/up/xeno
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
 
