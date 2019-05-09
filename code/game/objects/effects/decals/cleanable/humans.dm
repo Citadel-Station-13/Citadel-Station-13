@@ -7,7 +7,7 @@
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/bloodmeme = ""
+	var/list/bloodmeme = ""
 	var/data = ""
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
@@ -56,17 +56,17 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
-/obj/effect/decal/cleanable/blood/tracks
-	icon_state = "tracks"
-	desc = "They look like tracks left by wheels."
-	random_icon_states = null
-
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
 	name = "blood"
 	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
+	blood_state = BLOOD_STATE_BLOOD
+	color = BLOOD_COLOR_HUMAN
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	var/bloodmeme = ""
+	var/data = ""
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	for(var/datum/reagent/R in reagents.reagent_list)
@@ -74,6 +74,12 @@
 		if(istype(R, /datum/reagent/blood))
 			if(R.data["blood_type"])
 				color = bloodtype_to_color(R.data["blood_type"]) //Color the blood with our dna stuff
+		else if(istype(R, /datum/reagent/liquidgibs))
+			if(R.data["blood_type"])
+				bloodmeme = R.data["blood_type"]
+				color = bloodtype_to_color(R.data["blood_type"])
+		else
+			color = blood_DNA_to_color()
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
@@ -88,7 +94,7 @@
 	update_icon()
 
 //BLOODY FOOTPRINTS
-/obj/effect/decal/cleanable/blood/footprints
+/obj/effect/decal/cleanable/blood/footprints/tracks
 	name = "tracks"
 	icon = 'icons/effects/fluidtracks.dmi'
 	icon_state = "nothingwhatsoever"
@@ -104,54 +110,25 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S)
-			if(S.last_bloodtype)
-				color = bloodtype_to_color(S.last_bloodtype)
-			else
-				color = bloodtype_to_color(bloodmeme)
-		else
-			if(H.last_bloodtype)
-				color = bloodtype_to_color(H.last_bloodtype)
-			else
-				color = bloodtype_to_color(bloodmeme)
-
-
 		if(S && S.bloody_shoes[blood_state])
+			S.last_bloodtype = bloodmeme
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
-		else
-			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			if (!(entered_dirs & H.dir))
-				entered_dirs |= H.dir
-				update_icon()
+		else if(!bloodiness)
+			H.bloodiness = max(bloodiness / BLOOD_LOSS_IN_SPREAD, 0)
+
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/Uncrossed(atom/movable/O)
 	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S)
-			if(S.last_bloodtype)
-				color = bloodtype_to_color(S.last_bloodtype)
-			else
-				color = bloodtype_to_color(bloodmeme)
-		else
-			if(H.last_bloodtype)
-				color = bloodtype_to_color(H.last_bloodtype)
-			else
-				color = bloodtype_to_color(bloodmeme)
-
 		if(S && S.bloody_shoes[blood_state])
 			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
-			if (!(exited_dirs & H.dir))
-				exited_dirs |= H.dir
-				update_icon()
-		else
-			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
@@ -162,16 +139,14 @@
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
-			bloodstep_overlay.color = bloodtype_to_color(bloodmeme)
+				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
-			bloodstep_overlay.color = bloodtype_to_color(bloodmeme)
+				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness

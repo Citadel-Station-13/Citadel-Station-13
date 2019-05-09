@@ -111,6 +111,17 @@ GLOBAL_LIST_INIT(paw_taurs, list(
 		))
 
 	//blood types
+GLOBAL_LIST_INIT(regular_bloods,list(
+		"O-",
+		"O+",
+		"A-",
+		"A+",
+		"B-",
+		"B+",
+		"AB-",
+		"AB+"
+		))
+
 GLOBAL_LIST_INIT(blood_types, list(
 		"blood",
 		"syntheticblood",

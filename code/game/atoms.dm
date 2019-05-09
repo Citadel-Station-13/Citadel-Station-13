@@ -389,14 +389,39 @@
 		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
 		add_overlay(blood_splatter_icon)
 
-/atom/proc/blood_DNA_to_color()
-	var/list/colors = list()//first we make a list of all bloodtypes present
-	var/list/blood = return_blood_DNA()
-	for(var/bloop in blood)
-		if(colors[blood[bloop]])
-			colors[blood[bloop]]++
+/atom/proc/blood_list_checks(Atom/A, var/blood_type, var/amount) //This is a messy attempt at trying to reduce lists of items and mobs with blood on them
+	if(blood_type in GLOB.regular_bloods)
+		blood_type = "A+" //generic so we don't have 8 different types of human blood
+
+	if(is_cleanable(A)
+		var/obj/effect/decal/cleanable/CL = A
+		if(blood_type in CL.bloodmeme)
+			return
 		else
-			colors[blood[bloop]] = 1
+			CL.bloodmeme += blood_type
+
+	if(isitem(A))
+		var/obj/item/I = A
+		if(blood_type in CL.bloodmeme)
+			return
+		else
+			CL.bloodmeme += blood_type
+
+	if(iscarbon(A))
+		var/mob/living/carbon/C = A
+		if(blood_type in C.bloodmeme)
+			return
+		else
+			C.bloodmeme += blood_type
+
+
+/atom/proc/blood_DNA_to_color(list/bloods)
+	var/list/colors = list()//first we make a list of all bloodtypes present
+	for(var/bloop in bloods)
+		if(colors[bloods[bloop]])
+			colors[bloods[bloop]]++
+		else
+			colors[bloods[bloop]] = 1
 
 	var/final_rgb = "#940000"
 
