@@ -218,6 +218,7 @@
 	secondary_color = "#888888"
 
 /obj/item/clothing/neck/petcollar/choker
+	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
 	name = "choker"
 	icon_state = "choker"
 	item_color = "choker"
@@ -260,6 +261,7 @@
 
 /obj/item/clothing/neck/petcollar/locked/choker
 	name = "choker"
+	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
 	icon_state = "choker"
 	item_color = "choker"
 
