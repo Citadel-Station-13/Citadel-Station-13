@@ -503,7 +503,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	L.lastattacker = user.real_name
 	L.lastattackerckey = user.ckey
 
-	L.adjustStaminaLoss(60) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
+	L.adjustStaminaLoss(35) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
 	L.Knockdown(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
