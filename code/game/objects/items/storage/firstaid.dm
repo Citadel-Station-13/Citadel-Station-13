@@ -284,7 +284,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/lsd(src)
 
-obj/item/storage/pill_bottle/aranesp
+/obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
 	desc = "The label says 'gotta go fast'."
 
