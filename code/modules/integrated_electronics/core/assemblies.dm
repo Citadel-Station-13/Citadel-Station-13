@@ -671,8 +671,8 @@
 
 /obj/item/electronic_assembly/small/implant/update_icon()
 	..()
-	implant.icon_state = icon_state
-
+	if(implant)
+		implant.icon_state = icon_state
 
 /obj/item/electronic_assembly/small/default
 	name = "type-a electronic device"
