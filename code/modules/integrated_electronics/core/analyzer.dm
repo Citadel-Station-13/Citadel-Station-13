@@ -8,6 +8,9 @@
 
 /obj/item/integrated_electronics/analyzer/afterattack(var/atom/A, var/mob/living/user)
 	. = ..()
+	if(istype(A, /obj/item/implant/integrated_circuit)) //snoooooowflake code
+		var/obj/item/implant/integrated_circuit/IC_implant = A
+		A = IC_implant.IC
 	if(istype(A, /obj/item/electronic_assembly))
 		var/saved = "[A.name] analyzed! On circuit printers with cloning enabled, you may use the code below to clone the circuit:<br><br><code>[SScircuit.save_electronic_assembly(A)]</code>"
 		if(saved)

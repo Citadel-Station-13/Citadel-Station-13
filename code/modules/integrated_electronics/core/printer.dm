@@ -216,6 +216,7 @@
 			E.diag_hud_set_circuitstat()
 			E.diag_hud_set_circuittracking()
 			E.investigate_log("was printed by [E.creator].", INVESTIGATE_CIRCUIT)
+			E.after_printing()
 
 		to_chat(usr, "<span class='notice'>[capitalize(built.name)] printed.</span>")
 		playsound(src, 'sound/items/jaws_pry.ogg', 50, TRUE)

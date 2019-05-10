@@ -110,6 +110,9 @@
 
 	access_card = new /obj/item/card/id(src)
 
+/obj/item/electronic_assembly/proc/after_printing()
+	return
+
 /obj/item/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -657,11 +660,13 @@
 	desc = "It's a case, for building tiny-sized, implantable electronics with."
 	var/obj/item/implant/integrated_circuit/implant = null
 
-/obj/item/electronic_assembly/small/implant/New()
-	implant = new
+/obj/item/electronic_assembly/small/implant/after_printing()
+	. = ..()
+	implant = new(get_turf(src))
 	implant.IC = src
 	implant.icon_state = icon_state
-	..(implant)
+	usr.dropItemToGround(src)
+	forceMove(implant)
 	usr.put_in_hands(implant)
 
 /obj/item/electronic_assembly/small/implant/update_icon()
