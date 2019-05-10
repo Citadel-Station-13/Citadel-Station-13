@@ -54,11 +54,6 @@
 	InverseChemVal 		= 0.5 		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
 	InverseChem 		= "SDZF" 	// What chem is metabolised when purity is below InverseChemVal
 
-/datum/chemical_reaction/eigenstate/on_reaction(datum/reagents/holder)
-	var/location = get_turf(holder.my_atom)
-	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in holder.reagent_list
-	E.location_created = location
-
 /datum/chemical_reaction/BElarger
 	name = ""
 	id = "e"

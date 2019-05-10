@@ -284,10 +284,42 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/lsd(src)
 
-/obj/item/storage/pill_bottle/aranesp
+obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
 	desc = "The label says 'gotta go fast'."
 
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
+
+/obj/item/storage/pill_bottle/antirad_plus
+	name = "anti radiation deluxe pill bottle"
+	desc = "The label says 'Med-Co branded pills'."
+
+/obj/item/storage/pill_bottle/antirad_plus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
+
+/obj/item/storage/pill_bottle/mutarad
+	name = "radiation treatment deluxe pill bottle"
+	desc = "The label says 'Med-Co branded pills' and below that 'Contains Mutadone in each pill!`."
+
+/obj/item/storage/pill_bottle/mutarad/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/mutarad(src)
+
+/obj/item/storage/pill_bottle/penis_enlargement
+	name = "penis enlargement pills"
+	desc = "Made by the Fermichem corporation - They have a little picture of Doctor Ronald Hyatt with a giant dong on them. The warming states not to take more than 10u at a time."
+
+/obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/penis_enlargement(src)
+
+/obj/item/storage/pill_bottle/breast_enlargement
+	name = "breast enlargement pills"
+	desc = "Made by the Fermichem corporation - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+
+/obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/breast_enlargement(src)

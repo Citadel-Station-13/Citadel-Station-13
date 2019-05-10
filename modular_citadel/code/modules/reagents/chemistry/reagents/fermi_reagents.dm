@@ -580,11 +580,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Incubus draft"
 	id = "PElarger"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermicem corp and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
 	color = "#H60584" // rgb: 96, 0, 255
-	taste_description = "a salty and sticky substance."
+	taste_description = "chinese dragon powder"
 	overdose_threshold = 12
 	metabolization_rate = 0.5
+
 	//var/mob/living/carbon/M
 	//var/mob/living/carbon/human/species/S
 	/*

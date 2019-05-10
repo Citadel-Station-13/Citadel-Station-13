@@ -214,3 +214,13 @@
 	if(prob(20))
 		desc = pick(descs)
 
+/obj/item/reagent_containers/pill/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
+
+/obj/item/reagent_containers/pill/penis_enlargement
+	name = "penis enlargement pill"
+	list_reagents = list("PEenlager" = 10)
+
+/obj/item/reagent_containers/pill/breast_enlargement
+	name = "breast enlargement pill"
+	list_reagents = list("BEenlager" = 10)
