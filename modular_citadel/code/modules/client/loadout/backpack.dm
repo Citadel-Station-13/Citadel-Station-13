@@ -72,3 +72,15 @@
 	name = "Box of crayons"
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/storage/crayons
+
+/datum/gear/toykatana
+	name = "Toy Katana"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/katana
+	cost = 3
+
+//datum/gear/lumeyes
+//	name = "Luminescent eye auto surgeon"
+//	category = SLOT_IN_BACKPACK
+//	path = /obj/item/autosurgeon/gloweyes
+//	cost = 4

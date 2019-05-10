@@ -284,5 +284,5 @@
 		emote("deathgasp")
 	add_trait(TRAIT_FAKEDEATH, source)
 	add_trait(TRAIT_DEATHCOMA, source)
-	tod = station_time_timestamp()
+	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
 	update_stat()

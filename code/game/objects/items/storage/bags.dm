@@ -1,5 +1,5 @@
 /*
- *	These absorb the functionality of the plant bag, ore satchel, etc.
+ *	These absorb the functionality of the plant bag, ore satchel, etc
  *	They use the use_to_pickup, quick_gather, and quick_empty functions
  *	that were already defined in weapon/storage, but which had been
  *	re-implemented in other classes.
@@ -161,6 +161,26 @@
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
+
+/obj/item/storage/bag/ore/cyborg/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	STR.allow_quick_empty = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
+	STR.max_w_class = WEIGHT_CLASS_HUGE
+	STR.max_combined_stack_amount = 150
+
+/obj/item/storage/bag/ore/large
+	name = "large mining satchel"
+	desc = "This bag can hold three times the ore in many small pockets. Shockingly foldable and compact for its volume."
+
+/obj/item/storage/bag/ore/large/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage/concrete/stack)
+	STR.allow_quick_empty = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
+	STR.max_w_class = WEIGHT_CLASS_HUGE
+	STR.max_combined_stack_amount = 150
 
 /obj/item/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
@@ -365,3 +385,15 @@
 	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+
+/obj/item/storage/bag/bio/holding
+	name = "bio bag of holding"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bspace_biobag"
+	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+
+/obj/item/storage/bag/bio/holding/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = INFINITY
+	STR.max_items = 100

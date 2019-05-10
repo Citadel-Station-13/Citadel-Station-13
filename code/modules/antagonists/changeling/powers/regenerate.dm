@@ -8,6 +8,9 @@
 	chemical_cost = 10
 	dna_cost = 0
 	req_stat = UNCONSCIOUS
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_regenerate"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>You feel an itching, both inside and \

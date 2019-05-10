@@ -5,6 +5,9 @@
 	dna_cost = 0
 	req_dna = 1
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_transform"
+	action_background_icon_state = "bg_ling"
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"

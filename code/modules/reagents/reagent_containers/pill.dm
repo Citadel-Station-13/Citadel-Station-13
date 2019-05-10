@@ -172,6 +172,23 @@
 	icon_state = "pill18"
 	list_reagents = list("potass_iodide" = 50)
 	roundstart = 1
+
+/obj/item/reagent_containers/pill/antirad_plus
+	name = "prussian blue pill"
+	desc = "Used to treat heavy radition poisoning."
+	icon = 'modular_citadel/icons/obj/modularpills.dmi'
+	icon_state = "prussian_blue"
+	list_reagents = list("prussian_blue" = 25, "water" = 10)
+	roundstart = 1
+
+/obj/item/reagent_containers/pill/mutarad
+	name = "radiation treatment deluxe pill"
+	desc = "Used to treat heavy radition poisoning and genetic defects."
+	icon = 'modular_citadel/icons/obj/modularpills.dmi'
+	icon_state = "anit_rad_fixgene"
+	list_reagents = list("prussian_blue" = 15, "potass_iodide" = 15, "mutadone" = 15, "water" = 5)
+	roundstart = 1
+
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
@@ -214,3 +231,9 @@
 	if(prob(20))
 		desc = pick(descs)
 
+/obj/item/reagent_containers/pill/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
+
+/obj/item/reagent_containers/pill/penis_enlargement
+	name = "penis enlargement pill"
+	list_reagents = list("penis_enlargement" = 30)

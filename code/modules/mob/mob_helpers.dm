@@ -29,27 +29,10 @@
 
 
 /proc/ran_zone(zone, probability = 80)
-
-	zone = check_zone(zone)
-
 	if(prob(probability))
-		return zone
-
-	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
-	switch(t)
-		if(1)
-			return BODY_ZONE_HEAD
-		if(2)
-			return BODY_ZONE_CHEST
-		if(3 to 6)
-			return BODY_ZONE_L_ARM
-		if(7 to 10)
-			return BODY_ZONE_R_ARM
-		if(11 to 14)
-			return BODY_ZONE_L_LEG
-		if(15 to 18)
-			return BODY_ZONE_R_LEG
-
+		zone = check_zone(zone)
+	else
+		zone = pickweight(list(BODY_ZONE_HEAD = 6, BODY_ZONE_CHEST = 6, BODY_ZONE_L_ARM = 22, BODY_ZONE_R_ARM = 22, BODY_ZONE_L_LEG = 22, BODY_ZONE_R_LEG = 22))
 	return zone
 
 /proc/above_neck(zone)
@@ -81,7 +64,8 @@
 		p++
 	return sanitize(t)
 
-/proc/slur(n)
+/proc/slur(n,var/strength=50)
+	strength = min(strength,50)
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)
@@ -89,7 +73,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
+		if(rand(1,100)<=strength*0.5)
 			if(lowertext(newletter)=="o")
 				newletter="u"
 			if(lowertext(newletter)=="s")
@@ -100,17 +84,17 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter="k"
-		if(rand(1,20)==20)
+		if(rand(1,100) <= strength*0.25)
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
 				newletter=" *BURP*."
-		switch(rand(1,20))
-			if(1)
+		if(rand(1,100) <= strength*0.5)
+			if(rand(1,5) == 1)
 				newletter+="'"
-			if(10)
+			if(rand(1,5) == 1)
 				newletter+="[newletter]"
-			if(20)
+			if(rand(1,5) == 1)
 				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
@@ -491,7 +475,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
 
-	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 

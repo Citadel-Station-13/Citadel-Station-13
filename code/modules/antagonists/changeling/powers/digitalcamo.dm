@@ -4,6 +4,9 @@
 	helptext = "We cannot be tracked by camera or seen by AI units while using this skill. However, humans looking at us will find us... uncanny. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	dna_cost = 1
 	loudness = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_digital_camo"
+	action_background_icon_state = "bg_ling"
 
 //Prevents AIs tracking you but makes you easily detectable to the human-eye.
 /obj/effect/proc_holder/changeling/digitalcamo/sting_action(mob/user)
@@ -19,5 +22,6 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/digitalcamo/on_refund(mob/user)
+	action.Remove(user)
 	user.digitalcamo = 0
 	user.digitalinvis = 0

@@ -126,3 +126,18 @@ GLOBAL_LIST(round_end_notifiees)
 /datum/tgs_chat_command/reload_admins/proc/ReloadAsync()
 	set waitfor = FALSE
 	load_admins()
+
+/datum/tgs_chat_command/addbunkerbypass
+	name = "whitelist"
+	help_text = "whitelist <ckey>"
+	admin_only = TRUE
+
+/datum/tgs_chat_command/addbunkerbypass/Run(datum/tgs_chat_user/sender, params)
+	if(!CONFIG_GET(flag/sql_enabled))
+		return "The Database is not enabled!"
+
+	GLOB.bunker_passthrough |= ckey(params)
+
+	log_admin("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
+	message_admins("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
+	return "[params] has been added to the current round's bunker bypass list."

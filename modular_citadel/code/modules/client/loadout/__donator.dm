@@ -368,3 +368,9 @@ datum/gear/darksabresheath
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/undertale
 	ckeywhitelist = list("twilightic")
+
+/datum/gear/frenchberet
+	name = "French Beret"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/frenchberet
+	ckeywhitelist = list("notazoltan")
