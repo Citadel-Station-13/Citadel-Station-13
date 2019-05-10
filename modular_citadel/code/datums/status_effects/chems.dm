@@ -164,31 +164,33 @@
 	alert_type = null
 	var/mob/living/E //E for enchanter
 	//var/mob/living/V = list() //V for victims
-	var/enthrallTally = 10
-	var/resistanceTally = 0
-	var/deltaResist
-	var/deltaEnthrall
+	var/enthrallTally = 1 //Keeps track of the enthralling process
+	var/resistanceTally = 0 //Keeps track of the resistance
+	var/deltaResist //The total resistance added per resist click
+	var/deltaEnthrall //currently unused (i think)
 	var/phase = 1 //-1: resisted state, due to be removed.0: sleeper agent, no effects unless triggered 1: initial, 2: 2nd stage - more commands, 3rd: fully enthralled, 4th Mindbroken
-	var/status = null
-	var/statusStrength = 0
-	var/enthrallID
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	var/status = null //status effects
+	var/statusStrength = 0 //strength of status effect
+	var/enthrallID //Enchanter's name/ID
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
-	var/mindbroken = FALSE
-	var/datum/weakref/redirect_component1
-	var/datum/weakref/redirect_component2
-	var/distancelist = list(4,3,2,1.5,1,0.8,0.6,0.4,0.2)
-	var/withdrawal = FALSE
-	var/withdrawalTick = 0
-	var/list/customTriggers = list()
+	var/mental_cost //Current cost of custom triggers
+	var/mindbroken = FALSE //Not sure I use this, replaced with phase 4
+	var/datum/weakref/redirect_component1 //resistance
+	var/datum/weakref/redirect_component2 //say
+	var/distancelist = list(4,3,2,1.5,1,0.8,0.6,0.4,0.2) //Distance multipliers
+	var/withdrawal = FALSE //withdrawl
+	var/withdrawalTick = 0 //counts how long withdrawl is going on for
+	var/list/customTriggers = list() //the list of custom triggers (maybe have to split into two)
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
 	if(M.ID == enthrallID)
-		owner.remove_status_effect(src)//This should'nt happen, but just in case
+		owner.remove_status_effect(src)//This shouldn't happen, but just in case
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
 	//Might need to add redirect component for listening too.
 	mental_capacity = 500 - B.get_brain_damage()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall)
 
 /datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_MINDSHIELD))
@@ -199,6 +201,7 @@
 	//phase specific events
 	switch(phase)
 		if(-1)//fully removed
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
 			owner.remove_status_effect(src)
 		else if(0)// sleeper agent
 			return
@@ -207,13 +210,15 @@
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
-				return
+				to_chat(owner, "<span class='notice'><i>Your conciousness slips, as you sink deeper into trance.</i></span>")
+				continue
 			if (resistanceTally > 100)
 				enthrallTally *= 0.5
-				phase -= 1
+				phase = -1
 				resistanceTally = 0
+				to_chat(owner, "<span class='notice'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
-				return
+				continue
 			if(prob(10))
 				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [enthrallID.name].", "You can't keep your eyes off [enthrallID.name].", "[enthrallID.name]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallID.name]", "[enthrallID.name] is so sexy and dominant, it feels right to obey them.")].</i></span>")
 		else if (2) //partially enthralled
@@ -221,21 +226,33 @@
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
-				return
+				to_chat(owner, "<span class='notice'><i>Your mind gives, eagerly obeying and serving [enthrallID.name].</i></span>")
+				to_chat(owner, "<span class='warning'><i>You are now fully enthralled to [enthrallID.name], and eager to follow their commands. However you find that in your intoxicated state you are much less likely to resort to violence, unless it is to defend your master. Equally you are unable to commit suicide, even if ordered to, as you cannot server your Master in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
+				continue
 			if (resistanceTally > 150)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
-				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
-				return
-		else if (3)
-
-		else if (4)
+				to_chat(owner, "<span class='notice'><i>You manage to shake some of the entrancement from your addled mind, however you can still feel yourself drawn towards [enthrallID.name].</i></span>")
+				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
+				continue
+		else if (3)//fully entranced
+			if (resistanceTally >= 250 && withdrawalTick >= 150)
+				enthrallTally = 0
+				phase -= 1
+				resistanceTally = 0
+				to_chat(owner, "<span class='notice'><i>The separation from you master sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
+		else if (4) //mindbroken
 			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !user.has_reagent("MKUltra"))
 				phase = 2
 				mental_capacity = 500
-				mental_capacity -= resistanceTally
-				resistanceTally = 0
+				E.customTriggers = list()
+				to_chat(owner, "<span class='notice'><i>Your mind starts to heal, fixing the damage caused by the massive ammounts of chem injected into your system earlier, .</i></span>")
+				M.slurring = 0
+				M.confused = 0
+			else
+				return//If you break the mind of someone, you can't use status effects on them.
+
 
 	//distance calculations
 	switch(get_dist(enthrallID, owner))
@@ -244,17 +261,21 @@
 			var/withdrawal = FALSE
 			if(withdrawalTick > 0)
 				withdrawalTick -= 2
+			M.hallucination = max(0, M.hallucination - 2)
+			M.stuttering = max(0, M.stuttering - 2)
+			M.jitteriness = max(0, M.jitteriness - 2)
 		if(9 to INFINITY)//If
 			var/withdrawal = TRUE
 
 	//chem calculations
 	if (user.has_reagent("MKUltra"))
-		enthrallTally += 2
+		if (phase >= 2)
+			enthrallTally += phase
 	else
 		if (phase < 3)
 			resistance += 10//If you've no chem, then you break out quickly
 			to_chat(owner, "<span class='notice'><i>You're starting to miss your Master/Mistress.</i></span>")
-	if (mental_capacity <= 500)
+	if (mental_capacity <= 500 || phase == 4)
 		if (user.has_reagent("mannitol"))
 			mental_capacity += 1
 		if (user.has_reagent("neurine"))
@@ -262,51 +283,112 @@
 
 	//Withdrawal subproc:
 	if (withdrawal == TRUE)//Your minions are really REALLY needy.
-		switch(withdrawalTick)
+		switch(withdrawalTick)//denial
 			if(20 to 40)//Gives wiggle room, so you're not SUPER needy
-				prob(10)
+				if(prob(10))
 					to_chat(owner, "You're starting to miss your Master/Mistress.")
-				prob(5)
-					owner.adjustBrainLoss(1)
+				if(prob(10))
+					owner.adjustBrainLoss(0.5)
+					to_chat(owner, "They'll surely be back soon") //denial
 			if(41)
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing1", /datum/mood_event/enthrallmissing1)
-			if(42 to 65)
-			prob(10)
-				to_chat(owner, "You're starting to miss your Master/Mistress.")
+			if(42 to 65)//barganing
+				if(prob(10))
+					to_chat(owner, "They are coming back, right...?")
+					owner.adjustBrainLoss(1)
+				if(prob(20))
+					to_chat(owner, "I just need to be a good pet for Master, they'll surely return if I'm a good pet.")
+					owner.adjustBrainLoss(-2)
 			if(66)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1") //Why does this not work?
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing2", /datum/mood_event/enthrallmissing2)
 				owner.stuttering += 20
 				owner.jitteriness += 20
-			if(67 to 90)
-				prob(10)
-					owner.SetStun(10, 0)
+			if(67 to 90) //anger
+				if(prob(30))
+					addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
+					addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+					to_chat(owner, "You suddenly lash out at the station in anger for it keeping you away from your Master.")
+			if(90)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2") //Why does this not work?
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing3", /datum/mood_event/enthrallmissing3)
+				to_chat(owner, "<span class='warning'><i>You need to find your Master at all costs, you can't hold yourself back anymore.</i></span>")
+			if(91 to 120)//depression
+				if(prob(20))
+					owner.adjustBrainLoss(1)
+					owner.stuttering += 2
+					owner.jitteriness += 2
+				if(prob(25))
+					M.hallucination += 2
+			if(121)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing4", /datum/mood_event/enthrallmissing4)
+				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without your Master.</i></span>")
+			if(120 to 140) //depression
+				if(prob(25))
+					owner.SetStun(20, 0)
 					owner.emote("cry")//does this exist?
-				pro(10)
+					to_chat(owner, "You're unable to hold back your tears, suddenly sobbing as the desire to see your Master oncemore overwhelms you.")
 					owner.adjustBrainLoss(2)
-
-
-
+					owner.stuttering += 2
+					owner.jitteriness += 2
+				if(prob(10))
+					deltaResist += 5
+			if(140 to INFINITY) //acceptance
+				if(prob(20))
+					deltaResist += 5
+					if(prob(20))
+						to_chat(owner, "Maybe you'll be okay without your Master.")
+				if(prob(10))
+					owner.adjustBrainLoss(1)
+					M.hallucination += 5
 
 		withdrawalTick++
 
 	//Status subproc - statuses given to you from your Master
+	//currently 3 statuses; antiresist -if you press resist, increases your enthrallment instead, HEAL - which slowly heals the pet, CHARGE - which breifly increases speed, PACIFY - makes pet a pacifist.
 	if (!status == null)
 
 		switch(status)
 			if("Antiresist")
 				if (statusStrength == 0)
 					status = null
+					to_chat(owner, "You feel able to resist oncemore.")
 				else
 					statusStrength -= 1
 
-			if("heal")
+			else if("heal")
 				if (statusStrength == 0)
 					status = null
+					to_chat(owner, "You finish licking your wounds.")
 				else
 					statusStrength -= 1
 					owner.heal_overall_damage(1, 1, 0, FALSE, FALSE)
+					cooldown += 1 //Cooldown doesn't process till status is done
 
+			else if("charge")
+				owner.add_trait(TRAIT_GOTTAGOFAST, "MKUltra")
+				status = "charged"
+				to_chat(owner, "Your Master's order fills you with a burst of speed!")
+
+			else if ("charged")
+				if (statusStrength == 0)
+					status = null
+					owner.remove_trait(TRAIT_GOTTAGOFAST, "MKUltra")
+					owner.Knockdown(30)
+					to_chat(owner, "Your body gives out as the adrenaline in your system runs out.")
+				else
+					statusStrength -= 1
+					cooldown += 1 //Cooldown doesn't process till status is done
+
+			else if ("pacify")
+				owner.add_trait(TRAIT_PACIFISM, "MKUltra")
+				status = null
+
+			//Truth serum?
+			//adrenals?
+			//M.next_move_modifier *= 0.5
+			//M.adjustStaminaLoss(-5*REM)
 
 	//final tidying
 	resistance += deltaResist

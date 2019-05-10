@@ -393,13 +393,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.nutrition += 500
 //If the reaction explodes
 /*
-/datum/reagent/fermi/SDGF/FermiExplode(turf/open/T)//Spawns an angery teratoma!! Spooky..! be careful!!
+/datum/reagent/fermi/SDGF/FermiExplode(turf/open/T)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
 	//var/mob/living/simple_animal/slime/S = new(get_turf(location_created),"grey")
 	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
-	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)//I dunno how slimes work cause fire is burny
 	S.name = "Living teratoma"
 	S.real_name = "Living teratoma"//horrifying!!
-	S.rabid = 1//Make them an angery boi
+	S.rabid = 1//Make them an angery boi, grr grr
 	to_chat("<span class='notice'>The cells clump up into a horrifying tumour.</span>")
 */
 
@@ -457,7 +457,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.nutrition = M.nutrition + (M.nutrition/2)
 		if(74)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
-			if (M.nutrition < 20000)
+			if (M.nutrition < 20000) //whoever knows the maxcap, please let me know, this seems a bit low.
 				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
 		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
@@ -577,13 +577,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		W = nW
 	..()
 
+//TODO: failing the reaction creates a penis instead.
 /datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Incubus draft"
 	id = "PElarger"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermicem corp and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
-	color = "#H60584" // rgb: 96, 0, 255
+	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
-	overdose_threshold = 12
+	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
 
 	//var/mob/living/carbon/M
@@ -597,7 +598,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	*/
 	var/mob/living/carbon/human/H
 
-/datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size
+/datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
@@ -613,7 +614,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			P = nP
 
 	P.cached_length = P.cached_length + 0.1
-	if (P.cached_length >= 10.5 && P.cached_length < 11) //too low?
+	if (P.cached_length >= 20.5 && P.cached_length < 21) //too low? Yes, 20 is the max
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
@@ -743,13 +744,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	description = "Need a description."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	metabolization_rate = 0.5
-	overdose_threshold = 200
+	//metabolization_rate = 0.5
+	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	//addiction_threshold = 30
 	//addiction_stage1_end = 9999//Should never end.
 	var/creatorID  //add here
 
-/datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+/datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
+	..()
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
 	else if(M.ID == creatorID)
@@ -758,7 +760,31 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
+		to_chat(owner, "<span class='notice'><i>You feel your vocal chords tingle as your voice becomes more sultry.</span>")
 	else
+		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+
+/datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthral)
+	E.enthrallTally += 1
+	M.adjustBrainLoss(0.1)
+	..()
+
+/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)
+	owner.add_trait(TRAIT_PACIFISM, "MKUltra")
+	if (!M.has_status_effect(/datum/status_effect/chem/enthral))
+		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthral)
+	to_chat(owner, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [enthrallID.name].</i></span>")
+	M.slurring = 100
+	M.confused = 100
+	E.phase = 4
+	E.mental_capacity = 0
+	E.customTriggers = list()
+
+/datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
+	M.adjustBrainLoss(0.2)
+	..()
 
 //Requires player to be within vicinity of creator
 //bonuses to mood

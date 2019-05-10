@@ -17,13 +17,17 @@
     timeout = 600
 
 /datum/mood_event/enthrallmissing1
-    mood_change = -10
+    mood_change = -5
     description = "<span class='warning'>I feel empty when Master's not around..</span>\n"
 
 /datum/mood_event/enthrallmissing2
-    mood_change = -15
+    mood_change = -10
     description = "<span class='warning'>I feel so lost in this complicated world without Master, where are they?!</span>\n"
 
 /datum/mood_event/enthrallmissing3
-    mood_change = -25
+    mood_change = -15
     description = "<span class='warning'>Where are you Master??!</span>\n"
+
+/datum/mood_event/enthrallmissing4
+    mood_change = -25
+    description = "<span class='warning'>You're all alone, It's so hard to continute without your Master...</span>\n"
