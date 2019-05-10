@@ -342,9 +342,6 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
-	if(fermiIsReacting == TRUE)
-		//reagents_holder_flags |= REAGENT_NOREACT unsure if this is needed
-		return
 	var/list/cached_reagents = reagent_list //a list of the reagents?
 	var/list/cached_reactions = GLOB.chemical_reactions_list //a list of the whole reactions?
 	var/datum/cached_my_atom = my_atom //It says my atom, but I didn't bring one with me!!
@@ -354,17 +351,14 @@
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
 
-	//if(fermiIsReacting == TRUE)
-	/*	if (reactedVol >= targetVol && targetVol != 0)
-			STOP_PROCESSING(SSprocessing, src)
+	if(fermiIsReacting == TRUE)
+		if (reactedVol >= targetVol && targetVol != 0)
+			STOP_PROCESSING(SSfastprocess, src)
 			fermiIsReacting = FALSE
-			message_admins("FermiChem processing stopped in reaction handler")
+			message_admins("FermiChem processing stopped")
 			reaction_occurred = 1
 			return
-		else
-			message_admins("FermiChem processing passed in reaction handler")
-			return
-	*/
+
 
 
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
@@ -470,27 +464,23 @@
 
 			if (C.FermiChem == TRUE && !continue_reacting)
 				message_admins("FermiChem Proc'd")
+				reaction_occurred = 1
 
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
-					message_admins("FermiChem target volume: [targetVol]")
 
 				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
-					//if (reactedVol < targetVol)
-					if (fermiIsReacting == TRUE)
-						return 0
-					else
+					if (reactedVol < targetVol)
 						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-						START_PROCESSING(SSprocessing, src)
+						START_PROCESSING(SSfastprocess, src)
 						message_admins("FermiChem processing started")
 						fermiIsReacting = TRUE
 						fermiReactID = selected_reaction
-						reaction_occurred = 1
-					//else
-					//	fermiIsReacting = FALSE
-					//	STOP_PROCESSING(SSfastprocess, src)
+					else
+						fermiIsReacting = FALSE
+						STOP_PROCESSING(SSfastprocess, src)
 				else
-					return 0
+					return
 
 
 				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
@@ -538,57 +528,14 @@
 	return 0//end!
 
 /datum/reagents/process()
-	var/datum/chemical_reaction/C = fermiReactID
-	var/list/cached_required_reagents = C.required_reagents//update reagents list
-	var/list/cached_results = C.results//resultant chemical list
-	var/multiplier = INFINITY
-
-	message_admins("updating targetVol from [targetVol]")
-	for(var/B in cached_required_reagents) //
-		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
-	if (multiplier == 0)
-		STOP_PROCESSING(SSprocessing, src)
-		fermiIsReacting = FALSE
-		message_admins("FermiChem STOPPED due to reactant removal! Reacted vol: [reactedVol] of [targetVol]")
-		reactedVol = 0
-		targetVol = 0
-		handle_reactions()
-		update_total()
-		return
-	for(var/P in cached_results)
-		targetVol = cached_results[P]*multiplier
-
-	message_admins("to [targetVol]")
-
-	if (fermiIsReacting == FALSE)
-		message_admins("THIS SHOULD NEVER APPEAR!")
-
-	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
+	if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
 		if (reactedVol < targetVol)
-			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
-			message_admins("FermiChem tick activated started, Reacted vol: [reactedVol] of [targetVol]")
+			reactedVol = FermiReact(fermiReactID, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 		else
-			STOP_PROCESSING(SSprocessing, src)
-			fermiIsReacting = FALSE
-			message_admins("FermiChem STOPPED due to volume reached! Reacted vol: [reactedVol] of [targetVol]")
-			reactedVol = 0
-			targetVol = 0
-			handle_reactions()
-			update_total()
-			return
-	else
-		STOP_PROCESSING(SSprocessing, src)
-		message_admins("FermiChem STOPPED due to temperature! Reacted vol: [reactedVol] of [targetVol]")
-		fermiIsReacting = FALSE
-		reactedVol = 0
-		targetVol = 0
-		handle_reactions()
-		update_total()
-		return
-
+			STOP_PROCESSING(SSfastprocess, src)
 	//handle_reactions()
 
-/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
+/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
 	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -597,6 +544,7 @@
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
 	//var/tempVol = totalVol
+	//var/list/multiplier = INFINITY
 
 	message_admins("Loop beginning")
 	//Begin Parse
@@ -650,18 +598,23 @@
 	stepChemAmmount = targetVol * deltaT
 	if (stepChemAmmount > C.RateUpLim)
 		stepChemAmmount = C.RateUpLim
-	else if (stepChemAmmount <= 0.01)
-		message_admins("stepChem underflow [stepChemAmmount]")
-		stepChemAmmount = 0.02
+	else if (stepChemAmmount < 0.01)
+		stepChemAmmount = 0.01
 
 	if ((reactedVol + stepChemAmmount) > targetVol)
 		stepChemAmmount = targetVol - reactedVol
-		message_admins("target volume reached. Reaction should stop after this loop. stepChemAmmount: [stepChemAmmount] + reactedVol: [reactedVol] = targetVol [targetVol]")
+		message_admins("target volume reached. Reaction should stop after this loop")
 
 	if (reactedVol > 0)
 		purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
 	else
 		purity = deltapH
+	message_admins("purity: [purity], purity of beaker")
+	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
+	//Apply pH changes and thermal output of reaction to beaker
+	chem_temp += (C.ThermicConstant * stepChemAmmount)
+	pH += (C.HIonRelease * stepChemAmmount)
+	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
 	// End.
 	/*
@@ -677,22 +630,14 @@
 		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
 	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
-		//reactedVol = max(reactedVol, 1) //this shouldnt happen ...
+		reactedVol = max(reactedVol, 1) //this shouldnt happen ...
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
 		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
-
-	message_admins("purity: [purity], purity of beaker")
-	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
-	//Apply pH changes and thermal output of reaction to beaker
-	chem_temp += (C.ThermicConstant * stepChemAmmount)
-	pH += (C.HIonRelease * stepChemAmmount)
-	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
-
 
 	reactedVol = reactedVol + stepChemAmmount
 
 
-	return (reactedVol)
+	return //(reactedVol)
 
 /datum/reagents/proc/FermiExplode()
 	return
@@ -837,11 +782,9 @@
 	cached_reagents += R
 	R.holder = src
 	R.volume = amount
-	R.loc = get_turf(my_atom)
 	if(data)
 		R.data = data
 		R.on_new(data)
-
 
 	if(isliving(my_atom))
 		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete

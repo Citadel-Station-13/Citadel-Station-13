@@ -53,10 +53,6 @@
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
-	var/targetVol = 0
-	var/reactedVol = 0
-	var/fermiIsReacting = FALSE
-	var/fermiReactID = null
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -342,9 +338,6 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
-	if(fermiIsReacting == TRUE)
-		//reagents_holder_flags |= REAGENT_NOREACT unsure if this is needed
-		return
 	var/list/cached_reagents = reagent_list //a list of the reagents?
 	var/list/cached_reactions = GLOB.chemical_reactions_list //a list of the whole reactions?
 	var/datum/cached_my_atom = my_atom //It says my atom, but I didn't bring one with me!!
@@ -352,21 +345,6 @@
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
-	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
-
-	//if(fermiIsReacting == TRUE)
-	/*	if (reactedVol >= targetVol && targetVol != 0)
-			STOP_PROCESSING(SSprocessing, src)
-			fermiIsReacting = FALSE
-			message_admins("FermiChem processing stopped in reaction handler")
-			reaction_occurred = 1
-			return
-		else
-			message_admins("FermiChem processing passed in reaction handler")
-			return
-	*/
-
-
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
 		var/list/possible_reactions = list() //init list
 		reaction_occurred = 0 // sets it back to 0?
@@ -390,7 +368,7 @@
 				var/meets_temp_requirement = 0
 				var/has_special_react = C.special_react
 				var/can_special_react = 0
-
+				var/reactedVol = 0
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -465,138 +443,67 @@
 			//FermiChem relies on two additional properties; pH and impurity
 			//Temperature plays into a larger role too.
 			//BRANCH HERE
-			//if(selected_reaction)
-			var/datum/chemical_reaction/C = selected_reaction
+			if(selected_reaction)
+				var/datum/chemical_reaction/C = selected_reaction
 
-			if (C.FermiChem == TRUE && !continue_reacting)
-				message_admins("FermiChem Proc'd")
+				if (C.FermiChem == TRUE)
+					message_admins("FermiChem Proc'd")
 
-				for(var/P in selected_reaction.results)
-					targetVol = cached_results[P]*multiplier
-					message_admins("FermiChem target volume: [targetVol]")
+					while (reaction_occurred < 1)
+						reaction_occurred, reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier)
+						CHECK_TICK
 
-				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
-					//if (reactedVol < targetVol)
-					if (fermiIsReacting == TRUE)
-						return 0
-					else
-						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-						START_PROCESSING(SSprocessing, src)
-						message_admins("FermiChem processing started")
-						fermiIsReacting = TRUE
-						fermiReactID = selected_reaction
-						reaction_occurred = 1
-					//else
-					//	fermiIsReacting = FALSE
-					//	STOP_PROCESSING(SSfastprocess, src)
+			//Standard reaction mechanics:
 				else
-					return 0
+
+					for(var/B in cached_required_reagents) //
+						multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+
+					for(var/B in cached_required_reagents)
+						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+
+					for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+						multiplier = max(multiplier, 1) //this shouldnt happen ...
+						SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)//log
+						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!! I THINK I can do this:
 
 
-				SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
+					var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
+					var/iconhtml = icon2html(cached_my_atom, seen)
+					if(cached_my_atom)
+						if(!ismob(cached_my_atom)) // No bubbling mobs
+							if(selected_reaction.mix_sound)
+								playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
 
-		//Standard reaction mechanics:
-			else
-
-				for(var/B in cached_required_reagents) //
-					multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
-
-				for(var/B in cached_required_reagents)
-					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
-
-				for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
-					multiplier = max(multiplier, 1) //this shouldnt happen ...
-					SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)//log
-					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)//add reagent function!! I THINK I can do this:
-
-
-				var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
-				var/iconhtml = icon2html(cached_my_atom, seen)
-				if(cached_my_atom)
-					if(!ismob(cached_my_atom)) // No bubbling mobs
-						if(selected_reaction.mix_sound)
-							playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
-
-						for(var/mob/M in seen)
-							to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
-
-					if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
-						var/obj/item/slime_extract/ME2 = my_atom
-						ME2.Uses--
-						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+								to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
-				selected_reaction.on_reaction(src, multiplier, special_react_result)
-				reaction_occurred = 1
-				continue_reacting = TRUE
+						if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
+							var/obj/item/slime_extract/ME2 = my_atom
+							ME2.Uses--
+							if(ME2.Uses <= 0) // give the notification that the slime core is dead
+								for(var/mob/M in seen)
+									to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+									ME2.name = "used slime extract"
+									ME2.desc = "This extract has been used up."
+
+					selected_reaction.on_reaction(src, multiplier, special_react_result)
+					reaction_occurred = 1
 
 	while(reaction_occurred)//while do nothing?
 	update_total()//Don't know waht this does.
 	return 0//end!
 
-/datum/reagents/process()
-	var/datum/chemical_reaction/C = fermiReactID
-	var/list/cached_required_reagents = C.required_reagents//update reagents list
-	var/list/cached_results = C.results//resultant chemical list
-	var/multiplier = INFINITY
-
-	message_admins("updating targetVol from [targetVol]")
-	for(var/B in cached_required_reagents) //
-		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
-	if (multiplier == 0)
-		STOP_PROCESSING(SSprocessing, src)
-		fermiIsReacting = FALSE
-		message_admins("FermiChem STOPPED due to reactant removal! Reacted vol: [reactedVol] of [targetVol]")
-		reactedVol = 0
-		targetVol = 0
-		handle_reactions()
-		update_total()
-		return
-	for(var/P in cached_results)
-		targetVol = cached_results[P]*multiplier
-
-	message_admins("to [targetVol]")
-
-	if (fermiIsReacting == FALSE)
-		message_admins("THIS SHOULD NEVER APPEAR!")
-
-	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
-		if (reactedVol < targetVol)
-			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
-			message_admins("FermiChem tick activated started, Reacted vol: [reactedVol] of [targetVol]")
-		else
-			STOP_PROCESSING(SSprocessing, src)
-			fermiIsReacting = FALSE
-			message_admins("FermiChem STOPPED due to volume reached! Reacted vol: [reactedVol] of [targetVol]")
-			reactedVol = 0
-			targetVol = 0
-			handle_reactions()
-			update_total()
-			return
-	else
-		STOP_PROCESSING(SSprocessing, src)
-		message_admins("FermiChem STOPPED due to temperature! Reacted vol: [reactedVol] of [targetVol]")
-		fermiIsReacting = FALSE
-		reactedVol = 0
-		targetVol = 0
-		handle_reactions()
-		update_total()
-		return
-
-	//handle_reactions()
-
-/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
+/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, totalVol)
 	var/datum/chemical_reaction/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
 	var/stepChemAmmount = 0
-	//var/ammoReacted = 0
+	var/ammoReacted = 0
 	//get purity from combined beaker reactant purities HERE.
 	var/purity = 1
 	//var/tempVol = totalVol
+	//var/list/multiplier = INFINITY
 
 	message_admins("Loop beginning")
 	//Begin Parse
@@ -647,40 +554,16 @@
 	//TODO Add CatalystFact
 	message_admins("calculating pH factor(purity), pH: [pH], min: [C.OptimalpHMin]-[C.ReactpHLim], max: [C.OptimalpHMax]+[C.ReactpHLim], deltapH: [deltapH]")
 
-	stepChemAmmount = targetVol * deltaT
+	stepChemAmmount = tempVol * deltaT
 	if (stepChemAmmount > C.RateUpLim)
 		stepChemAmmount = C.RateUpLim
-	else if (stepChemAmmount <= 0.01)
-		message_admins("stepChem underflow [stepChemAmmount]")
-		stepChemAmmount = 0.02
+	else if (stepChemAmmount < 0.01)
+		stepChemAmmount = 0.01
 
-	if ((reactedVol + stepChemAmmount) > targetVol)
-		stepChemAmmount = targetVol - reactedVol
-		message_admins("target volume reached. Reaction should stop after this loop. stepChemAmmount: [stepChemAmmount] + reactedVol: [reactedVol] = targetVol [targetVol]")
-
-	if (reactedVol > 0)
-		purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
+	if (ammoReacted > 0)
+		purity = ((purity * ammoReacted) + (deltapH * stepChemAmmount)) /((ammoReacted + stepChemAmmount)) //This should add the purity to the product
 	else
 		purity = deltapH
-
-	// End.
-	/*
-	for(var/B in cached_required_reagents) //
-		tempVol = min(reactedVol, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
-	*/
-	message_admins("cached_results: [cached_results], reactedVol: [reactedVol], stepChemAmmount [stepChemAmmount]")
-
-
-
-	for(var/B in cached_required_reagents)
-		message_admins("cached_required_reagents(B): [cached_required_reagents[B]], reactedVol: [reactedVol], base stepChemAmmount [stepChemAmmount]")
-		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
-
-	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
-		//reactedVol = max(reactedVol, 1) //this shouldnt happen ...
-		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
-		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
-
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
@@ -688,11 +571,32 @@
 	pH += (C.HIonRelease * stepChemAmmount)
 	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
+	// End.
 
-	reactedVol = reactedVol + stepChemAmmount
+	selected_reaction.on_reaction(src, multiplier, special_react_result)
+
+	for(var/B in cached_required_reagents) //
+		tempVol = min(totalVol, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
 
-	return (reactedVol)
+	message_admins("cached_results: [cached_results], totalVol: [totalVol], stepChemAmmount [stepChemAmmount]")
+	for(var/B in cached_required_reagents)
+		message_admins("cached_required_reagents(B): [cached_required_reagents[B]], totalVol: [totalVol], base stepChemAmmount [stepChemAmmount]")
+		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+
+	for(var/P in selected_reaction.results)//Not sure how this works, what is selected_reaction.results?
+		totalVol = max(totalVol, 1) //this shouldnt happen ...
+		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
+		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
+
+	ammoReacted = ammoReacted + stepChemAmmount
+
+	if ammoReacted = totalVol
+		reaction_occurred = 1
+		SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", ammoReacted, C.id)//log
+
+	CHECK_TICK
+	return (reaction_occurred, ammoReacted)
 
 /datum/reagents/proc/FermiExplode()
 	return
@@ -837,11 +741,9 @@
 	cached_reagents += R
 	R.holder = src
 	R.volume = amount
-	R.loc = get_turf(my_atom)
 	if(data)
 		R.data = data
 		R.on_new(data)
-
 
 	if(isliving(my_atom))
 		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete

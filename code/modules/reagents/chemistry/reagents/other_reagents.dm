@@ -1863,6 +1863,11 @@
 	description = "The primary precursor for an ancient feline delicacy known as skooma. While it has no notable effects on it's own, mixing it with morphine in a chilled container may yield interesting results."
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
+  
+/datum/reagent/moonsugar/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		to_chat(M, "You find yourself unable to supress the desire to meow!")
+		M.emote("nya")
 
 /datum/reagent/penis_enlargement
 	name = "Penis Enlargement"
@@ -1880,3 +1885,4 @@
 			P.length += added_length
 			P.update()
 	..()
+ 
