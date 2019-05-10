@@ -4,12 +4,12 @@
 
 //Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
 /datum/clockwork_scripture/create_object/stargazer
-	descname = "Generates Power From Starlight - Important!"
+	descname = "Generates Power From Starlight"
 	name = "Stargazer"
 	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
 	invocations = list("Capture their inferior light for us!")
 	channel_time = 50
-	power_cost = 50
+	power_cost = 200
 	object_path = /obj/structure/destructible/clockwork/stargazer
 	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
 	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
