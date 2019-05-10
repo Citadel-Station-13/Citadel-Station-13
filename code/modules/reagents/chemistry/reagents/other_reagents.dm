@@ -106,10 +106,8 @@
 		// Get blood data from the blood reagent.
 		if(istype(R, /datum/reagent/blood))
 			if(R.data["blood_type"])
-				B.bloodmeme = R.data["blood_type"]
-		if(istype(R, /datum/reagent/liquidgibs))
-			if(R.data["blood_type"])
-				B.bloodmeme = R.data["blood_type"]
+				B.blood_list_checks(src, R.data["blood_type"])
+				B.color = B.blood_DNA_to_color(blood_mix_types)
 
 /datum/reagent/blood/synthetics
 	data = list("donor"=null,"viruses"=null,"blood_DNA"=null, "bloodcolor" = BLOOD_COLOR_SYNTHETIC, "blood_type"="SY","resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)

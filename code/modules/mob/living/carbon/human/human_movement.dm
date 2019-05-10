@@ -55,18 +55,17 @@
 
 				//Bloody footprints
 				var/turf/T = get_turf(src)
-				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
+				if(S.blood_smear && S.blood_smear[S.blood_state])
 					var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
-					if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == bloodtype_to_color(S.last_bloodtype)))
+					if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == color))
 						return
-					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
+					S.blood_smear[S.blood_state] = max(0, S.blood_smear[S.blood_state]-BLOOD_LOSS_PER_STEP)
 					var/obj/effect/decal/cleanable/blood/footprints/tracks/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/footprints(T)
 					FP.icon_state = FOOTPRINT_SHOE
 					FP.print_state = FOOTPRINT_SHOE
 					FP.blood_state = S.blood_state
 					FP.entered_dirs |= dir
-					FP.bloodiness = S.bloody_shoes[S.blood_state]
-					FP.bloodmeme = S.bloodmeme
+					FP.bloodiness = S.blood_smear[S.blood_state]
 					FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints
@@ -82,7 +81,7 @@
 					var/turf/T = get_turf(src)
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
-						if (oldFP.color == color)
+						if(oldFP && (oldFP.blood_state == blood_state && oldFP.color == color))
 							return
 						else
 							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks(T)
@@ -107,18 +106,17 @@
 								FP.icon_state = FOOTPRINT_SHOE
 								FP.print_state = FOOTPRINT_SHOE
 							FP.add_blood_DNA(return_blood_DNA())
-							FP.bloodmeme = bloodmeme
 							FP.update_icon()
 							var/newdir = get_dir(T, loc)
 							if(newdir == dir)
-								B.setDir(newdir)
+								FP.setDir(newdir)
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
 									newdir = 1
 								else if(newdir == 12)
 									newdir = 4
-							B.setDir(newdir)
+							FP.setDir(newdir)
 							bloodiness--
 
 			else //we're on the floor, smear some stuff around
@@ -128,26 +126,24 @@
 					var/turf/T = get_turf(src)
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
-						if (oldFP.color == color)
+						if(oldFP && (oldFP.blood_state == blood_state && oldFP.color == color))
 							return
 						else
 							var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/body(T)
 							FP.icon_state = FOOTPRINT_DRAG
 							FP.print_state = FOOTPRINT_DRAG
 							FP.add_blood_DNA(return_blood_DNA())
-							FP.bloodtrack = bloodtrack
-							FP.bloodmeme = bloodmeme
 							FP.update_icon()
 							var/newdir = get_dir(T, loc)
 							if(newdir == dir)
-								B.setDir(newdir)
+								FP.setDir(newdir)
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
 									newdir = 1
 								else if(newdir == 12)
 									newdir = 4
-							B.setDir(newdir)
+							FP.setDir(newdir)
 							bloodiness--
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.

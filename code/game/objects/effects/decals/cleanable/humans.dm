@@ -7,22 +7,20 @@
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/list/bloodmeme = ""
 	var/data = ""
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if(!data)
 		C.data = add_blood_DNA(return_blood_DNA())
-	if (bloodiness)
-		if (C.bloodiness < MAX_SHOE_BLOODINESS)
+	if(bloodiness)
+		if(C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
-	if(!bloodmeme)
-		C.bloodmeme = add_blood_DNA(return_blood_DNA())
 	update_icon()
 	return ..()
 
-//obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
-//	return TRUE
+obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
+	blood_list_checks(src, data["blood_type"])
+	return TRUE
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
 	. = ..()
@@ -33,14 +31,12 @@
 		// Get blood data from the blood reagent.
 		if(istype(R, /datum/reagent/blood))
 			if(R.data["blood_type"])
-				bloodmeme = R.data["blood_type"]
-				color = bloodtype_to_color(R.data["blood_type"])
+				blood_list_checks(src, R.data["blood_type"])
+				blood_color = blood_DNA_to_color(blood_mix_types)
 		else if(istype(R, /datum/reagent/liquidgibs))
 			if(R.data["blood_type"])
-				bloodmeme = R.data["blood_type"]
-				color = bloodtype_to_color(R.data["blood_type"])
-		else
-			color = blood_DNA_to_color()
+				blood_list_checks(src, R.data["blood_type"])
+				blood_color = blood_DNA_to_color(blood_mix_types)
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -50,7 +46,6 @@
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	add_blood_DNA(list("blood_type"= "A+"))
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -65,7 +60,6 @@
 	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/bloodmeme = ""
 	var/data = ""
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
@@ -73,17 +67,17 @@
 		// Get blood data from the blood reagent.
 		if(istype(R, /datum/reagent/blood))
 			if(R.data["blood_type"])
-				color = bloodtype_to_color(R.data["blood_type"]) //Color the blood with our dna stuff
+				blood_list_checks(src, R.data["blood_type"])
+				color = blood_DNA_to_color(blood_mix_types)
 		else if(istype(R, /datum/reagent/liquidgibs))
 			if(R.data["blood_type"])
-				bloodmeme = R.data["blood_type"]
-				color = bloodtype_to_color(R.data["blood_type"])
+				blood_list_checks(src, R.data["blood_type"])
+				color = blood_DNA_to_color(blood_mix_types)
 		else
 			color = blood_DNA_to_color()
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
-	AddComponent(/datum/component/forensics)
 	update_icon()
 
 /obj/effect/decal/cleanable/trail_holder/can_bloodcrawl_in()
@@ -110,15 +104,20 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.bloody_shoes[blood_state])
-			S.last_bloodtype = bloodmeme
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+		if(S && S.blood_smear[blood_state])
+			S.blood_list_checks(S, data["blood_type"])
+			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
-		else if(!bloodiness)
-			H.bloodiness = max(bloodiness / BLOOD_LOSS_IN_SPREAD, 0)
+
+		else if(!H.bloodiness)
+			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+			H.blood_list_checks(H, data["blood_type"])
+			if (!(entered_dirs & H.dir))
+				entered_dirs |= H.dir
+				update_icon()
 
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/Uncrossed(atom/movable/O)
@@ -126,34 +125,42 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.bloody_shoes[blood_state])
-			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+		if(S && S.blood_smear[blood_state])
+			S.blood_list_checks(S, data["blood_type"])
+			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
 
+		else if(!H.bloodiness)
+			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+			H.blood_list_checks(H, data["blood_type"])
+			if (!(exited_dirs & H.dir))
+				exited_dirs |= H.dir
+				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/update_icon()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
+	color = blood_DNA_to_color(blood_mix_types)
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
 	. = ..()
-	if(shoe_types.len)
+	if(shoe_types.len && user.mind.assigned_role == "Detective") //gumshoe does the detective thing, not every fucking assistant
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe

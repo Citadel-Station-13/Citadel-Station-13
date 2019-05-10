@@ -35,8 +35,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
-			splat.color = color
-			splat.bloodmeme = bloodmeme
+			splat.update_icon()
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 

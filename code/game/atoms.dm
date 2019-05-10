@@ -324,26 +324,16 @@
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
-	to_chat(world, "carbon's get_blood_dna_list called by [src]")
 	var/blood_id = get_blood_id()
-	to_chat(world, "We got [blood_id] for a return")
 	for(var/B in GLOB.blood_id_types)
-		to_chat(world, "checking blood_id_types")
 		var/list/bluhduh = typecacheof(B)
-		to_chat(world, "We bluhduh now, let's compare with [blood_id] now")
 		if(!blood_id in bluhduh)
-			to_chat(world, "[src] apparently doesn't have a valid blood type of blood, we're returning null due to [bluhduh]")
 			return
-		to_chat(world, "[src] has an approved type of blood.")
 		var/list/blood_dna = list()
-		to_chat(world, "blood_dna list made.")
 		if(dna)
-			to_chat(world, "[src] has dna, we know the bloodtype to be [dna.blood_type].")
 			blood_dna[dna.unique_enzymes] = dna.blood_type
 		else
-			to_chat(world, "[src] doesn't have dna I guess.")
 			blood_dna["UNKNOWN DNA"] = "X*"
-		to_chat(world, "blood_dna is [blood_dna]")
 		return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
@@ -367,77 +357,6 @@
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)
-
-//to add blood onto something, with blood dna info to include.
-/atom/proc/add_blood(list/blood_dna)
-	return FALSE
-
-/obj/item/add_blood(list/blood_dna)
-	if(!..())
-		return FALSE
-	add_blood_overlay()
-	return TRUE //we applied blood to the item
-
-/obj/item/proc/add_blood_overlay()
-	GET_COMPONENT(D, /datum/component/forensics)
-	if(!D.blood_DNA.len)
-		return
-	if(initial(icon) && initial(icon_state))
-		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
-		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
-		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
-		add_overlay(blood_splatter_icon)
-
-/atom/proc/blood_list_checks(Atom/A, var/blood_type, var/amount) //This is a messy attempt at trying to reduce lists of items and mobs with blood on them
-	if(blood_type in GLOB.regular_bloods)
-		blood_type = "A+" //generic so we don't have 8 different types of human blood
-
-	if(is_cleanable(A)
-		var/obj/effect/decal/cleanable/CL = A
-		if(blood_type in CL.bloodmeme)
-			return
-		else
-			CL.bloodmeme += blood_type
-
-	if(isitem(A))
-		var/obj/item/I = A
-		if(blood_type in CL.bloodmeme)
-			return
-		else
-			CL.bloodmeme += blood_type
-
-	if(iscarbon(A))
-		var/mob/living/carbon/C = A
-		if(blood_type in C.bloodmeme)
-			return
-		else
-			C.bloodmeme += blood_type
-
-
-/atom/proc/blood_DNA_to_color(list/bloods)
-	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/bloop in bloods)
-		if(colors[bloods[bloop]])
-			colors[bloods[bloop]]++
-		else
-			colors[bloods[bloop]] = 1
-
-	var/final_rgb = "#940000"
-
-	if(colors.len)
-		var/sum = 0 //this is all shitcode, but it works; trust me
-		final_rgb = bloodtype_to_color(colors[1])
-		sum = colors[colors[1]]
-		if(colors.len > 1)
-			var/i = 2
-			while(i <= colors.len)
-				var/tmp = colors[colors[i]]
-				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
-				sum += tmp
-				i++
-
-	return final_rgb
 
 /atom/proc/wash_cream()
 	return TRUE

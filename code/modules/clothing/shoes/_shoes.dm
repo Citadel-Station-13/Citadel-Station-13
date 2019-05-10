@@ -10,12 +10,8 @@
 
 	permeability_coefficient = 0.5
 	slowdown = SHOES_SLOWDOWN
-	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/offset = 0
 	var/equipped_before_drop = FALSE
-	var/last_bloodtype = ""//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
-	var/last_blood_DNA = ""//same as last one
 
 	//CITADEL EDIT Enables digitigrade shoe styles
 	var/adjusted = NORMAL_STYLE
@@ -51,15 +47,15 @@
 		IF_HAS_BLOOD_DNA(src)
 			bloody = TRUE
 		else
-			bloody = bloody_shoes[BLOOD_STATE_BLOOD]
+			bloody = blood_smear[BLOOD_STATE_BLOOD]
 
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
 			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = bloodtype_to_color(last_bloodtype))
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color(blood_mix_types))
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = bloodtype_to_color(last_bloodtype))
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_DNA_to_color(blood_mix_types))
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -98,7 +94,7 @@
 /obj/item/clothing/shoes/proc/clean_blood(datum/source, strength)
 	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
-	bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	if(ismob(loc))
 		var/mob/M = loc

@@ -171,12 +171,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_LOSS_IN_SPREAD		20
 
 //Bloody shoe blood states
-#define HUMANIZED_BLOOD				"A+"
-#define LIZARDIZED_BLOOD			"L"
-#define SLIMEIZED_BLOOD				"GEL"
-#define OILIZED_BLOOD				"HR"
-#define XENOIZED_BLOOD				"X*"
-#define SYNTHETICIZED_BLOOD			"SY"
+#define BLOOD_STATE_BLOOD			"blood"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
 #define BLOOD_AMOUNT_PER_DECAL		20

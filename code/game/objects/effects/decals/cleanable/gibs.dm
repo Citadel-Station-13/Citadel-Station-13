@@ -6,11 +6,12 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
+	var/slimy_gibs = FALSE
 
 /obj/effect/decal/cleanable/blood/gibs/proc/guts()
 	if(gib_overlay)
 		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay")
-		if(bloodmeme != "GEL")
+		if(!slimy_gibs)
 			gibz.appearance_flags = RESET_COLOR
 		add_overlay(gibz)
 
@@ -19,7 +20,10 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
+		if(L.mind.assigned_role == "Detective") //Gumshoe perks yo
+			playsound(loc, 'sound/effects/gib_step.ogg', 10, 1)
+		else
+			playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
@@ -33,8 +37,7 @@
 			if(infective)
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-			splat.color = color
-			splat.bloodmeme = bloodmeme
+			splat.update_icon()
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -129,26 +132,32 @@
 /obj/effect/decal/cleanable/blood/gibs/slime/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/slime/down
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/slime/body
 	random_icon_states = list("gibhead", "gibtorso")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/slime/torso
 	random_icon_states = list("gibtorso")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/slime/limb
 	random_icon_states = list("gibleg", "gibarm")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/slime/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/synth
 	desc = "They look sludgy and disgusting."
