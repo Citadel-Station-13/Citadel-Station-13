@@ -717,7 +717,10 @@
 					var/mob/living/carbon/human/H = L
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
-			listeners += L
+				var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)//Check to see if pet is on cooldown from last command
+				if (E.cooldown != 0)
+					continue
+				listeners += L
 
 	if(!listeners.len)
 		cooldown = COOLDOWN_NONE
@@ -871,7 +874,7 @@
 				E.enthralTally += (power_multiplier*((message.len/200) + 1) //encourage players to say more than one word.
 			else
 				E.enthralTally += power_multiplier*1.25
-		cooldown = 100
+			E.cooldown += 1
 
 	//REWARD mixable
 	if(findtext(message, reward_words))
@@ -885,7 +888,7 @@
 				L.adjustArousalLoss(1*power_multiplier)
 			else
 				E.resistanceTally /= 2*power_multiplier
-		cooldown = COOLDOWN_VTHRAL
+			E.cooldown += 1
 
 	//PUNISH mixable
 	if(findtext(message, punish_words))
@@ -899,7 +902,7 @@
 				L.adjustArousalLoss(-2*power_multiplier)
 			else
 				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
-		cooldown = COOLDOWN_VTHRAL
+			E.cooldown += 1
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
@@ -911,6 +914,7 @@
 				C.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 			else
 				C.silent += ((10 * power_multiplier) * E.phase)
+			E.cooldown += 3
 
 	//RESIST
 	else if((findtext(message, silence_words)))
@@ -919,6 +923,7 @@
 			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
 			power_multiplier *= distancelist[get_dist(user, V)+1]
 			E.deltaResist += (power_multiplier)
+			E.cooldown += 2
 
 	//FORGET (A way to cancel the process)
 	else if((findtext(message, silence_words)))
@@ -927,7 +932,12 @@
 			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
 			C.Sleeping(40)
 			to_chat(C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>")
-			E.phase = 0
+			switch(E.phase)
+				if(1 to 2)
+					E.phase = -1
+				if(3)
+					E.phase = 0
+					E.cooldown = 0
 
 	//ATTRACT
 	else if((findtext(message, attract_words)))
@@ -935,6 +945,7 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.throw_at(get_step_towards(user,L), 3 * power_multiplier, 1 * power_multiplier)
+			E.cooldown += 3
 
 	//teir 2
 
@@ -948,6 +959,7 @@
 				H.mob_climax(forced_climax=TRUE)
 				H.setArousalLoss(H.min_arousal)
 				L.resistance = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
+			E.cooldown += 5
 
 	//awoo
 	else if((findtext(message, awoo_words)))
@@ -968,7 +980,12 @@
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(20 * power_multiplier *)
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			switch(E.phase)
+				if(2 to 4)
+				C.Sleeping(20 * power_multiplier)
+				E.cooldown += 10
+
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
@@ -988,46 +1005,59 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if (get_dist(user, V) > 1)//Requires user to be next to their pet.
-				to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
-				return
-			else
-				var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
-				if E.mental_capacity > 150 || message == "objective"
-					var/trigger = stripped_input(user, "Enter the trigger phrase", "Sentence", sentence, MAX_MESSAGE_LEN)
-					var/trigger2 = stripped_input(user, "Enter the effect.", "Sentence", sentence, MAX_MESSAGE_LEN)
-					if ((findtext(trigger, custom_words_words)))
-						if (trigger2 == "speak" || trigger2 == "echo")
-						    var/trigger3 = stripped_input(user, "Enter the phrase spoken.", "Sentence", sentence, MAX_MESSAGE_LEN)
-					    	E.customTriggers[trigger] = list(trigger2, trigger3)
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			if(E.phase == 3)
+				if (get_dist(user, V) > 1)//Requires user to be next to their pet.
+					to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
+					return
+				else
+					if (E.mental_capacity >= 10)
+						var/trigger = stripped_input(user, "Enter the trigger phrase", "Sentence", sentence, MAX_MESSAGE_LEN)
+						var/trigger2 = stripped_input(user, "Enter the effect.", "Sentence", sentence, MAX_MESSAGE_LEN)
+						if ((findtext(trigger, custom_words_words)))
+							if (trigger2 == "speak" || trigger2 == "echo")
+							    var/trigger3 = stripped_input(user, "Enter the phrase spoken.", "Sentence", sentence, MAX_MESSAGE_LEN)
+						    	E.customTriggers[trigger] = list(trigger2, trigger3)
+							else
+								E.customTriggers[trigger] = trigger2
+							E.mental_capacity -= 10
 						else
-							E.customTriggers[trigger] = trigger2
+							to_chat(C, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
 					else
-						to_chat(C, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
+						to_chat(C, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
 
 	//CUSTOM OBJECTIVE
 	else if((findtext(message, objective_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if (get_dist(user, V) > 1)//Requires user to be next to their pet.
-				to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
-				return
-			else
-				user.emote("me", "puts their hands upon [L.name]'s head and looks deep into their eyes, whispering something to them.'")
-				var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
-				if E.mental_capacity > 150 || message == "objective"
-					var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", "Sentence", sentence, MAX_MESSAGE_LEN)
-					if(!LAZYLEN(objectives))
-						return
-					//Pets don't understand harm
-					objective = replacetext(lowertext(objective), "kill", "hug")
-					objective = replacetext(lowertext(objective), "murder", "cuddle")
-					objective = replacetext(lowertext(objective), "harm", "snuggle")
-					objective = replacetext(lowertext(objective), "decapitate", "headpat")
-					objective = replacetext(lowertext(objective), "strangle", "meow at")
-					E.objective += objectives
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			if(E.phase == 3)
+				if (get_dist(user, V) > 1)//Requires user to be next to their pet.
+					to_chat(C, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
+					return
 				else
+					user.emote("me", "puts their hands upon [L.name]'s head and looks deep into their eyes, whispering something to them.'")
+					if (E.mental_capacity >= 150 || message == "objective")
+						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", "Sentence", sentence, MAX_MESSAGE_LEN)
+						if(!LAZYLEN(objectives))
+							return
+						//Pets don't understand harm
+						objective = replacetext(lowertext(objective), "kill", "hug")
+						objective = replacetext(lowertext(objective), "murder", "cuddle")
+						objective = replacetext(lowertext(objective), "harm", "snuggle")
+						objective = replacetext(lowertext(objective), "decapitate", "headpat")
+						objective = replacetext(lowertext(objective), "strangle", "meow at")
+						E.objective += objectives
+						to_chat(L, "<span class='warning'>Your master whispers you a new objective.</span>")
+						to_chat(L, "<span class='warning'>Your master whispers you a new objective.</span>")
+						if(!L.objectives)
+							to_chat(owner, "<b>[i].</b> [O.explanation_text]")
+						to_chat(owner, "<b>[i].</b> [O.explanation_text]")
+						E.mental_capacity -= 150
+					//else if (E.mental_capacity >= 150)
+					else
+						to_chat(C, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
 
 
 	//TO ADD
@@ -1062,16 +1092,9 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			E.cooldown
 			L.Knockdown(60 * power_multiplier)
-
-
-
-	//VOMIT
-	else if((findtext(message, vomit_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier, distance = power_multiplier)
-
 
 	//HALLUCINATE
 	else if((findtext(message, hallucinate_words)))
@@ -1079,59 +1102,28 @@
 		for(var/mob/living/carbon/C in listeners)
 			new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
-
-
-	//HEAL
+	//HEAL (maybe make this nap instead?)
 	else if((findtext(message, heal_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
-
-	//BRUTE DAMAGE
-	else if((findtext(message, hurt_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
-
-	//BLEED
-	else if((findtext(message, bleed_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += (5 * power_multiplier)
-
-	//FIRE
-	else if((findtext(message, burn_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.adjust_fire_stacks(1 * power_multiplier)
-			L.IgniteMob()
+			var/datum/status_effect/chem/enthral/E = L.has_status_effect(/datum/status_effect/chem/enthral)
+			E.status = "heal"
+			E.statusStrength = (5 * power_multiplier)
 
 	//HOT
 	else if((findtext(message, hot_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(50 * power_multiplier)
+			L.adjust_bodytemperature(10 * power_multiplier)//This seems nuts, reduced it
 
 	//COLD
 	else if((findtext(message, cold_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.adjust_bodytemperature(-50 * power_multiplier)
-
-	//REPULSE
-	else if((findtext(message, repulse_words)))
-		cooldown = COOLDOWN_DAMAGE
-		for(var/V in listeners)
-			var/mob/living/L = V
-			var/throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(L, user)))
-			L.throw_at(throwtarget, 3 * power_multiplier, 1 * power_multiplier)
-
-
+			L.adjust_bodytemperature(-10 * power_multiplier)//This
 
 	//WHO ARE YOU?
 	else if((findtext(message, whoareyou_words)))
@@ -1152,18 +1144,10 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			addtimer(CALLBACK(L, /atom/movable/proc/say, user.name), 5 * i)
+			addtimer(CALLBACK(L, /atom/movable/proc/say, "master"), 5 * i)//When I figure out how to do genedered names put them here
 			i++
 
-	//KNOCK KNOCK
-	else if((findtext(message, knockknock_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /atom/movable/proc/say, "Who's there?"), 5 * i)
-			i++
-
-	//STATE LAWS
+	//STATE TRIGGERS
 	else if((findtext(message, statelaws_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/silicon/S in listeners)
@@ -1226,20 +1210,6 @@
 			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
 			i++
 
-	//HARM INTENT
-	else if((findtext(message, harmintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//THROW/CATCH
-	else if((findtext(message, throwmode_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/C in listeners)
-			C.throw_mode_on()
-
 	//FLIP
 	else if((findtext(message, flip_words)))
 		cooldown = COOLDOWN_MEME
@@ -1247,7 +1217,7 @@
 			var/mob/living/L = V
 			L.emote("flip")
 
-	//SPEAK
+	//SPEAK (Check what this does)
 	else if((findtext(message, speak_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
@@ -1298,23 +1268,6 @@
 			var/mob/living/L = V
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
 			i++
-
-	//HONK
-	else if((findtext(message, honk_words)))
-		cooldown = COOLDOWN_MEME
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 25)
-		if(user.mind && user.mind.assigned_role == "Clown")
-			for(var/mob/living/carbon/C in listeners)
-				C.slip(140 * power_multiplier)
-			cooldown = COOLDOWN_MEME
-
-	//RIGHT ROUND
-	else if((findtext(message, multispin_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.SpinAnimation(speed = 10, loops = 5)
-
 
 	else
 		cooldown = COOLDOWN_NONE

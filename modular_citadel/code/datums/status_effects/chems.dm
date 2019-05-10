@@ -228,6 +228,14 @@
 				resistanceTally = 0
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 				return
+		else if (3)
+
+		else if (4)
+			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !user.has_reagent("MKUltra"))
+				phase = 2
+				mental_capacity = 500
+				mental_capacity -= resistanceTally
+				resistanceTally = 0
 
 	//distance calculations
 	switch(get_dist(enthrallID, owner))
@@ -282,7 +290,31 @@
 
 		withdrawalTick++
 
+	//Status subproc - statuses given to you from your Master
+	if (!status == null)
+
+		switch(status)
+			if("Antiresist")
+				if (statusStrength == 0)
+					status = null
+				else
+					statusStrength -= 1
+
+			if("heal")
+				if (statusStrength == 0)
+					status = null
+				else
+					statusStrength -= 1
+					owner.heal_overall_damage(1, 1, 0, FALSE, FALSE)
+
+
+	//final tidying
 	resistance += deltaResist
+	deltaResist = 0
+	if (cooldown > 0)
+		cooldown -= 1
+	else
+		to_chat(enthrallID, "<span class='notice'><i>Your pet [owner.name] appears to have finished internalising your last command.</i></span>")
 
 //Check for proximity of master DONE
 //Place triggerreacts here - create a dictionary of triggerword and effect.
@@ -360,9 +392,17 @@
 /datum/status_effect/chem/enthrall/proc/owner_resist(mob/living/carbon/M)
 	if (status == "Sleeper" || phase == 0)
 		return
-	else if (status == "Antiresist")//If ordered to not resist
+	else if (phase == 4)
+		to_chat(owner, "<span class='notice'><i>Your mind is too far gone to even entertain the thought of resisting.</i></span>")
+		return
+	else if (phase == 3 || withdrawal == FALSE)
+		to_chat(owner, "<span class='notice'><i>The presence of your Master fully captures the horizon of your mind, removing any thoughts of resistance.</i></span>")
+		return
+	else if (status == "Antiresist")//If ordered to not resist; resisting while ordered to not makes it last longer, and increases the rate in which you are enthralled.
 		if (statusStrength > 0)
-			statusStrength -= 2
+			to_chat(owner, "<span class='notice'><i>The order from your Master to give in is conflicting with your attempt to resist, drawing you deeper into trance.</i></span>")
+			statusStrength += 1
+			enthrallTally += 1
 			return
 		else
 			status = null
