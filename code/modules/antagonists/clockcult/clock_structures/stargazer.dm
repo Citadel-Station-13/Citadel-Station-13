@@ -1,5 +1,5 @@
 #define STARGAZER_RANGE 3 //How many tiles the stargazer can see out to
-#define STARGAZER_POWER 15 //How many watts will be produced per second when the stargazer sees starlight
+#define STARGAZER_POWER 7 //How many watts will be produced per second when the stargazer sees starlight
 
 //Stargazer: A very fragile but cheap generator that creates power from starlight.
 /obj/structure/destructible/clockwork/stargazer
