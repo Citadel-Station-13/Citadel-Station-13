@@ -36,16 +36,16 @@
 /obj/item/implant/integrated_circuit/screwdriver_act(mob/living/user, obj/item/I)
 	IC.screwdriver_act(user, I)
 
-
 /obj/item/implant/integrated_circuit/implant(mob/living/target, mob/user, silent = FALSE)
 	. = ..()
 	IC.forceMove(target)
-
 
 /obj/item/implant/integrated_circuit/removed(mob/living/source, silent = FALSE, special = 0)
 	. = ..()
 	IC.forceMove(src)
 
-
 /obj/item/implant/integrated_circuit/attack_self(mob/user)
 	IC.attack_self(user)
+
+/obj/item/implant/integrated_circuit/afterattack(atom/target, mob/user, proximity)
+	IC.afterattack(target, user, proximity)
