@@ -35,6 +35,9 @@
 	var/FermiChem = FALSE //If the chemical uses the Fermichem reaction mechanics
 	var/FermiExplode = FALSE //If the chemical explodes in a special way as a result of
 	var/ImpureChem = "toxin" //What chemical is produced with an inpure reaction
+	var/InverseChemVal = 0.3
+	var/InverseChem = "toxin"
+
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume, specialreact)
 	return

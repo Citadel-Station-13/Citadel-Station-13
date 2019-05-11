@@ -196,3 +196,25 @@
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
+
+//FermiChem
+/obj/item/organ/tongue/OwO
+	name = "fluffy tongue"
+	desc = "OwO what's this?"
+	icon_state = "tonguenormal"
+	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
+
+/obj/item/organ/tongue/OwO/TongueSpeech(var/message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "ne", "nye")
+		message = replacetext(message, "nu", "nyu")
+		message = replacetext(message, "na", "nya")
+		message = replacetext(message, "no", "nyo")
+		message = replacetext(message, "ove", "uv")
+		//message = replacetext(message, "th", "ff") //too incoherent in practice
+		message = replacetext(message, "l", "w")
+		message = replacetext(message, "r", "w")
+	if(prob(20))
+		message +=  pick(" OwO", " uwu")
+	message = lowertext(message)
+	return message

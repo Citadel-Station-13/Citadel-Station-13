@@ -267,7 +267,13 @@
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
 
+/mob/living/carbon/human/proc/Force_update_genitals()
+	dna.species.handle_genitals(src)
+	//dna.species.handle_breasts(src)
+
+
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
+	message_admins("attempting to update sprite")
 	if(!H)//no args
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done
@@ -276,15 +282,12 @@
 		return
 	if(H.has_trait(TRAIT_HUSK))
 		return
-
 	var/list/genitals_to_add = list()
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
 	var/size = null
-
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
-
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
@@ -293,7 +296,6 @@
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 				genitals_to_add += H.getorganslot(G.slot)
 	//Now we added all genitals that aren't internal and should be rendered
-
 	//start applying overlays
 	for(var/layer in relevant_layers)
 		var/layertext = genitals_layertext(layer)
@@ -348,3 +350,68 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
+/*
+/datum/species/proc/handle_breasts(mob/living/carbon/human/H)
+	//check for breasts first!
+
+	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
+	if(!B)
+		return
+	message_admins("attempting to update sprite in a hacky way")
+	///obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) Where did this come from?
+	//Variables:
+	var/size = B.size
+	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[B.shape]
+	var/list/standing = list()
+
+	if(!S || S.icon_state == "none")
+		return
+	for(var/layer in relevant_layers)
+		var/layertext = genitals_layertext(layer)
+		S = GLOB.breasts_shapes_list[B.shape]
+
+		var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
+
+		//If breasts are hueg (larger than 5 only have one sprite atm)
+		if (size > 5)
+			genital_overlay.icon_state = "[B.slot]_[B.shape]_[size]_0_[layertext]"//I haven't done around sizes above 5, I dunno how..!
+		else
+			genital_overlay.icon_state = "[B.slot]_[S.icon_state]_[size]_[B.aroused_state]_[layertext]"
+
+		//center icon
+		if(S.center)
+			genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
+
+		//Check skin colour
+		if(use_skintones && H.dna.features["genitals_use_skintone"])
+			genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+		else
+			switch(S.color_src)
+				if("vag_color")
+					genital_overlay.color = "#[H.dna.features["vag_color"]]"
+				if(MUTCOLORS)
+					if(fixed_mut_color)
+						genital_overlay.color = "#[fixed_mut_color]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor"]]"
+				if(MUTCOLORS2)
+					if(fixed_mut_color2)
+						genital_overlay.color = "#[fixed_mut_color2]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor2"]]"
+				if(MUTCOLORS3)
+					if(fixed_mut_color3)
+						genital_overlay.color = "#[fixed_mut_color3]"
+					else
+						genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+
+						standing += genital_overlay
+		//Standing..?
+		if(LAZYLEN(standing))
+			H.overlays_standing[layer] = standing.Copy()
+			standing = list()
+
+	for(var/L in relevant_layers)
+		H.apply_overlay(L)
+*/

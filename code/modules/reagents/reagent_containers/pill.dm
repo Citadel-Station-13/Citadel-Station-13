@@ -236,4 +236,8 @@
 
 /obj/item/reagent_containers/pill/penis_enlargement
 	name = "penis enlargement pill"
-	list_reagents = list("penis_enlargement" = 30)
+	list_reagents = list("PEenlager" = 10)
+
+/obj/item/reagent_containers/pill/breast_enlargement
+	name = "breast enlargement pill"
+	list_reagents = list("BEenlager" = 10)

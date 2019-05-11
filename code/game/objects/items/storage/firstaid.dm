@@ -315,8 +315,16 @@
 
 /obj/item/storage/pill_bottle/penis_enlargement
 	name = "penis enlargement pills"
-	desc = "You want penis enlargement pills?"
+	desc = "Made by Fermichem - They have a little picture of Doctor Ronald Hyatt with a giant dong on them. The warming states not to take more than 10u at a time."
 
 /obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
+
+/obj/item/storage/pill_bottle/breast_enlargement
+	name = "breast enlargement pills"
+	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+
+/obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/breast_enlargement(src)
