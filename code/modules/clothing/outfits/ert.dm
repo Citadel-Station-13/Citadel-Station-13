@@ -159,7 +159,6 @@
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/construction/rcd/combat=1)
 
-
 /datum/outfit/centcom_official
 	name = "CentCom Official"
 
@@ -261,3 +260,54 @@
 		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
+
+/datum/outfit/ert/mime
+	name = "Mimesquad"
+
+	id = /obj/item/card/id/ert
+	uniform = /obj/item/clothing/under/rank/mime
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/mime
+	mask = /obj/item/clothing/mask/gas/mime
+	ears = /obj/item/clothing/ears/earmuffs
+	glasses = /obj/item/clothing/glasses/sunglasses
+
+
+	back = /obj/item/storage/backpack/mime
+	belt = /obj/item/storage/belt/military/mime/full
+
+	r_pocket = /obj/item/pda/mime
+	l_pocket = /obj/item/clothing/mask/muzzle
+
+	backpack_contents = list(
+		/obj/item/storage/box/engineer=1,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1,
+		/obj/item/reagent_containers/food/snacks/grown/banana/mime=1,
+		/obj/item/toy/crayon/spraycan/mimecan=1,
+		/obj/item/gun/syringe/dna=1
+	)
+
+/datum/outfit/ert/mime/leader
+	name = "Mimesquad Leader"
+	suit_store = /obj/item/gun/ballistic/automatic/sniper_rifle/mime
+
+
+/datum/outfit/ert/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/implant/mindshield/M = new/obj/item/implant/mindshield(H)
+	M.implant(H, null, 1)
+
+	var/obj/item/implant/stealth/S = new/obj/item/implant/stealth(H)
+	S.implant(H, null, 1)
+
+	var/obj/item/pda/heads/pda = H.r_store
+	pda.owner = H.real_name
+	pda.ownjob = "ERT Mime"
+	pda.update_label()
+
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "ERT Mime"
+	W.registered_name = H.real_name
+	W.update_label()
+

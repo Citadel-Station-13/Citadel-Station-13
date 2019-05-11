@@ -225,9 +225,23 @@ Contains:
 	desc = "Standard issue medical suit for the ERT."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
+	helmettype = /obj/item/clothing/suit/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+
+	//ERT Mime
+/obj/item/clothing/head/helmet/space/hardsuit/ert/mime
+	desc = "Standard issue mime helmet for the ERT."
+	icon_state = "hardsuit0-ert_mime"
+	item_state = "hardsuit0-ert_mime"
+	item_color = "ert_mime"
+
+/obj/item/clothing/suit/space/hardsuit/ert/mime
+	desc = "Standard issue mime suit for the ERT."
+	icon_state = "ert_mime"
+	item_state = "ert_mime"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/mime
+	tauric = FALSE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"

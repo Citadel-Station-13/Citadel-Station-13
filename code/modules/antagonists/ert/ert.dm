@@ -94,6 +94,33 @@
 	outfit = /datum/outfit/death_commando
 	role = "Officer"
 
+/datum/antagonist/ert/mime
+	name = "Mimesquad"
+	role = "Mimesquad"
+	outfit = /datum/outfit/ert/mime
+
+
+/datum/antagonist/ert/mime/leader
+	name = "Mimesquad"
+	role = "Mimesquad Leader"
+	outfit = /datum/outfit/ert/mime/leader
+
+/datum/antagonist/ert/mime/on_gain()
+	. = ..()
+	owner.miming = TRUE
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/finger_guns(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mime(null))
+	var/datum/martial_art/mime/style = new
+	style.teach(owner)
+
+/datum/antagonist/ert/mime/New()
+	. = ..()
+	name_source = GLOB.mime_names
+
+/datum/antagonist/ert/mime/update_name()
+	owner.current.fully_replace_character_name(owner.current.real_name,"[pick(name_source)]")
+
 /datum/antagonist/ert/create_team(datum/team/ert/new_team)
 	if(istype(new_team))
 		ert_team = new_team

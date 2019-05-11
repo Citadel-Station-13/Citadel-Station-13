@@ -150,6 +150,17 @@
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
 	selfdestruct = TRUE
 
+/obj/item/firing_pin/mime
+	name = "silent firing pin"
+	desc = "An advanced firing pin that only works if the user is deadly silent."
+	color = "#FFFFFF"
+	fail_message = "<span class='warning'>...</span>"
+
+/obj/item/firing_pin/mime/pin_auth(mob/living/user)
+	if(user.mind && user.mind.miming)
+		return TRUE
+
+	return FALSE
 
 // DNA-keyed pin.
 // When you want to keep your toys for yourself.

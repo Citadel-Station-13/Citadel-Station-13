@@ -34,3 +34,31 @@
 
 	else
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))
+
+/obj/item/grenade/flashbang/silent
+	name = "flash"
+	desc = "A flashbang, but without the bang!"
+	icon_state = "flashbang"
+	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	flashbang_range = 7 //how many tiles away the mob will be stunned.
+
+/obj/item/grenade/flashbang/silent/prime()
+	update_mob()
+	var/flashbang_turf = get_turf(src)
+	if(!flashbang_turf)
+		return
+	do_sparks(rand(5, 9), FALSE, src)
+	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_WHITE, (flashbang_range + 2), 4, 2)
+	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
+		bang(get_turf(M), M)
+	qdel(src)
+
+/obj/item/grenade/flashbang/silent/bang(turf/T , mob/living/M)
+	if(M.stat == DEAD)	//They're dead!
+		return
+	var/distance = max(0,get_dist(get_turf(src),T))
+
+	if(M.flash_act(affect_silicon = 1))
+		M.Knockdown(max(200/max(1,distance), 60))

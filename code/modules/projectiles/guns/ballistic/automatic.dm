@@ -374,6 +374,14 @@
 	else
 		icon_state = "sniper"
 
+/obj/item/gun/ballistic/automatic/sniper_rifle/mime
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/soporific
+	pin = /obj/item/firing_pin/mime
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/mime/Initialize(mapload)
+	. = ..()
+	var/obj/item/suppressor/S = new(src)
+	install_suppressor(S)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

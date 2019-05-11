@@ -21,6 +21,14 @@
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
 
+
+/obj/item/gun/ballistic/automatic/pistol/suppressed/soporific
+	mag_type = /obj/item/ammo_box/magazine/m10mm/soporific
+
+/obj/item/gun/ballistic/automatic/pistol/suppressed/soporific/mime
+	pin = /obj/item/firing_pin/mime
+
+
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."

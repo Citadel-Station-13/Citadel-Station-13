@@ -53,3 +53,11 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+
+/datum/ert/mime
+	roles = list(/datum/antagonist/ert/mime)
+	leader_role = /datum/antagonist/ert/mime/leader
+	rename_team = "Mimesquad"
+	enforce_human = TRUE
+	mission = "Eliminate as much noise as you possibly can, as silently as possible."
+	polldesc = "a Nanotrasen mime response team"

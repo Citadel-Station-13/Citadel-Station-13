@@ -597,6 +597,31 @@
 	beakers += B1
 	beakers += B2
 
+
+/obj/item/grenade/chem_grenade/mute
+	name = "mute toxin smoke grenade"
+	desc = "Shuts people up when inhaled."
+	stage = READY
+
+/obj/item/grenade/chem_grenade/mute/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("mutetoxin", 25)
+	B1.reagents.add_reagent("potassium", 25)
+	B2.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("sugar", 25)
+
+	beakers += B1
+	beakers += B2
+
+
+
+
+
+
+
 #undef READY
 #undef WIRED
 #undef EMPTY

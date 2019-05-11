@@ -424,6 +424,36 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 
+
+/obj/item/storage/belt/military/mime
+	name = "tactical mime suspenders"
+	desc = "Tactical and fancy red suspenders designed to hold lots of space and be as quiet as possible when retrieve items."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders"
+	item_state = "suspenders"
+
+/obj/item/storage/belt/military/mime/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(
+		/obj/item/grenade,
+		/obj/item/ammo_box/magazine/m10mm,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/dnainjector/
+	))
+	STR.max_items = 8
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/military/mime/full/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/suppressed/soporific/mime(src)
+	new /obj/item/ammo_box/magazine/m10mm/soporific(src)
+	new /obj/item/grenade/flashbang/silent(src)
+	new /obj/item/grenade/chem_grenade/mute(src)
+	new /obj/item/dnainjector/mutemut(src)
+	new /obj/item/dnainjector/mutemut(src)
+	new /obj/item/dnainjector/mutemut(src)
+	new /obj/item/dnainjector/mutemut(src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
