@@ -3,23 +3,25 @@
 	id = "reagent_explosion"
 	var/strengthdiv = 10
 	var/modifier = 0
+	var/noexplosion = FALSE
 
-/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
-	var/turf/T = get_turf(holder.my_atom)
-	var/inside_msg
-	if(ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
-		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
-	var/lastkey = holder.my_atom.fingerprintslast
-	var/touch_msg = "N/A"
-	if(lastkey)
-		var/mob/toucher = get_mob_by_key(lastkey)
-		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
-	var/datum/effect_system/reagents_explosion/e = new()
-	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
-	e.start()
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume, turf/override)
+	if(!noexplosion)
+		var/turf/T = override || get_turf(holder.my_atom)
+		var/inside_msg
+		if(ismob(holder.my_atom))
+			var/mob/M = holder.my_atom
+			inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+		var/lastkey = holder.my_atom.fingerprintslast
+		var/touch_msg = "N/A"
+		if(lastkey)
+			var/mob/toucher = get_mob_by_key(lastkey)
+			touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+		log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
+		e.start()
 	holder.clear_reagents()
 
 
@@ -56,6 +58,7 @@
 	required_reagents = list("holywater" = 1, "potassium" = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
 	if(created_volume >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
@@ -76,7 +79,7 @@
 				C.Knockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
-	..()
+	..(holder, created_volume, T)
 
 
 /datum/chemical_reaction/blackpowder
@@ -95,8 +98,9 @@
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
 	sleep(rand(50,100))
-	..()
+	..(holder, created_volume, T)
 
 /datum/chemical_reaction/thermite
 	name = "Thermite"
@@ -423,6 +427,7 @@
 	required_reagents = list("teslium" = 1, "water" = 1)
 	strengthdiv = 100
 	modifier = -100
+	noexplosion = TRUE
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
 	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN

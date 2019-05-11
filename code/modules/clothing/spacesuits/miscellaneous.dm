@@ -64,6 +64,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
@@ -114,6 +115,7 @@ Contains:
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 	dog_fashion = /datum/dog_fashion/head/santa
 
@@ -137,12 +139,14 @@ Contains:
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	name = "royal bandana"
 	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/pirate
 	name = "royal waistcoat "
@@ -250,6 +254,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
@@ -273,6 +278,7 @@ Contains:
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
 	item_flags = NODROP
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/suit/space/hardsuit/carp
@@ -295,6 +301,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -304,6 +311,7 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()

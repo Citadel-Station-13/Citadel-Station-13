@@ -112,12 +112,17 @@
 /obj/item/storage/firstaid/radbgone/PopulateContents()
 	if(empty)
 		return
+	if(prob(50))
+		new /obj/item/reagent_containers/pill/mutarad(src)
+	if(prob(80))
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
 	new /obj/item/reagent_containers/syringe/charcoal(src)
 	new /obj/item/storage/pill_bottle/charcoal(src)
 	new /obj/item/reagent_containers/pill/mutadone(src)
 	new /obj/item/reagent_containers/pill/antirad(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka(src)
 	new /obj/item/healthanalyzer(src)
+
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"

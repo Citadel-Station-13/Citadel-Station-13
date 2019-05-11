@@ -6,6 +6,9 @@
 	loudness = 1
 	dna_cost = 2
 	req_human = 1
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_freedom"
+	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use

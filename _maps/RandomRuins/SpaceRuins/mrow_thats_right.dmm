@@ -350,6 +350,7 @@
 	dir = 4
 	},
 /obj/structure/closet/cabinet,
+/obj/item/pda/neko,
 /obj/item/gps{
 	gpstag = "kitty"
 	},

@@ -3,13 +3,21 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
+	mutantrace_variation = MUTANTRACE_VARIATION
+
+/obj/item/clothing/mask/gas/glass
+	name = "glass gas mask"
+	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
+	icon_state = "gas_clear"
+	flags_inv = HIDEEYES
+
 
 // **** Welding gas mask ****
 

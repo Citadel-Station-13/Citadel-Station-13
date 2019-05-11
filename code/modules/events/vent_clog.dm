@@ -13,16 +13,49 @@
 	var/list/vents  = list()
 	var/randomProbability = 1
 	var/reagentsAmount = 100
-	var/list/saferChems = list("water","carbon","flour","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube","pink_glitter","cryptobiolin",
-						 "plantbgone","blood","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid","mindbreaker","rotatium","bluespace",
-						 "pax","laughter","concentrated_barbers_aid","colorful_reagent","dizzysolution","tiresolution","sodiumchloride","beer","hair_dye","sugar","white_glitter","growthserum")
+	var/list/saferChems = list(
+		"water",
+		"carbon",
+		"flour",
+		"cleaner",
+		"nutriment",
+		"condensedcapsaicin",
+		"mushroomhallucinogen",
+		"lube",
+		"pink_glitter",
+		"cryptobiolin",
+		"plantbgone",
+		"blood",
+		"charcoal",
+		"space_drugs",
+		"morphine",
+		"holywater",
+		"ethanol",
+		"hot_coco",
+		"sacid",
+		"mindbreaker",
+		"rotatium",
+		"bluespace",
+		"pax",
+		"laughter",
+		"concentrated_barbers_aid",
+		"colorful_reagent",
+		"dizzysolution",
+		"tiresolution",
+		"sodiumchloride",
+		"beer",
+		"hair_dye",
+		"sugar",
+		"white_glitter",
+		"growthserum"
+	)
 	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
 
 /datum/round_event/vent_clog/setup()
-	endWhen = rand(25, 100)
+	endWhen = rand(120, 180)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/T = get_turf(temp_vent)
 		if(T && is_station_level(T.z) && !temp_vent.welded)
@@ -30,25 +63,34 @@
 	if(!vents.len)
 		return kill()
 
-/datum/round_event/vent_clog/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			R.my_atom = vent
-			if (prob(randomProbability))
-				R.add_reagent(get_random_reagent_id(), reagentsAmount)
-			else
-				R.add_reagent(pick(saferChems), reagentsAmount)
+/datum/round_event/vent_clog/tick()
 
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
+	if(!vents.len)
+		return kill()
 
-			var/cockroaches = prob(33) ? 3 : 0
-			while(cockroaches)
-				new /mob/living/simple_animal/cockroach(get_turf(vent))
-				cockroaches--
-		CHECK_TICK
+	CHECK_TICK
+
+	var/obj/machinery/atmospherics/components/unary/vent = pick(vents)
+	vents -= vent
+
+	if(!vent || vent.welded)
+		return
+
+	var/turf/T = get_turf(vent)
+	if(!T)
+		return
+
+	var/datum/reagents/R = new/datum/reagents(1000)
+	R.my_atom = vent
+	if (prob(randomProbability))
+		R.add_reagent(get_random_reagent_id(), reagentsAmount)
+	else
+		R.add_reagent(pick(saferChems), reagentsAmount)
+
+	var/datum/effect_system/smoke_spread/chem/C = new
+	C.set_up(R,16,T,TRUE)
+	C.start()
+	playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
 
 /datum/round_event_control/vent_clog/threatening
 	name = "Clogged Vents: Threatening"
@@ -75,7 +117,7 @@
 	reagentsAmount = 250
 
 /datum/round_event_control/vent_clog/beer
-	name = "Foamy beer stationwide"
+	name = "Clogged Vents: Beer"
 	typepath = /datum/round_event/vent_clog/beer
 	max_occurrences = 0
 
@@ -83,12 +125,12 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/plasma_decon
-	name = "Plasma decontamination"
+	name = "Anti-Plasma Flood"
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
 
 /datum/round_event_control/vent_clog/female
-	name = "FemCum stationwide"
+	name = "Clogged Vents; Girlcum"
 	typepath = /datum/round_event/vent_clog/female
 	max_occurrences = 0
 
@@ -96,7 +138,7 @@
 	reagentsAmount = 100
 
 /datum/round_event_control/vent_clog/male
-	name = "Semen stationwide"
+	name = "Clogged Vents: Semen"
 	typepath = /datum/round_event/vent_clog/male
 	max_occurrences = 0
 
@@ -108,7 +150,7 @@
 
 /datum/round_event/vent_clog/beer/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("beer", reagentsAmount)
@@ -118,9 +160,12 @@
 			foam.start()
 		CHECK_TICK
 
+/datum/round_event/vent_clog/male/announce()
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejaculation of contents may occur.", "Atmospherics alert")
+
 /datum/round_event/vent_clog/male/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("semen", reagentsAmount)
@@ -130,9 +175,12 @@
 			foam.start()
 		CHECK_TICK
 
+/datum/round_event/vent_clog/female/announce()
+	priority_announce("The scrubbers network is experiencing a backpressure squirt. Some ejection of contents may occur.", "Atmospherics alert")
+
 /datum/round_event/vent_clog/female/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent("femcum", reagentsAmount)
@@ -147,7 +195,7 @@
 
 /datum/round_event/vent_clog/plasma_decon/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc)
+		if(vent && vent.loc && !vent.welded)
 			var/datum/effect_system/smoke_spread/freezing/decon/smoke = new
 			smoke.set_up(7, get_turf(vent), 7)
 			smoke.start()

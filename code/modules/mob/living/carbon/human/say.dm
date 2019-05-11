@@ -1,9 +1,14 @@
 /mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
-	if(slurring)
-		return "slurs"
-	else
-		. = ..()
+	switch(slurring)
+		if(10 to 25)
+			return "jumbles"
+		if(25 to 50)
+			return "slurs"
+		if(50 to INFINITY)
+			return "garbles"
+		else
+			. = ..()
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)

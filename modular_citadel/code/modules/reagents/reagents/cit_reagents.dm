@@ -36,11 +36,10 @@
 /obj/effect/decal/cleanable/semen/New()
 	..()
 	dir = pick(1,2,4,8)
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
-/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
-	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/semen(T)
-		reagentdecal.reagents.add_reagent("semen", reac_volume)
+/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
+	S.add_blood_DNA(return_blood_DNA())
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -98,7 +97,7 @@
 	color = "#FFADFF"//PINK, rgb(255, 173, 255)
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
-	if(M && M.canbearoused)
+	if(M && M.canbearoused && !M.has_trait(TRAIT_CROCRIN_IMMUNE))
 		if(prob(33))
 			M.adjustArousalLoss(2)
 		if(prob(5))
@@ -120,7 +119,7 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
-	if(M && M.canbearoused)
+	if(M && M.canbearoused && !M.has_trait(TRAIT_CROCRIN_IMMUNE))
 		if(prob(33))
 			M.adjustArousalLoss(6)//not quite six times as powerful, but still considerably more powerful.
 		if(prob(5))
@@ -152,7 +151,7 @@
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
-	if(M && M.canbearoused && prob(33))
+	if(M && M.canbearoused && !M.has_trait(TRAIT_CROCRIN_IMMUNE) && prob(33))
 		if(M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
 			var/mob/living/carbon/human/H = M
 			if(prob(50)) //Less spam

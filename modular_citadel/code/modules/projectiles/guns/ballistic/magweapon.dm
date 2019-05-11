@@ -55,7 +55,7 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 0
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -123,7 +123,7 @@
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 ///research memes///
-
+/*
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
 	spawnwithmagazine = FALSE
@@ -155,7 +155,7 @@
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+*/
 //////toy memes/////
 
 /obj/item/projectile/bullet/reusable/foam_dart/mag
@@ -210,7 +210,7 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 0
+	damage = 2
 	knockdown = 0
 	stamina = 25
 	armour_penetration = -10
@@ -271,7 +271,8 @@
 	recoil = 0.15
 	casing_ejector = 0
 
-///research///
+/*
+//research///
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
@@ -304,7 +305,7 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
+*/
 ///foamagrifle///
 
 /obj/item/ammo_box/magazine/toy/foamag
@@ -326,10 +327,9 @@
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-
 /*
 // TECHWEBS IMPLEMENTATION
-*/
+//
 
 /datum/techweb_node/magnetic_weapons
 	id = "magnetic_weapons"
@@ -339,7 +339,7 @@
 	design_ids = list("magrifle", "magpisol", "mag_magrifle", "mag_magrifle_nl", "mag_magpistol", "mag_magpistol_nl")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-
+*/
 
 //////Hyper-Burst Rifle//////
 

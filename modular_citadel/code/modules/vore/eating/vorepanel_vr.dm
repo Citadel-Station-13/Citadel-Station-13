@@ -18,9 +18,10 @@
 
 	var/dat = picker_holder.gen_vui(src)
 
-	picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
+	picker_holder.popup = new(src, "insidePanel","Vore Panel", 450, 700, picker_holder)
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
+	src.openpanel = 1
 
 /mob/living/proc/updateVRPanel() //Panel popup update call from belly events.
 	if(src.openpanel == 1)
@@ -30,7 +31,7 @@
 
 		var/dat = picker_holder.gen_vui(src)
 
-		picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
+		picker_holder.popup = new(src, "insidePanel","Vore Panel", 450, 700, picker_holder)
 		picker_holder.popup.set_content(dat)
 		picker_holder.popup.open()
 
@@ -39,7 +40,7 @@
 //
 /datum/vore_look
 	var/obj/belly/selected
-	var/show_interacts = TRUE
+	var/show_interacts = 0
 	var/datum/browser/popup
 	var/loop = null;  // Magic self-reference to stop the handler from being GC'd before user takes action.
 
@@ -55,13 +56,14 @@
 
 /datum/vore_look/proc/gen_vui(var/mob/living/user)
 	var/dat
-
+	dat += "Remember to toggle the vore mode, it's to the left of your combat toggle. Open mouth means you're voracious!<br>"
+	dat += "<HR>"
 	var/atom/userloc = user.loc
 	if (isbelly(userloc))
 		var/obj/belly/inside_belly = userloc
 		var/mob/living/eater = inside_belly.owner
 
-	//Don't display this part if we couldn't find the belly since could be held in hand.
+		//Don't display this part if we couldn't find the belly since could be held in hand.
 		if(inside_belly)
 			dat += "<font color = 'green'>You are currently [user.absorbed ? "absorbed into " : "inside "]</font> <font color = 'yellow'>[eater]'s</font> <font color = 'red'>[inside_belly]</font>!<br><br>"
 
@@ -102,7 +104,6 @@
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'>[B.name]"
-
 		var/spanstyle
 		switch(B.digest_mode)
 			if(DM_HOLD)
@@ -110,11 +111,13 @@
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
 			if(DM_HEAL)
-				spanstyle = "color:green;"
+				spanstyle = "color:darkgreen;"
 			if(DM_NOISY)
 				spanstyle = "color:purple;"
 			if(DM_ABSORB)
 				spanstyle = "color:purple;"
+			if(DM_DRAGON)
+				spanstyle = "color:blue;"
 
 		dat += "<span style='[spanstyle]'> ([B.contents.len])</span></a></li>"
 
@@ -156,6 +159,10 @@
 		dat += "<a href='?src=\ref[src];b_name=\ref[selected]'>Name:</a>"
 		dat += " '[selected.name]'"
 
+		//Belly Type button
+		dat += "<br><a href='?src=\ref[src];b_wetness=\ref[selected]'>Is Fleshy:</a>"
+		dat += "[selected.is_wet ? "Yes" : "No"]"
+
 		//Digest Mode Button
 		dat += "<br><a href='?src=\ref[src];b_mode=\ref[selected]'>Belly Mode:</a>"
 		dat += " [selected.digest_mode]"
@@ -169,11 +176,11 @@
 		dat += " '[selected.desc]'"
 
 		//Belly sound
-		dat += "<br><a href='?src=\ref[src];b_sound=\ref[selected]'>Set Vore Sound</a>"
+		dat += "<br><a href='?src=\ref[src];b_sound=\ref[selected]'>Vore Sound: [selected.vore_sound]</a>"
 		dat += "<a href='?src=\ref[src];b_soundtest=\ref[selected]'>Test</a>"
 
 		//Release sound
-		dat += "<br><a href='?src=\ref[src];b_release=\ref[selected]'>Set Release Sound</a>"
+		dat += "<br><a href='?src=\ref[src];b_release=\ref[selected]'>Release Sound: [selected.release_sound]</a>"
 		dat += "<a href='?src=\ref[src];b_releasesoundtest=\ref[selected]'>Test</a>"
 
 		//Belly messages
@@ -201,10 +208,6 @@
 			dat += "<br><a href='?src=\ref[src];b_escapetime=\ref[selected]'>Set Belly Escape Time</a>"
 			dat += " [selected.escapetime/10]s"
 
-			dat += "<br style='line-height:5px;'>"
-			dat += "<br><a href='?src=\ref[src];b_absorbchance=\ref[selected]'>Set Belly Absorb Chance</a>"
-			dat += " [selected.absorbchance]%"
-
 			//Special <br> here to add a gap
 			dat += "<br style='line-height:5px;'>"
 			dat += "<br><a href='?src=\ref[src];b_transferchance=\ref[selected]'>Set Belly Transfer Chance</a>"
@@ -215,19 +218,17 @@
 
 			//Special <br> here to add a gap
 			dat += "<br style='line-height:5px;'>"
+			dat += "<br><a href='?src=\ref[src];b_absorbchance=\ref[selected]'>Set Belly Absorb Chance</a>"
+			dat += " [selected.absorbchance]%"
+
 			dat += "<br><a href='?src=\ref[src];b_digestchance=\ref[selected]'>Set Belly Digest Chance</a>"
 			dat += " [selected.digestchance]%"
 			dat += "<HR>"
-
-			// Belly Silence
-			dat += "<br><a href='?src=\ref[src];b_silent=\ref[selected]'>Belly Silence (for not belly bellies):</a>"
-			dat += " [selected.silent ? "Yes" : "No"]"
 
 		//Delete button
 		dat += "<br><a style='background:#990000;' href='?src=\ref[src];b_del=\ref[selected]'>Delete Belly</a>"
 
 	dat += "<a href='?src=\ref[src];setflavor=1'>Set Flavor</a>"
-	dat += "<a href='?src=\ref[src];togglenoisy=1'>Toggle Hunger Noises</a>"
 
 	dat += "<HR>"
 
@@ -239,15 +240,21 @@
 	dat += "<HR>"
 	switch(user.digestable)
 		if(TRUE)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable <font color='darkgreen'>(Currently: ON)</font></a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable <font color='red'>(Currently: OFF)</font></a>"
 
 	switch(user.devourable)
 		if(TRUE)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
+			dat += "<br><a href='?src=\ref[src];toggledvor=1'>Toggle Devourable <font color='darkgreen'>(Currently: ON)</font></a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
+			dat += "<br><a href='?src=\ref[src];toggledvor=1'>Toggle Devourable <font color='red'>(Currently: OFF)</font></a>"
+
+	switch(user.feeding)
+		if(TRUE)
+			dat += "<br><a href='?src=\ref[src];toggledfeed=1'>Toggle Feeding <font color='darkgreen'>(Currently: ON)</font></a>"
+		if(FALSE)
+			dat += "<br><a href='?src=\ref[src];toggledfeed=1'>Toggle Feeding <font color='red'>(Currently: OFF)</font></a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -258,25 +265,26 @@
 
 	if(href_list["close"])
 		qdel(src)  // Cleanup
+		user.openpanel = 0
 		return
 
 	if(href_list["show_int"])
 		show_interacts = !show_interacts
-		return TRUE //Force update
+		return 1 //Force update
 
 	if(href_list["int_help"])
-		to_chat(usr,"These control how your belly responds to someone using 'resist' while inside you. The percent chance to trigger each is listed below, \
+		alert("These control how your belly responds to someone using 'resist' while inside you. The percent chance to trigger each is listed below, \
 				and you can change them to whatever you see fit. Setting them to 0% will disable the possibility of that interaction. \
-				These only function as long as interactions are turned on in general. Keep in mind, the 'belly mode' interactions (digest) \
-				will affect all prey in that belly, if one resists and triggers digestion. If multiple trigger at the same time, \
-				only the first in the order of 'Escape > Transfer > Absorb > Digest' will occur.")
-		return TRUE //Force update
+				These only function as long as interactions are turned on in general. Keep in mind, the 'belly mode' interactions (digest/absorb) \
+				will affect all prey in that belly, if one resists and triggers digestion/absorption. If multiple trigger at the same time, \
+				only the first in the order of 'Escape > Transfer > Absorb > Digest' will occur.","Interactions Help")
+		return 0 //Force update
 
 	if(href_list["outsidepick"])
 		var/atom/movable/tgt = locate(href_list["outsidepick"])
 		var/obj/belly/OB = locate(href_list["outsidebelly"])
 		if(!(tgt in OB)) //Aren't here anymore, need to update menu.
-			return TRUE
+			return 1
 		var/intent = "Examine"
 
 		if(istype(tgt,/mob/living))
@@ -289,11 +297,11 @@
 				if("Help Out") //Help the inside-mob out
 					if(user.stat || user.absorbed || M.absorbed)
 						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-						return
+						return 1
 
 					to_chat(user,"<font color='green'>You begin to push [M] to freedom!</font>")
 					to_chat(M,"[usr] begins to push you to freedom!")
-					to_chat(OB.owner,"<span class='warning'>Someone is trying to escape from inside you!</span>")
+					to_chat(M.loc,"<span class='warning'>Someone is trying to escape from inside you!</span>")
 					sleep(50)
 					if(prob(33))
 						OB.release_specific_contents(M)
@@ -305,15 +313,14 @@
 						to_chat(M,"<span class='alert'> Even with [user]'s help, you slip back inside again.</span>")
 						to_chat(OB.owner,"<font color='green'>Your body efficiently shoves [M] back where they belong.</font>")
 
-
 				if("Devour") //Eat the inside mob
 					if(user.absorbed || user.stat)
 						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
-						return
+						return 1
 
 					if(!user.vore_selected)
 						to_chat(user,"<span class='warning'>Pick a belly on yourself first!</span>")
-						return
+						return 1
 
 					var/obj/belly/TB = user.vore_selected
 					to_chat(user,"<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
@@ -329,9 +336,9 @@
 
 		else if(istype(tgt,/obj/item))
 			var/obj/item/T = tgt
-			if(!(tgt in OB.contents))
+			if(!(tgt in OB))
 				//Doesn't exist anymore, update.
-				return TRUE
+				return 1
 			intent = alert("What do you want to do to that?","Query","Examine","Use Hand")
 			switch(intent)
 				if("Examine")
@@ -339,8 +346,8 @@
 
 				if("Use Hand")
 					if(user.stat)
-						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return
+						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+						return 1
 
 					user.ClickOn(T)
 					sleep(5) //Seems to exit too fast for the panel to update
@@ -353,32 +360,31 @@
 			intent = alert("Eject all, Move all?","Query","Eject all","Cancel","Move all")
 			switch(intent)
 				if("Cancel")
-					return
+					return 0
 
 				if("Eject all")
 					if(user.stat)
-						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return
+						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+						return 0
 
 					selected.release_all_contents()
-					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
 					if(user.stat)
-						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return FALSE
+						to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+						return 0
 
 					var/obj/belly/choice = input("Move all where?","Select Belly") as null|anything in user.vore_organs
 					if(!choice)
-						return FALSE
+						return 0
 
 					for(var/atom/movable/tgt in selected)
-						selected.transfer_contents(tgt, choice, 1)
 						to_chat(tgt,"<span class='warning'>You're squished from [user]'s [lowertext(selected)] to their [lowertext(choice.name)]!</span>")
+						selected.transfer_contents(tgt, choice, 1)
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
 		if(!(tgt in selected)) //Old menu, needs updating because they aren't really there.
-			return TRUE//Forces update
+			return 1 //Forces update
 		intent = "Examine"
 		intent = alert("Examine, Eject, Move? Examine if you want to leave this box.","Query","Examine","Eject","Move")
 		switch(intent)
@@ -387,11 +393,10 @@
 
 			if("Eject")
 				if(user.stat)
-					to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-					return FALSE
+					to_chat(user,"<span class='warning'>You can't do that in your state!</span>")
+					return 0
 
 				selected.release_specific_contents(tgt)
-				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
 				if(user.stat)
@@ -456,6 +461,9 @@
 			return 0
 
 		selected.name = new_name
+
+	if(href_list["b_wetness"])
+		selected.is_wet = !selected.is_wet
 
 	if(href_list["b_mode"])
 		var/list/menu_list = selected.digest_modes
@@ -540,12 +548,12 @@
 		if(!choice)
 			return
 
-		selected.release_sound = GLOB.release_sounds[choice]
+		selected.release_sound = choice
 
 	if(href_list["b_releasesoundtest"])
-		var/soundfile = selected.release_sound
-		if(soundfile)
-			user << soundfile
+		var/sound/releasetest = GLOB.release_sounds[selected.release_sound]
+		if(releasetest)
+			user << releasetest
 
 	if(href_list["b_sound"])
 		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") as null|anything in GLOB.vore_sounds
@@ -553,12 +561,12 @@
 		if(!choice)
 			return
 
-		selected.vore_sound = GLOB.vore_sounds[choice]
+		selected.vore_sound = choice
 
 	if(href_list["b_soundtest"])
-		var/soundfile = selected.vore_sound
-		if(soundfile)
-			user << soundfile
+		var/sound/voretest = GLOB.vore_sounds[selected.vore_sound]
+		if(voretest)
+			user << voretest
 
 	if(href_list["b_tastes"])
 		selected.can_taste = !selected.can_taste
@@ -577,17 +585,17 @@
 			selected.bulge_size = (new_bulge/100)
 
 	if(href_list["b_escapable"])
-		if(selected.escapable == FALSE) //Possibly escapable and special interactions.
-			selected.escapable = TRUE
-			to_chat(usr,"<span class='warning'>Prey now have special interactions with your [selected.name] depending on your settings.</span>")
-		else if(selected.escapable == TRUE) //Never escapable.
-			selected.escapable = FALSE
-			to_chat(usr,"<span class='warning'>Prey will not be able to have special interactions with your [selected.name].</span>")
-			show_interacts = FALSE //Force the hiding of the panel
+		if(selected.escapable == 0) //Possibly escapable and special interactions.
+			selected.escapable = 1
+			to_chat(usr,"<span class='warning'>Prey now have special interactions with your [lowertext(selected.name)] depending on your settings.</span>")
+		else if(selected.escapable == 1) //Never escapable.
+			selected.escapable = 0
+			to_chat(usr,"<span class='warning'>Prey will not be able to have special interactions with your [lowertext(selected.name)].</span>")
+			show_interacts = 0 //Force the hiding of the panel
 		else
-			to_chat(usr,"<span class='warning'>Something went wrong. Your stomach will now not have special interactions. Press the button enable them again and tell a dev.") //If they somehow have a varable that's not 0 or 1
-			selected.escapable = TRUE
-			show_interacts = FALSE //Force the hiding of the panel
+			alert("Something went wrong. Your stomach will now not have special interactions. Press the button enable them again and tell a dev.","Error") //If they somehow have a varable that's not 0 or 1
+			selected.escapable = 0
+			show_interacts = 0 //Force the hiding of the panel
 
 	if(href_list["b_escapechance"])
 		var/escape_chance_input = input(user, "Set prey escape chance on resist (as %)", "Prey Escape Chance") as num|null
@@ -605,14 +613,14 @@
 			selected.transferchance = sanitize_integer(transfer_chance_input, 0, 100, initial(selected.transferchance))
 
 	if(href_list["b_transferlocation"])
-		var/choice = input("Where do you want your [selected.name] to lead if prey resists?","Select Belly") as null|anything in (user.vore_organs + "None - Remove" - selected.name)
+		var/obj/belly/choice = input("Where do you want your [lowertext(selected.name)] to lead if prey resists?","Select Belly") as null|anything in (user.vore_organs + "None - Remove" - selected)
 
 		if(!choice) //They cancelled, no changes
-			return FALSE
+			return 0
 		else if(choice == "None - Remove")
 			selected.transferlocation = null
 		else
-			selected.transferlocation = user.vore_organs[choice]
+			selected.transferlocation = choice.name
 
 	if(href_list["b_absorbchance"])
 		var/absorb_chance_input = input(user, "Set belly absorb mode chance on resist (as %)", "Prey Absorb Chance") as num|null
@@ -624,13 +632,10 @@
 		if(!isnull(digest_chance_input))
 			selected.digestchance = sanitize_integer(digest_chance_input, 0, 100, initial(selected.digestchance))
 
-	if(href_list["b_silent"])
-		selected.silent = !selected.silent
-
 	if(href_list["b_del"])
 		var/alert = alert("Are you sure you want to delete your [lowertext(selected.name)]?","Confirmation","Delete","Cancel")
 		if(!alert == "Delete")
-			return FALSE
+			return 0
 
 		var/failure_msg = ""
 
@@ -651,7 +656,7 @@
 
 		if(failure_msg)
 			alert(user,failure_msg,"Error!")
-			return FALSE
+			return 0
 
 		qdel(selected)
 		selected = user.vore_organs[1]
@@ -689,7 +694,7 @@
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
 		switch(choice)
 			if("Cancel")
-				return
+				return 0
 			if("Allow Digestion")
 				user.digestable = TRUE
 			if("Prevent Digestion")
@@ -702,7 +707,7 @@
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
 		switch(choice)
 			if("Cancel")
-				return
+				return 0
 			if("Allow Devourment")
 				user.devourable = TRUE
 			if("Prevent Devourment")
@@ -710,6 +715,19 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable
+
+	if(href_list["toggledfeed"])
+		var/choice = alert(user, "This button is to toggle your ability to be fed to others. Feeding predators is currently: [user.feeding ? "Allowed" : "Prevented"]", "", "Allow Feeding", "Cancel", "Prevent Feeding")
+		switch(choice)
+			if("Cancel")
+				return 0
+			if("Allow Feeding")
+				user.feeding = TRUE
+			if("Prevent Feeding")
+				user.feeding = FALSE
+
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.feeding = user.feeding
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

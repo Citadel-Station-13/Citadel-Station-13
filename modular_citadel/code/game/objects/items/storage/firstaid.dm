@@ -24,6 +24,13 @@
 /obj/item/storage/firstaid/o2
 	icon_state = "oxy"
 
+/obj/item/storage/firstaid/radbgone
+	icon_state = "rad"
+
+/obj/item/storage/firstaid/radbgone/Initialize(mapload)
+    . = ..()
+    icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
+
 /obj/item/storage/firstaid/tactical
 	icon_state = "tactical"
 
@@ -43,10 +50,10 @@
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 5
-	STR.max_items = 5
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.max_items = 12
+	STR.can_hold = typecacheof(list(
+	/obj/item/hypospray/mkii,
+	/obj/item/reagent_containers/glass/bottle/vial))
 
 /obj/item/storage/hypospraykit/regular
 	icon_state = "firstaid-mini"
@@ -129,10 +136,10 @@
 /obj/item/storage/hypospraykit/cmo/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 6
 	STR.max_items = 6
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.can_hold = typecacheof(list(
+	/obj/item/hypospray/mkii,
+	/obj/item/reagent_containers/glass/bottle/vial))
 
 /obj/item/storage/hypospraykit/cmo/PopulateContents()
 	if(empty)

@@ -6,6 +6,9 @@
 	dna_cost = 2
 	req_human = 1
 	req_stat = UNCONSCIOUS
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_adrenals"
+	action_background_icon_state = "bg_ling"
 
 //Recover from stuns.
 /obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)

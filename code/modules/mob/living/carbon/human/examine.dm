@@ -18,6 +18,16 @@
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
+	if(ishuman(src)) //user just returned, y'know, the user's own species. dumb.
+		var/mob/living/carbon/human/H = src
+		var/datum/species/pref_species = H.dna.species
+		if(get_visible_name() == "Unknown") // same as flavor text, but hey it works.
+			msg += "You can't make out what species they are.\n"
+		else if(skipface)
+			msg += "You can't make out what species they are.\n"
+		else
+			msg += "[t_He] [t_is] a [H.dna.custom_species ? H.dna.custom_species : pref_species.name]!\n"
+
 	//uniform
 	if(w_uniform && !(SLOT_W_UNIFORM in obscured))
 		//accessory
@@ -341,8 +351,13 @@
 	else if(isobserver(user) && traitstring)
 		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
 
-	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
-		msg += "[print_flavor_text()]\n"
+	if(print_flavor_text())
+		if(get_visible_name() == "Unknown")	//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+			msg += "...?<br>"
+		else if(skipface) //Sometimes we're not unknown, but impersonating someone in a hardsuit, let's not reveal our flavor text then either.
+			msg += "...?<br>"
+		else
+			msg += "[print_flavor_text()]\n"
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

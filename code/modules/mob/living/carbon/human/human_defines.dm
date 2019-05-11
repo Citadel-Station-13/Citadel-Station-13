@@ -47,6 +47,8 @@
 
 	var/nameless = FALSE //For drones of both the insectoid and robotic kind. And other types of nameless critters.
 
+	var/custom_species = null
+
 	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 
