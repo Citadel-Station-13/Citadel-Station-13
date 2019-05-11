@@ -1,3 +1,4 @@
+//Mech sensor: Activates when stepped on by a mech
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech
 	name = "mech sensor"
 	desc = "A thin plate of brass, barely visible but clearly distinct."
@@ -5,7 +6,6 @@
 	max_integrity = 5
 	icon_state = "pressure_sensor"
 	alpha = 75
-
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/mech/Crossed(atom/movable/AM)
 
