@@ -1,3 +1,6 @@
+//We're really behind tg on traits huh?
+#define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
+
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -50,6 +53,8 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_FEARLESS			"fearless"
+#define TRAIT_UNSTABLE			"unstable"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"

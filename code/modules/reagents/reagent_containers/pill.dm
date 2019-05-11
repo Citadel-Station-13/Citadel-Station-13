@@ -166,6 +166,13 @@
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
 
+/obj/item/reagent_containers/pill/psicodine
+	name = "psicodine pill"
+	desc = "Used to treat mental instability and traumas."
+	list_reagents = list("psicodine" = 10)
+	icon_state = "pill22"
+	roundstart = 1
+
 /obj/item/reagent_containers/pill/antirad
 	name = "potassium iodide pill"
 	desc = "Used to treat radition used to counter radiation poisoning."
@@ -215,6 +222,12 @@
 /obj/item/reagent_containers/pill/aranesp
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
+
+/obj/item/reagent_containers/pill/happiness
+	name = "happiness pill"
+	desc = "It has a creepy smiling face on it."
+	icon_state = "pill_happy"
+	list_reagents = list("happiness" = 10)
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"

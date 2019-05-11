@@ -1101,11 +1101,8 @@
 						objective = replacetext(lowertext(objective), "harm", "snuggle")
 						objective = replacetext(lowertext(objective), "decapitate", "headpat")
 						objective = replacetext(lowertext(objective), "strangle", "meow at")
-						H.objective += objective
 						to_chat(H, "<span class='warning'>Your master whispers you a new objective.</span>")
-						if(!H.objectives)
-							to_chat(H, "<b>[LAZYLEN(H.objectives)].</b> [H.objectives.explanation_text]")
-						to_chat(H, "<b>[LAZYLEN(H.objectives)].</b> [H.objectives.explanation_text]")
+						brainwash(H, objective)
 						E.mental_capacity -= 150
 					//else if (E.mental_capacity >= 150)
 					else

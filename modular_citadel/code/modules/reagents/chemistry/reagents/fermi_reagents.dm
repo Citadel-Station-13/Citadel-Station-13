@@ -308,11 +308,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Give the new clone an idea of their character
 				//SHOULD print last 5 messages said by the original to the clones chatbox
 				var/list/say_log = M.logging[LOG_SAY]
+				var/recent_speech
 				if(LAZYLEN(say_log) > 5)
-					var/recent_speech = say_log.Copy(say_log.len+5,0) //0 so len-LING_ARS+1 to end of list
+					recent_speech = say_log.Copy(say_log.len+5,0) //0 so len-LING_ARS+1 to end of list
 				else
-					for(var/spoken_memory in recent_speech)
-						to_chat(SM, spoken_memory)
+					recent_speech = say_log
+				for(var/spoken_memory in recent_speech)
+					to_chat(SM, spoken_memory)
 
 
 				return
