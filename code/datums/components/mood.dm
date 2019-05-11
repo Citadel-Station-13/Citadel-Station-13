@@ -232,6 +232,7 @@
 
 /datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
 	// Disturbed stops you from getting any more sane - I'm just gonna bung this in here
+	var/mob/living/owner = parent
 	if(owner.has_trait(TRAIT_UNSTABLE))
 		return
 	if(sanity > maximum)
