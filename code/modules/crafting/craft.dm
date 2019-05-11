@@ -21,6 +21,7 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
+							CAT_FISH,
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,
