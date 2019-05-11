@@ -263,3 +263,4 @@ When crafting most items, you can either manually combine parts or use the craft
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
 Laser pointers can be upgraded by replacing its micro laser with a better one from RnD! Use a screwdriver on it to remove the old laser. Upgrading the laser pointer gives you better odds of stunning a cyborg, and even blinding people with sunglasses.
+You can bypass clockwork cult pressure sensors if you walk instead of jog on them. Alternatively, you can also become a clockwork cultist.
