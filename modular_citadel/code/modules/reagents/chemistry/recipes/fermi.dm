@@ -126,6 +126,8 @@
 
 /datum/chemical_reaction/enthral/on_reaction(datum/reagents/holder)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/enthrallID = B.get_blood_id()
-	var/datum/reagent/fermi/enthral/E = locate(/datum/reagent/fermi/enthral) in holder.reagent_list
-	E.enthrallID = enthrallID
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
+	E.creatorGender = B.["gender"]
+	E.creatorName = B.["real_name"]
+	var/enthrallID = B.get_blood_data()
+	E.creatorID = enthrallID

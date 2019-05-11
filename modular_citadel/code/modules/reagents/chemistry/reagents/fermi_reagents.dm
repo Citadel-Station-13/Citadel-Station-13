@@ -308,10 +308,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Give the new clone an idea of their character
 				//SHOULD print last 5 messages said by the original to the clones chatbox
 				var/list/say_log = M.logging[LOG_SAY]
-			   	if(LAZYLEN(say_log) > 5)
-				   	recent_speech = say_log.Copy(say_log.len+5,0) //0 so len-LING_ARS+1 to end of list
-			   	else
-   					for(var/spoken_memory in recent_speech)
+				if(LAZYLEN(say_log) > 5)
+					var/recent_speech = say_log.Copy(say_log.len+5,0) //0 so len-LING_ARS+1 to end of list
+				else
+					for(var/spoken_memory in recent_speech)
 						to_chat(SM, spoken_memory)
 
 
@@ -749,6 +749,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	//addiction_threshold = 30
 	//addiction_stage1_end = 9999//Should never end.
 	var/creatorID  //add here
+	var/creatorGender
+	var/creatorName
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	..()
@@ -760,22 +762,25 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(owner, "<span class='notice'><i>You feel your vocal chords tingle as your voice becomes more sultry.</span>")
+		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice becomes more sultry.</span>")
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+		var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+		E.enthrallID = creatorID
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
-	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthral)
+	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	E.enthrallTally += 1
 	M.adjustBrainLoss(0.1)
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)
-	owner.add_trait(TRAIT_PACIFISM, "MKUltra")
-	if (!M.has_status_effect(/datum/status_effect/chem/enthral))
+	M.add_trait(TRAIT_PACIFISM, "MKUltra")
+	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthral)
-	to_chat(owner, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [enthrallID.name].</i></span>")
+	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	E.enthrallID = creatorID
+	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [enthrallID.name].</i></span>")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4
@@ -817,7 +822,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				//for(var/victim in seen)
-				to_chat(M, "You notice [pick([seen])]'s bulge [pick("OwO!", "uwu!")]")
+				to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
 			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
@@ -834,7 +839,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				//for(var/victim in seen)
-				to_chat(M, "You notice [pick([seen])]'s bulge [pick("OwO!", "uwu!")]")
+				to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 	..()
 
 /*

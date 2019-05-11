@@ -172,7 +172,6 @@
 	var/status = null //status effects
 	var/statusStrength = 0 //strength of status effect
 	var/enthrallID //Enchanter's name/ID
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
 	var/mental_cost //Current cost of custom triggers
 	var/mindbroken = FALSE //Not sure I use this, replaced with phase 4
@@ -182,6 +181,7 @@
 	var/withdrawal = FALSE //withdrawl
 	var/withdrawalTick = 0 //counts how long withdrawl is going on for
 	var/list/customTriggers = list() //the list of custom triggers (maybe have to split into two)
+	var/cooldown = 0
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
 	if(M.ID == enthrallID)
@@ -189,6 +189,7 @@
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
 	//Might need to add redirect component for listening too.
+	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	mental_capacity = 500 - B.get_brain_damage()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall)
 
@@ -243,7 +244,7 @@
 				resistanceTally = 0
 				to_chat(owner, "<span class='notice'><i>The separation from you master sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 		else if (4) //mindbroken
-			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !user.has_reagent("MKUltra"))
+			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !M.has_reagent("MKUltra"))
 				phase = 2
 				mental_capacity = 500
 				E.customTriggers = list()
@@ -268,17 +269,17 @@
 			var/withdrawal = TRUE
 
 	//chem calculations
-	if (user.has_reagent("MKUltra"))
+	if (M.has_reagent("MKUltra"))
 		if (phase >= 2)
 			enthrallTally += phase
 	else
 		if (phase < 3)
-			resistance += 10//If you've no chem, then you break out quickly
+			deltaResist += 10//If you've no chem, then you break out quickly
 			to_chat(owner, "<span class='notice'><i>You're starting to miss your Master/Mistress.</i></span>")
 	if (mental_capacity <= 500 || phase == 4)
-		if (user.has_reagent("mannitol"))
+		if (owner.has_reagent("mannitol"))
 			mental_capacity += 1
-		if (user.has_reagent("neurine"))
+		if (owner.has_reagent("neurine"))
 			mental_capacity += 2
 
 	//Withdrawal subproc:
@@ -306,8 +307,8 @@
 				owner.jitteriness += 20
 			if(67 to 90) //anger
 				if(prob(30))
-					addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
-					addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+					addtimer(CALLBACK(M, /mob/verb/a_intent_change, INTENT_HARM), 2)
+					addtimer(CALLBACK(M, /mob/proc/click_random_mob), 2)
 					to_chat(owner, "You suddenly lash out at the station in anger for it keeping you away from your Master.")
 			if(90)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2") //Why does this not work?
@@ -391,10 +392,10 @@
 			//M.adjustStaminaLoss(-5*REM)
 
 	//final tidying
-	resistance += deltaResist
+	resistanceTally  += deltaResist
 	deltaResist = 0
 	if (cooldown > 0)
-		cooldown -= 1
+		cooldown -= (1 + (mental_capacity/1000 ))
 	else
 		to_chat(enthrallID, "<span class='notice'><i>Your pet [owner.name] appears to have finished internalising your last command.</i></span>")
 
@@ -418,18 +419,18 @@
 
 /datum/status_effect/chem/enthrall/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/mob/living/carbon/C = owner
-	for (trigger in customTriggers)
-	    if (trigger == message)//if trigger1 is the message
+	for (var/trigger in customTriggers)
+		if (trigger == message)//if trigger1 is the message
 
 			//Speak (Forces player to talk)
-	        if (customTriggers[trigger][1] == "speak")//trigger2
+			if (customTriggers[trigger][1] == "speak")//trigger2
 				C.visible_message("<span class='notice'>Your mouth moves on it's own, before you can even catch it. Though you find yourself fully believing in the validity of what you just said and don't think to question it.</span>")
-	            (C.say([customTriggers[trigger][2]]))//trigger3
+				(C.say(customTriggers[trigger][2]))//trigger3
 
 
 			//Echo (repeats message!)
 			else if (customTriggers[trigger][1] == "echo")//trigger2
-	            (to_chat(owner, customTriggers[trigger][2]))//trigger3
+				(to_chat(owner, customTriggers[trigger][2]))//trigger3
 
 			//Shocking truth!
 			else if (customTriggers[trigger] == "shock")
@@ -501,25 +502,25 @@
 	else
 		deltaResist *= 0.2
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
-	if (user.has_reagent("mannitol"))
+	if (M.has_reagent("mannitol"))
 		deltaResist *= 1.25
-	if (user.has_reagent("neurine"))
+	if (M.has_reagent("neurine"))
 		deltaResist *= 1.5
-	if (!H.has_trait(TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
-		if (user.has_reagent("anaphro"))
+	if (!owner.has_trait(TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
+		if (owner.has_reagent("anaphro"))
 			deltaResist *= 1.5
-		if (user.has_reagent("anaphro+"))
+		if (owner.has_reagent("anaphro+"))
 			deltaResist *= 2
-		if (user.has_reagent("aphro"))
+		if (owner.has_reagent("aphro"))
 			deltaResist *= 0.75
-		if (user.has_reagent("aphro+"))
+		if (owner.has_reagent("aphro+"))
 			deltaResist *= 0.5
 
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))
 		deltaResist *= 2
-	else if (is_servant_of_ratvar(user))
+	else if (is_servant_of_ratvar(owner))
 		deltaResist *= 2
 	//antags should be able to resist, so they can do their other objectives. This chem does frustrate them, but they've all the tools to break free when an oportunity presents itself.
 	else if (owner.mind.assigned_role in GLOB.antagonists)
@@ -551,14 +552,14 @@
 		deltaResist *= 0.5
 
 	if(owner.has_trait(TRAIT_CROCRIN_IMMUNE) || !owner.canbearoused)
-		power_multiplier *= 0.75//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
+		deltaResist *= 0.75//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
 
 	if (deltaResist>0)//just in case
 		deltaResist /= phase//later phases require more resistance
 
-/datum/status_effect/chem/enthrall/proc/owner_say(mob/living/carbon/M) //I can only hope this works
+/datum/status_effect/chem/enthrall/proc/owner_say(message) //I can only hope this works
 	var/static/regex/owner_words = regex("[enthrallID.real_name]|[enthrallID.first_name()]")
-	if(findtext(message, enthral_words))
+	if(findtext(message, owner_words))
 		if(enthrallID.gender == FEMALE)
 			message = replacetext(lowertext(message), lowertext(enthrallID.real_name), "Mistress")
 			message = replacetext(lowertext(message), lowertext(enthrallID.first_name), "Mistress")

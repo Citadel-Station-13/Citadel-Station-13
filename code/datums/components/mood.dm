@@ -118,7 +118,7 @@
 	if(owner.client && owner.hud_used)
 		if(sanity < 25)
 			screen_obj.icon_state = "mood_insane"
-		else if (owner.has_status_effect(/datum/status_effect/chem/enthral))//Fermichem enthral chem, maybe change?
+		else if (owner.has_status_effect(/datum/status_effect/chem/enthrall))//Fermichem enthral chem, maybe change?
 			screen_obj.icon_state = "mood_entrance"
 		else
 			screen_obj.icon_state = "mood[mood_level]"
