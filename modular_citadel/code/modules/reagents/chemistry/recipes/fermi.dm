@@ -127,7 +127,12 @@
 /datum/chemical_reaction/enthral/on_reaction(datum/reagents/holder)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	E.creatorGender = B.["gender"]
+	if (B.["gender"] == "female")
+		E.creatorGender = "Mistress"
+	else
+		E.creatorGender = "Master"
 	E.creatorName = B.["real_name"]
-	var/enthrallID = B.get_blood_data()
-	E.creatorID = enthrallID
+	E.creatorID = B.["ckey"]
+	var/mob/living/creator = holder
+	E.creator = creator
+	//var/enthrallID = B.get_blood_data()

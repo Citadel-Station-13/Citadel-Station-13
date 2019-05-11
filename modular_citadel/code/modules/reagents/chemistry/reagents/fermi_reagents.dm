@@ -515,7 +515,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		return
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
-	B.cached_size = [sizeConv[B.size]]
+	B.cached_size = sizeConv[B.size]
 	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]")
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
@@ -748,39 +748,46 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	//addiction_threshold = 30
 	//addiction_stage1_end = 9999//Should never end.
-	var/creatorID  //add here
+	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
+	var/mob/living/creator
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	..()
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
-	else if(M.ID == creatorID)
+	else if(M.key == creatorID && creatorName == M.real_name) //same name AND same player - same instance of the player. (should work for clones?)
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
-		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice becomes more sultry.</span>")
+		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
+		creator = M
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-		var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+		var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		E.enthrallID = creatorID
+		E.enthrallGender = creatorGender
+		E.master = creator
+
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
-	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	E.enthrallTally += 1
 	M.adjustBrainLoss(0.1)
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
+	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-	var/datum/status_effect/chem/enthral/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	E.enthrallID = creatorID
-	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [enthrallID.name].</i></span>")
+		E.enthrallID = creatorID
+		E.enthrallGender = creatorGender
+		E.master = creator
+	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4

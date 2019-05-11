@@ -677,7 +677,7 @@
 
 /obj/item/organ/vocal_cords/velvet/speak_with(message)
 	velvetspeech(message, owner, spans, base_multiplier)
-	next_command = world.time + (cooldown * cooldown_mod)
+	//next_command = world.time + (cooldown * cooldown_mod)
 
 //////////////////////////////////////
 ///////////FermiChem//////////////////
@@ -972,7 +972,6 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					var/mob/living/M = V
 					H.say("*awoo")
 					E.cooldown += 1
 
@@ -994,8 +993,8 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-				C.Sleeping(20 * power_multiplier)
-				E.cooldown += 10
+					C.Sleeping(20 * power_multiplier)
+					E.cooldown += 10
 
 	//STRIP
 	else if((findtext(message, strip_words)))
@@ -1071,7 +1070,7 @@
 						var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						if ((findtext(trigger, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
-								var/trigger3 = stripped_input(user, "Enter the phrase spoken.", "Sentence", sentence, MAX_MESSAGE_LEN)
+								var/trigger3 = stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN)
 								E.customTriggers[trigger] = list(trigger2, trigger3)
 							else
 								E.customTriggers[trigger] = trigger2
@@ -1083,7 +1082,6 @@
 
 	//CUSTOM OBJECTIVE
 	else if((findtext(message, objective_words)))
-		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
@@ -1127,7 +1125,6 @@
 					E.statusStrength = (5 * power_multiplier)
 					E.cooldown += 5
 
-	var/i = 0
 	//STUN
 	if(findtext(message, stun_words))
 		for(var/V in listeners)
