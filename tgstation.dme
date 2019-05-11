@@ -2492,6 +2492,7 @@
 #include "code\modules\research\designs\electronics_designs.dm"
 #include "code\modules\research\designs\equipment_designs.dm"
 #include "code\modules\research\designs\limbgrower_designs.dm"
+#include "code\modules\research\designs\machine_desings\machine_designs_all_misc.dm"
 #include "code\modules\research\designs\machine_desings\machine_designs_cargo.dm"
 #include "code\modules\research\designs\machine_desings\machine_designs_engi.dm"
 #include "code\modules\research\designs\machine_desings\machine_designs_medical.dm"
