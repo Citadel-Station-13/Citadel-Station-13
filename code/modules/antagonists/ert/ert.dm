@@ -111,8 +111,6 @@
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/finger_guns(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mime(null))
-	var/datum/martial_art/mime/style = new
-	style.teach(owner)
 
 /datum/antagonist/ert/mime/New()
 	. = ..()

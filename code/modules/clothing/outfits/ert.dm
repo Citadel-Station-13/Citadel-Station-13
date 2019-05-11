@@ -292,6 +292,7 @@
 
 
 /datum/outfit/ert/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+
 	if(visualsOnly)
 		return
 
@@ -311,3 +312,5 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
+	var/datum/martial_art/mime/style = new
+	style.teach(H)
