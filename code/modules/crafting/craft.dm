@@ -21,7 +21,6 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
-							CAT_FISH,
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,
@@ -29,6 +28,7 @@
 							CAT_PIZZA,
 							CAT_SALAD,
 							CAT_SANDWICH,
+							CAT_SUSHI,
 							CAT_SOUP,
 							CAT_SPAGHETTI),
                         CAT_CLOTHING) //Clothing subcategories
