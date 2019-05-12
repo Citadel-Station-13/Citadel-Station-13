@@ -42,3 +42,12 @@
 	name = "Prescription glasses"
 	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/regular
+
+/datum/gear/glasses/garb
+	name = "plain black GAR glasses"
+	path = /obj/item/clothing/glasses/garb
+
+/datum/gear/glasses/gigagarb
+	name = "plain black giga GAR glasses"
+	path = /obj/item/clothing/glasses/garb/giga
+
