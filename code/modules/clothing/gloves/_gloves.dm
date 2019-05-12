@@ -31,7 +31,7 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		IF_HAS_BLOOD_DNA(src)
 			GET_COMPONENT(D, /datum/component/forensics)
-			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = D.blood_DNA_to_color())
+			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = D.blood_mix_color)
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()

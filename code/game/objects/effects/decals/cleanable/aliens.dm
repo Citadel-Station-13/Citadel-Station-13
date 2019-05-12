@@ -7,8 +7,7 @@
 
 /obj/effect/decal/cleanable/blood/xeno/Initialize()
 	. = ..()
-	if(!data)
-		data = add_blood_DNA(list("donor"= "UNKNOWN DNA","bloodcolor" = BLOOD_COLOR_XENO, "blood_type"= "X*"))
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 
 /obj/effect/decal/cleanable/blood/splatter/xeno
 	color = BLOOD_COLOR_XENO
@@ -65,5 +64,4 @@
 
 /obj/effect/decal/cleanable/blood/xeno/tracks/Initialize()
 	. = ..()
-	if(!data)
-		data = add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))

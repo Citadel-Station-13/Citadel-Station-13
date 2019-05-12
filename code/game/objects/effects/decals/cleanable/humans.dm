@@ -5,13 +5,14 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_BLOOD
-	color = BLOOD_COLOR_HUMAN
+	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/data = ""
+
+/obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	if(!data)
-		C.data = add_blood_DNA(return_blood_DNA())
 	if(bloodiness)
 		if(C.bloodiness < MAX_SHOE_BLOODINESS)
 			C.bloodiness += bloodiness
@@ -19,7 +20,6 @@
 	return ..()
 
 obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
-	blood_list_checks(src, data["blood_type"])
 	return TRUE
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
@@ -27,16 +27,10 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		// Get blood data from the blood reagent.
-		if(istype(R, /datum/reagent/blood))
-			if(R.data["blood_type"])
-				blood_list_checks(src, R.data["blood_type"])
-				blood_color = blood_DNA_to_color(blood_mix_types)
-		else if(istype(R, /datum/reagent/liquidgibs))
-			if(R.data["blood_type"])
-				blood_list_checks(src, R.data["blood_type"])
-				blood_color = blood_DNA_to_color(blood_mix_types)
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(!blood_color)
+		blood_color = D.blood_mix_color
+	color = blood_color
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -57,24 +51,12 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
-	blood_state = BLOOD_STATE_BLOOD
 	color = BLOOD_COLOR_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	var/data = ""
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		// Get blood data from the blood reagent.
-		if(istype(R, /datum/reagent/blood))
-			if(R.data["blood_type"])
-				blood_list_checks(src, R.data["blood_type"])
-				color = blood_DNA_to_color(blood_mix_types)
-		else if(istype(R, /datum/reagent/liquidgibs))
-			if(R.data["blood_type"])
-				blood_list_checks(src, R.data["blood_type"])
-				color = blood_DNA_to_color(blood_mix_types)
-		else
-			color = blood_DNA_to_color()
+	GET_COMPONENT(D, /datum/component/forensics)
+	color = D.blood_mix_color
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
@@ -105,7 +87,6 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
-			S.blood_list_checks(S, data["blood_type"])
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
@@ -113,8 +94,8 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 				update_icon()
 
 		else if(!H.bloodiness)
+			H.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
-			H.blood_list_checks(H, data["blood_type"])
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
@@ -126,7 +107,6 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
-			S.blood_list_checks(S, data["blood_type"])
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
@@ -134,29 +114,30 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 				update_icon()
 
 		else if(!H.bloodiness)
+			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
-			H.blood_list_checks(H, data["blood_type"])
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/update_icon()
+	..()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
+		GET_COMPONENT(B, /datum/component/forensics)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir, color = B.blood_mix_color)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir, color = B.blood_mix_color)
 			add_overlay(bloodstep_overlay)
 
-	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
-	color = blood_DNA_to_color(blood_mix_types)
+	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
 	. = ..()

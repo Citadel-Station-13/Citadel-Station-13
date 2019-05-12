@@ -122,6 +122,23 @@ GLOBAL_LIST_INIT(regular_bloods,list(
 		"AB+"
 		))
 
+GLOBAL_LIST_INIT(all_types_bloods,list(
+		"O-",
+		"O+",
+		"A-",
+		"A+",
+		"B-",
+		"B+",
+		"AB-",
+		"AB+",
+		"SY",
+		"X*",
+		"HF",
+		"L",
+		"U",
+		"GEL"
+		))
+
 GLOBAL_LIST_INIT(blood_types, list(
 		"blood",
 		"syntheticblood",

@@ -63,9 +63,9 @@
 		IF_HAS_BLOOD_DNA(src)
 			GET_COMPONENT(D, /datum/component/forensics)
 			if(taurmode >= SNEK_TAURIC)
-				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood", color = D.blood_DNA_to_color())
+				. += mutable_appearance('modular_citadel/icons/mob/64x32_effects.dmi', "[blood_overlay_type]blood", color = D.blood_mix_color)
 			else
-				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood", color = D.blood_DNA_to_color())
+				. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood", color = D.blood_mix_color)
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform

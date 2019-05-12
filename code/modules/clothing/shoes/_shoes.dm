@@ -52,10 +52,11 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
+			GET_COMPONENT(D, /datum/component/forensics)
 			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color(blood_mix_types))
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = D.blood_mix_color)
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_DNA_to_color(blood_mix_types))
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = D.blood_mix_color)
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()

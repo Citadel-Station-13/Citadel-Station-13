@@ -7,13 +7,16 @@
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
 	var/slimy_gibs = FALSE
+	var/body_colors
 
 /obj/effect/decal/cleanable/blood/gibs/proc/guts()
 	if(gib_overlay)
 		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay")
+		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-overlay", color = body_colors)
 		if(!slimy_gibs)
 			gibz.appearance_flags = RESET_COLOR
 		add_overlay(gibz)
+		add_overlay(gibz2)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -98,26 +101,32 @@
 /obj/effect/decal/cleanable/blood/gibs/human/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/human/down
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/human/body
 	random_icon_states = list("gibhead", "gibtorso")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/human/torso
 	random_icon_states = list("gibtorso")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/human/limb
 	random_icon_states = list("gibleg", "gibarm")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/human/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 	gib_overlay = TRUE
+	slimy_gibs = TRUE
 
 // Slime Gibs
 /obj/effect/decal/cleanable/blood/gibs/slime

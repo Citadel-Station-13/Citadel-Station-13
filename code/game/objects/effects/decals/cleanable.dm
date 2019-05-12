@@ -5,7 +5,7 @@
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
-	var/blood_color = BLOOD_COLOR_HUMAN
+	var/blood_color
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -75,14 +75,6 @@
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
 			var/obj/item/clothing/shoes/S = H.shoes
-			for(var/datum/reagent/R in reagents.reagent_list)
-				// Get blood data from the blood reagent.
-				if(istype(R, /datum/reagent/blood))
-					if(R.data["blood_type"])
-						S.blood_list_checks(src, R.data["blood_type"])
-				else if(istype(R, /datum/reagent/liquidgibs))
-					if(R.data["blood_type"])
-						S.blood_list_checks(src, R.data["blood_type"])
 			var/add_blood = 0
 			if(bloodiness >= BLOOD_GAIN_PER_STEP)
 				add_blood = BLOOD_GAIN_PER_STEP
@@ -96,29 +88,8 @@
 			H.update_inv_shoes()
 
 		else if(H.bloodiness && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
-			for(var/datum/reagent/R in reagents.reagent_list)
-				// Get blood data from the blood reagent.
-				if(istype(R, /datum/reagent/blood))
-					if(R.data["blood_type"])
-						H.blood_list_checks(src, R.data["blood_type"])
-				else if(istype(R, /datum/reagent/liquidgibs))
-					if(R.data["blood_type"])
-						H.blood_list_checks(src, R.data["blood_type"])
-				var/add_blood = 0
-				if(H.bloodiness >= BLOOD_GAIN_PER_STEP)
-					add_blood = BLOOD_GAIN_PER_STEP
-				else
-					add_blood = bloodiness
-				bloodiness -= add_blood
-				H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
-				H.add_blood_DNA(return_blood_DNA())
-				H.blood_state = blood_state
-				update_icon()
-
-		else
-			color = blood_DNA_to_color()
 			var/add_blood = 0
-			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+			if(H.bloodiness >= BLOOD_GAIN_PER_STEP)
 				add_blood = BLOOD_GAIN_PER_STEP
 			else
 				add_blood = bloodiness

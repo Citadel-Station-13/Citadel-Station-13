@@ -15,21 +15,21 @@
 		_icon_state = "itemblood"
 	var/icon = initial(I.icon)
 	var/icon_state = initial(I.icon_state)
-	var/color = initial(I.blood_DNA_to_color(I.blood_mix_types))
 	if(!icon || !icon_state)
 		// It's something which takes on the look of other items, probably
 		icon = I.icon
 		icon_state = I.icon_state
+	GET_COMPONENT(D, /datum/component/forensics)
 	var/static/list/blood_splatter_appearances = list()
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
-	var/index = "[REF(icon)]-[icon_state]-[color]"
+	var/index = "[REF(icon)]-[icon_state]-[D.blood_mix_color]"
 	pic = blood_splatter_appearances[index]
 
 	if(!pic)
 		var/icon/blood_splatter_icon = icon(initial(I.icon), initial(I.icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon(_icon, _icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-		blood_splatter_icon.color = I.blood_DNA_to_color(I.blood_mix_types) //Colors it based upon blood color mix
+		blood_splatter_icon.Blend(D.blood_mix_color, ICON_MULTIPLY)  //add the blood's color with DNA information
 		blood_splatter_appearances[index] = pic
 	return TRUE
 

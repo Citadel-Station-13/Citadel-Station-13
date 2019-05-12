@@ -5,6 +5,7 @@
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
 	var/list/blood_mix_types	// data("[blood_type]" = sting list
+	var/blood_mix_color
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
 	fingerprints = fingerprints | F.fingerprints
@@ -12,10 +13,11 @@
 	blood_DNA = blood_DNA | F.blood_DNA
 	fibers = fibers | F.fibers
 	blood_mix_types = blood_mix_types | F.blood_mix_types
+	blood_mix_color = blood_mix_color | F.blood_mix_color
 	check_blood()
 	return ..()
 
-/datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers, new_blood_mix_types)
+/datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers, new_blood_mix_types, new_blood_mix_color)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	fingerprints = new_fingerprints
@@ -23,6 +25,7 @@
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
 	blood_mix_types = new_blood_mix_types
+	blood_mix_color = new_blood_mix_color
 	check_blood()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
@@ -36,6 +39,7 @@
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
 	blood_mix_types = null
+	blood_mix_color = null
 	return TRUE
 
 /datum/component/forensics/proc/wipe_fibers()
@@ -150,6 +154,8 @@
 	LAZYINITLIST(blood_DNA)
 	for(var/i in dna)
 		blood_DNA[i] = dna[i]
+	var/blood_type = blood_DNA.Find(GLOB.all_types_bloods)
+	add_blood_list(blood_type)
 	check_blood()
 	return TRUE
 
@@ -159,38 +165,21 @@
 	if(!length(blood_DNA))
 		return
 
-/datum/component/forensics/proc/add_blood_list_check(list/_blood_mix_types)
-	if(!length(_blood_mix_types))
+/datum/component/forensics/proc/add_blood_list(blood_type)
+	if(!blood_type)
 		return
 	LAZYINITLIST(blood_mix_types)
-	for(var/i in _blood_mix_types)	//We use an associative list, because all the other cool kids are doing it
-		blood_mix_types[i] = i
+	blood_list_checks(blood_mix_types, blood_type)
+	blood_DNA_to_color(blood_mix_types)
 	return TRUE
 
-/datum/component/forensics/proc/blood_list_checks(Atom/A, var/blood_type) //This is a messy attempt at trying to reduce lists of items and mobs with blood colors on them
+/datum/component/forensics/proc/blood_list_checks(list/blood_types, var/blood_type) //This is a messy attempt at trying to reduce lists of items and mobs with blood colors on them
 	if(blood_type in GLOB.regular_bloods)
 		blood_type = "A+" //generic so we don't have 8 different types of human blood
-	if(is_cleanable(src))
-		var/obj/effect/decal/cleanable/CL = src
-		if(blood_type in CL.blood_mix_types)
-			return
-		else
-			LAZYSET(blood_type,CL.blood_mix_types, CL.blood_mix_types)
-			CL.blood_color = blood_DNA_to_color(CL.blood_mix_types)
-	else if(isitem(src))
-		var/obj/item/I = src
-		if(blood_type in I.blood_mix_types)
-			return
-		else
-			LAZYSET(blood_type,I.blood_mix_types, I.blood_mix_types)
-			I.blood_color = blood_DNA_to_color(I.blood_mix_types)
-	else if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		if(blood_type in C.blood_mix_types)
-			return
-		else
-			LAZYSET(blood_type,C.blood_mix_types, C.blood_mix_types)
-			C.blood_color = blood_DNA_to_color(C.blood_mix_types)
+	if(blood_type in blood_mix_types)
+		return
+	else
+		LAZYADD(blood_mix_types, blood_type)
 	return TRUE
 
 /datum/component/forensics/proc/blood_DNA_to_color(list/bloods)
@@ -208,4 +197,6 @@
 				i++
 		else
 			final_rgb = BlendRGB(final_rgb, bloodtype_to_color(bloods))
-	return final_rgb
+
+	blood_mix_color = final_rgb
+	return TRUE

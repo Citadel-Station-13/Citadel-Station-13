@@ -33,29 +33,27 @@
 
 
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
-	to_chat(world, "Attempting to add DNA to pass to gibs")
+	var/body_coloring
 	if(source_mob)
-		to_chat(world, "We got a source mob, [source_mob]")
 		dna_to_add = source_mob.get_blood_dna_list() //ez pz
+		if(ishuman(source_mob))
+			var/mob/living/carbon/human/H = source_mob
+			if(H.dna.species.use_skintones)
+				body_coloring = skintone2hex(H.skin_tone)
+			else
+				body_coloring = "#[H.dna.features["mcolor"]]"
+
 	else if(gib_mob_type)
-		to_chat(world, "We got a mob type, [gib_mob_type]")
 		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
 		if(gib_mob_species)
-			to_chat(world, "We got a mob species too, [gib_mob_species]")
 			if(ishuman(temp_mob))
-				to_chat(world, "it's a human type mob for sure")
 				var/mob/living/carbon/human/H = temp_mob
 				H.set_species(gib_mob_species)
-				if(isjellyperson(H))
-					H.dna.blood_type = "GEL"
-				if(isipcperson(H))
-					H.dna.blood_type = "HF"
-				if(isxenoperson(H))
-					H.dna.blood_type = "X*"
-				if(islizard(H))
-					H.dna.blood_type = "L"
-				to_chat(world, "temp_mob is a [H.dna.species]")
 				dna_to_add = temp_mob.get_blood_dna_list()
+				if(H.dna.species.use_skintones)
+					body_coloring = skintone2hex(H.skin_tone)
+				else
+					body_coloring = "#[H.dna.features["mcolor"]]"
 				qdel(H)
 			else
 				dna_to_add = temp_mob.get_blood_dna_list()
@@ -78,6 +76,7 @@
 
 				gib.add_blood_DNA(dna_to_add)
 				// color them properly, please.
+				gib.body_colors = body_coloring
 				gib.update_icon()
 
 				var/list/directions = gibdirections[i]
