@@ -8,7 +8,8 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
-/obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
+/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
+	AddComponent(/datum/component/forensics, null,null,blood_DNA,null,blood_mix_types,blood_mix_color)
 	. = ..()
 	update_icon()
 
@@ -27,9 +28,9 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	GET_COMPONENT(D, /datum/component/forensics)
-	if(!blood_color)
-		blood_color = D.blood_mix_color
+	GET_COMPONENT(F, /datum/component/forensics)
+	if(istype(F))
+		F.blood_mix_color = blood_color
 	color = blood_color
 
 /obj/effect/decal/cleanable/blood/old
@@ -56,7 +57,9 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	GET_COMPONENT(D, /datum/component/forensics)
-	color = D.blood_mix_color
+	if(istype(D) && !blood_color)
+		blood_color = D.blood_mix_color
+	color = blood_color
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
@@ -129,12 +132,14 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir, color = B.blood_mix_color)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir, color = blood_color)
+			bloodstep_overlay.Blend(blood_color, ICON_MULTIPLY)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir, color = B.blood_mix_color)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir, color = blood_color)
+			bloodstep_overlay.Blend(blood_color, ICON_MULTIPLY)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness

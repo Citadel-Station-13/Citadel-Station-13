@@ -230,22 +230,16 @@
 		return "blood"
 
 /mob/living/carbon/get_blood_id()
-	to_chat(world, "carbon's get blood id called")
 	var/mob/living/carbon/C = src
 	if(ishuman(C))
-		to_chat(world, "[C] is a [dna.species]")
 		var/mob/living/carbon/human/H = C
 		if(H.dna.species.exotic_blood)
-			to_chat(world, "[H] has [H.dna.species.exotic_blood]")
 			return "[H.dna.species.exotic_blood]"
 	if(dna.species.exotic_blood)
-		to_chat(world, "[src] apparently isn't a human. but has exotic blood, [dna.species.exotic_blood].")
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
-		to_chat(world, "[src] apparently isn't a human. And has no clone or no blood")
 		return
 	else
-		to_chat(world, "[src] apparently isn't a human, doesn't have snowflake blood either or something.")
 		return "blood"
 
 // This is has more potential uses, and is probably faster than the old proc.
