@@ -173,6 +173,7 @@
 		/obj/item/gun/energy/e_gun/advtaser/cyborg,
 		/obj/item/gun/energy/printer,
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/gun/energy/laser/cyborg
 	)
 
