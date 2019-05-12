@@ -233,7 +233,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 50
-	var/mole_requirement = 1
+	var/gas_per_throw = 6
 
 /obj/item/integrated_circuit/weaponized/air_cannon/do_work()
 
@@ -278,8 +278,10 @@
 	if(!source_air || !target_air)
 		return
 
-	if(source_air.total_moles() <= mole_requirement)
+	var/datum/gas_mixture/removed = source_air.remove(gas_per_throw)
+	if(!removed)
 		return
+	target_air.merge(removed)
 
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
@@ -287,13 +289,10 @@
 	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
-	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
+	assembly.visible_message("<span class='danger'>\The [assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with lethal force.")
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
-
-	var/datum/gas_mixture/removed = source_air.remove(mole_requirement)
-	target_air.merge(removed)
 
 	air_update_turf()
 
