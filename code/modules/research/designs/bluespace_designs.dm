@@ -24,6 +24,17 @@
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/satchel_holding
+	name = "Satchel of Holding"
+	desc = "A satchel that opens into a localized pocket of bluespace."
+	id = "satchel_holding"
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
+	build_path = /obj/item/storage/backpack/holding/satchel
+	category = list("Bluespace Designs")
+	dangerous_construction = TRUE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/biobag_holding
 	name = "Bio Bag of Holding"
 	desc = "A chemical holding thingy. Mostly used for xenobiology."
