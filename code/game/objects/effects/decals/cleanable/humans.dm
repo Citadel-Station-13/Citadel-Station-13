@@ -141,7 +141,7 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
 	. = ..()
-	if(shoe_types.len && user.mind.assigned_role == "Detective") //gumshoe does the detective thing, not every fucking assistant
+	if(shoe_types.len && ishuman(user) && user.mind.assigned_role == "Detective") //gumshoe does the detective thing, not every fucking assistant
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
