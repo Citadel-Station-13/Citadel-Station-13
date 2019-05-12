@@ -74,10 +74,12 @@
 /obj/item/stock_parts/cell/magrifle_e
 	name = "magrifle power supply"
 	maxcharge = 14400
+	chargerate = 3520
 
 /obj/item/stock_parts/cell/magpistol_e
 	name = "magpistol power supply"
 	maxcharge = 6000
+	chargerate = 1000
 
 ///sci designs///
 
