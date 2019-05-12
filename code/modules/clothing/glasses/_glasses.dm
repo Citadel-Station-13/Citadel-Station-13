@@ -224,6 +224,17 @@
 	force = 12
 	throwforce = 12
 
+/obj/item/clothing/glasses/garb
+	name = "plain black gar glasses"
+	desc = "Go beyond impossible and kick reason to the curb! Doesn't seem to have flash protection."
+	icon_state = "garb"
+	item_state = "garb"
+
+/obj/item/clothing/glasses/garb/supergarb
+	name = "plain black giga gar glasses"
+	desc = "Believe in us humans. Also doesn't seem to have flash protection."
+	icon_state = "supergarb"
+
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "gar glasses"
 	desc = "Just who the hell do you think I am?!"
