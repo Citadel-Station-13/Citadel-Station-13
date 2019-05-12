@@ -268,8 +268,8 @@
 		dna.species.handle_genitals(src)
 
 /mob/living/carbon/human/proc/Force_update_genitals()
-	dna.species.handle_genitals(src)
-	//dna.species.handle_breasts(src)
+	//dna.species.handle_genitals(src)
+	dna.species.handle_breasts(src)
 
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
@@ -350,7 +350,7 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
-/*
+
 /datum/species/proc/handle_breasts(mob/living/carbon/human/H)
 	//check for breasts first!
 
@@ -414,4 +414,4 @@
 
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
-*/
+	H.update_icons()

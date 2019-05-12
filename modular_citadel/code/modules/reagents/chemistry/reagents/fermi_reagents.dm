@@ -726,7 +726,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		if(100)
 			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
 			M.alpha = M.alpha - 1
-			M.add_trait(TRAIT_NOCLONE)
+			M.add_trait(TRAIT_NOCLONE) //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(80)
 			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the forthcoming oblivion.</b></span>")
 			M.alpha = M.alpha - 1
@@ -735,16 +735,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.alpha = M.alpha - 1
 		if(0 to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
-			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of the afterlife remain with you. (At the cost of staying in character while dead.)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
-			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
+			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life and afterlife remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+			M.visible_message("[M.name] suddenly disappears, their body evaporating from existence, freeing [M.nane] from their mortal coil.")
+			deadchat_broadcast("<span class='userdanger'>[M.name] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK otta them.</span>")
+			message_admins("[M.name] has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag). They MUST stay within characer while dead.")
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
+
+////////////////////////////////////////
+//				MKULTA				  //
+////////////////////////////////////////
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
 	id = "enthral"
-	description = "Need a description."
-	color = "#A080H4" // rgb: , 0, 255
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#2C051A" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	//metabolization_rate = 0.5
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
@@ -808,6 +814,39 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/reagent/fermi/hatmium
+	name = "Hat growth serium"
+	id = "hatmium"
+	description = "A strange substance that draws in a hat from the hat dimention, "
+	color = "#A080H4" // rgb: , 0, 255
+	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+	//metabolization_rate = 0.5
+	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
+	var/obj/item/clothing/head/hat
+	//addiction_threshold = 30
+	//addiction_stage1_end = 9999//Should never end.
+
+/datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
+	//var/mob/living/carbon/human/o = M
+	var/items = M.get_contents()
+	for(var/obj/item/W in items)
+		if(W == M.head)
+			M.dropItemToGround(W, TRUE)
+	hat = new var/obj/item/clothing/head/hattip
+	equip_to_slot_if_possible(hat, SLOT_HEAD, 1, 1)
+
+/datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
+	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
+	if(!overdosed)
+		for var/i in hat.armor
+			hat.armor[i] = (1+(current_cycle/10))
+
+/datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)//To prevent people in cyro going nuts
+	for var/i in hat.armor
+		hat.armor[i] = (1/(current_cycle*10))
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/reagent/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
@@ -850,6 +889,56 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//for(var/victim in seen)
 				to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 	..()
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
+	name = "Catgirli[pick("a","u","e","y","")]m [pick("apex", "prime", "meow")]" //an attempt at hiding it
+	id = "secretcatchem"
+	description = "An illegal and hidden chem that turns people into catgirls. It's said you see the light if you take too much of it."
+	color = "#A0B0E4" // rgb: , 0, 255
+	taste_description = "hairballs and cream"
+	overdose_threshold = 10
+
+/datum/reagent/fermi/Catgirlium/on_mob_add(mob/living/carbon/human/H)
+	var/current_species = H.dna.species.type
+	var/datum/species/mutation = race
+	if(mutation && mutation != current_species)
+		to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
+		H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!")
+		H.Knockdown(60)
+		H.set_species(mutation)
+	else
+		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
+
+/datum/reagent/fermi/Catgirlium/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		playsound(get_turf(M), 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
+		H.emote("me","lets out a nya!")
+	if(prob(10))
+		playsound(get_turf(M), 'sound/effects/meow1.ogg', 50, 1, -1)
+		H.emote("me","lets out a mewl!")
+	if(prob(10))
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+		H.emote("me","lets out a meowrowr!")
+
+/datum/reagent/fermi/Catgirlium/overdose_start(mob/living/carbon/human/H) //I couldn't resist - should I hide this somewhere else?
+	to_chat(H, "<span class='notice'><b>You suddenly see the light and realise that everyone will be better off, and much happier, if they were only a cat girl.</b></span>")
+	objective = "Aid in the production of more chemicals and turn everyone on the station into catgirls. Avoid any and all attempts at renoucing your newfound catgirl form for this is your true form now."
+	if (owner.mind.assigned_role in GLOB.antagonists)
+		objective += "Complete your objectives in tandem with this new objective. If you are tasked with murdering someone turning someone into a catgirl is now an alternative to you."
+	brainwash(H, objective)
+
+/*
+/proc/secretcatchem(mob/living/carbon/C) //Explosion turns you into a cat. Meow.
+	C.unequip_everything()
+	//var/cat = new /mob/living/simple_animal/pet/cat(C.loc)
+	var/mob/living/simple_animal/pet/cat = new(get_turf(C.loc))
+	C.mind.transfer_to(cat)
+	cat.name = C.name
+	qdel(C)
+*/
+
 
 /*
 /mob/living/simple_animal/hostile/retaliate/ghost

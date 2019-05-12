@@ -798,7 +798,7 @@
 	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet") ////punish_words
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|*snap")
+	var/static/regex/wakeup_words = regex("revert|awaken|snap")
 	//phase1
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/antiresist_words = regex("unable to resist|give in")//useful if you think your target is resisting a lot

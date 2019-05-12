@@ -190,7 +190,7 @@
 	if(M.key == enthrallID)
 		owner.remove_status_effect(src)//This shouldn't happen, but just in case
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
-	redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
+	//redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
 	//Might need to add redirect component for listening too.
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	mental_capacity = 500 - B.get_brain_damage()
@@ -408,8 +408,8 @@
 /datum/status_effect/chem/enthrall/on_remove(mob/living/carbon/M)
 	qdel(redirect_component1.resolve())
 	redirect_component1 = null
-	qdel(redirect_component2.resolve())
-	redirect_component2 = null
+	//qdel(redirect_component2.resolve())
+	//redirect_component2 = null
 
 /*
 /datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -558,13 +558,16 @@
 
 	if (deltaResist>0)//just in case
 		deltaResist /= phase//later phases require more resistance
-
+/*
 /datum/status_effect/chem/enthrall/proc/owner_say(message) //I can only hope this works
-	var/static/regex/owner_words = regex("[master.real_name]|[master.first_name()]")
+	var/datum/status_effect/chem/enthrall/E = owner.has_status_effect(/datum/status_effect/chem/enthrall)
+	var/mob/living/master = E.master
+	var/static/regex/owner_words = regex("[master.name]|[master.first_name()]")
 	if(findtext(message, owner_words))
 		message = replacetext(lowertext(message), lowertext(master.real_name), "[enthrallGender]")
 		message = replacetext(lowertext(message), lowertext(master.name), "[enthrallGender]")
 	return message
+*/
 /*
 /datum/status_effect/chem/OwO
 	id = "OwO"

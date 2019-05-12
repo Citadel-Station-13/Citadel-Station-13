@@ -75,6 +75,7 @@
 //Rediculous sizes remove hands.
 //Should I turn someone with meter wide... assets into a blob?
 //this is far too lewd wah
+
 /obj/item/organ/genital/breasts/update_size()//wah
 	//var/mob/living/carbon/human/o = owner
 	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
@@ -120,6 +121,7 @@
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner
+			message_admins("Cached: [cached_size], prev: [prev_size], size: [size]")
 			H.Force_update_genitals()
 		else if (breast_values[size] < breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "contracts into")] a [uppertext(size)]-cup.</b></span>")
