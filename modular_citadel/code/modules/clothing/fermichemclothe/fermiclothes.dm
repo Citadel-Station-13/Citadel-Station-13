@@ -4,7 +4,7 @@
 /obj/item/clothing/head/hattip	//I wonder if anyone else has played cryptworlds
 	name = "Sythetic hat"
     con = 'icons/obj/clothing/hats.dmi'
-	icon_state = "top_hat"
+	icon_state = "cowboy"
 	desc = "A sythesized hat, you can't seem to take it off. And tips their hat."
 	armor = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
