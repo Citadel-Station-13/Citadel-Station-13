@@ -1806,7 +1806,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/bar)
 "fE" = (
-/obj/machinery/vending/boozeomat/all_access
+/obj/machinery/vending/boozeomat/all_access,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
