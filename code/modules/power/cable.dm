@@ -42,7 +42,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	grind_results = list("copper" = 20)
+	grind_results = list("copper" = 0.2) //30 coil = 6u 
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	var/datum/powernet/powernet
