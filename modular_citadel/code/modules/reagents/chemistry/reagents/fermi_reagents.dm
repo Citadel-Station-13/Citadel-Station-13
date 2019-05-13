@@ -17,19 +17,23 @@
 	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	//return ..()
 
-/datum/reagent/fermi/overdose_start(mob/living/carbon/M)
-	current_cycle++
+///datum/reagent/fermi/overdose_start(mob/living/carbon/M)
+	//current_cycle++
 
 //eigenstate Chem
 //Teleports you to chemistry and back
 //OD teleports you randomly around the Station
 //Addiction send you on a wild ride and replaces you with an alternative reality version of yourself.
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										EIGENSTASIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
 	id = "eigenstate"
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
-	taste_description = "wiggly"
+	taste_description = "wiggly cosmic dust."
 	color = "#5020H4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 20
@@ -496,6 +500,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										BREAST ENLARGE
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 //breast englargement
 //Honestly the most requested chems
 //I'm not a very kinky person, sorry if it's not great
@@ -538,7 +546,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			nB.cached_size = 0
 			nB.prev_size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-			M.reagents.remove_reagent(src.id, 5)
+			holder.remove_reagent(src.id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	//message_admins("Breast size: [B.size], [B.cached_size], [holder]")
@@ -579,6 +587,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		W = nW
 	..()
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										PENIS ENLARGE
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 //TODO: failing the reaction creates a penis instead.
 /datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Incubus draft"
@@ -612,7 +624,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
 			nP.cached_length = 0.1
 			nP.prev_size = 0.1
-			M.reagents.remove_reagent(src.id, 5)
+			holder.remove_reagent(src.id, 5)
 			P = nP
 
 	P.cached_length = P.cached_length + 0.1
@@ -650,6 +662,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		T = nT
 	..()
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										ASTROGEN
+///////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
 	id = "astral"
@@ -736,9 +751,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		if(0 to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life and afterlife remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
-			M.visible_message("[M.name] suddenly disappears, their body evaporating from existence, freeing [M.nane] from their mortal coil.")
-			deadchat_broadcast("<span class='userdanger'>[M.name] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK otta them.</span>")
-			message_admins("[M.name] has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag). They MUST stay within characer while dead.")
+			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
+			deadchat_broadcast("<span class='userdanger'>[M] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK otta them.</span>")
+			message_admins("[M] has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag). They MUST stay within characer while dead.")
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
@@ -788,6 +803,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)
+	. = ..()
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
@@ -812,19 +828,19 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //Addiction is applied when creator is out of viewer
 //
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										HATIMUIM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/reagent/fermi/hatmium
+/datum/reagent/fermi/hatmium //for hatterhat
 	name = "Hat growth serium"
 	id = "hatmium"
 	description = "A strange substance that draws in a hat from the hat dimention, "
 	color = "#A080H4" // rgb: , 0, 255
-	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	//metabolization_rate = 0.5
-	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	var/obj/item/clothing/head/hat
-	//addiction_threshold = 30
-	//addiction_stage1_end = 9999//Should never end.
+	taste_description = "like jerky, whiskey and an off aftertaste of a crypt"
+	overdose_threshold = 100
+	var/obj/item/clothing/head/hattip/hat
+
 
 /datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
 	//var/mob/living/carbon/human/o = M
@@ -832,21 +848,24 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	for(var/obj/item/W in items)
 		if(W == M.head)
 			M.dropItemToGround(W, TRUE)
-	hat = new var/obj/item/clothing/head/hattip
-	equip_to_slot_if_possible(hat, SLOT_HEAD, 1, 1)
+	hat = new /obj/item/clothing/head/hattip()
+	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
+
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
 	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
 	if(!overdosed)
-		for var/i in hat.armor
-			hat.armor[i] = (1+(current_cycle/10))
+		for (var/i in hat.armor)
+			hat.armor[i] = (1+(current_cycle*20)) //Doesn't work aaarghhhhh!!!!
+	else
+		for (var/i in hat.armor)
+			hat.armor[i] = (1/(current_cycle*10))
+	..()
 
-/datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)//To prevent people in cyro going nuts
-	for var/i in hat.armor
-		hat.armor[i] = (1/(current_cycle*10))
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										FURRANIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Works as intended!!
 /datum/reagent/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
@@ -893,16 +912,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
-	name = "Catgirli[pick("a","u","e","y","")]m [pick("apex", "prime", "meow")]" //an attempt at hiding it
+	//name = "Catgirl" //an attempt at hiding it
 	id = "secretcatchem"
 	description = "An illegal and hidden chem that turns people into catgirls. It's said you see the light if you take too much of it."
 	color = "#A0B0E4" // rgb: , 0, 255
 	taste_description = "hairballs and cream"
 	overdose_threshold = 10
 
-/datum/reagent/fermi/Catgirlium/on_mob_add(mob/living/carbon/human/H)
+/datum/reagent/fermi/secretcatchem/New()
+	name = "Catgirli[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
+
+/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
+	. = ..()
 	var/current_species = H.dna.species.type
-	var/datum/species/mutation = race
+	var/datum/species/mutation = /datum/species/human/felinid
 	if(mutation && mutation != current_species)
 		to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 		H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!")
@@ -911,21 +934,23 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	else
 		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
 
-/datum/reagent/fermi/Catgirlium/on_mob_life(mob/living/carbon/M)
+/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
 		playsound(get_turf(M), 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
-		H.emote("me","lets out a nya!")
+		M.emote("me","lets out a nya!")
 	if(prob(10))
 		playsound(get_turf(M), 'sound/effects/meow1.ogg', 50, 1, -1)
-		H.emote("me","lets out a mewl!")
+		M.emote("me","lets out a mewl!")
 	if(prob(10))
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
-		H.emote("me","lets out a meowrowr!")
+		M.emote("me","lets out a meowrowr!")
+	..()
 
-/datum/reagent/fermi/Catgirlium/overdose_start(mob/living/carbon/human/H) //I couldn't resist - should I hide this somewhere else?
+/datum/reagent/fermi/secretcatchem/overdose_start(mob/living/carbon/human/H) //I couldn't resist - should I hide this somewhere else?
+	. = ..()
 	to_chat(H, "<span class='notice'><b>You suddenly see the light and realise that everyone will be better off, and much happier, if they were only a cat girl.</b></span>")
-	objective = "Aid in the production of more chemicals and turn everyone on the station into catgirls. Avoid any and all attempts at renoucing your newfound catgirl form for this is your true form now."
-	if (owner.mind.assigned_role in GLOB.antagonists)
+	var/objective = "Aid in the production of more chemicals and turn everyone on the station into catgirls. Avoid any and all attempts at renoucing your newfound catgirl form for this is your true form now."
+	if (H.mind.assigned_role in GLOB.antagonists)
 		objective += "Complete your objectives in tandem with this new objective. If you are tasked with murdering someone turning someone into a catgirl is now an alternative to you."
 	brainwash(H, objective)
 
@@ -937,6 +962,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	C.mind.transfer_to(cat)
 	cat.name = C.name
 	qdel(C)
+	//Add to chat lines
+	//Maybe teleport player away instead?
 */
 
 
@@ -948,7 +975,7 @@ alpha = 20
 reduce viewrange?
 */
 
-/*
+/* Needs to be fixed:
 //Nanite removal
 //Writen by Trilby!!
 /datum/reagent/fermi/naninte_b_gone

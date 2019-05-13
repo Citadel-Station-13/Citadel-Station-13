@@ -25,6 +25,7 @@
 	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)
 	prev_size = size
+	cached_size = breast_values[size]
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))

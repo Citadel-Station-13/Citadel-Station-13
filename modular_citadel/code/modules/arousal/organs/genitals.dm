@@ -263,14 +263,15 @@
 		return
 	update_genitals()
 
-/mob/living/carbon/human/proc/update_genitals()
+/mob/living/carbon/human/proc/update_genitals(mob/living/carbon/human/H)
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
+	H.update_body()
 
-/mob/living/carbon/human/proc/Force_update_genitals()
-	//dna.species.handle_genitals(src)
+/mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H)
+	dna.species.handle_genitals(src)
 	dna.species.handle_breasts(src)
-
+	H.update_body()
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
 	message_admins("attempting to update sprite")
@@ -358,23 +359,27 @@
 	if(!B)
 		return
 	message_admins("attempting to update sprite in a hacky way")
-	///obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) Where did this come from?
+	//obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) //Where did this come from?
 	//Variables:
 	var/size = B.size
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/datum/sprite_accessory/S = GLOB.breasts_shapes_list[B.shape]
 	var/list/standing = list()
 
-	if(!S || S.icon_state == "none")
-		return
+
+	//if(!S || S.icon_state == "none")
+		//return
+	
 	for(var/layer in relevant_layers)
 		var/layertext = genitals_layertext(layer)
 		S = GLOB.breasts_shapes_list[B.shape]
 
+		message_admins("Attempting sprite calc: Bslot:[B.slot], B.shape:[B.shape], size:[size], Arouse:[B.aroused_state], layertxt:[layertext]")
+
 		var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
 
 		//If breasts are hueg (larger than 5 only have one sprite atm)
-		if (size > 5)
+		if (B.breast_values[size] > 5)
 			genital_overlay.icon_state = "[B.slot]_[B.shape]_[size]_0_[layertext]"//I haven't done around sizes above 5, I dunno how..!
 		else
 			genital_overlay.icon_state = "[B.slot]_[S.icon_state]_[size]_[B.aroused_state]_[layertext]"
@@ -415,3 +420,4 @@
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
 	H.update_icons()
+	///obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) //Where did this come from?
