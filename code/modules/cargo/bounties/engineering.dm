@@ -84,7 +84,7 @@
 	description = "The staff have nothing to do when off-work. Can you send us some Battle Arcade games to play?"
 	reward = 3000
 	required_count = 5
-	wanted_types = list(obj/machinery/computer/arcade/battle)
+	wanted_types = list(/obj/machinery/computer/arcade/battle)
 
 /datum/bounty/item/engineering/energy_ball
 	name = "Contained Tesla Ball"
