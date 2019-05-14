@@ -1451,7 +1451,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	// CITADEL EDIT slap mouthy gits
+	// CITADEL EDIT slap mouthy gits and booty
 	var/aim_for_mouth  = user.zone_selected == "mouth"
 	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
@@ -1460,6 +1460,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'>You slap [target] in the face! </span>",\
+		"You hear a slap.")
+		stop_wagging_tail(target)
+		return FALSE
+	var/aim_for_groin  = user.zone_selected == "groin"
+	var/target_aiming_for_groin = target.zone_selected == "groin"
+	if(aim_for_groin && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
+			"<span class='notice'>You slap [target]'s ass! </span>",\
 		"You hear a slap.")
 		stop_wagging_tail(target)
 		return FALSE
