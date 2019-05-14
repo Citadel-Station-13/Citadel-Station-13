@@ -214,7 +214,7 @@
 
 	hasprimary = TRUE
 	hassecondary = TRUE
-	primary_color = "#000000"
+	primary_color = "#222222"
 	secondary_color = "#888888"
 
 /obj/item/clothing/neck/petcollar/choker
