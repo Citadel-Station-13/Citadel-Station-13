@@ -832,10 +832,10 @@
 	if(cached_reagents[reagent])								//if it's already in us, merge
 		var/datum/reagent/R = cached_reagents[reagent]
 
-		WIP_TAG			//check my maths for purity calculations
+		//WIP_TAG			//check my maths for purity calculations
 		//Add amount and equalize purity
-		var/our_pure_moles = R.volume * R.purity
-		var/their_pure_moles = amount * other_purity
+		//var/our_pure_moles = R.volume * R.purity
+		//var/their_pure_moles = amount * other_purity
 		R.volume += amount
 		//R.purity = (our_pure_moles + their_pure_moles) / (R.volume)
 		R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
@@ -846,7 +846,7 @@
 			my_atom.on_reagent_change(ADD_REAGENT)
 		R.on_merge(data, amount)
 		if(!no_react)
-			start_reacting()
+			handle_reactions()
 		return TRUE
 
 	else
@@ -863,7 +863,7 @@
 		if(my_atom)
 			my_atom.on_reagent_change(ADD_REAGENT)
 		if(!no_react)
-			start_reacting()
+			handle_reactions()
 		if(isliving(my_atom))
 			R.on_mob_add(my_atom)
 		return TRUE
@@ -897,7 +897,7 @@
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
 			amount = CLAMP(amount, 0, R.volume)
-			pH = ((pH * volume)-(R.pH * amount))/(volume - amount)
+			pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to

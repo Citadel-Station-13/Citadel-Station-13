@@ -36,7 +36,8 @@
 	//Fermichem vars:
 	var/purity = 1
 	var/impureChem = "toxin"
-	var/loc = null
+	//var/loc = null
+	var/pH
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

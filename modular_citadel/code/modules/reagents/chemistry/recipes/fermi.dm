@@ -21,7 +21,6 @@
 	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
-	ImpureChem = "toxin" //What chemical is produced with an inpure reaction
 
 /datum/chemical_reaction/eigenstate/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
@@ -50,9 +49,6 @@
 	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE		// If the chemical explodes in a special way
-	ImpureChem 			= "SDGFTox"	// What chemical is metabolised with an inpure reaction
-	InverseChemVal 		= 0.5 		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	InverseChem 		= "SDZF" 	// What chem is metabolised when purity is below InverseChemVal
 
 /datum/chemical_reaction/BElarger
 	name = ""
@@ -119,9 +115,6 @@
 	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE		// If the chemical explodes in a special way
-	//ImpureChem 			= "SDGFTox"	// What chemical is metabolised with an inpure reaction
-	//InverseChemVal 		= 0.5 		// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	//InverseChem 		= "SDZF" 	// What chem is metabolised when purity is below InverseChemVal
 
 
 /datum/chemical_reaction/enthral/on_reaction(datum/reagents/holder)

@@ -8,9 +8,12 @@
 //Naninte chem
 
 /datum/reagent/fermi
-	name = "Fermi"
-	id = "fermi"
-	taste_description = "If affection had a taste, this would be it."
+	name = "Fermi" 	//Why did I putthis here?
+	id = "fermi"	//It's meeee
+	taste_description	= "If affection had a taste, this would be it."
+	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
+	var/InverseChemVal 		= 0					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
+	var/InverseChem 		= "Initropidril" 	// What chem is metabolised when purity is below InverseChemVal
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	//current_cycle++
@@ -22,15 +25,15 @@
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
 	if (src.purity == 1)
 		return
-	if (CR.InverseChemVal > src.purity)
+	else if (src.InverseChemVal > src.purity)
 		holder.remove_reagent(src.id, volume, FALSE)
-		holder.add_reagent(CR.InverseChem)
+		holder.add_reagent(src.InverseChem)
 		return
 	else
 		var/pureVol = volume * purity
 		var/impureVol = volume * (1 - pureVol)
 		holder.remove_reagent(src.id, (volume*impureVol), FALSE)
-		holder.add_reagent(CR.ImpureChem, impureVol, FALSE)
+		holder.add_reagent(src.ImpureChem, impureVol, FALSE)
 
 
 
