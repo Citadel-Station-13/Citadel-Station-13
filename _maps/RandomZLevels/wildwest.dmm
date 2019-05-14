@@ -957,7 +957,7 @@
 /obj/structure/mineral_door/wood{
 	icon_state = "wood"
 	},
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/footprints/tracks/wheels
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -998,7 +998,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dt" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/footprints/tracks/wheels
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
