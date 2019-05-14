@@ -1984,11 +1984,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dG" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	desc = "Your instincts say you shouldn't be following these.";
-	dir = 8;
-	icon_state = "ltrails_1"
-	},
+/obj/effect/decal/cleanable/blood/footprints/tracks/wheels,
 /obj/item/mining_scanner,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
