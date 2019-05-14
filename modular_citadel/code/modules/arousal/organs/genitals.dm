@@ -263,10 +263,9 @@
 		return
 	update_genitals()
 
-/mob/living/carbon/human/proc/update_genitals(mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/update_genitals()
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
-	H.update_body()
 
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H)
 	dna.species.handle_genitals(src)
@@ -369,7 +368,7 @@
 
 	//if(!S || S.icon_state == "none")
 		//return
-	
+
 	for(var/layer in relevant_layers)
 		var/layertext = genitals_layertext(layer)
 		S = GLOB.breasts_shapes_list[B.shape]

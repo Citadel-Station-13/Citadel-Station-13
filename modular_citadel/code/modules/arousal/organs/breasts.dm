@@ -15,7 +15,7 @@
 	fluid_id				= "milk"
 	var/amount				= 2
 	producing				= TRUE
-	shape					= "pair"
+	shape					= "Pair"
 	can_masturbate_with		= TRUE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
