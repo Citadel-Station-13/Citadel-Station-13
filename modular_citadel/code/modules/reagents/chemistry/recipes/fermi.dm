@@ -125,6 +125,7 @@
 
 
 /datum/chemical_reaction/enthral/on_reaction(datum/reagents/holder)
+	message_admins("On reaction for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
 	if (B.["gender"] == "female")

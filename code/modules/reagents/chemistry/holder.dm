@@ -127,6 +127,7 @@
 
 		update_total()
 		handle_reactions()
+		//pH = REAGENT_NORMAL_PH Maybe unnessicary?
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -431,6 +432,8 @@
 					else
 						FermiExplode()
 					//explode function!!
+
+				TODO: make plastic beakers melt at 447 kalvin, all others at ~850 and meta-material never break.
 				*/
 
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))//Temperature check!!
@@ -658,10 +661,10 @@
 		stepChemAmmount = targetVol - reactedVol
 		message_admins("target volume reached. Reaction should stop after this loop. stepChemAmmount: [stepChemAmmount] + reactedVol: [reactedVol] = targetVol [targetVol]")
 
-	if (reactedVol > 0)
-		purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
-	else
-		purity = deltapH
+	//if (reactedVol > 0)
+	//	purity = ((purity * reactedVol) + (deltapH * stepChemAmmount)) /((reactedVol+ stepChemAmmount)) //This should add the purity to the product
+	//else
+	purity = deltapH//set purity equal to pH offset
 
 	// End.
 	/*
@@ -679,7 +682,7 @@
 	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
 		//reactedVol = max(reactedVol, 1) //this shouldnt happen ...
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
-		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp)//add reagent function!! I THINK I can do this:
+		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp, purity)//add reagent function!! I THINK I can do this:
 
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
@@ -786,7 +789,7 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, pH = 7, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -798,6 +801,9 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
+	if(!pH)
+		other_pH = D.pH
+
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
@@ -807,6 +813,7 @@
 	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
+	var/cached_pH = pH
 
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/specific_heat = 0
@@ -820,38 +827,49 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 	////
 
+	pH = round(-log(10, ((cached_total * (10^(-cached_pH))) + (amount * (10^(-other_pH)))) / new_total), REAGENT_PH_ACCURACY)
 	//add the reagent to the existing if it exists
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
-		if (R.id == reagent)
-			R.volume += amount
-			update_total()
-			if(my_atom)
-				my_atom.on_reagent_change(ADD_REAGENT)
-			R.on_merge(data, amount)
-			if(!no_react)
-				handle_reactions()
-			return TRUE
+	if(cached_reagents[reagent])								//if it's already in us, merge
+		var/datum/reagent/R = cached_reagents[reagent]
 
-	//otherwise make a new one
-	var/datum/reagent/R = new D.type(data)
-	cached_reagents += R
-	R.holder = src
-	R.volume = amount
-	R.loc = get_turf(my_atom)
-	if(data)
-		R.data = data
-		R.on_new(data)
+		WIP_TAG			//check my maths for purity calculations
+		//Add amount and equalize purity
+		var/our_pure_moles = R.volume * R.purity
+		var/their_pure_moles = amount * other_purity
+		R.volume += amount
+		//R.purity = (our_pure_moles + their_pure_moles) / (R.volume)
+		R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
+			////
 
+		update_total()
+		if(my_atom)
+			my_atom.on_reagent_change(ADD_REAGENT)
+		R.on_merge(data, amount)
+		if(!no_react)
+			start_reacting()
+		return TRUE
 
-	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
-	update_total()
-	if(my_atom)
-		my_atom.on_reagent_change(ADD_REAGENT)
-	if(!no_react)
-		handle_reactions()
-	return TRUE
+	else
+		var/datum/reagent/R = new D.type(data)
+		cached_reagents[R.id] = R
+		R.holder = src
+		R.volume = amount
+		R.purity = other_purity
+		if(data)
+			R.data = data
+			R.on_new(data)
+
+		update_total()
+		if(my_atom)
+			my_atom.on_reagent_change(ADD_REAGENT)
+		if(!no_react)
+			start_reacting()
+		if(isliving(my_atom))
+			R.on_mob_add(my_atom)
+		return TRUE
+
+	return FALSE
+
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
@@ -879,6 +897,7 @@
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
 			amount = CLAMP(amount, 0, R.volume)
+			pH = ((pH * volume)-(R.pH * amount))/(volume - amount)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to

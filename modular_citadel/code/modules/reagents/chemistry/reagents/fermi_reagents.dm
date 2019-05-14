@@ -17,6 +17,24 @@
 	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	//return ..()
 
+//This should process fermichems to find out how pure they are and what effect to do.
+//TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
+/datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+	if (src.purity == 1)
+		return
+	if (CR.InverseChemVal > src.purity)
+		holder.remove_reagent(src.id, volume, FALSE)
+		holder.add_reagent(CR.InverseChem)
+		return
+	else
+		var/pureVol = volume * purity
+		var/impureVol = volume * (1 - pureVol)
+		holder.remove_reagent(src.id, (volume*impureVol), FALSE)
+		holder.add_reagent(CR.ImpureChem, impureVol, FALSE)
+
+
+
+
 ///datum/reagent/fermi/overdose_start(mob/living/carbon/M)
 	//current_cycle++
 
@@ -775,6 +793,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
+
+/datum/reagent/fermi/enthrall/on_new()
+	message_admins("On new for enthral proc'd")
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
+	if (B.["gender"] == "female")
+		creatorGender = "Mistress"
+	else
+		creatorGender = "Master"
+	creatorName = B.["real_name"]
+	creatorID = B.["ckey"]
+	var/mob/living/creatore = holder
+	creator = creatore
+	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	..()
