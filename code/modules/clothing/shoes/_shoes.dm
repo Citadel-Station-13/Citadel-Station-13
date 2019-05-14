@@ -52,11 +52,10 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			GET_COMPONENT(D, /datum/component/forensics)
 			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = D.blood_mix_color)
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_color)
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = D.blood_mix_color)
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_color)
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -97,6 +96,7 @@
 		return
 	blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
+	blood_color = null
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_shoes()

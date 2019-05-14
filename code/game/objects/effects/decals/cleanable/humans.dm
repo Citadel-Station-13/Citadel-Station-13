@@ -8,9 +8,9 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
-/obj/effect/decal/cleanable/blood/Initialize(mapload, list/datum/disease/diseases)
-	AddComponent(/datum/component/forensics, null,null,blood_DNA,null,blood_mix_types,blood_mix_color)
+/obj/effect/decal/cleanable/blood/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/forensics)
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
@@ -20,7 +20,7 @@
 	update_icon()
 	return ..()
 
-obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
+/obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 	return TRUE
 
 /obj/effect/decal/cleanable/blood/transfer_mob_blood_dna()
@@ -29,9 +29,20 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	GET_COMPONENT(F, /datum/component/forensics)
-	if(istype(F))
-		F.blood_mix_color = blood_color
+	if(F && istype(F))
+		blood_color = F.blood_mix_color
+	else
+		for(var/datum/reagent/R in reagents.reagent_list)
+			// Get blood data from the blood reagent.
+			if(istype(R, /datum/reagent/blood))
+				if(R.data["blood_type"])
+					blood_color = bloodtype_to_color(R.data["blood_type"])
+			else if(istype(R, /datum/reagent/liquidgibs))
+				if(R.data["blood_type"])
+					blood_color = bloodtype_to_color(R.data["blood_type"])
+
 	color = blood_color
+
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -91,6 +102,7 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.blood_color = blood_color
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -99,6 +111,7 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		else if(!H.bloodiness)
 			H.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+			H.blood_color = blood_color
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
@@ -111,6 +124,7 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.blood_color = blood_color
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
@@ -119,30 +133,28 @@ obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
 		else if(!H.bloodiness)
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+			H.blood_color = blood_color
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/update_icon()
-	..()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
-		GET_COMPONENT(B, /datum/component/forensics)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir, color = blood_color)
-			bloodstep_overlay.Blend(blood_color, ICON_MULTIPLY)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir, color = blood_color)
-			bloodstep_overlay.Blend(blood_color, ICON_MULTIPLY)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
+
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
 	. = ..()

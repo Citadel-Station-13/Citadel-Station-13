@@ -234,7 +234,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(H.dna.species.exotic_blood)
-			return "[H.dna.species.exotic_blood]"
+			return H.dna.species.exotic_blood
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
 	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))

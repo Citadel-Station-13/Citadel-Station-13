@@ -64,6 +64,7 @@
 					FP.icon_state = FOOTPRINT_SHOE
 					FP.print_state = FOOTPRINT_SHOE
 					FP.blood_state = S.blood_state
+					FP.blood_color = S.blood_color
 					FP.entered_dirs |= dir
 					FP.bloodiness = S.blood_smear[S.blood_state]
 					FP.update_icon()
@@ -79,7 +80,8 @@
 					if(!has_gravity(loc))
 						return
 					var/turf/T = get_turf(src)
-					if(bloodiness)
+					var/mob/living/carbon/human/H = src
+					if(H.bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
 						if(oldFP && (oldFP.blood_state == blood_state && oldFP.color == color))
 							return
@@ -106,6 +108,7 @@
 								FP.icon_state = FOOTPRINT_SHOE
 								FP.print_state = FOOTPRINT_SHOE
 							FP.add_blood_DNA(return_blood_DNA())
+							FP.blood_color = H.blood_color
 							FP.update_icon()
 							var/newdir = get_dir(T, loc)
 							if(newdir == dir)
@@ -124,6 +127,7 @@
 					if(!has_gravity(loc))
 						return
 					var/turf/T = get_turf(src)
+					var/mob/living/carbon/human/H = src
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks) in T
 						if(oldFP && (oldFP.blood_state == blood_state && oldFP.color == color))
@@ -133,6 +137,7 @@
 							FP.icon_state = FOOTPRINT_DRAG
 							FP.print_state = FOOTPRINT_DRAG
 							FP.add_blood_DNA(return_blood_DNA())
+							FP.blood_color = H.blood_color
 							FP.update_icon()
 							var/newdir = get_dir(T, loc)
 							if(newdir == dir)

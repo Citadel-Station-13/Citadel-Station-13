@@ -11,12 +11,16 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/guts()
 	if(gib_overlay)
-		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", layer = (LOW_OBJ_LAYER - 0.1))
-		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-overlay", color = body_colors, layer = (LOW_OBJ_LAYER - 0.2))
+		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", color = blood_color)
+		gibz.layer = (LOW_OBJ_LAYER - 0.1)
+		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-overlay", color = body_colors)
+		gibz2.layer = (LOW_OBJ_LAYER - 0.2)
 		if(!slimy_gibs)
 			gibz.appearance_flags = RESET_COLOR
-		add_overlay(gibz)
-		add_overlay(gibz2)
+			add_overlay(gibz)
+		else
+			add_overlay(gibz)
+			add_overlay(gibz2)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -41,8 +45,10 @@
 			GET_COMPONENT(infective, /datum/component/infective)
 			if(infective)
 				diseases = infective.diseases
+			var/obj/effect/decal/cleanable/blood/gibs/gibbers = src
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
-			splat.update_icon()
+			splat.color = gibbers.blood_color
+
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -97,8 +103,8 @@
 /obj/effect/decal/cleanable/blood/gibs/human/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
-	update_icon()
 	guts()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/gibs/human/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")

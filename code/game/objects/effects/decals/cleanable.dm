@@ -84,6 +84,7 @@
 			S.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,S.blood_smear[blood_state]+add_blood)
 			S.add_blood_DNA(return_blood_DNA())
 			S.blood_state = blood_state
+			S.blood_color = blood_color
 			update_icon()
 			H.update_inv_shoes()
 
@@ -97,6 +98,7 @@
 			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
 			H.add_blood_DNA(return_blood_DNA())
 			H.blood_state = blood_state
+			H.blood_color = blood_color
 			update_icon()
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
