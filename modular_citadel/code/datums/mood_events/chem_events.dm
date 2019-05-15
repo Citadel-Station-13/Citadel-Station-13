@@ -9,7 +9,7 @@
 /datum/mood_event/enthrallpraise
     mood_change = 12
     description = "<span class='warning'>I feel so happy! I'm a good pet who Master loves!</span>\n"
-    timeout = 400
+    timeout = 600
 
 /datum/mood_event/enthrallscold
     mood_change = -12
@@ -30,4 +30,4 @@
 
 /datum/mood_event/enthrallmissing4
     mood_change = -25
-    description = "<span class='warning'>You're all alone, It's so hard to continute without your Master...</span>\n"
+    description = "<span class='warning'>I'm all alone, It's so hard to continute without Master...</span>\n"

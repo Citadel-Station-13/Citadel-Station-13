@@ -207,9 +207,9 @@
 				to_chat(owner, "<span class='notice'><i>Your mind starts to restore some of it's clarity as you feel the effects of the drug wain.</i></span>")
 	if (mental_capacity <= 500 || phase == 4)
 		if (owner.reagents.has_reagent("mannitol"))
-			mental_capacity += 1
+			mental_capacity += 5
 		if (owner.reagents.has_reagent("neurine"))
-			mental_capacity += 2
+			mental_capacity += 10
 
 	//mindshield check
 	if(M.has_trait(TRAIT_MINDSHIELD))
@@ -409,13 +409,12 @@
 	//qdel(redirect_component2.resolve())
 	//redirect_component2 = null
 
-/*
+
 /datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-		    if(enthrallID.name in message || enthrallID.first_name in message)
+		    if(master in message || master in message)
 		        return
 		    else
 		        . = ..()
-*/
 
 /datum/status_effect/chem/enthrall/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/mob/living/carbon/C = owner

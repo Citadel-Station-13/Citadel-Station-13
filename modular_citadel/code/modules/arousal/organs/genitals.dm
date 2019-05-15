@@ -269,8 +269,8 @@
 
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H)
 	dna.species.handle_genitals(src)
-	dna.species.handle_breasts(src)
-	H.update_body()
+	//dna.species.handle_breasts(src)
+	//H.update_body()
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
 	message_admins("attempting to update sprite")
@@ -351,6 +351,7 @@
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
 
+/* Behold the maddness I went through.
 /datum/species/proc/handle_breasts(mob/living/carbon/human/H)
 	//check for breasts first!
 
@@ -420,3 +421,4 @@
 		H.apply_overlay(L)
 	H.update_icons()
 	///obj/item/organ/genital/breasts/update_icon(/obj/item/organ/genital) //Where did this come from?
+*/

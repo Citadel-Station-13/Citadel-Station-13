@@ -48,7 +48,7 @@
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
-	var/pH = REAGENT_NORMAL_PH
+	var/pH = REAGENT_NORMAL_PH//This is definately 7, right?
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
@@ -545,6 +545,7 @@
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
 	var/multiplier = INFINITY
+	var/special_react_result = C.check_special_react(src)
 
 	message_admins("updating targetVol from [targetVol]")
 	for(var/B in cached_required_reagents) //
@@ -557,6 +558,8 @@
 		targetVol = 0
 		handle_reactions()
 		update_total()
+
+		C.on_reaction(src, multiplier, special_react_result)
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
@@ -578,6 +581,7 @@
 			targetVol = 0
 			handle_reactions()
 			update_total()
+			C.on_reaction(src, multiplier, special_react_result)
 			return
 	else
 		STOP_PROCESSING(SSprocessing, src)
@@ -587,6 +591,7 @@
 		targetVol = 0
 		handle_reactions()
 		update_total()
+		C.on_reaction(src, multiplier, special_react_result)
 		return
 
 	//handle_reactions()
@@ -827,48 +832,54 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 	////
 
-	pH = round(-log(10, ((cached_total * (10^(-cached_pH))) + (amount * (10^(-other_pH)))) / new_total), REAGENT_PH_ACCURACY)
+	//pH = round(-log(10, ((cached_total * (10^(-cached_pH))) + (amount * (10^(-other_pH)))) / new_total), REAGENT_PH_ACCURACY) I think this is wrong? I'm getting negative numbers?
+	pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
 	//add the reagent to the existing if it exists
-	if(cached_reagents[reagent])								//if it's already in us, merge
-		var/datum/reagent/R = cached_reagents[reagent]
 
-		//WIP_TAG			//check my maths for purity calculations
-		//Add amount and equalize purity
-		//var/our_pure_moles = R.volume * R.purity
-		//var/their_pure_moles = amount * other_purity
-		R.volume += amount
-		//R.purity = (our_pure_moles + their_pure_moles) / (R.volume)
-		R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
-			////
+	for(var/A in cached_reagents)
+		var/datum/reagent/R = A
+		if (R.id == reagent)
+			//WIP_TAG			//check my maths for purity calculations
+			//Add amount and equalize purity
+			R.volume += amount
+			//Maybe make a pH for reagents, not sure. it's hard to imagine where the H+ ions would go. I'm okay with this solution for now.
+			//R.purity = (our_pure_moles + their_pure_moles) / (R.volume)
+			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
+				////
 
-		update_total()
-		if(my_atom)
-			my_atom.on_reagent_change(ADD_REAGENT)
-		R.on_merge(data, amount)
-		if(!no_react)
-			handle_reactions()
-		return TRUE
+			update_total()
+			if(my_atom)
+				my_atom.on_reagent_change(ADD_REAGENT)
+			R.on_merge(data, amount)
+			if(!no_react)
+				handle_reactions()
+			return TRUE
 
-	else
-		var/datum/reagent/R = new D.type(data)
-		cached_reagents[R.id] = R
-		R.holder = src
-		R.volume = amount
-		R.purity = other_purity
-		if(data)
-			R.data = data
-			R.on_new(data)
 
-		update_total()
-		if(my_atom)
-			my_atom.on_reagent_change(ADD_REAGENT)
-		if(!no_react)
-			handle_reactions()
-		if(isliving(my_atom))
-			R.on_mob_add(my_atom)
-		return TRUE
+	//otherwise make a new one
+	var/datum/reagent/R = new D.type(data)
+	cached_reagents += R
+	R.holder = src
+	R.volume = amount
+	R.purity = other_purity
+	R.loc = get_turf(my_atom)
+	if(data)
+		R.data = data
+		R.on_new(data)
+	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
+		var/datum/reagent/fermi/FermiTime = D //It's Fermi time!
+		FermiTime.fermiCreate(R.holder) //Seriously what is "data" ????
+		//This is how I keep myself sane.
 
-	return FALSE
+
+	update_total()
+	if(my_atom)
+		my_atom.on_reagent_change(ADD_REAGENT)
+	if(!no_react)
+		handle_reactions()
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom)
+	return TRUE
 
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
@@ -896,8 +907,11 @@
 		if (R.id == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
+			if((total_volume - amount) == 0)//Because this can result in 0, I don't want it to crash.
+				pH = 7
+			else
+				pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
 			amount = CLAMP(amount, 0, R.volume)
-			pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to

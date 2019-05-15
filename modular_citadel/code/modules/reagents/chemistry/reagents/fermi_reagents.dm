@@ -7,6 +7,8 @@
 //And tips their hat
 //Naninte chem
 
+
+
 /datum/reagent/fermi
 	name = "Fermi" 	//Why did I putthis here?
 	id = "fermi"	//It's meeee
@@ -20,6 +22,9 @@
 	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	//return ..()
 
+/datum/reagent/fermi/proc/fermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	return
+
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
@@ -27,7 +32,7 @@
 		return
 	else if (src.InverseChemVal > src.purity)
 		holder.remove_reagent(src.id, volume, FALSE)
-		holder.add_reagent(src.InverseChem)
+		holder.add_reagent(src.InverseChem, volume, FALSE)
 		return
 	else
 		var/pureVol = volume * purity
@@ -41,14 +46,25 @@
 ///datum/reagent/fermi/overdose_start(mob/living/carbon/M)
 	//current_cycle++
 
-//eigenstate Chem
-//Teleports you to chemistry and back
-//OD teleports you randomly around the Station
-//Addiction send you on a wild ride and replaces you with an alternative reality version of yourself.
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										EIGENSTASIUM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//eigenstate Chem
+//Teleports you to chemistry and back
+//OD teleports you randomly around the Station
+//Addiction send you on a wild ride and replaces you with an alternative reality version of yourself.
+//During the process you get really hungry, then your items start teleporting randomly,
+//then alternative versions of yourself are brought in from a different universe and they yell at you.
+//and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative (this used to reroll objectives, but Kevin said prooobably not).
+//Currently the creation loc doesn't work, so it  teleports you back to where you took it. Which is fine too.
+//Bugginess level: low - I can't get the remove all status effects and moodlets to work. Basically I'd like to reset the character to roundstart if possible.
+
+//Important factors to consider while balancing:
+//1.It's... Fun. And thats mostly it. The teleport thing isn't that useful, since you have to be not stunned to take it.
+//You could use it as an antag and OD someone, but you have to inject 20u, which is 5 more than a syringe, and it doesn't kill you.
+//I'd like to make it reroll your objectives or expand upon the alternative version of you.
 
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
@@ -105,7 +121,7 @@
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
 	M.Jitter(10)
 
-/datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly
+/datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly, probably one of my favourite effects. Sometimes kills you.
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
@@ -210,6 +226,8 @@
 ////////////////////////////////////////////////////
 // 		synthetic-derived growth factor			 //
 //////////////////////////////////////////////////
+other files that are relivant:
+modular_citadel/code/datums/status_effects/chems.dm - SDGF
 WHAT IT DOES
 
 Several outcomes are possible (in priority order):
@@ -349,7 +367,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//qdel(src)
 
 			else if(src.playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
-				message_admins("Failed to find clone Candidate")
+				//message_admins("Failed to find clone Candidate")
 				src.unitCheck = TRUE
 				if(M.has_status_effect(/datum/status_effect/chem/SGDF)) // Heal the user if they went to all this trouble to make it and can't get a clone, the poor fellow.
 					switch(current_cycle)
@@ -387,7 +405,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
-							holder.remove_reagent(src.id, 1)//removes SGDF on completion.
+							holder.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
@@ -524,11 +542,28 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										BREAST ENLARGE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//Other files that are relivant:
+//modular_citadel/code/datums/status_effects/chems.dm
+//modular_citadel/code/modules/arousal/organs/breasts.dm
 
 //breast englargement
 //Honestly the most requested chems
 //I'm not a very kinky person, sorry if it's not great
 //I tried to make it interesting..!!
+
+//Normal function increases your breast size by 0.1, 1 unit = 1 cup.
+//If you get stupid big, it presses against your clothes, causing brute and oxydamage. Then rips them off.
+//If you keep going, it makes you slower, in speed and action.
+//decreasing your size will return you to normal.
+//(see the status effect in chem.dm)
+//Need to add something that checks to see if the breasts are gone to remove negative debuffs, as well as improve how they're added instead of a flat +/-
+//I think most of the layering stuff Works
+//but by god does it make me mad, never again.
+//Overdosing on (what is essentially space estrogen) makes you female, removes balls and shrinks your dick.
+//OD is low for a reason. I'd like fermichems to have low ODs, and dangerous ODs, and since this is a meme chem that everyone will rush to make, it'll be a lesson learnt early.
+
+//Bug status: Maybe a bit buggy with the spritecode, and the sprites themselves need touching up.
+//TODO - fail reaction explosion makes breasts and baps you with them.
 /datum/reagent/fermi/BElarger
 	name = "Sucubus milk"
 	id = "BEenlager"
@@ -611,12 +646,15 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
+//See breast explanation, it's the same but with taliwhackers
+//Oh and I refuse to draw dicks. Someone else can or I'll replace large sprites with a redtail.
+//Since someone else made this in the time it took me to PR it, I merged the two ideas.
+//Which basically means I took the description.
 //TODO: failing the reaction creates a penis instead.
 /datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Incubus draft"
 	id = "PElarger"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermicem corp and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny?
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
@@ -682,10 +720,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		nT.Insert(M)
 		T = nT
 	..()
-
+/*
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										ASTROGEN
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+More fun chems!
+When you take it, it spawns a ghost that shouldn't be able to interact with the world, it can talk cause eh, it's space whattya gonna do
+This ghost moves pretty quickly and is mostly invisible, but is still visible for people with eyes.
+When it's out of your system, you return back to yourself. It doesn't last long and metabolism of the chem is exponential.
+ODing doesn't seem to work, I dunno why, I'd like it to frustrate your attempts to move around and make you fall aleep after.
+Addiction is particularlly brutal, it slowly turns you invisible with flavour text, then kills you at a low enough alpha. (i've also added something to prevent geneticists speeding this up)
+There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
+I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
+
+Buginess level: low
+*/
+
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
 	id = "astral"
@@ -694,19 +744,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	taste_description = "velvety brambles"
 	metabolization_rate = 0//Removal is exponential, see code
 	overdose_threshold = 20
-	addiction_threshold = 30
-	addiction_stage1_end = 9999//Should never end.
+	addiction_threshold = 25
+	addiction_stage1_end = 9999//Should never end. There is no escape make your time
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/ODing = FALSE
+	var/antiGenetics = 255
+	var/sleepytime = 0
 	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255//Reset addiction
 	switch(current_cycle)
 		if(0)//Require a minimum
-			//var/mob/living/carbon/H = M
-			//M.alpha = 255
+			M.alpha = 255
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -723,52 +774,57 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			G.alpha = 35
 			G.name = "[M]'s astral projection"
 			M.mind.transfer_to(G)
+			sleepytime = 10*volume
+	if(overdosed)
+		if(prob(50))
+			to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
+			do_teleport(G, M.loc)
 	holder.remove_reagent(src.id, current_cycle, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
 	G.mind.transfer_to(origin)
 	qdel(G)
-	if(ODing == TRUE)
-		M.Sleeping(10*volume, 0)
+	if(overdosed)
+		M.Sleeping(sleepytime, 0)
 		ODing = FALSE
-	..()
-
-/datum/reagent/fermi/astral/overdose_process(mob/living/carbon/M)
-	ODing = TRUE
-	if (!G == null)
-		if(prob(70))
-			to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
-			do_teleport(G, M.loc)
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
 	if(prob(65))
-		M.alpha = M.alpha - 1
-	switch(M.alpha)
+		M.alpha--
+		antiGenetics--
+	switch(antiGenetics)
 		if(245)
 			to_chat(M, "<span class='warning'>You notice your body starting to disappear, maybe you took too much Astrogen...?</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(220)
 			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(180)
 			to_chat(M, "<span class='notice'>You're starting to get scared as more and more of your body and consciousness begins to fade.</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(120)
 			to_chat(M, "<span class='notice'>As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(100)
 			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 			M.add_trait(TRAIT_NOCLONE) //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(80)
 			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the forthcoming oblivion.</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(45)
 			to_chat(M, "<span class='warning'>The last vestiges of your mind eagerly await your imminent annihilation.</b></span>")
-			M.alpha = M.alpha - 1
+			M.alpha--
+			antiGenetics--
 		if(0 to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life and afterlife remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
@@ -778,10 +834,148 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
-
+/*
 ////////////////////////////////////////
 //				MKULTA				  //
 ////////////////////////////////////////
+The magnum opus of FermiChem -
+Long and complicated, I highly recomend you look at the two other files heavily involved in this
+modular_citadel/code/datums/status_effects/chems.dm - handles the subject's reactions
+code/modules/surgery/organs/vocal_cords.dm - handles the enchanter speaking
+What started as a chem for bhijin became way too ambitious, because I live in the sky with pie.
+
+HOW IT WORKS
+Fermis_Reagent.dm
+There's 3 main ways this chemical works; I'll start off with discussing how it's set up.
+Upon reacting with blood as a catalyst, the blood is used to define who the enthraller is - thus only the creator is/can choose who the master will be. As a side note, you can't adminbus this chem, even admins have to earn it.
+This uses the fermichem only proc; FermiCreate, which is basically the same as On_new, except it doesn't require "data" which is something to do with blood and breaks everything so I said bugger it and made my own proc. It basically sets up vars.
+When it's first made, the creator has to drink some of it, in order to give them the vocal chords needed.
+When it's given to someone, it gives them the status effect and kicks off that side of things. For every metabolism tick, it increases the enthrall tally.
+Finally, if you manage to pump 150u into some poor soul, you overload them, and mindbreak them. Making them your willing, but broken slave. Which can only be reversed by; fixing their brain with mannitol and neurine (100 / 50u respectively) (or less with both),
+
+vocal_cords.dm
+This handles when the enchanter speaks - basically uses code from voice of god, but only for people with the staus effect. Most of the words are self explainitory, and has a smaller range of commands. If you're not sure what one does, it likely affects the enthrall tally, or the resist tally.
+list of commands:
+
+-mixables-
+enthral_words
+reward_words
+punish_words
+0
+saymyname_words
+wakeup_words
+1
+silence_words
+antiresist_words
+resist_words
+forget_words
+attract_words
+orgasm_words
+2
+awoo_words
+nya_words
+sleep_words
+strip_words
+walk_words
+run_words
+knockdown_words
+3
+statecustom_words
+custom_words
+objective_words
+heal_words
+stun_words
+hallucinate_words
+hot_words
+cold_words
+getup_words
+pacify_words
+charge_words
+
+Mixables can be used intersperced with other commands, 0 is commands that work on sleeper against (i.e. players enthralled to state 3, then ordered to wake up and forget, they can be triggered back instantly)
+1 is for players who immediately are injected with the chem - no stuns, only a silence and something that draws them towrds them. This is the best time to try to fight it and you're likely to win by spamming resist, unless the enchantress has plans.
+2 is the seconds stage, which allows removal of clothes, slowdown and light stunning. You can also make them nya and awoo, because cute.
+3 is the finaly state, which allows application of a few status effects (see chem.dm) and allows custom triggers to be installed (kind of like nanites), again, see chem.dm
+In a nutshell, this is the way you enthrall people, by typing messages into chat and managing cooldowns on the stronger words. You have to type words and your message strength is increases with the number of characters - if you type short messages the cooldown will be too much and the other player will overcome the chem.
+I suppose people could spam gdjshogndjoadphgiuaodp but, the truth of this chem is that it mostly allows a casus beli for subs to give in, and everyones a sub on cit (mostly), so if you aujigbnadjgipagdsjk then they might resist harder cause you're a baddie and baddies don't deserve pets.
+Also, the use of this chem as a murder aid is antithetic to it's design, the subject gains bonus resistance if they're hurt or hungry (I'd like to expland this more, I like the idea that you have to look after all of them otherwise they aren't as effective, kind of like tamagachis!). If this becomes a problem, I'll deal with it, I'm not happy with people abusing this chem for an easy murder. (I might make it so you an't strike your pet when health is too low.)
+Additionaly, in lieu of previous statement - the pet is ordered to not kill themselves, even if ordered to.
+
+chem.dm
+oof
+There's a few basic things that have to be understood with this status effect
+1. There is a min loop which calculates the enthrall state of the subject, when the entrall tally is over a certain amount, it will push you up 1 phase.
+0 - Sleeper
+1 - initial
+2 - enthralled
+3 - Fully entranced
+4 - mindbroken
+4 can only be reached via OD, whereas you can increment up from 1 > 2 > 3. 0 is only obtainable on a state 3 pet, and it toggles between the two.
+
+1.5 Chem warfare
+Since this is a chem, it's expected that you will use all of the chemicals at your disposal. Using aphro and aphro+ will weaken the resistance of the subject, while ananphro, anaphro+, mannitol and neurine will strengthen it.
+Additionally, the more aroused you are, the weaker your resistance will be, as a result players immune to aphro and anaphro give a flat bonus to the enthraller.
+using furranium and hatmium on the enchanter weakens their power considerably, because they sound rediculous. "Youwe fweewing wery sweepy uwu" This completely justifies their existance.
+The impure toxin for this chem increases resistance too, so if they're a bad chemist it'll be unlikely they have a good ratio (and as a secret bonus, really good chemists cann purposely make the impure chem, to use either to combat the use of it against them, or as smoke grenades to deal with a large party)
+
+2. There is a resistance proc which occurs whenever the player presses resist. You have to press it a lot, this is intentional. If you're trying to fight the enchanter, then you can't click both. You usually will win if you just mash resist and the enchanter does nothing, so you've got to react.
+Each step futher it becomes harder to resist, in state 2 it's longer, but resisting is still worthwhile. If you're not in state 3, and you've not got MKultra inside of you, you generate resistance very fast. So in some cases the better option will be to stall out any attempts to entrance you.
+At the moment, resistance doesn't affect the commands - mostly because it's a way to tell if a state 3 is trying to resist. But this might change if it gets too hard to fight them off.
+Durign state 3, it's impossible to resist if the enthraller is in your presence (8 tiles), you generate no resistance if so. If they're out of your range, then you start to go into the addiction processed
+As your resistance is tied to your arousal, sometimes your best option is to wah
+
+3. The addition process starts when the enthraller is out of range, it roughtly follows the five stages of grief; denial, anger, bargaining, depression and acceptance.
+What it mostly does makes you sad, hurts your brain, and sometimes you lash out in anger.
+Denial - minor brain damaged
+bargaining - 50:50 chance of brain damage and brain healing
+anger - randomly lashing out and hitting people
+depression - massive mood loss, stuttering, jittering, hallucinations and brain damage
+depression, again - random stunning and crying, brain damage, and resistance
+acceptance - minor brain damage and resistance.
+You can also resist while out of range, but you can only break free of a stange 3 enthrallment by hitting the acceptance phase with a high enough resistance.
+Finally, being near your enthraller reverts the damages caused.
+It is expected that if you intend to break free you'll need to use psicodine and mannitol or you'll end up in a bad, but not dead, state. This gives more work for medical!! Finally the true rational of this complicated chem comes out.
+
+4. Status effects in status effects.
+There's a few commands that give status effects, such as antiresist, which will cause resistance presses to increase the enthrallment instead, theses are called from the vocal chords.
+They're mostly self explainitory; antiresist, charge, pacify and heal. Heals quite weak for obvious reasons. I'd like to add more, maybe some weak adneals with brute/exhaustion costs after the status is over. A truth serum might be neat too.
+State 4 pets don't get status effects.
+
+5. Custom triggers
+Because it wasnt complicated enough already.
+Custom triggers are set by stating a trigger word, which will call a sub proc, which is also defined when the trigger is Called
+The effects avalible at the moment are:
+Speak - forces pet to say a preallocated phrase in response to the trigger
+Echo - sends a message to that player only (i.e. makes them think something)
+Shock - gives them a seizure/zaps them
+You can look this one up yourself - it's what you expect, it's cit
+kneel - gives a short knockdown
+strip - strips jumpsuit only
+objective - gives the pet a new objective. This requires a high ammount of mental capasity - which is determined by how much you resist. If you resist enough during phase 1 and 2, then they can't give you an objective.
+Feel free to add more.
+triggers work when said by ANYONE, not just the enchanter.
+This is only state 3 pets, state 4 pets cannot get custom triggers, you broke them you bully.
+
+6. One other thing that I can't get to work - replacing the mention of your enthraller with Master/Mistress. Maybe it's too much trouble.
+
+7. If you're an antage you get a bonus to resistance AND to enthralling. Thus it can be worth using this on both sides. It shouldn't be hard to resist as an antag. There are futher bonuses to command, Chaplains and chemist.
+If you give your pet a collar then their resistance reduced too.
+(I think thats everything?)
+
+How buggy is it?
+Probably very, it's hard to test this by myself.
+
+BALANCE ISSUES:
+There are none, but I'm glad you asked.
+
+Okay, seriously, unless you're an antag, it will be difficult to enthrall people, you'll need to put a lot of work into it, and really it's supposed to be a mix of rp and combat(?) use. If you get a small army of pets then it can be useful, but equally, they can revered with a ananphro + mannitol grenade.
+If it becomes an issue, I'll make all pets pacifists and apply more weakness effects based on mood and state. I'll probably do this anyways as I want the bond between the two to be imperative.
+As stated earlier the biggest concern is the use as a murder aid, which I have ideas for. (weaken the enthraller during the enthrallment process?)
+
+And as stated earlier, this chem is hard to make, and is punishing on failure. You fall in love with the chem dispencer and have to stay within 8 tiles of it. Additionally, you hug the dispencer instead of using it - thus making you unable to continue chemistry for that round, and likely getting the CMO mad as hecc at you.
+(thats not written yet but thats the idea.)
+*/
+
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
 	id = "enthral"
@@ -797,7 +991,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/creatorName
 	var/mob/living/creator
 
-/datum/reagent/fermi/enthrall/on_new()
+/datum/reagent/fermi/enthrall/fermiCreate()
 	message_admins("On new for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
@@ -866,6 +1060,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										HATIMUIM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//Fun chem, simply adds a heat upon your head, and tips their hat
+//Also has a speech alteration effect when the hat is there
+//Should, but doesn't currently, increase armour; 1 armour per 10u
+//but if you OD it becomes negative.
+//please help fix that
+
 
 /datum/reagent/fermi/hatmium //for hatterhat
 	name = "Hat growth serium"
@@ -891,16 +1091,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
 	if(!overdosed)
 		for (var/i in hat.armor)
-			hat.armor[i] = (1+(current_cycle*20)) //Doesn't work aaarghhhhh!!!!
+			hat.armor[i] = -(1+(current_cycle/10)) //Doesn't work aaarghhhhh!!!!
 	else
 		for (var/i in hat.armor)
-			hat.armor[i] = (1/(current_cycle*10))
+			hat.armor[i] = (1+(current_cycle/10))
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										FURRANIUM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+//OwO whats this?
 //Works as intended!!
+//Makes you nya and awoo
+//At a certain amount of time in your system it gives you a fluffy tongue owo!
+
 /datum/reagent/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
@@ -946,71 +1150,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
-	//name = "Catgirl" //an attempt at hiding it
-	id = "secretcatchem"
-	description = "An illegal and hidden chem that turns people into catgirls. It's said you see the light if you take too much of it."
-	color = "#A0B0E4" // rgb: , 0, 255
-	taste_description = "hairballs and cream"
-	overdose_threshold = 10
-
-/datum/reagent/fermi/secretcatchem/New()
-	name = "Catgirli[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
-
-/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
-	. = ..()
-	var/current_species = H.dna.species.type
-	var/datum/species/mutation = /datum/species/human/felinid
-	if(mutation && mutation != current_species)
-		to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
-		H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!")
-		H.Knockdown(60)
-		H.set_species(mutation)
-	else
-		to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
-
-/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/M)
-	if(prob(10))
-		playsound(get_turf(M), 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
-		M.emote("me","lets out a nya!")
-	if(prob(10))
-		playsound(get_turf(M), 'sound/effects/meow1.ogg', 50, 1, -1)
-		M.emote("me","lets out a mewl!")
-	if(prob(10))
-		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
-		M.emote("me","lets out a meowrowr!")
-	..()
-
-/datum/reagent/fermi/secretcatchem/overdose_start(mob/living/carbon/human/H) //I couldn't resist - should I hide this somewhere else?
-	. = ..()
-	to_chat(H, "<span class='notice'><b>You suddenly see the light and realise that everyone will be better off, and much happier, if they were only a cat girl.</b></span>")
-	var/objective = "Aid in the production of more chemicals and turn everyone on the station into catgirls. Avoid any and all attempts at renoucing your newfound catgirl form for this is your true form now."
-	if (H.mind.assigned_role in GLOB.antagonists)
-		objective += "Complete your objectives in tandem with this new objective. If you are tasked with murdering someone turning someone into a catgirl is now an alternative to you."
-	brainwash(H, objective)
-
-/*
-/proc/secretcatchem(mob/living/carbon/C) //Explosion turns you into a cat. Meow.
-	C.unequip_everything()
-	//var/cat = new /mob/living/simple_animal/pet/cat(C.loc)
-	var/mob/living/simple_animal/pet/cat = new(get_turf(C.loc))
-	C.mind.transfer_to(cat)
-	cat.name = C.name
-	qdel(C)
-	//Add to chat lines
-	//Maybe teleport player away instead?
-*/
-
-
-/*
-/mob/living/simple_animal/hostile/retaliate/ghost
-incorporeal_move = 1
-name
-alpha = 20
-reduce viewrange?
-*/
-
-/* Needs to be fixed:
+/* Needs to be fixed, I cannot get it to work and it's giving me compile errors aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 //Nanite removal
 //Writen by Trilby!!
 /datum/reagent/fermi/naninte_b_gone
@@ -1025,13 +1165,13 @@ reduce viewrange?
 	var/component/nanites/nane = C.GetComponent(/component/nanites)
 	if(isnull(nane))
 		return
-	nane.regen_rate = -5.0
+	nane.regen_rate = -5.0//This seems really high
 
 /datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
 	var/component/nanites/nane = C.GetComponent(/component/nanites)
 	if(isnull(nane))
 		return
-	nane.regen_rate = -7.5
+	nane.regen_rate = -7.5//12.5 seems crazy high?
 */
 
 /*
