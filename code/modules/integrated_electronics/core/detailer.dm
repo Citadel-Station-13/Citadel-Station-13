@@ -27,7 +27,7 @@
 		"blue" = COLOR_ASSEMBLY_BLUE,
 		"purple" = COLOR_ASSEMBLY_PURPLE,
 		"pink" = COLOR_ASSEMBLY_PINK,
-		"custom" = "#ffffff"
+		"custom" = COLOR_ASSEMBLY_WHITE
 		)
 
 /obj/item/integrated_electronics/detailer/Initialize()
