@@ -48,13 +48,13 @@
 	HIonRelease 		= 0.01 		// pH change per 1u reaction
 	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode 		= FALSE		// If the chemical explodes in a special way
+	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 
 /datum/chemical_reaction/BElarger
 	name = ""
 	id = "e"
 	results = list("Eigenstasium" = 6)
-	required_reagents = list("salglu_solution" = 1, "milk" = 5, "synthflesh" = 2, "silicon" = 2, "crocin" = 2)
+	required_reagents = list("salglu_solution" = 1, "milk" = 5, "synthflesh" = 2, "silicon" = 2, "aphro" = 2)
 	//FermiChem vars:
 	OptimalTempMin = 350 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax = 500 // Upper end for above

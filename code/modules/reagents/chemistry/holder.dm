@@ -623,26 +623,19 @@
 
 	//For now, purity is handled elsewhere
 
-	//Calculate DeltaT (Deviation of T from optimal)
-	if (chem_temp < C.OptimalTempMax && chem_temp >= C.OptimalTempMin)
-		deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
-	else if (chem_temp >= C.OptimalTempMax)
-		deltaT = 1
-	else
-		deltaT = 0
-	message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
-
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Lower range
 	if (pH < C.OptimalpHMin)
 		if (pH < (C.OptimalpHMin - C.ReactpHLim))
 			deltapH = 0
+			return//If outside pH range, no reaction
 		else
 			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))
 	//Upper range
 	else if (pH > C.OptimalpHMin)
 		if (pH > (C.OptimalpHMin + C.ReactpHLim))
 			deltapH = 0
+			return //If outside pH range, no reaction
 		else
 			deltapH = ((C.ReactpHLim -(pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH))
 	//Within mid range
@@ -654,6 +647,16 @@
 		WARNING("[my_atom] attempted to determine FermiChem pH for '[C.id]' which broke for some reason! ([usr])")
 	//TODO Add CatalystFact
 	message_admins("calculating pH factor(purity), pH: [pH], min: [C.OptimalpHMin]-[C.ReactpHLim], max: [C.OptimalpHMax]+[C.ReactpHLim], deltapH: [deltapH]")
+
+	//Calculate DeltaT (Deviation of T from optimal)
+	if (chem_temp < C.OptimalTempMax && chem_temp >= C.OptimalTempMin)
+		deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
+	else if (chem_temp >= C.OptimalTempMax)
+		deltaT = 1
+	else
+		deltaT = 0
+	message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
+
 
 	stepChemAmmount = targetVol * deltaT
 	if (stepChemAmmount > C.RateUpLim)

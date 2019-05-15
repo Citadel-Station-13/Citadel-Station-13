@@ -1,4 +1,4 @@
-//Fermichem!!
+ //Fermichem!!
 //Fun chems for all the family
 
 //MCchem
@@ -15,7 +15,7 @@
 	taste_description	= "If affection had a taste, this would be it."
 	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
 	var/InverseChemVal 		= 0					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	var/InverseChem 		= "Initropidril" 	// What chem is metabolised when purity is below InverseChemVal
+	var/InverseChem 		= "Initropidril" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	//current_cycle++
@@ -28,6 +28,8 @@
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+	if(src.purity < 0)
+		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (src.purity == 1)
 		return
 	else if (src.InverseChemVal > src.purity)
@@ -278,6 +280,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/pollStarted = FALSE
 	var/location_created
 	var/startHunger
+	var/ImpureChem 			= "SDGFtox"
+	var/InverseChemVal 		= 0.5
+	var/InverseChem 		= "SDZF"
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
@@ -573,7 +578,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
 	metabolization_rate = 0.5
-	var/mob/living/carbon/human/H
+	//var/mob/living/carbon/human/H
+	var/ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	var/InverseChemVal 		= 0.25
+	var/InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
 	var/mob/living/carbon/human/H = M
@@ -629,7 +637,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
-		P.length = P.length - 0.1
+		P.cached_length = P.cached_length - 0.1
 		message_admins("lewdsnek size: [P.size], [P.cached_length], [holder]")
 		P.update()
 	if(T)
@@ -643,6 +651,24 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		nW.Insert(M)
 		W = nW
 	..()
+
+/datum/reagent/fermi/BEsmaller
+	name = "Sucubus milk"
+	id = "BEsmaller"
+	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
+	color = "#E60584" // rgb: 96, 0, 255
+	taste_description = "a milky ice cream like flavour."
+	metabolization_rate = 0.5
+
+/datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	if(!B)
+		return
+	B.cached_size = B.cached_size - 0.1
+	B.update()
+	..()
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
@@ -660,17 +686,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-
-	//var/mob/living/carbon/M
-	//var/mob/living/carbon/human/species/S
-	/*
-	var/obj/item/organ/genital/penis/P
-	var/obj/item/organ/genital/testicles/T
-	var/obj/item/organ/genital/vagina/V
-	var/obj/item/organ/genital/womb/W
-	var/obj/item/organ/genital/breasts/B
-	*/
-	var/mob/living/carbon/human/H
+	var/ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	var/InverseChemVal 		= 0.25
+	var/InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
+	//var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	var/mob/living/carbon/human/H = M
@@ -706,7 +725,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	message_admins("PE Breast status: [B]")
 	if(M.gender == FEMALE)
 		M.gender = MALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine as your !</span>")
 
 	if(B)
 		B.cached_size = B.cached_size - 0.1
@@ -720,6 +739,23 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		var/obj/item/organ/genital/testicles/nT = new
 		nT.Insert(M)
 		T = nT
+	..()
+
+/datum/reagent/fermi/PElarger // Due to cozmo's request...!
+	name = "Incubus draft"
+	id = "PElarger"
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
+	color = "#888888" // This is greyish..?
+	taste_description = "chinese dragon powder"
+	metabolization_rate = 0.5
+
+/datum/reagent/fermi/PEsmaller/on_mob_life(mob/living/carbon/M)
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/genital/breasts/P = M.getorganslot("penis")
+	if(!B)
+		return
+	P.cached_size = P.cached_size - 0.1
+	P.update()
 	..()
 /*
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -749,7 +785,6 @@ Buginess level: low
 	addiction_stage1_end = 9999//Should never end. There is no escape make your time
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
-	var/ODing = FALSE
 	var/antiGenetics = 255
 	var/sleepytime = 0
 	//var/Svol = volume
@@ -775,10 +810,10 @@ Buginess level: low
 			G.alpha = 35
 			G.name = "[M]'s astral projection"
 			M.mind.transfer_to(G)
-			sleepytime = 10*volume
+			sleepytime = 15*volume
 	if(overdosed)
 		if(prob(50))
-			to_chat(M, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
+			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
 	holder.remove_reagent(src.id, current_cycle, FALSE)
 	..()
@@ -787,8 +822,8 @@ Buginess level: low
 	G.mind.transfer_to(origin)
 	qdel(G)
 	if(overdosed)
+		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
-		ODing = FALSE
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
@@ -1090,12 +1125,12 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
 	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
+	var/hatArmor = (1+(current_cycle/10))
 	if(!overdosed)
 		for (var/i in hat.armor)
-			hat.armor[i] = -(1+(current_cycle/10)) //Doesn't work aaarghhhhh!!!!
-	else
+			hat.armor.modifyRating = (hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor)
 		for (var/i in hat.armor)
-			hat.armor[i] = (1+(current_cycle/10))
+			hat.armor.modifyRating = (-hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor)
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

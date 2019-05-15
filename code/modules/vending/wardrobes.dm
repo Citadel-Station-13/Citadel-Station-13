@@ -312,7 +312,8 @@
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
-					/obj/item/storage/bag/chemistry = 2)
+					/obj/item/storage/bag/chemistry = 2,	
+					/obj/item/pHbooklet = 2)//pH indicator)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 
 /obj/item/vending_refill/wardrobe/chem_wardrobe

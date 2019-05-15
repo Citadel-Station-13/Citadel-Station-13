@@ -5,6 +5,8 @@
     icon = 'modular_citadel/icons/obj/FermiChem.dmi'
     item_flags = NOBLUDGEON
     var/numberOfPages = 50
+    resistance_flags = FLAMMABLE
+    w_class = WEIGHT_CLASS_TINY
     //set flammable somehow
 
 /obj/item/pHbooklet/attack_hand(mob/user)
@@ -37,4 +39,6 @@
     //item_flags = NOBLUDGEON
     color = "#f5c352"
     var/used = FALSE
+    resistance_flags = FLAMMABLE
+    w_class = WEIGHT_CLASS_TINY
     //set flammable somehow

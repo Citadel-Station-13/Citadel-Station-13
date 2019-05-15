@@ -255,7 +255,7 @@
 			if(the_event.timeout)
 				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return 0 //Don't have to update the event.
-	the_event = new type(src, param)
+	the_event = new type(src, param)//This causes a runtime for some reason, was this me?
 
 	mood_events[category] = the_event
 	update_mood()

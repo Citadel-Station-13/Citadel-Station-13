@@ -37,7 +37,7 @@
 	var/purity = 1
 	var/impureChem = "toxin"
 	var/loc = null //Should be the creation location!
-	var/pH
+	var/pH = 7
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

@@ -15,6 +15,7 @@
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
+	pH = 9
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
@@ -44,6 +45,7 @@
 	addiction_threshold = 30
 	taste_description = "smoke"
 	trippy = FALSE
+	pH = 8
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
@@ -65,6 +67,7 @@
 	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
+	pH = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -112,6 +115,7 @@
 	color = "#0064B4"
 	overdose_threshold = 20
 	addiction_threshold = 15
+	pH = 9
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -164,6 +168,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	pH = 5
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
@@ -250,6 +255,7 @@
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
+	pH = 8.2
 
 /datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
 	..()
@@ -346,6 +352,7 @@
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
+	pH = 9.2
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
@@ -367,6 +374,7 @@
 	color = "#FFF378"
 	addiction_threshold = 10
 	overdose_threshold = 20
+	pH = 10.5
 
 /datum/reagent/drug/happiness/on_mob_add(mob/living/L)
 	..()
@@ -446,6 +454,7 @@
 	addiction_threshold = 1
 	addiction_stage3_end = 40
 	addiction_stage4_end = 240
+	pH = 12.5
 
 /datum/reagent/drug/skooma/on_mob_add(mob/living/L)
 	. = ..()
