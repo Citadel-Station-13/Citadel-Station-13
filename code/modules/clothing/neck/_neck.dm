@@ -213,7 +213,7 @@
 
 	hasprimary = TRUE
 	hassecondary = TRUE
-	primary_color = "#000000"
+	primary_color = "#222222"
 	secondary_color = "#888888"
 
 /obj/item/clothing/neck/petcollar/choker
@@ -223,7 +223,7 @@
 	item_color = "choker"
 
 	hasprimary = TRUE
-	primary_color = "#000000"
+	primary_color = "#222222"
 
 /obj/item/clothing/neck/petcollar/locked
 	name = "locked collar"
@@ -255,7 +255,7 @@
 
 	hasprimary = TRUE
 	hassecondary = TRUE
-	primary_color = "#000000"
+	primary_color = "#222222"
 	secondary_color = "#888888"
 
 /obj/item/clothing/neck/petcollar/locked/choker
@@ -265,7 +265,7 @@
 	item_color = "choker"
 
 	hasprimary = TRUE
-	primary_color = "#000000"
+	primary_color = "#222222"
 
 /obj/item/key/collar
 	name = "Collar Key"
