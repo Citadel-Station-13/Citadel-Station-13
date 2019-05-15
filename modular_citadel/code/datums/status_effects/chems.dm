@@ -558,8 +558,8 @@
 		deltaResist /= phase//later phases require more resistance
 
 /datum/status_effect/chem/enthrall/proc/owner_say(message) //I can only hope this works
-	var/datum/status_effect/chem/enthrall/E = owner.has_status_effect(/datum/status_effect/chem/enthrall)
-	var/mob/living/master = E.master
+	//var/datum/status_effect/chem/enthrall/E = owner.has_status_effect(/datum/status_effect/chem/enthrall)
+	//var/mob/living/master = E.master
 	var/static/regex/owner_words = regex("[master]")
 	if(findtext(message, owner_words))
 		message = replacetext(lowertext(message), lowertext(master), "[enthrallGender]")
