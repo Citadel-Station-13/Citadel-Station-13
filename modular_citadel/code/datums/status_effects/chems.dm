@@ -237,19 +237,19 @@
 				to_chat(owner, "<span class='notice'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
-				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [master.name].", "You can't keep your eyes off [master.name].", "[master.name]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master.name]", "[master.name] is so sexy and dominant, it feels right to obey them.")].</i></span>")
+				to_chat(owner, "<span class='notice'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so sexy and dominant, it feels right to obey them.")].</i></span>")
 		else if (2) //partially enthralled
 			if (enthrallTally > 150)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
-				to_chat(owner, "<span class='notice'><i>Your mind gives, eagerly obeying and serving [master.name].</i></span>")
-				to_chat(owner, "<span class='warning'><i>You are now fully enthralled to [master.name], and eager to follow their commands. However you find that in your intoxicated state you are much less likely to resort to violence, unless it is to defend your [enthrallGender]. Equally you are unable to commit suicide, even if ordered to, as you cannot server your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
+				to_chat(owner, "<span class='notice'><i>Your mind gives, eagerly obeying and serving [master].</i></span>")
+				to_chat(owner, "<span class='warning'><i>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are much less likely to resort to violence, unless it is to defend your [enthrallGender]. Equally you are unable to commit suicide, even if ordered to, as you cannot server your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 			else if (resistanceTally > 150)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
-				to_chat(owner, "<span class='notice'><i>You manage to shake some of the entrancement from your addled mind, however you can still feel yourself drawn towards [master.name].</i></span>")
+				to_chat(owner, "<span class='notice'><i>You manage to shake some of the entrancement from your addled mind, however you can still feel yourself drawn towards [master].</i></span>")
 				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
 		else if (3)//fully entranced
 			if (resistanceTally >= 250 && withdrawalTick >= 150)
@@ -409,12 +409,13 @@
 	//qdel(redirect_component2.resolve())
 	//redirect_component2 = null
 
-
+/*
 /datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 		    if(master in message || master in message)
 		        return
 		    else
 		        . = ..()
+*/
 
 /datum/status_effect/chem/enthrall/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/mob/living/carbon/C = owner
@@ -555,16 +556,15 @@
 
 	if (deltaResist>0)//just in case
 		deltaResist /= phase//later phases require more resistance
-/*
+
 /datum/status_effect/chem/enthrall/proc/owner_say(message) //I can only hope this works
 	var/datum/status_effect/chem/enthrall/E = owner.has_status_effect(/datum/status_effect/chem/enthrall)
 	var/mob/living/master = E.master
-	var/static/regex/owner_words = regex("[master.name]|[master.first_name()]")
+	var/static/regex/owner_words = regex("[master]")
 	if(findtext(message, owner_words))
-		message = replacetext(lowertext(message), lowertext(master.real_name), "[enthrallGender]")
-		message = replacetext(lowertext(message), lowertext(master.name), "[enthrallGender]")
+		message = replacetext(lowertext(message), lowertext(master), "[enthrallGender]")
 	return message
-*/
+
 /*
 /datum/status_effect/chem/OwO
 	id = "OwO"
