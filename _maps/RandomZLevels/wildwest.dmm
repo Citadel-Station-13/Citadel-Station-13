@@ -1004,7 +1004,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "du" = (
-/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/blood/footprints/tracks/wheels,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dv" = (
