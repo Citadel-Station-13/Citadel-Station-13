@@ -58,13 +58,14 @@
 //During the process you get really hungry, then your items start teleporting randomly,
 //then alternative versions of yourself are brought in from a different universe and they yell at you.
 //and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative (this used to reroll objectives, but Kevin said prooobably not).
-//Currently the creation loc doesn't work, so it  teleports you back to where you took it. Which is fine too.
+//Currently the creation loc doesn't work, so it  teleports you back to where you took it. Which is fine too. This should be fixed, so it either does one or the other.
 //Bugginess level: low - I can't get the remove all status effects and moodlets to work. Basically I'd like to reset the character to roundstart if possible.
 
 //Important factors to consider while balancing:
 //1.It's... Fun. And thats mostly it. The teleport thing isn't that useful, since you have to be not stunned to take it.
 //You could use it as an antag and OD someone, but you have to inject 20u, which is 5 more than a syringe, and it doesn't kill you.
 //I'd like to make it reroll your objectives or expand upon the alternative version of you.
+//It's maybe one of the most fun chems, I would say so by far. It's hillarious
 
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
