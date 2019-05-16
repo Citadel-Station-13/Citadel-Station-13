@@ -204,7 +204,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
 	taste_description = "fish"
-	ph = 12.2
+	pH = 12.2
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
@@ -868,7 +868,7 @@
 	id = "mannitol"
 	description = "Efficiently restores brain damage."
 	color = "#DCDCFF"
-	ph = 10.4
+	pH = 10.4
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustBrainLoss(-2*REM)
@@ -1120,14 +1120,14 @@
 	. = 1
 
 /datum/reagent/medicine/neo_jelly
-    name = "Neo Jelly"
-    id = "neo_jelly"
-    description = "Gradually regenerates all types of damage, without harming slime anatomy.Can OD"
-    reagent_state = LIQUID
-    metabolization_rate = 1 * REAGENTS_METABOLISM
-    color = "#91D865"
-    overdose_threshold = 30
-    taste_description = "jelly"
+	name = "Neo Jelly"
+	id = "neo_jelly"
+	description = "Gradually regenerates all types of damage, without harming slime anatomy.Can OD"
+	reagent_state = LIQUID
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	color = "#91D865"
+	overdose_threshold = 30
+	taste_description = "jelly"
 	pH = 13
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)

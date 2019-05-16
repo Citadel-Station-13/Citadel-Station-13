@@ -35,7 +35,7 @@
 	var/self_consuming = FALSE
 	//Fermichem vars:
 	var/purity = 1
-	var/impureChem = "toxin"
+	//var/ImpureChem = "toxin"
 	var/loc = null //Should be the creation location!
 	var/pH = 7
 

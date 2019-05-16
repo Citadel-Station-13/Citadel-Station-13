@@ -41,6 +41,7 @@
 		var/impureVol = volume * (1 - pureVol)
 		holder.remove_reagent(src.id, (volume*impureVol), FALSE)
 		holder.add_reagent(src.ImpureChem, impureVol, FALSE)
+	return
 
 
 
@@ -280,9 +281,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/pollStarted = FALSE
 	var/location_created
 	var/startHunger
-	var/ImpureChem 			= "SDGFtox"
-	var/InverseChemVal 		= 0.5
-	var/InverseChem 		= "SDZF"
+	ImpureChem 			= "SDGFtox"
+	InverseChemVal 		= 0.5
+	InverseChem 		= "SDZF"
 
 	//var/fClone_current_controller = OWNER
 	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
@@ -577,13 +578,13 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
-	metabolization_rate = 0.5
-	//var/mob/living/carbon/human/H
-	var/ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	var/InverseChemVal 		= 0.25
-	var/InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
+	metabolization_rate = 0.5qa
+	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
+	InverseChemVal 		= 0.25
+	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+	..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
@@ -661,7 +662,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
-	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B)
 		return
@@ -686,9 +686,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
-	var/ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	var/InverseChemVal 		= 0.25
-	var/InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
+	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	InverseChemVal 		= 0.25
+	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
 	//var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
@@ -743,7 +743,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/PElarger // Due to cozmo's request...!
 	name = "Incubus draft"
-	id = "PElarger"
+	id = "PEsmaller"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
@@ -751,10 +751,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/PEsmaller/on_mob_life(mob/living/carbon/M)
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/genital/breasts/P = M.getorganslot("penis")
-	if(!B)
+	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
+	if(!P)
 		return
-	P.cached_size = P.cached_size - 0.1
+	P.cached_length = P.cached_length - 0.1
 	P.update()
 	..()
 /*
@@ -770,7 +770,7 @@ Addiction is particularlly brutal, it slowly turns you invisible with flavour te
 There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
 I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
 
-Buginess level: low
+Buginess level: works as intended - except teleport makes sparks for some reason. I'd like it to not if possible..?
 */
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
@@ -1128,9 +1128,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/hatArmor = (1+(current_cycle/10))
 	if(!overdosed)
 		for (var/i in hat.armor)
-			hat.armor.modifyRating = (hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor, hatArmor)
+			hat.armor = list("melee" = hatArmor, "bullet" = hatArmor, "laser" = hatArmor, "energy" = hatArmor, "bomb" = hatArmor, "bio" = hatArmor, "rad" = hatArmor, "fire" = hatArmor)
+	else
 		for (var/i in hat.armor)
-			hat.armor.modifyRating = (-hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor, -hatArmor)
+			hat.armor = list("melee" = -hatArmor, "bullet" = -hatArmor, "laser" = -hatArmor, "energy" = -hatArmor, "bomb" = -hatArmor, "bio" = -hatArmor, "rad" = -hatArmor, "fire" = -hatArmor)
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1140,6 +1141,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 //Works as intended!!
 //Makes you nya and awoo
 //At a certain amount of time in your system it gives you a fluffy tongue owo!
+//STATUS: ready
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
