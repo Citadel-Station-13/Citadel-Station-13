@@ -755,8 +755,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(!(H.has_trait(TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
-						if(SKINTONE)
-							accessory_overlay.color = skintone2hex(H.skin_tone)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = "#[fixed_mut_color]"
