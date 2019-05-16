@@ -1,7 +1,7 @@
 // Overthrow gamemode, based on the sleeping agent antagonist.
-/datum/game_mode/overthrow
-	name = "overthrow"
-	config_tag = "overthrow"
+/datum/game_mode/gang
+	name = "gang"
+	config_tag = "gang"
 	antag_flag = ROLE_OVERTHROW
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.
@@ -14,7 +14,7 @@
 	<span class='notice'>Crew</span>: Do not let the agents succeed!"
 	var/list/initial_agents = list() // Why doesn't this exist at /game_mode level? Literally every gamemode has some sort of version for this, what the fuck
 
-/datum/game_mode/overthrow/pre_setup()
+/datum/game_mode/gang/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
@@ -38,21 +38,21 @@
 		return FALSE
 	return TRUE
 
-/datum/game_mode/overthrow/post_setup()
+/datum/game_mode/gang/post_setup()
 	for(var/i in initial_agents) // each agent will have its own team.
 		var/datum/mind/agent = i
-		var/datum/antagonist/overthrow/O = agent.add_antag_datum(/datum/antagonist/overthrow) // create_team called on_gain will create the team
+		var/datum/antagonist/gang/O = agent.add_antag_datum(/datum/antagonist/gang) // create_team called on_gain will create the team
 		O.equip_initial_overthrow_agent()
 	return ..()
 
-/datum/game_mode/overthrow/generate_report()
+/datum/game_mode/gang/generate_report()
 	return "Some sleeping agents have managed to get aboard. Their objective is to stage a coup and take over the station stealthly."
 
 // Calculates points for each team and displays the winners.
-/datum/game_mode/overthrow/special_report() // so many for loops, I am deeply sorry
+/datum/game_mode/gang/special_report() // so many for loops, I am deeply sorry
 	var/list/teams = list()
-	for(var/datum/antagonist/overthrow/I in GLOB.antagonists)
-		var/datum/team/overthrow/Oteam = I.team
+	for(var/datum/antagonist/gang/I in GLOB.antagonists)
+		var/datum/team/gang/Oteam = I.team
 		if(istype(Oteam)) // same
 			teams |= Oteam
 	var/max_points = 0 // the maximum amount of points reached
@@ -60,7 +60,7 @@
 		var/datum/team/T = j
 		var/points = 0 // Sum of points of all the objectives done
 		for(var/k in T.objectives)
-			var/datum/objective/overthrow/obj = k
+			var/datum/objective/gang/obj = k
 			if(istype(obj))
 				points += obj.get_points()
 		if(max_points < points)

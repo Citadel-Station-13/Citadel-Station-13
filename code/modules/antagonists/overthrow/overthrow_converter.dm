@@ -16,15 +16,15 @@
 	if(istype(target) && target.mind && user && user.mind)
 		var/datum/mind/target_mind = target.mind
 		var/datum/mind/user_mind = user.mind
-		var/datum/antagonist/overthrow/TO = target_mind.has_antag_datum(/datum/antagonist/overthrow)
-		var/datum/antagonist/overthrow/UO = user_mind.has_antag_datum(/datum/antagonist/overthrow)
+		var/datum/antagonist/gang/TO = target_mind.has_antag_datum(/datum/antagonist/gang)
+		var/datum/antagonist/gang/UO = user_mind.has_antag_datum(/datum/antagonist/gang)
 		if(!UO)
 			to_chat(user, "<span class='danger'>You don't know how to use this thing!</span>") // It needs a valid team to work, if you aren't an antag don't use this thing
 			return FALSE
 		if(TO)
 			to_chat(user, "<span class='notice'>[target.name] woke up already, the implant would be ineffective against him!</span>")
 			return FALSE
-		target_mind.add_antag_datum(/datum/antagonist/overthrow, UO.team)
+		target_mind.add_antag_datum(/datum/antagonist/gang, UO.team)
 		log_combat(user, target, "implanted", "\a [name]")
 		return TRUE
 

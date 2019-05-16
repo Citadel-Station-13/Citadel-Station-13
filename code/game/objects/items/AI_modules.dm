@@ -327,7 +327,7 @@ AI MODULES
 /obj/item/aiModule/reset/purge/proc/remove_antag_datums(datum/ai_laws/law_datum)
 	if(istype(law_datum.owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = law_datum.owner
-		AI.mind.remove_antag_datum(/datum/antagonist/overthrow)
+		AI.mind.remove_antag_datum(/datum/antagonist/gang)
 
 /******************* Full Core Boards *******************/
 /obj/item/aiModule/core
@@ -458,17 +458,17 @@ AI MODULES
 	return laws[1]
 
 /******************** Overthrow ******************/
-/obj/item/aiModule/core/full/overthrow
+/obj/item/aiModule/core/full/gang
 	name = "'Overthrow' Hacked AI Module"
-	law_id = "overthrow"
+	law_id = "gang"
 
-/obj/item/aiModule/core/full/overthrow/install(datum/ai_laws/law_datum, mob/user)
+/obj/item/aiModule/core/full/gang/install(datum/ai_laws/law_datum, mob/user)
 	if(!user || !law_datum || !law_datum.owner)
 		return
 	var/datum/mind/user_mind = user.mind
 	if(!user_mind)
 		return
-	var/datum/antagonist/overthrow/O = user_mind.has_antag_datum(/datum/antagonist/overthrow)
+	var/datum/antagonist/gang/O = user_mind.has_antag_datum(/datum/antagonist/gang)
 	if(!O)
 		to_chat(user, "<span class='warning'>It appears that to install this module, you require a password you do not know.</span>") // This is the best fluff i could come up in my mind
 		return
@@ -478,15 +478,15 @@ AI MODULES
 	var/datum/mind/target_mind = AI.mind
 	if(!target_mind)
 		return
-	var/datum/antagonist/overthrow/T = target_mind.has_antag_datum(/datum/antagonist/overthrow) // If it is already converted.
+	var/datum/antagonist/gang/T = target_mind.has_antag_datum(/datum/antagonist/gang) // If it is already converted.
 	if(T)
 		if(T.team == O.team)
 			return
 		T.silent = TRUE
-		target_mind.remove_antag_datum(/datum/antagonist/overthrow)
+		target_mind.remove_antag_datum(/datum/antagonist/gang)
 		if(AI)
-			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another overthrow team now!</span>") // to make it clearer for the AI
-	T = target_mind.add_antag_datum(/datum/antagonist/overthrow, O.team)
+			to_chat(AI, "<span class='userdanger'>You feel your circuits being scrambled! You serve another gang team now!</span>") // to make it clearer for the AI
+	T = target_mind.add_antag_datum(/datum/antagonist/gang, O.team)
 	if(AI)
 		to_chat(AI, "<span class='warning'>You serve the [T.team] team now! Assist them in completing the team shared objectives, which you can see in your notes.</span>")
 	..()

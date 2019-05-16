@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
-	ROLE_OVERTHROW = /datum/game_mode/overthrow,
+	ROLE_OVERTHROW = /datum/game_mode/gang,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE
 ))
