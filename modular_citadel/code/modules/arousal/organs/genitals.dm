@@ -110,10 +110,13 @@
 
 
 /obj/item/organ/genital/proc/update_size()
+	return
 
 /obj/item/organ/genital/proc/update_appearance()
+	return
 
 /obj/item/organ/genital/proc/update_link()
+	return
 
 /obj/item/organ/genital/proc/remove_ref()
 	if(linked_organ)
@@ -318,6 +321,7 @@
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[G.aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
