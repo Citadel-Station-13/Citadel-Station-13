@@ -1465,12 +1465,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
-	if(aim_for_groin && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
+	if(aim_for_groin && (target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
 			"<span class='notice'>You slap [target]'s ass! </span>",\
 		"You hear a slap.")
 		stop_wagging_tail(target)
+		if (target.canbearoused)
+			target.adjustArousalLoss(5)
+		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
+			target.mob_climax(forced_climax=TRUE)
 		return FALSE
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
