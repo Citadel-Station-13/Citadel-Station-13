@@ -10,6 +10,7 @@
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "jellyblood"
+	exotic_bloodtype = "GEL"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
@@ -17,6 +18,7 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -119,7 +121,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150

@@ -8,10 +8,6 @@
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
-/obj/effect/decal/cleanable/blood/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/forensics)
-	update_icon()
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if(bloodiness)
@@ -28,21 +24,24 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	GET_COMPONENT(F, /datum/component/forensics)
-	if(F && istype(F))
-		blood_color = F.blood_mix_color
+	if(!blood_color)
+		if(reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				// Get blood data from the blood reagent.
+				if(istype(R, /datum/reagent/blood))
+					if(R.data["blood_type"])
+						blood_color = bloodtype_to_color(R.data["blood_type"])
+				else if(istype(R, /datum/reagent/liquidgibs))
+					if(R.data["blood_type"])
+						blood_color = bloodtype_to_color(R.data["blood_type"])
+		else
+			return
 	else
-		for(var/datum/reagent/R in reagents.reagent_list)
-			// Get blood data from the blood reagent.
-			if(istype(R, /datum/reagent/blood))
-				if(R.data["blood_type"])
-					blood_color = bloodtype_to_color(R.data["blood_type"])
-			else if(istype(R, /datum/reagent/liquidgibs))
-				if(R.data["blood_type"])
-					blood_color = bloodtype_to_color(R.data["blood_type"])
+		color = blood_color
 
-	color = blood_color
-
+//obj/effect/decal/cleanable/blood/update_color()
+ // if(SEND_SIGNAL(COMSIG_BLOOD_COLOR) & COMPONENT_BLOCK_UPDATE_COLOR)
+ //   return
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -108,9 +107,9 @@
 				entered_dirs |= H.dir
 				update_icon()
 
-		else if(!H.bloodiness)
-			H.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+		else if(H.bloodiness && H.blood_smear[blood_state])
+			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			H.bloodiness = H.bloodinessmax
 			H.blood_color = blood_color
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -130,9 +129,9 @@
 				exited_dirs |= H.dir
 				update_icon()
 
-		else if(!H.bloodiness)
+		else if(H.bloodiness && H.blood_smear[blood_state])
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			H.bloodiness = max(H.bloodiness - BLOOD_LOSS_IN_SPREAD, 0)
+			H.bloodiness = H.bloodinessmax
 			H.blood_color = blood_color
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
@@ -143,17 +142,18 @@
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]-[color]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
+	color = blood_color
 
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
@@ -166,8 +166,8 @@
 
 	to_chat(user, .)
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/replace_decal(obj/effect/decal/cleanable/C)
-	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
+/obj/effect/decal/cleanable/blood/footprints/tracks/replace_decal(obj/effect/decal/cleanable/blood/footprints/tracks/C)
+	if(print_state != C.print_state) //We only replace footprints of the same type as us
 		return
 	if(color != C.color)
 		return
@@ -178,11 +178,17 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/footprints
+/obj/effect/decal/cleanable/blood/footprints/tracks/shoe
 	name = "footprints"
 	desc = "They look like tracks left by footwear."
 	icon_state = FOOTPRINT_SHOE
 	print_state = FOOTPRINT_SHOE
+
+/obj/effect/decal/cleanable/blood/footprints/tracks/foot
+	name = "footprints"
+	desc = "They look like tracks left by a bare foot."
+	icon_state = FOOTPRINT_FOOT
+	print_state = FOOTPRINT_FOOT
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/snake
 	name = "tracks"
@@ -191,14 +197,14 @@
 	print_state = FOOTPRINT_SNAKE
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/paw
-	name = "tracks"
-	desc = "They look like tracks left by mammalian paws."
+	name = "footprints"
+	desc = "They look like tracks left by paws."
 	icon_state = FOOTPRINT_PAW
 	print_state = FOOTPRINT_PAW
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/claw
-	name = "tracks"
-	desc = "They look like tracks left by reptilian claws."
+	name = "footprints"
+	desc = "They look like tracks left by claws."
 	icon_state = FOOTPRINT_CLAW
 	print_state = FOOTPRINT_CLAW
 

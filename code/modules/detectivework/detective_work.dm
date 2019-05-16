@@ -25,6 +25,16 @@
 	if(D)
 		. = D.fibers
 
+/atom/proc/return_blood_mix_types()
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(D)
+		. = D.blood_mix_types
+
+/atom/proc/return_blood_mix_color()
+	GET_COMPONENT(D, /datum/component/forensics)
+	if(D)
+		. = D.blood_mix_color
+
 /atom/proc/add_fingerprint_list(list/fingerprints)		//ASSOC LIST FINGERPRINT = FINGERPRINT
 	if(length(fingerprints))
 		. = AddComponent(/datum/component/forensics, fingerprints)

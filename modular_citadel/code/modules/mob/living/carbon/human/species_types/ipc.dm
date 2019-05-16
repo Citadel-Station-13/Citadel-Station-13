@@ -13,6 +13,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 
 	exotic_blood = "oilblood"
+	exotic_bloodtype = "HF"
 
 	var/datum/action/innate/monitor_change/screen
 

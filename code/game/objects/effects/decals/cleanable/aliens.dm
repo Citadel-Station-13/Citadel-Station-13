@@ -33,8 +33,10 @@
 			GET_COMPONENT(infective, /datum/component/infective)
 			if(infective)
 				diseases = infective.diseases
+			var/obj/effect/decal/cleanable/blood/gibs/gibbers = src
 			var/obj/effect/decal/cleanable/blood/splatter/xeno/splat = new /obj/effect/decal/cleanable/blood/splatter/xeno(loc, diseases)
-			splat.update_icon()
+			splat.color = gibbers.blood_color
+			splat.blood_color = gibbers.blood_color
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 

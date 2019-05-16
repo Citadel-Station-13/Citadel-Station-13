@@ -11,14 +11,13 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/guts()
 	if(gib_overlay)
-		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", color = blood_color)
-		gibz.layer = (LOW_OBJ_LAYER - 0.1)
-		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-overlay", color = body_colors)
-		gibz2.layer = (LOW_OBJ_LAYER - 0.2)
+		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-overlay", color = blood_color, layer = (LOW_OBJ_LAYER + 0.1))
+		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-overlay", color = body_colors, layer = (LOW_OBJ_LAYER + 0.1))
 		if(!slimy_gibs)
 			gibz.appearance_flags = RESET_COLOR
 			add_overlay(gibz)
 		else
+			gibz.appearance_flags = RESET_COLOR
 			add_overlay(gibz)
 			add_overlay(gibz2)
 
@@ -31,6 +30,8 @@
 			var/mob/living/carbon/human/H = L
 			if(H.mind.assigned_role == "Detective") //Gumshoe perks yo
 				playsound(loc, 'sound/effects/gib_step.ogg', 10, 1)
+			else
+				playsound(loc, 'sound/effects/gib_step.ogg', H.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 		else
 			playsound(loc, 'sound/effects/gib_step.ogg', L.has_trait(TRAIT_LIGHT_STEP) ? 20 : 50, 1)
 	. = ..()
@@ -48,6 +49,7 @@
 			var/obj/effect/decal/cleanable/blood/gibs/gibbers = src
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 			splat.color = gibbers.blood_color
+			splat.blood_color = gibbers.blood_color
 
 		if(!step_to(src, get_step(src, direction), 0))
 			break

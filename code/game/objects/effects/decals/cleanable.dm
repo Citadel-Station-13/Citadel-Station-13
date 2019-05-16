@@ -90,12 +90,13 @@
 
 		else if(H.bloodiness && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
 			var/add_blood = 0
-			if(H.bloodiness >= BLOOD_GAIN_PER_STEP)
-				add_blood = BLOOD_GAIN_PER_STEP
+			if(H.bloodiness >= 1)
+				add_blood = 5
 			else
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
+			H.bloodiness = add_blood
 			H.add_blood_DNA(return_blood_DNA())
 			H.blood_state = blood_state
 			H.blood_color = blood_color

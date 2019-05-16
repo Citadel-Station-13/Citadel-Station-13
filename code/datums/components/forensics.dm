@@ -32,6 +32,7 @@
 /datum/component/forensics/RegisterWithParent()
 	check_blood()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+//	RegisterSignal(parent, COMSIG_BLOOD_COLOR, .proc/
 
 /datum/component/forensics/UnregisterFromParent()
     UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
@@ -163,10 +164,14 @@
 	if(!length(dna))
 		return
 	LAZYINITLIST(blood_DNA)
+	LAZYINITLIST(blood_mix_types)
 	for(var/i in dna)
 		blood_DNA[i] = dna[i]
-	var/blood_type = blood_DNA.Find(GLOB.all_types_bloods)
-	add_blood_list(blood_type)
+	for(var/type in blood_DNA)
+		if(type in blood_DNA[type])
+			blood_mix_types += blood_DNA[type]
+
+	blood_list_check(blood_mix_types)
 	check_blood()
 	return TRUE
 
@@ -176,22 +181,18 @@
 	if(!length(blood_DNA))
 		return
 
-/datum/component/forensics/proc/add_blood_list(blood_type)
-	if(!blood_type)
-		return
-	LAZYINITLIST(blood_mix_types)
-	blood_list_checks(blood_mix_types, blood_type)
-	blood_DNA_to_color(blood_mix_types)
-	return TRUE
-
-/datum/component/forensics/proc/blood_list_checks(list/blood_types, var/blood_type) //This is a messy attempt at trying to reduce lists of items and mobs with blood colors on them
+/datum/component/forensics/proc/blood_list_check(list/blood_types, blood_type) //This is a messy attempt at trying to reduce lists of items and mobs with blood colors on them
 	if(blood_type in GLOB.regular_bloods)
 		blood_type = "A+" //generic so we don't have 8 different types of human blood
 	if(blood_type in blood_mix_types)
 		return
 	else
 		LAZYADD(blood_mix_types, blood_type)
-	return TRUE
+
+	if(blood_mix_types.len)
+		blood_DNA_to_color(blood_mix_types)
+	else
+		return
 
 /datum/component/forensics/proc/blood_DNA_to_color(list/bloods)
 	var/final_rgb = "#940000" //We default to red just in case
@@ -210,4 +211,3 @@
 			final_rgb = BlendRGB(final_rgb, bloodtype_to_color(bloods))
 
 	blood_mix_color = final_rgb
-	return TRUE

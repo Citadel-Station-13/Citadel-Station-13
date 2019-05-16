@@ -44,6 +44,7 @@
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/bloodiness = 0
+	var/bloodinessmax = 5
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
 	var/list/blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/blood_color //For blood smearing stuff

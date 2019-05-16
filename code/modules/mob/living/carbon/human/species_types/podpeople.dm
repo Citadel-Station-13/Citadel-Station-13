@@ -12,6 +12,7 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
+	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

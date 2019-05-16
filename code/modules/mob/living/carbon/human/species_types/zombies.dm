@@ -15,6 +15,7 @@
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -47,7 +48,7 @@
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
-	
+
 	//Zombies never actually die, they just fall down until they regenerate enough to rise back up.
 	//They must be restrained, beheaded or gibbed to stop being a threat.
 	if(regen_cooldown < world.time)
@@ -58,7 +59,7 @@
 		C.adjustToxLoss(-heal_amt)
 	if(!C.InCritical() && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
-		
+
 //Congrats you somehow died so hard you stopped being a zombie
 /datum/species/zombie/infectious/spec_death(mob/living/carbon/C)
 	. = ..()

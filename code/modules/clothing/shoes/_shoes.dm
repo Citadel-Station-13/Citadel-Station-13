@@ -17,6 +17,8 @@
 	var/adjusted = NORMAL_STYLE
 	mutantrace_variation = MUTANTRACE_VARIATION
 
+	var/move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/shoe
+
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
