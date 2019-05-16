@@ -1,3 +1,4 @@
+
 #define INITIAL_CRYSTALS 5 // initial telecrystals in the boss' uplink
 
 // Syndicate mutineer agents. They're agents selected by the Syndicate to take control of stations when assault teams like nuclear operatives cannot be sent.
