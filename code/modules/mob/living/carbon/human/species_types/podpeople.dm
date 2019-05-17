@@ -72,6 +72,7 @@
 
 /datum/species/pod/pseudo_weak
 	id = "podweak"
+	limb_id = "pod"
 	light_nutrition_gain_factor = 7.5
 	light_bruteheal = 0.2
 	light_burnheal = 0.2
