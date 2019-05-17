@@ -475,3 +475,5 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 #define AREASELECT_CORNERA "corner A"
 #define AREASELECT_CORNERB "corner B"
+
+#define PREF_SAVELOAD_COOLDOWN 5

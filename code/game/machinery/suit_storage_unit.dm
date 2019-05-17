@@ -63,7 +63,7 @@
 	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
-	suit_type = /obj/item/clothing/suit/hooded/explorer
+	suit_type = /obj/item/clothing/suit/hooded/explorer/standard
 	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva

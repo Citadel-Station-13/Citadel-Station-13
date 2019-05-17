@@ -8,7 +8,7 @@
 	explosion_block = 3
 	point_return = 4
 	atmosblock = TRUE
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 25, "bullet" = 25, "laser" = 15, "energy" = 10, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)
@@ -20,11 +20,12 @@
 
 /obj/structure/blob/shield/update_icon()
 	..()
-	if(obj_integrity <= 75)
+	if(obj_integrity <= 70)
 		icon_state = "blob_shield_damaged"
 		name = "weakened strong blob"
 		desc = "A wall of twitching tendrils."
 		atmosblock = FALSE
+		armor = list("melee" = 15, "bullet" = 15, "laser" = 5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 	else
 		icon_state = initial(icon_state)
 		name = initial(name)

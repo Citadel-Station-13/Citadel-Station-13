@@ -709,3 +709,14 @@
 	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/goldenbox
+	name = "Gold Plated Toolbox"
+	result = /obj/item/storage/toolbox/gold_fake 
+	reqs = list(/obj/item/stack/sheet/cardboard = 1, //so we dont null items in crafting
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/sheet/mineral/gold = 1,
+				/obj/item/stock_parts/cell = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC
