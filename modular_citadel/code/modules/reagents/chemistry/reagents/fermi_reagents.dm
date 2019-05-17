@@ -23,7 +23,11 @@
 	//return ..()
 
 //Called when reaction stops.
-/datum/reagent/fermi/proc/fermiFinish(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/reagent/fermi/proc/FermiFinish(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	return
+
+//Called when added to a beaker without the reagent added.
+/datum/reagent/fermi/proc/FermiNew(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -579,7 +583,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
-	metabolization_rate = 0.5qa
+	metabolization_rate = 0.5
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
@@ -1028,7 +1032,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/creatorName
 	var/mob/living/creator
 
-/datum/reagent/fermi/enthrall/fermiCreate()
+/datum/reagent/fermi/enthrall/FermiFinish()
 	message_admins("On new for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list

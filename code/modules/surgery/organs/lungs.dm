@@ -55,11 +55,11 @@
 	var/crit_stabilizing_reagent = "epinephrine"
 
 	//health
-	var/health = 500
+	var/maxHealth = 500
 	var/damage = 0
 
 //TODO: lung health affects lung function
-/obj/item/organ/tongue/proc/adjustLungLoss(mob/living/carbon/M, damage_mod)
+/obj/item/organ/lungs/proc/adjustLungLoss(mob/living/carbon/human/M, damage_mod)
 	if (maxHealth == "plasma")
 		return
 	if(damage+damage_mod < 0)
@@ -74,16 +74,15 @@
 	else if ((damage / maxHealth) > 0.75)
 		to_chat(M, "<span class='warning'>It's getting really hard to breathe!!</span>")
 		M.emote("gasp")
-		H.Dizzy(3)
+		M.Dizzy(3)
 	else if ((damage / maxHealth) > 0.5)
-		H.Dizzy(2)
+		M.Dizzy(2)
 		to_chat(M, "<span class='notice'>Your chest is really starting to hurt.</span>")
 		M.emote("cough")
-		H.Dizzy(1)
 	else if ((damage / maxHealth) > 0.2)
 		to_chat(M, "<span class='notice'>You feel an ache within your chest.</span>")
 		M.emote("cough")
-
+		M.Dizzy(1)
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
@@ -156,7 +155,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5*((damage/health)/2)) //More damaged lungs = slower oxy rate up to a factor of half
+				H.adjustOxyLoss(-5*((damage/maxHealth)/2)) //More damaged lungs = slower oxy rate up to a factor of half
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			H.clear_alert("not_enough_oxy")
 
@@ -185,7 +184,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5*((damage/health)/2))
+				H.adjustOxyLoss(-5*((damage/maxHealth)/2))
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			H.clear_alert("nitro")
 
@@ -222,7 +221,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5*((damage/health)/2))
+				H.adjustOxyLoss(-5*((damage/maxHealth)/2))
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			H.clear_alert("not_enough_co2")
 
@@ -252,7 +251,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(-5*((damage/health)/2))
+				H.adjustOxyLoss(-5*((damage/maxHealth)/2))
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			H.clear_alert("not_enough_tox")
 
@@ -442,14 +441,14 @@
 	safe_oxygen_max = 0 // Like, at all.
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
-	health = "plasma"//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
+	maxHealth = "plasma"//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
 	synthetic = TRUE
-	health = 600
+	maxHealth = 600
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
@@ -469,7 +468,7 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
-	health = 750
+	maxHealth = 750
 
 /obj/item/organ/lungs/ashwalker
 	name = "ash lungs"

@@ -30,7 +30,7 @@
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
-/datum/chemical_reaction/eigenstate/FermiCreate(datum/reagents/holder)
+/datum/chemical_reaction/fermi/eigenstate/FermiCreate(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in holder.reagent_list
 	E.location_created = location

@@ -543,6 +543,7 @@ im
 
 /datum/reagents/process()
 	var/datum/chemical_reaction/C = fermiReactID
+
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
 	var/multiplier = INFINITY
@@ -559,7 +560,8 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		C.fermiFinish(src, multiplier)
+		var/datum/reagent/fermi/Ferm = fermiReactID
+		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 	for(var/P in cached_results)
@@ -582,7 +584,8 @@ im
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			C.fermiFinish(src, multiplier)
+			var/datum/reagent/fermi/Ferm = fermiReactID
+			Ferm.FermiFinish(src, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
 			return
 	else
@@ -593,14 +596,15 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		C.fermiFinish(src, multiplier)
+		var/datum/reagent/fermi/Ferm = fermiReactID
+		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 
 	//handle_reactions()
 
 /datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
-	var/datum/chemical_reaction/C = selected_reaction
+	var/datum/chemical_reaction/fermi/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
 	var/stepChemAmmount = 0
@@ -619,8 +623,8 @@ im
 		C.FermiExplode(src, (reactedVol+targetVol), chem_temp, pH)
 
 	if (pH > 14)
-	 	pH = 14
-	else (pH < 0 || )
+		pH = 14
+	else if (pH < 0)
 		pH = 0
 		//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 		//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
@@ -636,7 +640,7 @@ im
 			deltapH = 0
 			return//If outside pH range, no reaction
 		else
-			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH))
+			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH)))
 	//Upper range
 	else if (pH > C.OptimalpHMin)
 		if (pH > (C.OptimalpHMin + C.ReactpHLim))
@@ -817,11 +821,12 @@ im
 		return FALSE
 
 	if (D.id == "water") //Do like an otter, add acid to water.
-		(if pH <= 2)
+		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-			s.set_up(reagents, totalVol, pH*10, src)
+			s.set_up(, total_volume, pH*10, src)
 			s.start()
 			remove_any(amount/10)
+			return
 
 
 	if(!pH)
@@ -885,8 +890,8 @@ im
 		R.data = data
 		R.on_new(data)
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
-		var/datum/reagent/fermi/FermiTime = D //It's Fermi time!
-		FermiTime.fermiCreate(R.holder) //Seriously what is "data" ????
+		var/datum/reagent/fermi/Ferm = D.id //It's Fermi time!
+		Ferm.FermiNew(R.holder) //Seriously what is "data" ????
 
 		//This is how I keep myself sane.
 
