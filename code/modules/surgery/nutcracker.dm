@@ -32,7 +32,6 @@
 	var/obj/item/bodypart/target_limb = M.get_bodypart(target_zone)
 	var/crush_time = max(0, 400 - target_limb.brute_dam*2)
 
-
 	if(!get_turf(M))
 		return
 	if(!istype(M))
@@ -49,7 +48,6 @@
 		return
 
 	M.visible_message("<span class='warning'>[user] is trying to crush [M]\s head with \the [src]!</span>")
-
 
 	if(do_mob(user, M, crush_time))
 		if(get_location_accessible(M, target_zone) && target_limb) //Yes, two checks, before and after the timer. What if someone puts a helmet on the guy while you're crushing his head?
