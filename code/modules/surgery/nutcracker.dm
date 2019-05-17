@@ -28,6 +28,11 @@
 //It's a bit of a clusterfuck, but if someone wants, it can be easily repurposed to work on other limbs too.
 /obj/item/nutcracker/attack(mob/living/carbon/M, mob/living/carbon/user)
 	. = ..()
+	var/target_zone = "head"
+	var/obj/item/bodypart/target_limb = M.get_bodypart(target_zone)
+	var/crush_time = max(0, 400 - target_limb.brute_dam*2)
+
+
 	if(!get_turf(M))
 		return
 	if(!istype(M))
@@ -42,10 +47,6 @@
 	if(!get_location_accessible(M, target_zone))
 		to_chat(user, "<span class='notice'>Expose [M]\s head before trying to crush it!</span>")
 		return
-
-	var/target_zone = "head"
-	var/obj/item/bodypart/target_limb = M.get_bodypart(target_zone)
-	var/crush_time = max(0, 400 - target_limb.brute_dam*2)
 
 	M.visible_message("<span class='warning'>[user] is trying to crush [M]\s head with \the [src]!</span>")
 
