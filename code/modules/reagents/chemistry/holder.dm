@@ -1,4 +1,4 @@
-
+im
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 
@@ -484,6 +484,7 @@
 						return 0
 					else
 						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+						selected_reaction.on_reaction(src, multiplier)
 						START_PROCESSING(SSprocessing, src)
 						message_admins("FermiChem processing started")
 						fermiIsReacting = TRUE
@@ -558,8 +559,8 @@
 		targetVol = 0
 		handle_reactions()
 		update_total()
-
-		C.on_reaction(src, multiplier, special_react_result)
+		C.fermiFinish(src, multiplier)
+		//C.on_reaction(src, multiplier, special_react_result)
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
@@ -581,7 +582,8 @@
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			C.on_reaction(src, multiplier, special_react_result)
+			C.fermiFinish(src, multiplier)
+			//C.on_reaction(src, multiplier, special_react_result)
 			return
 	else
 		STOP_PROCESSING(SSprocessing, src)
@@ -591,7 +593,8 @@
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		C.on_reaction(src, multiplier, special_react_result)
+		C.fermiFinish(src, multiplier)
+		//C.on_reaction(src, multiplier, special_react_result)
 		return
 
 	//handle_reactions()
@@ -613,13 +616,16 @@
 	if (chem_temp > C.ExplodeTemp)
 		//go to explode proc
 		message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [chem_temp]")
-		FermiExplode()
+		C.FermiExplode(src, (reactedVol+targetVol), chem_temp, pH)
 
-	if (pH > 14 || pH < 0)
+	if (pH > 14)
+	 	pH = 14
+	else (pH < 0 || )
+		pH = 0
 		//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 		//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 		message_admins("pH is lover limit, cur pH: [pH]")
-		FermiExplode()
+
 
 	//For now, purity is handled elsewhere
 
@@ -630,14 +636,14 @@
 			deltapH = 0
 			return//If outside pH range, no reaction
 		else
-			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))
+			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH))
 	//Upper range
 	else if (pH > C.OptimalpHMin)
 		if (pH > (C.OptimalpHMin + C.ReactpHLim))
 			deltapH = 0
 			return //If outside pH range, no reaction
 		else
-			deltapH = ((C.ReactpHLim -(pH - (C.OptimalpHMax + C.ReactpHLim))+C.ReactpHLim)/(C.ReactpHLim**C.CurveSharppH))
+			deltapH = (((pH - (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))
 	//Within mid range
 	else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
 		deltapH = 1
@@ -650,7 +656,7 @@
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if (chem_temp < C.OptimalTempMax && chem_temp >= C.OptimalTempMin)
-		deltaT = (((C.OptimalTempMin - chem_temp)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
+		deltaT = (((chem_temp - C.OptimalTempMin)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
 	else if (chem_temp >= C.OptimalTempMax)
 		deltaT = 1
 	else
@@ -692,6 +698,7 @@
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
 		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp, purity)//add reagent function!! I THINK I can do this:
 
+	C.FermiCreate(src)
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
@@ -809,6 +816,14 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
+	if (D.id == "water") //Do like an otter, add acid to water.
+		(if pH <= 2)
+			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+			s.set_up(reagents, totalVol, pH*10, src)
+			s.start()
+			remove_any(amount/10)
+
+
 	if(!pH)
 		other_pH = D.pH
 
@@ -872,6 +887,7 @@
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/FermiTime = D //It's Fermi time!
 		FermiTime.fermiCreate(R.holder) //Seriously what is "data" ????
+
 		//This is how I keep myself sane.
 
 

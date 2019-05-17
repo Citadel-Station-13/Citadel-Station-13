@@ -22,7 +22,8 @@
 	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	//return ..()
 
-/datum/reagent/fermi/proc/fermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+//Called when reaction stops.
+/datum/reagent/fermi/proc/fermiFinish(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -584,7 +585,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
-	..()
+	. = ..()
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
@@ -1042,7 +1043,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
-	..()
+	. = ..()
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
 	else if(M.key == creatorID && creatorName == M.real_name) //same name AND same player - same instance of the player. (should work for clones?)
@@ -1114,7 +1115,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 
 /datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
-	//var/mob/living/carbon/human/o = M
+	. = ..()
 	var/items = M.get_contents()
 	for(var/obj/item/W in items)
 		if(W == M.head)

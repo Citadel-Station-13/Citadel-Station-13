@@ -1108,6 +1108,7 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
+	pH = 11.9
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M)
 	M.Dizzy(1)
@@ -1514,8 +1515,8 @@
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "acid"
-	pH = 5
+	taste_description = "sweet and tarry" //Again, not a strong acid.
+	pH = 5.5
 
 /datum/reagent/ash
 	name = "Ash"
@@ -1532,7 +1533,7 @@
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "acid"
+	taste_description = "solvent"//It's neutral though..?
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -1630,7 +1631,8 @@
 	description = "Also known as sodium hydroxide. As a profession making this is somewhat underwhelming."
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
-	taste_description = "acid"
+	taste_description = "alkali" //who put ACID for NaOH ????
+	pH = 13
 
 /datum/reagent/drying_agent
 	name = "Drying agent"

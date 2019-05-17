@@ -1,6 +1,14 @@
 //TO TWEAK:
 
-/datum/chemical_reaction/eigenstate
+//Called for every reaction step
+/datum/chemical_reaction/fermi/proc/FermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	return
+
+//Called for every reaction step
+/datum/chemical_reaction/fermi/proc/FermiExplode(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	return
+
+/datum/chemical_reaction/fermi/eigenstate
 	name = "Eigenstasium"
 	id = "eigenstate"
 	results = list("eigenstate" = 1)
@@ -22,7 +30,7 @@
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
-/datum/chemical_reaction/eigenstate/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/eigenstate/FermiCreate(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in holder.reagent_list
 	E.location_created = location

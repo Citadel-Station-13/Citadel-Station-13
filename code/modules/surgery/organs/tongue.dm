@@ -41,6 +41,9 @@
 		M.apply_damage(damage_mod, BURN, target)
 		to_chat(M, "<span class='userdanger'>The drink burns your skull! Oof, your bones!</span>")
 		return
+	if(damage+damage_mod < 0)
+		damage = 0
+		return
 
 	damage += damage_mod
 	if ((damage / maxHealth) > 1)
