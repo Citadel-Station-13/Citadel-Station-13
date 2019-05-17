@@ -58,4 +58,9 @@
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
 			string = "breasts_[lowertext(shape)]_[size]"
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_genitals()
+
 	icon_state = sanitize_text(string)
+

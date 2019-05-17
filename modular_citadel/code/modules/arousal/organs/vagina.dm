@@ -58,6 +58,9 @@
 		else
 			color = "#[owner.dna.features["vag_color"]]"
 			string  = "vagina"
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_genitals()
 
 	icon_state = sanitize_text(string)
 
