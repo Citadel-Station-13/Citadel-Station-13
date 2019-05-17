@@ -4,7 +4,7 @@
 	icon_state 				= "penis"
 	icon 					= 'modular_citadel/icons/obj/genitals/penis.dmi'
 	zone 					= "groin"
-	slot 					= "penis"
+	slot 					= ORGAN_SLOT_PENIS
 	w_class 				= 3
 	can_masturbate_with 	= TRUE
 	masturbation_verb 		= "stroke"
@@ -40,7 +40,8 @@
 	var/string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
-	desc = "You see a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long."
+	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
+
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...

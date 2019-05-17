@@ -15,7 +15,6 @@
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 //TOS
 /obj/item/clothing/under/rank/trek/command
@@ -117,25 +116,25 @@
 
 /obj/item/clothing/under/rank/trek/command/ds9
 	desc = "The uniform worn by command officers of the 2380s."
-	icon_state = "trek_command"
+	icon_state = "trek_ds9_command"
 	item_state = "trek_ds9_command"
 
 /obj/item/clothing/under/rank/trek/engsec/ds9
 	desc = "The uniform worn by operations officers of the 2380s."
-	icon_state = "trek_engsec"
+	icon_state = "trek_ds9_engsec"
 	item_state = "trek_ds9_engsec"
 
 /obj/item/clothing/under/rank/trek/medsci/ds9
 	desc = "The uniform undershirt worn by medsci officers of the 2380s."
-	icon_state = "trek_medsci"
+	icon_state = "trek_ds9_medsci"
 	item_state = "trek_ds9_medsci"
 
 //MODERN ish Joan sqrl sprites. I think
 
 //For general use
 /obj/item/clothing/suit/storage/fluff/fedcoat
-	name = "Federation Uniform Jacket (Red)"
-	desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it. Set phasers to awesome."
+	name = "Federation Uniform Jacket"
+	desc = "A uniform jacket from the United Federation. Set phasers to awesome."
 
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
@@ -177,27 +176,24 @@
 				icon_state = "[initial(icon_state)]_open"
 				item_state = "[initial(item_state)]_open"
 				unbuttoned = 1
-				usr << "You unbutton the coat."
+				to_chat(usr,"You unbutton the coat.")
 			if(1)
 				icon_state = "[initial(icon_state)]"
 				item_state = "[initial(item_state)]"
 				unbuttoned = 0
-				usr << "You button up the coat."
+				to_chat(usr,"You button up the coat.")
 		usr.update_inv_wear_suit()
 
 	//Variants
 /obj/item/clothing/suit/storage/fluff/fedcoat/medsci
-		desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it. Wearing this may make you feel all scientific."
 		icon_state = "fedblue"
 		item_state = "fedblue"
 
 /obj/item/clothing/suit/storage/fluff/fedcoat/eng
-		desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it.Wearing it may make you feel like checking a warp core, whatever that is."
 		icon_state = "fedeng"
 		item_state = "fedeng"
 
 /obj/item/clothing/suit/storage/fluff/fedcoat/capt
-		desc = "A uniform jacket from the United Federation. Starfleet still uses this uniform and there are variations of it. You feel like a commanding officer of Starfleet."
 		icon_state = "fedcapt"
 		item_state = "fedcapt"
 
@@ -205,34 +201,31 @@
 
 /obj/item/clothing/suit/storage/fluff/modernfedcoat
 	name = "Modern Federation Uniform Jacket"
-	desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. Wearing this makes you feel like a competant commander."
+	desc = "A modern uniform jacket from the United Federation."
 	icon = 'modular_citadel/icons/obj/clothing/trek_item_icon.dmi'
 	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/trek_mob_icon.dmi'
 	icon_state = "fedmodern"
 	item_state = "fedmodern"
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
-				/obj/item/tank/internals/emergency_oxygen,
-				/obj/item/flashlight,
-				/obj/item/gun,
-				/obj/item/melee/baton,
-				/obj/item/restraints/handcuffs,
-				/obj/item/taperecorder)
-	armor = list("melee" = 45, "bullet" = 25, "laser" = 25,"energy" = 25, "bomb" = 25, "bio" = 25, "rad" = 50, "fire" = 50, "acid" = 50)
+		/obj/item/flashlight, /obj/item/analyzer,
+		/obj/item/radio, /obj/item/tank/internals/emergency_oxygen,
+		/obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer,/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/glass/bottle/vial,/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/pill,/obj/item/storage/pill_bottle, /obj/item/restraints/handcuffs,/obj/item/hypospray
+		)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 5, "rad" = 10, "fire" = 10, "acid" = 0)
 
 	//Variants
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/medsci
-		desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. Wearing this makes you feel like a scientist or a pilot."
 		icon_state = "fedmodernblue"
 		item_state = "fedmodernblue"
 
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
-		desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. You feel like you can handle any type of technical engineering problems."
 		icon_state = "fedmoderneng"
 		item_state = "fedmoderneng"
 
 /obj/item/clothing/suit/storage/fluff/modernfedcoat/sec
-		desc = "A modern uniform jacket from the United Federation. Their Starfleet had recently started using these uniforms. This uniform makes you want to protect and serve as an officer."
 		icon_state = "fedmodernsec"
 		item_state = "fedmodernsec"
 
@@ -256,3 +249,7 @@
 /obj/item/clothing/head/caphat/formal/fedcover/sec
 		icon_state = "fedcapsec"
 		item_state = "fedcapsec"
+
+/obj/item/clothing/head/caphat/formal/fedcover/black
+		icon_state = "fedcapblack"
+		item_state = "fedcapblack"

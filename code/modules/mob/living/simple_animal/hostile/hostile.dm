@@ -353,6 +353,10 @@
 					vore_attack(src,L,src)
 				else
 					return L.attack_animal(src)
+			else
+				return L.attack_animal(src) //literally every single fucking one of these need this I guess.
+		else
+			return target.attack_animal(src)
 	else
 		return target.attack_animal(src)
 

@@ -759,6 +759,7 @@
 	taste_description = "skewing"
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
+	/*
 	if(M.hud_used)
 		if(current_cycle >= 5 && current_cycle % 3 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -774,6 +775,7 @@
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = newmatrix, time = 5, easing = QUAD_EASING, loop = -1)
 				animate(transform = -newmatrix, time = 5, easing = QUAD_EASING)
+	*/
 	return ..()
 
 /datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
