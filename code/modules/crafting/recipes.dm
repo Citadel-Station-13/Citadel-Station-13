@@ -686,6 +686,16 @@
 	reqs = list(/obj/item/bedsheet = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/briefcase
+	name = "Hand made Briefcase"
+	result = /obj/item/storage/briefcase/crafted
+	time = 35
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cardboard = 1,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 5)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/aitater
 	name = "intelliTater"
 	result = /obj/item/aicard/aitater
