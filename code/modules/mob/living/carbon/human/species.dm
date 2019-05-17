@@ -1461,7 +1461,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
-		stop_wagging_tail(target)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
 		return FALSE
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
@@ -1470,11 +1471,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
 			"<span class='notice'>You slap [target]'s ass! </span>",\
 		"You hear a slap.")
-		stop_wagging_tail(target)
 		if (target.canbearoused)
 			target.adjustArousalLoss(5)
 		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
 			target.mob_climax(forced_climax=TRUE)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
 		return FALSE
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
