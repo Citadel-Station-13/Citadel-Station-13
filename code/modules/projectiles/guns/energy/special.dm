@@ -121,14 +121,14 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
-	force = 12
-	sharpness = IS_SHARP
+	force = 10
 	can_charge = 0
 
-	heat = 3800
+	heat = 3000
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
-	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	light_intensity = .05
+	toolspeed = 1.75 //plasmacutters can be used as welders, and are slower than standard welders
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
@@ -142,11 +142,11 @@
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
 		I.use(1)
-		cell.give(1000)
+		cell.give(500)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else if(istype(I, /obj/item/stack/ore/plasma))
 		I.use(1)
-		cell.give(500)
+		cell.give(250)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
@@ -168,7 +168,8 @@
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
-	force = 15
+	force = 12
+	toolspeed = 1.25
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/gun/energy/wormhole_projector
