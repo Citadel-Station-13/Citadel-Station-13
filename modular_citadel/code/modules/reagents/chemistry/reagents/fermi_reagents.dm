@@ -20,7 +20,7 @@
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	//current_cycle++
-	//holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
+	//M.reagents.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
 	//return ..()
 
 //Called when reaction stops. #STOP_PROCESSING
@@ -34,24 +34,41 @@
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
-	message_admins("purity of chem is [src.purity]")
+	message_admins("purity of chem is [purity]")
 	if(src.purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (src.purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > src.purity)
 		M.reagents.remove_reagent(src.id, volume, FALSE)
-		M.reagents.add_reagent(src.InverseChem, volume, FALSE)
-		message_admins("all convered to []")
+		M.reagents.add_reagent(src.InverseChem, volume, FALSE, other_purity = 1)
+		message_admins("all convered to [src.InverseChem]")
 		return
 	else
-		var/pureVol = volume * purity
-		var/impureVol = volume * (1 - pureVol)
+		//var/pureVol = volume * purity
+		var/impureVol = volume * (1 - (volume * purity))
 		M.reagents.remove_reagent(src.id, (volume*impureVol), FALSE)
-		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE)
+		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
+	..()
 
-
+/datum/reagent/fermi/on_merge(mob/living/carbon/M, amount, other_purity)
+	if(other_purity < 0)
+		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
+	if (other_purity == 1 || src.DoNotSplit == TRUE)
+		return
+	else if (src.InverseChemVal > other_purity)
+		M.reagents.remove_reagent(src.id, amount, FALSE)
+		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
+		message_admins("all convered to [src.InverseChem]")
+		return
+	else
+		//var/pureVol =
+		var/impureVol = amount * (1 - (amount * other_purity))
+		M.reagents.remove_reagent(src.id, impureVol, FALSE)
+		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
+	return
+	..()
 
 
 
@@ -138,7 +155,7 @@
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	holder.remove_reagent(src.id, 0.5)//So you're not stuck for 10 minutes teleporting
+	M.reagents.remove_reagent(src.id, 0.5)//So you're not stuck for 10 minutes teleporting
 	..() //loop function
 
 //Addiction
@@ -360,7 +377,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Really hacky way to deal with this stupid problem I have
 				SM.reagents.add_reagent("SDGFheal", volume)
 				//holder.add_reagent("SDGFheal", volume)
-				holder.remove_reagent(src.id, 999)
+				M.reagents.remove_reagent(src.id, 999)
 				//SMR = locate(/datum/reagents in SM)
 				//holder.trans_to(SMR, volume)
 
@@ -421,7 +438,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
-							holder.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
+							M.reagents.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 							message_admins("Purging SGDF [volume]")
 					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
@@ -523,7 +540,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
 		if(86)
-			if (!holder.has_reagent("pen_acid"))//Counterplay is pent.)
+			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
 				message_admins("Zombie spawned at [M.loc]")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
 				M.next_move_modifier = 1
@@ -538,7 +555,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.desc = "[M]'s clone, gone horribly wrong."
 				ZI.zombiejob = null
 				//ZI.updateappearance(mutcolor_update=1)
-				holder.remove_reagent(src.id, 20)
+				M.reagents.remove_reagent(src.id, 20)
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
 				M.nutrition = startHunger - 500
@@ -548,7 +565,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.real_name = "Living teratoma"//horrifying!!
 				S.rabid = 1//Make them an angery boi
 				//S.updateappearance(mutcolor_update=1)
-				holder.remove_reagent(src.id, 20)
+				M.reagents.remove_reagent(src.id, 20)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
@@ -621,7 +638,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			nB.cached_size = 0
 			nB.prev_size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-			holder.remove_reagent(src.id, 5)
+			M.reagents.remove_reagent(src.id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	//message_admins("Breast size: [B.size], [B.cached_size], [holder]")
@@ -712,7 +729,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
 			nP.cached_length = 0.1
 			nP.prev_size = 0.1
-			holder.remove_reagent(src.id, 5)
+			M.reagents.remove_reagent(src.id, 5)
 			P = nP
 
 	P.cached_length = P.cached_length + 0.1
@@ -750,7 +767,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		T = nT
 	..()
 
-/datum/reagent/fermi/PElarger // Due to cozmo's request...!
+/datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Incubus draft"
 	id = "PEsmaller"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
@@ -824,7 +841,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	holder.remove_reagent(src.id, current_cycle, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -1035,8 +1052,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/mob/living/creator
 
 
-/datum/reagent/fermi/enthrall/FermiNew()
-	message_admins("On new for enthral proc'd")
+/datum/reagent/fermi/enthrall/FermiNew(holder)
+	message_admins("FermiNew for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
 	if (B.["gender"] == "female")
@@ -1087,6 +1104,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				FallInLove(C, M)
 			return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	if(!E)
+		CRASH("No enthrall status found in [M]!")
 	E.enthrallTally += 1
 	M.adjustBrainLoss(0.1)
 	..()
@@ -1230,15 +1249,17 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(20))
 				to_chat(M, "<span class='notice'>Your tongue feels... fluffy</span>")
 		if(10 to 20)
-			if(prob(20))
+			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")
-			if(prob(20))
+			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(20))
+			if(prob(10))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
-				//for(var/victim in seen)
+				for(var/victim in seen)
+					if((victim != /mob/living/simple_animal/pet/) || (victim == M))
+						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
@@ -1248,18 +1269,19 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			nT.Insert(M)
 			qdel(T)
 		if(22 to INFINITY)
-			if(prob(20))
+			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")
-			if(prob(20))
+			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(20))
+			if(prob(10))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
-				//for(var/victim in seen)
+				for(var/victim in seen)
+					if((victim != /mob/living/simple_animal/pet/) || (victim == M))
+						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
-			nT.maxHealth += purity //I like to have some reason for purity..!
 	..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1326,10 +1348,31 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiAcid"
 	description = "Someone didn't do like an otter, and add acid to water."
 
-/datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C)
+/datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
-	if(prob(20))
-		to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
-	C.apply_damage(2, BURN, target)
-	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-	L.adjustLungLoss(2)
+	C.adjustFireLoss(1, 0)
+	if(method==VAPOR)
+		if(prob(20))
+			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
+		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+		L.adjustLungLoss(2)
+		C.apply_damage(1, BURN, target)
+	var/acidstr = (5-C.reagents.pH)
+	C.acid_act(acidstr, volume)
+	..()
+
+/datum/reagent/fermi/fermiAcid/reaction_obj(obj/O, reac_volume)
+	if(ismob(O.loc)) //handled in human acid_act()
+		return
+	reac_volume = round(volume,0.1)
+	var/acidstr = (5-holder.pH)
+	O.acid_act(acidstr, volume)
+	..()
+
+/datum/reagent/fermi/fermiAcid/reaction_turf(turf/T, reac_volume)
+	if (!istype(T))
+		return
+	reac_volume = round(volume,0.1)
+	var/acidstr = (5-holder.pH)
+	T.acid_act(acidstr, volume)
+	..()

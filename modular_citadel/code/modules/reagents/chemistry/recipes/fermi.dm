@@ -71,7 +71,7 @@
 
 //serum
 /datum/chemical_reaction/fermi/SDGF
-	name = "synthetic-derived growth factor"
+	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 3)
 	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
@@ -105,7 +105,7 @@
 /datum/chemical_reaction/fermi/BElarger
 	name = "Sucubus milk"
 	id = "BElarger"
-	results = list("Eigenstasium" = 6)
+	results = list("BElarger" = 6)
 	required_reagents = list("salglu_solution" = 1, "milk" = 5, "synthflesh" = 2, "silicon" = 2, "aphro" = 2)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -120,7 +120,7 @@
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.1
 	RateUpLim 				= 10
-	FermiChem				= FALSE
+	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
@@ -152,7 +152,7 @@
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.1
 	RateUpLim 				= 10
-	FermiChem				= FALSE
+	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
@@ -168,8 +168,7 @@
 	name = "Astrogen"
 	id = "astral"
 	results = list("astral" = 3)
-	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
-	required_catalysts = list("blood" = 1)
+	required_reagents = list("eigenstasium" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -184,32 +183,33 @@
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.1
 	RateUpLim 				= 10
-	FermiChem				= FALSE
+	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25
 
 
 /datum/chemical_reaction/fermi/enthrall //Vars needed
-	name = "need a name"
+	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 3)
-	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
+	required_reagents = list("iron" = 1, "iodine" = 1)
+	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
 	required_catalysts = list("blood" = 1)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
-	OptimalTempMin 			= 200
+	OptimalTempMin 			= 780
 	OptimalTempMax			= 800
-	ExplodeTemp 			= 900
-	OptimalpHMin 			= 5
-	OptimalpHMax 			= 10
-	ReactpHLim 				= 3
-	CatalystFact 			= 0
-	CurveSharpT 			= 2
-	CurveSharppH 			= 2
-	ThermicConstant 		= 1
+	ExplodeTemp 			= 820
+	OptimalpHMin 			= 1
+	OptimalpHMax 			= 2
+	ReactpHLim 				= 2
+	//CatalystFact 			= 0
+	CurveSharpT 			= 0.5
+	CurveSharppH 			= 4
+	ThermicConstant 		= 20
 	HIonRelease 			= 0.1
-	RateUpLim 				= 10
-	FermiChem				= FALSE
+	RateUpLim 				= 5
+	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.15
 
@@ -236,21 +236,21 @@
 	..()
 
 /datum/chemical_reaction/fermi/hatmium
-	name = "Hat growth serium"
+	name = "Hat growth serum"
 	id = "hatmium"
 	results = list("hatmium" = 5)
-	//required_reagents = list("synthflesh" = 5, "blood" = 3, "uranium" = 1, "iron" = 1, "salglu_solution" = 3)
+	required_reagents = list("whiskey" = 1, "nutriment" = 3, "cooking_oil" = 2, "iron" = 1, "blackpepper" = 3)
 	//mix_message = ""
 	//FermiChem vars:
-	OptimalTempMin 	= 450
-	OptimalTempMax 	= 600
-	ExplodeTemp 	= 700
-	OptimalpHMin 	= 6
-	OptimalpHMax 	= 8
+	OptimalTempMin 	= 500
+	OptimalTempMax 	= 650
+	ExplodeTemp 	= 750
+	OptimalpHMin 	= 10
+	OptimalpHMax 	= 14
 	ReactpHLim 		= 1
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
-	CurveSharppH 	= 2
+	CurveSharppH 	= 0.5
 	ThermicConstant = -2.5
 	HIonRelease 	= 0.01
 	RateUpLim 		= 5
@@ -270,21 +270,21 @@
 	name = "Furranium"
 	id = "furranium"
 	results = list("furranium" = 5)
-	//required_reagents = list("synthflesh" = 5, "blood" = 3, "uranium" = 1, "iron" = 1, "salglu_solution" = 3)
+	required_reagents = list("aphro" = 1, "moonsugar" = 1, "silver" = 1, "salglu_solution" = 1)
 	//mix_message = ""
 	//FermiChem vars:
-	OptimalTempMin 	= 450
+	OptimalTempMin 	= 350
 	OptimalTempMax 	= 600
 	ExplodeTemp 	= 700
-	OptimalpHMin 	= 6
-	OptimalpHMax 	= 8
+	OptimalpHMin 	= 8
+	OptimalpHMax 	= 10
 	ReactpHLim 		= 1
 	//CatalystFact 	= 0 //To do 1
-	CurveSharpT 	= 4
-	CurveSharppH 	= 2
-	ThermicConstant = -2.5
-	HIonRelease 	= 0.01
-	RateUpLim 		= 5
+	CurveSharpT 	= 2
+	CurveSharppH 	= 0.5
+	ThermicConstant = -2
+	HIonRelease 	= -0.1
+	RateUpLim 		= 10
 	FermiChem 		= TRUE
 	//FermiExplode 	= FALSE
 	//PurityMin		= 0.15
@@ -294,8 +294,8 @@
 	name = "Naninte bain"
 	id = "naninte_b_gone"
 	results = list("naninte_b_gone" = 5)
-	required_reagents = list("synthflesh" = 5, "blood" = 3, "uranium" = 1, "iron" = 1, "salglu_solution" = 3)
-	mix_message = "the blood and sugar nucleates a hard coating of synth flesh inside the beaker."
+	required_reagents = list("synthflesh" = 5, "uranium" = 1, "iron" = 1, "salglu_solution" = 3)
+	mix_message = "the reaction gurgles, encapsulating the reagents in flesh."
 	//FermiChem vars:
 	OptimalTempMin 	= 450
 	OptimalTempMax 	= 600

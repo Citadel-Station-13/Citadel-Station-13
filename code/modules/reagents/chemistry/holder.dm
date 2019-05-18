@@ -650,7 +650,7 @@ im
 			deltapH = 0
 			return //If outside pH range, no reaction
 		else
-			deltapH = (((pH - (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))
+			deltapH = (((- pH + (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))//Reverse - to + to prevent math operation failures.
 	//Within mid range
 	else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
 		deltapH = 1
@@ -870,15 +870,19 @@ im
 			R.volume += amount
 			//Maybe make a pH for reagents, not sure. it's hard to imagine where the H+ ions would go. I'm okay with this solution for now.
 			//R.purity = (our_pure_moles + their_pure_moles) / (R.volume)
+			message_admins("Purity before addition: [R.purity], vol:[R.volume]. Adding [other_purity], vol: [amount]")
 			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
-				////
+			message_admins("Purity after [R.purity]")
 
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
+			//if(R.FermiChem == TRUE)
+			//	R.on_mob_add(my_atom)
 			R.on_merge(data, amount)
 			if(!no_react)
 				handle_reactions()
+
 			return TRUE
 
 
@@ -893,8 +897,8 @@ im
 		R.data = data
 		R.on_new(data)
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
-		var/datum/reagent/fermi/Ferm = D.id //It's Fermi time!
-		Ferm.FermiNew(R.holder) //Seriously what is "data" ????
+		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
+		Ferm.FermiNew(src) //Seriously what is "data" ????
 
 		//This is how I keep myself sane.
 
