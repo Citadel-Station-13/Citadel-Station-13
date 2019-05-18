@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
+
 	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
@@ -228,6 +229,7 @@ SUBSYSTEM_DEF(vote)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		time_remaining = round(vp/10)
 		for(var/c in GLOB.clients)
+			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
 			var/client/C = c
 			var/datum/action/vote/V = new
 			if(question)
