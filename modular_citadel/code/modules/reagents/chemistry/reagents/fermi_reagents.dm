@@ -1239,7 +1239,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				//for(var/victim in seen)
-				to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
+				if(seen)
+					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
 			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
@@ -1263,7 +1264,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-//Needs to be fixed, I cannot get it to work and it's giving me compile errors aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 //Nanite removal
 //Writen by Trilby!!
 //Status: Done - needs bug test
