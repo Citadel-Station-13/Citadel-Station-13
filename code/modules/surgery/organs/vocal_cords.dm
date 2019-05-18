@@ -805,8 +805,8 @@
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
-	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //lewd
 	//phase 2
+	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //wah, lewd
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
@@ -964,6 +964,24 @@
 			E.cooldown += 6
 
 	//teir 2
+
+	//ORGASM
+	else if((findtext(message, orgasm_words)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(E.phase > 1)
+				if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
+					H.mob_climax(forced_climax=TRUE)
+					H.setArousalLoss(H.min_arousal)
+					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
+					E.enthrallTally += power_multiplier
+				else
+					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
+					E.enthrallTally += power_multiplier*1.1
+					to_chat(H, "<span class='warning'>Your Masters command whites out your mind in bliss!</b></span>")
+				E.cooldown += 6
+
 
 	//awoo
 	else if((findtext(message, awoo_words)))
