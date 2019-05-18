@@ -47,7 +47,16 @@
 		"hair_dye",
 		"sugar",
 		"white_glitter",
-		"growthserum"
+		"growthserum",
+		"cornoil",
+		"uranium",
+		"carpet",
+		"firefighting_foam",
+		"semen",
+		"femcum",
+		"tearjuice",
+		"strange_reagent"
+
 	)
 	//needs to be chemid unit checked at some point
 
@@ -58,8 +67,10 @@
 	endWhen = rand(120, 180)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/T = get_turf(temp_vent)
-		if(T && is_station_level(T.z) && !temp_vent.welded)
+		var/area/A = T.loc
+		if(T && is_station_level(T.z) && !temp_vent.welded && !A.safe)
 			vents += temp_vent
+
 	if(!vents.len)
 		return kill()
 
@@ -87,8 +98,8 @@
 	else
 		R.add_reagent(pick(saferChems), reagentsAmount)
 
-	var/datum/effect_system/smoke_spread/chem/C = new
-	C.set_up(R,16,T,TRUE)
+	var/datum/effect_system/smoke_spread/chem/smoke_machine/C = new
+	C.set_up(R,16,1,T)
 	C.start()
 	playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
 
