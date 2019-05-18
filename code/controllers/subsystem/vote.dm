@@ -16,7 +16,6 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
-
 	var/obfuscated = FALSE//CIT CHANGE - adds obfuscated/admin-only votes
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
