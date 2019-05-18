@@ -31,3 +31,11 @@
 /datum/mood_event/enthrallmissing4
     mood_change = -25
     description = "<span class='warning'>I'm all alone, It's so hard to continute without Master...</span>\n"
+
+/datum/mood_event/InLove
+    mood_change = 10
+    description = "<span class='warning'>I'm in love!!</span>\n"
+
+/datum/mood_event/MissingLove
+    mood_change = -10
+    description = "<span class='warning'>I can't keep my crush off my mind, I need to see them again!</span>\n"

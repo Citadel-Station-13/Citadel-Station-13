@@ -582,7 +582,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //TODO - fail reaction explosion makes breasts and baps you with them.
 /datum/reagent/fermi/BElarger
 	name = "Sucubus milk"
-	id = "BEenlager"
+	id = "BElarger"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
@@ -800,9 +800,9 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255//Reset addiction
+	antiGenetics = 255
 	switch(current_cycle)
 		if(0)//Require a minimum
-			M.alpha = 255
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -1023,7 +1023,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
-	id = "enthral"
+	id = "enthrall"
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
 	color = "#2C051A" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
@@ -1111,11 +1111,46 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	M.adjustBrainLoss(0.2)
 	..()
 
+//Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
+/datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
+	name = "MKUltra"
+	id = "enthrallExplo"
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#2C051A" // rgb: , 0, 255
+	metabolization_rate = 0.1
+	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
+	var/mob/living/carbon/love
+
+/datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system.
+	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
+		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		if(!seen)
+			return
+		love = seen
+		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
+		to_chat(M, "<span class='notice'>You develop deep feelings for [love], your heart beginning to race as you look upon them with new eyes.</span>")
+	else
+		if(get_dist(M, love) < 8)
+			//if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
+			M.adjustArousalLoss(5)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove)
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
+		else
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
+	..()
+
+/datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
+	M.remove_status_effect(STATUS_EFFECT_INLOVE)
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
+	..()
+
 /datum/reagent/fermi/enthrall/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
 	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
-		to_chat(Lover, "<span class='warning'>You are already fully devoted to your love!</span>")
+		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
 		return
-	to_chat(Lover, "<span class='notice'>You develop feelings for [Love], and anyone they like.</span>")
+	to_chat(Lover, "<span class='notice'>You develop deep feelings for [Love], your heart beginning to race as you look upon them with new eyes.</span>")
 	if(Lover.mind)
 		Lover.mind.store_memory("You are in love with [Love].")
 	Lover.faction |= "[REF(Love)]"
@@ -1282,6 +1317,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	..()
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+//				MISC FERMICHEM CHEMS FOR SPECIFIC INTERACTIONS ONLY
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/fermi/fermiAcid
