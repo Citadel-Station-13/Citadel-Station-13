@@ -39,7 +39,7 @@
 
 /datum/bounty/item/engineering/microwave
 	name = "Microwaves"
-	description = "Are cooks are unable to keep up with order do to a lack of microwaves, please send us some."
+	description = "Due to a shortage of microwaves, our chefs are incapable of keeping up with our sheer volume of orders. We need at least three microwaves to keep up with our crew's dietary habits."
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/machinery/microwave)
@@ -53,14 +53,14 @@
 
 /datum/bounty/item/engineering/rcd
 	name = "Spare RCD"
-	description = "Construction and repairs to are shuttles are going slowly, turns out we are sort of RCDs, can you send us a few?"
+	description = "Construction and repairs to are shuttles are going slowly. As it turns out, we're a little short on RCDs, can you send us a few?"
 	reward = 2500
 	required_count = 3
 	wanted_types = list(/obj/item/construction/rcd)
 
 /datum/bounty/item/engineering/rpd
 	name = "Spare RPD"
-	description = "Are atmos techs are sick and tired of running back and forth to get more pipes when making new parts or repairing shuttles. Can you send us a few?"
+	description = "Our Atmospheric Technicians are still living in the past, relying on stationary pipe dispensers to produce the pipes necessary to accomplish their strenuous tasks. They could use an upgrade. Could you send us some Rapid Pipe Dispensers?"
 	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/pipe_dispenser)
