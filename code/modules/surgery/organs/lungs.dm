@@ -1,3 +1,5 @@
+#define LUNGS_MAX_HEALTH 500
+
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -55,11 +57,11 @@
 	var/crit_stabilizing_reagent = "epinephrine"
 
 	//health
-	var/maxHealth = 500
+	var/maxHealth = LUNGS_MAX_HEALTH
 	var/damage = 0
 
 //TODO: lung health affects lung function
-/obj/item/organ/lungs/proc/adjustLungLoss(mob/living/carbon/human/M, damage_mod)
+/obj/item/organ/lungs/proc/adjustLungLoss(mob/living/carbon/M, damage_mod)
 	if (maxHealth == "plasma")
 		return
 	if(damage+damage_mod < 0)
@@ -69,7 +71,7 @@
 	damage += damage_mod
 	if ((damage / maxHealth) > 1)
 		to_chat(M, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
-		M.emote("cough")
+		M.emote("gasp")
 		qdel(src)
 	else if ((damage / maxHealth) > 0.75)
 		to_chat(M, "<span class='warning'>It's getting really hard to breathe!!</span>")

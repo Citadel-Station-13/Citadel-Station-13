@@ -547,7 +547,7 @@ im
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
 	var/multiplier = INFINITY
-	var/special_react_result = C.check_special_react(src)
+	//var/special_react_result = C.check_special_react(src) Only add if I add in the fermi-izer chem
 
 	message_admins("updating targetVol from [targetVol]")
 	for(var/B in cached_required_reagents) //
@@ -620,16 +620,19 @@ im
 	if (chem_temp > C.ExplodeTemp)
 		//go to explode proc
 		message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [chem_temp]")
-		C.FermiExplode(src, (reactedVol+targetVol), chem_temp, pH)
+		C.FermiExplode(src, my_atom, (reactedVol+targetVol), chem_temp, pH)
 
 	if (pH > 14)
 		pH = 14
+		message_admins("pH is lover limit, cur pH: [pH]")
 	else if (pH < 0)
 		pH = 0
 		//Create chemical sludge eventually(for now just destroy the beaker I guess?)
 		//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 		message_admins("pH is lover limit, cur pH: [pH]")
 
+	if ((purity < C.PurityMin) && (!C.PurityMin == 0))//If purity is below the min, blow it up.
+		C.FermiExplode(src, (reactedVol+targetVol), chem_temp, pH, C)
 
 	//For now, purity is handled elsewhere
 
@@ -823,7 +826,7 @@ im
 	if (D.id == "water") //Do like an otter, add acid to water.
 		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-			s.set_up(, total_volume, pH*10, src)
+			s.set_up("fermiAcid", total_volume, pH*10, src)
 			s.start()
 			remove_any(amount/10)
 			return

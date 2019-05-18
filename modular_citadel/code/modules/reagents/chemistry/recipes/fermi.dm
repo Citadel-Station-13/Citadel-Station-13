@@ -4,8 +4,41 @@
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
-//Called for every reaction step
-/datum/chemical_reaction/fermi/proc/FermiExplode(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+//Called when temperature is above a certain threshold
+//....Is this too much?
+/datum/chemical_reaction/fermi/proc/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	var/Svol = volume
+	var/turf/T = get_turf(holder.my_atom)
+	if(temp>600)//if hot, start a fire
+		switch(temp)
+			if (601 to 800)
+				for(var/turf/turf in range(1,T))
+					new /obj/effect/hotspot(turf)
+					volume /= 3
+			if (801 to 1100)
+				for(var/turf/turf in range(2,T))
+					new /obj/effect/hotspot(turf)
+					volume /= 4
+			if (1101 to INFINITY)
+				for(var/turf/turf in range(3,T))
+					new /obj/effect/hotspot(turf)
+					volume /= 5
+
+	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+	if(pH < 2.5)
+		s.set_up("fermiAcid", (volume/3), pH*10, T)
+		volume /=3
+	for (var/reagent in holder.reagent_list)
+		var/datum/reagent/R = reagent
+		s.set_up(R.id, R.volume/3, pH*10, T)
+		//R.on_reaction(T, volume/10) //Uneeded, I think (hope)
+	s.start()
+
+	if (pH > 12)
+		var/datum/effect_system/reagents_explosion/e = new()
+		e.set_up(round(volume/Svol, 1), T, 0, 0)
+		e.start()
+	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], containing [holder.reagent_list]")
 	return
 
 /datum/chemical_reaction/fermi/eigenstate
@@ -29,6 +62,7 @@
 	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
+
 
 /datum/chemical_reaction/fermi/eigenstate/FermiCreate(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
@@ -99,7 +133,6 @@
 	RateUpLim = 5
 	FermiChem = TRUE
 	FermiExplode = FALSE
-	ImpureChem = "carpotoxin"
 
 /datum/chemical_reaction/enthral
 	name = "need a name"
