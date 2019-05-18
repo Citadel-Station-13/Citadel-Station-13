@@ -121,13 +121,14 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
-	force = 10
+	force = 12
+	sharpness = IS_SHARP
 	can_charge = 0
 
 	heat = 3800 //Melting ores
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
-	toolspeed = 1.50 //plasmacutters can be used as welders, and are slower than standard welders
+	toolspeed = 1.0 //plasmacutters can be used as welders.
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
@@ -168,8 +169,8 @@
 	name = "advanced plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff. The advanced model alows its welding to be shielded allowing for quicker cutting over the normal plasma cutter."
 	icon_state = "adv_plasmacutter"
-	force = 12
-	toolspeed = 1.25
+	force = 15
+	toolspeed = 0.7
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/gun/energy/wormhole_projector
