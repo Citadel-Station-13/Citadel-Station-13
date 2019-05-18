@@ -2,7 +2,7 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 18
+	damage = 20
 	range = 4
 	dismemberment = 5
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
@@ -32,7 +32,7 @@
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 22
+	damage = 28
 	range = 5
 	mine_range = 5
 	dismemberment = 10
