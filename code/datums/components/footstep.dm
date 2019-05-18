@@ -18,7 +18,7 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-	if(!T.footstep || LM.buckled || LM.lying || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
+	if(!T.footstep || LM.buckled || LM.lying || !LM.canmove || LM.resting || LM.buckled || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
 		if (LM.lying && !(!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING))) //play crawling sound if we're lying
 			playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v)
 		return
@@ -95,10 +95,7 @@
 					GLOB.footstep[T.footstep][3] + e)
 			
 			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
-				if(H.dna.species.special_step_sounds)
-					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
-				else
-					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-						GLOB.barefootstep[T.barefootstep][2] * v,
-						TRUE,
-						GLOB.barefootstep[T.barefootstep][3] + e)
+				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
+					GLOB.barefootstep[T.barefootstep][2] * v,
+					TRUE,
+					GLOB.barefootstep[T.barefootstep][3] + e)
