@@ -13,7 +13,7 @@
 	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
-	var/input = stripped_input(usr, "Please choose a message to transmit.", "Changeling Hivemind", "")
+	var/input = html_decode(stripped_input(usr, "Please choose a message to transmit.", "Changeling Hivemind", ""))
 	user.say(".g[input]")
 
 /obj/effect/proc_holder/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
