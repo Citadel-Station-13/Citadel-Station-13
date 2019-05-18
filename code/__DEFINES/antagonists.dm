@@ -35,3 +35,8 @@
 
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300
+
+//Gangshit
+#define NOT_DOMINATING			-1
+#define MAX_LEADERS_GANG		3
+#define INITIAL_DOM_ATTEMPTS	3
