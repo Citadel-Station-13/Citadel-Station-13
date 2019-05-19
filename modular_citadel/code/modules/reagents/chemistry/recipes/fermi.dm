@@ -6,9 +6,9 @@
 
 //Called when temperature is above a certain threshold
 //....Is this too much?
-/datum/chemical_reaction/fermi/proc/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/chemical_reaction/fermi/proc/FermiExplode(src, my_atom, volume, temp, pH, Reaction) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	var/Svol = volume
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/T = get_turf(my_atom)
 	if(temp>600)//if hot, start a fire
 		switch(temp)
 			if (601 to 800)
@@ -68,6 +68,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in holder.reagent_list
 	E.location_created = location
+	//add on_new() handling of vars
 
 //serum
 /datum/chemical_reaction/fermi/SDGF
@@ -126,7 +127,7 @@
 
 /datum/chemical_reaction/fermi/BElarger/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
 	//var/obj/item/organ/genital/breasts/B =
-	new /obj/item/organ/genital/breasts(holder.my_atom)
+	new /obj/item/organ/genital/breasts(holder.my_atom.loc)
 	var/list/seen = viewers(5, get_turf(holder.my_atom))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")//OwO
@@ -158,7 +159,7 @@
 
 /datum/chemical_reaction/fermi/PElarger/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
 	//var/obj/item/organ/genital/penis/nP =
-	new /obj/item/organ/genital/penis(holder.my_atom)
+	new /obj/item/organ/genital/penis(holder.my_atom.loc)
 	var/list/seen = viewers(5, get_turf(holder.my_atom))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")//OwO
@@ -215,8 +216,8 @@
 
 /datum/chemical_reaction/fermi/enthrall/on_reaction(var/atom/my_atom)
 	message_admins("On reaction for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagent_list
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
 	else

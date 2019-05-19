@@ -20,6 +20,7 @@
 	return ..()
 
 /obj/item/clothing/head/hattip/speechModification(message)
+	..()
 	if(prob(0.01))
 		message += "\" and tips their hat. \"Spy's sappin' my Sentry!"
 		return message

@@ -674,7 +674,7 @@ im
 	message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
 
 
-	stepChemAmmount = multiplier * deltaT
+	stepChemAmmount = deltaT //used to have multipler, now it doesn't
 	if (stepChemAmmount > C.RateUpLim)
 		stepChemAmmount = C.RateUpLim
 	else if (stepChemAmmount <= 0.01)
@@ -713,7 +713,7 @@ im
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
 	//chem_temp = round(chem_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
-	adjust_thermal_energy((C.ThermicConstant * stepChemAmmount), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
+	adjust_thermal_energy((chem_temp*(C.ThermicConstant * stepChemAmmount *100)), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
 	pH += (C.HIonRelease * stepChemAmmount)
 	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 

@@ -1049,14 +1049,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
-	//data = ("creatorID" = null, "creatorGender" = null, "creatorName" = null)
+	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 
 
-/datum/reagent/fermi/enthrall/FermiNew(var/atom/my_atom)
+/datum/reagent/fermi/enthrall/nn_new(list/data)
 	message_admins("FermiNew for enthral proc'd")
 	creatorID = data.["creatorID"]
 	creatorGender = data.["creatorGender"]
