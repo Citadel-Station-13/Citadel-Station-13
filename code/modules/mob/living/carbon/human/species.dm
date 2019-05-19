@@ -756,7 +756,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!forced_colour)
 					switch(S.color_src)
 						if(SKINTONE)
-							accessory_overlay.color = skintone2hex(H.skin_tone)
+							accessory_overlay.color = "#[skintone2hex(H.skin_tone)]"
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = "#[fixed_mut_color]"
