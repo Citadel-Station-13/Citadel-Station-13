@@ -76,27 +76,19 @@
 			o.dropItemToGround(W, TRUE)
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
-	//message_admins("BElarge tick!")
-	/*
-	var/items = o.get_contents()
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W)
-		//items |= owner.get_equipped_items(TRUE)
-
-		//owner.dropItemToGround(owner.wear_suit)
-		//owner.dropItemToGround(owner.w_uniform)
-	*/
 	switch(round(B.cached_size))
 		if(9)
 			if (!(B.breast_sizes[B.prev_size] == B.size))
+				to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 				o.remove_movespeed_modifier("megamilk")
 				o.next_move_modifier = 1
 		if(10 to INFINITY)
 			if (!(B.breast_sizes[B.prev_size] == B.size))
 				to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
-				o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (round(B.cached_size) - 8))
-				o.next_move_modifier = (round(B.cached_size) - 8)
+				o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = ((round(B.cached_size) - 8))/3)
+				o.next_move_modifier = (round(B.cached_size) - 8)/3
+	if(prob(5))
+		to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
 	..()
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
@@ -139,18 +131,21 @@
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 	switch(round(P.cached_length))
-		if(11)
+		if(21)
 			if (!(P.prev_size == P.size))
-				to_chat(o, "<span class='warning'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+				to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 				o.remove_movespeed_modifier("hugedick")
 				o.next_move_modifier = 1
-		if(12 to INFINITY)
+		if(22 to INFINITY)
 			if (!(P.prev_size == P.size))
 				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's affecting your movements!</b></span>")
-				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 11.1))
-				o.next_move_modifier = (round(P.length) - 11)
+				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 21.1))
+				o.next_move_modifier = (round(P.length) - 21)
 	..()
 
+/datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/M)
+	owner.remove_movespeed_modifier("hugedick")
+	owner.next_move_modifier = 1
 
 /*//////////////////////////////////////////
 		Mind control functions
@@ -185,6 +180,14 @@
 	var/cooldown = 0
 
 /datum/status_effect/chem/enthrall/on_apply(mob/living/carbon/M)
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
+	enthrallID = E.creatorID
+	enthrallGender = E.creatorGender
+	master = E.creator
+	if(!E)
+		message_admins("WARNING: No chem found in thrall!!!!")
+	if(!master)
+		message_admins("WARNING: No master! found in thrall!!!!")
 	if(M.key == enthrallID)
 		owner.remove_status_effect(src)//This shouldn't happen, but just in case
 	redirect_component1 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
@@ -195,6 +198,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall)
 
 /datum/status_effect/chem/enthrall/tick(mob/living/carbon/M)
+	message_admins("Enthrall processing for [M]: ")
 
 	//chem calculations
 	if (owner.reagents.has_reagent("MKUltra"))
@@ -398,6 +402,7 @@
 		cooldown -= (1 + (mental_capacity/1000 ))
 	else
 		to_chat(master, "<span class='notice'><i>Your pet [owner.name] appears to have finished internalising your last command.</i></span>")
+	..()
 
 //Check for proximity of master DONE
 //Place triggerreacts here - create a dictionary of triggerword and effect.

@@ -50,35 +50,35 @@
         to_chat(user, "<span class='warning'>[user] has already been used!</span>")
         return
     switch(cont.reagents.pH)
-        if(13.5 to INFINITY)
+        if(14 to INFINITY)
             color = "#462c83"
-        if(12.5 to 13.5)
+        if(13 to 14)
             color = "#63459b"
-        if(11.5 to 12.5)
+        if(12 to 13)
             color = "#5a51a2"
-        if(10.5 to 11.5)
+        if(11 to 12)
             color = "#3853a4"
-        if(9.5 to 10.5)
+        if(10 to 11)
             color = "#3f93cf"
-        if(8.5 to 9.5)
+        if(9 to 10)
             color = "#0bb9b7"
-        if(7.5 to 8.5)
+        if(8 to 9)
             color = "#23b36e"
-        if(6.5 to 7.5)
+        if(7 to 8)
             color = "#3aa651"
-        if(5.5 to 6.5)
+        if(6 to 7)
             color = "#4cb849"
-        if(4.5 to 5.5)
+        if(5 to 6)
             color = "#b5d335"
-        if(3.5 to 4.5)
-            color = "#b5d333"
-        if(2.5 to 3.5)
+        if(4 to 5)
             color = "#f7ec1e"
-        if(1.5 to 2.5)
+        if(3 to 4)
             color = "#fbc314"
-        if(0.5 to 1.5)
+        if(2 to 3)
             color = "#f26724"
-        if(-INFINITY to 0.5)
+        if(1 to 2)
             color = "#ef1d26"
-        description += " The paper looks to be around [round(glass.reagents.pH)]"
+        if(-INFINITY to 1)
+            color = "#c6040c"
+    desc += " The paper looks to be around a pH of [round(cont.reagents.pH)]"
     used = TRUE

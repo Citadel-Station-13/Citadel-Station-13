@@ -4,11 +4,11 @@
 
 /datum/mood_event/enthrall
     mood_change = 5
-    description = "<span class='warning'>I am a good pet for Master.</span>\n"
+    description = "<span class='nicegreen'>I am a good pet for Master.</span>\n"
 
 /datum/mood_event/enthrallpraise
     mood_change = 12
-    description = "<span class='warning'>I feel so happy! I'm a good pet who Master loves!</span>\n"
+    description = "<span class='nicegreen'>I feel so happy! I'm a good pet who Master loves!</span>\n"
     timeout = 600
 
 /datum/mood_event/enthrallscold
@@ -34,7 +34,7 @@
 
 /datum/mood_event/InLove
     mood_change = 10
-    description = "<span class='warning'>I'm in love!!</span>\n"
+    description = "<span class='nicegreen'>I'm in love!!</span>\n"
 
 /datum/mood_event/MissingLove
     mood_change = -10

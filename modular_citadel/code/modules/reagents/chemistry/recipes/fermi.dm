@@ -6,39 +6,56 @@
 
 //Called when temperature is above a certain threshold
 //....Is this too much?
-/datum/chemical_reaction/fermi/proc/FermiExplode(src, my_atom, volume, temp, pH, Reaction) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
-	var/Svol = volume
+/datum/chemical_reaction/fermi/proc/FermiExplode(src, var/atom/my_atom, datum/reagents/holder, volume, temp, pH, Reaction, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	//var/Svol = volume
+	if (Exploding == TRUE)
+		return
+	var/ImpureTot = 0
+	var/pHmod = 1
 	var/turf/T = get_turf(my_atom)
 	if(temp>600)//if hot, start a fire
 		switch(temp)
 			if (601 to 800)
 				for(var/turf/turf in range(1,T))
 					new /obj/effect/hotspot(turf)
-					volume /= 3
+					//volume /= 3
 			if (801 to 1100)
 				for(var/turf/turf in range(2,T))
 					new /obj/effect/hotspot(turf)
-					volume /= 4
-			if (1101 to INFINITY)
+					//volume /= 4
+			if (1101 to INFINITY) //If you're crafty
 				for(var/turf/turf in range(3,T))
 					new /obj/effect/hotspot(turf)
-					volume /= 5
+					//volume /= 5
 
-	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-	if(pH < 2.5)
-		s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
-		volume /=3
-	for (var/reagent in holder.reagent_list)
-		var/datum/reagent/R = reagent
-		s.set_up(R, R.volume/3, pH*10, T)
-		//R.on_reaction(T, volume/10) //Uneeded, I think (hope)
-	s.start()
-
-	if (pH > 12)
+	//var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	if(pH < 4)
+		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
+		R.add_reagent("fermiAcid", ((volume/3)/pH))
+		pHmod = 2
+	if (pH > 10)
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(volume/Svol, 1), T, 0, 0)
+		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
 		e.start()
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], containing [holder.reagent_list]")
+		pHmod = 1.5
+	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list)
+		if (istype(reagent, /datum/reagent/fermi))
+			var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+			Ferm.FermiExplode(src, my_atom, holder, volume, temp, pH, Exploding = TRUE)
+			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
+		R.add_reagent(reagent, reagent.volume)
+		if (reagent.purity < 0.6)
+			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
+	if(R.reagent_list)
+		s.set_up(R, (volume/10)*pHmod, T)
+		s.start()
+	if(!ImpureTot == 0)
+		ImpureTot *= volume
+		empulse(T, volume/10, ImpureTot/10, 1)
+	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
+	my_atom.reagents.clear_reagents()
 	return
 
 /datum/chemical_reaction/fermi/eigenstate
@@ -95,7 +112,7 @@
 	PurityMin 			= 0.25
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/T = get_turf(holder)
 	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
 	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)//I dunno how slimes work cause fire is burny
 	S.name = "Living teratoma"
@@ -127,8 +144,8 @@
 
 /datum/chemical_reaction/fermi/BElarger/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
 	//var/obj/item/organ/genital/breasts/B =
-	new /obj/item/organ/genital/breasts(holder.my_atom.loc)
-	var/list/seen = viewers(5, get_turf(holder.my_atom))
+	new /obj/item/organ/genital/breasts(get_turf(holder))
+	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")//OwO
 	..()
@@ -138,7 +155,6 @@
 	id = "PElarger"
 	results = list("PElarger" = 3)
 	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
-	required_catalysts = list("blood" = 1)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -159,8 +175,8 @@
 
 /datum/chemical_reaction/fermi/PElarger/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
 	//var/obj/item/organ/genital/penis/nP =
-	new /obj/item/organ/genital/penis(holder.my_atom.loc)
-	var/list/seen = viewers(5, get_turf(holder.my_atom))
+	new /obj/item/organ/genital/penis(get_turf(holder))
+	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")//OwO
 	..()
@@ -214,10 +230,12 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.15
 
-/datum/chemical_reaction/fermi/enthrall/on_reaction(var/atom/my_atom)
+//Apprently works..?Negative
+/*
+/datum/chemical_reaction/fermi/enthrall/on_reaction(datum/reagents/holder)
 	message_admins("On reaction for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagent_list
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
 	else
@@ -226,14 +244,19 @@
 	E.data.["creatorID"] = B.data.["ckey"]
 	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
 	..()
+
 	//var/enthrallID = B.get_blood_data()
+*/
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(src, var/atom/my_atom, volume, temp, pH, Reaction)
 	var/turf/T = get_turf(my_atom)
-	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-	s.set_up(/datum/reagent/fermi/enthrallExplo, volume, pH*10, T)
+	var/datum/reagents/R = new/datum/reagents(350)
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	R.add_reagent("enthrallExplo", volume)
+	s.set_up(R, volume, T)
 	s.start()
-	..()
+	my_atom.reagents.clear_reagents()
+	//..() //Please don't kill everyone too.
 
 /datum/chemical_reaction/fermi/hatmium
 	name = "Hat growth serum"

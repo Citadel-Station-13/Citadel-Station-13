@@ -24,7 +24,7 @@
 	//return ..()
 
 //Called when reaction stops. #STOP_PROCESSING
-/datum/reagent/fermi/proc/FermiFinish(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/reagent/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
 //Called when added to a beaker without any of the reagent present. #add_reagent
@@ -34,6 +34,8 @@
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+	if(!M)
+		return ..()
 	message_admins("purity of chem is [purity]")
 	if(src.purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
@@ -53,6 +55,8 @@
 	..()
 
 /datum/reagent/fermi/on_merge(mob/living/carbon/M, amount, other_purity)
+	if(!M)
+		return ..()
 	if(other_purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (other_purity == 1 || src.DoNotSplit == TRUE)
@@ -364,7 +368,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//reaction_mob(SM, )I forget what this is for
 				//Damage the clone
 				SM.blood_volume = BLOOD_VOLUME_NORMAL/2
-				SM.adjustCloneLoss(80, 0)
+				SM.adjustCloneLoss(60, 0)
 				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
 				//var/datum/reagents/SMR = SM
@@ -1049,14 +1053,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
-	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
+	data// = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 
 
-/datum/reagent/fermi/enthrall/nn_new(list/data)
+/datum/reagent/fermi/enthrall/on_new(list/data)
 	message_admins("FermiNew for enthral proc'd")
 	creatorID = data.["creatorID"]
 	creatorGender = data.["creatorGender"]
@@ -1073,11 +1077,23 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	creatorID = B.data.["ckey"]
 	*/
 
+/datum/reagent/fermi/enthrall/FermiFinish(datum/reagents/holder)
+	message_admins("On finish for enthral proc'd")
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
+	else
+		E.data.["creatorGender"] = "Master"
+	E.data["creatorName"] = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
+	message_admins("key: [M.key] vs [creatorID], ")
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
 	else if(M.key == creatorID && creatorName == M.real_name) //same name AND same player - same instance of the player. (should work for clones?)
@@ -1090,16 +1106,20 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		creator = M
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-		var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+		//var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+		/*
 		if(creator)
 			E.enthrallID = creatorID
 			E.enthrallGender = creatorGender
 			E.master = creator
+		*/
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
 		if (M.key == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
+			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+				return
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 			for(var/victim in seen)
 				if((victim == /mob/living/simple_animal/pet/) || (victim == M))
@@ -1111,6 +1131,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			return
 		else // If someone else drinks it, the creator falls in love with them!
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
+			if(C.has_status_effect(STATUS_EFFECT_INLOVE))
+				return
 			if(C in viewers(7, get_turf(M)))
 				M.reagents.remove_reagent(src.id, src.volume)
 				FallInLove(C, M)
@@ -1158,9 +1180,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		for(var/victim in seen)
 			if((victim == /mob/living/simple_animal/pet/) || (victim == M))
 				seen = seen - victim
-		if(!seen)
+		if(seen.len == 0)
 			return
-		love = seen
+		love = pick(seen)
+		if(!love)
+			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
 		to_chat(M, "<span class='notice'>You develop deep feelings for [love], your heart beginning to race as you look upon them with new eyes.</span>")
 	else

@@ -478,15 +478,16 @@ im
 					targetVol = cached_results[P]*multiplier
 					message_admins("FermiChem target volume: [targetVol]")
 
-				if (chem_temp > C.OptimalTempMin)//To prevent pointless reactions
+				if ((chem_temp > C.OptimalTempMin) && (pH > (C.OptimalpHMin - C.ReactpHLim)) && (pH < (C.OptimalpHMax + C.ReactpHLim)))//To prevent pointless reactions
 					//if (reactedVol < targetVol)
 					if (fermiIsReacting == TRUE)
 						return 0
 					else
 						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-						selected_reaction.on_reaction(src, multiplier)
+						//selected_reaction.on_reaction(src, my_atom, multiplier)
 						START_PROCESSING(SSprocessing, src)
 						message_admins("FermiChem processing started")
+						selected_reaction.on_reaction(src, my_atom, multiplier)
 						fermiIsReacting = TRUE
 						fermiReactID = selected_reaction
 						reaction_occurred = 1
@@ -560,7 +561,7 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
@@ -585,7 +586,7 @@ im
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
+			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 			Ferm.FermiFinish(src, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
 			return
@@ -597,14 +598,14 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 
 	//handle_reactions()
 
-/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+/datum/reagents/proc/FermiReact(selected_reaction, cached_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -620,10 +621,10 @@ im
 
 
 	//Check extremes first
-	if (chem_temp > C.ExplodeTemp)
+	if (cached_temp > C.ExplodeTemp)
 		//go to explode proc
-		message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [chem_temp]")
-		C.FermiExplode(src, my_atom, (reactedVol+targetVol), chem_temp, pH)
+		message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [cached_temp]")
+		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
 
 	if (pH > 14)
 		pH = 14
@@ -635,7 +636,7 @@ im
 		message_admins("pH is lover limit, cur pH: [pH]")
 
 	if ((purity < C.PurityMin) && (!C.PurityMin == 0))//If purity is below the min, blow it up.
-		C.FermiExplode(src, (reactedVol+targetVol), chem_temp, pH, C)
+		C.FermiExplode(src, (reactedVol+targetVol), cached_temp, pH, C)
 
 	//For now, purity is handled elsewhere
 
@@ -648,8 +649,8 @@ im
 		else
 			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH)))
 	//Upper range
-	else if (pH > C.OptimalpHMin)
-		if (pH > (C.OptimalpHMin + C.ReactpHLim))
+	else if (pH > C.OptimalpHMax)
+		if (pH > (C.OptimalpHMax + C.ReactpHLim))
 			deltapH = 0
 			return //If outside pH range, no reaction
 		else
@@ -665,9 +666,9 @@ im
 	message_admins("calculating pH factor(purity), pH: [pH], min: [C.OptimalpHMin]-[C.ReactpHLim], max: [C.OptimalpHMax]+[C.ReactpHLim], deltapH: [deltapH]")
 
 	//Calculate DeltaT (Deviation of T from optimal)
-	if (chem_temp < C.OptimalTempMax && chem_temp >= C.OptimalTempMin)
-		deltaT = (((chem_temp - C.OptimalTempMin)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
-	else if (chem_temp >= C.OptimalTempMax)
+	if (cached_temp < C.OptimalTempMax && cached_temp >= C.OptimalTempMin)
+		deltaT = (((cached_temp - C.OptimalTempMin)**C.CurveSharpT)/((C.OptimalTempMax - C.OptimalTempMin)**C.CurveSharpT))
+	else if (cached_temp >= C.OptimalTempMax)
 		deltaT = 1
 	else
 		deltaT = 0
@@ -706,14 +707,14 @@ im
 	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
 		//reactedVol = max(reactedVol, 1) //this shouldnt happen ...
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
-		add_reagent(P, cached_results[P]*stepChemAmmount, null, chem_temp, purity)//add reagent function!! I THINK I can do this:
+		add_reagent(P, cached_results[P]*stepChemAmmount, null, cached_temp, purity)//add reagent function!! I THINK I can do this:
 
 	C.FermiCreate(src)
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
-	//chem_temp = round(chem_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
-	adjust_thermal_energy((chem_temp*(C.ThermicConstant * stepChemAmmount *100)), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
+	chem_temp = round(cached_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
+	//adjust_thermal_energy((cached_temp*(C.ThermicConstant * stepChemAmmount *100)), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
 	pH += (C.HIonRelease * stepChemAmmount)
 	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
