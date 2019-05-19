@@ -1,5 +1,6 @@
 #define DOM_BLOCKED_SPAM_CAP 6
-#define DOM_REQUIRED_TURFS 30
+//32 instead of 40 for safety reasons. How many turfs aren't walls around dominator for it to work
+#define DOM_REQUIRED_TURFS 32
 #define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
@@ -22,7 +23,7 @@
 
 /obj/machinery/dominator/Initialize()
 	. = ..()
-	set_light(2)
+	set_light(l_range = 2, l_power = 0.75)
 	GLOB.poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, TRUE, src)
@@ -86,10 +87,10 @@
 		if(time_remaining > 0)
 			if(excessive_walls_check())
 				gang.domination_time += 20
-				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
 					spam_prevention++
 				else
+					playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0) // Play sound buzz-two.ogg, not before cause its annoying.
 					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
 					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
 					spam_prevention = 0
@@ -190,7 +191,8 @@
 		countdown.start()
 		countdown.color = gang.color
 
-		set_light(3)
+		set_light(l_range = 3, l_power = 0.9)
+		light_color = gang.color
 		START_PROCESSING(SSmachines, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
@@ -200,15 +202,15 @@
 				vagos.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
 /obj/machinery/dominator/proc/excessive_walls_check() // why the fuck was this even a global proc...
-	var/open = FALSE
+	var/open = 0
 	for(var/turf/T in view(3, src))
-		if(!isclosedturf(T))
+		if(!iswallturf(T)) //Check for /closed/wall, isclosedturf() moves it back to just checking for /closed/ which makes it very finicky.
 			open++
+			//to_chat(world, "THE DOMINATOR SEES [open] OPEN TURFS") uncomment to see what this shitty fucking wallcheck sees
 	if(open < DOM_REQUIRED_TURFS)
 		return TRUE
 	else
 		return FALSE
-
 /obj/machinery/dominator/proc/set_broken()
 	if(gang)
 		gang.domination_time = NOT_DOMINATING

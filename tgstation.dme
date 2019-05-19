@@ -2813,7 +2813,6 @@
 #include "modular_citadel\code\game\gamemodes\gangs\dominator.dm"
 #include "modular_citadel\code\game\gamemodes\gangs\dominator_countdown.dm"
 #include "modular_citadel\code\game\gamemodes\gangs\gang.dm"
-#include "modular_citadel\code\game\gamemodes\gangs\gang_crayon.dm"
 #include "modular_citadel\code\game\gamemodes\gangs\gang_datums.dm"
 #include "modular_citadel\code\game\gamemodes\gangs\gang_decals.dm"
 #include "modular_citadel\code\game\gamemodes\gangs\gang_hud.dm"

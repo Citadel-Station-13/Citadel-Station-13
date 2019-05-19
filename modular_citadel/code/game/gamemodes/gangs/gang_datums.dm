@@ -38,7 +38,7 @@
 
 /datum/team/gang/waffle
 	name = "Waffle"
-	color = "#808000"
+	color = "#808000" //shared color with cyber, but they can keep brown cause waffles.
 	inner_outfits = list(/obj/item/clothing/under/suit_jacket/green)
 	outer_outfits = list(/obj/item/clothing/suit/poncho)
 
@@ -62,7 +62,7 @@
 
 /datum/team/gang/cyber
 	name = "Cyber"
-	color = "#808000"
+	color = "#00f904" //Cyber and waffle shared colors, I made these guys green and made weed darker green.
 	inner_outfits = list(/obj/item/clothing/under/color/lightbrown)
 	outer_outfits = list(/obj/item/clothing/suit/nemes)
 
@@ -80,7 +80,7 @@
 
 /datum/team/gang/gib
 	name = "Gib"
-	color = "#636060" //Applying black to grayscale... Zero-G is already grey too.
+	color = "#636060" //Applying black to grayscale... Zero-G is already grey too. oh well.
 	inner_outfits = list(/obj/item/clothing/under/color/black)
 	outer_outfits = list(/obj/item/clothing/suit/jacket/leather/overcoat)
 
@@ -134,6 +134,6 @@
 
 /datum/team/gang/weed
 	name = "Weed"
-	color = "#66ff33"
+	color = "#6cd648"
 	inner_outfits = list(/obj/item/clothing/under/color/darkgreen)
 	outer_outfits = list(/obj/item/clothing/suit/vapeshirt)
