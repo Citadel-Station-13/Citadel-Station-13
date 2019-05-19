@@ -26,11 +26,11 @@
 
 	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
 	if(pH < 2.5)
-		s.set_up("fermiAcid", (volume/3), pH*10, T)
+		s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
 		volume /=3
 	for (var/reagent in holder.reagent_list)
 		var/datum/reagent/R = reagent
-		s.set_up(R.id, R.volume/3, pH*10, T)
+		s.set_up(R, R.volume/3, pH*10, T)
 		//R.on_reaction(T, volume/10) //Uneeded, I think (hope)
 	s.start()
 
@@ -223,8 +223,7 @@
 		E.creatorGender = "Master"
 	E.creatorName = B.["real_name"]
 	E.creatorID = B.["ckey"]
-	var/mob/living/creator = holder
-	E.creator = creator
+	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
 	..()
 	//var/enthrallID = B.get_blood_data()
 

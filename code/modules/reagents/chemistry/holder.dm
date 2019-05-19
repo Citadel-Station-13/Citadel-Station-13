@@ -190,7 +190,7 @@ im
 			trans_data = copy_data(T)
 
 			//fermichem Added ph TODO: add T.purity
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 		//R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, pH, T.purity, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 		remove_reagent(T.id, transfer_amount)
 
@@ -251,7 +251,7 @@ im
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, no_react = TRUE) //Fermichem edit TODO: add purity
+			R.add_reagent(current_reagent.id, amount, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //Fermichem edit TODO: add purity
 			//R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, current_reagent.purity, no_react = TRUE) //Fermichem edit
 			remove_reagent(current_reagent.id, amount, 1)
 			break
@@ -560,7 +560,7 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm = fermiReactID
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
@@ -571,10 +571,11 @@ im
 
 	if (fermiIsReacting == FALSE)
 		message_admins("THIS SHOULD NEVER APPEAR!")
+		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
 
 	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
 		if (reactedVol < targetVol)
-			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
+			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 			message_admins("FermiChem tick activated started, Reacted vol: [reactedVol] of [targetVol]")
 		else
 			STOP_PROCESSING(SSprocessing, src)
@@ -584,7 +585,7 @@ im
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			var/datum/reagent/fermi/Ferm = fermiReactID
+			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
 			Ferm.FermiFinish(src, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
 			return
@@ -596,14 +597,14 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm = fermiReactID
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 
 	//handle_reactions()
 
-/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results)
+/datum/reagents/proc/FermiReact(selected_reaction, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -615,6 +616,8 @@ im
 
 	message_admins("Loop beginning")
 	//Begin Parse
+
+
 
 	//Check extremes first
 	if (chem_temp > C.ExplodeTemp)
@@ -652,7 +655,7 @@ im
 		else
 			deltapH = (((- pH + (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))//Reverse - to + to prevent math operation failures.
 	//Within mid range
-	else if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
+	if (pH >= C.OptimalpHMin && pH <= C.OptimalpHMax)
 		deltapH = 1
 	//This should never proc:
 	else
@@ -671,12 +674,12 @@ im
 	message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
 
 
-	stepChemAmmount = targetVol * deltaT
+	stepChemAmmount = multiplier * deltaT
 	if (stepChemAmmount > C.RateUpLim)
 		stepChemAmmount = C.RateUpLim
 	else if (stepChemAmmount <= 0.01)
 		message_admins("stepChem underflow [stepChemAmmount]")
-		stepChemAmmount = 0.02
+		stepChemAmmount = 0.01
 
 	if ((reactedVol + stepChemAmmount) > targetVol)
 		stepChemAmmount = targetVol - reactedVol
@@ -709,7 +712,7 @@ im
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
-	chem_temp += (C.ThermicConstant * stepChemAmmount)
+	chem_temp = round(chem_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
 	pH += (C.HIonRelease * stepChemAmmount)
 	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
@@ -826,7 +829,7 @@ im
 	if (D.id == "water") //Do like an otter, add acid to water.
 		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-			s.set_up("fermiAcid", total_volume, pH*10, src)
+			s.set_up(/datum/reagent/fermi/fermiAcid, total_volume, pH*10, src)
 			s.start()
 			remove_any(amount/10)
 			return
@@ -898,7 +901,7 @@ im
 		R.on_new(data)
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
-		Ferm.FermiNew(src) //Seriously what is "data" ????
+		Ferm.FermiNew(my_atom) //Seriously what is "data" ????
 
 		//This is how I keep myself sane.
 

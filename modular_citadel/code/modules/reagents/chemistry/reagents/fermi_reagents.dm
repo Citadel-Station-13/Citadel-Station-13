@@ -233,8 +233,8 @@
 			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
-			for (var/datum/mood_event/i in M)
-				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, i) //Why does this not work?
+			for(var/datum/mood_event/Me in M)
+				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 
 
@@ -816,8 +816,8 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
-	M.alpha = 255//Reset addiction
-	antiGenetics = 255
+	//M.alpha = 255//Reset addiction
+	//antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
 		if(0)//Require a minimum
 			origin = M
@@ -854,7 +854,10 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(prob(65))
+	if(M.reagents.has_reagent("astral")
+		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
+		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
+	if(prob(60))
 		M.alpha--
 		antiGenetics--
 	switch(antiGenetics)
@@ -867,7 +870,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 			M.alpha--
 			antiGenetics--
 		if(180)
-			to_chat(M, "<span class='notice'>You're starting to get scared as more and more of your body and consciousness begins to fade.</b></span>")
+			to_chat(M, "<span class='notice'>You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b></span>")
 			M.alpha--
 			antiGenetics--
 		if(120)
@@ -880,7 +883,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 			antiGenetics--
 			M.add_trait(TRAIT_NOCLONE) //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(80)
-			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates the forthcoming oblivion.</b></span>")
+			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates your forthcoming oblivion.</b></span>")
 			M.alpha--
 			antiGenetics--
 		if(45)
@@ -890,9 +893,9 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(0 to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
 			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life and afterlife remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+			deadchat_broadcast("<span class='warning'>[M] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK outta them.</span>")
 			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
-			deadchat_broadcast("<span class='userdanger'>[M] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK otta them.</span>")
-			message_admins("[M] has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag). They MUST stay within characer while dead.")
+			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role). They MUST stay within characer while dead.")
 			qdel(M) //Approx 60minutes till death from initial addiction
 	..()
 
@@ -1052,18 +1055,16 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/mob/living/creator
 
 
-/datum/reagent/fermi/enthrall/FermiNew(holder)
+/datum/reagent/fermi/enthrall/FermiNew(var/atom/my_atom)
 	message_admins("FermiNew for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	if (B.["gender"] == "female")
-		creatorGender = "Mistress"
+	if (B.data.["gender"] == "female")
+		creatorGender = "Mistress"d
 	else
 		creatorGender = "Master"
-	creatorName = B.["real_name"]
-	creatorID = B.["ckey"]
-	var/mob/living/creatore = holder
-	creator = creatore
+	creatorName = B.data.["real_name"]
+	creatorID = B.data.["ckey"]
 	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
@@ -1199,7 +1200,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	description = "A strange substance that draws in a hat from the hat dimention, "
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt"
-	overdose_threshold = 100
+	overdose_threshold = 25
 	var/obj/item/clothing/head/hattip/hat
 	DoNotSplit = TRUE
 
@@ -1209,14 +1210,17 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/items = M.get_contents()
 	for(var/obj/item/W in items)
 		if(W == M.head)
-			M.dropItemToGround(W, TRUE)
+			if(W = /obj/item/clothing/head/hattip)
+				qdel(W)
+			else
+				M.dropItemToGround(W, TRUE)
 	hat = new /obj/item/clothing/head/hattip()
 	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
 
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
 	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
-	var/hatArmor = (1+(current_cycle/10))*purity
+	var/hatArmor = (1+(current_cycle/100))*purity
 	if(!overdosed)
 		hat.armor = list("melee" = hatArmor, "bullet" = hatArmor, "laser" = hatArmor, "energy" = hatArmor, "bomb" = hatArmor, "bio" = hatArmor, "rad" = hatArmor, "fire" = hatArmor)
 	else
@@ -1255,7 +1259,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(10))
+			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
 					if((victim != /mob/living/simple_animal/pet/) || (victim == M))
@@ -1275,10 +1279,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
-			if(prob(10))
+			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					if((victim != /mob/living/simple_animal/pet/) || (victim == M))
+					if((victim = /mob/living/simple_animal/pet/) || (victim == M))
 						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
