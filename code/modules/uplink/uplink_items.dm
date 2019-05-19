@@ -1438,6 +1438,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	restricted_roles = list("Assistant")
 
+/datum/uplink_item/role_restricted/goldenbox
+	name = "Gold Toolbox"
+	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
+	item = /obj/item/storage/toolbox/gold_real
+	cost = 5 // Has synda tools + gloves + a robust weapon
+	restricted_roles = list("Assistant", "Curator") //Curator do to being made of gold - It fits the theme
+
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \

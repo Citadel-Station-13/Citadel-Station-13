@@ -14,7 +14,8 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats"
+						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate",
+						"eye"
 						)
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
@@ -36,7 +37,9 @@ SUBSYSTEM_DEF(traumas)
 						"falling" = strings(PHOBIA_FILE, "falling"),
 						"anime" = strings(PHOBIA_FILE, "anime"),
 						"mimes" = strings(PHOBIA_FILE, "mimes"),
-						"cats" = strings(PHOBIA_FILE, "cats")
+						"cats" = strings(PHOBIA_FILE, "cats"),
+						"syndicate"= strings(PHOBIA_FILE, "syndicate"),
+						"eye" = strings(PHOBIA_FILE, "eye")
             )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -56,7 +59,9 @@ SUBSYSTEM_DEF(traumas)
 					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
 					   /mob/living/simple_animal/pet/penguin)),
 					   "anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
-					   "cats"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/hostile/cat_butcherer))
+					   "cats"= typecacheof(list(/mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/hostile/cat_butcherer)),
+					   "syndicate" = typecacheof(list(/mob/living/simple_animal/hostile/syndicate, /mob/living/simple_animal/hostile/viscerator, /mob/living/simple_animal/hostile/carp/cayenne, /mob/living/silicon/robot/modules/syndicate)),
+					   "eye" = typecacheof(list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher, /mob/living/simple_animal/hostile/carp/eyeball))
 					   )
 
 
@@ -157,7 +162,23 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/under/sexymime, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
 						
 					"cats" = typecacheof(list(/obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty,
-						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat))
+						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat)),
+						
+					"syndicate" = typecacheof(list(/obj/item/stack/tile/mineral/plastitanium, /obj/machinery/computer/shuttle/syndicate, /obj/machinery/computer/shuttle/syndicate/recall, /obj/machinery/computer/shuttle/syndicate/drop_pod, /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate, /obj/machinery/recharge_station,
+						/obj/machinery/porta_turret/syndicate, /obj/structure/closet/syndicate, /obj/machinery/suit_storage_unit/syndicate, /obj/item/clothing/under/syndicate, /obj/item/folder/syndicate, /obj/item/documents/syndicate, /obj/item/clothing/glasses/phantomthief/syndicate, /obj/item/antag_spawner/nuke_ops, /obj/item/storage/box/syndicate,
+						/obj/structure/fluff/empty_sleeper/syndicate, /obj/item/implant/radio/syndicate, /obj/item/clothing/head/helmet/space/syndicate, /obj/machinery/nuclearbomb/syndicate, /obj/item/grenade/syndieminibomb, /obj/item/storage/backpack/duffelbag/syndie, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver/syndie,
+						/obj/item/gun/ballistic/automatic/shotgun/bulldog, /obj/item/gun/ballistic/automatic/c20r, /obj/item/gun/ballistic/automatic/m90, /obj/item/gun/ballistic/automatic/l6_saw, /obj/item/storage/belt/grenade/full, /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate, /obj/item/gun/energy/kinetic_accelerator/crossbow,
+						/obj/item/melee/transforming/energy/sword/saber, /obj/item/twohanded/dualsaber, /obj/item/melee/powerfist, /obj/item/storage/box/syndie_kit, /obj/item/grenade/spawnergrenade/manhacks, /obj/item/grenade/chem_grenade/bioterrorfoam, /obj/item/reagent_containers/spray/chemsprayer/bioterror, /obj/item/ammo_box/magazine/m10mm, 
+						/obj/item/ammo_box/magazine/pistolm9mm, /obj/item/ammo_box/a357, /obj/item/ammo_box/magazine/m12g, /obj/item/ammo_box/magazine/mm195x129, /obj/item/antag_spawner/nuke_ops, /obj/mecha/combat/gygax/dark, /obj/mecha/combat/marauder/mauler, /obj/item/soap/syndie, /obj/item/gun/syringe/syndicate, /obj/item/cartridge/virus/syndicate,
+						/obj/item/cartridge/virus/frame, /obj/item/chameleon, /obj/item/storage/box/syndie_kit/cutouts, /obj/item/clothing/suit/space/hardsuit/syndi, /obj/item/card/emag, /obj/item/storage/toolbox/syndicate, /obj/item/storage/book/bible/syndicate, /obj/item/encryptionkey/binary, /obj/item/encryptionkey/syndicate, /obj/item/aiModule/syndicate,
+						/obj/item/clothing/shoes/magboots/syndie, /obj/item/powersink, /obj/item/sbeacondrop, /obj/item/sbeacondrop/bomb, /obj/item/syndicatedetonator, /obj/item/shield/energy, /obj/item/assault_pod, /obj/item/slimepotion/slime/sentience/nuclear, /obj/item/stack/telecrystal, /obj/item/jammer, /obj/item/codespeak_manual/unlimited, 
+						/obj/item/toy/cards/deck/syndicate, /obj/item/storage/secure/briefcase/syndie, /obj/item/storage/fancy/cigarettes/cigpack_syndicate, /obj/item/toy/syndicateballoon, /obj/item/clothing/gloves/rapid, /obj/item/paper/fluff/ruins/thederelict/syndie_mission, /obj/item/organ/cyberimp/eyes/hud/security/syndicate, /obj/item/clothing/head/HoS/syndicate, 
+						/obj/machinery/computer/pod/old/syndicate, /obj/machinery/vending/medical/syndicate_access, /obj/item/mmi/syndie, /obj/item/target/syndicate, /obj/machinery/vending/cigarette/syndicate, /obj/item/robot_module/syndicate, /obj/item/clothing/mask/gas/syndicate, /obj/machinery/power/singularity_beacon/syndicate, /obj/item/clothing/head/syndicatefake, 
+						/obj/item/radio/headset/syndicate, /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate, /obj/item/pda/syndicate, /obj/item/clothing/suit/armor/vest/capcarapace/syndicate, /obj/item/gun/ballistic/automatic/flechette, /obj/item/ammo_box/magazine/flechette, /obj/item/clothing/suit/toggle/lawyer/black/syndie, /obj/item/melee/transforming/energy/sword/cx/traitor, 
+						/obj/structure/sign/poster/contraband/syndicate_pistol, /obj/structure/sign/poster/contraband/syndicate_recruitment, /obj/item/bedsheet/syndie, /obj/item/borg/upgrade/syndicate, /obj/item/tank/jetpack/oxygen/harness, /obj/item/firing_pin/implant/pindicate, /obj/item/reagent_containers/glass/bottle/traitor, /obj/item/storage/belt/military, 
+						/obj/item/twohanded/shockpaddles/syndicate, /obj/item/clothing/mask/cigarette/syndicate, /obj/item/toy/plush/nukeplushie)),
+
+					"eye" = typecacheof(list(/obj/item/organ/eyes, /obj/item/reagent_containers/syringe))
 						)
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
@@ -165,18 +186,19 @@ SUBSYSTEM_DEF(traumas)
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
 						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
 						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor)),
-						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
+						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit)),
+						"syndicate" = typecacheof(list(/turf/closed/wall/mineral/plastitanium, /turf/open/floor/mineral/plastitanium, /turf/open/floor/plasteel/shuttle/red/syndicate))
 						)
 
 	phobia_species = list("lizards" = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
-						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
-						  "robots" = typecacheof(list(/datum/species/android)),
+						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth, /datum/species/corporate)),
+						  "robots" = typecacheof(list(/datum/species/android, /datum/species/synth)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
-						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
-						  /datum/species/shadow)),
+						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod, /datum/species/shadow)),
 						  "anime" = typecacheof(list(/datum/species/human/felinid)),
-						  "cats" = typecacheof(list(/datum/species/human/felinid))
+						  "cats" = typecacheof(list(/datum/species/human/felinid)),
+						  "syndicate" = typecacheof(list(/datum/species/corporate, /datum/species/zombie/infectious))
 						 )				 
 
 	return ..()
