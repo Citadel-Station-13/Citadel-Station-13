@@ -40,14 +40,14 @@
 	if (src.purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > src.purity)
-		M.reagents.remove_reagent(src.id, volume, FALSE)
+		M.reagents.remove_reagent(src, volume, FALSE)
 		M.reagents.add_reagent(src.InverseChem, volume, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
 		//var/pureVol = volume * purity
 		var/impureVol = volume * (1 - (volume * purity))
-		M.reagents.remove_reagent(src.id, (volume*impureVol), FALSE)
+		M.reagents.remove_reagent(src, (volume*impureVol), FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 	..()
@@ -58,14 +58,14 @@
 	if (other_purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > other_purity)
-		M.reagents.remove_reagent(src.id, amount, FALSE)
+		M.reagents.remove_reagent(src, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
 		//var/pureVol =
 		var/impureVol = amount * (1 - (amount * other_purity))
-		M.reagents.remove_reagent(src.id, impureVol, FALSE)
+		M.reagents.remove_reagent(src, impureVol, FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 	..()
@@ -854,7 +854,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(M.reagents.has_reagent("astral")
+	if(M.reagents.has_reagent("astral"))
 		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
 	if(prob(60))
@@ -1049,6 +1049,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
+	//data = ("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
@@ -1057,15 +1058,21 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/enthrall/FermiNew(var/atom/my_atom)
 	message_admins("FermiNew for enthral proc'd")
+	creatorID = data.["creatorID"]
+	creatorGender = data.["creatorGender"]
+	creatorName = data.["creatorName"]
+	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender]")
+	/*
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	//var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
 	if (B.data.["gender"] == "female")
-		creatorGender = "Mistress"d
+		creatorGender = "Mistress"
 	else
 		creatorGender = "Master"
 	creatorName = B.data.["real_name"]
 	creatorID = B.data.["ckey"]
-	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
+	*/
+
 
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -1084,19 +1091,23 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-		E.enthrallID = creatorID
-		E.enthrallGender = creatorGender
-		E.master = creator
+		if(creator)
+			E.enthrallID = creatorID
+			E.enthrallGender = creatorGender
+			E.master = creator
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
 		if (M.key == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+			for(var/victim in seen)
+				if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+					seen = seen - victim
 			if(!seen)
 				return
 			M.reagents.remove_reagent(src.id, src.volume)
-			FallInLove(M, seen)
+			FallInLove(M, pick(seen))
 			return
 		else // If someone else drinks it, the creator falls in love with them!
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
@@ -1144,6 +1155,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system.
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		for(var/victim in seen)
+			if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+				seen = seen - victim
 		if(!seen)
 			return
 		love = seen
@@ -1210,7 +1224,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/items = M.get_contents()
 	for(var/obj/item/W in items)
 		if(W == M.head)
-			if(W = /obj/item/clothing/head/hattip)
+			if(W == /obj/item/clothing/head/hattip)
 				qdel(W)
 			else
 				M.dropItemToGround(W, TRUE)
@@ -1262,7 +1276,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					if((victim != /mob/living/simple_animal/pet/) || (victim == M))
+					if((victim == /mob/living/simple_animal/pet/) || (victim == M))
 						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")

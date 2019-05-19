@@ -251,7 +251,7 @@ im
 		if(current_reagent.id == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.id, amount, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //Fermichem edit TODO: add purity
+			R.add_reagent(current_reagent.id, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE) //Fermichem edit TODO: add purity
 			//R.add_reagent(current_reagent.id, amount, trans_data, src.chem_temp, pH, current_reagent.purity, no_react = TRUE) //Fermichem edit
 			remove_reagent(current_reagent.id, amount, 1)
 			break
@@ -560,7 +560,7 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
@@ -585,7 +585,7 @@ im
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
+			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
 			Ferm.FermiFinish(src, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
 			return
@@ -597,7 +597,7 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[fermiReactID]
+		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C]
 		Ferm.FermiFinish(src, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
@@ -712,7 +712,8 @@ im
 	message_admins("purity: [purity], purity of beaker")
 	message_admins("Temp before change: [chem_temp], pH after change: [pH]")
 	//Apply pH changes and thermal output of reaction to beaker
-	chem_temp = round(chem_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
+	//chem_temp = round(chem_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
+	adjust_thermal_energy((C.ThermicConstant * stepChemAmmount), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
 	pH += (C.HIonRelease * stepChemAmmount)
 	message_admins("Temp after change: [chem_temp], pH after change: [pH]")
 
@@ -812,7 +813,7 @@ im
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
 	var/S = specific_heat()
-	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
+	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
 	if(!isnum(amount) || !amount)

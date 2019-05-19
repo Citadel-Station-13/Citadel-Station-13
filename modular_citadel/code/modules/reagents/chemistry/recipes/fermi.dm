@@ -213,24 +213,24 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.15
 
-/datum/chemical_reaction/fermi/enthrall/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/fermi/enthrall/on_reaction(var/atom/my_atom)
 	message_admins("On reaction for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	if (B.["gender"] == "female")
-		E.creatorGender = "Mistress"
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
 	else
-		E.creatorGender = "Master"
-	E.creatorName = B.["real_name"]
-	E.creatorID = B.["ckey"]
-	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender], creator:[creator]")
+		E.data.["creatorGender"] = "Master"
+	E.data["creatorName"] = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
 	..()
 	//var/enthrallID = B.get_blood_data()
 
-/datum/chemical_reaction/fermi/enthrall/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
-	var/turf/T = get_turf(holder.my_atom)
+/datum/chemical_reaction/fermi/enthrall/FermiExplode(src, var/atom/my_atom, volume, temp, pH, Reaction)
+	var/turf/T = get_turf(my_atom)
 	var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-	s.set_up("enthrallExplo", volume, pH*10, T)
+	s.set_up(/datum/reagent/fermi/enthrallExplo, volume, pH*10, T)
 	s.start()
 	..()
 
