@@ -1461,7 +1461,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
-		if (!target.has_trait(TRAIT_NYMPHO))
+		if (!target.has_trait(TRAIT_MASO))
 			stop_wagging_tail(target)
 		return FALSE
 	var/aim_for_groin  = user.zone_selected == "groin"
@@ -1473,9 +1473,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		"You hear a slap.")
 		if (target.canbearoused)
 			target.adjustArousalLoss(5)
-		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
+		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_MASO) && target.has_dna())
 			target.mob_climax(forced_climax=TRUE)
-		if (!target.has_trait(TRAIT_NYMPHO))
+		if (!target.has_trait(TRAIT_MASO))
 			stop_wagging_tail(target)
 		return FALSE
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
@@ -1710,6 +1710,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(BP)
 				if(damage > 0 ? BP.receive_damage(damage * hit_percent * brutemod * H.physiology.brute_mod, 0) : BP.heal_damage(abs(damage * hit_percent * brutemod * H.physiology.brute_mod), 0))
 					H.update_damage_overlays()
+					if (H.has_trait(TRAIT_MASO))
+						(H.adjustArousalLoss(damage * brutemod * H.physiology.brute_mod))
+					if (H.getArousalLoss() >= 100 && ishuman(H) && H.has_trait(TRAIT_MASO) && H.has_dna())
+						(H.mob_climax(forced_climax=TRUE))
+
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod * H.physiology.brute_mod)
 		if(BURN)
