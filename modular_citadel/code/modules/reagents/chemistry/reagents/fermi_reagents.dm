@@ -1214,6 +1214,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		else
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
+			if(prob(10))
+				owner.Stun(10)
+				owner.emote("whimper")//does this exist?
+				to_chat(owner, "You're overcome with a desire to see [love].")
+				owner.adjustBrainLoss(5)
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
