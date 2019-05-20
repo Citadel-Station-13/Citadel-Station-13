@@ -24,9 +24,10 @@
 	//return ..()
 
 //Called when reaction stops. #STOP_PROCESSING
+/*
 /datum/reagent/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
-
+*/
 //Called when added to a beaker without any of the reagent present. #add_reagent
 /datum/reagent/fermi/proc/FermiNew(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
@@ -34,8 +35,9 @@
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+	. = ..()
 	if(!M)
-		return ..()
+		return
 	message_admins("purity of chem is [purity]")
 	if(src.purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
@@ -49,14 +51,16 @@
 	else
 		//var/pureVol = volume * purity
 		var/impureVol = volume * (1 - (volume * purity))
+		message_admins("splitting [src] [volume] into [src.ImpureChem] [impureVol]")
 		M.reagents.remove_reagent(src, (volume*impureVol), FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
-	..()
 
 /datum/reagent/fermi/on_merge(mob/living/carbon/M, amount, other_purity)
+	. = ..()
 	if(!M)
-		return ..()
+		return
+	message_admins("purity of chem is [purity]")
 	if(other_purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (other_purity == 1 || src.DoNotSplit == TRUE)
@@ -69,10 +73,10 @@
 	else
 		//var/pureVol =
 		var/impureVol = amount * (1 - (amount * other_purity))
+		message_admins("splitting [src] [volume] into [src.ImpureChem] [impureVol]")
 		M.reagents.remove_reagent(src, impureVol, FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
-	..()
 
 
 
@@ -1053,18 +1057,37 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
-	data// = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
+	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 
+/datum/reagent/fermi/enthrall/test
+	name = "MKUltraTest"
+	id = "enthrallTest"
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#2C051A" // rgb: , 0, 255
+	//ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	//InverseChemVal 		= 0.25
+	//InverseChem 		= "enthrall" //At really impure vols, it just becomes 100% inverse
+	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Isabelle Foster")
+	creatorID  = "honkatonkbramblesnatch"//ckey
+	creatorGender = "Mistress"
+	creatorName = "Isabelle Foster"
+	purity = 1
+
+/datum/reagent/fermi/enthrall/test/on_new()
+	id = "enthrall"
+	..()
+	creator = get_mob_by_key(creatorID)
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	message_admins("FermiNew for enthral proc'd")
 	creatorID = data.["creatorID"]
 	creatorGender = data.["creatorGender"]
 	creatorName = data.["creatorName"]
+	creator = get_mob_by_key(creatorID)
 	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender]")
 	/*
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
@@ -1077,33 +1100,21 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	creatorID = B.data.["ckey"]
 	*/
 
-/datum/reagent/fermi/enthrall/FermiFinish(datum/reagents/holder)
-	message_admins("On finish for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
-	else
-		E.data.["creatorGender"] = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
-
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!creatorID)
 		CRASH("Something went wrong in enthral creation")
-	message_admins("key: [M.key] vs [creatorID], ")
+	message_admins("key: [M.ckey] vs [creatorID], ")
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
-	else if(M.key == creatorID && creatorName == M.real_name) //same name AND same player - same instance of the player. (should work for clones?)
+	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
-		Vc.Remove(M)
+		if(Vc)
+			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
-		creator = M
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		//var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
@@ -1116,8 +1127,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+	if (M.ckey == creatorID && creatorName == M.real_name)
+		return
 	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
-		if (M.key == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
+		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
@@ -1139,6 +1152,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if(!E)
+		M.reagents.remove_reagent(src.id, 10)
+		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		CRASH("No enthrall status found in [M]!")
 	E.enthrallTally += 1
 	M.adjustBrainLoss(0.1)
@@ -1147,12 +1162,15 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly.
 	. = ..()
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
-	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
+		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		E.enthrallID = creatorID
 		E.enthrallGender = creatorGender
 		E.master = creator
+	else
+		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
 	M.slurring = 100
 	M.confused = 100
@@ -1392,14 +1410,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
-	C.adjustFireLoss(1, 0)
+	var/acidstr = (5-C.reagents.pH)
+	C.adjustFireLoss(acidstr, 0)
 	if(method==VAPOR)
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(2)
-		C.apply_damage(1, BURN, target)
-	var/acidstr = (5-C.reagents.pH)
+		L.adjustLungLoss(acidstr)
+		C.apply_damage(acidstr/2, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
 
@@ -1418,3 +1436,32 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/acidstr = (5-holder.pH)
 	T.acid_act(acidstr, volume)
 	..()
+
+/datum/reagent/fermi/fermiTest
+	name = "Fermis Test Reagent"
+	id = "fermiTest"
+	description = "You should be really careful with this...! Also, how did you get this?"
+	data = "Big bang"
+
+/datum/reagent/fermi/fermiTest/on_new()
+	var/location = get_turf(holder.my_atom)
+	if(purity < 0.34 || purity == 1)
+		var/datum/effect_system/foam_spread/s = new()
+		s.set_up(volume*2, location, holder)
+		s.start()
+	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
+		var/datum/effect_system/smoke_spread/chem/s = new()
+		s.set_up(holder, volume*2, location)
+		s.start()
+	if(purity >= 0.67)
+		for (var/datum/reagent/reagent in holder.reagent_list)
+			if (istype(reagent, /datum/reagent/fermi))
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
+			else
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.on_reaction(holder, reagent.volume)
+	for(var/mob/M in viewers(8, location))
+		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	holder.clear_reagents()

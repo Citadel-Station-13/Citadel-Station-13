@@ -4,12 +4,18 @@
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
+//Called when reaction STOP_PROCESSING
+/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+	return
+
 //Called when temperature is above a certain threshold
 //....Is this too much?
 /datum/chemical_reaction/fermi/proc/FermiExplode(src, var/atom/my_atom, datum/reagents/holder, volume, temp, pH, Reaction, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	//var/Svol = volume
 	if (Exploding == TRUE)
 		return
+	if(!pH)//Dunno how things got here without a pH.
+		pH = 7
 	var/ImpureTot = 0
 	var/pHmod = 1
 	var/turf/T = get_turf(my_atom)
@@ -119,6 +125,7 @@
 	S.real_name = "Living teratoma"//horrifying!!
 	S.rabid = 1//Make them an angery boi, grr grr
 	to_chat("<span class='warning'>The cells clump up into a horrifying tumour!</span>")
+	holder.clear_reagents()
 
 /datum/chemical_reaction/fermi/BElarger
 	name = "Sucubus milk"
@@ -148,6 +155,7 @@
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")//OwO
+	holder.clear_reagents()
 	..()
 
 /datum/chemical_reaction/fermi/PElarger //Vars needed
@@ -179,6 +187,7 @@
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")//OwO
+	holder.clear_reagents()
 	..()
 
 /datum/chemical_reaction/fermi/astral //Vars needed
@@ -230,6 +239,24 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.15
 
+
+
+/datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	message_admins("On finish for enthral proc'd")
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
+		E.creatorGender = "Mistress"
+	else
+		E.data.["creatorGender"] = "Master"
+		E.creatorGender = "Master"
+	E.data["creatorName"] = B.data.["real_name"]
+	E.creatorName = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	E.creatorID = B.data.["ckey"]
+	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
+
 //Apprently works..?Negative
 /*
 /datum/chemical_reaction/fermi/enthrall/on_reaction(datum/reagents/holder)
@@ -248,14 +275,14 @@
 	//var/enthrallID = B.get_blood_data()
 */
 
-/datum/chemical_reaction/fermi/enthrall/FermiExplode(src, var/atom/my_atom, volume, temp, pH, Reaction)
-	var/turf/T = get_turf(my_atom)
-	var/datum/reagents/R = new/datum/reagents(350)
+/datum/chemical_reaction/fermi/enthrall/FermiExplode(src, datum/reagents/holder, volume, temp, pH, Reaction)
+	var/turf/T = get_turf(holder)
+	var/datum/reagents/R = new/datum/reagents(1000)
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.add_reagent("enthrallExplo", volume)
 	s.set_up(R, volume, T)
 	s.start()
-	my_atom.reagents.clear_reagents()
+	holder.clear_reagents()
 	//..() //Please don't kill everyone too.
 
 /datum/chemical_reaction/fermi/hatmium
@@ -287,6 +314,7 @@
 	var/list/seen = viewers(5, get_turf(holder.my_atom))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The makes an off sounding pop, as a hat suddenly climbs out of the beaker!</b></span>")
+	holder.clear_reagents()
 	..()
 
 /datum/chemical_reaction/fermi/furranium //low temp and medium pH

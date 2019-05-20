@@ -616,35 +616,26 @@
 /obj/item/organ/vocal_cords/velvet
 	name = "velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
-	icon_state = "voice_of_god"
-	actions_types = list(/datum/action/item_action/organ_action/colossus)
+	icon_state = "in_love"
+	//actions_types = list(/datum/action/item_action/organ_action/velvet)
 	var/next_command = 0
 	var/cooldown_mod = 1
 	var/base_multiplier = 1
 	spans = list("say","yell")
 
 /*
-/datum/action/item_action/organ_action/colossus
-	name = "Voice of God"
-	var/obj/item/organ/vocal_cords/colossus/cords = null
+/datum/action/item_action/organ_action/velvet
+	name = "Velvet voice"
+	var/obj/item/organ/vocal_cords/velvet/cords = null
 
-/datum/action/item_action/organ_action/colossus/New()
+/datum/action/item_action/organ_action/velvet/New()
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/colossus/IsAvailable()
-	if(world.time < cords.next_command)
-		return FALSE
-	if(!owner)
-		return FALSE
-	if(!owner.can_speak())
-		return FALSE
-	if(check_flags & AB_CHECK_CONSCIOUS)
-		if(owner.stat)
-			return FALSE
+/datum/action/item_action/organ_action/velvet/IsAvailable()
 	return TRUE
 
-/datum/action/item_action/organ_action/colossus/Trigger()
+/datum/action/item_action/organ_action/velvet/Trigger()
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)
@@ -658,16 +649,12 @@
 	owner.say(".x[command]")
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
-	if(world.time < next_command)
-		to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(next_command - world.time)] before Speaking again.</span>")
-		return FALSE
 	if(!owner)
 		return FALSE
 	if(!owner.can_speak())
 		to_chat(owner, "<span class='warning'>You are unable to speak!</span>")
 		return FALSE
 	return TRUE
-*/
 
 /obj/item/organ/vocal_cords/velvet/handle_speech(message)
 	velvetspeech(message, owner, spans, base_multiplier)
@@ -678,18 +665,20 @@
 /obj/item/organ/vocal_cords/velvet/speak_with(message)
 	velvetspeech(message, owner, spans, base_multiplier)
 	//next_command = world.time + (cooldown * cooldown_mod)
-
+*/
 //////////////////////////////////////
 ///////////FermiChem//////////////////
 //////////////////////////////////////
-
-/proc/velvetspeech(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
+//Removed span_list from input arguments. //mob/living/user
+/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = TRUE)
+	message_admins("Velvet speech proc'd on [user]")
 	var/cooldown = 0
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
 
 	var/log_message = message
+	/*
 	if(!span_list || !span_list.len) //Not too sure what this does, I think it changes your output message depending if you're a cultist or not? I.e. font
 		if(iscultist(user))
 			span_list = list("narsiesmall")
@@ -697,8 +686,8 @@
 			span_list = list("ratvar")
 		else
 			span_list = list()
-
-	user.say(message, sanitize = TRUE)//Removed spans = span_list, It should just augment normal speech
+	*/
+	//user.say(message, sanitize = TRUE)//Removed spans = span_list, It should just augment normal speech//DO NOT ENABLE, RECURSION HELL
 
 	//FIND THRALLS
 
@@ -714,12 +703,15 @@
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
 				var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//Check to see if pet is on cooldown from last command
-				if (E.cooldown != 0)//If they're on cooldown you can't give them more commands.
+				if (E.cooldown >= 0)//If they're on cooldown you can't give them more commands.
 					continue
 				listeners += L
+	if(debug == TRUE)
+		for(var/L in listeners)
+			to_chat(world, "[user] choses, and [L] obeys.")
 
 	if(!listeners.len)
-		cooldown = COOLDOWN_NONE
+		cooldown = 0
 		return cooldown
 
 	//POWER CALCULATIONS
@@ -785,6 +777,9 @@
 	if (T.name == "fluffy tongue") //If you sound hillarious, it's hard to take you seriously. This is a way for other players to combat/reduce their effectiveness.
 		power_multiplier *= 0.75
 
+	if(debug == TRUE)
+		to_chat(world, "[user]'s power is [power_multiplier].")
+
 	/* CHECK THIS STUFF IN THE CHEM STATUS INSTEAD.
 	if(istype(H.neck, /obj/item/clothing/neck/petcollar))
 		power_multiplier *= 1.5 //Collaring players makes them more docile and accepting of their place as a pet
@@ -793,14 +788,14 @@
 	*/
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara") //enthral_words
-	var/static/regex/reward_words = regex("good boy|good girl|good pet") //reward_words
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet") ////punish_words
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara") //enthral_words works
+	var/static/regex/reward_words = regex("good boy|good girl|good pet") //reward_words works
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet") ////punish_words works
 	//phase 0
-	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
-	var/static/regex/wakeup_words = regex("revert|awaken|snap")
+	var/static/regex/saymyname_words = regex("say my name|who am i|whoami") //works I think
+	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
 	//phase1
-	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
+	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush") //works
 	var/static/regex/antiresist_words = regex("unable to resist|give in")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
@@ -825,11 +820,10 @@
 	var/static/regex/hot_words = regex("heat|hot|hell")
 	var/static/regex/cold_words = regex("cold|cool down|chill|freeze")
 	var/static/regex/getup_words = regex("get up")
-	var/static/regex/pacify_words = regex("More and more docile|complaisant|friendly|pacifist")
+	var/static/regex/pacify_words = regex("more and more docile|complaisant|friendly|pacifist")
 	var/static/regex/charge_words = regex("charge|oorah|attack")
 
-	var/distancelist = list(1.5,1.5,1.3,1.2,1.1,1,0.8,0.6,0.5,0.25)
-
+	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
 
 	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
 
@@ -881,20 +875,23 @@
 	//SAY MY NAME
 	if((findtext(message, saymyname_words)))
 		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /atom/movable/proc/say, "Master"), 5)//When I figure out how to do genedered names put them here
+			var/mob/living/carbon/C = V
+			C.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+			addtimer(CALLBACK(C, /atom/movable/proc/say, "Master"), 5)//When I figure out how to do genedered names put them here
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
+			L.SetSleeping(0)//Can you hear while asleep?
 			switch(E.phase)
 				if(0)
 					E.phase = 3
 					E.status = null
-					to_chat(L, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>")
-			L.SetSleeping(0)//Can you hear while asleep?
+					addtimer(CALLBACK(L, /atom/movable/proc/to_chat, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
+					//to_chat(L, )
+
 
 	//tier 1
 	//SILENCE
@@ -906,6 +903,13 @@
 				C.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 			else
 				C.silent += ((10 * power_multiplier) * E.phase)
+			E.cooldown += 3
+
+	//SPEAK
+	else if((findtext(message, silence_words)))
+		for(var/mob/living/carbon/C in listeners)
+			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
+			C.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
 			E.cooldown += 3
 
 	//Antiresist
@@ -929,7 +933,7 @@
 	else if((findtext(message, forget_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			C.Sleeping(40)
+			C.Sleeping(50)
 			to_chat(C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>")
 			switch(E.phase)
 				if(1 to 2)
@@ -964,6 +968,7 @@
 			E.cooldown += 6
 
 	//teir 2
+
 
 	//ORGASM
 	else if((findtext(message, orgasm_words)))
@@ -1001,8 +1006,8 @@
 			switch(E.phase)
 				if(2 to INFINITY)
 					var/mob/living/M = V
-					playsound(get_turf(M), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/merowr.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
-					H.emote("me","lets out a nya!")
+					playsound(get_turf(M), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
+					H.emote(H,"lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
@@ -1028,7 +1033,7 @@
 					to_chat(H, "<span class='warning'>Before you can even think about it, you quickly remove your clothes in response to your Master's command.</b></span>")
 					E.cooldown += 10
 
-	//WALK
+	//WALK doesn't work?
 	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -1039,7 +1044,7 @@
 						L.toggle_move_intent()
 						E.cooldown += 1
 
-	//RUN
+	//RUN doesn't work?
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -1057,7 +1062,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 2 only
-					L.Knockdown(20 * power_multiplier * E.phase)
+					L.Knockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
 
 	//tier3
@@ -1086,7 +1091,7 @@
 					if (E.mental_capacity >= 10)
 						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
 						var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
-						if ((findtext(trigger, custom_words_words)))
+						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
 								var/trigger3 = stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN)
 								E.customTriggers[trigger] = list(trigger2, trigger3)
@@ -1108,7 +1113,7 @@
 					to_chat(H, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
 					return
 				else
-					user.emote("me", "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote(user, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					if (E.mental_capacity >= 150 || message == "objective")
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))

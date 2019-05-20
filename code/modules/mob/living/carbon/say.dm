@@ -2,6 +2,12 @@
 	for(var/datum/brain_trauma/trauma in get_traumas())
 		message = trauma.on_say(message)
 	message = ..(message)
+
+	var/obj/item/organ/vocal_cords/Vc = getorganslot(ORGAN_SLOT_VOICE)
+	if(Vc)
+		if(Vc.name == "velvet chords" )
+			velvetspeech(message, src)
+
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")

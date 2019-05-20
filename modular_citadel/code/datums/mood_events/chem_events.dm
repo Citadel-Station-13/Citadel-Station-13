@@ -37,5 +37,5 @@
     description = "<span class='nicegreen'>I'm in love!!</span>\n"
 
 /datum/mood_event/MissingLove
-    mood_change = -10
+    mood_change = -20
     description = "<span class='warning'>I can't keep my crush off my mind, I need to see them again!</span>\n"

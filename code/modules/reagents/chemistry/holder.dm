@@ -494,6 +494,10 @@ im
 					//else
 					//	fermiIsReacting = FALSE
 					//	STOP_PROCESSING(SSfastprocess, src)
+				else if	(chem_temp > C.ExplodeTemp)
+					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+					Ferm.FermiExplode(src, my_atom, total_volume, chem_temp, pH)
+					return 0
 				else
 					return 0
 
@@ -543,7 +547,7 @@ im
 	return 0//end!
 
 /datum/reagents/process()
-	var/datum/chemical_reaction/C = fermiReactID
+	var/datum/chemical_reaction/fermi/C = fermiReactID
 
 	var/list/cached_required_reagents = C.required_reagents//update reagents list
 	var/list/cached_results = C.results//resultant chemical list
@@ -561,8 +565,8 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
-		Ferm.FermiFinish(src, multiplier)
+		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
+		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 	for(var/P in cached_results)
@@ -586,8 +590,8 @@ im
 			targetVol = 0
 			handle_reactions()
 			update_total()
-			var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
-			Ferm.FermiFinish(src, multiplier)
+			//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
+			C.FermiFinish(src, my_atom, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
 			return
 	else
@@ -598,8 +602,8 @@ im
 		targetVol = 0
 		handle_reactions()
 		update_total()
-		var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
-		Ferm.FermiFinish(src, multiplier)
+		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
+		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
 		return
 
