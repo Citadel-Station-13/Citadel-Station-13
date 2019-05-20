@@ -16,6 +16,17 @@
 				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
+/obj/item/disk/design_disk/plant_disk
+	name = "Plant Disk Blueprints"
+	desc = "A disk to be uploaded into the autolathen for more plant disks."
+	icon_state = "datadisk1"
+	max_blueprints = 1
+
+/obj/item/disk/design_disk/golem_shell/Initialize()
+	. = ..()
+	var/datum/design/diskplantgene/P = new
+	blueprints[1] = P
+
 //Free Golems
 
 /obj/item/disk/design_disk/golem_shell
