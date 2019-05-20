@@ -2,12 +2,66 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Engineering";
+	name = "engineering security door"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/shower{
+	dir = 4;
+	name = "emergency shower"
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
+"aac" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "Engineering";
+	name = "engineering security door"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower"
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"aae" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/closet/radiation,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"aaf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/closet/radiation,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -44312,20 +44366,6 @@
 "bWD" = (
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/engineering)
-"bWE" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "Engineering";
-	name = "engineering security door"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/structure/closet/radiation,
-/turf/open/floor/plasteel,
-/area/engine/break_room)
 "bWF" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
@@ -44338,19 +44378,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/engine/break_room)
-"bWG" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "Engineering";
-	name = "engineering security door"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWH" = (
@@ -44926,12 +44953,6 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"bYm" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "bYn" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -44940,19 +44961,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"bYo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -95206,9 +95214,9 @@ pps
 bUl
 bUZ
 bVS
-bWE
+aab
 bXk
-bYm
+aae
 bYZ
 bZG
 cax
@@ -95720,9 +95728,9 @@ pps
 bUn
 bVb
 bVU
-bWG
+aac
 bXq
-bYo
+aaf
 hXK
 bZI
 hXK
