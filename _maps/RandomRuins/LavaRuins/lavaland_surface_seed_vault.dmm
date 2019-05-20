@@ -273,6 +273,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "Z" = (
+/obj/item/disk/design_disk/plant_disk,
 /obj/machinery/autolathe{
 	hacked = TRUE;
 	desc = "This autolathe seems to have its safety light off."
