@@ -524,12 +524,12 @@
 			"The shuttle's custodian was found washing the windows with their own blood.",
 			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",
 			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine.",
-			"A assistant was found on the shuttle.",
-			"A medical officer was found pouring blood packs onto the electronic board to start the flight, then slit her wrists open.",
+			"An assistant was found on the shuttle.",
+			"A medical officer was found pouring out several blood bags onto the shuttle's instrument panels, before slitting both wrists open and screaming 'DEATH IS NOT THE END'.",
 			"A fuel technician was found replacing the fuel with his blood.",
-			"All the lights on the shuttle have turnned a crimson red before blowing out.",
+			"All the lights aboard the shuttle turned a crimson red before blowing out..",
 			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh.",
-			"All of a sudden the engine turbine started to leak blood and turn a crimson red.",
+			"An engine turbine began leaking blood when it was powered on.",
 			"The shuttle's transponder is emitting the encoded message 'FEAR THE OLD BLOOD' in lieu of its assigned identification signal.")
 		var/message = pick_n_take(curses)
 		message += " The shuttle will be delayed by three minutes."
