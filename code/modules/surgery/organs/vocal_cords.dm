@@ -827,7 +827,7 @@
 	//CALLBACKS ARE USED FOR MESSAGES BECAUSE SAY IS HANDLED AFTER THE PROCESSING.
 
 	//Tier 1
-	//ENTHRAL mixable
+	//ENTHRAL mixable (works I think)
 	if(findtext(message, enthral_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -838,9 +838,11 @@
 				E.enthrallTally += (power_multiplier*(((length(message))/200) + 1)) //encourage players to say more than one word.
 			else
 				E.enthrallTally += power_multiplier*1.25
+			if(L.canbearoused)
+				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
 			E.cooldown += 1
 
-	//REWARD mixable
+	//REWARD mixable works
 	if(findtext(message, reward_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -850,12 +852,14 @@
 			if (L.canbearoused)
 				//E.resistanceTally -= 1
 				L.adjustArousalLoss(1*power_multiplier)
+				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
 			else
 				E.resistanceTally /= 2*power_multiplier
+				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallpraise", /datum/mood_event/enthrallpraise)
 			E.cooldown += 1
 
-	//PUNISH mixable
+	//PUNISH mixable  works
 	else if(findtext(message, punish_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -865,19 +869,24 @@
 			if (L.canbearoused)
 				E.resistanceTally /= 1*power_multiplier
 				L.adjustArousalLoss(-2*power_multiplier)
+				addtimer(CALLBACK(L, .proc/to_chat, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			else
 				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold)
+				addtimer(CALLBACK(L, .proc/to_chat, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_tEVENT, "enthrallscold", /datum/mood_event/enthrallscold)
 			E.cooldown += 1
 
 	//teir 0
-	//SAY MY NAME
+	//SAY MY NAME works
 	if((findtext(message, saymyname_words)))
 		for(var/V in listeners)
 			var/mob/living/carbon/C = V
+			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			C.remove_trait(TRAIT_MUTE, "enthrall")
-			addtimer(CALLBACK(C, /atom/movable/proc/say, "Master"), 5)//When I figure out how to do genedered names put them here
-
+			if(C.canbearoused)
+				addtimer(CALLBACK(C, /atom/movable/proc/say, "[E.enthrallGender]"), 5)
+			else
+				addtimer(CALLBACK(C, /atom/movable/proc/say, "My director."), 5)
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
 		for(var/V in listeners)
@@ -888,8 +897,11 @@
 				if(0)
 					E.phase = 3
 					E.status = null
-					addtimer(CALLBACK(L, /proc/to_chat, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
-					//to_chat(L, )
+					if(C.canbearoused)
+						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
+					else
+						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
+						//to_chat(L, )
 
 
 	//tier 1
@@ -941,6 +953,10 @@
 				if(3)
 					E.phase = 0
 					E.cooldown = 0
+					if(C.canbearoused)
+						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
+					else
+						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
 
 	//ATTRACT
 	else if((findtext(message, attract_words)))
@@ -1052,7 +1068,7 @@
 	//tier3
 
 	//STATE TRIGGERS
-	else if((findtext(message, statecustom_words)))
+	else if((findtext(message, statecustom_words)))//doesn't work
 		for(var/V in listeners)
 			var/speaktrigger = ""
 			var/mob/living/L = V

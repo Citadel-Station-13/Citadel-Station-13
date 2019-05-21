@@ -459,7 +459,7 @@ im
 			var/datum/chemical_reaction/C = selected_reaction
 
 			if (C.FermiChem == TRUE && !continue_reacting)
-				//message_admins("FermiChem Proc'd")
+				message_admins("FermiChem Proc'd")
 
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
@@ -555,6 +555,8 @@ im
 		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
@@ -580,6 +582,8 @@ im
 			//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 			C.FermiFinish(src, my_atom, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 			return
 	else
 		STOP_PROCESSING(SSprocessing, src)
@@ -592,6 +596,8 @@ im
 		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 		return
 
 	//handle_reactions()
@@ -901,6 +907,8 @@ im
 	if(data)
 		R.data = data
 		R.on_new(data)
+	if(R.addProc == TRUE)
+		R.on_new()
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
 		Ferm.FermiNew(my_atom) //Seriously what is "data" ????

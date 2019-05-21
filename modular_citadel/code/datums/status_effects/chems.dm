@@ -31,7 +31,7 @@
 	//message_admins("SDGF ticking")
 	if(owner.stat == DEAD)
 		//message_admins("SGDF status swapping")
-		if(fermi_Clone && fermi_Clone.stat != DEAD)
+		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(owner.mind)
 				owner.mind.transfer_to(fermi_Clone)
 				owner.visible_message("<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
@@ -44,6 +44,8 @@
 /datum/status_effect/chem/BElarger
 	id = "BElarger"
 	alert_type = null
+	var/moveCalc = 1
+	var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	//var/list/items = list()
 	//var/items = o.get_contents()
 
@@ -68,7 +70,7 @@
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	if(!B)
 		o.remove_movespeed_modifier("megamilk")
-		o.next_move_modifier = 1
+		o.next_move_modifier /= moveCalc
 		owner.remove_status_effect(src)
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -76,24 +78,28 @@
 			o.dropItemToGround(W, TRUE)
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
-	switch(round(B.cached_size))
-		if(9)
-			if (!(B.breast_sizes[B.prev_size] == B.size))
-				to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
-				o.remove_movespeed_modifier("megamilk")
-				o.next_move_modifier = 1
-		if(10 to INFINITY)
-			if (!(B.breast_sizes[B.prev_size] == B.size))
-				to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
-				o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = ((round(B.cached_size) - 8))/3)
-				o.next_move_modifier = (round(B.cached_size) - 8)/3
-	if(prob(5))
-		to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
-	..()
+	moveCalc = ((round(B.cached_size) - 9))/5)
+	if (breast_values[size] > breast_values[prev_size])
+		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		o.next_move_modifier *= moveCalc
+	else if (breast_values[size] < breast_values[prev_size])
+		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		o.next_move_modifier /= moveCalc
+	if(round(B.cached_size) < 16)
+		switch(round(B.cached_size))
+			if(9)
+				if (!(B.breast_sizes[B.prev_size] == B.size))
+					to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
+			if(10 to INFINITY)
+				if (!(B.breast_sizes[B.prev_size] == B.size))
+					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
+		if(prob(5))
+			to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
+		..()
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
 	owner.remove_movespeed_modifier("megamilk")
-	owner.next_move_modifier = 1
+	owner.next_move_modifier /= moveCalc
 
 
 /datum/status_effect/chem/PElarger
@@ -214,8 +220,8 @@
 			enthrallTally += phase
 	else
 		if (phase < 3 && phase != 0)
-			deltaResist += 2//If you've no chem, then you break out quickly
-			if(prob(20))
+			deltaResist += 3//If you've no chem, then you break out quickly
+			if(prob(10))
 				to_chat(owner, "<span class='notice'><i>Your mind starts to restore some of it's clarity as you feel the effects of the drug wain.</i></span>")
 	if (mental_capacity <= 500 || phase == 4)
 		if (owner.reagents.has_reagent("mannitol"))
@@ -228,6 +234,8 @@
 		resistanceTally += 5
 		if(prob(10))
 			to_chat(owner, "<span class='notice'><i>You feel lucidity returning to your mind as the mindshield buzzes, attempting to return your brain to normal function.</i></span>")
+		if(phase == 4)
+			mental_capacity += 5
 
 	//phase specific events
 	switch(phase)
@@ -251,7 +259,8 @@
 				to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore.'</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
-				to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
+				if(owner.canbearoused)
+					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
 		if (2) //partially enthralled
 			if (enthrallTally > 150)
 				phase += 1
@@ -267,15 +276,17 @@
 				to_chat(owner, "<span class='notice'><i>You manage to shake some of the entrancement from your addled mind, however you can still feel yourself drawn towards [master].</i></span>")
 				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
 			if(prob(10))
-				to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
+				if(owner.canbearoused)
+					to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (3)//fully entranced
 			if (resistanceTally >= 200 && withdrawalTick >= 150)
 				enthrallTally = 0
 				phase -= 1
 				resistanceTally = 0
 				to_chat(owner, "<span class='notice'><i>The separation from you [enthrallGender] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
-			if(prob(3))
-				to_chat(owner, "<span class='hypnophrase'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
+			if(prob(2))
+				if(owner.canbearoused)
+				to_chat(owner, "<span class='notice'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
 			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !owner.reagents.has_reagent("MKUltra"))
 				phase = 2
@@ -454,9 +465,11 @@
 */
 //Doesn't work
 
-/datum/status_effect/chem/enthrall/proc/owner_hear(message = message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	//message_admins("post: hear:[hearer], msg:[message], spk:[speaker], lng:[message_language], raw:[raw_message], freq:[radio_freq], spen:[spans], mod:[message_mode]")
 	var/mob/living/carbon/C = owner
 	//message_admins("[C] heard something!")
+	raw_message = lowertext(raw_message)
 	for (var/trigger in customTriggers)
 		//cached_trigger = lowertext(trigger)
 		message_admins("[C] heard something: [message] vs [trigger] vs [raw_message]")
@@ -497,7 +510,7 @@
 				C.Knockdown(20)
 
 			//strip (some) clothes
-			else if (customTriggers[trigger] == "strip")//This wasn't meant to just be a lewd thing oops
+			else if (lowertext(customTriggers[trigger]) == "strip")//This wasn't meant to just be a lewd thing oops
 				var/mob/living/carbon/human/o = owner
 				var/items = o.get_contents()
 				for(var/obj/item/W in items)
@@ -506,7 +519,7 @@
 				C.visible_message("<span class='notice'><i>You feel compelled to strip your clothes.</i></span>")
 
 			//trance
-			else if (customTriggers[trigger] == "trance")
+			else if (lowertext(customTriggers[trigger]) == "trance")
 				var/mob/living/carbon/human/o = owner
 				o.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 

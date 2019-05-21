@@ -614,7 +614,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 12
 	metabolization_rate = 0.5
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
+	InverseChemVal 		= 0.3
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
@@ -622,6 +622,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
+		message_admins("No breasts found on init!")
 		return
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
@@ -721,7 +722,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
+	InverseChemVal 		= 0.3
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
 	//var/mob/living/carbon/human/H
 
@@ -1104,7 +1105,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!creatorID)
-		CRASH("Something went wrong in enthral creation")
+		message_admins("Something went wrong in enthral creation THIS SHOULD NOT APPEAR")
+		return
 	message_admins("key: [M.ckey] vs [creatorID], ")
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
@@ -1128,8 +1130,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
-	if (M.ckey == creatorID && creatorName == M.real_name)
-		return
 	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
@@ -1151,17 +1151,34 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				M.reagents.remove_reagent(src.id, src.volume)
 				FallInLove(C, M)
 			return
-	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it does nothing.
+		return
+	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)//If purity is over 5, works as intended
 	if(!E)
 		M.reagents.remove_reagent(src.id, 10)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
-		CRASH("No enthrall status found in [M]!")
+		message_admins("No enthrall status found in [M]!")
 	E.enthrallTally += 1
-	M.adjustBrainLoss(0.1)
+	if(prob(50))
+		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
-/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly.
+/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly. I made it so the creator is set to gain the status for someone random.
 	. = ..()
+	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 150u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
+		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		for(var/victim in seen)
+			if((victim != mob/living/carbon/M) || (victim == M))//as much as I want you to fall for beepsky, he doesn't have a ckey
+				if(!victim.ckey)
+					seen = seen - victim
+		var/chosen = pick(seen)
+		creatorID = chosen.ckey
+		if (chosen.gender == "female")
+			creatorGender = "Mistress"
+		else
+			creatorGender = "Master"
+		creatorName = chosen.real_name
+		creator = get_mob_by_key(creatorID)
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
@@ -1180,7 +1197,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	E.customTriggers = list()
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.2)
+	M.adjustBrainLoss(0.1)//should be 15 in total
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
@@ -1447,7 +1464,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	data = list("Big bang" = 1, "please work" = 2)
+	//data = list("Big bang" = 1, "please work" = 2)
+	addProc = TRUE
 
 /datum/reagent/fermi/fermiTest/on_new()
 	..()

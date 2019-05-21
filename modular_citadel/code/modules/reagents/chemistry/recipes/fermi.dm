@@ -194,7 +194,7 @@
 	name = "Astrogen"
 	id = "astral"
 	results = list("astral" = 3)
-	required_reagents = list("eigenstasium" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
+	required_reagents = list("eigenstate" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
