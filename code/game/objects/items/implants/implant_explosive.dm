@@ -11,7 +11,7 @@
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 	var/active = FALSE
 
-/obj/item/implant/sad_trombone/trigger(emote, mob/source)
+/obj/item/implant/explosive/trigger(emote, mob/source)
 	if(emote == "deathgasp")
 		activate("death")
 

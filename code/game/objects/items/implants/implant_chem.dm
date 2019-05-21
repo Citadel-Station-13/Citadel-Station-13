@@ -4,7 +4,7 @@
 	icon_state = "reagents"
 	container_type = OPENCONTAINER
 	activated = FALSE
-	var/obj/item/chemholder
+	var/obj/item/imp_chemholder/chemholder
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -33,18 +33,23 @@
 
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE)
 	. = ..()
-	if(.)
-		chemholder = new(imp_in)
-		chemholder.resistance_flags |= INDESTRUCTIBLE //bomb-proofing.
-		chemholder.item_flags |= DROPDEL
-		reagents.trans_to(chemholder, reagents.total_volume)
+	if(!.)
+		return
+	if(chemholder)
+		chemholder.forceMove(target)
+		return
+	chemholder = new(imp_in, src)
+	reagents.trans_to(chemholder, reagents.total_volume)
 
 /obj/item/implant/chem/removed(mob/target, silent = FALSE, special = 0)
 	. = ..()
-	if(.)
+	if(!.)
+		return
+	if(!special)
 		chemholder.reagents.trans_to(src, chemholder.reagents.total_volume)
 		QDEL_NULL(chemholder)
-
+	else
+		chemholder?.moveToNullspace()
 
 /obj/item/implant/chem/trigger(emote, mob/living/source)
 	if(emote == "deathgasp")
@@ -77,5 +82,19 @@
 	if(istype(W, /obj/item/reagent_containers/syringe) && imp)
 		W.afterattack(imp, user, TRUE, params)
 		return TRUE
+	else
+		return ..()
+
+/obj/item/imp_chemholder
+	var/obj/item/implant/chem/implant
+
+/obj/item/imp_chemholder/Initialize(mapload, obj/item/implant/chem/_implant)
+	. = ..()
+	create_reagents(50)
+	implant = _implant
+
+/obj/item/imp_chemholder/Destroy()
+	if(implant?.imp_in)
+		qdel(implant)
 	else
 		return ..()
