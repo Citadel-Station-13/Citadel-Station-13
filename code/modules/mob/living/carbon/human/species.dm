@@ -756,7 +756,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!forced_colour)
 					switch(S.color_src)
 						if(SKINTONE)
-							accessory_overlay.color = skintone2hex(H.skin_tone)
+							accessory_overlay.color = "#[skintone2hex(H.skin_tone)]"
 						if(MUTCOLORS)
 							if(fixed_mut_color)
 								accessory_overlay.color = "#[fixed_mut_color]"
@@ -1451,7 +1451,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	// CITADEL EDIT slap mouthy gits
+	// CITADEL EDIT slap mouthy gits and booty
 	var/aim_for_mouth  = user.zone_selected == "mouth"
 	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
@@ -1461,7 +1461,22 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
 			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
-		stop_wagging_tail(target)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
+		return FALSE
+	var/aim_for_groin  = user.zone_selected == "groin"
+	var/target_aiming_for_groin = target.zone_selected == "groin"
+	if(aim_for_groin && (target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
+			"<span class='notice'>You slap [target]'s ass! </span>",\
+		"You hear a slap.")
+		if (target.canbearoused)
+			target.adjustArousalLoss(5)
+		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
+			target.mob_climax(forced_climax=TRUE)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
 		return FALSE
 	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>")

@@ -1,13 +1,13 @@
 //Mob vars
 /mob/living
-	var/arousalloss = 0			//How aroused the mob is.
-	var/min_arousal = 0			//The lowest this mobs arousal will get. default = 0
-	var/max_arousal = 100		//The highest this mobs arousal will get. default = 100
-	var/arousal_rate = 1		//The base rate that arousal will increase in this mob.
-	var/arousal_loss_rate = 1	//How easily arousal can be relieved for this mob.
-	var/canbearoused = FALSE	//Mob-level disabler for arousal. Starts off and can be enabled as features are added for different mob types.
-	var/mb_cd_length = 100		//5 second cooldown for masturbating because fuck spam.
-	var/mb_cd_timer = 0			//The timer itself
+	var/arousalloss = 0									//How aroused the mob is.
+	var/min_arousal = AROUSAL_MINIMUM_DEFAULT			//The lowest this mobs arousal will get. default = 0
+	var/max_arousal = AROUSAL_MAXIMUM_DEFAULT			//The highest this mobs arousal will get. default = 100
+	var/arousal_rate = AROUSAL_START_VALUE				//The base rate that arousal will increase in this mob.
+	var/arousal_loss_rate = AROUSAL_START_VALUE			//How easily arousal can be relieved for this mob.
+	var/canbearoused = FALSE					//Mob-level disabler for arousal. Starts off and can be enabled as features are added for different mob types.
+	var/mb_cd_length = 5 SECONDS						//5 second cooldown for masturbating because fuck spam.
+	var/mb_cd_timer = 0									//The timer itself
 
 /mob/living/carbon/human
 	canbearoused = TRUE
@@ -22,8 +22,8 @@
 
 //Species vars
 /datum/species
-	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
-	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relieved
+	var/arousal_gain_rate = AROUSAL_START_VALUE //Rate at which this species becomes aroused
+	var/arousal_lose_rate = AROUSAL_START_VALUE //Multiplier for how easily arousal can be relieved
 	var/list/cum_fluids = list("semen")
 	var/list/milk_fluids = list("milk")
 	var/list/femcum_fluids = list("femcum")
@@ -77,7 +77,8 @@
 		updatearousal()
 
 /mob/living/proc/getPercentAroused()
-	return ((100 / max_arousal) * arousalloss)
+	var/percentage = ((100 / max_arousal) * arousalloss)
+	return percentage
 
 /mob/living/proc/isPercentAroused(percentage)//returns true if the mob's arousal (measured in a percent of 100) is greater than the arg percentage.
 	if(!isnum(percentage) || percentage > 100 || percentage < 0)
@@ -104,6 +105,8 @@
 					S = GLOB.breasts_shapes_list[G.shape]
 			if(S?.alt_aroused)
 				G.aroused_state = isPercentAroused(G.aroused_amount)
+			if(getArousalLoss() >= ((max_arousal / 100) * 33))
+				G.aroused_state = TRUE
 			else
 				G.aroused_state = FALSE
 			G.update_appearance()

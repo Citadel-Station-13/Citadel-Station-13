@@ -290,6 +290,8 @@
 	var/hacked = FALSE
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	var/list/possible_colors = list("red", "blue", "green", "purple")
+	total_mass = 0.375 //Survival flashlights typically weigh around 5 ounces.
+	var/total_mass_on = 3.4 //The typical medieval sword, on the other hand, weighs roughly 3 pounds. //Values copied from the regular e-sword
 
 /obj/item/twohanded/dualsaber/suicide_act(mob/living/carbon/user)
 	if(wielded)
@@ -387,6 +389,7 @@
 	if(wielded)
 		sharpness = IS_SHARP
 		w_class = w_class_on
+		total_mass = total_mass_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
@@ -394,6 +397,7 @@
 /obj/item/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
+	total_mass = initial(total_mass)
 	..()
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
