@@ -18,6 +18,9 @@
 	imp_type = /obj/item/implant/gps
 
 /obj/item/implant/gps
+	name = "\improper GPS implant"
+	desc = "Track with this and a GPS."
+	activated = FALSE
 	var/obj/item/gps/internal/mining/real_gps
 
 /obj/item/implant/gps/implant(mob/living/target, mob/user, silent = FALSE)
