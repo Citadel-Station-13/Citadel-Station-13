@@ -406,19 +406,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/nullrod/scythe
-	icon_state = "scythe1"
-	item_state = "scythe1"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "reaper scythe"
-	desc = "Ask not for whom the bell tolls..."
-	w_class = WEIGHT_CLASS_BULKY
-	armour_penetration = 35
-	slot_flags = ITEM_SLOT_BACK
-	sharpness = IS_SHARP
-	attack_verb = list("chopped", "sliced", "cut", "reaped")
-
 /obj/item/nullrod/ratvarian_spear
 	icon_state = "ratvarian_spear"
 	icon = 'icons/obj/clockwork_objects.dmi'
@@ -426,8 +413,9 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	name = "bronze spear"
 	desc = "A bronze spear with a soft glow around its shaft. Ticking and whirring can be heard emanating from its head."
-	force = 15
-	throw_force = 25
+	force = 16
+	block_chance = 25
+	throwforce = 25
 	var/last_throw_special = 0
 	var/throw_special_cooldown = 100
 
@@ -453,6 +441,19 @@
 		return
 	to_chat(L, "<span class='boldnotice'>You feel like [src] is ready to throw again!</span>")
 
+/obj/item/nullrod/scythe
+	icon_state = "scythe1"
+	item_state = "scythe1"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	name = "reaper scythe"
+	desc = "Ask not for whom the bell tolls..."
+	w_class = WEIGHT_CLASS_BULKY
+	armour_penetration = 35
+	slot_flags = ITEM_SLOT_BACK
+	sharpness = IS_SHARP
+	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
 /obj/item/nullrod/scythe/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
@@ -466,7 +467,6 @@
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-
 
 /obj/item/nullrod/scythe/spellblade
 	icon_state = "spellblade"
