@@ -104,7 +104,7 @@
 			M.emote(pick("moan","blush"))
 		if(prob(5))
 			var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
-			to_chat(M, "<span class='love'>[aroused_message]</span>")
+			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus
@@ -133,7 +133,7 @@
 				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
 			else
 				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
-			to_chat(M, "<span class='love'>[aroused_message]</span>")
+			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
 	..()
 
 /datum/reagent/drug/aphrodisiacplus/addiction_act_stage2(mob/living/M)
