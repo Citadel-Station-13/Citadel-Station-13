@@ -114,8 +114,8 @@
 	addiction_threshold = 15
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
-	addiction_stage3_end = 40
-	addiction_stage4_end = 43 //Incase it's too long
+	addiction_stage3_end = 41
+	addiction_stage4_end = 44 //Incase it's too long
 	var/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 0
@@ -251,7 +251,7 @@
 	src.addictCyc4++
 
 	..()
-	. = 1
+	//. = 1
 
 //TODO
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)

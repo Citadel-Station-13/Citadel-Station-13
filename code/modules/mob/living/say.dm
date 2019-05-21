@@ -205,11 +205,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	//global say component
-	//SEND_GLOBAL_SIGNAL(COMSIG_LIVING_SAY, src, message)
-	//if(SEND_SIGNAL(COMSIG_LIVING_SAY,src,message) == COMPONENT_NO_SAY)
-	//	return
-
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
 	if(succumbed)

@@ -454,7 +454,7 @@
 */
 //Doesn't work
 
-/datum/status_effect/chem/enthrall/proc/owner_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/datum/status_effect/chem/enthrall/proc/owner_hear(message = message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/mob/living/carbon/C = owner
 	//message_admins("[C] heard something!")
 	for (var/trigger in customTriggers)

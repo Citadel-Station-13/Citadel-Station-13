@@ -616,6 +616,7 @@ im
 		//go to explode proc
 		//message_admins("temperature is over limit: [C.ExplodeTemp] Current temperature: [cached_temp]")
 		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
+		return
 
 	if (pH > 14)
 		pH = 14
@@ -628,6 +629,7 @@ im
 
 	if ((purity < C.PurityMin) && (!C.PurityMin == 0))//If purity is below the min, blow it up.
 		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
+		return
 
 	//For now, purity is handled elsewhere
 

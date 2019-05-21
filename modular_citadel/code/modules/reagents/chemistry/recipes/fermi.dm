@@ -190,7 +190,7 @@
 	my_atom.reagents.clear_reagents()
 	..()
 
-/datum/chemical_reaction/fermi/astral //done
+/datum/chemical_reaction/fermi/astral //done //BORKEN
 	name = "Astrogen"
 	id = "astral"
 	results = list("astral" = 3)
@@ -278,7 +278,7 @@
 	var/turf/T = get_turf(my_atom)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("enthrallExplo", volume)
+	R.add_reagent("enthrallExplo", volume/2)
 	s.set_up(R, volume, T)
 	s.start()
 	my_atom.reagents.clear_reagents()

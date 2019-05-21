@@ -706,9 +706,6 @@
 				if (E.cooldown > 0)//If they're on cooldown you can't give them more commands.
 					continue
 				listeners += L
-	if(debug == TRUE)
-		for(var/L in listeners)
-			to_chat(world, "[user] choses, and [L] obeys.")
 
 	if(!listeners.len)
 		cooldown = 0
@@ -994,7 +991,7 @@
 				if(2 to INFINITY)
 					var/mob/living/M = V
 					playsound(get_turf(M), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
-					M.emote(M,"lets out a nya!")
+					M.emote(M, 1, "lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
