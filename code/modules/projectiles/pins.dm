@@ -160,6 +160,11 @@
 	if(user.mind && user.mind.miming)
 		return TRUE
 
+	if(iscarbon(user))
+		var/mob/living/carbon/M = user
+		if(M.silent > 0)
+			return TRUE
+
 	return FALSE
 
 // DNA-keyed pin.
