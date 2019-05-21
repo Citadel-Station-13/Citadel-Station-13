@@ -988,6 +988,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
+/datum/uplink_item/device_tools/nutcracker
+	name = "Nutcracker"
+	desc = "An oversized version of what you'd initially expect here. Big enough to crush skulls."
+	item = /obj/item/nutcracker
+	cost = 1
+
 /datum/uplink_item/device_tools/surgerybag_adv
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
@@ -1511,7 +1517,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo 
+/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo
 	name = "Hilarious firing pin"
 	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
 	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
