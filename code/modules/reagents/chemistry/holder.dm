@@ -555,8 +555,12 @@ im
 		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
+		//Reaction sounds and words
+		playsound(get_turf(my_atom), C.mix_sound, 80, 1)
+		var/list/seen = viewers(5, get_turf(my_atom))//Sound and sight checkers
+		var/iconhtml = icon2html(my_atom, seen)
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+			to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
@@ -582,8 +586,12 @@ im
 			//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 			C.FermiFinish(src, my_atom, multiplier)
 			//C.on_reaction(src, multiplier, special_react_result)
+			//Reaction sounds and words
+			playsound(get_turf(my_atom), C.mix_sound, 80, 1)
+			var/list/seen = viewers(5, get_turf(my_atom))//Sound and sight checkers
+			var/iconhtml = icon2html(my_atom, seen)
 			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+				to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 			return
 	else
 		STOP_PROCESSING(SSprocessing, src)
@@ -596,8 +604,12 @@ im
 		//var/datum/reagent/fermi/Ferm  = GLOB.chemical_reagents_list[C.id]
 		C.FermiFinish(src, my_atom, multiplier)
 		//C.on_reaction(src, multiplier, special_react_result)
+		//Reaction sounds and words
+		playsound(get_turf(my_atom), C.mix_sound, 80, 1)
+		var/list/seen = viewers(5, get_turf(my_atom))//Sound and sight checkers
+		var/iconhtml = icon2html(my_atom, seen)
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+			to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 		return
 
 	//handle_reactions()

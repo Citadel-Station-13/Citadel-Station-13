@@ -1,5 +1,8 @@
 //TO TWEAK:
 
+/datum/chemical_reaction/fermi
+	mix_sound = 'modular_citadel/sound/voice/merowr.ogg'
+
 //Called for every reaction step
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return

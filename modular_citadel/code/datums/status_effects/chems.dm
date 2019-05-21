@@ -45,7 +45,7 @@
 	id = "BElarger"
 	alert_type = null
 	var/moveCalc = 1
-	var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
+	//var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	//var/list/items = list()
 	//var/items = o.get_contents()
 
@@ -78,11 +78,11 @@
 			o.dropItemToGround(W, TRUE)
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
-	moveCalc = ((round(B.cached_size) - 9))/5)
-	if (breast_values[size] > breast_values[prev_size])
+	moveCalc = (round(B.cached_size) - 9)/5
+	if (B.breast_values[B.size] > B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier *= moveCalc
-	else if (breast_values[size] < breast_values[prev_size])
+	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier /= moveCalc
 	if(round(B.cached_size) < 16)
@@ -286,7 +286,7 @@
 				to_chat(owner, "<span class='notice'><i>The separation from you [enthrallGender] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 			if(prob(2))
 				if(owner.canbearoused)
-				to_chat(owner, "<span class='notice'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
+					to_chat(owner, "<span class='notice'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
 			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !owner.reagents.has_reagent("MKUltra"))
 				phase = 2

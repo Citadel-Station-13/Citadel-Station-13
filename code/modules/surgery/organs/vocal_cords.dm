@@ -873,7 +873,7 @@
 			else
 				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
 				addtimer(CALLBACK(L, .proc/to_chat, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_tEVENT, "enthrallscold", /datum/mood_event/enthrallscold)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold)
 			E.cooldown += 1
 
 	//teir 0
@@ -897,7 +897,7 @@
 				if(0)
 					E.phase = 3
 					E.status = null
-					if(C.canbearoused)
+					if(L.canbearoused)
 						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					else
 						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
@@ -954,9 +954,9 @@
 					E.phase = 0
 					E.cooldown = 0
 					if(C.canbearoused)
-						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
+						addtimer(CALLBACK(C, .proc/to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
+						addtimer(CALLBACK(C, .proc/to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
 
 	//ATTRACT
 	else if((findtext(message, attract_words)))

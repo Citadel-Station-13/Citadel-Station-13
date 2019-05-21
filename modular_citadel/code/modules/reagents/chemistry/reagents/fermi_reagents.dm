@@ -1167,11 +1167,12 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	. = ..()
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 150u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
-		for(var/victim in seen)
-			if((victim != mob/living/carbon/M) || (victim == M))//as much as I want you to fall for beepsky, he doesn't have a ckey
-				if(!victim.ckey)
-					seen = seen - victim
-		var/chosen = pick(seen)
+		for(var/mob/living/carbon/victim in seen)
+			if(victim == M)//as much as I want you to fall for beepsky, he doesn't have a ckey
+				seen = seen - victim
+			if(!victim.ckey)
+				seen = seen - victim
+		var/mob/living/carbon/chosen = pick(seen)
 		creatorID = chosen.ckey
 		if (chosen.gender == "female")
 			creatorGender = "Mistress"
