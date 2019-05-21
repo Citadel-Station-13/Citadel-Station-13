@@ -130,6 +130,15 @@
 	else
 		return ..()
 
+/obj/item/melee/transforming/energy/sword/cx/chaplain
+	name = "divine lightblade"
+	force_on = 20		//haha i'll regret this
+	block_chance = 50
+
+/obj/item/melee/transforming/energy/sword/cx/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
 /obj/item/toy/sword/cx
