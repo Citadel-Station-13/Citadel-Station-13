@@ -21,6 +21,10 @@
 	var/statuscheck			= FALSE
 	var/prev_size			= 6
 
+/obj/item/organ/genital/penis/Initialize()
+	. = ..()
+	prev_size = length
+	cached_length = length
 
 /obj/item/organ/genital/penis/update_size()
 	var/mob/living/carbon/human/o = owner
@@ -33,32 +37,32 @@
 			length = cached_length
 			size = 1
 			if(statuscheck == TRUE)
-				message_admins("Attempting to remove.")
+				//message_admins("Attempting to remove.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = FALSE
 		if(5 to 8) //If modest size
 			length = cached_length
 			size = 2
 			if(statuscheck == TRUE)
-				message_admins("Attempting to remove.")
+				//message_admins("Attempting to remove.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = FALSE
 		if(9 to INFINITY) //If massive
 			length = cached_length
 			size = 3 //no new sprites for anything larger yet
 			if(statuscheck == FALSE)
-				message_admins("Attempting to apply.")
+				//message_admins("Attempting to apply.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = TRUE
 		if(15 to INFINITY)
 			length = cached_length
 			size = 3 //no new sprites for anything larger yet
 			if(statuscheck == FALSE)
-				message_admins("Attempting to apply.")
+				//message_admins("Attempting to apply.")
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = TRUE
-	message_admins("Pinas size: [size], [cached_length], [o]")
-	message_admins("2. size vs prev_size")
+	//message_admins("Pinas size: [size], [cached_length], [o]")
+	//message_admins("2. size vs prev_size")
 	if (round(length) > round(prev_size))
 		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(length)] inch penis.</b></span>")
 	else if (round(length) < round(prev_size))

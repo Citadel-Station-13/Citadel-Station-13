@@ -24,7 +24,7 @@
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
 #define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
-
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -137,8 +137,9 @@
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
-#define COMSIG_LIVING_SAY "say"                              //mob/living/say() - return COMSIG_I_FORGET_WHAT_TO_CALL_IT to interrupt before message sent.
-	#define COMPONENT_NO_SAY 1									// Here I am pretending to know what I'm doing.
+//#define COMSIG_LIVING_SAY "say"                              //mob/living/say() - return COMSIG_I_FORGET_WHAT_TO_CALL_IT to interrupt before message sent.
+//	#define COMPONENT_NO_SAY 1									// Here I am pretending to know what I'm doing.
+//#define
 
 
 // /mob/living/carbon signals

@@ -6,6 +6,7 @@
 	var/obj/item/organ/vocal_cords/Vc = getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		if(Vc.name == "velvet chords" )
+			..()
 			velvetspeech(message, src)
 
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)

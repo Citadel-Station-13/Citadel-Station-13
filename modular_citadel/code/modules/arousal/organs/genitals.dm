@@ -273,7 +273,7 @@
 	//H.update_body()
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
-	message_admins("attempting to update sprite")
+	//message_admins("attempting to update sprite")
 	if(!H)//no args
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done

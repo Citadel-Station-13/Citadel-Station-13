@@ -670,7 +670,7 @@
 ///////////FermiChem//////////////////
 //////////////////////////////////////
 //Removed span_list from input arguments. //mob/living/user
-/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = TRUE)
+/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = FALSE)
 	message_admins("Velvet speech proc'd on [user]")
 	var/cooldown = 0
 
@@ -703,7 +703,7 @@
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
 				var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//Check to see if pet is on cooldown from last command
-				if (E.cooldown >= 0)//If they're on cooldown you can't give them more commands.
+				if (E.cooldown > 0)//If they're on cooldown you can't give them more commands.
 					continue
 				listeners += L
 	if(debug == TRUE)
@@ -812,7 +812,7 @@
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
-	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|objective")//What a descriptive name!
+	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
@@ -826,6 +826,8 @@
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
 
 	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
+
+	//CALLBACKS ARE USED FOR MESSAGES BECAUSE SAY IS HANDLED AFTER THE PROCESSING.
 
 	//Tier 1
 	//ENTHRAL mixable
@@ -876,7 +878,7 @@
 	if((findtext(message, saymyname_words)))
 		for(var/V in listeners)
 			var/mob/living/carbon/C = V
-			C.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+			C.remove_trait(TRAIT_MUTE, "enthrall")
 			addtimer(CALLBACK(C, /atom/movable/proc/say, "Master"), 5)//When I figure out how to do genedered names put them here
 
 	//WAKE UP
@@ -889,7 +891,7 @@
 				if(0)
 					E.phase = 3
 					E.status = null
-					addtimer(CALLBACK(L, /atom/movable/proc/to_chat, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
+					addtimer(CALLBACK(L, /proc/to_chat, "<span class='warning'>The snapping of your Master's fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					//to_chat(L, )
 
 
@@ -900,7 +902,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, C)+1]
 			if (E.phase == 3) //If target is fully enthralled,
-				C.add_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+				C.add_trait(TRAIT_MUTE, "enthrall")
 			else
 				C.silent += ((10 * power_multiplier) * E.phase)
 			E.cooldown += 3
@@ -933,11 +935,12 @@
 	else if((findtext(message, forget_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			C.Sleeping(50)
 			to_chat(C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>")
+			C.Sleeping(50)
 			switch(E.phase)
 				if(1 to 2)
 					E.phase = -1
+					to_chat(C, "<span class='big warning'>You have no recollection of being enthralled by [E.master]</b></span>")
 				if(3)
 					E.phase = 0
 					E.cooldown = 0
@@ -951,22 +954,6 @@
 			E.cooldown += 3
 
 
-	//ORGASM
-	else if((findtext(message, orgasm_words)))
-		for(var/V in listeners)
-			var/mob/living/carbon/human/H = V
-			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
-				H.mob_climax(forced_climax=TRUE)
-				H.setArousalLoss(H.min_arousal)
-				E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
-				E.enthrallTally += power_multiplier
-			else
-				E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
-				E.enthrallTally += power_multiplier*1.1
-				to_chat(H, "<span class='warning'>Your Masters command whites out your mind in bliss!</b></span>")
-			E.cooldown += 6
-
 	//teir 2
 
 
@@ -976,7 +963,7 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
-				if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
+				if(H.canbearoused) // probably a redundant check but for good measure
 					H.mob_climax(forced_climax=TRUE)
 					H.setArousalLoss(H.min_arousal)
 					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
@@ -1007,7 +994,7 @@
 				if(2 to INFINITY)
 					var/mob/living/M = V
 					playsound(get_turf(M), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
-					H.emote(H,"lets out a nya!")
+					M.emote(M,"lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
@@ -1072,10 +1059,10 @@
 		for(var/V in listeners)
 			var/speaktrigger = ""
 			var/mob/living/L = V
-			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
-			if (!E.customTriggers == list())//i.e. if it's not empty
-				for (var/trigger in E.customTriggers)
-					speaktrigger = "[trigger]\n"
+			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//i.e. if it's not empty
+			for (var/trigger in E.customTriggers)
+				speaktrigger = "[trigger]\n"
+			if(!speaktrigger == "")
 				L.say(speaktrigger)
 
 	//CUSTOM TRIGGERS
@@ -1085,7 +1072,7 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
-					to_chat(H, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
+					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
 					return
 				else
 					if (E.mental_capacity >= 10)
@@ -1110,7 +1097,7 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
-					to_chat(H, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
+					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
 					return
 				else
 					user.emote(user, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
@@ -1310,7 +1297,8 @@
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
 			i++
 	*/
-
+	else
+		return
 	if(message_admins)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")

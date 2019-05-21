@@ -205,6 +205,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
+	//global say component
+	//SEND_GLOBAL_SIGNAL(COMSIG_LIVING_SAY, src, message)
+	//if(SEND_SIGNAL(COMSIG_LIVING_SAY,src,message) == COMPONENT_NO_SAY)
+	//	return
+
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
 	if(succumbed)
@@ -273,6 +278,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
 			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()

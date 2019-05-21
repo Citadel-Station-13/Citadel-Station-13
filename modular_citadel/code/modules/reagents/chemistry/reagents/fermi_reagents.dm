@@ -14,8 +14,8 @@
 	id = "fermi"	//It's meeee
 	taste_description	= "If affection had a taste, this would be it."
 	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
-	var/InverseChemVal 		= 0					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	var/InverseChem 		= "Initropidril" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
+	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
+	var/InverseChem 		= "toxin" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
@@ -34,7 +34,7 @@
 
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
-/datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
 	. = ..()
 	if(!M)
 		return
@@ -44,15 +44,15 @@
 	if (src.purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > src.purity)
-		M.reagents.remove_reagent(src, volume, FALSE)
-		M.reagents.add_reagent(src.InverseChem, volume, FALSE, other_purity = 1)
+		M.reagents.remove_reagent(src.id, amount, FALSE)
+		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
-		//var/pureVol = volume * purity
-		var/impureVol = volume * (1 - (volume * purity))
-		message_admins("splitting [src] [volume] into [src.ImpureChem] [impureVol]")
-		M.reagents.remove_reagent(src, (volume*impureVol), FALSE)
+		//var/pureVol = amount * purity
+		var/impureVol = amount * (1 - purity)
+		message_admins("splitting [src.id] [amount] into [src.ImpureChem] [impureVol]")
+		M.reagents.remove_reagent(src.id, (impureVol), FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 
@@ -66,15 +66,15 @@
 	if (other_purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > other_purity)
-		M.reagents.remove_reagent(src, amount, FALSE)
+		M.reagents.remove_reagent(src.id, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
 		//var/pureVol =
-		var/impureVol = amount * (1 - (amount * other_purity))
-		message_admins("splitting [src] [volume] into [src.ImpureChem] [impureVol]")
-		M.reagents.remove_reagent(src, impureVol, FALSE)
+		var/impureVol = amount * (1 - other_purity)
+		message_admins("splitting [src] [amount] into [src.ImpureChem] [impureVol]")
+		M.reagents.remove_reagent(src.id, impureVol, FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 
@@ -111,7 +111,7 @@
 	taste_description = "wiggly cosmic dust."
 	color = "#5020H4" // rgb: 50, 20, 255
 	overdose_threshold = 15
-	addiction_threshold = 20
+	addiction_threshold = 15
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
 	addiction_stage3_end = 40
@@ -525,7 +525,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/startHunger
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
-	message_admins("SGZF ingested")
+	//message_admins("SGZF ingested")
 	switch(current_cycle)//Pretends to be normal
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
@@ -577,7 +577,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
-	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
+	//message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -821,6 +821,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/antiGenetics = 255
 	var/sleepytime = 0
+	InverseChemVal = 0.25
 	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
@@ -1215,10 +1216,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 			if(prob(10))
-				owner.Stun(10)
-				owner.emote("whimper")//does this exist?
-				to_chat(owner, "You're overcome with a desire to see [love].")
-				owner.adjustBrainLoss(5)
+				M.Stun(10)
+				M.emote("whimper")//does this exist?
+				to_chat(M, "You're overcome with a desire to see [love].")
+				M.adjustBrainLoss(5)
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
@@ -1446,9 +1447,36 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	data = "Big bang"
+	data = list("Big bang" = 1, "please work" = 2)
 
 /datum/reagent/fermi/fermiTest/on_new()
+	..()
+	message_admins("FermiTest addition!")
+	var/location = get_turf(holder.my_atom)
+	if(purity < 0.34 || purity == 1)
+		var/datum/effect_system/foam_spread/s = new()
+		s.set_up(volume*2, location, holder)
+		s.start()
+	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
+		var/datum/effect_system/smoke_spread/chem/s = new()
+		s.set_up(holder, volume*2, location)
+		s.start()
+	if(purity >= 0.67)
+		for (var/datum/reagent/reagent in holder.reagent_list)
+			if (istype(reagent, /datum/reagent/fermi))
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
+			else
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.on_reaction(holder, reagent.volume)
+	for(var/mob/M in viewers(8, location))
+		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	holder.clear_reagents()
+
+/datum/reagent/fermi/fermiTest/on_merge()
+	..()
+	message_admins("FermiTest addition!")
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
