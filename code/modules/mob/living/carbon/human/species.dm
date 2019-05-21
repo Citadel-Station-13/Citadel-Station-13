@@ -1452,39 +1452,51 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// CITADEL EDIT slap mouthy gits and booty
-	var/aim_for_mouth  = user.zone_selected == "mouth"
-	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+	var/aim_for_mouth = user.zone_selected == "mouth"
+	var/target_on_help = target.a_intent == INTENT_HELP
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
 	var/target_restrained = target.restrained()
-	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
-		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'>You slap [target] in the face! </span>",\
-		"You hear a slap.")
-		if (!target.has_trait(TRAIT_NYMPHO))
-			stop_wagging_tail(target)
-		return FALSE
+	var/same_dir = (target.dir & user.dir)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
-	if(aim_for_groin && (target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
+
+	if(target.check_block()) //END EDIT
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		return 0
+	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		to_chat(user, "<span class='warning'>You're too exhausted!</span>")
+		return FALSE
+
+	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
-			"<span class='notice'>You slap [target]'s ass! </span>",\
-		"You hear a slap.")
+
+		user.visible_message(
+			"<span class='danger'>[user] slaps [target] in the face!</span>",
+			"<span class='notice'>You slap [user == target ? "yourself" : target] in the face! </span>",\
+			"You hear a slap."
+		)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
+		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
+		user.adjustStaminaLossBuffered(3)
+		return FALSE
+	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message(
+			"<span class='danger'>[user] slaps [target]'s ass!</span>",
+			"<span class='notice'>You slap [user == target ? "your" : target + "'s"] ass! </span>",\
+			"You hear a slap."
+		)
 		if (target.canbearoused)
 			target.adjustArousalLoss(5)
 		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
 			target.mob_climax(forced_climax=TRUE)
 		if (!target.has_trait(TRAIT_NYMPHO))
 			stop_wagging_tail(target)
+		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
+		user.adjustStaminaLossBuffered(3)
 		return FALSE
-	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
-		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
-		return FALSE
-	else if(target.check_block()) //END EDIT
-		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
-		return 0
-	if(attacker_style && attacker_style.disarm_act(user,target))
+	else if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
