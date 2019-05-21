@@ -902,7 +902,7 @@ im
 				my_atom.on_reagent_change(ADD_REAGENT)
 			//if(R.FermiChem == TRUE)
 			//	R.on_mob_add(my_atom)
-			R.on_merge(data, amount)
+			R.on_merge(data, amount, my_atom, other_purity)
 			if(!no_react)
 				handle_reactions()
 
@@ -920,7 +920,7 @@ im
 		R.data = data
 		R.on_new(data)
 	if(R.addProc == TRUE)
-		R.on_new()
+		R.on_new(my_atom)
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
 		Ferm.FermiNew(my_atom) //Seriously what is "data" ????

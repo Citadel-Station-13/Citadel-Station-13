@@ -56,23 +56,25 @@
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 
-/datum/reagent/fermi/on_merge(mob/living/carbon/M, amount, other_purity)
+//When merging two fermichems
+/datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)
 	. = ..()
+	message_admins("purity of chem is [purity]")
 	if(!M)
 		return
 	message_admins("purity of chem is [purity]")
-	if(other_purity < 0)
+	if (purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
-	if (other_purity == 1 || src.DoNotSplit == TRUE)
+	if (purity == 1 || src.DoNotSplit == TRUE)
 		return
-	else if (src.InverseChemVal > other_purity)
+	else if (src.InverseChemVal > purity)
 		M.reagents.remove_reagent(src.id, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
 		//var/pureVol =
-		var/impureVol = amount * (1 - other_purity)
+		var/impureVol = amount * (1 - purity)
 		message_admins("splitting [src] [amount] into [src.ImpureChem] [impureVol]")
 		M.reagents.remove_reagent(src.id, impureVol, FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
@@ -334,9 +336,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 		if(20 to INFINITY)
-			message_admins("Number of candidates [LAZYLEN(candies)]")
+			//message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
-				message_admins("Candidate found!")
+				message_admins("Candidate found! [candies] is becomeing a clone of [M]! Hee~!! Exciting!!")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
@@ -420,6 +422,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjustBruteLoss(-1, 0)
 							M.adjustFireLoss(-1, 0)
 							M.heal_bodypart_damage(1,1)
+							M.reagents.remove_reagent(src.id, 1)//faster rate of loss.
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
 						if(21)
@@ -448,7 +451,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(87 to INFINITY)
 							M.reagents.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 							message_admins("Purging SGDF [volume]")
-					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
+					//message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
 
 	..()
@@ -1470,6 +1473,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/fermiTest/on_new()
 	..()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	else
+		holder.remove_reagent(src.id, 1000)//Avoiding recurrsion
 	message_admins("FermiTest addition!")
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)

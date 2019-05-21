@@ -463,7 +463,7 @@
 		    else
 		        . = ..()
 */
-//Doesn't work
+//WORKS!! AAAAA
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	//message_admins("post: hear:[hearer], msg:[message], spk:[speaker], lng:[message_language], raw:[raw_message], freq:[radio_freq], spen:[spans], mod:[message_mode]")
@@ -471,22 +471,22 @@
 	//message_admins("[C] heard something!")
 	raw_message = lowertext(raw_message)
 	for (var/trigger in customTriggers)
-		//cached_trigger = lowertext(trigger)
-		message_admins("[C] heard something: [message] vs [trigger] vs [raw_message]")
-		if ("[trigger]" == raw_message)//if trigger1 is the message
+		var/cached_trigger = lowertext(trigger)
+		//message_admins("[C] heard something: [message] vs [trigger] vs [raw_message]")
+		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
 			message_admins("[C] has been triggered with [trigger]!")
 
-			//Speak (Forces player to talk)
+			//Speak (Forces player to talk) works
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
-				to_chat(C, "<span class='notice'><i>Your mouth moves on it's own, before you can even catch it. You find yourself fully believing in the validity of what you just said and don't think to question it.</i></span>")
+				to_chat(C, "<span class='notice'><i>Your body moves on it's own before you can even catch it. You find yourself fully believing in the validity of what you just said and don't think to question it.</i></span>")
 				(C.say(customTriggers[trigger][2]))//trigger3
 
 
-			//Echo (repeats message!)
+			//Echo (repeats message!) works
 			else if (lowertext(customTriggers[trigger][1]) == "echo")//trigger2
 				(to_chat(owner, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"))//trigger3
 
-			//Shocking truth!
+			//Shocking truth! works
 			else if (lowertext(customTriggers[trigger]) == "shock")
 				if (C.canbearoused)
 					C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, TRUE)//I've no idea how strong this is
@@ -495,7 +495,7 @@
 				else
 					C.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, TRUE)//To make up for the lack of effect
 
-			//wah intensifies
+			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 				if (C.canbearoused)
 					if (C.getArousalLoss() > 80)
@@ -507,7 +507,8 @@
 
 			//kneel (knockdown)
 			else if (lowertext(customTriggers[trigger]) == "kneel")//as close to kneeling as you can get, I suppose.
-				C.Knockdown(20)
+				C.resting = 1
+				C.lying = 1
 
 			//strip (some) clothes
 			else if (lowertext(customTriggers[trigger]) == "strip")//This wasn't meant to just be a lewd thing oops
@@ -516,7 +517,7 @@
 				for(var/obj/item/W in items)
 					if(W == o.w_uniform || W == o.wear_suit)
 						o.dropItemToGround(W, TRUE)
-				C.visible_message("<span class='notice'><i>You feel compelled to strip your clothes.</i></span>")
+				to_chat(owner,"<span class='notice'><i>You feel compelled to strip your clothes.</i></span>")
 
 			//trance
 			else if (lowertext(customTriggers[trigger]) == "trance")

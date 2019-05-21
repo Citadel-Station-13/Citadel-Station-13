@@ -805,11 +805,13 @@
 	var/static/regex/strip_words = regex("strip|derobe|nude")
 	var/static/regex/walk_words = regex("slow down")
 	var/static/regex/run_words = regex("run")
+	var/static/regex/liedown_words = regex("lie down") //TO ADD
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
 	//phase 3
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
 	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
+	var/static/regex/recognise_words = regex("recognise me|i'm back|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
@@ -839,7 +841,7 @@
 			else
 				E.enthrallTally += power_multiplier*1.25
 			if(L.canbearoused)
-				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
+				addtimer(CALLBACK(L, .proc.to_chat, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
 			E.cooldown += 1
 
 	//REWARD mixable works
@@ -852,10 +854,10 @@
 			if (L.canbearoused)
 				//E.resistanceTally -= 1
 				L.adjustArousalLoss(1*power_multiplier)
-				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
+				addtimer(CALLBACK(L, .proc.to_chat, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
 			else
 				E.resistanceTally /= 2*power_multiplier
-				addtimer(CALLBACK(L, .proc/to_chat, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
+				addtimer(CALLBACK(L, .proc.to_chat, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallpraise", /datum/mood_event/enthrallpraise)
 			E.cooldown += 1
 
@@ -869,10 +871,10 @@
 			if (L.canbearoused)
 				E.resistanceTally /= 1*power_multiplier
 				L.adjustArousalLoss(-2*power_multiplier)
-				addtimer(CALLBACK(L, .proc/to_chat, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
+				addtimer(CALLBACK(L, .proc.to_chat, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			else
 				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
-				addtimer(CALLBACK(L, .proc/to_chat, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
+				addtimer(CALLBACK(L, .proc.to_chat, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold)
 			E.cooldown += 1
 
@@ -898,9 +900,9 @@
 					E.phase = 3
 					E.status = null
 					if(L.canbearoused)
-						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
+						addtimer(CALLBACK(L, .proc.to_chat, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(L, .proc/to_chat, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
+						addtimer(CALLBACK(L, .proc.to_chat, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
 						//to_chat(L, )
 
 
@@ -954,9 +956,9 @@
 					E.phase = 0
 					E.cooldown = 0
 					if(C.canbearoused)
-						addtimer(CALLBACK(C, .proc/to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
+						addtimer(CALLBACK(C, .proc.to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(C, .proc/to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
+						addtimer(CALLBACK(C, .proc.to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
 
 	//ATTRACT
 	else if((findtext(message, attract_words)))
@@ -1071,12 +1073,15 @@
 	else if((findtext(message, statecustom_words)))//doesn't work
 		for(var/V in listeners)
 			var/speaktrigger = ""
-			var/mob/living/L = V
-			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//i.e. if it's not empty
+			var/mob/living/carbon/C = V
+			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)//i.e. if it's not empty
 			for (var/trigger in E.customTriggers)
-				speaktrigger = "[trigger]\n"
+				speaktrigger += "[trigger], "
 			if(!speaktrigger == "")
-				L.say(speaktrigger)
+				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
+				addtimer(CALLBACK(C, /atom/movable/proc/say, "[speaktrigger]"), 5)
+				C.remove_trait(TRAIT_DEAF, "Triggers")
+
 
 	//CUSTOM TRIGGERS
 	else if((findtext(message, custom_words)))
@@ -1132,6 +1137,19 @@
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
 
 
+	//RECOGNISE
+	else if((findtext(message, recognise_words)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(E.phase > 1)
+				if(user.ckey == E.enthrallID && user.real_name == E.master.real_name)
+					E.master = user
+					if(H.canbearoused)
+						addtimer(CALLBACK(H, .proc.to_chat, "<span class='nicegreen'>You hear the words of your [E.enthrallID] again!! They're back!!</b></span>"), 5)
+					else
+						addtimer(CALLBACK(H, .proc.to_chat, "<span class='nicegreen'>You recognise the words of [user], and comply with their orders oncemore.</b></span>"), 5)//It's a bit like a job, It's a living.
+
 	//I dunno how to do state objectives without them revealing they're an antag
 
 	//HEAL (maybe make this nap instead?)
@@ -1146,7 +1164,7 @@
 					E.cooldown += 5
 
 	//STUN
-	if(findtext(message, stun_words))
+	else if(findtext(message, stun_words))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
