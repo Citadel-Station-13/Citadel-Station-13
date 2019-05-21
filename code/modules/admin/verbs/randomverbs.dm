@@ -1295,7 +1295,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
 		if(ADMIN_PUNISHMENT_PIE)
-			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new /obj/item/reagent_containers/food/snacks/pie/cream/nostun(get_turf(target))
+			var/obj/item/reagent_containers/food/snacks/pie/cream/nostun/creamy = new(get_turf(target))
 			creamy.splat(target)
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
