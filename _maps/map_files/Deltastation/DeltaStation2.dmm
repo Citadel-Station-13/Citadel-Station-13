@@ -101814,6 +101814,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "dpo" = (
@@ -126296,6 +126297,20 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"eLw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/chem_dispenser,
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "eMD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -126355,6 +126370,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab)
+"fhE" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical{
+	name = "Apothecary"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "fno" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -126584,6 +126615,13 @@
 /obj/item/restraints/handcuffs/fake,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"hSf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/medical/medbay/central)
 "iaF" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -126593,6 +126631,18 @@
 /obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+"iwL" = (
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ixL" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
@@ -126743,6 +126793,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/morgue)
+"jOE" = (
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "jRy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -126853,6 +126920,22 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
+"lzF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "lEl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -126909,6 +126992,23 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"lTx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay/central)
 "lXF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -127259,6 +127359,16 @@
 	dir = 10
 	},
 /area/science/misc_lab)
+"tRT" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/chem_heater,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "upk" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
@@ -174190,9 +174300,9 @@ dfL
 dCM
 dEb
 cPy
-dfL
-dCM
-dEb
+cNz
+fhE
+hSf
 cPy
 dhs
 dMS
@@ -174447,7 +174557,7 @@ dBo
 cSF
 dEc
 cPy
-dBo
+lzF
 cSF
 dEc
 cPy
@@ -174961,8 +175071,8 @@ dBq
 dCN
 dEe
 cPy
-dBq
-dCN
+lTx
+cSK
 dEe
 cPy
 cMg
@@ -175218,9 +175328,9 @@ dBr
 dCO
 dEf
 cPy
-dBr
+eLw
 dCO
-dEf
+tRT
 cPy
 dLo
 dMW
@@ -175475,9 +175585,9 @@ dBs
 dCP
 dEg
 cPy
-dBs
+jOE
 dCP
-dEg
+iwL
 cPy
 dLp
 dMV
