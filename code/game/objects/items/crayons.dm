@@ -68,8 +68,7 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
-	var/datum/team/gang/gang //For marking territory, spraycans are gang-locked to their initial gang due to colors
-
+	var/datum/team/gang/gang //For marking territory.
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -290,8 +289,14 @@
 	else if(drawing in numerals)
 		temp = "number"
 
-	temp = gang_check(user,target)
-	if(!temp) return // gang check
+	// If a gang member is using a gang spraycan, it'll behave differently
+	var/gang_mode = FALSE
+	if(gang && user.mind && user.mind.has_antag_datum(/datum/antagonist/gang)) //Heres a check.
+		gang_mode = TRUE // No more runtimes if a non-gang member sprays a gang can, it just works like normal cans.
+	// discontinue if the area isn't valid for tagging because gang "honour"
+	if(gang_mode && (!can_claim_for_gang(user, target)))
+		return
+
 	var/graf_rot
 	if(drawing in oriented)
 		switch(user.dir)
@@ -320,12 +325,13 @@
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
 	var/takes_time = !instant
+	if(gang_mode)
+		takes_time = TRUE
 
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(gang) takes_time = TRUE // gang tagging takes time.
 	if(takes_time)
 		if(!do_after(user, 50, target = target))
 			return
@@ -336,8 +342,15 @@
 
 	var/list/turf/affected_turfs = list()
 
-	if(!gang) //drawing is done in gang_final() if it's a gang type
-		if(actually_paints)
+
+	if(actually_paints)
+		if(gang_mode)
+			// Double check it wasn't tagged in the meanwhile
+			if(!can_claim_for_gang(user, target))
+				return
+			tag_for_gang(user, target)
+			affected_turfs += target
+		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
 					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
@@ -357,8 +370,6 @@
 					else
 						to_chat(user, "<span class='warning'>There isn't enough space to paint!</span>")
 						return
-	else // gangstuff
-		if(gang_final(user, target, affected_turfs)) return // gangstuff
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You finish drawing \the [temp].</span>")
@@ -382,27 +393,6 @@
 
 
 //////////////Gang mode stuff/////////////////
-/obj/item/toy/crayon/proc/gang_check(mob/user, atom/target) // hooked into afterattack
-	var/gang_mode = FALSE
-	if(gang && user.mind)
-		var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
-		if(G.gang != gang)
-			to_chat(user, "<span class='danger'>This spraycan's color isn't your gang's one! You cannot use it.</span>")
-			return FALSE
-		gang_mode = TRUE
-		instant = FALSE
-		. = "graffiti"
-	// discontinue if the area isn't valid for tagging because gang "honour"
-	if(gang_mode && (!can_claim_for_gang(user, target)))
-		return FALSE
-
-/obj/item/toy/crayon/proc/gang_final(mob/user, atom/target, list/affected_turfs) // hooked into afterattack
-	// Double check it wasn't tagged in the meanwhile
-	if(!can_claim_for_gang(user, target))
-		return TRUE
-	tag_for_gang(user, target)
-	affected_turfs += target
-
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
 	// Check area validity.
 	// Reject space, player-created areas, and non-station z-levels.
@@ -419,10 +409,6 @@
 			if(gangtag.gang != GA.gang)
 				spraying_over = TRUE
 				break
-
-	for(var/obj/machinery/power/apc in target)
-		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
-		return FALSE
 
 	var/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
@@ -446,9 +432,9 @@
 	var/datum/antagonist/gang/G = user.mind.has_antag_datum(/datum/antagonist/gang)
 	var/area/territory = get_area(target)
 
-	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user)
+	new /obj/effect/decal/cleanable/crayon/gang(target,G.gang,"graffiti",0,user) // Heres the gang tag.
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
-////////////Gang end////////////////////
+/////////////////Gang end////////////////////
 
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -782,7 +768,7 @@
 	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
 
 /obj/item/toy/crayon/spraycan/gang
-	charges = 20
+	charges = 10 // Charges are at 10 because the tagger trait exists.
 	gang = TRUE
 
 	pre_noise = FALSE

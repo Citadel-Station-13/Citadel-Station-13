@@ -86,15 +86,15 @@
 
 /datum/team/gang/tunnel
 	name = "Tunnel"
-	color = "#FF00FF"
+	color = "#FF00FF" //Gave the leather jacket to the tunnel gang over diablo.
 	inner_outfits = list(/obj/item/clothing/under/villain)
-	outer_outfits = list(/obj/item/clothing/suit/poncho/ponchoshame)
+	outer_outfits = list(/obj/item/clothing/suit/jacket/leather)
 
 /datum/team/gang/diablo
 	name = "Diablo"
-	color = "#FF0000"
-	inner_outfits = list(/obj/item/clothing/under/color/red)
-	outer_outfits = list(/obj/item/clothing/suit/jacket/leather)
+	color = "#FF0000"   //literal early 90s skinhead regalia.
+	inner_outfits = list(/obj/item/clothing/under/pants/classicjeans)
+	outer_outfits = list(/obj/item/clothing/suit/suspenders)
 
 /datum/team/gang/psyke
 	name = "Psyke"

@@ -331,7 +331,7 @@
 	var/list/report = list()
 	report += "<span class='header'>[name]:</span>"
 	if(winner)
-		report += "<span class='greentext'>The [name] gang was successful!</span>"
+		report += "<span class='greentext'>The [name] gang successfully activated the mind dominator!</span>"
 	else
 		report += "<span class='redtext'>The [name] gang has failed!</span>"
 
