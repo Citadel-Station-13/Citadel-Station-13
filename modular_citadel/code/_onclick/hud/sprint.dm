@@ -25,7 +25,7 @@
 
 /obj/screen/sprint_buffer
 	name = "sprint ubffer"
-	icon = 'icons/effects/progressbar.dmi'
+	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_100"
 
 /obj/screen/sprint_buffer/Click()
