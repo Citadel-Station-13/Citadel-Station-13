@@ -304,6 +304,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
+	SSshuttle.realtimeofstart = world.realtime
 
 	return TRUE
 
@@ -563,6 +564,9 @@ SUBSYSTEM_DEF(ticker)
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
+		return news_message
+	else
+		return "We regret to inform you that shit be whack, yo. None of our reporters have any idea of what may or may not have gone on."
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
@@ -655,7 +659,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/gondolabridge.ogg',
+		'sound/roundend/haveabeautifultime.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

@@ -5,6 +5,9 @@
 	chemical_cost = 20
 	dna_cost = 2
 	req_stat = UNCONSCIOUS
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_fleshmend"
+	action_background_icon_state = "bg_ling"
 
 //Starts healing you every second for 10 seconds.
 //Can be used whilst unconscious.

@@ -6,7 +6,7 @@ GLOBAL_VAR(restart_counter)
 //So subsystems globals exist, but are not initialised
 /world/New()
 
-	log_world("World loaded at [time_stamp()]!")
+	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
 	SetupExternalRSC()
 
@@ -90,7 +90,7 @@ GLOBAL_VAR(restart_counter)
 			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
 			GLOB.picture_log_directory += "[GLOB.round_id]"
 		else
-			var/timestamp = replacetext(time_stamp(), ":", ".")
+			var/timestamp = replacetext(TIME_STAMP("hh:mm:ss", FALSE), ":", ".")
 			GLOB.log_directory += "[timestamp]"
 			GLOB.picture_log_directory += "[timestamp]"
 			GLOB.picture_logging_prefix += "T_[timestamp]_"
@@ -226,11 +226,11 @@ GLOBAL_VAR(restart_counter)
 					do_hard_reboot = FALSE
 
 		if(do_hard_reboot)
-			log_world("World hard rebooted at [time_stamp()]")
+			log_world("World hard rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 			shutdown_logging() // See comment below.
 			TgsEndProcess()
 
-	log_world("World rebooted at [time_stamp()]")
+	log_world("World rebooted at [TIME_STAMP("hh:mm:ss", FALSE)]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 

@@ -474,7 +474,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -652,7 +652,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss"))
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
@@ -667,7 +667,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss"))
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")

@@ -199,6 +199,10 @@
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
 
+	//tell the nice people on discord what went on before the salt cannon happens.
+	world.TgsTargetedChatBroadcast("The current round has ended. Please standby for your shift interlude Nanotrasen News Network's report!", FALSE)
+	world.TgsTargetedChatBroadcast(send_news_report(),FALSE)
+
 	CHECK_TICK
 
 	//These need update to actually reflect the real antagonists

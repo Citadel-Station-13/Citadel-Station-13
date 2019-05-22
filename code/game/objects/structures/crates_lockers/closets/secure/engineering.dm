@@ -6,6 +6,7 @@
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/ce(src)
+	new /obj/item/clothing/head/beret/ce(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)

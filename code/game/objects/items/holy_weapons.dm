@@ -248,7 +248,9 @@
 	if(SSreligion.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_weapon
-	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
+	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
+	/obj/item/melee/transforming/energy/sword/cx/chaplain
+	)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
 		var/obj/item/nullrod/rodtype = V

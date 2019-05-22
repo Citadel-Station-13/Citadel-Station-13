@@ -6,13 +6,16 @@
 	req_dna = 1
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_regenerative_stasis"
+	action_background_icon_state = "bg_ling"
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
-		user.tod = station_time_timestamp()
+		user.tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
 	user.fakedeath("changeling") //play dead
 	user.update_stat()
 	user.update_canmove()
@@ -25,7 +28,9 @@
 		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
-			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+			var/obj/effect/proc_holder/changeling/revive/RV =  new /obj/effect/proc_holder/changeling/revive(null)
+			C.purchasedpowers += RV
+			RV.action.Grant(user)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
 	if(user.has_trait(TRAIT_DEATHCOMA, "changeling"))

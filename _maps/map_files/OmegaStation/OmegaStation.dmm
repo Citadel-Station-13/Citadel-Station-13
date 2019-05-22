@@ -13798,7 +13798,6 @@
 /area/crew_quarters/dorms)
 "axG" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/cryopod,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13807,6 +13806,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -16798,6 +16800,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aDG" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aDH" = (
@@ -36561,10 +36564,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bxJ" = (
-/obj/effect/landmark/event_spawn,
-/obj/machinery/computer/cryopod{
-	pixel_x = 30
-	},
 /obj/machinery/light{
 	dir = 4;
 	light_color = "#e8eaff"
@@ -36572,6 +36571,13 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 26
+	},
+/obj/machinery/cryopod{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)

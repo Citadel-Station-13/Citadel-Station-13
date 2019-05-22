@@ -39,6 +39,21 @@
 	selfcharge = EGUN_SELFCHARGE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/gun/energy/laser/carbine
+	name = "laser carbine"
+	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal laser gun."
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "lasernew"
+	item_state = "laser"
+	force = 10
+	throwforce = 10
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
+	cell_type = /obj/item/stock_parts/cell/lascarbine
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/gun/energy/laser/carbine/nopin
+	pin = null
+
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"

@@ -870,3 +870,19 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
+
+/datum/design/lock_collar
+	name = "Lockable Collar"
+	id = "lock_collar"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 100)
+	build_path = /obj/item/clothing/neck/petcollar/locked
+	category = list("initial", "Misc")
+
+/datum/design/collar_key
+	name = "Collar Key"
+	id = "collar_key"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 150)
+	build_path = /obj/item/key/collar
+	category = list("initial", "Misc")

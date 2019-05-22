@@ -297,7 +297,7 @@
 			ND.number++
 
 //This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
-/datum/component/storage/proc/orient2hud()
+/datum/component/storage/proc/orient2hud(mob/user, maxcolumns)
 	var/atom/real_location = real_location()
 	var/adjusted_contents = real_location.contents.len
 
@@ -307,7 +307,7 @@
 		numbered_contents = _process_numerical_display()
 		adjusted_contents = numbered_contents.len
 
-	var/columns = CLAMP(max_items, 1, screen_max_columns)
+	var/columns = CLAMP(max_items, 1, maxcolumns ? maxcolumns : screen_max_columns)
 	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 	standard_orient_objs(rows, columns, numbered_contents)
 
@@ -351,6 +351,8 @@
 /datum/component/storage/proc/show_to(mob/M)
 	if(!M.client)
 		return FALSE
+	var/list/cview = getviewsize(M.client.view)
+	var/maxallowedscreensize = cview[1]-8
 	var/atom/real_location = real_location()
 	if(M.active_storage != src && (M.stat == CONSCIOUS))
 		for(var/obj/item/I in real_location)
@@ -358,7 +360,7 @@
 				return FALSE
 	if(M.active_storage)
 		M.active_storage.hide_from(M)
-	orient2hud()
+	orient2hud(M, (isliving(M) ? maxallowedscreensize : 7))
 	M.client.screen |= boxes
 	M.client.screen |= closer
 	M.client.screen |= real_location.contents
