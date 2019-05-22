@@ -23,6 +23,7 @@
 
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
+		// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
 		var/msg = html_decode(replacetext(flavor_text, "\n", " "))
 		if(lentext(msg) <= 40)
 			return "<span class='notice'>[html_encode(msg)]</span>"
