@@ -319,6 +319,9 @@
 	staminas = new /obj/screen/staminas()
 	infodisplay += staminas
 
+	sprint_buffer = new
+	infodisplay += sprint_buffer
+
 	if(!CONFIG_GET(flag/disable_stambuffer))
 		staminabuffer = new /obj/screen/staminabuffer()
 		infodisplay += staminabuffer
