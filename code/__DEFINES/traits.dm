@@ -72,6 +72,7 @@
 #define	TRAIT_PHOTOGRAPHER		"photographer"
 #define	TRAIT_MUSICIAN			"musician"
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
+#define TRAIT_NYMPHO			"nymphomania"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

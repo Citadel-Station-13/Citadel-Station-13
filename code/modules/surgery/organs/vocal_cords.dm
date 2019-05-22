@@ -575,7 +575,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
-			if(H.canbearoused && H.has_dna()) // probably a redundant check but for good measure
+			if(H.canbearoused && H.has_dna() && H.has_trait(TRAIT_NYMPHO)) // probably a redundant check but for good measure
 				H.mob_climax(forced_climax=TRUE)
 
 	//DAB

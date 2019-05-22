@@ -57,7 +57,7 @@
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
 	message_admins("purity of chem is [purity]")
-	if(M.istype(/mob/living/carbon/M))
+	if(istype(M, /mob/living/carbon))
 		return
 	message_admins("purity of chem is [purity]")
 	if (purity < 0)
@@ -728,6 +728,17 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
 	//var/mob/living/carbon/human/H
 
+/datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+	. = ..()
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
+	if(!P)
+		message_admins("No penis found on init!")
+		return
+	P.prev_size = P.length
+	P.cached_length = P.length
+	message_admins("init P len: [P.length], prev: [P.prev_size], cache = [P.cached_length]")
+
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
@@ -762,7 +773,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	message_admins("PE Breast status: [B]")
 	if(M.gender == FEMALE)
 		M.gender = MALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine as your !</span>")
+		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
 		B.cached_size = B.cached_size - 0.1

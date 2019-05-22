@@ -528,7 +528,7 @@
 			//Speak (Forces player to talk) works
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
-				if(M.has_trait(TRAIT_NYMPHO))
+				if(C.has_trait(TRAIT_NYMPHO))
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				to_chat(C, "<span class='notice'><i>[saytext]</i></span>")
 				(C.say(customTriggers[trigger][2]))//trigger3
@@ -549,7 +549,7 @@
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (M.has_trait(TRAIT_NYMPHO))
+				if (C.has_trait(TRAIT_NYMPHO))
 					if (C.getArousalLoss() > 80)
 						C.mob_climax(forced_climax=TRUE)
 					else
