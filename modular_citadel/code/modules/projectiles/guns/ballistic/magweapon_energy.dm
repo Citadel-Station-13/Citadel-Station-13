@@ -53,7 +53,6 @@
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/amagm_e
 	max_ammo = 24
 
-
 /obj/item/ammo_box/magazine/mmag_e/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
@@ -73,12 +72,12 @@
 
 /obj/item/stock_parts/cell/magrifle_e
 	name = "magrifle power supply"
-	maxcharge = 14400
+	maxcharge = 21600
 	chargerate = 3520
 
 /obj/item/stock_parts/cell/magpistol_e
 	name = "magpistol power supply"
-	maxcharge = 6000
+	maxcharge = 9000
 	chargerate = 1000
 
 ///sci designs///
@@ -218,7 +217,6 @@
 	pin = null
 	spawnwithmagazine = FALSE
 
-
 ///magpistol///
 
 /obj/item/gun/ballistic/automatic/pistol/mag_e
@@ -278,7 +276,6 @@
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 
-
 /obj/item/gun/ballistic/automatic/pistol/mag_e/update_icon()
 	..()
 	if(magazine)
@@ -287,7 +284,6 @@
 	else
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-
 
 /obj/item/gun/ballistic/automatic/pistol/mag_e/nopin
 	pin = null
