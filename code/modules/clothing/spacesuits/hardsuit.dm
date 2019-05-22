@@ -443,7 +443,6 @@
 	icon_state = "hardsuit0-medical"
 	item_state = "medical_helm"
 	item_color = "medical"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	flash_protect = 0
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	scan_reagents = 1
@@ -500,8 +499,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 	tauric = TRUE		//Citadel Add for tauric hardsuits
 
-
-
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
 	name = "security hardsuit helmet"
@@ -510,7 +507,6 @@
 	item_state = "sec_helm"
 	item_color = "sec"
 	armor = list("melee" = 35, "bullet" = 15, "laser" = 30,"energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 75, "acid" = 75)
-
 
 /obj/item/clothing/suit/space/hardsuit/security
 	icon_state = "hardsuit-sec"
@@ -532,7 +528,6 @@
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list("melee" = 45, "bullet" = 25, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
-
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
 	icon_state = "hardsuit-hos"
@@ -624,6 +619,37 @@
 	var/footstep = 1
 	var/datum/component/mobhook
 
+/obj/item/clothing/suit/space/hardsuit/ancient/mason
+	name = "M.A.S.O.N RIG"
+	desc = "The Multy Advanced Sencer Of Networks RIG type hardsuit. With shining plates to protect against not only rads storms, SM meltdowns, acid proof coating this hulking hardsuit has huds built into its visors.\
+			The scanners allow for at a glace huds on anything a engineer would need. Sadly most of its armor makes the suit bulky and unable to sustain much harm from any weapon other then a bomb. This RIG can hold bags and toolboxes on its external shells.\
+			M.A.S.O.N Rigs are also made to withstand lava as well as ash storms down on lava land or other planets that are hotter then normal with its own environmental hazards. \
+			Only few of these are made to do the shear costs of them for use. Armord as it is, this suit will NOT save you from a nuke, massive bomb, or other larger explosions."
+	icon_state = "hardsuit-ancient"
+	item_state = "anc_hardsuit"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
+	slowdown = 6 //Slow
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage, /obj/item/construction/rcd, /obj/item/pipe_dispenser) 
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
+	name = "M.A.S.O.N RIG helmet"
+	desc = "M.A.S.O.N RIG hardsuit helmet. This hulking helmet was made only for constructions making it not armored for anything but that. \
+			Weak against combat it excels giving eye protection and flood light."
+	icon_state = "hardsuit0-ancient"
+	item_state = "anc_helm"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
+	item_color = "ancient"
+	brightness_on = 16
+	scan_reagents = 1
+	flash_protect = 5 //We will not be flash by bombs
+	tint = 1
+	/obj/machinery/doppler_array/integrated/bomb_radar
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
 /obj/item/clothing/suit/space/hardsuit/ancient/proc/on_mob_move()
 	var/mob/living/carbon/human/H = loc
 	if(!istype(H) || H.wear_suit != src)
@@ -693,7 +719,6 @@
 		return 1
 	return 0
 
-
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -751,8 +776,6 @@
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
 
-
-
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	name = "shielded hardsuit helmet"
 	desc = "Standard issue hardsuit helmet for playing capture the flag."
@@ -760,7 +783,6 @@
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
-
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
 	icon_state = "hardsuit0-ert_security"
@@ -773,10 +795,6 @@
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
-
-
-
-
 
 //////Syndicate Version
 
@@ -791,7 +809,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
 	tauric = TRUE		//Citadel Add for tauric hardsuits
-
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
