@@ -37,6 +37,7 @@
 		return message
 	if(prob(0.01))
 		message += "\" and tips their hat. \"Spy's sappin' my Sentry!"
+		message_admins("I really appreciate all the hard work you put into adminning citadel, I hope you're all having a good day and I hope this hidden and rare message admins brightens up your day.")
 		return message
 	message += "\" and tips their hat. \"[pick("Yeehaw!", "Boy howdy.", "Darn tootin'.", "Well don't that beat all.", "Whoooowee, would ya look at that!", "Whoooowee! Makin' bacon!", "Cream Gravy!", "Yippekeeyah-heeyapeeah-kayoh!", "Move 'em out!", "Giddy up!")]"
 	return message

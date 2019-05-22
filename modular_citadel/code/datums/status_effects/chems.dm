@@ -68,6 +68,7 @@
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
+	moveCalc = 1+((round(B.cached_size) - 9)/10) //Afffects how fast you move, and how often you can click.
 	if(!B)
 		o.remove_movespeed_modifier("megamilk")
 		o.next_move_modifier /= moveCalc
@@ -78,7 +79,6 @@
 			o.dropItemToGround(W, TRUE)
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
-	moveCalc = (round(B.cached_size) - 9)/5
 	if (B.breast_values[B.size] > B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier *= moveCalc
@@ -105,6 +105,8 @@
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
 	alert_type = null
+	var/bloodCalc
+	var/moveCalc
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	message_admins("PElarge started!")
@@ -125,9 +127,11 @@
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
+	moveCalc = 1+((round(P.length) - 21)/10) //effects how fast you can move
+	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
 		o.remove_movespeed_modifier("hugedick")
-		o.next_move_modifier = 1
+		o.blood_ratio /= bloodCalc //If someone else uses blood_ratio, turn this into a multiplier(I should make a handler huh)
 		owner.remove_status_effect(src)
 	message_admins("PElarge tick!")
 	var/items = o.get_contents()
@@ -138,20 +142,21 @@
 			to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 	switch(round(P.cached_length))
 		if(21)
-			if (!(P.prev_size == P.size))
+			if (P.prev_size > P.size)
 				to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 				o.remove_movespeed_modifier("hugedick")
-				o.next_move_modifier = 1
+				o.blood_ratio /= bloodCalc
 		if(22 to INFINITY)
 			if (!(P.prev_size == P.size))
-				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's affecting your movements!</b></span>")
-				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = (P.length - 21.1))
-				o.next_move_modifier = (round(P.length) - 21)
+				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
+				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+				o.blood_ratio *= bloodCalc
 	..()
 
-/datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/M)
+/datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
 	owner.remove_movespeed_modifier("hugedick")
-	owner.next_move_modifier = 1
+	o.blood_ratio /= bloodCalc
+
 
 /*//////////////////////////////////////////
 		Mind control functions

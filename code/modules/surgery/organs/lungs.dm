@@ -159,7 +159,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(breathModifier) //More damaged lungs = slower oxy rate up to a factor of half
+				H.adjustOxyLoss(-breathModifier) //More damaged lungs = slower oxy rate up to a factor of half
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
 			H.clear_alert("not_enough_oxy")
 
@@ -188,7 +188,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(breathModifier)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
 			H.clear_alert("nitro")
 
@@ -225,7 +225,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(breathModifier)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
 			H.clear_alert("not_enough_co2")
 
@@ -255,7 +255,7 @@
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
-				H.adjustOxyLoss(breathModifier)
+				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
 			H.clear_alert("not_enough_tox")
 

@@ -13,9 +13,9 @@
 	name = "Fermi" 	//Why did I putthis here?
 	id = "fermi"	//It's meeee
 	taste_description	= "affection and love!"
-	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
+	var/ImpureChem 			= "fermiTox"			// What chemical is metabolised with an inpure reaction
 	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	var/InverseChem 		= "toxin" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
+	var/InverseChem 		= "fermiTox" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
@@ -67,6 +67,9 @@
 	else if (src.InverseChemVal > purity)
 		M.reagents.remove_reagent(src.id, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
+		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
+			if(R.name == "")
+				R.name = src.name//Negative effects are hidden
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
@@ -75,6 +78,9 @@
 		message_admins("splitting [src] [amount] into [src.ImpureChem] [impureVol]")
 		M.reagents.remove_reagent(src.id, impureVol, FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
+		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
+			if(R.name == "")
+				R.name = src.name//Negative effects are hidden
 	return
 
 
@@ -1510,6 +1516,49 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	holder.clear_reagents()
+
+/datum/reagent/fermi/fermiTox
+	name = ""//defined on setup
+	id = "fermiTox"
+	description = "You should be really careful with this...! Also, how did you get this?"
+
+/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
+	if(C.dna && istype(C.dna.species, /datum/species/jelly))
+		C.adjustToxLoss(-1)
+	else
+		C.adjustToxLoss(1)
+	..()
+
+/datum/reagent/fermi/fermiABuffer
+	name = "Acidic buffer"//defined on setup
+	id = "fermiABuffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
+	addProc = TRUE
+
+/datum/reagent/fermi/fermiABuffer/on_new()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	if(holder.pH < 3)
+		return
+	pH = ((holder.pH * holder.total_volume)+(3 * src.volume))/(holder.total_volume + src.volume)
+	holder.remove_reagent(src.id, 1000)
+	..()
+
+/datum/reagent/fermi/fermiBBuffer
+	name = "Basic buffer"//defined on setup
+	id = "fermiBBuffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
+	addProc = TRUE
+
+/datum/reagent/fermi/fermiBBuffer/on_new()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	if(holder.pH > 11)
+		return
+	pH = ((holder.pH * holder.total_volume)+(11 * src.volume))/(holder.total_volume + src.volume)
+	holder.remove_reagent(src.id, 1000)
+	..()
+
 /*
 /datum/reagent/fermi/fermiTest/on_merge()
 	..()
