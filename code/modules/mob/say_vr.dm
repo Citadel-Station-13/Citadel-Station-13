@@ -23,11 +23,11 @@
 
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
-		var/msg = replacetext(flavor_text, "\n", " ")
+		var/msg = html_decode(replacetext(flavor_text, "\n", " "))
 		if(lentext(msg) <= 40)
-			return "<span class='notice'>[msg]</span>"
+			return "<span class='notice'>[html_encode(msg)]</span>"
 		else
-			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
+			return "<span class='notice'>[html_encode(copytext(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
 
 /mob/proc/get_top_level_mob()
 	if(istype(src.loc,/mob)&&src.loc!=src)
