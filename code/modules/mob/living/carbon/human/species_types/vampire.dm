@@ -46,7 +46,7 @@
 		C.adjustCloneLoss(-4)
 		return
 	C.blood_volume -= 0.75
-	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
+	if(C.blood_volume <= (BLOOD_VOLUME_SURVIVE*C.blood_ratio))
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
 	var/area/A = get_area(C)

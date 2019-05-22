@@ -372,7 +372,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.nutrition -= 500
 				//reaction_mob(SM, )I forget what this is for
 				//Damage the clone
-				SM.blood_volume = BLOOD_VOLUME_NORMAL/2
+				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
 				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
@@ -498,7 +498,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 1
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
 	M.setBrainLoss(-1)
