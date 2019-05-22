@@ -19,10 +19,6 @@
 
 	var/move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/shoe
 
-/obj/item/clothing/shoes/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
-
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(rand(2)>1)
 		user.visible_message("<span class='suicide'>[user] begins tying \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -46,7 +42,7 @@
 	. = list()
 	if(!isinhands)
 		var/bloody = FALSE
-		IF_HAS_BLOOD_DNA(src)
+		if(blood_DNA)
 			bloody = TRUE
 		else
 			bloody = blood_smear[BLOOD_STATE_BLOOD]
@@ -55,9 +51,9 @@
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
 			if(adjusted == NORMAL_STYLE)
-				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_color)
+				. += mutable_appearance('icons/effects/blood.dmi', "shoeblood", color = blood_DNA_to_color())
 			else
-				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_color)
+				. += mutable_appearance('modular_citadel/icons/mob/digishoes.dmi', "shoeblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -93,9 +89,8 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/clothing/shoes/proc/clean_blood(datum/source, strength)
-	if(strength < CLEAN_STRENGTH_BLOOD)
-		return
+/obj/item/clothing/shoes/clean_blood()
+	..()
 	blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	blood_color = null

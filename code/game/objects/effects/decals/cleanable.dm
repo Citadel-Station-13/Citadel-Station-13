@@ -82,7 +82,8 @@
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			S.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,S.blood_smear[blood_state]+add_blood)
-			S.add_blood_DNA(return_blood_DNA())
+			if(blood_DNA && blood_DNA.len)
+				S.add_blood(blood_DNA)
 			S.blood_state = blood_state
 			S.blood_color = blood_color
 			update_icon()
@@ -97,7 +98,8 @@
 			bloodiness -= add_blood
 			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
 			H.bloodiness = add_blood
-			H.add_blood_DNA(return_blood_DNA())
+			if(blood_DNA && blood_DNA.len)
+				H.add_blood(blood_DNA)
 			H.blood_state = blood_state
 			H.blood_color = blood_color
 			update_icon()

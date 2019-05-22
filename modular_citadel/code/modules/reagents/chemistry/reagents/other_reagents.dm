@@ -4,7 +4,7 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			O.clean_blood()
 
 /datum/reagent/syndicateadrenals
 	name = "Syndicate Adrenaline"

@@ -57,18 +57,20 @@
 					var/turf/T = get_turf(src)
 					if(S.blood_smear && S.blood_smear[S.blood_state])
 						var/obj/effect/decal/cleanable/blood/footprints/tracks/shoe/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints/tracks/shoe) in T
-						if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == S.blood_color))
+						if(oldFP && (oldFP.blood_state == S.blood_state && oldFP.color == bloodtype_to_color(S.last_bloodtype)))
 							return
-						S.blood_smear[S.blood_state] = max(0, S.blood_smear[S.blood_state]-BLOOD_LOSS_PER_STEP)
-						var/obj/effect/decal/cleanable/blood/footprints/tracks/shoe/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/shoe(T)
-						FP.icon_state = FOOTPRINT_SHOE
-						FP.print_state = FOOTPRINT_SHOE
-						FP.blood_state = S.blood_state
-						FP.blood_color = S.blood_color
-						FP.entered_dirs |= dir
-						FP.bloodiness = S.blood_smear[S.blood_state]
-						FP.update_icon()
-						update_inv_shoes()
+					S.blood_smear[S.blood_state] = max(0, S.blood_smear[S.blood_state]-BLOOD_LOSS_PER_STEP)
+					var/obj/effect/decal/cleanable/blood/footprints/tracks/shoe/FP = new /obj/effect/decal/cleanable/blood/footprints/tracks/shoe(T)
+					FP.icon_state = FOOTPRINT_SHOE
+					FP.print_state = FOOTPRINT_SHOE
+					FP.blood_state = S.blood_state
+					FP.entered_dirs |= dir
+					FP.bloodiness = S.blood_smear[S.blood_state]
+					if(S.last_blood_DNA && S.last_bloodtype)
+						FP.blood_DNA += list(S.last_blood_DNA = S.last_bloodtype)
+						//hacky as heck; we need to move the LAST entry to there, otherwise we mix all the blood
+					FP.update_icon()
+					update_inv_shoes()
 					//End bloody footprints
 
 					S.step_action()
@@ -80,27 +82,28 @@
 				var/step_print = dna.species.get_move_trail(src)
 				if(bloodiness && blood_smear[blood_state])
 					var/obj/effect/decal/cleanable/blood/footprints/tracks/oldFP = locate(step_print) in T
-					if(oldFP && (oldFP.blood_state == blood_state && oldFP == dna.species.move_trail && oldFP.blood_color == blood_color))
+					if(oldFP && (oldFP.blood_state == blood_state && oldFP.color == bloodtype_to_color(last_bloodtype)))
 						return
-					else
-						var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new step_print(T)
-						if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None") && !lying)
-							if(dna.features["taur"] in GLOB.noodle_taurs)
-								FP.icon_state = FOOTPRINT_SNAKE
-								FP.print_state = FOOTPRINT_SNAKE
-							else if(dna.features["taur"] in GLOB.paw_taurs)
-								FP.icon_state = FOOTPRINT_PAW
-								FP.print_state = FOOTPRINT_PAW
-						if(!dna.species.move_trail && !lying) //we're assuming people have their chosen snowflake on, so.
-							FP.icon_state = FOOTPRINT_SHOE
-							FP.print_state = FOOTPRINT_SHOE
+					var/obj/effect/decal/cleanable/blood/footprints/tracks/FP = new step_print(T)
+					if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None") && !lying)
+						if(dna.features["taur"] in GLOB.noodle_taurs)
+							FP.icon_state = FOOTPRINT_SNAKE
+							FP.print_state = FOOTPRINT_SNAKE
+						else if(dna.features["taur"] in GLOB.paw_taurs)
+							FP.icon_state = FOOTPRINT_PAW
+							FP.print_state = FOOTPRINT_PAW
+					if(!dna.species.move_trail && !lying) //we're assuming people have their chosen snowflake on, so.
+						FP.icon_state = FOOTPRINT_SHOE
+						FP.print_state = FOOTPRINT_SHOE
 
-						FP.add_blood_DNA(return_blood_DNA())
-						FP.blood_color = blood_color
-						FP.entered_dirs |= dir
-						FP.bloodiness = blood_smear[blood_state]
-						FP.update_icon()
-						bloodiness--
+					FP.blood_state = blood_state
+					FP.entered_dirs |= dir
+					FP.bloodiness = blood_smear[blood_state]
+					if(last_blood_DNA && last_bloodtype)
+						FP.blood_DNA += list(last_blood_DNA = last_bloodtype)
+						//hacky as heck; we need to move the LAST entry to there, otherwise we mix all the blood
+					FP.update_icon()
+					bloodiness--
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))

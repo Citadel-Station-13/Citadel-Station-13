@@ -17,9 +17,8 @@
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
 				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
-			IF_HAS_BLOOD_DNA(src)
-				GET_COMPONENT(D, /datum/component/forensics)
-				. += mutable_appearance('icons/effects/blood.dmi', "maskblood", color = D.blood_mix_color)
+			if(blood_DNA)
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood", color = blood_DNA_to_color())
 
 /obj/item/clothing/mask/equipped(mob/user, slot)
 	..()

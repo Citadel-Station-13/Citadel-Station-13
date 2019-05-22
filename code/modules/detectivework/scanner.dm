@@ -80,13 +80,19 @@
 
 		//Make our lists
 		var/list/fingerprints = list()
-		var/list/blood = A.return_blood_DNA()
-		var/list/fibers = A.return_fibers()
+		var/list/blood = list()
+		var/list/fibers = list()
 		var/list/reagents = list()
 
 		var/target_name = A.name
 
 		// Start gathering
+
+		if(A.blood_DNA && A.blood_DNA.len)
+			blood = A.blood_DNA.Copy()
+
+		if(A.suit_fibers && A.suit_fibers.len)
+			fibers = A.suit_fibers.Copy()
 
 		if(ishuman(A))
 
@@ -96,7 +102,8 @@
 
 		else if(!ismob(A))
 
-			fingerprints = A.return_fingerprints()
+			if(A.fingerprints && A.fingerprints.len)
+				fingerprints = A.fingerprints.Copy()
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
@@ -110,7 +117,6 @@
 						if(R.data["blood_DNA"] && R.data["blood_type"])
 							var/blood_DNA = R.data["blood_DNA"]
 							var/blood_type = R.data["blood_type"]
-							LAZYINITLIST(blood)
 							blood[blood_DNA] = blood_type
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
@@ -119,7 +125,7 @@
 		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss")][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
-		if(length(fingerprints))
+		if(fingerprints && fingerprints.len)
 			sleep(30)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
@@ -127,7 +133,7 @@
 			found_something = 1
 
 		// Blood
-		if (length(blood))
+		if (blood && blood.len)
 			sleep(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
@@ -135,7 +141,7 @@
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 		//Fibers
-		if(length(fibers))
+		if(fibers && fibers.len)
 			sleep(30)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
@@ -143,7 +149,7 @@
 			found_something = 1
 
 		//Reagents
-		if(length(reagents))
+		if(reagents && reagents.len)
 			sleep(30)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)

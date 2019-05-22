@@ -1,8 +1,12 @@
 
 /mob
 	var/bloody_hands = 0
+	var/bloody_feet = 0
 
 /obj/item/clothing/gloves
+	var/transfer_blood = 0
+
+/obj/item/clothing/shoes
 	var/transfer_blood = 0
 
 
@@ -46,5 +50,6 @@
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
-			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			A.clean_blood()
+			A.wash_cream()
 	return

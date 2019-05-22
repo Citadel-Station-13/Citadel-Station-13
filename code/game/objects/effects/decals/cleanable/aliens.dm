@@ -4,10 +4,7 @@
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
 	color = BLOOD_COLOR_XENO
-
-/obj/effect/decal/cleanable/blood/xeno/Initialize()
-	. = ..()
-	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	blood_DNA = list("UNKNOWN DNA" = "X*")
 
 /obj/effect/decal/cleanable/blood/splatter/xeno
 	color = BLOOD_COLOR_XENO
@@ -64,6 +61,10 @@
 /obj/effect/decal/cleanable/blood/gibs/xeno/larva/body
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
 
-/obj/effect/decal/cleanable/blood/xeno/tracks/Initialize()
+/obj/effect/decal/cleanable/blood/xtracks
+	icon_state = "tracks"
+	random_icon_states = null
+
+/obj/effect/decal/cleanable/blood/xtracks/Initialize()
+	add_blood(list("UNKNOWN DNA" = "X*"))
 	. = ..()
-	add_blood_DNA(list("UNKNOWN DNA" = "X*"))

@@ -12,8 +12,6 @@
 
 /obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
 	. = ..()
-	AddComponent(/datum/component/forensics)
-
 	if(gibtypes.len != gibamounts.len)
 		stack_trace("Gib list amount length mismatch!")
 		return
@@ -74,7 +72,7 @@
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
-				gib.add_blood_DNA(dna_to_add)
+				gib.blood_DNA += dna_to_add
 				// color them properly, please.
 				gib.body_colors = body_coloring
 				gib.update_icon()

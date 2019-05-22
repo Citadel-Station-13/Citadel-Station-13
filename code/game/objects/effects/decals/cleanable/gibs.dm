@@ -48,6 +48,7 @@
 				diseases = infective.diseases
 			var/obj/effect/decal/cleanable/blood/gibs/gibbers = src
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			splat.transfer_blood_dna(blood_DNA)
 			splat.color = gibbers.blood_color
 			splat.blood_color = gibbers.blood_color
 
@@ -87,7 +88,7 @@
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

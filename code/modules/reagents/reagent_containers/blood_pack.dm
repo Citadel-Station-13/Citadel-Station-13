@@ -48,7 +48,7 @@
 
 /obj/item/reagent_containers/blood/random/Initialize()
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "SY")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "SY", "HF", "GEL")
 	return ..()
 
 /obj/item/reagent_containers/blood/APlus
@@ -77,6 +77,12 @@
 
 /obj/item/reagent_containers/blood/synthetics
 	blood_type = "SY"
+
+/obj/item/reagent_containers/blood/oilblood
+	blood_type = "HF"
+
+/obj/item/reagent_containers/blood/jellyblood
+	blood_type = "GEL"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))

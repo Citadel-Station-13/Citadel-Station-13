@@ -22,9 +22,8 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		IF_HAS_BLOOD_DNA(src)
-			GET_COMPONENT(D, /datum/component/forensics)
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = D.blood_mix_color)
+		if(blood_DNA)
+			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood", color = blood_DNA_to_color())
 		if(accessory_overlay)
 			. += accessory_overlay
 

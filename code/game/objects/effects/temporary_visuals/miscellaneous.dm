@@ -43,7 +43,7 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	color = BLOOD_COLOR_XENO
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"

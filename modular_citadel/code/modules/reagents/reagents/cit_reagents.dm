@@ -2,7 +2,7 @@
 /datum/reagent/consumable/semen
 	name = "Semen"
 	id = "semen"
-	description = "Sperm from some animal. Useless for anything but insemination, really."
+	description = "Sperm from some animal. I bet you'll drink this out of a bucket someday."
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
@@ -21,7 +21,7 @@
 		S = new(T)
 	S.reagents.add_reagent("semen", reac_volume)
 	if(data["blood_DNA"])
-		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
 
 /obj/effect/decal/cleanable/semen
 	name = "semen"
@@ -36,10 +36,12 @@
 /obj/effect/decal/cleanable/semen/New()
 	..()
 	dir = pick(1,2,4,8)
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	S.add_blood_DNA(return_blood_DNA())
+	if (S.blood_DNA)
+		blood_DNA |= S.blood_DNA.Copy()
+	..()
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
@@ -67,10 +69,11 @@
 /obj/effect/decal/cleanable/femcum/New()
 	..()
 	dir = pick(1,2,4,8)
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	F.add_blood_DNA(return_blood_DNA())
+	if(F.blood_DNA)
+		blood_DNA |= F.blood_DNA.Copy()
 	..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
@@ -84,7 +87,7 @@
 		S = new(T)
 	S.reagents.add_reagent("femcum", reac_volume)
 	if(data["blood_DNA"])
-		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		S.add_blood(list(data["blood_DNA"] = data["blood_type"]))
 
 //aphrodisiac & anaphrodisiac
 
