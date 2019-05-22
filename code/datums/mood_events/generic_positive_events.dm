@@ -33,6 +33,11 @@
 	mood_change = 2
 	timeout = 2400
 
+/datum/mood_event/bshonk
+	description = "<span class='nicegreen'>Quantum mechanics can be fun and silly, too! Honk!</span>\n"
+	mood_change = 6
+	timeout = 4800
+
 /datum/mood_event/perform_cpr
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6

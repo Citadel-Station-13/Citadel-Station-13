@@ -18876,6 +18876,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod{
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aMm" = (
@@ -74297,6 +74300,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cuC" = (
@@ -75916,10 +75923,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/cryopod{
-	pixel_x = 30
-	},
-/obj/machinery/cryopod,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -75928,6 +75931,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -76886,7 +76892,6 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/machinery/cryopod,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -76895,6 +76900,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/cryopod{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -77710,6 +77718,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/white,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -78713,6 +78722,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -78880,7 +78890,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/wardrobe/mixed,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cCc" = (
@@ -79858,20 +79870,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/locker)
-"cDB" = (
-/obj/structure/closet/wardrobe/white,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cDC" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -80973,20 +80971,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"cFv" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/locker)
 "cFw" = (
 /obj/item/clipboard{
 	pixel_x = -4;
@@ -81692,7 +81676,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGM" = (
-/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81703,6 +81686,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGN" = (
@@ -81738,9 +81722,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGP" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81751,6 +81732,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/black,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGQ" = (
@@ -81773,20 +81755,6 @@
 "cGR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/locker)
-"cGS" = (
-/obj/structure/closet/wardrobe/black,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -127461,6 +127429,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"xKS" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/locker)
 "xMn" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -177002,7 +176983,7 @@ cAu
 cBZ
 cDA
 cFt
-cGM
+xKS
 cxi
 cJg
 cKV
@@ -177514,9 +177495,9 @@ cxr
 cyW
 cqd
 cCb
-cDB
-cFv
-cGS
+cCb
+cCb
+cCb
 cqd
 cJi
 cKX

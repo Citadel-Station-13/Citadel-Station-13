@@ -269,11 +269,11 @@
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
 					if(R.overdose_threshold)
-						if(R.volume >= R.overdose_threshold && !R.overdosed)
+						if(R.volume > R.overdose_threshold && !R.overdosed)
 							R.overdosed = 1
 							need_mob_update += R.overdose_start(C)
 					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
+						if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
 							var/datum/reagent/new_reagent = new R.type()
 							cached_addictions.Add(new_reagent)
 					if(R.overdosed)

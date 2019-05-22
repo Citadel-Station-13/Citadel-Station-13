@@ -14,7 +14,6 @@
 	ext_cooldown = 25
 
 /obj/item/integrated_circuit/manipulation/electric_stimulator/do_work()
-	..()
 	set_pin_data(IC_OUTPUT, 1, 0)
 	var/mob/living/M = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
 	if(!check_target(M))
