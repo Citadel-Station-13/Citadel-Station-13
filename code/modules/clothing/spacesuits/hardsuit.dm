@@ -646,10 +646,25 @@
 	scan_reagents = 1
 	flash_protect = 5 //We will not be flash by bombs
 	tint = 1
-	/obj/machinery/doppler_array/integrated/bomb_radar
+	var/obj/machinery/doppler_array/integrated/bomb_radar
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/Initialize()
+	. = ..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
+
+/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+		DHUD.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/ancient/mason/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+		DHUD.remove_hud_from(user)
 /obj/item/clothing/suit/space/hardsuit/ancient/proc/on_mob_move()
 	var/mob/living/carbon/human/H = loc
 	if(!istype(H) || H.wear_suit != src)
