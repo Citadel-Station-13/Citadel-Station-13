@@ -158,6 +158,17 @@
 ///////////////////////////////////////////
 */
 
+//Preamble
+/datum/mob/living/carbon/
+	var/lewd = TRUE //Maybe false?
+
+/mob/living/carbon/verb/toggle_lewd()
+	set category = "IC"
+	set name = "toggle lewdchem"
+	set desc = "Allows you to toggle if you'd like lewd flavour messages."
+	lewd = !(lewd)
+	to_chat(usr, "You [(lewd?"will":"no longer")] receive lewdchem messages.")
+
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
 	alert_type = null
@@ -190,6 +201,8 @@
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
+	if(!E.creatorID)
+		message_admins("WARNING: FermiChem No master found in thrall, this makes me max sad.")
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
@@ -259,7 +272,7 @@
 				to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore.'</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
-				if(owner.canbearoused)
+				if(owner.lewd)
 					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
 		if (2) //partially enthralled
 			if (enthrallTally > 150)
@@ -276,16 +289,16 @@
 				to_chat(owner, "<span class='notice'><i>You manage to shake some of the entrancement from your addled mind, however you can still feel yourself drawn towards [master].</i></span>")
 				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
 			if(prob(10))
-				if(owner.canbearoused)
+				if(owner.lewd)
 					to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (3)//fully entranced
-			if (resistanceTally >= 200 && withdrawalTick >= 150)
+			if ((resistanceTally >= 200 && withdrawalTick >= 150) || (M.has_trait(TRAIT_MINDSHIELD) && resistanceTally >= 100))
 				enthrallTally = 0
 				phase -= 1
 				resistanceTally = 0
 				to_chat(owner, "<span class='notice'><i>The separation from you [enthrallGender] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 			if(prob(2))
-				if(owner.canbearoused)
+				if(owner.lewd)
 					to_chat(owner, "<span class='notice'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
 			if (mental_capacity >= 499 || owner.getBrainLoss() >=20 || !owner.reagents.has_reagent("MKUltra"))
@@ -446,7 +459,7 @@
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing4")
 	qdel(redirect_component.resolve())
 	redirect_component = null
 	//qdel(redirect_component2.resolve())

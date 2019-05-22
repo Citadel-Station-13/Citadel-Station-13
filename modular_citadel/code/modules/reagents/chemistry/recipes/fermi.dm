@@ -247,6 +247,11 @@
 	message_admins("On finish for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if(!B.data)
+		var/list/seen = viewers(5, get_turf(holder.my_atom))
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>")
+			E.purity = 0
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"

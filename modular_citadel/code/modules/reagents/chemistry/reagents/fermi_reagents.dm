@@ -57,10 +57,10 @@
 	return
 
 //When merging two fermichems
-/datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)
+/datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
 	message_admins("purity of chem is [purity]")
-	if(!M)
+	if(!istype(M, datum/mob/living/carbon/M))
 		return
 	message_admins("purity of chem is [purity]")
 	if (purity < 0)
@@ -187,6 +187,8 @@
 			M.Stun(40)
 
 	var/items = M.get_contents()
+	if(!LAZYLEN(items))
+		return ..()//This'll work, right?
 	var/obj/item/I = pick(items)
 	M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
@@ -1158,9 +1160,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)//If purity is over 5, works as intended
 	if(!E)
+		E = null
 		M.reagents.remove_reagent(src.id, 10)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		message_admins("No enthrall status found in [M]!")
+		var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	E.enthrallTally += 1
 	if(prob(50))
 		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
@@ -1476,7 +1480,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	else
-		holder.remove_reagent(src.id, 1000)//Avoiding recurrsion
+		holder.remove_reagent("fermiTest", 1000)//Avoiding recurrsion
 	message_admins("FermiTest addition!")
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)
@@ -1499,7 +1503,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	holder.clear_reagents()
-
+/*
 /datum/reagent/fermi/fermiTest/on_merge()
 	..()
 	message_admins("FermiTest addition!")
@@ -1524,3 +1528,4 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
 		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 	holder.clear_reagents()
+	*/

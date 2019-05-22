@@ -84,7 +84,7 @@
 		prev_size = size
 		return
 	//message_admins("Breast size at start: [size], [cached_size], [owner]")
-	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
+	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!(Why does this runtime??)
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		src.Remove(owner)
 	switch(round(cached_size))
