@@ -74,7 +74,8 @@
 
 				gib.blood_DNA += dna_to_add
 				// color them properly, please.
-				gib.body_colors = body_coloring
+				if(gib.gib_overlay)
+					gib.body_colors = body_coloring
 				gib.update_icon()
 
 				var/list/directions = gibdirections[i]

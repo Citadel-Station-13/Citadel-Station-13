@@ -91,7 +91,6 @@
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			S.blood_color = blood_color
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -100,7 +99,6 @@
 		else if(H.bloodiness && H.blood_smear[blood_state])
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = H.bloodinessmax
-			H.blood_color = blood_color
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
@@ -115,7 +113,6 @@
 			if(color != bloodtype_to_color(S.last_bloodtype))//last entry - we check its color
 				return
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			S.blood_color = blood_color
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
@@ -124,7 +121,6 @@
 		else if(H.bloodiness && H.blood_smear[blood_state])
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			H.bloodiness = H.bloodinessmax
-			H.blood_color = blood_color
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()
@@ -146,7 +142,6 @@
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
-	color = blood_color
 
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
