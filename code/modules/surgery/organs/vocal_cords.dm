@@ -671,8 +671,7 @@
 //////////////////////////////////////
 //Removed span_list from input arguments. //mob/living/user
 /proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = FALSE)
-	message_admins("Velvet speech proc'd on [user]")
-	var/cooldown = 0
+	//message_admins("Velvet speech proc'd on [user]")
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
@@ -708,8 +707,7 @@
 				listeners += L
 
 	if(!listeners.len)
-		cooldown = 0
-		return cooldown
+		return 0
 
 	//POWER CALCULATIONS
 
@@ -768,7 +766,7 @@
 	if(specific_listeners.len)
 		listeners = specific_listeners
 		//power_multiplier *= (1 + (1/specific_listeners.len)) //Put this is if it becomes OP, power is judged internally on a thrall, so shouldn't be nessicary.
-		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
+		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)//I have no idea what this does
 
 	var/obj/item/organ/tongue/T = user.getorganslot(ORGAN_SLOT_TONGUE)
 	if (T.name == "fluffy tongue") //If you sound hillarious, it's hard to take you seriously. This is a way for other players to combat/reduce their effectiveness.
@@ -841,7 +839,8 @@
 			else
 				E.enthrallTally += power_multiplier*1.25
 			if(L.canbearoused)
-				addtimer(CALLBACK(L, .proc.to_chat, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
+				if(L.lewd)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
 			E.cooldown += 1
 
 	//REWARD mixable works
@@ -851,14 +850,16 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, V)+1]
 			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
-			if (L.canbearoused)
-				//E.resistanceTally -= 1
-				L.adjustArousalLoss(1*power_multiplier)
-				addtimer(CALLBACK(L, L.to_chat, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
+			if (L.lewd)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
+				if(L.has_trait(TRAIT_NYMPHO))
+					L.adjustArousalLoss(2*power_multiplier)
 			else
-				E.resistanceTally /= 2*power_multiplier
-				addtimer(CALLBACK(L, L.to_chat, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallpraise", /datum/mood_event/enthrallpraise)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
+			E.resistanceTally -= power_multiplier
+			E.enthrallTally += 1
+			var/descmessage = "[(L.lewd?"I feel so happy! I'm a good pet who [E.enthrallGender] loves!":"I did a good job!")]"
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallpraise", /datum/mood_event/enthrallpraise, descmessage)
 			E.cooldown += 1
 
 	//PUNISH mixable  works
@@ -868,14 +869,16 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, V)+1]
 			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
-			if (L.canbearoused)
+			if (L.lewd)
 				E.resistanceTally /= 1*power_multiplier
-				L.adjustArousalLoss(-2*power_multiplier)
-				addtimer(CALLBACK(L, L.to_chat, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			else
-				E.resistanceTally /= 3*power_multiplier //asexuals are masochists apparently (not seriously)
-				addtimer(CALLBACK(L, L.to_chat, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
+
+			var/descmessage = "[(L.lewd?"I've failed [E.enthrallGender]... What a bad, bad pet!":"I did a bad job...")]"
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold, descmessage)
+			E.resistanceTally += 1
+			E.enthrallTally += power_multiplier
 			E.cooldown += 1
 
 	//teir 0
@@ -885,10 +888,11 @@
 			var/mob/living/carbon/C = V
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			C.remove_trait(TRAIT_MUTE, "enthrall")
-			if(C.canbearoused)
+			if(C.lewd)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[E.enthrallGender]"), 5)
 			else
-				addtimer(CALLBACK(C, /atom/movable/proc/say, "My director."), 5)
+				addtimer(CALLBACK(C, /atom/movable/proc/say, "[E.master]"), 5)//The least lewdest I could think of
+
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
 		for(var/V in listeners)
@@ -899,10 +903,11 @@
 				if(0)
 					E.phase = 3
 					E.status = null
-					if(L.canbearoused)
-						addtimer(CALLBACK(L, L.to_chat, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
+					user.emote("snap")
+					if(L.lewd)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(L, L.to_chat, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
 						//to_chat(L, )
 
 
@@ -922,8 +927,9 @@
 	else if((findtext(message, silence_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			C.remove_trait(TRAIT_MUTE, TRAUMA_TRAIT)
+			C.remove_trait(TRAIT_MUTE, "enthrall")
 			E.cooldown += 3
+
 
 	//Antiresist
 	else if((findtext(message, antiresist_words)))
@@ -940,25 +946,27 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, C)+1]
 			E.deltaResist += (power_multiplier)
+			E.owner_resist()
 			E.cooldown += 2
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>You are spurred into resisting from [user]'s words!'</b></span>"), 5)
 
 	//FORGET (A way to cancel the process)
 	else if((findtext(message, forget_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			to_chat(C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>")
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>"), 5)
 			C.Sleeping(50)
 			switch(E.phase)
 				if(1 to 2)
 					E.phase = -1
-					to_chat(C, "<span class='big warning'>You have no recollection of being enthralled by [E.master]</b></span>")
+					to_chat(C, "<span class='big warning'>You have no recollection of being enthralled by [E.master]!</b></span>")
 				if(3)
 					E.phase = 0
 					E.cooldown = 0
-					if(C.canbearoused)
-						addtimer(CALLBACK(C, C.to_chat, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
+					if(C.lewd)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to yourself before being enthralled by your [E.enthrallGender], with no memory of what happened.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(C, C.to_chat, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='big warning'>You revert to who you were before, with no memory of what happened with [E.master].</b></span>"), 5)
 
 	//ATTRACT
 	else if((findtext(message, attract_words)))
@@ -967,6 +975,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			L.throw_at(get_step_towards(user,L), 3 * power_multiplier, 1 * power_multiplier)
 			E.cooldown += 3
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You are drawn towards [user]!</b></span>"), 5)
 
 
 	//teir 2
@@ -978,16 +987,12 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
-				if(H.canbearoused) // probably a redundant check but for good measure
+				if(H.has_trait(TRAIT_NYMPHO) && H.canbearoused) // probably a redundant check but for good measure
 					H.mob_climax(forced_climax=TRUE)
 					H.setArousalLoss(H.min_arousal)
 					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
 					E.enthrallTally += power_multiplier
-				else
-					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
-					E.enthrallTally += power_multiplier*1.1
-					to_chat(H, "<span class='warning'>Your Masters command whites out your mind in bliss!</b></span>")
-				E.cooldown += 6
+					E.cooldown += 6
 
 
 	//awoo
@@ -1007,9 +1012,8 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					var/mob/living/M = V
-					playsound(get_turf(M), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
-					M.emote(M, 1, "lets out a nya!")
+					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
+					H.emote("me", 1, "lets out a nya!")
 					E.cooldown += 1
 
 	//SLEEP
@@ -1018,7 +1022,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					C.Sleeping(20 * power_multiplier)
+					C.Sleeping(30 * power_multiplier)
 					E.cooldown += 10
 
 	//STRIP
@@ -1030,9 +1034,10 @@
 				if(2 to INFINITY)//Tier 2 only
 					E.phase = 1
 					var/items = H.get_contents()
-					for(var/I in items)
-						H.dropItemToGround(I, TRUE)
-					to_chat(H, "<span class='warning'>Before you can even think about it, you quickly remove your clothes in response to your Master's command.</b></span>")
+					for(var/obj/item/W in items)
+						if(W == H.w_uniform || W == H.wear_suit)
+							H.dropItemToGround(W, TRUE)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='warning'>Before you can even think about it, you quickly remove your clothes in response to [(H.lewd?"your [E.enthrallGender]'s command'":"[E.master]'s directive'")].</b></span>"), 5)
 					E.cooldown += 10
 
 	//WALK doesn't work?
@@ -1066,6 +1071,7 @@
 				if(3 to INFINITY)//Tier 2 only
 					L.Knockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!'</b></span>"), 5)
 
 	//tier3
 
@@ -1074,13 +1080,13 @@
 		for(var/V in listeners)
 			var/speaktrigger = ""
 			var/mob/living/carbon/C = V
-			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)//i.e. if it's not empty
-			for (var/trigger in E.customTriggers)
-				speaktrigger += "[trigger], "
-			if(!speaktrigger == "")
-				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
-				addtimer(CALLBACK(C, /atom/movable/proc/say, "[speaktrigger]"), 5)
-				C.remove_trait(TRAIT_DEAF, "Triggers")
+			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
+			if (E.phase > 3)
+				for (var/trigger in E.customTriggers)
+					speaktrigger += "[trigger], "
+					C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
+					C.remove_trait(TRAIT_DEAF, "Triggers")
 
 
 	//CUSTOM TRIGGERS
@@ -1097,6 +1103,7 @@
 					if (E.mental_capacity >= 10)
 						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
 						var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
+						trigger2 = lowertext(trigger2)
 						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
 								var/trigger3 = stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN)
@@ -1104,6 +1111,7 @@
 							else
 								E.customTriggers[trigger] = trigger2
 							E.mental_capacity -= 10
+							addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.lewd?"your [E.enthrallGender]":"[E.master]")] whispers you a new trigger.</span>"), 5)
 						else
 							to_chat(user, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
 					else
@@ -1120,7 +1128,7 @@
 					return
 				else
 					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
-					if (E.mental_capacity >= 150 || message == "objective")
+					if (E.mental_capacity >= 250 || message == "objective")
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))
 							return
@@ -1130,9 +1138,9 @@
 						objective = replacetext(lowertext(objective), "harm", "snuggle")
 						objective = replacetext(lowertext(objective), "decapitate", "headpat")
 						objective = replacetext(lowertext(objective), "strangle", "meow at")
-						to_chat(H, "<span class='warning'>Your master whispers you a new objective.</span>")
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.lewd?"your [E.enthrallGender]":"[E.master]")] whispers you a new objective.</span>"), 5)
 						brainwash(H, objective)
-						E.mental_capacity -= 150
+						E.mental_capacity -= 250
 					//else if (E.mental_capacity >= 150)
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
@@ -1146,7 +1154,7 @@
 			if(E.phase > 1)
 				if(user.ckey == E.enthrallID && user.real_name == E.master.real_name)
 					E.master = user
-					addtimer(CALLBACK(C, C.to_chat, "<span class='nicegreen'>You hear the words of your [E.enthrallGender] again!! They're back!!</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='nicegreen'>[(H.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>"), 5)
 
 	//I dunno how to do state objectives without them revealing they're an antag
 
@@ -1160,6 +1168,8 @@
 					E.status = "heal"
 					E.statusStrength = (5 * power_multiplier)
 					E.cooldown += 5
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You begin to lick your wounds.</b></span>"), 5)
+					L.Stun(40)
 
 	//STUN
 	else if(findtext(message, stun_words))
@@ -1168,8 +1178,9 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
-					L.Stun(30 * power_multiplier)
+					L.Stun(40 * power_multiplier)
 					E.cooldown += 8
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You freeze up!</b></span>"), 5)
 
 	//HALLUCINATE
 	else if(findtext(message, hallucinate_words))
@@ -1188,7 +1199,7 @@
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
 					L.adjust_bodytemperature(10 * power_multiplier)//This seems nuts, reduced it
-					to_chat(L, "<span class='warning'>You feel your metabolism speed up!</b></span>")
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism speed up!</b></span>"), 5)
 
 	//COLD
 	else if(findtext(message, cold_words))
@@ -1198,7 +1209,7 @@
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
 					L.adjust_bodytemperature(-10 * power_multiplier)//This
-					to_chat(L, "<span class='warning'>You feel your metabolism slow down!</b></span>")
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism slow down!</b></span>"), 5)
 
 
 	//GET UP
@@ -1214,6 +1225,7 @@
 					L.SetKnockdown(0)
 					L.SetUnconscious(0) //i said get up i don't care if you're being tased
 					E.cooldown += 10 //This could be really strong
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You jump to your feel from sheer willpower!</b></span>"), 5)
 
 	//PACIFY
 	else if(findtext(message, pacify_words))
@@ -1331,7 +1343,7 @@
 	if(message_admins)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message)
+	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 
 	return
 

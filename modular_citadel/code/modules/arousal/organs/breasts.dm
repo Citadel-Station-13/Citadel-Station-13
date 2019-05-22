@@ -26,6 +26,8 @@
 	reagents.add_reagent(fluid_id, fluid_max_volume)
 	prev_size = size
 	cached_size = breast_values[size]
+	if (cached_size == "c")//fix for a weird bug that has something to do with how they're set up on the character create screen.
+		cached_size = 3
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))

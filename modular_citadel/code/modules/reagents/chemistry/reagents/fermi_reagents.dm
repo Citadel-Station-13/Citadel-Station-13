@@ -12,7 +12,7 @@
 /datum/reagent/fermi
 	name = "Fermi" 	//Why did I putthis here?
 	id = "fermi"	//It's meeee
-	taste_description	= "If affection had a taste, this would be it."
+	taste_description	= "affection and love!"
 	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
 	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
 	var/InverseChem 		= "toxin" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
@@ -24,10 +24,7 @@
 	//return ..()
 
 //Called when reaction stops. #STOP_PROCESSING
-/*
-/datum/reagent/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
-	return
-*/
+
 //Called when added to a beaker without any of the reagent present. #add_reagent
 /datum/reagent/fermi/proc/FermiNew(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
@@ -60,7 +57,7 @@
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
 	message_admins("purity of chem is [purity]")
-	if(!istype(M, datum/mob/living/carbon/M))
+	if(M.istype(/mob/living/carbon/M))
 		return
 	message_admins("purity of chem is [purity]")
 	if (purity < 0)
@@ -253,7 +250,7 @@
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	src.addictCyc4++
-
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[src.id]_overdose")//holdover until above fix works
 	..()
 	//. = 1
 
@@ -1160,12 +1157,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)//If purity is over 5, works as intended
 	if(!E)
-		E = null
 		M.reagents.remove_reagent(src.id, 10)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		message_admins("No enthrall status found in [M]!")
-		var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	E.enthrallTally += 1
+	else
+		E.enthrallTally += 1
 	if(prob(50))
 		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()

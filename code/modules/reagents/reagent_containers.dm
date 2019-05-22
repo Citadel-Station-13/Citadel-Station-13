@@ -44,7 +44,7 @@
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-
+/*Checking to see if I can delete this
 /obj/item/reagent_containers/attack(obj/item/W, mob/user, params)
 	..()
 	if(!istype(W, /obj/item/pHpaper))
@@ -85,7 +85,7 @@
 		if(-INFINITY to 1)
 			P.color = "#ef1d26"
 	P.used = TRUE
-
+*/
 
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
