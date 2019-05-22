@@ -649,6 +649,7 @@
 
 	if(health >= 0)
 		if(src == M)
+			var/to_send = list()
 			visible_message("[src] examines [p_them()]self.", \
 				"<span class='notice'>You check yourself for injuries.</span>")
 
@@ -695,53 +696,55 @@
 				var/no_damage
 				if(status == "OK" || status == "no damage")
 					no_damage = TRUE
-				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
+				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>"
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+					to_send += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>"
 
 			for(var/t in missing)
-				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
+				to_send += "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
 			if(bleed_rate)
-				to_chat(src, "<span class='danger'>You are bleeding!</span>")
+				to_send += "<span class='danger'>You are bleeding!</span>"
 			if(getStaminaLoss())
 				if(getStaminaLoss() > 30)
-					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
+					to_send += "<span class='info'>You're completely exhausted.</span>"
 				else
-					to_chat(src, "<span class='info'>You feel fatigued.</span>")
+					to_send += "<span class='info'>You feel fatigued.</span>"
 			if(has_trait(TRAIT_SELF_AWARE))
 				if(toxloss)
 					if(toxloss > 10)
-						to_chat(src, "<span class='danger'>You feel sick.</span>")
+						to_send += "<span class='danger'>You feel sick.</span>"
 					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
+						to_send += "<span class='danger'>You feel nauseated.</span>"
 					else if(toxloss > 40)
-						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+						to_send += "<span class='danger'>You feel very unwell!</span>"
 				if(oxyloss)
 					if(oxyloss > 10)
-						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+						to_send += "<span class='danger'>You feel lightheaded.</span>"
 					else if(oxyloss > 20)
-						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+						to_send += "<span class='danger'>Your thinking is clouded and distant.</span>"
 					else if(oxyloss > 30)
-						to_chat(src, "<span class='danger'>You're choking!</span>")
+						to_send += "<span class='danger'>You're choking!</span>"
 
 			switch(nutrition)
 				if(NUTRITION_LEVEL_FULL to INFINITY)
-					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+					to_send += "<span class='info'>You're completely stuffed!</span>"
 				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-					to_chat(src, "<span class='info'>You're well fed!</span>")
+					to_send += "<span class='info'>You're well fed!</span>"
 				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					to_chat(src, "<span class='info'>You're not hungry.</span>")
+					to_send += "<span class='info'>You're not hungry.</span>"
 				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+					to_send += "<span class='info'>You could use a bite to eat.</span>"
 				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+					to_send += "<span class='info'>You feel quite hungry.</span>"
 				if(0 to NUTRITION_LEVEL_STARVING)
-					to_chat(src, "<span class='danger'>You're starving!</span>")
+					to_send += "<span class='danger'>You're starving!</span>"
 
 			if(roundstart_quirks.len)
-				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+				to_send += "<span class='notice'>You have these quirks: [get_trait_string()].</span>"
+			
+			to_chat(src, jointext(to_send, "\n"))
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)
