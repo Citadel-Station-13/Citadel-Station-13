@@ -107,6 +107,7 @@
 	var/mob/living/t_current = sacrificial.current
 	if(!sacrificial || !sacrificial.current) //target is gone for good but not sacced.
 		main_cult.sort_sacrifice(TRUE)
+		return
 	if(QDELETED(sac_objective.target_current) || sac_objective.target_current != t_current) //target is now a different mob (monkey, simple mob)
 		sac_objective.sac_image = t_current.get_sac_image()
 		sac_objective.target_current = t_current
