@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
 			with a togglable 40mm under-barrel grenade launcher."
 	item = /obj/item/gun/ballistic/automatic/m90
-	cost = 18
+	cost = 16
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/flamethrower/full/tank
-	cost = 4
+	cost = 2
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -388,7 +388,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			autoinjectors for rapid application on up to two targets each, a syringe, and a bottle containing \
 			the BVAK solution."
 	item = /obj/item/storage/box/syndie_kit/tuberculosisgrenade
-	cost = 12
+	cost = 8
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 4
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/shotgun
@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "12g Scatter Laser shot Slugs"
 	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 5 // most armor has less laser protection then bullet
+	cost = 4 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
@@ -768,7 +768,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen \
 			them for longer. Beware, it has a chance to detonate your PDA."
 	item = /obj/item/cartridge/virus/syndicate
-	cost = 6
+	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/stealthy_weapons/suppressor
@@ -776,7 +776,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Fitted for use on any small caliber weapon with a threaded barrel, this suppressor will silence the \
 			shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/suppressor
-	cost = 3
+	cost = 2
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -844,7 +844,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/cartridge/virus/frame
-	cost = 4
+	cost = 2
 	restricted = TRUE
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -886,7 +886,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
-	cost = 5
+	cost = 3
 	surplus = 90
 
 /datum/uplink_item/stealthy_tools/mulligan
@@ -894,7 +894,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
 			and appearance."
 	item = /obj/item/reagent_containers/syringe/mulligan
-	cost = 4
+	cost = 2
 	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -999,7 +999,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 15 //Mite be to cheap
+	cost = 10
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -1041,7 +1041,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/encryptionkey/binary
-	cost = 5
+	cost = 3
 	surplus = 75
 	restricted = TRUE
 
@@ -1099,7 +1099,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
-	cost = 9 //10% discount!
+	cost = 8 //20% discount!
 	cant_discount = TRUE
 
 /datum/uplink_item/device_tools/x4bag
@@ -1208,7 +1208,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Sentience Potion"
 	item = /obj/item/slimepotion/slime/sentience/nuclear
 	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
-	cost = 4
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
@@ -1336,7 +1336,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/anti_stun
-	cost = 12
+	cost = 6
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
@@ -1448,7 +1448,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Gold Toolbox"
 	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
 	item = /obj/item/storage/toolbox/gold_real
-	cost = 5 // Has synda tools + gloves + a robust weapon
+	cost = 3 // Has synda tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator do to being made of gold - It fits the theme
 
 /datum/uplink_item/role_restricted/brainwash_disk
@@ -1457,7 +1457,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list("Medical Doctor")
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
@@ -1517,12 +1517,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo
+/datum/uplink_item/device_tools/honkpins/ //Idealy so they can place it into their own guns without needing cargo
 	name = "Hilarious firing pin"
 	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
 	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
-	item = /obj/item/firing_pin/clown
-	cost = 1
+	item = /obj/item/firing_pin/clown/ultra
+	cost = 2
 	restricted_roles = list("Clown")
 
 /*
