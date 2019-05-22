@@ -621,10 +621,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/mason
 	name = "M.A.S.O.N RIG"
-	desc = "The Multy Advanced Sencer Of Networks RIG type hardsuit. With shining plates to protect against not only rads storms, SM meltdowns, acid proof coating this hulking hardsuit has huds built into its visors.\
-			The scanners allow for at a glace huds on anything a engineer would need. Sadly most of its armor makes the suit bulky and unable to sustain much harm from any weapon other then a bomb. This RIG can hold bags and toolboxes on its external shells.\
-			M.A.S.O.N Rigs are also made to withstand lava as well as ash storms down on lava land or other planets that are hotter then normal with its own environmental hazards. \
-			Only few of these are made to do the shear costs of them for use. Armord as it is, this suit will NOT save you from a nuke, massive bomb, or other larger explosions."
+	desc = "The Multi-Augmented Severe Operations Networked Resource Integration Gear is an man-portable tank designed for extreme environmental situations. It is excessively bulky, but rated for all but the most atomic of hazards. The specialized armor is surprisingly weak to conventional weaponry. The exo slot can attach most storge bags on to the suit."
 	icon_state = "hardsuit-ancient"
 	item_state = "anc_hardsuit"
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
@@ -636,8 +633,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
 	name = "M.A.S.O.N RIG helmet"
-	desc = "M.A.S.O.N RIG hardsuit helmet. This hulking helmet was made only for constructions making it not armored for anything but that. \
-			Weak against combat it excels giving eye protection and flood light."
+	desc = "The M.A.S.O.N RIG helmet is complimentary to the rest of the armor. It features a very large, high powered flood lamp and robust flash protection."
 	icon_state = "hardsuit0-ancient"
 	item_state = "anc_helm"
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
