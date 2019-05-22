@@ -1229,8 +1229,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(M, "<span class='notice'>You develop deep feelings for [love], your heart beginning to race as you look upon them with new eyes.</span>")
 	else
 		if(get_dist(M, love) < 8)
-			//if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
-			M.adjustArousalLoss(5)
+			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
+				M.adjustArousalLoss(5)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 		else
