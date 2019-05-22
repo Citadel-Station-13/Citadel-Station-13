@@ -1819,7 +1819,9 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fE" = (
 /obj/machinery/vending/boozeomat{
-	req_access_txt = "200"
+	extended_inventory = 1;
+	req_access_txt = "200";
+	scan_id = 0
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
