@@ -221,7 +221,7 @@
 	//Might need to add redirect component for listening too.
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	mental_capacity = 500 - B.get_brain_damage()
-	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"I find enjoyment in fulfilling the requests of [master] and I am appreciative of being in this position currently with no desire for this to change.")]"
+	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='big warning'><i>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can still repeatedly resist their effects! (Mash resist to fight back!!)</i></span>")
 	return ..()
