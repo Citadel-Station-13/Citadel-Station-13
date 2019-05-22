@@ -97,22 +97,6 @@
 				main_cult = C.cult_team
 	..()
 
-/datum/game_mode/cult/process()
-	if(finished)
-		return
-	var/datum/objective/sacrifice/sac_objective = locate() in main_cult.objectives
-	if(!sac_objective || sac_objective.check_completion())
-		return
-	var/datum/mind/sacrificial = sac_objective.get_target()
-	var/mob/living/t_current = sacrificial.current
-	if(!sacrificial || !sacrificial.current) //target is gone for good but not sacced.
-		main_cult.sort_sacrifice(TRUE)
-		return
-	if(QDELETED(sac_objective.target_current) || sac_objective.target_current != t_current) //target is now a different mob (monkey, simple mob)
-		sac_objective.sac_image = t_current.get_sac_image()
-		sac_objective.target_current = t_current
-		sac_objective.update_explanation_text()
-
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
 	if (!istype(cult_mind))
 		return FALSE

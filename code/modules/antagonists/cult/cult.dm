@@ -242,6 +242,30 @@
 	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
 
+/datum/team/cult/New()
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/datum/team/cult/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/datum/team/cult/process()
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+	var/datum/objective/sacrifice/sac_objective = locate() in objectives
+	if(!sac_objective || sac_objective.check_completion())
+		return
+	var/datum/mind/sacrificial = sac_objective.get_target()
+	var/mob/living/sac_current = sacrificial.current
+	if(!sacrificial || !sac_current) //target is gone for good but not sacrified.
+		sort_sacrifice(TRUE)
+		return
+	if(QDELETED(sac_objective.target_current) || sac_objective.target_current != sac_current) //target is now a different mob (monkey, simple mob)
+		sac_objective.sac_image = sac_current.get_sac_image()
+		sac_objective.target_current = sac_current
+		sac_objective.update_explanation_text()
+
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return

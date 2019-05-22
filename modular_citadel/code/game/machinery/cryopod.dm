@@ -246,13 +246,6 @@
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
 
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/M = SSticker.mode
-		var/datum/team/cult/C = M.main_cult
-		var/datum/objective/sacrifice/S = locate() in C.objectives
-		if(S.target == mob_occupant.mind)
-			C.sort_sacrifice(TRUE)
-
 	//Update any existing objectives involving this mob.
 	for(var/datum/objective/O in GLOB.objectives)
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
