@@ -840,7 +840,7 @@
 				E.enthrallTally += power_multiplier*1.25
 			if(L.canbearoused)
 				if(L.lewd)
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>[E.master] is so nice to listen to.</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><i><b>[E.enthrallGender] is so nice to listen to.</b></i></span>"), 5)
 			E.cooldown += 1
 
 	//REWARD mixable works
@@ -855,7 +855,7 @@
 				if(L.has_trait(TRAIT_NYMPHO))
 					L.adjustArousalLoss(2*power_multiplier)
 			else
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>I've been praised for doing a good job!</b></span>"), 5)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><b><i>I've been praised for doing a good job!</b></i></span>"), 5)
 			E.resistanceTally -= power_multiplier
 			E.enthrallTally += 1
 			var/descmessage = "[(L.lewd?"I feel so happy! I'm a good pet who [E.enthrallGender] loves!":"I did a good job!")]"

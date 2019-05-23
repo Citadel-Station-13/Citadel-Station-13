@@ -449,8 +449,8 @@ im
 			var/list/multiplier = INFINITY //Wat
 
 			for(var/B in cached_required_reagents) //
-				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
-
+				//multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+				multiplier = min(multiplier, (get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 			//Splits reactions into two types; FermiChem is advanced reaction mechanics, Other is default reaction.
 			//FermiChem relies on two additional properties; pH and impurity
 			//Temperature plays into a larger role too.

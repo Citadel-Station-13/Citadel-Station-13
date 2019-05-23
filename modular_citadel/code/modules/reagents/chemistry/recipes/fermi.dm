@@ -70,8 +70,8 @@
 /datum/chemical_reaction/fermi/eigenstate//done
 	name = "Eigenstasium"
 	id = "eigenstate"
-	results = list("eigenstate" = 1)
-	required_reagents = list("bluespace" = 1, "stable_plasma" = 1, "sugar" = 1)
+	results = list("eigenstate" = 0.1)
+	required_reagents = list("bluespace" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
 	mix_message = "zaps brightly into existance, diffusing the energy from the localised gravity well as light"
 	//FermiChem vars:
 	OptimalTempMin = 350 // Lower area of bell curve for determining heat based rate reactions
@@ -100,9 +100,9 @@
 /datum/chemical_reaction/fermi/SDGF
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
-	results = list("SDGF" = 3)
+	results = list("SDGF" = 0.3)
 	//required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
-	required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
+	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "synthflesh" = 1, "blood" = 1)
 	//FermiChem vars:
 	OptimalTempMin 		= 350 		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 500 		// Upper end for above
@@ -127,6 +127,7 @@
 	S.name = "Living teratoma"
 	S.real_name = "Living teratoma"//horrifying!!
 	S.rabid = 1//Make them an angery boi, grr grr
+	S.color = "#810010"
 	to_chat("<span class='warning'>The cells clump up into a horrifying tumour!</span>")
 	my_atom.reagents.clear_reagents()
 
@@ -134,7 +135,7 @@
 	name = "Sucubus milk"
 	id = "BElarger"
 	results = list("BElarger" = 6)
-	required_reagents = list("salglu_solution" = 1, "milk" = 5, "synthflesh" = 2, "silicon" = 2, "aphro" = 2)
+	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
@@ -164,8 +165,8 @@
 /datum/chemical_reaction/fermi/PElarger //done
 	name = "Incubus draft"
 	id = "PElarger"
-	results = list("PElarger" = 3)
-	required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
+	results = list("PElarger" = 0.3)
+	required_reagents = list("plasma" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -196,8 +197,8 @@
 /datum/chemical_reaction/fermi/astral //done //BORKEN
 	name = "Astrogen"
 	id = "astral"
-	results = list("astral" = 3)
-	required_reagents = list("eigenstate" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
+	results = list("astral" = 0.3)
+	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.1, "synaptizine" = 0.1, "aluminium" = 0.5)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
@@ -219,10 +220,10 @@
 /datum/chemical_reaction/fermi/enthrall//done
 	name = "MKUltra"
 	id = "enthrall"
-	results = list("enthrall" = 3)
-	required_reagents = list("iron" = 1, "iodine" = 1)
+	results = list("enthrall" = 0.3)
+	required_reagents = list("iron" = 0.1, "iodine" = 0.1)
 	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
-	required_catalysts = list("blood" = 1)
+	required_catalysts = list("blood" = 0.1)
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 780
@@ -295,8 +296,8 @@
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
 	id = "hatmium"
-	results = list("hatmium" = 5)
-	required_reagents = list("whiskey" = 1, "nutriment" = 3, "cooking_oil" = 2, "iron" = 1)
+	results = list("hatmium" = 0.5)
+	required_reagents = list("whiskey" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 500
@@ -327,8 +328,8 @@
 /datum/chemical_reaction/fermi/furranium //low temp and medium pH - done
 	name = "Furranium"
 	id = "furranium"
-	results = list("furranium" = 5)
-	required_reagents = list("aphro" = 1, "moonsugar" = 1, "silver" = 2, "salglu_solution" = 1)
+	results = list("furranium" = 0.5)
+	required_reagents = list("aphro" = 0.1, "moonsugar" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -351,8 +352,8 @@
 /datum/chemical_reaction/fermi/naninte_b_gone//done
 	name = "Naninte bain"
 	id = "naninte_b_gone"
-	results = list("naninte_b_gone" = 5)
-	required_reagents = list("synthflesh" = 5, "uranium" = 1, "iron" = 1, "salglu_solution" = 3)
+	results = list("naninte_b_gone" = 0.5)
+	required_reagents = list("synthflesh" = 0.5, "uranium" = 0.1, "iron" = 0.1, "salglu_solution" = 0.3)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh."
 	//FermiChem vars:
 	OptimalTempMin 	= 450

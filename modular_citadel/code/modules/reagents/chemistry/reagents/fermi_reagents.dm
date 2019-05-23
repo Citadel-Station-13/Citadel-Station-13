@@ -35,7 +35,7 @@
 	. = ..()
 	if(!M)
 		return
-	message_admins("purity of chem is [purity]")
+	message_admins("adding to human [purity]")
 	if(src.purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (src.purity == 1 || src.DoNotSplit == TRUE)
@@ -46,7 +46,7 @@
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
-		//var/pureVol = amount * purity
+		//var/pureVol = amount * puritys
 		var/impureVol = amount * (1 - purity)
 		message_admins("splitting [src.id] [amount] into [src.ImpureChem] [impureVol]")
 		M.reagents.remove_reagent(src.id, (impureVol), FALSE)
@@ -56,10 +56,9 @@
 //When merging two fermichems
 /datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
 	. = ..()
-	message_admins("purity of chem is [purity]")
-	if(istype(M, /mob/living/carbon))
+	if(!ishuman(M))
 		return
-	message_admins("purity of chem is [purity]")
+	message_admins("merging to human [purity]")
 	if (purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (purity == 1 || src.DoNotSplit == TRUE)
@@ -848,7 +847,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	//M.alpha = 255//Reset addiction
 	//antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
-		if(0)//Require a minimum
+		if(1)//Require a minimum
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -870,7 +869,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle-1, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -1534,11 +1533,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiABuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
 	addProc = TRUE
+	pH = 3
 
 /datum/reagent/fermi/fermiABuffer/on_new()
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
-	if(holder.pH < 3)
 		return
 	pH = ((holder.pH * holder.total_volume)+(3 * src.volume))/(holder.total_volume + src.volume)
 	holder.remove_reagent(src.id, 1000)
@@ -1549,11 +1547,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiBBuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
 	addProc = TRUE
+	pH = 11
 
 /datum/reagent/fermi/fermiBBuffer/on_new()
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return
-	if(holder.pH > 11)
 		return
 	pH = ((holder.pH * holder.total_volume)+(11 * src.volume))/(holder.total_volume + src.volume)
 	holder.remove_reagent(src.id, 1000)

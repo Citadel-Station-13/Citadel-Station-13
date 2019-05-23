@@ -169,7 +169,7 @@
 
 /mob/living/verb/toggle_lewd()
 	set category = "IC"
-	set name = "toggle lewdchem"
+	set name = "Toggle Lewdchem"
 	set desc = "Allows you to toggle if you'd like lewd flavour messages."
 	lewd = !(lewd)
 	to_chat(usr, "You [(lewd?"will":"no longer")] receive lewdchem messages.")
