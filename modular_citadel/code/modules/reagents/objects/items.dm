@@ -20,6 +20,8 @@
 			numberOfPages--
 			playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			add_fingerprint(user)
+            if(numberOfPages == 0)
+                icon_state = "pHbookletEmpty"
 			return
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")

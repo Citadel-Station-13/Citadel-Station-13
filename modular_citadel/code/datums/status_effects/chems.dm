@@ -34,8 +34,8 @@
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(owner.mind)
 				owner.mind.transfer_to(fermi_Clone)
-				owner.visible_message("<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
-				fermi_Clone.visible_message("<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+				to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				fermi_Clone = null
 				owner.remove_status_effect(src)
 		//	to_chat(owner, "<span class='notice'>[linked_extract] desperately tries to move your soul to a living body, but can't find one!</span>")
@@ -79,7 +79,16 @@
 			o.dropItemToGround(W, TRUE)
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
-	if (B.breast_values[B.size] > B.breast_values[B.prev_size])
+	if (B.size == "huge")
+		if(prob(2))
+			to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
+			var/target = o.get_bodypart(BODY_ZONE_CHEST)
+			o.apply_damage(0.1, BRUTE, target)
+		if(!B.cached_size == B.breast_values[B.prev_size])
+			o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+			o.next_move_modifier *= moveCalc
+		return ..()
+	else if (B.breast_values[B.size] > B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier *= moveCalc
 	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
@@ -207,21 +216,19 @@
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
-	if(!E.creatorID)
-		message_admins("WARNING: FermiChem No master found in thrall, this makes me max sad.")
+	if(!E)
+		message_admins("WARNING: FermiChem: No chem found in thrall, did you bus in the chem? Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
-	if(!E)
-		message_admins("WARNING: No chem found in thrall!!!!")
 	if(!master)
-		message_admins("WARNING: No master! found in thrall!!!!")
+		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
 	if(M.ckey == enthrallID)
 		owner.remove_status_effect(src)//This shouldn't happen, but just in case
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	//redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
 	//redirect_component3 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_HEAR = CALLBACK(src, .proc/owner_hear)))) //Do resistance calc if resist is pressed
-	//RegisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL, .proc/owner_say)
+	//RegisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL, .proc/owner_say) //to add, maybe.
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	//Might need to add redirect component for listening too.
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
@@ -506,7 +513,7 @@
 	redirect_component = null
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
-	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
+	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
 
 /*
 /datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)

@@ -850,7 +850,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	//M.alpha = 255//Reset addiction
 	//antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
-		if(1)//Require a minimum
+		if(0)//Require a minimum
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -1072,6 +1072,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 (thats not written yet but thats the idea.)
 */
 
+//TODO rewrite code so that the low purity stuff is a seperate chem for clarity.
+
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
 	id = "enthrall"
@@ -1085,6 +1087,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
+	pH = 10
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
@@ -1305,6 +1308,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	overdose_threshold = 25
 	var/obj/item/clothing/head/hattip/hat
 	DoNotSplit = TRUE
+	pH = 4
 
 
 /datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
@@ -1347,6 +1351,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	InverseChemVal 		= 0
 	var/obj/item/organ/tongue/nT
 	DoNotSplit = TRUE
+	pH = 5
 
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
 
@@ -1404,6 +1409,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	ImpureChem 			= "naninte_b_goneTox" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25
 	InverseChem 		= "naninte_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	pH = 9
 
 /datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
@@ -1453,6 +1459,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = "Acid vapour"
 	id = "fermiAcid"
 	description = "Someone didn't do like an otter, and add acid to water."
+	pH = 0
 
 /datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
@@ -1490,7 +1497,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	//data = list("Big bang" = 1, "please work" = 2)
 	addProc = TRUE
 
-/datum/reagent/fermi/fermiTest/on_new()
+/datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
 	..()
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return

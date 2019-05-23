@@ -270,7 +270,7 @@
 		dna.species.handle_genitals(src)
 
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
-	dna.species.handle_genitals(src, ignoreGenitalFlags = TRUE)
+	dna.species.handle_genitals(src)
 	//dna.species.handle_breasts(src)
 	//H.update_body()
 //species_traits = list(NOTRANSSTING,NOGENITALS)
@@ -316,8 +316,7 @@
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
 					aroused_state = 0//Breasts don't have aroused_states, there's literally no difference in the spite.
-					if ((G.cached_size > 5) && (layertext == "BEHIND"))
-						size = "e" //I don't understand the BEHIND sprite honestly, so this is a way to just use the largest.
+					if(size == "huge")
 
 
 

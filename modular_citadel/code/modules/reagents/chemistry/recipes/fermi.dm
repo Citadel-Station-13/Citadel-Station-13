@@ -72,7 +72,7 @@
 	id = "eigenstate"
 	results = list("eigenstate" = 0.1)
 	required_reagents = list("bluespace" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
-	mix_message = "zaps brightly into existance, diffusing the energy from the localised gravity well as light"
+	mix_message = "the reaction zaps suddenly!"
 	//FermiChem vars:
 	OptimalTempMin = 350 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax = 500 // Upper end for above
@@ -229,14 +229,14 @@
 	OptimalTempMin 			= 780
 	OptimalTempMax			= 800
 	ExplodeTemp 			= 820
-	OptimalpHMin 			= 1
-	OptimalpHMax 			= 2
+	OptimalpHMin 			= 12
+	OptimalpHMax 			= 13
 	ReactpHLim 				= 2
 	//CatalystFact 			= 0
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
 	ThermicConstant 		= 20
-	HIonRelease 			= 0.1
+	HIonRelease 			= -0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -248,7 +248,7 @@
 	message_admins("On finish for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B.data)
+	if(!B)
 		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>")

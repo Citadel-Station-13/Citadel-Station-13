@@ -920,7 +920,7 @@ im
 		R.data = data
 		R.on_new(data)
 	if(R.addProc == TRUE)
-		R.on_new(my_atom)
+		R.on_new(src)
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
 		Ferm.FermiNew(my_atom) //Seriously what is "data" ????

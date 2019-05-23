@@ -1,4 +1,4 @@
-#define LUNGS_MAX_HEALTH 500
+#define LUNGS_MAX_HEALTH 450
 
 /obj/item/organ/lungs
 	name = "lungs"
@@ -410,8 +410,8 @@
 			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
 			adjustLungLoss(cold_level_2_damage*cold_modifier)
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
-			adjustLungLoss(cold_level_1_damage*cold_modifier)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
+			adjustLungLoss(cold_level_1_damage*cold_modifier)
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
