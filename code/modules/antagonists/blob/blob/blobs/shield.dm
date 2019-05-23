@@ -34,7 +34,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		atmosblock = TRUE
-		if(weakend)
+		if(weakened)
 			armor = armor.setRating("melee" = 25, "bullet" = 25, "laser" = 15, "energy" = 10, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 			weakened = FALSE
 	air_update_turf(1)
