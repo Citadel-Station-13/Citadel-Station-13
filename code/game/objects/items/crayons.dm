@@ -768,7 +768,7 @@
 	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
 
 /obj/item/toy/crayon/spraycan/gang
-	charges = 10 // Charges are at 10 because the tagger trait exists.
+	charges = 20 // Charges back to 20, which is the default value for them.
 	gang = TRUE
 
 	pre_noise = FALSE

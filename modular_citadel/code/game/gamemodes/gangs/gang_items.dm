@@ -195,7 +195,7 @@
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 20
+	cost = 25
 	item_path = /obj/item/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
@@ -207,7 +207,7 @@
 /datum/gang_item/weapon/sniper
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
-	cost = 30
+	cost = 35
 	item_path = /obj/item/gun/ballistic/automatic/sniper_rifle
 
 /datum/gang_item/weapon/ammo/sniper_ammo
@@ -225,7 +225,7 @@
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
 	id = "MG"
-	cost = 40
+	cost = 45
 	item_path = /obj/machinery/manned_turret
 	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting.</span>"
 
@@ -291,7 +291,7 @@
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
-	cost = 10
+	cost = 12
 	item_path = /obj/item/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
@@ -391,7 +391,7 @@ datum/gang_item/equipment/shield
 
 /datum/gang_item/equipment/dominator/get_extra_info(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gang)
-		return "This device requires a 5x5 area clear of walls to work best. (Estimated Takeover Time: [round(gang.determine_domination_time()/60,0.1)] minutes)"
+		return "This device requires a 5x5 area clear of walls to FUNCTION. (Estimated Takeover Time: [round(gang.determine_domination_time()/60,0.1)] minutes)"
 
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/userarea = get_area(user)
