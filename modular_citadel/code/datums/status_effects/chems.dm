@@ -85,7 +85,7 @@
 	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier /= moveCalc
-	if(round(B.cached_size) < 16)
+	if((B.size) < 16)
 		switch(round(B.cached_size))
 			if(9)
 				if (!(B.breast_sizes[B.prev_size] == B.size))

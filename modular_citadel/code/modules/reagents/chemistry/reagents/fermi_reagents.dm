@@ -142,10 +142,11 @@
 		if(0)
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-			do_sparks(5,FALSE,M)
-			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-			//M.forceMove(location_created) //Teleports to creation location
-			do_sparks(5,FALSE,M)
+			if(purity > 0.75) //Teleports you home if it's pure enough
+				do_sparks(5,FALSE,M)
+				do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+				//M.forceMove(location_created) //Teleports to creation location
+				do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	//message_admins("eigenstate state: [current_cycle]")
@@ -219,7 +220,7 @@
 			C.emote("spin")
 			M.emote("spin")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "Watashi no nihon'noanime no yona monodesu!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Detta �r sista g�ngen jag dricker beepsky smash.", "Now neither of us will be virgins!")]\"")
+			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "Ciekawe co na obiad?", "You fool! You took too much eigenstasium! You've doomed us all!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Fermichem was a mistake", "This is one hell of a strong beepsky smash.", "Now neither of us will be virgins!")]\"")
 			message_admins("Fermi T Clone: [fermi_Tclone] teleport attempt")
 		if(2)
 			var/mob/living/carbon/C = fermi_Tclone
@@ -627,6 +628,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	var/mob/living/carbon/human/H = M
+	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
 		message_admins("No breasts found on init!")
@@ -736,6 +738,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	var/mob/living/carbon/human/H = M
+	H.genital_override = TRUE
 	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found on init!")
@@ -754,8 +757,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		if(nP)
 			nP.length = 0.2
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
-			nP.cached_length = 0.1
-			nP.prev_size = 0.1
+			nP.cached_length = 0.2
+			nP.prev_size = 0.2
 			M.reagents.remove_reagent(src.id, 5)
 			P = nP
 

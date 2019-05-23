@@ -90,9 +90,9 @@
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
 
-/datum/chemical_reaction/fermi/eigenstate/FermiCreate(datum/reagents/holder)
+/datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/location = get_turf(holder.my_atom)
-	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in holder.reagent_list
+	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	E.location_created = location
 	//add on_new() handling of vars
 
@@ -249,7 +249,7 @@
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
 	if(!B.data)
-		var/list/seen = viewers(5, get_turf(holder.my_atom))
+		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>")
 			E.purity = 0

@@ -19,7 +19,7 @@
 	var/list/dickflags 		= list()
 	var/list/knotted_types 	= list("knotted", "barbed, knotted")
 	var/statuscheck			= FALSE
-	var/prev_size			= 6
+	var/prev_size			= 6 //really should be renamed to prev_length
 
 /obj/item/organ/genital/penis/Initialize()
 	. = ..()
@@ -61,7 +61,7 @@
 				//message_admins("Attempting to apply.")
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = TRUE
-	//message_admins("Pinas size: [size], [cached_length], [o]")
+	//message_admins("Pinas size: [length], [cached_length], [o]")
 	//message_admins("2. size vs prev_size")
 	if (round(length) > round(prev_size))
 		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(length)] inch penis.</b></span>")
