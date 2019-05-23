@@ -171,7 +171,7 @@
 /datum/gang_item/weapon/surplus
 	name = "Surplus Rifle"
 	id = "surplus"
-	cost = 7
+	cost = 6
 	item_path = /obj/item/gun/ballistic/automatic/surplus
 
 /datum/gang_item/weapon/ammo/surplus_ammo
@@ -183,7 +183,7 @@
 /datum/gang_item/weapon/improvised
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
-	cost = 6
+	cost = 5
 	item_path = /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
@@ -195,7 +195,7 @@
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 25
+	cost = 20
 	item_path = /obj/item/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
@@ -207,7 +207,7 @@
 /datum/gang_item/weapon/sniper
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
-	cost = 40
+	cost = 30
 	item_path = /obj/item/gun/ballistic/automatic/sniper_rifle
 
 /datum/gang_item/weapon/ammo/sniper_ammo
@@ -225,7 +225,7 @@
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
 	id = "MG"
-	cost = 50
+	cost = 40
 	item_path = /obj/machinery/manned_turret
 	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting.</span>"
 
@@ -236,13 +236,13 @@
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
-	cost = 60
+	cost = 50
 	item_path = /obj/item/gun/ballistic/automatic/mini_uzi
 
 /datum/gang_item/weapon/ammo/uzi_ammo
 	name = "Uzi Ammo"
 	id = "uzi_ammo"
-	cost = 30
+	cost = 20
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
 ///////////////////
@@ -256,7 +256,7 @@
 /datum/gang_item/equipment/spraycan
 	name = "Territory Spraycan"
 	id = "spraycan"
-	cost = 5
+	cost = 1
 	item_path = /obj/item/toy/crayon/spraycan/gang
 
 /datum/gang_item/equipment/spraycan/spawn_item(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
@@ -285,13 +285,13 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 7
+	cost = 5
 	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
-	cost = 12
+	cost = 10
 	item_path = /obj/item/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
@@ -308,7 +308,7 @@
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
-	cost = 12
+	cost = 10
 	item_path = /obj/item/clothing/shoes/combat/gang
 
 /obj/item/clothing/shoes/combat/gang
@@ -317,10 +317,16 @@
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
 
+datum/gang_item/equipment/shield
+	name = "Riot Shield"
+	id = "riot_shield"
+	cost = 25
+	item_path = /obj/item/shield/riot
+
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
 	id = "pen"
-	cost = 25
+	cost = 20
 	item_path = /obj/item/pen/gang
 	spawn_msg = "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 
@@ -343,7 +349,7 @@
 
 /datum/gang_item/equipment/gangtool
 	id = "gangtool"
-	cost = 10
+	cost = 5
 
 /datum/gang_item/equipment/gangtool/spawn_item(mob/living/carbon/user, datum/team/gang/gang, obj/item/device/gangtool/gangtool)
 	var/item_type

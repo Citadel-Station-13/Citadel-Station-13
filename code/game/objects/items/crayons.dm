@@ -332,8 +332,8 @@
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(takes_time)
-		if(!do_after(user, 50, target = target))
+	if(takes_time) //This is what deteremines the time it takes to spray a tag in gang mode. 50 is Default.
+		if(!do_after(user, 25, target = target)) //Lets try 25 instead of giving them all spraycans.
 			return
 
 	if(length(text_buffer))
