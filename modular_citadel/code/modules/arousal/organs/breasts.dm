@@ -19,7 +19,7 @@
 	can_masturbate_with		= TRUE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
-	fluid_transfer_factor 	=0.5
+	fluid_transfer_factor 	= 0.5
 
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
@@ -60,6 +60,7 @@
 			desc += " They're very small and flatchested, however."
 		else
 			desc += " You estimate that they're [uppertext(size)]-cups."
+			string = "breasts_[lowertext(shape)]_[size]-s"
 
 	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."
@@ -70,6 +71,12 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
+			string = "breasts_[lowertext(shape)]_[size]"
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_genitals()
+
+			icon_state = sanitize_text(string)
 
 
 //Allows breasts to grow and change size, with sprite changes too.

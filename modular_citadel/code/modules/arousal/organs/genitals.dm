@@ -130,7 +130,7 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
-	if (NOGENITALS in dna.species.species_traits)
+	if ((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
@@ -155,7 +155,7 @@
 /mob/living/carbon/human/proc/give_penis()
 	if(!dna)
 		return FALSE
-	if(NOGENITALS in dna.species.species_traits)
+	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return FALSE
 	if(!getorganslot("penis"))
 		var/obj/item/organ/genital/penis/P = new
@@ -173,7 +173,7 @@
 /mob/living/carbon/human/proc/give_balls()
 	if(!dna)
 		return FALSE
-	if(NOGENITALS in dna.species.species_traits)
+	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return FALSE
 	if(!getorganslot("testicles"))
 		var/obj/item/organ/genital/testicles/T = new
@@ -194,7 +194,7 @@
 /mob/living/carbon/human/proc/give_breasts()
 	if(!dna)
 		return FALSE
-	if(NOGENITALS in dna.species.species_traits)
+	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return FALSE
 	if(!getorganslot("breasts"))
 		var/obj/item/organ/genital/breasts/B = new
@@ -211,11 +211,13 @@
 
 
 /mob/living/carbon/human/proc/give_ovipositor()
+	return
 /mob/living/carbon/human/proc/give_eggsack()
+	return
 /mob/living/carbon/human/proc/give_vagina()
 	if(!dna)
 		return FALSE
-	if(NOGENITALS in dna.species.species_traits)
+	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return FALSE
 	if(!getorganslot("vagina"))
 		var/obj/item/organ/genital/vagina/V = new
@@ -231,7 +233,7 @@
 /mob/living/carbon/human/proc/give_womb()
 	if(!dna)
 		return FALSE
-	if(NOGENITALS in dna.species.species_traits)
+	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
 		return FALSE
 	if(!getorganslot("womb"))
 		var/obj/item/organ/genital/womb/W = new
@@ -267,10 +269,12 @@
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
 
-/mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H)
-	dna.species.handle_genitals(src)
+/mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
+	dna.species.handle_genitals(src, ignoreGenitalFlags = TRUE)
 	//dna.species.handle_breasts(src)
 	//H.update_body()
+//species_traits = list(NOTRANSSTING,NOGENITALS)
+
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
 	//message_admins("attempting to update sprite")
@@ -278,14 +282,15 @@
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done
 		return
-	if(NOGENITALS in species_traits)//golems and such
+	if((NOGENITALS in species_traits) && (H.genital_override = FALSE))//golems and such - things that shouldn't
 		return
 	if(H.has_trait(TRAIT_HUSK))
 		return
 	var/list/genitals_to_add = list()
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
-	var/size = null
+	var/size
+	var/aroused_state
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
 	//start scanning for genitals
@@ -302,6 +307,7 @@
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
 			size = G.size
+			aroused_state = G.aroused_state
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
@@ -313,13 +319,14 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
 
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -328,6 +335,7 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
+					/* This was removed for some reason?
 					if(MUTCOLORS)
 						if(fixed_mut_color)
 							genital_overlay.color = "#[fixed_mut_color]"
@@ -343,6 +351,7 @@
 							genital_overlay.color = "#[fixed_mut_color3]"
 						else
 							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+					*/
 			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()
