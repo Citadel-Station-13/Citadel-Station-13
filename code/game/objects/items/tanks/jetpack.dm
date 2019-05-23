@@ -120,6 +120,7 @@
 	volume = 60
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
+	full_speed = FALSE //Old pre-hardsuit tech
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
