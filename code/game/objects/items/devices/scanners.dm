@@ -310,7 +310,7 @@ SLIME SCANNER
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
@@ -318,9 +318,9 @@ SLIME SCANNER
 					blood_type = R.name
 				else
 					blood_type = blood_id
-			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+			if(C.blood_volume <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.blood_volume > (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
-			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
+			else if(C.blood_volume <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else
 				msg += "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>\n"

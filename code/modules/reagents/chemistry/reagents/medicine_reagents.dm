@@ -61,8 +61,8 @@
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
 	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-		M.blood_volume = BLOOD_VOLUME_NORMAL
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
+		M.blood_volume = (BLOOD_VOLUME_NORMAL*M.blood_ratio)
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing

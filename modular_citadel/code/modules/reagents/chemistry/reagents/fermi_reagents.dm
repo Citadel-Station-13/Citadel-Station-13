@@ -12,10 +12,10 @@
 /datum/reagent/fermi
 	name = "Fermi" 	//Why did I putthis here?
 	id = "fermi"	//It's meeee
-	taste_description	= "If affection had a taste, this would be it."
-	var/ImpureChem 			= "toxin"			// What chemical is metabolised with an inpure reaction
-	var/InverseChemVal 		= 0					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
-	var/InverseChem 		= "Initropidril" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
+	taste_description	= "affection and love!"
+	var/ImpureChem 			= "fermiTox"			// What chemical is metabolised with an inpure reaction
+	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
+	var/InverseChem 		= "fermiTox" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
@@ -24,8 +24,6 @@
 	//return ..()
 
 //Called when reaction stops. #STOP_PROCESSING
-/datum/reagent/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
-	return
 
 //Called when added to a beaker without any of the reagent present. #add_reagent
 /datum/reagent/fermi/proc/FermiNew(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
@@ -33,46 +31,56 @@
 
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
-/datum/reagent/fermi/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
+	. = ..()
 	if(!M)
-		return ..()
-	message_admins("purity of chem is [purity]")
+		return
+	message_admins("adding to human [purity]")
 	if(src.purity < 0)
 		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
 	if (src.purity == 1 || src.DoNotSplit == TRUE)
 		return
 	else if (src.InverseChemVal > src.purity)
-		M.reagents.remove_reagent(src, volume, FALSE)
-		M.reagents.add_reagent(src.InverseChem, volume, FALSE, other_purity = 1)
-		message_admins("all convered to [src.InverseChem]")
-		return
-	else
-		//var/pureVol = volume * purity
-		var/impureVol = volume * (1 - (volume * purity))
-		M.reagents.remove_reagent(src, (volume*impureVol), FALSE)
-		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
-	return
-	..()
-
-/datum/reagent/fermi/on_merge(mob/living/carbon/M, amount, other_purity)
-	if(!M)
-		return ..()
-	if(other_purity < 0)
-		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
-	if (other_purity == 1 || src.DoNotSplit == TRUE)
-		return
-	else if (src.InverseChemVal > other_purity)
-		M.reagents.remove_reagent(src, amount, FALSE)
+		M.reagents.remove_reagent(src.id, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		message_admins("all convered to [src.InverseChem]")
 		return
 	else
-		//var/pureVol =
-		var/impureVol = amount * (1 - (amount * other_purity))
-		M.reagents.remove_reagent(src, impureVol, FALSE)
+		//var/pureVol = amount * puritys
+		var/impureVol = amount * (1 - purity)
+		message_admins("splitting [src.id] [amount] into [src.ImpureChem] [impureVol]")
+		M.reagents.remove_reagent(src.id, (impureVol), FALSE)
 		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
-	..()
+
+//When merging two fermichems
+/datum/reagent/fermi/on_merge(data, amount, mob/living/carbon/M, purity)//basically on_mob_add but for merging
+	. = ..()
+	if(!ishuman(M))
+		return
+	message_admins("merging to human [purity]")
+	if (purity < 0)
+		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
+	if (purity == 1 || src.DoNotSplit == TRUE)
+		return
+	else if (src.InverseChemVal > purity)
+		M.reagents.remove_reagent(src.id, amount, FALSE)
+		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
+		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
+			if(R.name == "")
+				R.name = src.name//Negative effects are hidden
+		message_admins("all convered to [src.InverseChem]")
+		return
+	else
+		//var/pureVol =
+		var/impureVol = amount * (1 - purity)
+		message_admins("splitting [src] [amount] into [src.ImpureChem] [impureVol]")
+		M.reagents.remove_reagent(src.id, impureVol, FALSE)
+		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
+		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
+			if(R.name == "")
+				R.name = src.name//Negative effects are hidden
+	return
 
 
 
@@ -107,11 +115,11 @@
 	taste_description = "wiggly cosmic dust."
 	color = "#5020H4" // rgb: 50, 20, 255
 	overdose_threshold = 15
-	addiction_threshold = 20
+	addiction_threshold = 15
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
-	addiction_stage3_end = 40
-	addiction_stage4_end = 43 //Incase it's too long
+	addiction_stage3_end = 41
+	addiction_stage4_end = 44 //Incase it's too long
 	var/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 0
@@ -181,6 +189,8 @@
 			M.Stun(40)
 
 	var/items = M.get_contents()
+	if(!LAZYLEN(items))
+		return ..()//This'll work, right?
 	var/obj/item/I = pick(items)
 	M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
@@ -245,9 +255,9 @@
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	src.addictCyc4++
-
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[src.id]_overdose")//holdover until above fix works
 	..()
-	. = 1
+	//. = 1
 
 //TODO
 ///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
@@ -330,9 +340,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 		if(20 to INFINITY)
-			message_admins("Number of candidates [LAZYLEN(candies)]")
+			//message_admins("Number of candidates [LAZYLEN(candies)]")
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
-				message_admins("Candidate found!")
+				message_admins("Candidate found! [candies] is becomeing a clone of [M]! Hee~!! Exciting!!")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				//var/typepath = owner.type
 				//clone = new typepath(owner.loc)
@@ -367,7 +377,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.nutrition -= 500
 				//reaction_mob(SM, )I forget what this is for
 				//Damage the clone
-				SM.blood_volume = BLOOD_VOLUME_NORMAL/2
+				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
 				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
@@ -416,6 +426,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjustBruteLoss(-1, 0)
 							M.adjustFireLoss(-1, 0)
 							M.heal_bodypart_damage(1,1)
+							M.reagents.remove_reagent(src.id, 1)//faster rate of loss.
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
 						if(21)
@@ -444,7 +455,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(87 to INFINITY)
 							M.reagents.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 							message_admins("Purging SGDF [volume]")
-					message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
+					//message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 77")
 
 
 	..()
@@ -492,7 +503,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 1
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
-	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
 	M.setBrainLoss(-1)
@@ -521,7 +532,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/startHunger
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
-	message_admins("SGZF ingested")
+	//message_admins("SGZF ingested")
 	switch(current_cycle)//Pretends to be normal
 		if(20)
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
@@ -573,7 +584,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
-	message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
+	//message_admins("Growth nucleation occuring (SDGF), step [current_cycle] of 20")
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -610,7 +621,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 12
 	metabolization_rate = 0.5
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
+	InverseChemVal 		= 0.3
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
@@ -618,6 +629,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
+		message_admins("No breasts found on init!")
 		return
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
@@ -717,9 +729,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.25
+	InverseChemVal 		= 0.3
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
 	//var/mob/living/carbon/human/H
+
+/datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+	. = ..()
+	var/mob/living/carbon/human/H = M
+	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
+	if(!P)
+		message_admins("No penis found on init!")
+		return
+	P.prev_size = P.length
+	P.cached_length = P.length
+	message_admins("init P len: [P.length], prev: [P.prev_size], cache = [P.cached_length]")
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	var/mob/living/carbon/human/H = M
@@ -755,7 +778,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	message_admins("PE Breast status: [B]")
 	if(M.gender == FEMALE)
 		M.gender = MALE
-		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine as your !</span>")
+		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
 		B.cached_size = B.cached_size - 0.1
@@ -817,13 +840,14 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/antiGenetics = 255
 	var/sleepytime = 0
+	InverseChemVal = 0.25
 	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	//M.alpha = 255//Reset addiction
 	//antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
-		if(0)//Require a minimum
+		if(1)//Require a minimum
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -845,7 +869,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle-1, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -1053,18 +1077,37 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
-	data// = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
+	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 
+/datum/reagent/fermi/enthrall/test
+	name = "MKUltraTest"
+	id = "enthrallTest"
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	color = "#2C051A" // rgb: , 0, 255
+	//ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
+	//InverseChemVal 		= 0.25
+	//InverseChem 		= "enthrall" //At really impure vols, it just becomes 100% inverse
+	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Isabelle Foster")
+	creatorID  = "honkatonkbramblesnatch"//ckey
+	creatorGender = "Mistress"
+	creatorName = "Isabelle Foster"
+	purity = 1
+
+/datum/reagent/fermi/enthrall/test/on_new()
+	id = "enthrall"
+	..()
+	creator = get_mob_by_key(creatorID)
 
 /datum/reagent/fermi/enthrall/on_new(list/data)
 	message_admins("FermiNew for enthral proc'd")
 	creatorID = data.["creatorID"]
 	creatorGender = data.["creatorGender"]
 	creatorName = data.["creatorName"]
+	creator = get_mob_by_key(creatorID)
 	message_admins("name: [creatorName], ID: [creatorID], gender: [creatorGender]")
 	/*
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
@@ -1077,33 +1120,22 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	creatorID = B.data.["ckey"]
 	*/
 
-/datum/reagent/fermi/enthrall/FermiFinish(datum/reagents/holder)
-	message_admins("On finish for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
-	else
-		E.data.["creatorGender"] = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
-
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!creatorID)
-		CRASH("Something went wrong in enthral creation")
-	message_admins("key: [M.key] vs [creatorID], ")
+		message_admins("Something went wrong in enthral creation THIS SHOULD NOT APPEAR")
+		return
+	message_admins("key: [M.ckey] vs [creatorID], ")
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
-	else if(M.key == creatorID && creatorName == M.real_name) //same name AND same player - same instance of the player. (should work for clones?)
+	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
-		Vc.Remove(M)
+		if(Vc)
+			Vc.Remove(M)
 		nVc.Insert(M)
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
-		creator = M
 	else
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		//var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
@@ -1117,7 +1149,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
-		if (M.key == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
+		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
@@ -1137,22 +1169,46 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				M.reagents.remove_reagent(src.id, src.volume)
 				FallInLove(C, M)
 			return
-	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it does nothing.
+		return
+	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)//If purity is over 5, works as intended
 	if(!E)
-		CRASH("No enthrall status found in [M]!")
-	E.enthrallTally += 1
-	M.adjustBrainLoss(0.1)
+		M.reagents.remove_reagent(src.id, 10)
+		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+		message_admins("No enthrall status found in [M]!")
+	else
+		E.enthrallTally += 1
+	if(prob(50))
+		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
-/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly.
+/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly. I made it so the creator is set to gain the status for someone random.
 	. = ..()
+	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 150u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
+		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+		for(var/mob/living/carbon/victim in seen)
+			if(victim == M)//as much as I want you to fall for beepsky, he doesn't have a ckey
+				seen = seen - victim
+			if(!victim.ckey)
+				seen = seen - victim
+		var/mob/living/carbon/chosen = pick(seen)
+		creatorID = chosen.ckey
+		if (chosen.gender == "female")
+			creatorGender = "Mistress"
+		else
+			creatorGender = "Master"
+		creatorName = chosen.real_name
+		creator = get_mob_by_key(creatorID)
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
-	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
+		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 		E.enthrallID = creatorID
 		E.enthrallGender = creatorGender
 		E.master = creator
+	else
+		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
 	M.slurring = 100
 	M.confused = 100
@@ -1161,7 +1217,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	E.customTriggers = list()
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.2)
+	M.adjustBrainLoss(0.1)//should be 15 in total
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
@@ -1189,13 +1245,18 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(M, "<span class='notice'>You develop deep feelings for [love], your heart beginning to race as you look upon them with new eyes.</span>")
 	else
 		if(get_dist(M, love) < 8)
-			//if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
-			M.adjustArousalLoss(5)
+			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
+				M.adjustArousalLoss(5)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 		else
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
+			if(prob(10))
+				M.Stun(10)
+				M.emote("whimper")//does this exist?
+				to_chat(M, "You're overcome with a desire to see [love].")
+				M.adjustBrainLoss(5)
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
@@ -1392,14 +1453,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
-	C.adjustFireLoss(1, 0)
+	var/acidstr = (5-C.reagents.pH)
+	C.adjustFireLoss(acidstr, 0)
 	if(method==VAPOR)
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(2)
-		C.apply_damage(1, BURN, target)
-	var/acidstr = (5-C.reagents.pH)
+		L.adjustLungLoss(acidstr)
+		C.apply_damage(acidstr/2, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
 
@@ -1418,3 +1479,106 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/acidstr = (5-holder.pH)
 	T.acid_act(acidstr, volume)
 	..()
+
+/datum/reagent/fermi/fermiTest
+	name = "Fermis Test Reagent"
+	id = "fermiTest"
+	description = "You should be really careful with this...! Also, how did you get this?"
+	//data = list("Big bang" = 1, "please work" = 2)
+	addProc = TRUE
+
+/datum/reagent/fermi/fermiTest/on_new()
+	..()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	else
+		holder.remove_reagent("fermiTest", 1000)//Avoiding recurrsion
+	message_admins("FermiTest addition!")
+	var/location = get_turf(holder.my_atom)
+	if(purity < 0.34 || purity == 1)
+		var/datum/effect_system/foam_spread/s = new()
+		s.set_up(volume*2, location, holder)
+		s.start()
+	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
+		var/datum/effect_system/smoke_spread/chem/s = new()
+		s.set_up(holder, volume*2, location)
+		s.start()
+	if(purity >= 0.67)
+		for (var/datum/reagent/reagent in holder.reagent_list)
+			if (istype(reagent, /datum/reagent/fermi))
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
+			else
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.on_reaction(holder, reagent.volume)
+	for(var/mob/M in viewers(8, location))
+		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	holder.clear_reagents()
+
+/datum/reagent/fermi/fermiTox
+	name = ""//defined on setup
+	id = "fermiTox"
+	description = "You should be really careful with this...! Also, how did you get this?"
+
+/datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
+	if(C.dna && istype(C.dna.species, /datum/species/jelly))
+		C.adjustToxLoss(-1)
+	else
+		C.adjustToxLoss(1)
+	..()
+
+/datum/reagent/fermi/fermiABuffer
+	name = "Acidic buffer"//defined on setup
+	id = "fermiABuffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
+	addProc = TRUE
+	pH = 3
+
+/datum/reagent/fermi/fermiABuffer/on_new()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	pH = ((holder.pH * holder.total_volume)+(3 * src.volume))/(holder.total_volume + src.volume)
+	holder.remove_reagent(src.id, 1000)
+	..()
+
+/datum/reagent/fermi/fermiBBuffer
+	name = "Basic buffer"//defined on setup
+	id = "fermiBBuffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
+	addProc = TRUE
+	pH = 11
+
+/datum/reagent/fermi/fermiBBuffer/on_new()
+	if(LAZYLEN(holder.reagent_list) == 1)
+		return
+	pH = ((holder.pH * holder.total_volume)+(11 * src.volume))/(holder.total_volume + src.volume)
+	holder.remove_reagent(src.id, 1000)
+	..()
+
+/*
+/datum/reagent/fermi/fermiTest/on_merge()
+	..()
+	message_admins("FermiTest addition!")
+	var/location = get_turf(holder.my_atom)
+	if(purity < 0.34 || purity == 1)
+		var/datum/effect_system/foam_spread/s = new()
+		s.set_up(volume*2, location, holder)
+		s.start()
+	if((purity < 0.67 && purity >= 0.34)|| purity == 1)
+		var/datum/effect_system/smoke_spread/chem/s = new()
+		s.set_up(holder, volume*2, location)
+		s.start()
+	if(purity >= 0.67)
+		for (var/datum/reagent/reagent in holder.reagent_list)
+			if (istype(reagent, /datum/reagent/fermi))
+				var/datum/chemical_reaction/fermi/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.FermiExplode(src, holder.my_atom, holder, holder.total_volume, holder.chem_temp, holder.pH)
+			else
+				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.id]
+				Ferm.on_reaction(holder, reagent.volume)
+	for(var/mob/M in viewers(8, location))
+		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	holder.clear_reagents()
+	*/

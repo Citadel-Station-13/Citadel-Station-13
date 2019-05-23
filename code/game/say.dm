@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	send_speech(message, 7, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	//message_admins("Pre: [message], [speaker], [message_language], [raw_message], [radio_freq], [spans], [message_mode]")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 
 /atom/movable/proc/can_speak()
@@ -97,7 +98,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
-	
+
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()

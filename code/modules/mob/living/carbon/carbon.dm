@@ -6,6 +6,7 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -910,3 +911,17 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+
+/mob/living/carbon/proc/hypnosis_vulnerable()//unused atm, but added in case
+	if(src.has_trait(TRAIT_MINDSHIELD))
+		return FALSE
+	if(hallucinating())
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(src.has_trait(TRAIT_DUMB))
+		return TRUE
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE

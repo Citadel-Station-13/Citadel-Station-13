@@ -35,6 +35,7 @@
 	var/self_consuming = FALSE
 	//Fermichem vars:
 	var/purity = 1
+	var/addProc = FALSE //When this reagent is added to a new beaker, it does something.
 	//var/ImpureChem = "toxin"
 	var/loc = null //Should be the creation location!
 	var/pH = 7
