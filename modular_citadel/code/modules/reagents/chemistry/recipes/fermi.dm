@@ -103,6 +103,7 @@
 	results = list("SDGF" = 0.3)
 	//required_reagents = list("plasma" = 1, "stable_plasma" = 1, "sugar" = 1)
 	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "synthflesh" = 1, "blood" = 1)
+	mix_message = "the reaction gives off a blorble!"
 	//FermiChem vars:
 	OptimalTempMin 		= 350 		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 500 		// Upper end for above
@@ -136,6 +137,7 @@
 	id = "BElarger"
 	results = list("BElarger" = 6)
 	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
+	mix_message = "the reaction gives off a sent of milkshakes!"
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800

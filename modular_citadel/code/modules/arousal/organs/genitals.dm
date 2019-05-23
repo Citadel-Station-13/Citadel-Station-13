@@ -316,7 +316,8 @@
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
 					aroused_state = 0//Breasts don't have aroused_states, there's literally no difference in the spite.
-					if(size == "huge")
+					//if(size == "huge")
+
 
 
 

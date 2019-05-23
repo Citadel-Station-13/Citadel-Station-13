@@ -636,7 +636,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
 	B.cached_size = sizeConv[B.size]
-	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]")
+	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	var/mob/living/carbon/human/H = M
