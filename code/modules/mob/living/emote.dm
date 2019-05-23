@@ -16,6 +16,13 @@
 	message_param = "bows to %t."
 	restraint_check = TRUE
 
+/datum/emote/living/think
+	key = "think"
+	key_third_person = "thinks"
+	message = "makes a thinking face."
+	message_param = "makes a thinking face at %t."
+	restraint_check = FALSE
+
 /datum/emote/living/burp
 	key = "burp"
 	key_third_person = "burps"
