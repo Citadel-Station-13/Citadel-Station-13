@@ -27,7 +27,19 @@ Thus, the two variables affect pump operation are set in New():
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+	
+/obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		on = !on
+		update_icon()
+	return ..()
+			update_icon()
+	return ..()
 
+/obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		target_pressure = MAX_OUTPUT_PRESSURE
+		
 /obj/machinery/atmospherics/components/binary/pump/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
