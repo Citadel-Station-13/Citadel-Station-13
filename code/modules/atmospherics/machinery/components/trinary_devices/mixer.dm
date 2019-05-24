@@ -14,6 +14,17 @@
 	pipe_state = "mixer"
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
+/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		target_pressure = MAX_OUTPUT_PRESSURE
+			update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/layer1
 	piping_layer = PIPING_LAYER_MIN
