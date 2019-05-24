@@ -44323,9 +44323,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWF" = (
@@ -44352,10 +44350,7 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/shower{
-	dir = 8;
-	pixel_y = -4
-	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWH" = (
@@ -44935,7 +44930,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYn" = (
@@ -44960,7 +44954,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYp" = (

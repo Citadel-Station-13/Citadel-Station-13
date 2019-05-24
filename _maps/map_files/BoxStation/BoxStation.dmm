@@ -45999,9 +45999,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/shower{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cek" = (
@@ -46010,9 +46007,6 @@
 	name = "engineering security door"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/shower{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cel" = (
