@@ -37,8 +37,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		transfer_rate = MAX_TRANSFER_RATE
-			update_icon()
-	return ..()
+		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
 		
 /obj/machinery/atmospherics/components/binary/volume_pump/layer1
 	piping_layer = PIPING_LAYER_MIN
