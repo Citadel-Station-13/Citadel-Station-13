@@ -33,9 +33,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 		update_icon()
 	return ..()
-			update_icon()
-	return ..()
-
+	
 /obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		target_pressure = MAX_OUTPUT_PRESSURE
