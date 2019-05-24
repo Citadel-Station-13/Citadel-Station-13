@@ -44325,7 +44325,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/closet/radiation,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWF" = (
@@ -44352,7 +44354,10 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/radiation,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWH" = (
@@ -44932,6 +44937,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYn" = (
@@ -44956,6 +44962,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYp" = (
@@ -53780,7 +53787,7 @@
 "eSB" = (
 /obj/machinery/computer/cryopod{
 	dir = 1;
-	pixel_y = -26;
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
