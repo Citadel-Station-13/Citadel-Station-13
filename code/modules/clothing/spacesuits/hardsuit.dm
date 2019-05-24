@@ -399,7 +399,6 @@
 	item_color = "owl"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
 
-
 	//Wizard hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/wizard
 	name = "gem-encrusted hardsuit helmet"
@@ -457,7 +456,7 @@
 	desc = "A Very.Med special suit that protects against hazardous, low pressure environments. Built with ultra-lightweight materials for easier movement. Has less armor then the normal Medical hardsuit but allows for greater mobility"
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/defibrillator, /obj/item/storage/belt/medical, /obj/item/reagent_containers/hypospray, /obj/item/pinpointer/crew, /obj/item/sensor_device)
-	armor = list("melee" = 20, "bullet" = 0, "laser" = 15, "energy" = 5, "bomb" = 15, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 85)
+	armor = list("melee" = 5, "bullet" = 0, "laser" = -10, "energy" = -5, "bomb" = 35, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 95)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
 	slowdown = 0 //So CMO can move with easy.
 	species_exception = list(/datum/species/angel)
@@ -470,7 +469,7 @@
 	item_state = "medical_helm"
 	item_color = "medical"
 	flash_protect = 1
-	armor = list("melee" = 20, "bullet" = 0, "laser" = 15, "energy" = 5, "bomb" = 15, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 85)
+	armor = list("melee" = -5, "bullet" = 0, "laser" = -15, "energy" = -15, "bomb" = 15, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 95)
 	scan_reagents = 1
 
 /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO/equipped(mob/living/carbon/human/user, slot)
