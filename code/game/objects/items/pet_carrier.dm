@@ -11,6 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 5
+	item_flags = SLOWS_WHILE_IN_HAND
 	attack_verb = list("bashed", "carried")
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
@@ -22,6 +23,8 @@
 	var/occupant_weight = 0
 	var/max_occupants = 3 //Hard-cap so you can't have infinite mice or something in one carrier
 	var/max_occupant_weight = MOB_SIZE_SMALL //This is calculated from the mob sizes of occupants
+	var/slowdown_per_human = 2
+	var/allow_humans = TRUE
 
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
@@ -86,19 +89,25 @@
 	if(!open)
 		to_chat(user, "<span class='warning'>You need to open [src]'s door!</span>")
 		return
-	if(target.mob_size > max_occupant_weight)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(iscatperson(H))
-				to_chat(user, "<span class='warning'>You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work.</span>")
-			else
-				to_chat(user, "<span class='warning'>Humans, generally, do not fit into pet carriers.</span>")
-		else
-			to_chat(user, "<span class='warning'>You get the feeling [target] isn't meant for a [name].</span>")
-		return
 	if(user == target)
 		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
 		return
+	if(target.mob_size > max_occupant_weight)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(!allow_humans)
+				if(iscatperson(H))
+					to_chat(user, "<span class='warning'>You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work.</span>")
+				else
+					to_chat(user, "<span class='warning'>Humans, generally, do not fit into pet carriers.</span>")
+			else
+				if(H.resting)
+					user.visible_message("<span class='boldwarning'>[user] starts stuffing [H] into [src]!</span>")
+					if(!do_after(user, 50, target = H))
+						return
+		else
+			to_chat(user, "<span class='warning'>You get the feeling [target] isn't meant for a [name].</span>")
+			return
 	load_occupant(user, target)
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
@@ -183,6 +192,8 @@
 	occupant.forceMove(src)
 	occupants += occupant
 	occupant_weight += occupant.mob_size
+	if(iscarbon(occupant))
+		slowdown += slowdown_per_human
 
 /obj/item/pet_carrier/proc/remove_occupant(mob/living/occupant, turf/new_turf)
 	if(!occupant in occupants || !istype(occupant))
@@ -191,5 +202,7 @@
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
+	if(iscarbon(occupent))
+		slowdown = max(0, slowdown - slowdown_per_human)
 
 #undef pet_carrier_full
