@@ -631,6 +631,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
+		H.emergent_genital_call()
 		message_admins("No breasts found on init!")
 		return
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
@@ -735,13 +736,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
 	//var/mob/living/carbon/human/H
 
-/datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found on init!")
+		H.emergent_genital_call()
 		return
 	P.prev_size = P.length
 	P.cached_length = P.length
@@ -785,7 +787,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 	if(B)
 		B.cached_size = B.cached_size - 0.1
-		message_admins("Breast size: [B.size], [B.cached_size], [holder]")
+		//message_admins("Breast size: [B.size], [B.cached_size], [holder]")
 		B.update()
 	if(V)
 		V.Remove(M)

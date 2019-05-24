@@ -16,7 +16,7 @@
 	var/convert_damage = FALSE //If you want to convert the caster's health to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
-	var/shapeshift_type //Incase I ever get lucky enough to be a wizard. Also why can you be a dog but not a cat!! Racist
+	var/shapeshift_type //Incase I ever get lucky enough to be a wizard. Also why can you be a dog but not a cat!! I know this isn't fermichem related, but this is really important!!!
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/cat,\
 		/mob/living/simple_animal/pet/dog/corgi,\

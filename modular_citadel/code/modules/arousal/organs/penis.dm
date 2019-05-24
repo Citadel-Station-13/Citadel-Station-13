@@ -64,14 +64,14 @@
 	//message_admins("Pinas size: [length], [cached_length], [o]")
 	//message_admins("2. size vs prev_size")
 	if (round(length) > round(prev_size))
-		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(length)] inch penis.</b></span>")
+		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(length)] inch penis.</b></span>")
 	else if (round(length) < round(prev_size))
-		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(length)] inch penis.</b></span>")
+		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(length)] inch penis.</b></span>")
 	prev_size = length
 	icon_state = sanitize_text("penis_[shape]_[size]")
 	//update_body()
 	//P.update_icon()  //Either of these don't work, why???
-	girth = (length * girth_ratio)
+	girth = (length * girth_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
 	//var/mob/living/carbon/human/H = owner
 	//H.update_genitals()
 	//owner.update_genitals()

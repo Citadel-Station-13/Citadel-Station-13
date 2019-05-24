@@ -135,9 +135,9 @@
 /datum/chemical_reaction/fermi/BElarger //done
 	name = "Sucubus milk"
 	id = "BElarger"
-	results = list("BElarger" = 6)
+	results = list("BElarger" = 0.6)
 	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
-	mix_message = "the reaction gives off a sent of milkshakes!"
+	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
@@ -169,6 +169,7 @@
 	id = "PElarger"
 	results = list("PElarger" = 0.3)
 	required_reagents = list("plasma" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
+	mix_message = ""
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -226,6 +227,7 @@
 	required_reagents = list("iron" = 0.1, "iodine" = 0.1)
 	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
 	required_catalysts = list("blood" = 0.1)
+	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 780
@@ -265,7 +267,7 @@
 	E.creatorName = B.data.["real_name"]
 	E.data.["creatorID"] = B.data.["ckey"]
 	E.creatorID = B.data.["ckey"]
-	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
+	message_admins("MKUltra made name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
 
 //Apprently works..?Negative
 /*
@@ -293,7 +295,7 @@
 	s.set_up(R, volume, T)
 	s.start()
 	my_atom.reagents.clear_reagents()
-	//..() //Please don't kill everyone too.
+	..(volume = 0, pH = 7, purity = 1) //Just a lil fire.
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"

@@ -130,7 +130,7 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
-	if ((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if (NOGENITALS in dna.species.species_traits)
 		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
@@ -155,7 +155,7 @@
 /mob/living/carbon/human/proc/give_penis()
 	if(!dna)
 		return FALSE
-	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("penis"))
 		var/obj/item/organ/genital/penis/P = new
@@ -173,7 +173,7 @@
 /mob/living/carbon/human/proc/give_balls()
 	if(!dna)
 		return FALSE
-	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("testicles"))
 		var/obj/item/organ/genital/testicles/T = new
@@ -194,7 +194,7 @@
 /mob/living/carbon/human/proc/give_breasts()
 	if(!dna)
 		return FALSE
-	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("breasts"))
 		var/obj/item/organ/genital/breasts/B = new
@@ -217,7 +217,7 @@
 /mob/living/carbon/human/proc/give_vagina()
 	if(!dna)
 		return FALSE
-	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("vagina"))
 		var/obj/item/organ/genital/vagina/V = new
@@ -233,7 +233,7 @@
 /mob/living/carbon/human/proc/give_womb()
 	if(!dna)
 		return FALSE
-	if((NOGENITALS in dna.species.species_traits) && (genital_override = FALSE))
+	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("womb"))
 		var/obj/item/organ/genital/womb/W = new
@@ -269,12 +269,22 @@
 	if(src && !QDELETED(src))
 		dna.species.handle_genitals(src)
 
+//fermichem procs
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
 	dna.species.handle_genitals(src)
 	//dna.species.handle_breasts(src)
 	//H.update_body()
 //species_traits = list(NOTRANSSTING,NOGENITALS)
 
+/mob/living/carbon/human/proc/emergent_genital_call()
+	var/organCheck = FALSE
+	for(var/obj/item/organ/O in internal_organs)
+		if(istype(O, /obj/item/organ/genital))
+			organCheck = TRUE
+	if (organCheck == FALSE)
+		dna.features["genitals_use_skintone"] = TRUE
+		dna.species.use_skintones = TRUE
+	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
 	//message_admins("attempting to update sprite")

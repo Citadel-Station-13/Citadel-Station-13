@@ -343,6 +343,29 @@ im
 		R.on_update (A)
 	update_total()
 
+//beaker check proc,
+/datum/reagents/proc/beaker_check(atom/A)
+	message_admins("beaker check proc'd")
+	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta))
+		return
+	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
+		if(chem_temp > 444)//assuming polypropylene
+			var/list/seen = viewers(5, get_turf(my_atom))
+			var/iconhtml = icon2html(A, seen)
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s beak melts from the temperature!</span>")
+			qdel(A)
+			return
+	if ((pH < 0.5) || (pH > 13.5))//maybe make it higher? Though..Hmm!
+		var/list/seen = viewers(5, get_turf(my_atom))
+		var/iconhtml = icon2html(A, seen)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s beak melts from the extreme pH!</span>")
+		qdel(A)
+		return
+
+
+
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION FERMICHEMS ASSEMBLE! I hope rp is similar
 	if(fermiIsReacting == TRUE)
 		//reagents_holder_flags |= REAGENT_NOREACT unsure if this is needed
@@ -356,7 +379,7 @@ im
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
 
-
+	beaker_check(my_atom) //Beaker resilience test
 
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
 		var/list/possible_reactions = list() //init list
@@ -627,7 +650,9 @@ im
 	//message_admins("Loop beginning")
 	//Begin Parse
 
-	//update_holder_purity(C)//updates holder's purity
+	message_admins("Purity precalc: [overallPurity]")
+	update_holder_purity(C)//updates holder's purity
+	message_admins("Purity postcalc: [overallPurity]")
 
 	//Check extremes first
 	if (cached_temp > C.ExplodeTemp)
@@ -645,7 +670,7 @@ im
 		//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 		//message_admins("pH is lover limit, cur pH: [pH]")
 
-	if ((purity < C.PurityMin) && (!C.PurityMin == 0))//If purity is below the min, blow it up.
+	if (purity < C.PurityMin)//If purity is below the min, blow it up.
 		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
 		return
 
@@ -704,6 +729,7 @@ im
 
 	//TODO: Check overall beaker purity with proc
 	//Then adjust purity of result AND yeild ammount with said purity.
+	stepChemAmmount *= overallPurity
 
 	// End.
 	/*
@@ -838,6 +864,8 @@ im
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
+	//beaker_check(my_atom)
+
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -852,11 +880,15 @@ im
 	if (D.id == "water") //Do like an otter, add acid to water.
 		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-			s.set_up(/datum/reagent/fermi/fermiAcid, total_volume, pH*10, src)
+			var/turf/T = get_turf(my_atom)
+			var/datum/reagents/R = new/datum/reagents(3000)//I don't want to hold it back..!
+			R.add_reagent("fermiAcid", amount)
+			for (var/datum/reagent/reagentgas in reagent_list)
+				R.add_reagent(reagentgas, amount/5)
+				remove_reagent(reagentgas, amount/5)
+			s.set_up(R, amount, T)
 			s.start()
-			remove_any(amount/10)
-			return
-
+			return FALSE
 
 	if(!pH)
 		other_pH = D.pH

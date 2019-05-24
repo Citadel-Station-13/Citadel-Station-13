@@ -68,7 +68,7 @@
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
-	moveCalc = 1+((round(B.cached_size) - 9)/10) //Afffects how fast you move, and how often you can click.
+	moveCalc = 1+((round(B.cached_size) - 9)/5) //Afffects how fast you move, and how often you can click.
 	if(!B)
 		o.remove_movespeed_modifier("megamilk")
 		o.next_move_modifier /= moveCalc
@@ -94,7 +94,7 @@
 	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		o.next_move_modifier /= moveCalc
-	if((B.size) < 16)
+	if((B.cached_size) < 16)
 		switch(round(B.cached_size))
 			if(9)
 				if (!(B.breast_sizes[B.prev_size] == B.size))

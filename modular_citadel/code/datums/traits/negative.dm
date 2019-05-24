@@ -10,7 +10,7 @@
 
 /datum/quirk/Hypno/add()
    //You caught me, it's not actually based off a trigger, stop spoiling the effect! Code diving ruins the magic!
-   addtimer(CALLBACK(src, /datum/quirk/Hypno.proc/triggered, quirk_holder), rand(1200, 3600))//increase by 10, it's lower so I can test it.
+   addtimer(CALLBACK(src, /datum/quirk/Hypno.proc/triggered, quirk_holder), rand(120, 360))//increase by 100, it's lower so I can test it.
 
 /datum/quirk/Hypno/proc/triggered(quirk_holder)//I figured I might as well make a trait of code I added.
    var/mob/living/carbon/human/H = quirk_holder
