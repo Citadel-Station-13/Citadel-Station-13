@@ -161,6 +161,7 @@
 		var/I = get_pin_data(IC_INPUT, k)
 		if(!isnull(I))
 			result = result + I
+			result = copytext(1, MAX_MESSAGE_LEN)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
