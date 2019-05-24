@@ -153,7 +153,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				var/obj/effect/immovablerod/wizard/WR = src
 				if(WR.wizard)
 					U.visible_message("<span class='boldwarning'>[src] transforms into [WR.wizard] as [U] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [WR.wizard] as you suplex them!</span>")
-					to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
+					to_chat(WR.wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
 					WR.wizard.Stun(60)
 					WR.wizard.apply_damage(25, BRUTE)
 					qdel(src)
