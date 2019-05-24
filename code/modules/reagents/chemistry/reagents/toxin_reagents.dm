@@ -304,13 +304,14 @@
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(10 to 20)
 			M.confused += 1
 			M.drowsyness += 1
+			M.adjustStaminaLoss(7.5)
 		if(20 to INFINITY)
 			M.Sleeping(40, 0)
 	..()
@@ -759,6 +760,7 @@
 	taste_description = "skewing"
 
 /datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
+	/*
 	if(M.hud_used)
 		if(current_cycle >= 5 && current_cycle % 3 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -774,6 +776,7 @@
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = newmatrix, time = 5, easing = QUAD_EASING, loop = -1)
 				animate(transform = -newmatrix, time = 5, easing = QUAD_EASING)
+	*/
 	return ..()
 
 /datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)

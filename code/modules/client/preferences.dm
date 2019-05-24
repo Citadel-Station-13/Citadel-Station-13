@@ -21,6 +21,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_ip
 	var/last_id
 
+	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
+	var/saveprefcooldown
+	var/loadprefcooldown
+	var/savecharcooldown
+	var/loadcharcooldown
+
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
@@ -75,13 +81,80 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
-		"tail_lizard" = "Smooth", "tail_human" = "Cat",
-		"snout" = "Round", "horns" = "None", "ears" = "Cat",
-		"wings" = "None", "frills" = "None", "spines" = "None",
-		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+		"tail_lizard" = "Smooth",
+		"tail_human" = "None",
+		"snout" = "Round",
+		"horns" = "None",
+		"ears" = "None",
+		"wings" = "None",
+		"frills" = "None",
+		"spines" = "None",
+		"body_markings" = "None",
+		"legs" = "Normal Legs",
+		"moth_wings" = "Plain",
+		"mcolor2" = "FFF",
+		"mcolor3" = "FFF",
+		"mam_body_markings" = "Plain",
+		"mam_ears" = "None",
+		"mam_snouts" = "None",
+		"mam_tail" = "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" = "Standard",
+		"xenohead" = "Standard",
+		"xenotail" = "Xenomorph Tail",
+		"taur" = "None",
+		"exhibitionist" = FALSE,
+		"genitals_use_skintone" = FALSE,
+		"has_cock" = FALSE,
+		"cock_shape" = "Human",
+		"cock_length" = 6,
+		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_color" = "fff",
+		"has_sheath" = FALSE,
+		"sheath_color" = "fff",
+		"has_balls" = FALSE,
+		"balls_internal" = FALSE,
+		"balls_color" = "fff",
+		"balls_amount" = 2,
+		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_size" = BALLS_SIZE_DEF,
+		"balls_cum_rate" = CUM_RATE,
+		"balls_cum_mult" = CUM_RATE_MULT,
+		"balls_efficiency" = CUM_EFFICIENCY,
+		"balls_fluid" = "semen",
+		"has_ovi" = FALSE,
+		"ovi_shape" = "knotted",
+		"ovi_length" = 6,
+		"ovi_color" = "fff",
+		"has_eggsack" = FALSE,
+		"eggsack_internal" = TRUE,
+		"eggsack_color" = "fff",
+		"eggsack_size" = BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" = EGG_GIRTH_DEF,
+		"has_breasts" = FALSE,
+		"breasts_color" = "fff",
+		"breasts_size" = "C",
+		"breasts_shape" = "Pair",
+		"breasts_fluid" = "milk",
+		"has_vag" = FALSE,
+		"vag_shape" = "Human",
+		"vag_color" = "fff",
+		"vag_clits" = 1,
+		"vag_clit_diam" = 0.25,
+		"has_womb" = FALSE,
+		"womb_cum_rate" = CUM_RATE,
+		"womb_cum_mult" = CUM_RATE_MULT,
+		"womb_efficiency" = CUM_EFFICIENCY,
+		"womb_fluid" = "femcum",
+		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
+		"flavor_text" = ""
+		)
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
+	var/custom_species = null
 
 		//Quirk list
 	var/list/positive_quirks = list()
@@ -126,6 +199,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/menuoptions
 
 	var/action_buttons_screen_locs = list()
+
+	//backgrounds
+	var/mutable_appearance/character_background
+	var/icon/bgstate = "steel"
+	var/list/bgstate_options = list("000", "midgrey", "FFF", "white", "steel", "techmaint", "dark", "plating", "reinforced")
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -264,8 +342,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
+			dat += "<br><b>Cycle background:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cycle_bg;task=input'>[bgstate]</a><BR>"
 
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
@@ -810,10 +890,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/donoritem
@@ -834,9 +914,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
 					if(gear.restricted_roles.len)
-						dat += "<font size=2>"
-						dat += gear.restricted_roles.Join(";")
-						dat += "</font>"
+						if(gear.restricted_desc)
+							dat += "<font size=2>"
+							dat += gear.restricted_desc
+							dat += "</font>"
+						else
+							dat += "<font size=2>"
+							dat += gear.restricted_roles.Join(";")
+							dat += "</font>"
 				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 			dat += "</table>"
 
@@ -1412,6 +1497,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("previous_facehair_style")
 					facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
+				if("cycle_bg")
+					bgstate = next_list_item(bgstate, bgstate_options)
+
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
@@ -1447,18 +1535,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						//let's ensure that no weird shit happens on species swapping.
+						custom_species = null
 						if(!("body_markings" in pref_species.default_features))
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
 							features["mam_body_markings"] = "None"
-						if("mam_body_markings" in pref_species.default_features && features["mam_body_markings"] == "None")
-							features["mam_body_markings"] = "Plain"
+						if("mam_body_markings" in pref_species.default_features)
+							if(features["mam_body_markings"] == "None")
+								features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
-						if("mam_tail" in pref_species.default_features)
-							features["mam_tail"] = "None"
-						if("mam_ears" in pref_species.default_features)
-							features["mam_ears"] = "None"
 						if(pref_species.id == "felinid")
 							features["mam_tail"] = "Cat"
 							features["mam_ears"] = "Cat"
@@ -1471,6 +1557,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = pref_species.default_color
 						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
+
+				if("custom_species")
+					var/new_species = reject_bad_name(input(user, "Choose your species subtype, if unique. This will show up on examinations and health scans. Do not abuse this:", "Character Preference", custom_species) as null|text)
+					if(new_species)
+						custom_species = new_species
+					else
+						custom_species = null
 
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
@@ -1579,6 +1672,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
+						features["mam_snouts"] = "None"
+
 
 				if("mam_snouts")
 					var/list/snowflake_mam_snouts_list = list()
@@ -1592,6 +1687,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_mam_snouts = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snowflake_mam_snouts_list
 					if(new_mam_snouts)
 						features["mam_snouts"] = new_mam_snouts
+						features["snout"] = "None"
 
 				if("horns")
 					var/new_horns
@@ -2107,6 +2203,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = nameless ? "[real_name] #[rand(10000, 99999)]" : real_name
 	character.name = character.real_name
 	character.nameless = nameless
+	character.custom_species = custom_species
 
 	character.gender = gender
 	character.age = age
@@ -2141,6 +2238,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
+	character.dna.custom_species = character.custom_species
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"

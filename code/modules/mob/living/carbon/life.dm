@@ -531,8 +531,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
 
-	if(slurring)
-		slurring = max(slurring-1,0)
+	if(slurring || drunkenness)
+		slurring = max(slurring-1,0,drunkenness)
 
 	if(cultslurring)
 		cultslurring = max(cultslurring-1, 0)
@@ -550,15 +550,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
-			if(prob(25))
-				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			if(has_trait(TRAIT_DRUNK_HEALING))
 				adjustBruteLoss(-0.12, FALSE)
 				adjustFireLoss(-0.06, FALSE)
-
-		if(drunkenness >= 11 && slurring < 5)
-			slurring += 1.2
 
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)

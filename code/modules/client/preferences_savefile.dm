@@ -58,6 +58,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_preferences()
 	if(!path)
 		return 0
+	if(world.time < loadprefcooldown)
+		if(istype(parent))
+			to_chat(parent, "<span class='warning'>You're attempting to load your preferences a little too fast. Wait half a second, then try again.</span>")
+		return 0
+	loadprefcooldown = world.time + PREF_SAVELOAD_COOLDOWN
 	if(!fexists(path))
 		return 0
 
@@ -152,6 +157,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!path)
 		return 0
+	if(world.time < saveprefcooldown)
+		if(istype(parent))
+			to_chat(parent, "<span class='warning'>You're attempting to save your preferences a little too fast. Wait half a second, then try again.</span>")
+		return 0
+	saveprefcooldown = world.time + PREF_SAVELOAD_COOLDOWN
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return 0
@@ -204,6 +214,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_character(slot)
 	if(!path)
 		return 0
+	if(world.time < loadcharcooldown) //This is before the check to see if the filepath exists to ensure that BYOND can't get hung up on read attempts when the hard drive is a little slow
+		if(istype(parent))
+			to_chat(parent, "<span class='warning'>You're attempting to load your character a little too fast. Wait half a second, then try again.</span>")
+		return "SLOW THE FUCK DOWN" //the reason this isn't null is to make sure that people don't have their character slots overridden by random chars if they accidentally double-click a slot
+	loadcharcooldown = world.time + PREF_SAVELOAD_COOLDOWN
 	if(!fexists(path))
 		return 0
 	var/savefile/S = new /savefile(path)
@@ -236,6 +251,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	S["real_name"]			>> real_name
 	S["nameless"]			>> nameless
+	S["custom_species"]		>> custom_species
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
 	S["gender"]				>> gender
@@ -260,12 +276,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
 	S["feature_moth_wings"]				>> features["moth_wings"]
-	if(!CONFIG_GET(flag/join_with_mutant_humans))
-		features["tail_human"] = "none"
-		features["ears"] = "none"
-	else
-		S["feature_human_tail"]				>> features["tail_human"]
-		S["feature_human_ears"]				>> features["ears"]
+	S["feature_human_tail"]				>> features["tail_human"]
+	S["feature_human_ears"]				>> features["ears"]
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -354,7 +366,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	gender = sanitize_gender(gender, TRUE, TRUE)
 	if(!real_name)
 		real_name = random_unique_name(gender)
-
+	custom_species = reject_bad_name(custom_species)
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		var/namedata = GLOB.preferences_custom_names[custom_name_id]
 		custom_names[custom_name_id] = reject_bad_name(custom_names[custom_name_id],namedata["allow_numbers"])
@@ -388,15 +400,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
-	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
+	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
 	features["horns"] 	= sanitize_inlist(features["horns"], GLOB.horns_list)
-	features["ears"]	= sanitize_inlist(features["ears"], GLOB.ears_list, "None")
+	features["ears"]	= sanitize_inlist(features["ears"], GLOB.ears_list)
 	features["frills"] 	= sanitize_inlist(features["frills"], GLOB.frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], GLOB.spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
-	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list, "Plain")
+	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list)
+	features["moth_wings"] 	= sanitize_inlist(features["moth_wings"], GLOB.moth_wings_list)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -421,6 +433,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_character()
 	if(!path)
 		return 0
+	if(world.time < savecharcooldown)
+		if(istype(parent))
+			to_chat(parent, "<span class='warning'>You're attempting to save your character a little too fast. Wait half a second, then try again.</span>")
+		return 0
+	savecharcooldown = world.time + PREF_SAVELOAD_COOLDOWN
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return 0
@@ -431,6 +448,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Character
 	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["nameless"]			, nameless)
+	WRITE_FILE(S["custom_species"]		, custom_species)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
 	WRITE_FILE(S["gender"]				, gender)

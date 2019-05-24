@@ -8,8 +8,6 @@
 	var/obj/belly/megafauna/dragon/maw/maw = new(src)
 	var/obj/belly/megafauna/dragon/gullet/gullet = new(src)
 	var/obj/belly/megafauna/dragon/gut/gut = new(src)
-//	for(var/obj/belly/X in list(maw, gullet, gut))
-//		vore_organs[X.name] = X
 	// Connect 'stomachs' together
 	maw.transferlocation = gullet
 	gullet.transferlocation = gut
@@ -49,6 +47,6 @@
 	vore_sound = "Tauric Swallow"
 	desc = "With a rush of burning ichor greeting you, you're introduced to the Drake's stomach. Wrinkled walls greedily grind against you, acidic slimes working into your body as you become fuel and nutriton for a superior predator. All that's left is your body's willingness to resist your destiny."
 	digest_mode = DM_DRAGON
-	digest_burn = 5
+	digest_burn = 2
 	swallow_time = 100  // costs extra time to eat directly to here
 	escapechance = 0

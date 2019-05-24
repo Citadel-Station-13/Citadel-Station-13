@@ -9,7 +9,6 @@
 	var/vore_taste = null					// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0						// Is the vore panel open?
-	var/noisy = FALSE						// tummies are rumbly?
 	var/absorbed = FALSE					//are we absorbed?
 	var/next_preyloop
 	var/vore_init = FALSE					//Has this mob's vore been initialized yet?
@@ -139,51 +138,6 @@
 //	return//disabled until I can make that toggle work
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
-
-//Dragon noms need to be faster
-/mob/living/proc/dragon_feeding(var/mob/living/user, var/mob/living/prey)
-	var/belly = user.vore_selected
-	return perform_dragon(user, prey, user, belly)
-
-/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/obj/belly/belly, swallow_time = 20)
-	//Sanity
-	if(!user || !prey || !pred || !istype(belly) || !(belly in pred.vore_organs))
-		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
-		return FALSE
-
-	if(istype(pred, /mob/living/simple_animal/hostile/megafauna/dragon))
-		if(isliving(prey) && !prey.Adjacent(pred))
-			return FALSE
-
-	// The belly selected at the time of noms
-	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
-	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
-
-		// Prepare messages
-	if(user == pred) //Feeding someone to yourself
-		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
-		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly.vore_verb),prey,lowertext(belly.name))
-
-	if(!prey.Adjacent(user)) // let's doublecheck for sanity's sake.
-		return FALSE
-
-	// Announce that we start the attempt!
-	user.visible_message(attempt_msg)
-
-	if(!do_mob(src, user, swallow_time))
-		return FALSE // Prey escaped (or user disabled) before timer expired.
-
-	// If we got this far, nom successful! Announce it!
-	user.visible_message(success_msg)
-	playsound(get_turf(user), "[belly.vore_sound]",75,0,-6,0)
-
-	// Actually shove prey into the belly.
-	belly.nom_mob(prey, user)
-	if (pred == user)
-		message_admins("[key_name(pred)] ate [key_name(prey)].")
-		pred.log_message("[key_name(pred)] ate [key_name(prey)].", LOG_ATTACK)
-		prey.log_message("[key_name(prey)] was eaten by [key_name(pred)].", LOG_ATTACK)
-	return TRUE
 
 //
 // Master vore proc that actually does vore procedures
@@ -335,8 +289,7 @@
 		if(!confirm == "Okay" || loc != B)
 			return
 		//Actual escaping
-		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
-		src.cure_blind("belly_[REF(src)]")
+		B.release_specific_contents(src,TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))
@@ -391,7 +344,6 @@
 	P.digestable = src.digestable
 	P.devourable = src.devourable
 	P.feeding = src.feeding
-	P.noisy = src.noisy
 	P.vore_taste = src.vore_taste
 
 	var/list/serialized = list()
@@ -417,7 +369,6 @@
 	digestable = P.digestable
 	devourable = P.devourable
 	feeding = P.feeding
-	noisy = P.noisy
 	vore_taste = P.vore_taste
 
 	release_vore_contents(silent = TRUE)

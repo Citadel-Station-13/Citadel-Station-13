@@ -27,6 +27,14 @@
 	for(var/i in 1 to 6)
 		new /obj/item/paper(folder)
 
+/obj/item/storage/briefcase/crafted
+	desc = "Hand crafted suitcase made of leather and cloth."
+	force = 6
+	max_integrity = 50
+
+/obj/item/storage/briefcase/crafted/PopulateContents()
+	return //So we dont spawn items
+
 /obj/item/storage/briefcase/lawyer
 	folder_path = /obj/item/folder/blue
 

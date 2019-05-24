@@ -64,7 +64,8 @@
 		p++
 	return sanitize(t)
 
-/proc/slur(n)
+/proc/slur(n,var/strength=50)
+	strength = min(strength,50)
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)
@@ -72,7 +73,7 @@
 	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
+		if(rand(1,100)<=strength*0.5)
 			if(lowertext(newletter)=="o")
 				newletter="u"
 			if(lowertext(newletter)=="s")
@@ -83,17 +84,17 @@
 				newletter="oo"
 			if(lowertext(newletter)=="c")
 				newletter="k"
-		if(rand(1,20)==20)
+		if(rand(1,100) <= strength*0.25)
 			if(newletter==" ")
 				newletter="...huuuhhh..."
 			if(newletter==".")
 				newletter=" *BURP*."
-		switch(rand(1,20))
-			if(1)
+		if(rand(1,100) <= strength*0.5)
+			if(rand(1,5) == 1)
 				newletter+="'"
-			if(10)
+			if(rand(1,5) == 1)
 				newletter+="[newletter]"
-			if(20)
+			if(rand(1,5) == 1)
 				newletter+="[newletter][newletter]"
 		newphrase+="[newletter]";counter-=1
 	return newphrase

@@ -208,3 +208,38 @@
 	new/obj/item/stack/cable_coil/orange(src)
 	new/obj/item/stack/cable_coil/cyan(src)
 	new/obj/item/stack/cable_coil/white(src)
+
+/obj/item/storage/toolbox/gold_real
+	name = "golden toolbox"
+	desc = "A larger then normal toolbox made of gold plated plastitanium."
+	item_state = "gold"
+	icon_state = "gold"
+	has_latches = FALSE
+	force = 16 // Less then a spear
+	throwforce = 14
+	throw_speed = 5
+	throw_range = 10
+
+/obj/item/storage/toolbox/gold_real/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar/red(src)
+	new /obj/item/wirecutters(src, "red")
+	new /obj/item/multitool/ai_detect(src)
+	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/storage/toolbox/gold_real/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 40
+	STR.max_items = 12
+
+/obj/item/storage/toolbox/gold_fake // used in crafting
+	name = "golden toolbox"
+	desc = "A gold plated toolbox, fancy and harmless do to the gold plating being on cardboard!"
+	icon_state = "gold"
+	item_state = "gold"
+	has_latches = FALSE
+	force = 0
+	throwforce = 0

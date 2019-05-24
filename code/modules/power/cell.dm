@@ -200,6 +200,10 @@
 	charge = 0
 	update_icon()
 
+/obj/item/stock_parts/cell/lascarbine
+	name = "laser carbine power supply"
+	maxcharge = 2500
+
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
 	maxcharge = 40000
