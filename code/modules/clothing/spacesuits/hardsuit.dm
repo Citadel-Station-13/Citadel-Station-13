@@ -89,7 +89,6 @@
 	. = ..()
 	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
 
-
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
@@ -103,7 +102,6 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/tank/jetpack/suit/jetpack = null
-
 
 /obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
@@ -141,7 +139,6 @@
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 		return
 	return ..()
-
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
@@ -203,7 +200,6 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	tauric = TRUE		//Citadel Add for tauric hardsuits
-
 
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
@@ -340,7 +336,6 @@
 		user.update_inv_wear_suit()
 		user.update_inv_w_uniform()
 
-
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
 	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
@@ -369,7 +364,6 @@
 	visor_flags = 0
 	on = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
@@ -435,7 +429,6 @@
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
 
-
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical
 	name = "medical hardsuit helmet"
@@ -456,6 +449,41 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+
+//CMO hardsuit - Less armor but speed buffs and huds
+/obj/item/clothing/suit/space/hardsuit/medical/CMO
+	icon_state = "hardsuit-medical"
+	name = "CMO medical hardsuit"
+	desc = "A Very.Med special suit that protects against hazardous, low pressure environments. Built with ultra-lightweight materials for easier movement. Has less armor then the normal Medical hardsuit but allows for greater mobility"
+	item_state = "medical_hardsuit"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/defibrillator, /obj/item/storage/belt/medical, /obj/item/reagent_containers/hypospray, /obj/item/pinpointer/crew, /obj/item/sensor_device)
+	armor = list("melee" = 20, "bullet" = 0, "laser" = 15, "energy" = 5, "bomb" = 15, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 85)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
+	slowdown = 0 //So CMO can move with easy.
+	species_exception = list(/datum/species/angel)
+	tauric = TRUE		//Citadel Add for tauric hardsuits
+
+/obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
+	name = "CMO hardsuit helmet"
+	desc = "A Very.Med special helmet designed for work in a hazardous, low pressure environment. Built with ultra-lightweight materials for extra comfort and movement, comes with bult in eye protection and a medical hud."
+	icon_state = "hardsuit0-medical"
+	item_state = "medical_helm"
+	item_color = "medical"
+	flash_protect = 1
+	armor = list("melee" = 20, "bullet" = 0, "laser" = 15, "energy" = 5, "bomb" = 15, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 85)
+	scan_reagents = 1
+
+/obj/item/clothing/head/helmet/space/hardsuit/medical/CMO/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/medical/CMO/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.remove_hud_from(user)
 
 	//Research Director hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/rd
@@ -499,8 +527,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 	tauric = TRUE		//Citadel Add for tauric hardsuits
 
-
-
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
 	name = "security hardsuit helmet"
@@ -509,7 +535,6 @@
 	item_state = "sec_helm"
 	item_color = "sec"
 	armor = list("melee" = 35, "bullet" = 15, "laser" = 30,"energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 75, "acid" = 75)
-
 
 /obj/item/clothing/suit/space/hardsuit/security
 	icon_state = "hardsuit-sec"
@@ -531,7 +556,6 @@
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list("melee" = 45, "bullet" = 25, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
-
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
 	icon_state = "hardsuit-hos"
@@ -692,7 +716,6 @@
 		return 1
 	return 0
 
-
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -750,8 +773,6 @@
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
 
-
-
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	name = "shielded hardsuit helmet"
 	desc = "Standard issue hardsuit helmet for playing capture the flag."
@@ -759,7 +780,6 @@
 	item_state = "hardsuit0-ert_medical"
 	item_color = "ert_medical"
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
-
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
 	icon_state = "hardsuit0-ert_security"
@@ -772,10 +792,6 @@
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
-
-
-
-
 
 //////Syndicate Version
 
@@ -790,7 +806,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
 	tauric = TRUE		//Citadel Add for tauric hardsuits
-
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/Initialize()
 	jetpack = new /obj/item/tank/jetpack/suit(src)
