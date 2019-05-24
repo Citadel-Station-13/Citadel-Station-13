@@ -345,24 +345,25 @@ im
 
 //beaker check proc,
 /datum/reagents/proc/beaker_check(atom/A)
-	message_admins("beaker check proc'd")
 	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta))
 		return
-	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
+	else if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
 		if(chem_temp > 444)//assuming polypropylene
-			var/list/seen = viewers(5, get_turf(my_atom))
+			var/list/seen = viewers(5, get_turf(A))
 			var/iconhtml = icon2html(A, seen)
 			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s beak melts from the temperature!</span>")
+				to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the temperature!</span>")
+				playsound(get_turf(A), 'sound/effects/bubbles.ogg', 80, 1)
 			qdel(A)
 			return
-	if ((pH < 0.5) || (pH > 13.5))//maybe make it higher? Though..Hmm!
-		var/list/seen = viewers(5, get_turf(my_atom))
+	else if(istype(A, /obj/item/reagent_containers/glass) && ((pH < 0.5) || (pH > 13.5)))//maybe make it higher? Though..Hmm!
+		var/list/seen = viewers(5, get_turf(A))
 		var/iconhtml = icon2html(A, seen)
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s beak melts from the extreme pH!</span>")
+			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
+			playsound(get_turf(A), 'sound/effects/bubbles.ogg', 80, 1)
 		qdel(A)
-		return
+	return
 
 
 
@@ -378,8 +379,6 @@ im
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
-
-	beaker_check(my_atom) //Beaker resilience test
 
 	do //What does do do in byond? It sounds very redundant? is it a while loop?
 		var/list/possible_reactions = list() //init list
@@ -650,9 +649,9 @@ im
 	//message_admins("Loop beginning")
 	//Begin Parse
 
-	message_admins("Purity precalc: [overallPurity]")
+	WARNING("Purity precalc: [overallPurity]")
 	update_holder_purity(C)//updates holder's purity
-	message_admins("Purity postcalc: [overallPurity]")
+	WARNING("Purity postcalc: [overallPurity]")
 
 	//Check extremes first
 	if (cached_temp > C.ExplodeTemp)
@@ -765,14 +764,15 @@ im
 
 	return (reactedVol)
 
-/datum/reagents/proc/update_holder_purity(var/datum/chemical_reaction/fermi/C)
+/datum/reagents/proc/update_holder_purity(var/datum/chemical_reaction/fermi/C, holder)
 	var/list/cached_reagents = reagent_list
 	var/i
 	var/cachedPurity
 	//var/fermiChem
-	for(var/reagent in C.required_reagents)
-		cachedPurity += cached_reagents[reagent].purity
-		i++
+	for(var/datum/reagent/R in my_atom.reagents.reagent_list)
+		if (R in cached_reagents)
+			cachedPurity += R.purity
+			i++
 	overallPurity = cachedPurity/i
 
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -879,16 +879,18 @@ im
 
 	if (D.id == "water") //Do like an otter, add acid to water.
 		if (pH <= 2)
-			var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+			var/datum/effect_system/smoke_spread/chem/s = new
 			var/turf/T = get_turf(my_atom)
-			var/datum/reagents/R = new/datum/reagents(3000)//I don't want to hold it back..!
+			var/datum/reagents/R = new/datum/re agents(3000)//I don't want to hold it back..!
 			R.add_reagent("fermiAcid", amount)
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
 				remove_reagent(reagentgas, amount/5)
-			s.set_up(R, amount, T)
+			s.set_up(R, CLAMP(amount/10, 0, 3), T)
 			s.start()
 			return FALSE
+
+	beaker_check(my_atom) //Beaker resilience test
 
 	if(!pH)
 		other_pH = D.pH

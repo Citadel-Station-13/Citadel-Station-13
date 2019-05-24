@@ -17,6 +17,7 @@
 	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
 	var/InverseChem 		= "fermiTox" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
+	//var/addProc 			= FALSE //When this reagent is added to a new beaker, it does something.
 
 ///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
 	//current_cycle++
@@ -634,6 +635,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		H.emergent_genital_call()
 		message_admins("No breasts found on init!")
 		return
+
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
 	B.cached_size = sizeConv[B.size]
@@ -740,14 +742,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	. = ..()
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
-	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		message_admins("No penis found on init!")
 		H.emergent_genital_call()
 		return
 	P.prev_size = P.length
 	P.cached_length = P.length
-	message_admins("init P len: [P.length], prev: [P.prev_size], cache = [P.cached_length]")
+	message_admins("init P len chem: [P.length], prev: [P.prev_size], cache = [P.cached_length]")
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	var/mob/living/carbon/human/H = M
@@ -757,10 +759,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
 		if(nP)
-			nP.length = 0.2
+			nP.length = 1
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
-			nP.cached_length = 0.2
-			nP.prev_size = 0.2
+			nP.cached_length = 1
+			nP.prev_size = 1
 			M.reagents.remove_reagent(src.id, 5)
 			P = nP
 
@@ -780,7 +782,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
 	var/obj/item/organ/genital/womb/W = M.getorganslot("womb")
 
-	message_admins("PE Breast status: [B]")
 	if(M.gender == FEMALE)
 		M.gender = MALE
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")

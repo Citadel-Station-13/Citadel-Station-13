@@ -6,7 +6,7 @@
 	zone 					= "chest"
 	slot 					= "breasts"
 	w_class 				= 3
-	size 					= BREASTS_SIZE_DEF  //SHOULD BE A LETTER
+	size 					= BREASTS_SIZE_DEF  //SHOULD BE A LETTER, starts as a number...???
 	var/cached_size			= null//for enlargement SHOULD BE A NUMBER
 	var/prev_size			//For flavour texts SHOULD BE A LETTER
 	var/breast_sizes 		= list ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "huge", "flat")
@@ -26,8 +26,10 @@
 	reagents.add_reagent(fluid_id, fluid_max_volume)
 	prev_size = size
 	cached_size = breast_values[size]
+	/* This breaks the character creation sceen. for some reason sizes are set to numbers there.
 	if (cached_size == "c")//fix for a weird bug that has something to do with how they're set up on the character create screen.
 		cached_size = 3
+	*/
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))
@@ -93,6 +95,8 @@
 		prev_size = size
 		return
 	//message_admins("Breast size at start: [size], [cached_size], [owner]")
+	if(!isnum(cached_size))
+		cached_size = breast_values[cached_size]
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!(Why does this runtime??)
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		src.Remove(owner)

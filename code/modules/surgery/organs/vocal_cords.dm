@@ -1022,7 +1022,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					C.Sleeping(30 * power_multiplier)
+					C.Sleeping(40 * power_multiplier)
 					E.cooldown += 10
 
 	//STRIP
@@ -1032,7 +1032,6 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)//Tier 2 only
-					E.phase = 1
 					var/items = H.get_contents()
 					for(var/obj/item/W in items)
 						if(W == H.w_uniform || W == H.wear_suit)

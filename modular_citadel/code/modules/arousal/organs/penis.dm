@@ -23,6 +23,8 @@
 
 /obj/item/organ/genital/penis/Initialize()
 	. = ..()
+	var/mob/living/carbon/human/o = owner
+	length = o.dna.features["cock_length"] //for whatever reason, this doesn't set up correctly.
 	prev_size = length
 	cached_length = length
 

@@ -58,7 +58,7 @@
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 	if(R.reagent_list)
-		s.set_up(R, (volume/10)*pHmod, T)
+		s.set_up(R, (volume/10)*pHmod, 10, T)
 		s.start()
 	if(!ImpureTot == 0)
 		ImpureTot *= volume
@@ -225,10 +225,9 @@
 	id = "enthrall"
 	results = list("enthrall" = 0.3)
 	required_reagents = list("iron" = 0.1, "iodine" = 0.1)
-	//required_reagents = list("cocoa" = 1, "astral" = 1, "mindbreaker" = 1, "psicodine" = 1, "happiness" = 1)
+	//required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
 	required_catalysts = list("blood" = 0.1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
-	//required_reagents = list("stable_plasma" = 5, "slimejelly" = 5, "synthflesh" = 10, "blood" = 10)
 	//FermiChem vars:
 	OptimalTempMin 			= 780
 	OptimalTempMax			= 800
@@ -268,24 +267,6 @@
 	E.data.["creatorID"] = B.data.["ckey"]
 	E.creatorID = B.data.["ckey"]
 	message_admins("MKUltra made name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
-
-//Apprently works..?Negative
-/*
-/datum/chemical_reaction/fermi/enthrall/on_reaction(datum/reagents/holder)
-	message_admins("On reaction for enthral proc'd")
-	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
-	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in holder.reagent_list
-	if (B.data.["gender"] == "female")
-		E.data.["creatorGender"] = "Mistress"
-	else
-		E.data.["creatorGender"] = "Master"
-	E.data["creatorName"] = B.data.["real_name"]
-	E.data.["creatorID"] = B.data.["ckey"]
-	message_admins("name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
-	..()
-
-	//var/enthrallID = B.get_blood_data()
-*/
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/turf/T = get_turf(my_atom)
