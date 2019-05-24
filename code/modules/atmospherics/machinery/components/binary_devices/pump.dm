@@ -29,7 +29,7 @@ Thus, the two variables affect pump operation are set in New():
 	pipe_state = "pump"
 	
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		on = !on
 		update_icon()
 	return ..()
@@ -37,7 +37,7 @@ Thus, the two variables affect pump operation are set in New():
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		
 /obj/machinery/atmospherics/components/binary/pump/layer1
