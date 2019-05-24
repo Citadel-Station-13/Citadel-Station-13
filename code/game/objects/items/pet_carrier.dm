@@ -202,7 +202,7 @@
 	occupants -= occupant
 	occupant_weight -= occupant.mob_size
 	occupant.setDir(SOUTH)
-	if(iscarbon(occupent))
+	if(iscarbon(occupant))
 		occupant.Knockdown(10, override_hardstun = 100)
 		slowdown = max(0, slowdown - slowdown_per_human)
 
