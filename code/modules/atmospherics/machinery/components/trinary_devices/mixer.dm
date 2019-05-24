@@ -23,9 +23,8 @@
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		target_pressure = MAX_OUTPUT_PRESSURE
-			update_icon()
-	return ..()
-
+		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
+		
 /obj/machinery/atmospherics/components/trinary/mixer/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
