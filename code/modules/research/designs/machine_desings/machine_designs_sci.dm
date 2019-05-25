@@ -152,4 +152,4 @@
 	id = "circuit_imprinter"
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERIN
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
