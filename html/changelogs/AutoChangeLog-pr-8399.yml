@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Large maps have had a patient room transformed into micro chemistry stations with nothing else in them. They've been labelled 'Apothecary' rooms and are accessible by doctors."
