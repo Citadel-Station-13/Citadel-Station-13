@@ -300,6 +300,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		if(C.client)
 			C.canbearoused = C.client.prefs.arousable
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(NOGENITALS in H.dna.species.species_traits)
+			H.give_genitals(TRUE) //call the clean up proc to delete anything on the mob then return.
+
 // EDIT ENDS
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)

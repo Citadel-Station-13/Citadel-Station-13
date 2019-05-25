@@ -133,12 +133,12 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
-	if (NOGENITALS in dna.species.species_traits)
-		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
+	if (NOGENITALS in dna.species.species_traits)
+		return
 	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 	if(dna.features["has_breasts"])
 		give_breasts()
