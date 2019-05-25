@@ -33,7 +33,6 @@
 	else
 		toggle_internals(user)
 
-
 /obj/item/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
 		return
@@ -47,7 +46,6 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
 
 /obj/item/tank/jetpack/proc/turn_on()
 	on = TRUE
@@ -121,6 +119,7 @@
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
+	full_speed = FALSE //Pre-hardsuit tech
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -153,8 +152,6 @@
 	item_state = "jetpack-sec"
 	full_speed = FALSE
 
-
-
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
@@ -162,7 +159,6 @@
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
-
 
 /obj/item/tank/jetpack/suit
 	name = "hardsuit jetpack upgrade"
@@ -221,7 +217,6 @@
 		turn_off()
 		return
 	..()
-
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
