@@ -1,14 +1,14 @@
 
-##Citadel Station 13 <BR>
-Based and maintained from /tg/station.<BR>
+##WZDS Station 13 <BR>
+Forked from Citadel Station 13 and Based and maintained from /tg/station.<BR>
 
 [![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/pretty-risque.svg)](https://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](http://forthebadge.com)
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/Citadel-Station-13/Citadel-Station-13)](http://www.krihelinator.xyz)
+[![Build Status](https://api.travis-ci.org/WZDSS13/WZDS-Station-13.png)](https://travis-ci.org/WZDSS13/WZDS-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/WZDSS13/WZDS-Station-13)](http://www.krihelinator.xyz)
 
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Citadel-Station-13/Citadel-Station-13.svg)](http://isitmaintained.com/project/Citadel-Station-13/Citadel-Station-13 "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/WZDSS13/WZDS-Station-13.svg)](http://isitmaintained.com/project/WZDSS13/WZDS-Station-13 "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/WZDSS13/WZDS-Station-13.svg)](http://isitmaintained.com/project/WZDSS13/WZDS-Station-13 "Average time to resolve an issue")
 
 **Upstream Information** <BR>
 **Website:** http://www.tgstation13.org <BR>
@@ -19,8 +19,8 @@ Based and maintained from /tg/station.<BR>
 **Citadel Station Information** <BR>
 **Forums:** http://citadel-station.net/forum/ <BR>
 **Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
-**Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
-**Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
+**Code:** https://github.com/WZDSS13/WZDS-Station-13 <BR>
+**Discord:**  [Here](https://discord.gg/vD7AAW5). <BR>
 
 ## DOWNLOADING
 
