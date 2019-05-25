@@ -100,12 +100,6 @@ proc/get_top_level_mob(var/mob/S)
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
 	message = "<b>[user]</b> " + "<i>[message]</i>"
 
-	for(var/mob/M in GLOB.dead_mob_list)
-		if(!M.client || isnewplayer(M))
-			continue
-		var/T = get_turf(src)
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(message)
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(message=message,hearing_distance=1)
