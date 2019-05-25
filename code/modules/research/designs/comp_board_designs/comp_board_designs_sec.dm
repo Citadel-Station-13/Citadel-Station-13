@@ -10,22 +10,6 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/board/comconsole
-	name = "Computer Design (Communications)"
-	desc = "Allows for the construction of circuit boards used to build a communications console."
-	id = "comconsole"
-	build_path = /obj/item/circuitboard/computer/communications
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY		//Honestly should have a bridge techfab for this sometime.
-
-/datum/design/board/idcardconsole
-	name = "Computer Design (ID Console)"
-	desc = "Allows for the construction of circuit boards used to build an ID computer."
-	id = "idcardconsole"
-	build_path = /obj/item/circuitboard/computer/card
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY		//Honestly should have a bridge techfab for this sometime.
-
 /datum/design/board/secdata
 	name = "Computer Design (Security Records Console)"
 	desc = "Allows for the construction of circuit boards used to build a security records console."
@@ -41,3 +25,19 @@
 	build_path = /obj/item/circuitboard/computer/prisoner
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/board/comconsole
+	name = "Computer Design (Communications)"
+	desc = "Allows for the construction of circuit boards used to build a communications console."
+	id = "comconsole"
+	build_path = /obj/item/circuitboard/computer/communications
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	| DEPARTMENTAL_FLAG_ENGINEERING 	//Honestly should have a bridge techfab for this sometime.
+
+/datum/design/board/idcardconsole
+	name = "Computer Design (ID Console)"
+	desc = "Allows for the construction of circuit boards used to build an ID computer."
+	id = "idcardconsole"
+	build_path = /obj/item/circuitboard/computer/card
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY	| DEPARTMENTAL_FLAG_ENGINEERING 	//Honestly should have a bridge techfab for this sometime.
