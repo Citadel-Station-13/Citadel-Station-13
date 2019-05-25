@@ -271,6 +271,13 @@
 
 //fermichem procs
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+
+	if (cached_size == null) //MOVE THIS TO FORCE UPDATE I have to do this because Pooj's latest commit broke everthing. I give up and I hate genitals.
+		prev_size = size
+		cached_size = breast_values[size]
+	if(!isnum(cached_size))
+		cached_size = breast_values[cached_size]
 	dna.species.handle_genitals(src)
 	//dna.species.handle_breasts(src)
 	//H.update_body()

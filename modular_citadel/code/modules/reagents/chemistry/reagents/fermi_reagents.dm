@@ -1459,7 +1459,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
-		empulse((get_turf(C)), 3, 2)//So the nanites randomize
+		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
+		var/T = get_turf(C)
+		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>The nanintes short circuit within your system!</b></span>")
 	..()
 
@@ -1472,11 +1474,13 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 //Increases shock events.
 /datum/reagent/fermi/naninte_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
-	if(prob(20))
+	if(prob(10))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
-		empulse((get_turf(C)), 2, 1, 1)//So the nanites randomize
+		//empulse((get_turf(C)), 2, 1, 1)//So the nanites randomize
+		var/T = get_turf(C)
+		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
 

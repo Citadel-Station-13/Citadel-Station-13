@@ -91,10 +91,6 @@
 /obj/item/organ/genital/breasts/update_size()//wah
 	//var/mob/living/carbon/human/o = owner
 	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
-	if (cached_size == null)
-		prev_size = size
-		cached_size = breast_values[size]
-		return
 	//message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(!isnum(cached_size))
 		cached_size = breast_values[cached_size]
