@@ -89,7 +89,7 @@
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
 	icon_state = "jetpack-improvised"
 	item_state = "jetpack-sec"
-	volume = 20 //normal jetpacks have 70 volume
+	volume = 30 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at hardsuit jetpack speeds
 
@@ -117,9 +117,10 @@
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
+	volume = 60
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
-	full_speed = FALSE //Pre-hardsuit tech
+	full_speed = FALSE //Old pre-hardsuit tech
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -132,7 +133,7 @@
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
 	item_state = "jetpack-mini"
-	volume = 40
+	volume = 50
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 

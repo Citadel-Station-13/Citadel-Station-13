@@ -1,0 +1,5 @@
+author: "WhiteHusky"
+delete-after: True
+changes: 
+  - tweak: "Changed the styling of arousal messages to use pink-ish colors."
+  - bugfix: "The orgasm moodlet message new-lines properly."
