@@ -102,7 +102,7 @@
 					return 1
 
 	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
-		if(resting && !L.resting)
+		if(resting && !L.resting && !pulledby)
 			if(attemptingcrawl)
 				return TRUE
 			if(getStaminaLoss() >= STAMINA_SOFTCRIT)
