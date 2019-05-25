@@ -39,7 +39,6 @@ Thus, the two variables affect pump operation are set in New():
 		transfer_rate = MAX_TRANSFER_RATE
 		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
 		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		
 /obj/machinery/atmospherics/components/binary/volume_pump/layer1
 	piping_layer = PIPING_LAYER_MIN
