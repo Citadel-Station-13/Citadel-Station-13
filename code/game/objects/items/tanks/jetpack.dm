@@ -151,6 +151,7 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
+	full_speed = FALSE
 
 
 
