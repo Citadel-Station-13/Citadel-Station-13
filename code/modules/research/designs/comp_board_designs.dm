@@ -304,10 +304,3 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/meteor_console
-	name = "Computer Design (Meteor Satellite Console)"
-	desc = "Allows for the construction of circuit boards used to build a new Meteor Satellite monitor console."
-	id = "meteor_console"
-	build_path = /obj/item/circuitboard/computer/sat_control
-	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
