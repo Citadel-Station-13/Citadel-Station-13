@@ -288,6 +288,10 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
 	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
 	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
+	new/datum/stack_recipe("12g ammo box", /obj/item/storage/box/lethalslugs), \
+	new/datum/stack_recipe("stun slug ammo box", /obj/item/storage/box/stunslug), \
+	new/datum/stack_recipe("tech shell ammo box", /obj/item/storage/box/techsslug), \
+	new/datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
