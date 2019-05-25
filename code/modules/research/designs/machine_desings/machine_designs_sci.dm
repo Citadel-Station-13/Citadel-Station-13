@@ -74,14 +74,6 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/circuit_imprinter
-	name = "Machine Design (Circuit Imprinter Board)"
-	desc = "The circuit board for a circuit imprinter."
-	id = "circuit_imprinter"
-	build_path = /obj/item/circuitboard/machine/circuit_imprinter
-	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/rdservercontrol
 	name = "Computer Design (R&D Server Control Console Board)"
 	desc = "The circuit board for an R&D Server Control Console."
@@ -153,3 +145,11 @@
 	build_path = /obj/item/circuitboard/machine/nanite_program_hub
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/circuit_imprinter
+	name = "Machine Design (Circuit Imprinter Board)"
+	desc = "The circuit board for a circuit imprinter."
+	id = "circuit_imprinter"
+	build_path = /obj/item/circuitboard/machine/circuit_imprinter
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERIN
