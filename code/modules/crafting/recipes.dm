@@ -189,6 +189,16 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/Firebot
+	name = "Firebot"
+	result = /mob/living/simple_animal/bot/firebot
+	reqs = list(/obj/item/extinguisher = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/assembly/prox_sensor = 1,
+				/obj/item/clothing/head/hardhat/red = 1)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -731,7 +741,7 @@
 
 /datum/crafting_recipe/goldenbox
 	name = "Gold Plated Toolbox"
-	result = /obj/item/storage/toolbox/gold_fake 
+	result = /obj/item/storage/toolbox/gold_fake
 	reqs = list(/obj/item/stack/sheet/cardboard = 1, //so we dont null items in crafting
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/stack/sheet/mineral/gold = 1,
