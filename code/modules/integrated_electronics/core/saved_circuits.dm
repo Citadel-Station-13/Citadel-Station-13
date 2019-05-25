@@ -144,6 +144,8 @@
 		return "Bad assembly name."
 	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"]))
 		return "Bad assembly description."
+	if(assembly_params["detail_color"] && !reject_bad_text(assembly_params["detail_color"], 7))
+		return "Bad assembly color."
 
 // Loads assembly parameters from a list
 // Doesn't verify any of the parameters it loads, this is the job of verify_save()
