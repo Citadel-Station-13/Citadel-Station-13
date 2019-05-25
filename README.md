@@ -16,9 +16,7 @@ Forked from Citadel Station 13 and Based and maintained from /tg/station.<BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
-**Citadel Station Information** <BR>
-**Forums:** http://citadel-station.net/forum/ <BR>
-**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
+**WZDS Station Information** <BR>
 **Code:** https://github.com/WZDSS13/WZDS-Station-13 <BR>
 **Discord:**  [Here](https://discord.gg/vD7AAW5). <BR>
 
