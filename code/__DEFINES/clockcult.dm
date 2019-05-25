@@ -28,9 +28,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_APPLICATION "Application"
 
 //Various costs related to power.
-#define MAX_CLOCKWORK_POWER 50000 //The max power in W that the cult can stockpile
-#define SCRIPT_UNLOCK_THRESHOLD 25000 //Scripts will unlock if the total power reaches this amount
-#define APPLICATION_UNLOCK_THRESHOLD 40000 //Applications will unlock if the total powre reaches this amount
+#define MAX_CLOCKWORK_POWER 80000 //The max power in W that the cult can stockpile
+#define SCRIPT_UNLOCK_THRESHOLD 35000 //Scripts will unlock if the total power reaches this amount
+#define APPLICATION_UNLOCK_THRESHOLD 50000 //Applications will unlock if the total powre reaches this amount
 
 #define ABSCOND_ABDUCTION_COST 95
 

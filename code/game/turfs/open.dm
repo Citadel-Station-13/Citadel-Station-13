@@ -7,6 +7,9 @@
 	var/wet
 
 	var/footstep = null
+	var/barefootstep = null
+	var/clawfootstep = null
+	var/heavyfootstep = null
 
 /turf/open/ComponentInitialize()
 	. = ..()
@@ -27,6 +30,9 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = TRUE
 
 /turf/open/indestructible/Melt()
@@ -42,6 +48,9 @@
 /turf/open/indestructible/sound
 	name = "squeaky floor"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -61,6 +70,10 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "cobble"
 	baseturfs = /turf/open/indestructible/cobble
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis
@@ -71,6 +84,9 @@
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	footstep = FOOTSTEP_LAVA
+	barefootstep = FOOTSTEP_LAVA
+	clawfootstep = FOOTSTEP_LAVA
+	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
@@ -108,6 +124,9 @@
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
@@ -116,6 +135,9 @@
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -128,6 +150,9 @@
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
 	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()

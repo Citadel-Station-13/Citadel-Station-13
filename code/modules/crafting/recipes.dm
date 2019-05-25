@@ -189,6 +189,16 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/Firebot
+	name = "Firebot"
+	result = /mob/living/simple_animal/bot/firebot
+	reqs = list(/obj/item/extinguisher = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/assembly/prox_sensor = 1,
+				/obj/item/clothing/head/hardhat/red = 1)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -433,6 +443,15 @@
 	name = "Extendo-Hand"
 	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
+	category = CAT_MISC
+
+/datum/crafting_recipe/bluespacehonker
+	name = "Bluespace Bike horn"
+	result = /obj/item/bikehorn/bluespacehonker
+	time = 10
+	reqs = list(/obj/item/stack/ore/bluespace_crystal = 1,
+				/obj/item/toy/crayon/blue = 1,
+				/obj/item/bikehorn = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/chemical_payload
@@ -686,6 +705,16 @@
 	reqs = list(/obj/item/bedsheet = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/briefcase
+	name = "Hand made Briefcase"
+	result = /obj/item/storage/briefcase/crafted
+	time = 35
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cardboard = 1,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 5)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/aitater
 	name = "intelliTater"
 	result = /obj/item/aicard/aitater
@@ -706,6 +735,17 @@
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
 	time = 30
-	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/goldenbox
+	name = "Gold Plated Toolbox"
+	result = /obj/item/storage/toolbox/gold_fake
+	reqs = list(/obj/item/stack/sheet/cardboard = 1, //so we dont null items in crafting
+				/obj/item/stack/cable_coil = 10,
+				/obj/item/stack/sheet/mineral/gold = 1,
+				/obj/item/stock_parts/cell = 1,
+				/datum/reagent/water  = 15)
+	time = 40
+	category = CAT_MISC

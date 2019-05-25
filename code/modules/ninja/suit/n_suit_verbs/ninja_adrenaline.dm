@@ -4,12 +4,25 @@
 
 	if(!ninjacost(0,N_ADRENALINE))
 		var/mob/living/carbon/human/H = affecting
-		H.SetUnconscious(0)
+		H.SetSleeping(0)
 		H.SetStun(0)
 		H.SetKnockdown(0)
-		H.adjustStaminaLoss(-75)
+		H.SetUnconscious(0)
+		H.adjustStaminaLoss(-150)
 		H.stuttering = 0
+		H.updatehealth()
+		H.update_stamina()
+		H.resting = 0
+		H.lying = 0
+		H.update_canmove()
+
+		H.reagents.add_reagent("inaprovaline", 3) //let's give another chance to dumb fucks who forget to breathe
+		H.reagents.add_reagent("synaptizine", 10)
+		H.reagents.add_reagent("omnizine", 10)
+		H.reagents.add_reagent("stimulants", 10)
+
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
+
 		a_boost--
 		to_chat(H, "<span class='notice'>There are <B>[a_boost]</B> adrenaline boosts remaining.</span>")
 		s_coold = 3

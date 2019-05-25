@@ -196,8 +196,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_heal
-	name = "Defibrillartor Healing disk"
-	desc = "A disk allowing for greater amounts of healing"
+	name = "Defibrillator Healing disk"
+	desc = "An upgrade which increases the healing power of the defibrillator"
 	id = "defib_heal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
@@ -207,8 +207,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_shock
-	name = "Defibrillartor Anit-Shock Disk"
-	desc = "A disk that helps agains shocking anyone, other then the intented target"
+	name = "Defibrillator Anti-Shock Disk"
+	desc = "A safety upgrade that guarantees only the patient will get shocked"
 	id = "defib_shock"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
@@ -218,8 +218,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_decay
-	name = "Defibrillartor Body-Decay extender Disk"
-	desc = "A disk that helps defibrillator revive the longer decayed dead"
+	name = "Defibrillator Body-Decay Extender Disk"
+	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
 	id = "defib_decay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
@@ -229,8 +229,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_speed
-	name = "Defibrllartor Pre-Primer Disk"
-	desc = "A disk that cuts the time charg time in half for defibrillator use"
+	name = "Defibrillator Fast Charge Disk"
+	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	id = "defib_speed"
 	build_type = PROTOLATHE
 	build_path = /obj/item/disk/medical/defib_speed

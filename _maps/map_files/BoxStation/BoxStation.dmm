@@ -250,7 +250,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/cryopod,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaH" = (
@@ -318,6 +320,10 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/computer/cryopod{
+	dir = 8;
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
@@ -12182,11 +12188,12 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/cryopod,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "aCe" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/item/bikehorn/rubberducky,
@@ -12822,6 +12829,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Dormitory South";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aDH" = (
@@ -12846,11 +12857,16 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "aDK" = (
-/obj/machinery/door/airlock{
-	name = "Cryo airlock"
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryogenics "
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "aDL" = (
 /obj/structure/sink{
 	dir = 8;
@@ -12864,6 +12880,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
@@ -12894,7 +12913,7 @@
 "aDQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
@@ -13386,13 +13405,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aFe" = (
-/obj/machinery/camera{
-	c_tag = "Dormitory South";
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -13401,12 +13419,21 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aFf" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
@@ -13423,6 +13450,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aFi" = (
@@ -13435,7 +13465,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aFj" = (
@@ -36632,14 +36664,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bHT" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "medpriv1";
-	name = "privacy door"
-	},
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "bHU" = (
@@ -37955,22 +37984,23 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKM" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKN" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 2";
+	name = "Apothecary";
 	req_access_txt = "5"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKO" = (
@@ -38424,24 +38454,17 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bLU" = (
-/obj/structure/table,
-/obj/item/folder/white,
-/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLV" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/machinery/button/door{
-	id = "medpriv1";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLW" = (
@@ -56571,16 +56594,31 @@
 /obj/structure/reagent_dispensers/keg/gargle,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"dgz" = (
+/turf/closed/wall,
+/area/crew_quarters/cryopod)
 "dqu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"dvc" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/cryopod)
 "dvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /turf/closed/wall,
 /area/science/circuit)
+"dzi" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/cryopod)
 "dKP" = (
 /turf/closed/wall,
 /area/maintenance/bar)
@@ -56625,6 +56663,11 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eVC" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
 "eVL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light_switch{
@@ -56664,8 +56707,14 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "fvY" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "fxa" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/wood{
@@ -56684,6 +56733,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"fTg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "gbq" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -56696,6 +56755,12 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"gfD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/cryopod)
 "gjl" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
@@ -56835,6 +56900,14 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"iVU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/crew_quarters/cryopod)
 "jbf" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -57233,11 +57306,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/cryopod{
-	pixel_y = -30
-	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57392,15 +57462,15 @@
 	},
 /area/maintenance/bar)
 "tqg" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/cryopod{
-	icon_state = "cryopod-open";
-	dir = 1
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "trb" = (
 /obj/machinery/light{
 	dir = 4
@@ -57430,6 +57500,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"tRe" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "tRF" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -57471,15 +57545,11 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ujF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/cryopod{
 	dir = 4
 	},
-/obj/machinery/cryopod{
-	icon_state = "cryopod-open";
-	dir = 1
-	},
 /turf/open/floor/carpet,
-/area/crew_quarters/dorms)
+/area/crew_quarters/cryopod)
 "uoB" = (
 /obj/structure/table/reinforced,
 /obj/item/multitool,
@@ -57567,6 +57637,11 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"vsM" = (
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/crew_quarters/cryopod)
 "vxh" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -57599,6 +57674,16 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vHj" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cryogenics "
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/crew_quarters/cryopod)
 "vHY" = (
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -57616,6 +57701,12 @@
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
+"woR" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/cryopod)
 "wph" = (
 /obj/docking_port/stationary{
 	area_type = /area/construction/mining/aux_base;
@@ -87629,12 +87720,12 @@ arf
 arf
 arf
 arf
-arf
-arf
-arf
-arf
-anF
-ahn
+dgz
+dgz
+dgz
+dgz
+dgz
+dgz
 aJn
 aJn
 aJq
@@ -87886,12 +87977,12 @@ atf
 arf
 aqa
 atf
-arf
+dgz
 tqg
 ujF
-arf
-anF
-ahn
+ujF
+ujF
+dgz
 aaa
 aJn
 aJq
@@ -88143,12 +88234,12 @@ ath
 arf
 apY
 ath
-arf
+dgz
 fvY
-ath
-arf
-anF
-ahn
+dvc
+dzi
+vsM
+dgz
 aaa
 aJn
 aLY
@@ -88400,12 +88491,12 @@ ath
 arf
 ayV
 ath
-arf
+dgz
 aCd
 qIw
-arf
-anF
-ahn
+gfD
+woR
+dgz
 aJw
 aJw
 aMh
@@ -88657,12 +88748,12 @@ awo
 arf
 asd
 aAb
-arf
-asd
+dgz
+iVU
 aDK
-arf
-aoa
-ahn
+vHj
+eVC
+dgz
 aJv
 aKG
 aMg
@@ -95642,8 +95733,8 @@ bof
 bof
 bof
 bJE
-bof
-bof
+bJE
+bJE
 bNd
 bIJ
 bPo
@@ -95899,7 +95990,7 @@ bof
 bGT
 bIo
 bof
-bIo
+tRe
 bLU
 bNd
 bII
@@ -96413,7 +96504,7 @@ bof
 bGU
 bqQ
 bof
-bCR
+fTg
 bLV
 bNd
 bOm

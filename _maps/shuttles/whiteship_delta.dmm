@@ -443,8 +443,8 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "E.V.A Access"
 	},
-/turf/open/floor/plasteel,
 /obj/structure/fans/tiny,
+/turf/open/floor/plasteel,
 /area/shuttle/abandoned/crew)
 "aK" = (
 /obj/effect/decal/cleanable/dirt{

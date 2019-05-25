@@ -87,6 +87,13 @@
 	icon_state = "hairy"
 	name = "Hairy"
 
+/datum/sprite_accessory/vagina/spade
+	icon_state = "spade"
+	name = "Spade"
+
+/datum/sprite_accessory/vagina/furred
+	icon_state = "furred"
+	name = "Furred"
 
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts

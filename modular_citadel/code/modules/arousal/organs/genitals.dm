@@ -92,7 +92,7 @@
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/O in internal_organs)
-		if(istype(O, /obj/item/organ/genital))
+		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
 			if(!G.internal)
 				genital_list += G
@@ -110,10 +110,13 @@
 
 
 /obj/item/organ/genital/proc/update_size()
+	return
 
 /obj/item/organ/genital/proc/update_appearance()
+	return
 
 /obj/item/organ/genital/proc/update_link()
+	return
 
 /obj/item/organ/genital/proc/remove_ref()
 	if(linked_organ)
@@ -130,12 +133,12 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
-	if (NOGENITALS in dna.species.species_traits)
-		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
+	if (NOGENITALS in dna.species.species_traits)
+		return
 	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 	if(dna.features["has_breasts"])
 		give_breasts()
@@ -211,7 +214,10 @@
 
 
 /mob/living/carbon/human/proc/give_ovipositor()
+	return
 /mob/living/carbon/human/proc/give_eggsack()
+	return
+
 /mob/living/carbon/human/proc/give_vagina()
 	if(!dna)
 		return FALSE
@@ -280,7 +286,8 @@
 	var/list/genitals_to_add = list()
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
-	var/size = null
+	var/size
+	var/aroused_state
 
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
@@ -288,7 +295,7 @@
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
-		if(istype(O, /obj/item/organ/genital))
+		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 				genitals_to_add += H.getorganslot(G.slot)
@@ -300,6 +307,7 @@
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
 			size = G.size
+			aroused_state = G.aroused_state
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
@@ -311,13 +319,14 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
 
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
@@ -326,21 +335,7 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							genital_overlay.color = "#[fixed_mut_color]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							genital_overlay.color = "#[fixed_mut_color2]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							genital_overlay.color = "#[fixed_mut_color3]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+
 			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()

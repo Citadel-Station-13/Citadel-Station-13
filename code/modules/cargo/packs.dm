@@ -81,6 +81,21 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/radiatione_emergency
+	name = "Emergenc Radiation Protection Crate"
+	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a few pill bottles that are able to handles radiation and the affects of the poisoning."
+	cost = 2500
+	contains = list(/obj/item/clothing/head/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
 	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
@@ -1357,6 +1372,19 @@
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
 
+/datum/supply_pack/medical/advrad
+	name = "Radiation Treatment Crate Deluxe"
+	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pill bottle, as well as a radiation treatment deluxe pill bottle!"
+	cost = 3500
+	contains = list(/obj/item/storage/pill_bottle/antirad_plus,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
@@ -1671,7 +1699,7 @@
 			/obj/item/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/radio/headset/headset_cargo/mining,
 			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
+			/obj/item/clothing/suit/hooded/explorer/standard,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure

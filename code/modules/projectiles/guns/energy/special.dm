@@ -299,4 +299,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
+	pin = null
 	var/power = 4
+
+/obj/item/gun/energy/gravity_gun/security
+	pin = /obj/item/firing_pin

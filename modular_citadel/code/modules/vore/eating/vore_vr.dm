@@ -28,7 +28,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 // The datum type bolted onto normal preferences datums for storing Vore stuff
 //
 
-#define VORE_VERSION 3
+#define VORE_VERSION 4
 
 GLOBAL_LIST_EMPTY(vore_preferences_datums)
 
@@ -41,7 +41,6 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	var/devourable = FALSE
 	var/feeding = FALSE
 //	var/allowmobvore = TRUE
-	var/noisy = FALSE
 	var/list/belly_prefs = list()
 	var/vore_taste = "nothing in particular"
 //	var/can_be_drop_prey = FALSE
@@ -108,7 +107,6 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 	digestable = json_from_file["digestable"]
 	devourable = json_from_file["devourable"]
 	feeding = json_from_file["feeding"]
-	noisy = json_from_file["noisy"]
 	vore_taste = json_from_file["vore_taste"]
 	belly_prefs = json_from_file["belly_prefs"]
 
@@ -119,8 +117,6 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 		devourable = FALSE
 	if(isnull(feeding))
 		feeding = FALSE
-	if(isnull(noisy))
-		noisy = FALSE
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
@@ -136,7 +132,6 @@ GLOBAL_LIST_EMPTY(vore_preferences_datums)
 			"digestable"			= digestable,
 			"devourable"			= devourable,
 			"feeding"				= feeding,
-			"noisy"					= noisy,
 			"vore_taste"			= vore_taste,
 			"belly_prefs"			= belly_prefs,
 		)

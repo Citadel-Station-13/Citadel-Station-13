@@ -15,7 +15,9 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/modular_computer))
+		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/magrifle_e,
+		/obj/item/gun/ballistic/automatic/pistol/mag_e))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)

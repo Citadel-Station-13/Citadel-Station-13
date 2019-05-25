@@ -9,6 +9,7 @@
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/nameless = FALSE
+	var/custom_species	//siiiiigh I guess this is important
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
@@ -45,6 +46,7 @@
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
+	destination.dna.custom_species = custom_species
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(ishuman(destination))
 		var/mob/living/carbon/human/H = destination
@@ -62,6 +64,7 @@
 	new_dna.species = new species.type
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
+	new_dna.custom_species = custom_species
 	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
@@ -202,7 +205,7 @@
 
 
 /datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless)
+	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name && nameless == D.nameless && custom_species == D.custom_species)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
