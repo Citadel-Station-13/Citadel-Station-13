@@ -310,9 +310,8 @@
 	blood_ratio -= value
 
 /mob/living/proc/ResetBloodVol()
-	if(ishuman(src))
-		if src.has_quirk(/datum/quirk/BloodPressure)
-			blood_ratio = 1.2
+	if(ishuman(src) && src.has_trait(TRAIT_HIGH_BLOOD))
+		blood_ratio = 1.2
 	blood_ratio = 1
 
 /mob/living/proc/AdjustBloodVol(var/value)
