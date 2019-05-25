@@ -14,7 +14,7 @@
 //Called when temperature is above a certain threshold
 //....Is this too much?
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
-	//var/Svol = volume
+	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
 	if (Exploding == TRUE)
 		return
 	if(!pH)//Dunno how things got here without a pH.
@@ -55,17 +55,16 @@
 					new /obj/effect/hotspot(turf)
 					//volume /= 5
 
-	if(!ImpureTot == 0) //If impure, v.small emp
-		ImpureTot *= volume
-		empulse(T, volume/10, ImpureTot/10, 1)
-
 	if (pH > 10) //if alkaline, small explosion.
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
 		e.start()
 		pHmod = 1.5
 
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
+	if(!ImpureTot == 0) //If impure, v.small emp
+		ImpureTot *= volume
+		empulse(T, volume/10, ImpureTot/10, 1)
+
 	my_atom.reagents.clear_reagents()
 	return
 

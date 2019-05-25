@@ -274,6 +274,8 @@
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
 			owner.remove_status_effect(src)
 		if(0)// sleeper agent
+			if (cooldown > 0)
+				cooldown -= 1
 			return
 		if(1)//Initial enthrallment
 			if (enthrallTally > 150)
@@ -317,7 +319,7 @@
 				if(owner.lewd)
 					to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (3)//fully entranced
-			if ((resistanceTally >= 200 && withdrawalTick >= 150) || (M.has_trait(TRAIT_MINDSHIELD) && resistanceTally >= 100))
+			if ((resistanceTally >= 200 && withdrawalTick >= 150) || (M.has_trait(TRAIT_MINDSHIELD) && (resistanceTally >= 100)))
 				enthrallTally = 0
 				phase -= 1
 				resistanceTally = 0

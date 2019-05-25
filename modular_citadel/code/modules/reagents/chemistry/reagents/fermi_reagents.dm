@@ -1095,7 +1095,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
+	DoNotSplit = TRUE
+	//OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
@@ -1448,7 +1449,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	N.regen_rate = -0.25//This seems really high
 	..()
 
-/datum/reagent/fermi/naninte_b_gone/overdose_start(mob/living/carbon/C)
+/datum/reagent/fermi/naninte_b_gone/overdose_process(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
