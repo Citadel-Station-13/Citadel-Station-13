@@ -886,7 +886,7 @@ im
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
 				remove_reagent(reagentgas, amount/5)
-			s.set_up(R, CLAMP(amount/10, 0, 1), T)
+			s.set_up(R, CLAMP(amount/10, 0, 2), T)
 			s.start()
 			return FALSE
 

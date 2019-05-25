@@ -168,6 +168,8 @@
 			P.length = dna.features["cock_length"]
 			P.girth_ratio = dna.features["cock_girth_ratio"]
 			P.shape = dna.features["cock_shape"]
+			P.prev_size = P.length
+			P.cached_length = P.length
 			P.update()
 
 /mob/living/carbon/human/proc/give_balls()
@@ -205,6 +207,8 @@
 			else
 				B.color = "#[dna.features["breasts_color"]]"
 			B.size = dna.features["breasts_size"]
+			B.prev_size = B.size
+			B.cached_size = B.breast_values[B.size]
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
 			B.update()
@@ -271,17 +275,8 @@
 
 //fermichem procs
 /mob/living/carbon/human/proc/Force_update_genitals(mob/living/carbon/human/H) //called in fermiChem
-	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
-
-	if (cached_size == null) //MOVE THIS TO FORCE UPDATE I have to do this because Pooj's latest commit broke everthing. I give up and I hate genitals.
-		prev_size = size
-		cached_size = breast_values[size]
-	if(!isnum(cached_size))
-		cached_size = breast_values[cached_size]
-	dna.species.handle_genitals(src)
+	dna.species.handle_genitals(src)//should work.
 	//dna.species.handle_breasts(src)
-	//H.update_body()
-//species_traits = list(NOTRANSSTING,NOGENITALS)
 
 /mob/living/carbon/human/proc/emergent_genital_call()
 	var/organCheck = FALSE

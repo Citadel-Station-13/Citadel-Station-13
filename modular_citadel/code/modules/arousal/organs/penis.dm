@@ -18,23 +18,14 @@
 	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags 		= list()
 	var/list/knotted_types 	= list("knotted", "barbed, knotted")
-	var/statuscheck			= FALSE
 	var/prev_size			= 6 //really should be renamed to prev_length
 
 /obj/item/organ/genital/penis/Initialize()
 	. = ..()
-	/* I hate genitals.
-	var/mob/living/carbon/human/o = owner
-	length = o.dna.features["cock_length"] //for whatever reason, this doesn't set up correctly.
-	prev_size = length
-	cached_length = length
-	*/
+	/* I hate genitals.*/
 
 /obj/item/organ/genital/penis/update_size()
 	var/mob/living/carbon/human/o = owner
-	if(!cached_length)
-		prev_size = length
-		cached_length = length
 	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 		to_chat(o, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
@@ -43,59 +34,41 @@
 		if(0 to 4) //If modest size
 			length = cached_length
 			size = 1
-			if(statuscheck == TRUE)
-				//message_admins("Attempting to remove.")
+			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
-				statuscheck = FALSE
 		if(5 to 10) //If modest size
 			length = cached_length
 			size = 2
-			if(statuscheck == TRUE)
-				//message_admins("Attempting to remove.")
+			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
-				statuscheck = FALSE
 		if(11 to 20) //If massive
 			length = cached_length
-			size = 3 
-			if(statuscheck == FALSE)
-				//message_admins("Attempting to apply.")
+			size = 3
+			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
-				statuscheck = TRUE
-		if(21 to 29)
+		if(21 to 29) //If massive and due for large effects
 			length = cached_length
 			size = 3
-			if(statuscheck == FALSE)
-				//message_admins("Attempting to apply.")
+			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
-				statuscheck = TRUE
-		if(30 to INFINITY)
+		if(30 to INFINITY) //If comical
 			length = cached_length
 			size = 4 //no new sprites for anything larger yet
-			if(statuscheck == FALSE)
-				//message_admins("Attempting to apply.")
+			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
-				statuscheck = TRUE
-	//message_admins("Pinas size: [length], [cached_length], [o]")
-	//message_admins("2. size vs prev_size")
+
 	if (round(length) > round(prev_size))
 		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
 	else if (round(length) < round(prev_size))
 		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
 	prev_size = length
 	icon_state = sanitize_text("penis_[shape]_[size]")
-	//update_body()
-	//P.update_icon()  //Either of these don't work, why???
 	girth = (length * girth_ratio)//Is it just me or is this ludicous, why not make it exponentially decay?
-	//var/mob/living/carbon/human/H = owner
-	//H.update_genitals()
-	//owner.update_genitals()
 
 	//I have no idea on how to update sprites and I hate it
 
 /obj/item/organ/genital/penis/update_appearance()
-	//var/mob/living/carbon/o = owner
-	var/string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
-	icon_state = sanitize_text(string)
+	var/string
 	var/lowershape = lowertext(shape)
 	desc = "You see [aroused_state ? "an erect" : "a flaccid"] [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[round(length, 0.25) != 1 ? "es" : ""] long and [round(girth, 0.25)] inch[round(girth, 0.25) != 1 ? "es" : ""] in girth."
 
@@ -104,9 +77,15 @@
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
+				string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]-s"
 		else
 			color = "#[owner.dna.features["cock_color"]]"
-	//owner.update_body()
+			string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.update_genitals()
+
+	icon_state = sanitize_text(string)
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

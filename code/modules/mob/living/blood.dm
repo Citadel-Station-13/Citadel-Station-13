@@ -300,3 +300,22 @@
 	var/obj/effect/decal/cleanable/oil/B = locate() in T.contents
 	if(!B)
 		B = new(T)
+
+//I think I had a plan, but it went out the window.
+/mob/living/proc/IncreaseBloodVol(var/value)
+	blood_ratio += value
+	return
+
+/mob/living/proc/DecreaseBloodVol(var/value)
+	blood_ratio -= value
+
+/mob/living/proc/ResetBloodVol()
+	if(ishuman(src))
+		if src.has_quirk(/datum/quirk/BloodPressure)
+			blood_ratio = 1.2
+	blood_ratio = 1
+
+/mob/living/proc/AdjustBloodVol(var/value)
+	if(blood_ratio == value)
+		return
+	blood_ratio = value

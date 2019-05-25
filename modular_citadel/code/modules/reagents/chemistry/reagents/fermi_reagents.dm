@@ -572,7 +572,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
-				ZI.zombiejob = null
+				ZI.zombiejob = FALSE
 				//ZI.updateappearance(mutcolor_update=1)
 				M.reagents.remove_reagent(src.id, 20)
 			else//easier to deal with
@@ -1086,17 +1086,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	color = "#2C051A" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
-	InverseChemVal 		= 0.5
-	InverseChem 		= "enthrallInverse" //At really impure vols, it just becomes 100% inverse
-	//DoNotSplit = TRUE
+	DoNotSplit = TRUE
 	data = list("creatorID" = null, "creatorGender" = null, "creatorName" = null)
 	var/creatorID  //ckey
 	var/creatorGender
 	var/creatorName
 	var/mob/living/creator
 	pH = 10
-	DoNotSplit = TRUE
-	//OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
+	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
@@ -1111,6 +1108,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	creatorGender = "Mistress"
 	creatorName = "Fermis Yakumo"
 	purity = 1
+	DoNotSplit = TRUE
 
 /datum/reagent/fermi/enthrall/test/on_new()
 	id = "enthrall"
@@ -1166,6 +1164,29 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+	if(purity < 0.5)//DO NOT SPLIT INTO DIFFERENT CHEM: This relies on DoNotSplit - has to be done this way.
+		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
+			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+				return
+			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+			for(var/victim in seen)
+				if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+					seen = seen - victim
+			if(!seen)
+				return
+			M.reagents.remove_reagent(src.id, src.volume)
+			FallInLove(M, pick(seen))
+			return
+		else // If someone else drinks it, the creator falls in love with them!
+			var/mob/living/carbon/C = get_mob_by_key(creatorID)
+			if(C.has_status_effect(STATUS_EFFECT_INLOVE))
+				return
+			if(C in viewers(7, get_turf(M)))
+				M.reagents.remove_reagent(src.id, src.volume)
+				FallInLove(C, M)
+			return
+		if(volume < 1)//You don't get to escape that easily
+			FallInLove(pick(GLOB.player_list), M)
 	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it does nothing.
 		return
 	if(!M.client)
@@ -1180,7 +1201,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		message_admins("No enthrall status found in [M]!")
 	else
 		E.enthrallTally += 1
-	if(prob(50))
+	if(prob(25))
 		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
@@ -1204,8 +1225,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
-		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 		E.enthrallID = creatorID
 		E.enthrallGender = creatorGender
 		E.master = creator
@@ -1221,39 +1242,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
 	M.adjustBrainLoss(0.1)//should be 15 in total
 	..()
-
-/datum/reagent/fermi/enthrall/Inverse
-	name = "MKUltra"
-	id = "enthrall"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#2C051A" // rgb: , 0, 255
-	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
-	DoNotSplit = TRUE
-
-/datum/reagent/fermi/enthrall/Inverse/on_mob_life(mob/living/carbon/M)
-	if(purity < 0.5)//Placeholder for now. I'd like to get this done.
-		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
-			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
-				return
-			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
-			for(var/victim in seen)
-				if((victim == /mob/living/simple_animal/pet/) || (victim == M))
-					seen = seen - victim
-			if(!seen)
-				return
-			M.reagents.remove_reagent(src.id, src.volume)
-			FallInLove(M, pick(seen))
-			return
-		else // If someone else drinks it, the creator falls in love with them!
-			var/mob/living/carbon/C = get_mob_by_key(creatorID)
-			if(C.has_status_effect(STATUS_EFFECT_INLOVE))
-				return
-			if(C in viewers(7, get_turf(M)))
-				M.reagents.remove_reagent(src.id, src.volume)
-				FallInLove(C, M)
-			return
-		if(volume < 1)//You don't get to escape that easily
-			FallInLove(pick(GLOB.player_list), M)
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
@@ -1291,7 +1279,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(10))
 				M.Stun(10)
 				M.emote("whimper")//does this exist?
-				to_chat(M, "You're overcome with a desire to see [love].")
+				to_chat(M, "<span class='notice'> You're overcome with a desire to see [love].</span>")
 				M.adjustBrainLoss(5)
 	..()
 
@@ -1299,6 +1287,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	M.remove_status_effect(STATUS_EFFECT_INLOVE)
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
+	to_chat(M, "Your feelings for [love] suddenly vanish!")
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
@@ -1445,24 +1434,24 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
-		return
+		return ..()
 	N.regen_rate = -0.25//This seems really high
 	..()
 
 /datum/reagent/fermi/naninte_b_gone/overdose_process(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
-	if(isnull(N))
-		return
-	N.regen_rate = -1//12.5 seems crazy high?
 	if(prob(20))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
 		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
-		var/T = get_turf(C)
+		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>The nanintes short circuit within your system!</b></span>")
+	if(isnull(N))
+		return ..()
+	N.regen_rate = -1//12.5 seems crazy high?
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
@@ -1479,7 +1468,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
 		//empulse((get_turf(C)), 2, 1, 1)//So the nanites randomize
-		var/T = get_turf(C)
+		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
@@ -1565,6 +1554,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = ""//defined on setup
 	id = "fermiTox"
 	description = "You should be really careful with this...! Also, how did you get this?"
+	data = "merge"
 
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
@@ -1578,12 +1568,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiABuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
 	taste_description = "an acidy sort of taste, blech."
+	color = "#fbc314"
 	addProc = FALSE
 	pH = 3
 
 /datum/reagent/fermi/fermiABuffer/on_new()
-	if(addProc == FALSE)//This is so it doesn't react when made.
-		addProc = TRUE
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	pH = ((holder.pH * holder.total_volume)+(3 * src.volume))/(holder.total_volume + src.volume)
@@ -1595,12 +1584,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiBBuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
 	taste_description = "an soapy sort of taste, blech."
+	color = "#3853a4"
 	addProc = FALSE
 	pH = 11
 
 /datum/reagent/fermi/fermiBBuffer/on_new()
-	if(addProc == FALSE)//This is so it doesn't react when made.
-		addProc = TRUE
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	pH = ((holder.pH * holder.total_volume)+(11 * src.volume))/(holder.total_volume + src.volume)

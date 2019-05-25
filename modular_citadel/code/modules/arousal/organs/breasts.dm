@@ -92,31 +92,25 @@
 	//var/mob/living/carbon/human/o = owner
 	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	//message_admins("Breast size at start: [size], [cached_size], [owner]")
-	if(!isnum(cached_size))
-		cached_size = breast_values[cached_size]
 	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!(Why does this runtime??)
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		src.Remove(owner)
 	switch(round(cached_size))
 		if(0) //If flatchested
 			size = "flat"
-			if(statuscheck == TRUE)
-				message_admins("Attempting to remove.")
+			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = FALSE
 		if(1 to 8) //If modest size
 			size = breast_sizes[round(cached_size)]
-			if(statuscheck == TRUE)
-				message_admins("Attempting to remove.")
+			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = FALSE
 		if(9 to 15) //If massive
 			size = breast_sizes[round(cached_size)]
-			if(statuscheck == FALSE)
-				message_admins("Attempting to apply.")
+			if(!owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.apply_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = TRUE
-
 		if(16 to INFINITY) //if Rediculous
 			size = cached_size
 	//message_admins("1. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")

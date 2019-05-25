@@ -140,9 +140,8 @@
 	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
 		o.remove_movespeed_modifier("hugedick")
-		o.blood_ratio /= bloodCalc //If someone else uses blood_ratio, turn this into a multiplier(I should make a handler huh)
+		o.ResetBloodVol()
 		owner.remove_status_effect(src)
-	message_admins("PElarge tick!")
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
 		if(W == o.w_uniform || W == o.wear_suit)
@@ -151,20 +150,19 @@
 			to_chat(owner, "<span class='warning'>Your enormous package is way to large to fit anything over!</b></span>")
 	switch(round(P.cached_length))
 		if(21)
-			if (P.prev_size > P.size)
-				to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
-				o.remove_movespeed_modifier("hugedick")
-				o.blood_ratio /= bloodCalc
+			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
+			o.remove_movespeed_modifier("hugedick")
+			o.AdjustBloodVol(bloodCalc)
 		if(22 to INFINITY)
-			if (!(P.prev_size == P.size))
-				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
+				if(prob(2))
+					to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
 				o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-				o.blood_ratio *= bloodCalc
+				o.AdjustBloodVol(bloodCalc)
 	..()
 
 /datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
 	owner.remove_movespeed_modifier("hugedick")
-	o.blood_ratio /= bloodCalc
+	o.ResetBloodVol()
 
 
 /*//////////////////////////////////////////

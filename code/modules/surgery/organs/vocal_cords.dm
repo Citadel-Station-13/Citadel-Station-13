@@ -884,13 +884,12 @@
 					descmessage += " And yet, it feels good..!"
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
-					E.cooldown += 1
 				*/
 			else
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
+				E.resistanceTally += power_multiplier
+				E.enthrallTally += power_multiplier
 				E.cooldown += 1
-			E.resistanceTally += power_multiplier
-			E.enthrallTally += power_multiplier
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold, descmessage)
 			E.cooldown += 1
 
@@ -1126,6 +1125,7 @@
 					return
 				else
 					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					if (E.mental_capacity >= 10)
 						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
@@ -1145,6 +1145,7 @@
 							to_chat(user, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blase expression, you don't think you can program anything else into them</b></span>")
+					user.SetStun(0)
 					H.SetStun(0)
 
 	//CUSTOM OBJECTIVE
@@ -1158,6 +1159,7 @@
 					return
 				else
 					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.SetStun(1000)//So you can't run away!
 					H.SetStun(1000)
 					if (E.mental_capacity >= 250 || message == "objective")
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
@@ -1177,6 +1179,7 @@
 					//else if (E.mental_capacity >= 150)
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
+					user.SetStun(0)
 					H.SetStun(0)
 
 

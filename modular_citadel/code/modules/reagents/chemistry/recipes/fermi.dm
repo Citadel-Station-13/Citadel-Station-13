@@ -14,7 +14,6 @@
 //Called when temperature is above a certain threshold
 //....Is this too much?
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
 	if (Exploding == TRUE)
 		return
 	if(!pH)//Dunno how things got here without a pH.
@@ -22,7 +21,7 @@
 	var/ImpureTot = 0
 	var/pHmod = 1
 	var/turf/T = get_turf(my_atom)
-
+	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	if(pH < 4) //if acidic, make acid spray
@@ -377,7 +376,9 @@
 	RateUpLim 		= 20
 	FermiChem 		= TRUE
 
-//datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+/datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
+	Fa.data = "merge"
 
 /datum/chemical_reaction/fermi/fermiBBuffer//done test
 	name = "Ethyl Ethanoate buffer"
@@ -400,4 +401,6 @@
 	RateUpLim 		= 20
 	FermiChem 		= TRUE
 
-///datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+/datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
+	Fb.data = "merge"
