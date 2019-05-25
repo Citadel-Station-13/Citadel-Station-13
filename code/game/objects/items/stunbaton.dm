@@ -207,6 +207,7 @@
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()
 	sparkler = new (src)
+	sparkler.activate_cooldown = 18
 
 /obj/item/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
