@@ -89,9 +89,6 @@
 	if(!open)
 		to_chat(user, "<span class='warning'>You need to open [src]'s door!</span>")
 		return
-	if(user == target)
-		to_chat(user, "<span class='warning'>Why would you ever do that?</span>")
-		return
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
