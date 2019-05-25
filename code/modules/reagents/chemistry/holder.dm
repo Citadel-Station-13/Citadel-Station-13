@@ -566,6 +566,7 @@ im
 	//message_admins("updating targetVol from [targetVol]")
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+		multiplier*=10
 	if (multiplier == 0)
 		STOP_PROCESSING(SSprocessing, src)
 		fermiIsReacting = FALSE
@@ -646,12 +647,12 @@ im
 	var/purity = 1
 	//var/tempVol = totalVol
 
-	//message_admins("Loop beginning")
+	message_admins("multiplier [multiplier], target vol:[targetVol], rate lim: [C.RateUpLim], reactedVol: [reactedVol]")
 	//Begin Parse
 
-	WARNING("Purity precalc: [overallPurity]")
-	update_holder_purity(C)//updates holder's purity
-	WARNING("Purity postcalc: [overallPurity]")
+	//WARNING("Purity precalc: [overallPurity]")
+	//update_holder_purity(C)//updates holder's purity
+	//WARNING("Purity postcalc: [overallPurity]")
 
 	//Check extremes first
 	if (cached_temp > C.ExplodeTemp)
@@ -709,8 +710,7 @@ im
 		deltaT = 0
 	//message_admins("calculating temperature factor, min: [C.OptimalTempMin], max: [C.OptimalTempMax], Exponential: [C.CurveSharpT], deltaT: [deltaT]")
 
-
-	stepChemAmmount = deltaT //used to have multipler, now it doesn't
+	stepChemAmmount = CLAMP((deltaT * C.RateUpLim), 0, (targetVol - reactedVol))  //used to have multipler, now it doesn't
 	if (stepChemAmmount > C.RateUpLim)
 		stepChemAmmount = C.RateUpLim
 	else if (stepChemAmmount <= 0.01)
@@ -728,7 +728,7 @@ im
 
 	//TODO: Check overall beaker purity with proc
 	//Then adjust purity of result AND yeild ammount with said purity.
-	stepChemAmmount *= overallPurity
+	stepChemAmmount *= reactant_purity(C)
 
 	// End.
 	/*
@@ -764,7 +764,7 @@ im
 
 	return (reactedVol)
 
-/datum/reagents/proc/update_holder_purity(var/datum/chemical_reaction/fermi/C, holder)
+/datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/fermi/C, holder)
 	var/list/cached_reagents = reagent_list
 	var/i
 	var/cachedPurity
@@ -773,7 +773,7 @@ im
 		if (R in cached_reagents)
 			cachedPurity += R.purity
 			i++
-	overallPurity = cachedPurity/i
+	return cachedPurity/i
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -881,12 +881,12 @@ im
 		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/s = new
 			var/turf/T = get_turf(my_atom)
-			var/datum/reagents/R = new/datum/re agents(3000)//I don't want to hold it back..!
+			var/datum/reagents/R = new/datum/reagents(3000)//I don't want to hold it back..!
 			R.add_reagent("fermiAcid", amount)
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
 				remove_reagent(reagentgas, amount/5)
-			s.set_up(R, CLAMP(amount/10, 0, 3), T)
+			s.set_up(R, CLAMP(amount/10, 0, 1), T)
 			s.start()
 			return FALSE
 
@@ -937,6 +937,10 @@ im
 			//if(R.FermiChem == TRUE)
 			//	R.on_mob_add(my_atom)
 			R.on_merge(data, amount, my_atom, other_purity)
+			if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
+				var/datum/reagent/fermi/Ferm = D //It's Fermi time!
+				if(Ferm.OnMobMergeCheck == TRUE) //// Ooooooh fermifermifermi
+					R.on_mob_add(my_atom, amount)
 			if(!no_react)
 				handle_reactions()
 

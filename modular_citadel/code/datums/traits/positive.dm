@@ -11,3 +11,4 @@
 /datum/quirk/BloodPressure/add()
 	var/mob/living/M = quirk_holder
 	M.blood_ratio = 1.2
+	M.blood_volume += 100

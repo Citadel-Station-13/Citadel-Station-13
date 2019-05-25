@@ -24,8 +24,8 @@
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)
-	prev_size = size
-	cached_size = breast_values[size]
+	//prev_size = size
+	//cached_size = breast_values[size]
 	/* This breaks the character creation sceen. for some reason sizes are set to numbers there.
 	if (cached_size == "c")//fix for a weird bug that has something to do with how they're set up on the character create screen.
 		cached_size = 3
@@ -56,7 +56,7 @@
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
 	if(isnum(size))
-		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "two big old tonhongerekoogers", "a couple of giant bonkhonagahoogs", "a pair of humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [size]cm in diameter."
+		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "two big old tonhongerekoogers", "a couple of giant bonkhonagahoogs", "a pair of humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [round(size)]cm in diameter."
 	else if (!isnum(size))
 		if (size == "flat")
 			desc += " They're very small and flatchested, however."
@@ -93,6 +93,7 @@
 	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	if (cached_size == null)
 		prev_size = size
+		cached_size = breast_values[size]
 		return
 	//message_admins("Breast size at start: [size], [cached_size], [owner]")
 	if(!isnum(cached_size))

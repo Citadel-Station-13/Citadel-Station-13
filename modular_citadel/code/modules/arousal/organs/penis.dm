@@ -23,13 +23,18 @@
 
 /obj/item/organ/genital/penis/Initialize()
 	. = ..()
+	/* I hate genitals.
 	var/mob/living/carbon/human/o = owner
 	length = o.dna.features["cock_length"] //for whatever reason, this doesn't set up correctly.
 	prev_size = length
 	cached_length = length
+	*/
 
 /obj/item/organ/genital/penis/update_size()
 	var/mob/living/carbon/human/o = owner
+	if(!cached_length)
+		prev_size = length
+		cached_length = length
 	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 		to_chat(o, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")
@@ -42,23 +47,30 @@
 				//message_admins("Attempting to remove.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = FALSE
-		if(5 to 8) //If modest size
+		if(5 to 10) //If modest size
 			length = cached_length
 			size = 2
 			if(statuscheck == TRUE)
 				//message_admins("Attempting to remove.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = FALSE
-		if(9 to INFINITY) //If massive
+		if(11 to 20) //If massive
 			length = cached_length
-			size = 3 //no new sprites for anything larger yet
+			size = 3 
 			if(statuscheck == FALSE)
 				//message_admins("Attempting to apply.")
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
 				statuscheck = TRUE
-		if(15 to INFINITY)
+		if(21 to 29)
 			length = cached_length
-			size = 3 //no new sprites for anything larger yet
+			size = 3
+			if(statuscheck == FALSE)
+				//message_admins("Attempting to apply.")
+				o.apply_status_effect(/datum/status_effect/chem/PElarger)
+				statuscheck = TRUE
+		if(30 to INFINITY)
+			length = cached_length
+			size = 4 //no new sprites for anything larger yet
 			if(statuscheck == FALSE)
 				//message_admins("Attempting to apply.")
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
@@ -66,9 +78,9 @@
 	//message_admins("Pinas size: [length], [cached_length], [o]")
 	//message_admins("2. size vs prev_size")
 	if (round(length) > round(prev_size))
-		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(length)] inch penis.</b></span>")
+		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
 	else if (round(length) < round(prev_size))
-		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(length)] inch penis.</b></span>")
+		to_chat(o, "<span class='warning'>Your [pick("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "Chase Redtail", "weenie", "tadger", "schlong", "thirsty ferret", "baloney pony", "schlanger")] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
 	prev_size = length
 	icon_state = sanitize_text("penis_[shape]_[size]")
 	//update_body()

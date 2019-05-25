@@ -73,7 +73,7 @@
 #define	TRAIT_MUSICIAN			"musician"
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
-#define	TRAIT_HIGH_BLOOD    "high_blood"
+#define	TRAIT_HIGH_BLOOD        "high_blood"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

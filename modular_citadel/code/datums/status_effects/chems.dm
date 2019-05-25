@@ -212,6 +212,9 @@
 	var/cooldown = 0
 	var/cooldownMsg = TRUE
 	var/cTriggered = FALSE
+	var/resistGrowth = 0
+	var/DistApart = 1
+	var/tranceTime = 0
 
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
@@ -273,7 +276,7 @@
 		if(0)// sleeper agent
 			return
 		if(1)//Initial enthrallment
-			if (enthrallTally > 100)
+			if (enthrallTally > 150)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				resistanceTally /= 2
@@ -282,7 +285,7 @@
 					to_chat(owner, "<span class='hypnophrase'><i>Your conciousness slips, as you sink deeper into trance and servitude.</i></span>")
 				else
 
-			else if (resistanceTally > 100)
+			else if (resistanceTally > 150)
 				enthrallTally *= 0.5
 				phase = -1
 				resistanceTally = 0
@@ -293,7 +296,7 @@
 				if(owner.lewd)
 					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
 		if (2) //partially enthralled
-			if (enthrallTally > 150)
+			if (enthrallTally > 200)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
@@ -303,8 +306,8 @@
 					to_chat(owner, "<span class='big nicegreen'><i>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
-					owner.add_trait(TRAIT_PACIFISM, "MKUltra")
-			else if (resistanceTally > 150)
+				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
+			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
@@ -336,7 +339,8 @@
 
 
 	//distance calculations
-	switch(get_dist(master, owner))
+	DistApart = get_dist(master, owner)
+	switch(DistApart)
 		if(0 to 8)//If the enchanter is within range, increase enthrallTally, remove withdrawal subproc and undo withdrawal effects.
 			if(phase <= 2)
 				enthrallTally += distancelist[get_dist(master, owner)+1]
@@ -438,7 +442,7 @@
 		withdrawalTick += 0.5
 
 	//Status subproc - statuses given to you from your Master
-	//currently 3 statuses; antiresist -if you press resist, increases your enthrallment instead, HEAL - which slowly heals the pet, CHARGE - which breifly increases speed, PACIFY - makes pet a pacifist.
+	//currently 3 statuses; antiresist -if you press resist, increases your enthrallment instead, HEAL - which slowly heals the pet, CHARGE - which breifly increases speed, PACIFY - makes pet a pacifist, ANTIRESIST - frustrates resist presses.
 	if (status)
 
 		if(status == "Antiresist")
@@ -497,6 +501,10 @@
 			to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 		cooldownMsg = TRUE
 		cooldown = 0
+	if (tranceTime > 0) //custom trances only last 50 ticks.
+		tranceTime -= 1
+	else
+		M.remove_status_effect(/datum/status_effect/trance)
 	//..()
 
 //Remove all stuff
@@ -572,8 +580,7 @@
 			//kneel (knockdown)
 			else if (lowertext(customTriggers[trigger]) == "kneel")//as close to kneeling as you can get, I suppose.
 				to_chat(owner, "<span class='notice'><i>You drop to the ground unsurreptitiously.</i></span>")
-				C.resting = 1
-				C.lying = 1
+				C.lay_down()
 
 			//strip (some) clothes
 			else if (lowertext(customTriggers[trigger]) == "strip")//This wasn't meant to just be a lewd thing oops, is this pref breaking?
@@ -585,9 +592,10 @@
 				to_chat(owner,"<span class='notice'><i>You feel compelled to strip your clothes.</i></span>")
 
 			//trance
-			else if (lowertext(customTriggers[trigger]) == "trance")//Maaaybe too strong.
+			else if (lowertext(customTriggers[trigger]) == "trance")//Maaaybe too strong. Weakened it, only lasts 50 ticks.
 				var/mob/living/carbon/human/o = owner
 				o.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+				tranceTime = 50
 
 		//add more fun stuff!
 
@@ -601,7 +609,8 @@
 	var/mob/living/carbon/M = owner
 	to_chat(owner, "<span class='notice'><i>You attempt to fight against against [(owner.lewd?"[enthrallGender]":"[master]")]'s influence!'</i></span>")
 	message_admins("Enthrall processing for [M]: enthrallTally: [enthrallTally], resistanceTally: [resistanceTally]")
-	//message_admins("[M] is trying to resist!")
+
+	//Able to resist checks
 	if (status == "Sleeper" || phase == 0)
 		return
 	else if (phase == 4)
@@ -627,21 +636,33 @@
 			return
 		else
 			status = null
+
+	//base resistance
 	if (deltaResist != 0)//So you can't spam it, you get one deltaResistance per tick.
 		deltaResist += 0.1 //Though I commend your spamming efforts.
 		return
 	else
-		deltaResist = 1
+		deltaResist = 2 + resistGrowth
+		resistGrowth += 0.1
+
+	//distance modifer
+	switch(DistApart)
+		if(0)
+			deltaResist *= 0.8
+		if(1 to 8)//If they're far away, increase resistance.
+			deltaResist *= (1+(DistApart/10))
+		if(9 to INFINITY)//If
+			deltaResist *= 2
+
 
 	if(prob(5))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 		deltaResist *= 1.5
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
-	//base resistance
+	//nymphomania
 	if (M.canbearoused && M.has_trait(TRAIT_NYMPHO))//I'm okay with this being removed.
 		deltaResist*= ((100 - M.arousalloss/100)/100)//more aroused you are, the weaker resistance you can give
-	//else
-	//	deltaResist *= 0.5
+
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
 	if (owner.reagents.has_reagent("mannitol"))
 		deltaResist *= 1.25
@@ -681,11 +702,11 @@
 
 	//Happiness resistance
 	//Your Thralls are like pets, you need to keep them happy.
-	if(owner.nutrition < 250)
-		deltaResist += (250-owner.nutrition)/100
+	if(owner.nutrition < 300)
+		deltaResist += (300-owner.nutrition)/6
 	if(owner.health < 100)//Harming your thrall will make them rebel harder.
 		deltaResist *= ((120-owner.health)/100)+1
-	//if()
+	//if(owner.mood.mood) //datum/component/mood TO ADD in FERMICHEM 2
 	//Add cold/hot, oxygen, sanity, happiness? (happiness might be moot, since the mood effects are so strong)
 	//Mental health could play a role too in the other direction
 
@@ -695,9 +716,11 @@
 	if(M.has_trait(TRAIT_MINDSHIELD))
 		deltaResist += 5//even faster!
 
+	/*
 	if (deltaResist>0)//just in case
 		deltaResist /= phase//later phases require more resistance
-	message_admins("[M] is trying to resist with a delta of [deltaResist]!")
+	*/
+	message_admins("Enthrall processing for [M]: enthrallTally: [enthrallTally], resistanceTally: [resistanceTally], delta: [deltaResist]")
 	return
 
 //I think this can be left out, but I'll leave the code incase anyone wants to add to it.
