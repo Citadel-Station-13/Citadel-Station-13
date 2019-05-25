@@ -460,7 +460,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
 	slowdown = 0 //So CMO can move with easy.
 	species_exception = list(/datum/species/angel)
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
 	name = "CMO hardsuit helmet"
