@@ -453,7 +453,7 @@
 /obj/item/clothing/suit/space/hardsuit/medical/CMO
 	icon_state = "hardsuit-medical"
 	name = "CMO medical hardsuit"
-	desc = "A Very.Med special suit that protects against hazardous, low pressure environments. Built with ultra-lightweight materials for easier movement. Has less armor then the normal Medical hardsuit but allows for greater mobility"
+	desc = "A NanoMed special suit that protects against hazardous, low pressure environments. Built with ultra-lightweight materials for easier movement. Has less armor then the normal Medical hardsuit but allows for greater mobility"
 	item_state = "medical_hardsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/defibrillator, /obj/item/storage/belt/medical, /obj/item/reagent_containers/hypospray, /obj/item/pinpointer/crew, /obj/item/sensor_device)
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -10, "energy" = -5, "bomb" = 35, "bio" = 120, "rad" = 80, "fire" = 90, "acid" = 95)
@@ -463,7 +463,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/medical/CMO
 	name = "CMO hardsuit helmet"
-	desc = "A Very.Med special helmet designed for work in a hazardous, low pressure environment. Built with ultra-lightweight materials for extra comfort and movement, comes with bult in eye protection and a medical hud."
+	desc = "A NanoMed special helmet designed for work in a hazardous, low pressure environment. Built with ultra-lightweight materials for extra comfort and movement, comes with bult in eye protection and a medical hud."
 	icon_state = "hardsuit0-medical"
 	item_state = "medical_helm"
 	item_color = "medical"
