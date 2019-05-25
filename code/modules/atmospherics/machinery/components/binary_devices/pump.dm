@@ -38,6 +38,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
+		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		
 /obj/machinery/atmospherics/components/binary/pump/layer1
 	piping_layer = PIPING_LAYER_MIN
