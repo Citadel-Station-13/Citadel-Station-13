@@ -121,15 +121,15 @@
 	message_admins("PElarge started!")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
-	for(var/obj/item/W in items)
-		if(W == o.w_uniform || W == o.wear_suit)
-			o.dropItemToGround(W, TRUE)
-			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	if(o.w_uniform || o.wear_suit)
 		to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling pecker! Unless you manage to reduce the size of your emancipated trouser snake, there's no way you're going to be able to put anything on over this girth..!</b></span>")
 		owner.visible_message("<span class='boldnotice'>[o]'s schlong suddenly bursts forth, ripping their clothes off!'</span>")
 	else
 		to_chat(o, "<span class='notice'>Your emancipated trouser snake is so ripe with girth, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
+	for(var/obj/item/W in items)
+		if(W == o.w_uniform || W == o.wear_suit)
+			o.dropItemToGround(W, TRUE)
+			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	return ..()
 
 
@@ -286,11 +286,8 @@
 				else
 
 			else if (resistanceTally > 150)
-				enthrallTally *= 0.5
 				phase = -1
-				resistanceTally = 0
 				to_chat(owner, "<span class='warning'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
-				to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore.'</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
 				if(owner.lewd)
@@ -311,6 +308,7 @@
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
+				resistGrowth = 0
 				to_chat(owner, "<span class='notice'><i>You manage to shake some of the effects from your addled mind, however you can still feel yourself drawn towards [master].</i></span>")
 				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
 			if(prob(10))
@@ -321,6 +319,7 @@
 				enthrallTally = 0
 				phase -= 1
 				resistanceTally = 0
+				resistGrowth = 0
 				to_chat(owner, "<span class='notice'><i>The separation from [(owner.lewd?"your [enthrallGender]":"[master]")] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 				owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
 			if(prob(2))
@@ -334,6 +333,7 @@
 				to_chat(owner, "<span class='notice'><i>Your mind starts to heal, fixing the damage caused by the massive ammounts of chem injected into your system earlier, .</i></span>")
 				M.slurring = 0
 				M.confused = 0
+				resistGrowth = 0
 			else
 				return//If you break the mind of someone, you can't use status effects on them.
 
@@ -521,6 +521,7 @@
 	redirect_component = null
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
+	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore!'</i></span>")
 	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
 
 /*
@@ -643,7 +644,7 @@
 		return
 	else
 		deltaResist = 2 + resistGrowth
-		resistGrowth += 0.1
+		resistGrowth += 0.05
 
 	//distance modifer
 	switch(DistApart)

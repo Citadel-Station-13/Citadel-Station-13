@@ -53,24 +53,24 @@
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume)
-			if((BLOOD_VOLUME_OKAY * blood_ratio) to (BLOOD_VOLUME_SAFE * blood_ratio))
-				if(prob(5))
-					to_chat(src, "<span class='warning'>You feel [word].</span>")
-				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.01, 1))
-			if((BLOOD_VOLUME_BAD * blood_ratio) to (BLOOD_VOLUME_OKAY*blood_ratio))
-				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
-				if(prob(5))
-					blur_eyes(6)
-					to_chat(src, "<span class='warning'>You feel very [word].</span>")
-			if((BLOOD_VOLUME_SURVIVE * blood_ratio) to (BLOOD_VOLUME_BAD * blood_ratio))
-				adjustOxyLoss(5)
-				if(prob(15))
-					Unconscious(rand(20,60))
-					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
-			if(-INFINITY to (BLOOD_VOLUME_SURVIVE * blood_ratio))
-				if(!has_trait(TRAIT_NODEATH))
-					death()
+		//switch(blood_volume) Used to be a switch statement; now it uses ifs (so blood ratio can work.) Check my logic please.
+		if(((BLOOD_VOLUME_OKAY * blood_ratio) < blood_volume) && (blood_volume <= (BLOOD_VOLUME_SAFE * blood_ratio)))
+			if(prob(5))
+				to_chat(src, "<span class='warning'>You feel [word].</span>")
+			adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.01, 1))
+		else if(((BLOOD_VOLUME_BAD * blood_ratio) < blood_volume) && (blood_volume <=(BLOOD_VOLUME_OKAY*blood_ratio)))
+			adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
+			if(prob(5))
+				blur_eyes(6)
+				to_chat(src, "<span class='warning'>You feel very [word].</span>")
+		else if( ((BLOOD_VOLUME_SURVIVE * blood_ratio) < blood_volume) && (blood_volume <= (BLOOD_VOLUME_BAD * blood_ratio)))
+			adjustOxyLoss(5)
+			if(prob(15))
+				Unconscious(rand(20,60))
+				to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
+		else if((-INFINITY < blood_volume) && (blood_volume <= (BLOOD_VOLUME_SURVIVE * blood_ratio)))
+			if(!has_trait(TRAIT_NODEATH))
+				death()
 
 		var/temp_bleed = 0
 		//Bleeding out
@@ -309,12 +309,23 @@
 /mob/living/proc/DecreaseBloodVol(var/value)
 	blood_ratio -= value
 
+//This is a terrible way of handling it.
 /mob/living/proc/ResetBloodVol()
-	if(ishuman(src) && src.has_trait(TRAIT_HIGH_BLOOD))
-		blood_ratio = 1.2
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (src.has_trait(TRAIT_HIGH_BLOOD))
+			blood_ratio = 1.2
+			H.handle_blood()
+			return
+		blood_ratio = 1
+		H.handle_blood()
+		return
 	blood_ratio = 1
 
 /mob/living/proc/AdjustBloodVol(var/value)
 	if(blood_ratio == value)
 		return
 	blood_ratio = value
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.handle_blood()

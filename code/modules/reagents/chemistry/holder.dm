@@ -353,7 +353,8 @@ im
 			var/iconhtml = icon2html(A, seen)
 			for(var/mob/M in seen)
 				to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the temperature!</span>")
-				playsound(get_turf(A), 'sound/effects/bubbles.ogg', 80, 1)
+				playsound(get_turf(A), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+
 			qdel(A)
 			return
 	else if(istype(A, /obj/item/reagent_containers/glass) && ((pH < 0.5) || (pH > 13.5)))//maybe make it higher? Though..Hmm!
@@ -361,7 +362,7 @@ im
 		var/iconhtml = icon2html(A, seen)
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
-			playsound(get_turf(A), 'sound/effects/bubbles.ogg', 80, 1)
+			playsound(get_turf(A), 'sound/FermiChem/acidmelt.ogg', 80, 1)
 		qdel(A)
 	return
 

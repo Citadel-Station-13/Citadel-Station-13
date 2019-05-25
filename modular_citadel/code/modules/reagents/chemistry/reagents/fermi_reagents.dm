@@ -630,6 +630,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
+	if(!ishuman(M)) //The monkey clause
+		if(volume >= 10)
+			var/turf/T = get_turf(M)
+			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
+			var/list/seen = viewers(8, T)
+			for(var/mob/S in seen)
+				to_chat(S, "<span class='warning'>A pair of breasts suddenly fly out of the [M]!</b></span>")
+			//var/turf/T2 = pick(turf in view(5, M))
+			var/T2 = get_random_station_turf()
+			M.adjustBruteLoss(5)
+			M.Knockdown(50)
+			B.throw_at(T2, 8, 1)
+		M.reagents.remove_reagent(src.id, 1000)
+		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
@@ -637,13 +651,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		H.emergent_genital_call()
 		message_admins("No breasts found on init!")
 		return
-
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
 	B.cached_size = sizeConv[B.size]
 	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
+	if(!ishuman(M))//Just in case
+		return
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
@@ -742,6 +757,19 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
+	if(!ishuman(M)) //Just monkeying around.
+		if(volume >= 10)
+			var/turf/T = get_turf(M)
+			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
+			var/list/seen = viewers(8, T)
+			for(var/mob/S in seen)
+				to_chat(S, "<span class='warning'>A penis suddenly flies out of the [M]!</b></span>")
+			var/T2 = get_random_station_turf()
+			M.adjustBruteLoss(5)
+			M.Knockdown(50)
+			P.throw_at(T2, 8, 1)
+		M.reagents.remove_reagent(src.id, 1000)
+		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
@@ -754,6 +782,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	message_admins("init P len chem: [P.length], prev: [P.prev_size], cache = [P.cached_length]")
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
+	if(!ishuman(M))
+		return
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)

@@ -284,8 +284,13 @@
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 	if (organCheck == FALSE)
-		dna.features["genitals_use_skintone"] = TRUE
-		dna.species.use_skintones = TRUE
+		if(ishuman(src))
+			dna.features["genitals_use_skintone"] = TRUE
+			dna.species.use_skintones = TRUE
+			return
+		//So people who haven't set stuff up don't get rainbow surprises.
+		dna.features["cock_color"] = "#[dna.features["mcolor"]]"
+		dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
 	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)

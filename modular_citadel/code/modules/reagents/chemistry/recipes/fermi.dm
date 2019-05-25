@@ -85,7 +85,7 @@
 	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant = 5 //Temperature change per 1u produced
 	HIonRelease = -0.1 //pH change per 1u reaction
-	RateUpLim = 5.5 //Optimal/max rate possible if all conditions are perfect
+	RateUpLim = 55 //Optimal/max rate possible if all conditions are perfect (NEEDS TO BE A MULTIPLE OF 10 IF RESULTS IS DOWN BY A FACTOR OF 10)
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
@@ -115,7 +115,7 @@
 	CurveSharppH 		= 4 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -5 		// Temperature change per 1u produced
 	HIonRelease 		= 0.05 		// pH change per 1u reaction
-	RateUpLim 			= 5 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 20 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 	PurityMin 			= 0.25
@@ -151,7 +151,7 @@
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.5
-	RateUpLim 				= 5
+	RateUpLim 				= 50
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
@@ -183,7 +183,7 @@
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
 	HIonRelease 			= -0.5
-	RateUpLim 				= 5
+	RateUpLim 				= 50
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
@@ -215,7 +215,7 @@
 	CurveSharppH 			= 1
 	ThermicConstant 		= 20
 	HIonRelease 			= -0.5
-	RateUpLim 				= 10
+	RateUpLim 				= 20
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25 // explode purity!
@@ -297,7 +297,7 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -2
 	HIonRelease 	= -0.05
-	RateUpLim 		= 5
+	RateUpLim 		= 50
 	FermiChem 		= TRUE
 	FermiExplode 	= TRUE
 	PurityMin		= 0.5
@@ -328,7 +328,7 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
 	HIonRelease 	= -0.1
-	RateUpLim 		= 10
+	RateUpLim 		= 20
 	FermiChem 		= TRUE
 	PurityMin		= 0.30
 
@@ -352,7 +352,7 @@
 	CurveSharppH 	= 1
 	ThermicConstant = 5
 	HIonRelease 	= 0.01
-	RateUpLim 		= 100
+	RateUpLim 		= 200
 	FermiChem 		= TRUE
 	PurityMin		= 0.15
 
@@ -373,7 +373,7 @@
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= -0.01
-	RateUpLim 		= 20
+	RateUpLim 		= 200
 	FermiChem 		= TRUE
 
 /datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
@@ -398,7 +398,7 @@
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= 0.01
-	RateUpLim 		= 20
+	RateUpLim 		= 200
 	FermiChem 		= TRUE
 
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
