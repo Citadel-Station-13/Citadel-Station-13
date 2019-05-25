@@ -268,8 +268,6 @@
 	empty_alarm()
 	return
 
-
-
 // L6 SAW //
 
 /obj/item/gun/ballistic/automatic/l6_saw
@@ -292,12 +290,10 @@
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin
 
-
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	..()
 	if(cover_open && magazine)
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
-
 
 /obj/item/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
@@ -308,11 +304,9 @@
 		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 	update_icon()
 
-
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEILING(get_ammo(0)/12.5, 1)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
 	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
-
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
@@ -344,8 +338,6 @@
 		return
 	..()
 
-
-
 // SNIPER //
 
 /obj/item/gun/ballistic/automatic/sniper_rifle
@@ -367,13 +359,11 @@
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 
-
 /obj/item/gun/ballistic/automatic/sniper_rifle/update_icon()
 	if(magazine)
 		icon_state = "sniper-mag"
 	else
 		icon_state = "sniper"
-
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
@@ -402,7 +392,6 @@
 		icon_state = "surplus"
 	else
 		icon_state = "surplus-e"
-
 
 // Laser rifle (rechargeable magazine) //
 
