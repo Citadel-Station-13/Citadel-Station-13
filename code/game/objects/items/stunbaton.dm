@@ -211,4 +211,4 @@
 
 /obj/item/melee/baton/cattleprod/baton_stun()
 	sparkler?.activate()
-	return ..()
+	. = ..()
