@@ -81,31 +81,32 @@
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
-	var/print_state = FOOTPRINT_SHOE //the icon state to load images from
+	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
+	var/print_state = FOOTPRINT_SHOE //the print state for different feet
 	var/list/shoe_types = list()
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/Crossed(atom/movable/O)
-	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
 		if(S && S.blood_smear[blood_state])
+			if(color != bloodtype_to_color(S.last_bloodtype))
+				return
 			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
 
-		else if(H.bloodiness && H.blood_smear[blood_state])
+		else if(H && H.blood_smear[blood_state])
+			if(color != bloodtype_to_color(H.last_bloodtype))
+				return
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			H.bloodiness = H.bloodinessmax
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
 				update_icon()
 
-
 /obj/effect/decal/cleanable/blood/footprints/tracks/Uncrossed(atom/movable/O)
-	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
@@ -118,9 +119,10 @@
 				exited_dirs |= H.dir
 				update_icon()
 
-		else if(H.bloodiness && H.blood_smear[blood_state])
+		else if(H && H.blood_smear[blood_state])
+			if(color != bloodtype_to_color(H.last_bloodtype))//last entry - we check its color
+				return
 			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			H.bloodiness = H.bloodinessmax
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
 				update_icon()

@@ -1,6 +1,6 @@
 
 /obj/effect/gibspawner
-	var/sparks = 0 //whether sparks spread
+	var/sparks = FALSE //whether sparks spread
 	var/virusProb = 20 //the chance for viruses to spread on the gibs
 	var/gib_mob_type  //generate a fake mob to transfer DNA from if we weren't passed a mob.
 	var/gib_mob_species //We'll want to nip-pick their species for blood type stuff
@@ -37,7 +37,7 @@
 		if(ishuman(source_mob))
 			var/mob/living/carbon/human/H = source_mob
 			if(H.dna.species.use_skintones)
-				body_coloring = skintone2hex(H.skin_tone)
+				body_coloring = "#[skintone2hex(H.skin_tone)]"
 			else
 				body_coloring = "#[H.dna.features["mcolor"]]"
 
@@ -49,15 +49,17 @@
 				H.set_species(gib_mob_species)
 				dna_to_add = temp_mob.get_blood_dna_list()
 				if(H.dna.species.use_skintones)
-					body_coloring = skintone2hex(H.skin_tone)
+					body_coloring = "#[skintone2hex(H.skin_tone)]"
 				else
 					body_coloring = "#[H.dna.features["mcolor"]]"
 				qdel(H)
 			else
 				dna_to_add = temp_mob.get_blood_dna_list()
 				qdel(temp_mob)
-		else
+		else if(!issilicon(temp_mob))
 			dna_to_add = temp_mob.get_blood_dna_list()
+			qdel(temp_mob)
+		else
 			qdel(temp_mob)
 	else
 		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
@@ -72,11 +74,12 @@
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
-				gib.blood_DNA += dna_to_add
-				// color them properly, please.
-				if(gib.gib_overlay)
-					gib.body_colors = body_coloring
-				gib.update_icon()
+				if(dna_to_add)
+					gib.blood_DNA += dna_to_add
+					// color them properly, please.
+					if(gib.gib_overlay)
+						gib.body_colors = body_coloring
+					gib.update_icon()
 
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
@@ -128,12 +131,20 @@
 
 /obj/effect/gibspawner/human/slimeperson
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/slime/up, /obj/effect/decal/cleanable/blood/gibs/slime/down, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/body, /obj/effect/decal/cleanable/blood/gibs/slime/limb, /obj/effect/decal/cleanable/blood/gibs/slime/core)
-
 	gib_mob_species = /datum/species/jelly
 
 /obj/effect/gibspawner/human/slimeperson/bodypartless
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/slime/core, /obj/effect/decal/cleanable/blood/gibs/slime, /obj/effect/decal/cleanable/blood/gibs/torso)
 	gibamounts = list(2, 0, 1, 1, 2, 0)
+
+/obj/effect/gibspawner/human/ipc
+	sparks = TRUE
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/ipc/up, /obj/effect/decal/cleanable/blood/gibs/ipc/down, /obj/effect/decal/cleanable/blood/gibs/ipc, /obj/effect/decal/cleanable/blood/gibs/ipc, /obj/effect/decal/cleanable/blood/gibs/ipc/body, /obj/effect/decal/cleanable/blood/gibs/ipc/limb, /obj/effect/decal/cleanable/blood/gibs/ipc/core)
+	gibamounts = list(1, 1, 1, 1, 1, 1)
+	gib_mob_type = /mob/living/carbon/human
+	gib_mob_species = /datum/species/ipc
+
+/obj/effect/gibspawner/human/ipc/bodypartless
 
 /obj/effect/gibspawner/xeno
 	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xeno/up/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/down/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/body/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/limb/xeno, /obj/effect/decal/cleanable/blood/gibs/xeno/core/xeno)
@@ -180,7 +191,7 @@
 	return ..()
 
 /obj/effect/gibspawner/robot
-	sparks = 1
+	sparks = TRUE
 	gibtypes = list(/obj/effect/decal/cleanable/robot_debris/up, /obj/effect/decal/cleanable/robot_debris/down, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/robot_debris/limb)
 	gibamounts = list(1, 1, 1, 1, 1, 1)
 	gib_mob_type = /mob/living/silicon
@@ -191,6 +202,3 @@
 	gibamounts[6] = pick(0, 1, 2)
 	return ..()
 
-/obj/effect/gibspawner/robot/ipc
-	gib_mob_type = /mob/living/carbon/human
-	gib_mob_species = /datum/species/ipc

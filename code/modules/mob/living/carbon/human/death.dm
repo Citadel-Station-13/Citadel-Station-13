@@ -12,7 +12,10 @@
 			new /obj/effect/gibspawner/human/slimeperson/bodypartless(drop_location(), dna, get_static_viruses())
 
 	if(isipcperson(src))
-		new /obj/effect/gibspawner/robot/ipc(drop_location(), dna, get_static_viruses())
+		if(with_bodyparts)
+			new /obj/effect/gibspawner/human/ipc(drop_location(), dna, get_static_viruses())
+		else
+			new /obj/effect/gibspawner/human/ipc/bodypartless(drop_location(), dna, get_static_viruses())
 
 	if(isxenoperson(src))
 		if(with_bodyparts)

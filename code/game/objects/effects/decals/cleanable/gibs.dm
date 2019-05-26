@@ -184,3 +184,64 @@
 	reagents.add_reagent("liquidsyntheticgibs", 5)
 	update_icon()
 	guts()
+
+//IPCs
+/obj/effect/decal/cleanable/blood/gibs/ipc
+	desc = "They look sharp yet oozing."
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	reagents.add_reagent("liquidoilgibs", 5)
+	update_icon()
+	guts()
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/guts()
+	if(gib_overlay)
+		var/mutable_appearance/gibz = mutable_appearance(icon, icon_state + "-ipcoverlay", color = blood_color, layer = -LOW_OBJ_LAYER)
+		var/mutable_appearance/gibz2 = mutable_appearance(icon, icon_state + "c-ipcoverlay", color = body_colors, layer = -LOW_OBJ_LAYER)
+		if(!slimy_gibs)
+			gibz.appearance_flags = RESET_COLOR
+			add_overlay(gibz)
+		else
+			gibz.appearance_flags = RESET_COLOR
+			add_overlay(gibz)
+			add_overlay(gibz2)
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/up
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/down
+	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/body
+	random_icon_states = list("gibhead", "gibtorso")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/torso
+	random_icon_states = list("gibtorso")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/limb
+	random_icon_states = list("gibleg", "gibarm")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/core
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+	gib_overlay = TRUE
+	slimy_gibs = TRUE
+
+/obj/effect/decal/cleanable/blood/gibs/synth
+	desc = "They look sludgy and disgusting."
+
+/obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	reagents.add_reagent("liquidsyntheticgibs", 5)
+	update_icon()
+	guts()

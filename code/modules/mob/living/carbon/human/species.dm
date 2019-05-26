@@ -636,6 +636,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
 			bodyparts_to_add -= "taur"
 
+		if(H.dna.features["taur"] != "None")
+			if(H.dna.features["taur"] in GLOB.noodle_taurs)
+				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/snake
+			else if(H.dna.features["taur"] in GLOB.paw_taurs)
+				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/paw
+
 //END EDIT
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.

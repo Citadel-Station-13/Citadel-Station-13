@@ -698,7 +698,6 @@
 		if(H.bloody_feet)
 			H.bloody_feet = 0
 			H.update_inv_shoes()
-		bloodiness = 0
 
 	update_icons()	//apply the now updated overlays to the mob
 
