@@ -84,15 +84,15 @@
 //Allows breasts to grow and change size, with sprite changes too.
 //maximum wah
 //Comical sizes slow you down in movement and actions.
-//Rediculous sizes remove hands.
+//Rediculous sizes makes you more cumberson.
 //Should I turn someone with meter wide... assets into a blob?
 //this is far too lewd wah
 
 /obj/item/organ/genital/breasts/update_size()//wah
-	//var/mob/living/carbon/human/o = owner
-	//var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
-	//message_admins("Breast size at start: [size], [cached_size], [owner]")
-	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!(Why does this runtime??)
+
+	if(!ishuman(owner) || !owner)
+		return
+	if(cached_size < 0)//I don't actually know what round() does to negative numbers, so to be safe!!(Why does this runtime??) - fixed
 		to_chat(owner, "<span class='warning'>You feel your breasts shrinking away from your body as your chest flattens out.</b></span>")
 		src.Remove(owner)
 	switch(round(cached_size))
@@ -113,8 +113,7 @@
 				statuscheck = TRUE
 		if(16 to INFINITY) //if Rediculous
 			size = cached_size
-	//message_admins("1. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
-	//message_admins("1. [prev_size] vs [breast_values[size]]")
+
 	if(round(cached_size) < 16)//Because byond doesn't count from 0, I have to do this.
 		if (prev_size == 0)
 			prev_size = "flat"
@@ -133,8 +132,9 @@
 			var/mob/living/carbon/human/H = owner
 			H.Force_update_genitals()
 		prev_size = size
-
+	/* for future use:
 	else if (cached_size >= 16)
 		if(size != "huge")
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom.</b></span>")// taking both of your hands to hold!.</b></span>")
 		size = "huge"
+	*/

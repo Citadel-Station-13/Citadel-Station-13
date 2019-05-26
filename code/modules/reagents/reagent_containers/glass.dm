@@ -108,7 +108,7 @@
 
 /obj/item/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. It can hold up to 50 units."
+	desc = "A beaker. It can hold up to 50 units. Unable to withstand extreme pHes"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
@@ -152,13 +152,13 @@
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
-	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	desc = "A jar for honey. It can hold up to 50 units of sweet delight. Unable to withstand reagents of an extreme pH."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vapour"
 
 /obj/item/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 100 units."
+	desc = "A large beaker. Can hold up to 100 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerlarge"
 	materials = list(MAT_GLASS=2500)
 	volume = 100
@@ -181,7 +181,7 @@
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
-	desc = "A large beaker. Can hold up to 200 units."
+	desc = "A large beaker. Can hold up to 200 units. Is able to withstand all chemical situations."
 	icon_state = "beakergold"
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 200
@@ -205,7 +205,7 @@
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology \
 		and Element Cuban combined with the Compound Pete. Can hold up to \
-		300 units."
+		300 units. Unable to withstand reagents of an extreme pH."
 	icon_state = "beakerbluespace"
 	materials = list(MAT_GLASS=3000)
 	volume = 300

@@ -26,6 +26,8 @@
 
 /obj/item/organ/genital/penis/update_size()
 	var/mob/living/carbon/human/o = owner
+	if(!ishuman(o) || !o)
+		return
 	if(cached_length < 0)//I don't actually know what round() does to negative numbers, so to be safe!!
 		var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 		to_chat(o, "<span class='warning'>You feel your tallywacker shrinking away from your body as your groin flattens out!</b></span>")

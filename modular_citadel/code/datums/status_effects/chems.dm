@@ -45,6 +45,7 @@
 	id = "BElarger"
 	alert_type = null
 	var/moveCalc = 1
+	var/cachedmoveCalc = 1
 	//var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	//var/list/items = list()
 	//var/items = o.get_contents()
@@ -71,7 +72,7 @@
 	moveCalc = 1+((round(B.cached_size) - 9)/5) //Afffects how fast you move, and how often you can click.
 	if(!B)
 		o.remove_movespeed_modifier("megamilk")
-		o.next_move_modifier /= moveCalc
+		sizeMoveMod(1)
 		owner.remove_status_effect(src)
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -86,14 +87,14 @@
 			o.apply_damage(0.1, BRUTE, target)
 		if(!B.cached_size == B.breast_values[B.prev_size])
 			o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-			o.next_move_modifier *= moveCalc
+			sizeMoveMod(moveCalc)
 		return ..()
 	else if (B.breast_values[B.size] > B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-		o.next_move_modifier *= moveCalc
+		sizeMoveMod(moveCalc)
 	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
 		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-		o.next_move_modifier /= moveCalc
+		sizeMoveMod(moveCalc)
 	if((B.cached_size) < 16)
 		switch(round(B.cached_size))
 			if(9)
@@ -108,7 +109,14 @@
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
 	owner.remove_movespeed_modifier("megamilk")
-	owner.next_move_modifier /= moveCalc
+	sizeMoveMod(1)
+
+/datum/status_effect/chem/BElarger/proc/sizeMoveMod(var/value)
+	if(cachedmoveCalc == value)
+		return
+	owner.next_move_modifier /= cachedmoveCalc
+	owner.next_move_modifier *= value
+	cachedmoveCalc = value
 
 
 /datum/status_effect/chem/PElarger
@@ -152,17 +160,17 @@
 		if(21)
 			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 			o.remove_movespeed_modifier("hugedick")
-			o.AdjustBloodVol(bloodCalc)
+			o.AdjustBloodVol(bloodCalc/2)
 		if(22 to INFINITY)
 			if(prob(2))
 				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
 			o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-			o.AdjustBloodVol(bloodCalc)
+			o.AdjustBloodVol(bloodCalc/2)
 	..()
 
 /datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
 	owner.remove_movespeed_modifier("hugedick")
-	o.ResetBloodVol()
+	owner.ResetBloodVol()
 
 
 /*//////////////////////////////////////////
@@ -485,8 +493,6 @@
 
 			//Truth serum?
 			//adrenals?
-			//M.next_move_modifier *= 0.5
-			//M.adjustStaminaLoss(-5*REM)
 
 	//final tidying
 	resistanceTally  += deltaResist

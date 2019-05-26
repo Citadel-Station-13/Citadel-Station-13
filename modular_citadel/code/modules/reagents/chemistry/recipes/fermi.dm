@@ -101,7 +101,7 @@
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 0.3)
-	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "synthflesh" = 1, "blood" = 1)
+	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "synthflesh" = 0.1, "blood" = 0.1)
 	mix_message = "the reaction gives off a blorble!"
 	//FermiChem vars:
 	OptimalTempMin 		= 600 		// Lower area of bell curve for determining heat based rate reactions
@@ -115,7 +115,7 @@
 	CurveSharppH 		= 4 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -5 		// Temperature change per 1u produced
 	HIonRelease 		= 0.05 		// pH change per 1u reaction
-	RateUpLim 			= 20 		// Optimal/max rate possible if all conditions are perfect
+	RateUpLim 			= 2 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 	PurityMin 			= 0.25
@@ -151,7 +151,7 @@
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.5
-	RateUpLim 				= 50
+	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
@@ -183,7 +183,7 @@
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
 	HIonRelease 			= -0.5
-	RateUpLim 				= 50
+	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
@@ -201,8 +201,8 @@
 /datum/chemical_reaction/fermi/astral //done //BORKEN
 	name = "Astrogen"
 	id = "astral"
-	results = list("astral" = 0.5)
-	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.2, "synaptizine" = 0.1, "aluminium" = 0.5)
+	results = list("astral" = 5)
+	required_reagents = list("eigenstate" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
 	//FermiChem vars:
 	OptimalTempMin 			= 700
 	OptimalTempMax			= 800
@@ -213,9 +213,9 @@
 	CatalystFact 			= 0
 	CurveSharpT 			= 1
 	CurveSharppH 			= 1
-	ThermicConstant 		= 20
+	ThermicConstant 		= 25
 	HIonRelease 			= -0.5
-	RateUpLim 				= 20
+	RateUpLim 				= 10
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25 // explode purity!
@@ -225,7 +225,7 @@
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 0.3)
-	required_reagents = list("iron" = 0.1, "iodine" = 0.1)
+	required_reagents = list("iron" = 1, "iodine" = 1)
 	//required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
 	required_catalysts = list("blood" = 0.1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
@@ -241,7 +241,7 @@
 	CurveSharppH 			= 4
 	ThermicConstant 		= 10
 	HIonRelease 			= -0.1
-	RateUpLim 				= 5
+	RateUpLim 				= 2
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.2
@@ -291,13 +291,13 @@
 	ExplodeTemp 	= 750
 	OptimalpHMin 	= 2
 	OptimalpHMax 	= 5
-	ReactpHLim 		= 1
+	ReactpHLim 		= 3
 	//CatalystFact 	= 0 //To do 1
-	CurveSharpT 	= 4
+	CurveSharpT 	= 8
 	CurveSharppH 	= 0.5
 	ThermicConstant = -2
 	HIonRelease 	= -0.05
-	RateUpLim 		= 50
+	RateUpLim 		= 5
 	FermiChem 		= TRUE
 	FermiExplode 	= TRUE
 	PurityMin		= 0.5
@@ -314,7 +314,7 @@
 	name = "Furranium"
 	id = "furranium"
 	results = list("furranium" = 0.5)
-	required_reagents = list("aphro" = 0.1, "moonsugar" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
+	required_reagents = list("aphro" = 1, "moonsugar" = 1, "silver" = 2, "salglu_solution" = 1)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -328,9 +328,12 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
 	HIonRelease 	= -0.1
-	RateUpLim 		= 20
+	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.30
+
+//FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
+//There's a weird rounding error or something ugh.
 
 //Nano-b-gone
 /datum/chemical_reaction/fermi/naninte_b_gone//done test
@@ -352,7 +355,7 @@
 	CurveSharppH 	= 1
 	ThermicConstant = 5
 	HIonRelease 	= 0.01
-	RateUpLim 		= 200
+	RateUpLim 		= 20
 	FermiChem 		= TRUE
 	PurityMin		= 0.15
 
@@ -365,19 +368,21 @@
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 2.5
-	OptimalpHMax 	= 3.5
+	OptimalpHMin 	= 2
+	OptimalpHMax 	= 6
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 1
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= -0.01
-	RateUpLim 		= 200
+	RateUpLim 		= 20
 	FermiChem 		= TRUE
 
+//This reaction bugs and turns everything in it to FermiABuffer - but now it's a feature instead!
 /datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
+	Fa.pH = my_atom.reagents.pH
 	Fa.data = "merge"
 
 /datum/chemical_reaction/fermi/fermiBBuffer//done test
@@ -390,17 +395,19 @@
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 10.5
-	OptimalpHMax 	= 11.5
+	OptimalpHMin 	= 8
+	OptimalpHMax 	= 12
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 1
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= 0.01
-	RateUpLim 		= 200
+	RateUpLim 		= 15
 	FermiChem 		= TRUE
 
+//This reaction bugs and turns everything in it to FermiBBuffer - but now it's a feature instead!
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
+	Fb.pH = my_atom.reagents.pH
 	Fb.data = "merge"

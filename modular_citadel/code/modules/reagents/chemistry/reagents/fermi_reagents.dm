@@ -379,28 +379,20 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				playerClone =  TRUE
 				M.next_move_modifier = 1
 				M.nutrition -= 500
-				//reaction_mob(SM, )I forget what this is for
+
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
 				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
-				//var/datum/reagents/SMR = SM
-				///datum/reagents
-				//var/mob/living/carbon/human has a holder, carbon does not
-				// You need to add to a holder.
-				// reagentS not reagent (?)
-				//SM.create_reagents()
 
-				//Really hacky way to deal with this stupid problem I have
+				//Really hacky way to deal with this stupid problem I have, and heal the clone. I think around 30u will make a healthy clone.
 				SM.reagents.add_reagent("SDGFheal", volume)
-				//holder.add_reagent("SDGFheal", volume)
 				M.reagents.remove_reagent(src.id, 999)
-				//SMR = locate(/datum/reagents in SM)
-				//holder.trans_to(SMR, volume)
 
 				//Give the new clone an idea of their character
 				//SHOULD print last 5 messages said by the original to the clones chatbox
+				//I don't think it works however.
 				var/list/say_log = M.logging[LOG_SAY]
 				var/recent_speech
 				if(LAZYLEN(say_log) > 5)
@@ -567,12 +559,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
 				M.emote("scream")
 				M.adjustToxLoss(30, 0)
-				var/mob/living/simple_animal/hostile/zombie/ZI = new(get_turf(M.loc))
+				var/mob/living/simple_animal/hostile/unemployedclone/ZI = new(get_turf(M.loc))
 				ZI.damage_coeff = list(BRUTE = ((1 / volume)**0.25) , BURN = ((1 / volume)**0.1), TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
-				ZI.zombiejob = FALSE
 				//ZI.updateappearance(mutcolor_update=1)
 				M.reagents.remove_reagent(src.id, 20)
 			else//easier to deal with
@@ -631,7 +622,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!ishuman(M)) //The monkey clause
-		if(volume >= 10)
+		if(volume >= 15) //To prevent monkey breast farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(T)
 			var/list/seen = viewers(8, T)
@@ -649,12 +640,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
 		H.emergent_genital_call()
-		message_admins("No breasts found on init!")
+		//message_admins("No breasts found on init!")
 		return
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 	B.prev_size = B.size
 	B.cached_size = sizeConv[B.size]
-	message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
+	//message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
@@ -662,7 +653,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
-		message_admins("No breasts found!")
+		//message_admins("No breasts found!")
 		var/obj/item/organ/genital/breasts/nB = new
 		nB.Insert(M)
 		if(nB)
@@ -703,7 +694,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 	if(P)
 		P.cached_length = P.cached_length - 0.1
-		message_admins("lewdsnek size: [P.size], [P.cached_length], [holder]")
+		//message_admins("lewdsnek size: [P.size], [P.cached_length], [holder]")
 		P.update()
 	if(T)
 		T.Remove(M)
@@ -758,7 +749,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!ishuman(M)) //Just monkeying around.
-		if(volume >= 10)
+		if(volume >= 15) //to prevent monkey penis farms
 			var/turf/T = get_turf(M)
 			var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(T)
 			var/list/seen = viewers(8, T)
@@ -1133,7 +1124,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	//ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	//InverseChemVal 		= 0.5
 	//InverseChem 		= "enthrall" //At really impure vols, it just becomes 100% inverse
-	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Isabelle Foster")
+	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
 	creatorGender = "Mistress"
 	creatorName = "Fermis Yakumo"
@@ -1284,7 +1275,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	DoNotSplit = TRUE
 	var/mob/living/carbon/love
 
-/datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system.
+/datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system,Gives a positive moodlet if close, gives brain damagea and a negative moodlet if not close enough.
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/victim in seen)
@@ -1310,7 +1301,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				M.Stun(10)
 				M.emote("whimper")//does this exist?
 				to_chat(M, "<span class='notice'> You're overcome with a desire to see [love].</span>")
-				M.adjustBrainLoss(5)
+				M.adjustBrainLoss(1)//I found out why everyone was so damaged!
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
@@ -1458,6 +1449,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	ImpureChem 			= "naninte_b_goneTox" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25
 	InverseChem 		= "naninte_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	taste_description = "what can only be described as licking a battery."
 	pH = 9
 
 /datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
@@ -1465,13 +1457,13 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
 		return ..()
-	N.regen_rate = -0.25//This seems really high
+	N.nanite_volume = -0.55//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/naninte_b_gone/overdose_process(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
-	if(prob(20))
+	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(10))
@@ -1481,7 +1473,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		to_chat(C, "<span class='warning'>The nanintes short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
-	N.regen_rate = -1//12.5 seems crazy high?
+	N.nanite_volume = -2//12.5 seems crazy high?
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
@@ -1493,10 +1485,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 //Increases shock events.
 /datum/reagent/fermi/naninte_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
-	if(prob(10))
+	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
-	if(prob(10))
+	if(prob(50))
 		//empulse((get_turf(C)), 2, 1, 1)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
@@ -1605,7 +1597,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/fermiABuffer/on_new()
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	pH = ((holder.pH * holder.total_volume)+(3 * src.volume))/(holder.total_volume + src.volume)
+	pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume)
 	holder.remove_reagent(src.id, 1000)
 	..()
 
@@ -1621,7 +1613,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 /datum/reagent/fermi/fermiBBuffer/on_new()
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	pH = ((holder.pH * holder.total_volume)+(11 * src.volume))/(holder.total_volume + src.volume)
+	pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume)
 	holder.remove_reagent(src.id, 1000)
 	..()
 

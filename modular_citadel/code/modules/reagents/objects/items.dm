@@ -51,7 +51,7 @@
     if(used == TRUE)
         to_chat(user, "<span class='warning'>[user] has already been used!</span>")
         return
-    switch(cont.reagents.pH)
+    switch(round(cont.reagents.pH, 1))
         if(14 to INFINITY)
             color = "#462c83"
         if(13 to 14)
@@ -82,5 +82,5 @@
             color = "#ef1d26"
         if(-INFINITY to 1)
             color = "#c6040c"
-    desc += " The paper looks to be around a pH of [round(cont.reagents.pH)]"
+    desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
     used = TRUE

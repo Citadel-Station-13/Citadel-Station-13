@@ -347,7 +347,7 @@ im
 /datum/reagents/proc/beaker_check(atom/A)
 	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta))
 		return
-	else if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
+	if((A.type == /obj/item/reagent_containers/glass/beaker/plastic))
 		if(chem_temp > 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(A))
 			var/iconhtml = icon2html(A, seen)
@@ -471,9 +471,6 @@ im
 			var/special_react_result = selected_reaction.check_special_react(src)
 			var/list/multiplier = INFINITY //Wat
 
-			for(var/B in cached_required_reagents) //
-				//multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
-				multiplier = min(multiplier, (get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 			//Splits reactions into two types; FermiChem is advanced reaction mechanics, Other is default reaction.
 			//FermiChem relies on two additional properties; pH and impurity
 			//Temperature plays into a larger role too.
@@ -483,28 +480,28 @@ im
 
 			if (C.FermiChem == TRUE && !continue_reacting)
 				message_admins("FermiChem Proc'd")
-
+				for(var/B in cached_required_reagents)
+					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
 				for(var/P in selected_reaction.results)
 					targetVol = cached_results[P]*multiplier
+
 					//message_admins("FermiChem target volume: [targetVol]")
 
-				if ((chem_temp > C.OptimalTempMin) && (pH > (C.OptimalpHMin - C.ReactpHLim)) && (pH < (C.OptimalpHMax + C.ReactpHLim)))//To prevent pointless reactions
-					//if (reactedVol < targetVol)
-					if (fermiIsReacting == TRUE)
-						return 0
-					else
-						//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
-						//selected_reaction.on_reaction(src, my_atom, multiplier)
-						START_PROCESSING(SSprocessing, src)
-						//message_admins("FermiChem processing started")
-						selected_reaction.on_reaction(src, my_atom, multiplier)
-						fermiIsReacting = TRUE
-						fermiReactID = selected_reaction
-						reaction_occurred = 1
-					//else
-					//	fermiIsReacting = FALSE
-					//	STOP_PROCESSING(SSfastprocess, src)
-				else if	(chem_temp > C.ExplodeTemp)
+				if( (chem_temp <= C.ExplodeTemp) && (chem_temp >= C.OptimalTempMin))
+					if( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )//To prevent pointless reactions
+						//if (reactedVol < targetVol)
+						if (fermiIsReacting == TRUE)
+							return 0
+						else
+							//reactedVol = FermiReact(selected_reaction, chem_temp, pH, multiplier, reactedVol, targetVol, cached_required_reagents, cached_results)
+							//selected_reaction.on_reaction(src, my_atom, multiplier)
+							START_PROCESSING(SSprocessing, src)
+							//message_admins("FermiChem processing started")
+							selected_reaction.on_reaction(src, my_atom, multiplier)
+							fermiIsReacting = TRUE
+							fermiReactID = selected_reaction
+							reaction_occurred = 1
+				if (chem_temp > C.ExplodeTemp)
 					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
@@ -518,7 +515,7 @@ im
 			else
 
 				for(var/B in cached_required_reagents) //
-					multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
+					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 
 				for(var/B in cached_required_reagents)
 					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
@@ -566,8 +563,9 @@ im
 
 	//message_admins("updating targetVol from [targetVol]")
 	for(var/B in cached_required_reagents) //
-		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
-		multiplier*=10
+		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
+		message_admins("Multi:[multiplier],( reag ammount:[get_reagent_amount(B)] / req reag:[cached_required_reagents[B]]")
+		//multiplier*=10
 	if (multiplier == 0)
 		STOP_PROCESSING(SSprocessing, src)
 		fermiIsReacting = FALSE
@@ -671,10 +669,6 @@ im
 		//TODO Strong acids eat glass, make it so you NEED plastic beakers for superacids(for some reactions)
 		//message_admins("pH is lover limit, cur pH: [pH]")
 
-	if (purity < C.PurityMin)//If purity is below the min, blow it up.
-		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
-		return
-
 	//For now, purity is handled elsewhere
 
 	//Calculate DeltapH (Deviation of pH from optimal)
@@ -738,8 +732,6 @@ im
 	*/
 	//message_admins("cached_results: [cached_results], reactedVol: [reactedVol], stepChemAmmount [stepChemAmmount]")
 
-
-
 	for(var/B in cached_required_reagents)
 		//message_admins("cached_required_reagents(B): [cached_required_reagents[B]], reactedVol: [reactedVol], base stepChemAmmount [stepChemAmmount]")
 		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
@@ -749,20 +741,21 @@ im
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
 		add_reagent(P, cached_results[P]*(stepChemAmmount), null, cached_temp, purity)//add reagent function!! I THINK I can do this:
 	//Above should reduce yeild based on holder purity.
+	//Purity Check
+		for(var/datum/reagent/R in my_atom.reagents.reagent_list)
+			if(P == R.id)
+				if (R.purity < C.PurityMin)//If purity is below the min, blow it up.
+					C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
+					return
 
-	C.FermiCreate(src)
-	//message_admins("purity: [purity], purity of beaker")
-	//message_admins("Temp before change: [chem_temp], pH after change: [pH]")
+	C.FermiCreate(src)//proc that calls when step is done
+
 	//Apply pH changes and thermal output of reaction to beaker
 	chem_temp = round(cached_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!!
-	//adjust_thermal_energy((cached_temp*(C.ThermicConstant * stepChemAmmount *100)), 0, 1500) //(J, min_temp = 2.7, max_temp = 1000)
 	pH += (C.HIonRelease * stepChemAmmount)
-	//message_admins("Temp after change: [chem_temp], pH after change: [pH]")
-
-
+	//keep track of the current reacted amount
 	reactedVol = reactedVol + stepChemAmmount
-
-
+	//return said amount to compare for next step.
 	return (reactedVol)
 
 /datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/fermi/C, holder)
