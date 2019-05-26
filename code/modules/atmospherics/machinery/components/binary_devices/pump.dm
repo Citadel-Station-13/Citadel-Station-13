@@ -35,6 +35,7 @@ Thus, the two variables affect pump operation are set in New():
 	return ..()
 	
 /obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
+	var/area/A = get_area(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
