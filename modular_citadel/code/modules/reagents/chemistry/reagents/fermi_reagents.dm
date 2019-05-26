@@ -122,7 +122,7 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
-	var/location_created
+	var/turf/open/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 0
 	var/addictCyc2 = 0
@@ -1185,6 +1185,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
+	. = ..()
 	if(purity < 0.5)//DO NOT SPLIT INTO DIFFERENT CHEM: This relies on DoNotSplit - has to be done this way.
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
@@ -1287,7 +1288,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "<span class='notice'>You develop deep feelings for [love], your heart beginning to race as you look upon them with new eyes.</span>")
+		to_chat(M, "<span class='notice'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
 	else
 		if(get_dist(M, love) < 8)
 			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
@@ -1504,7 +1505,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = "Acid vapour"
 	id = "fermiAcid"
 	description = "Someone didn't do like an otter, and add acid to water."
-	taste_description = "acid burns, ow!!"
+	taste_description = "acid burns, ow"
+	color = "#000000"
 	pH = 0
 
 /datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
@@ -1577,6 +1579,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "fermiTox"
 	description = "You should be really careful with this...! Also, how did you get this?"
 	data = "merge"
+	color = "#000000"
 
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
@@ -1592,10 +1595,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "an acidy sort of taste, blech."
 	color = "#fbc314"
 	addProc = FALSE
-	pH = 3
+	pH = 6
 
-/datum/reagent/fermi/fermiABuffer/on_new()
+/datum/reagent/fermi/fermiABuffer/on_new(oldpH)
 	if(LAZYLEN(holder.reagent_list) == 1)
+
 		return
 	pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume)
 	holder.remove_reagent(src.id, 1000)
@@ -1608,7 +1612,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	taste_description = "an soapy sort of taste, blech."
 	color = "#3853a4"
 	addProc = FALSE
-	pH = 11
+	pH = 8
 
 /datum/reagent/fermi/fermiBBuffer/on_new()
 	if(LAZYLEN(holder.reagent_list) == 1)

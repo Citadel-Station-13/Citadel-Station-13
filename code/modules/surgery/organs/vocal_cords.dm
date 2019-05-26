@@ -837,7 +837,7 @@
 			if(length(message))
 				E.enthrallTally += (power_multiplier*(((length(message))/200) + 1)) //encourage players to say more than one word.
 			else
-				E.enthrallTally += power_multiplier*1.25
+				E.enthrallTally += power_multiplier*1.25 //thinking about it, I don't know how this can proc
 			if(L.canbearoused)
 				if(L.lewd)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><i><b>[E.enthrallGender] is so nice to listen to.</b></i></span>"), 5)
@@ -851,10 +851,10 @@
 			power_multiplier *= distancelist[get_dist(user, V)+1]
 			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
 			if (L.lewd)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'>[E.enthrallGender] has praised me!!</b></span>"), 5)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</b></span>"), 5)
 				if(L.has_trait(TRAIT_NYMPHO))
 					L.adjustArousalLoss(2*power_multiplier)
-				/* TODO: ADD THIS IN WHEN MASO IS MERGED
+				/*enable when maso is added
 				if(L.has_trait(TRAIT_MASO))
 					E.enthrallTally -= power_multiplier
 					E.resistanceTally += power_multiplier
@@ -864,7 +864,7 @@
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><b><i>I've been praised for doing a good job!</b></i></span>"), 5)
 			E.resistanceTally -= power_multiplier
 			E.enthrallTally += power_multiplier
-			var/descmessage = "[(L.lewd?"I feel so happy! I'm a good pet who [E.enthrallGender] loves!":"I did a good job!")]"
+			var/descmessage = "<span class='love'><i>[(L.lewd?"I feel so happy! I'm a good pet who [E.enthrallGender] loves!":"I did a good job!")]</i></span>"
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallpraise", /datum/mood_event/enthrallpraise, descmessage)
 			E.cooldown += 1
 
@@ -877,14 +877,16 @@
 			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
 			var/descmessage = "[(L.lewd?"I've failed [E.enthrallGender]... What a bad, bad pet!":"I did a bad job...")]"
 			if (L.lewd)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
-				/* TODO: ADD THIS IN WHEN MASO IS MERGED
+				//TODO: ADD THIS IN WHEN MASO IS MERGED
+				/*
 				if(L.has_trait(TRAIT_MASO))
 					L.adjustArousalLoss(3*power_multiplier)
-					descmessage += " And yet, it feels good..!"
+					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
-				*/
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>I've let [E.enthrallGender] down...!</b></span>"), 5)
+				else*/
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			else
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
 				E.resistanceTally += power_multiplier
@@ -1000,7 +1002,9 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
 				if(H.has_trait(TRAIT_NYMPHO) && H.canbearoused) // probably a redundant check but for good measure
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
+					H.SetStun(20)
 					H.setArousalLoss(H.min_arousal)
 					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
 					E.enthrallTally += power_multiplier
@@ -1027,7 +1031,7 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(2 to INFINITY)
-					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1)
+					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
 					H.emote("me", 1, "lets out a nya!")
 					E.cooldown += 1
 
@@ -1051,7 +1055,7 @@
 					for(var/obj/item/W in items)
 						if(W == H.w_uniform || W == H.wear_suit)
 							H.dropItemToGround(W, TRUE)
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='warning'>Before you can even think about it, you quickly remove your clothes in response to [(H.lewd?"your [E.enthrallGender]'s command'":"[E.master]'s directive'")].</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='[(H.lewd?"love":"warning")]'>Before you can even think about it, you quickly remove your clothes in response to [(H.lewd?"your [E.enthrallGender]'s command'":"[E.master]'s directive'")].</b></span>"), 5)
 					E.cooldown += 10
 
 	//WALK doesn't work? it does, randomly, work now
@@ -1065,7 +1069,7 @@
 						L.toggle_move_intent()
 						E.cooldown += 1
 
-	//RUN doesn't work?
+	//RUN doesn't work? Nope, it randomly works now
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
@@ -1085,7 +1089,7 @@
 				if(2 to INFINITY)//Tier 2 only
 					L.lay_down()
 					E.cooldown += 10
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly lie down!'</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "[(L.lewd?"<span class='love'>You eagerly lie down!":"<span class='notice'>You suddenly lie down!'")]</b></span>"), 5)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
@@ -1217,7 +1221,7 @@
 				if(3 to INFINITY)//Tier 3 only
 					L.Stun(40 * power_multiplier)
 					E.cooldown += 8
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You freeze up!</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>Your muscles freeze up!</b></span>"), 5)
 
 	//HALLUCINATE
 	else if(findtext(message, hallucinate_words))

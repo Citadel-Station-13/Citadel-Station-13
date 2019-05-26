@@ -60,7 +60,7 @@
 			desc += " They're very small and flatchested, however."
 		else
 			desc += " You estimate that they're [uppertext(size)]-cups."
-			string = "breasts_[lowertext(shape)]_[size]-s"
+			//string = "breasts_[lowertext(shape)]_[size]-s"
 
 	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."

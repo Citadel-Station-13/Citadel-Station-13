@@ -347,7 +347,7 @@ im
 /datum/reagents/proc/beaker_check(atom/A)
 	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta))
 		return
-	if((A.type == /obj/item/reagent_containers/glass/beaker/plastic))
+	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
 		if(chem_temp > 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(A))
 			var/iconhtml = icon2html(A, seen)
@@ -361,6 +361,7 @@ im
 		var/list/seen = viewers(5, get_turf(A))
 		var/iconhtml = icon2html(A, seen)
 		for(var/mob/M in seen)
+			message_admins("pH at melting: [pH]")
 			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
 			playsound(get_turf(A), 'sound/FermiChem/acidmelt.ogg', 80, 1)
 		qdel(A)
@@ -723,7 +724,7 @@ im
 
 	//TODO: Check overall beaker purity with proc
 	//Then adjust purity of result AND yeild ammount with said purity.
-	stepChemAmmount *= reactant_purity(C)
+	purity *= reactant_purity(C)
 
 	// End.
 	/*
@@ -758,15 +759,17 @@ im
 	//return said amount to compare for next step.
 	return (reactedVol)
 
+//Currently calculates it irrespective of required reagents at the start
 /datum/reagents/proc/reactant_purity(var/datum/chemical_reaction/fermi/C, holder)
 	var/list/cached_reagents = reagent_list
-	var/i
+	var/i = 0
 	var/cachedPurity
 	//var/fermiChem
 	for(var/datum/reagent/R in my_atom.reagents.reagent_list)
 		if (R in cached_reagents)
 			cachedPurity += R.purity
 			i++
+	//message_admins("total reactant purity = [cachedPurity/i]")
 	return cachedPurity/i
 
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -952,7 +955,7 @@ im
 		R.data = data
 		R.on_new(data)
 	if(R.addProc == TRUE)
-		R.on_new(src)
+		R.on_new(pH) //Add more as desired.
 	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
 		Ferm.FermiNew(my_atom) //Seriously what is "data" ????

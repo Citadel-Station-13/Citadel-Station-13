@@ -192,29 +192,31 @@
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
 	alert_type = null
-	var/mob/living/E //E for enchanter
-	//var/mob/living/V = list() //V for victims
 	var/enthrallTally = 1 //Keeps track of the enthralling process
 	var/resistanceTally = 0 //Keeps track of the resistance
 	var/deltaResist //The total resistance added per resist click
-	//var/deltaEnthrall //currently unused (i think)
+
 	var/phase = 1 //-1: resisted state, due to be removed.0: sleeper agent, no effects unless triggered 1: initial, 2: 2nd stage - more commands, 3rd: fully enthralled, 4th Mindbroken
+
 	var/status = null //status effects
 	var/statusStrength = 0 //strength of status effect
+
 	var/mob/living/master //Enchanter's person
 	var/enthrallID //Enchanter's ckey
 	var/enthrallGender //Use master or mistress
-	//var/mob/living/master == null
+
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
-	//var/mental_cost //Current cost of custom triggers
-	//var/mindbroken = FALSE //Not sure I use this, replaced with phase 4
 	var/datum/weakref/redirect_component //resistance
 	//var/datum/weakref/redirect_component2 //say
 	//var/datum/weakref/redirect_component3 //hear
+
 	var/distancelist = list(2,1.5,1,0.8,0.6,0.5,0.4,0.3,0.2) //Distance multipliers
+
 	var/withdrawal = FALSE //withdrawl
 	var/withdrawalTick = 0 //counts how long withdrawl is going on for
+
 	var/list/customTriggers = list() //the list of custom triggers (maybe have to split into two)
+
 	var/cooldown = 0
 	var/cooldownMsg = TRUE
 	var/cTriggered = FALSE
@@ -244,7 +246,7 @@
 	mental_capacity = 500 - B.get_brain_damage()
 	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
-	to_chat(owner, "<span class='big warning'><i>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can still repeatedly resist their effects! (Mash resist to fight back!!)</i></span>")
+	to_chat(owner, "<span class='[(owner.lewd?"big love":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
 	return ..()
 
 /datum/status_effect/chem/enthrall/tick()
@@ -267,8 +269,8 @@
 			mental_capacity += 10
 
 	//mindshield check
-	if(M.has_trait(TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ.
-		resistanceTally += 5
+	if(M.has_trait(TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ. (resisting gives a bigger bonus with a mindshield)
+		resistanceTally += 2
 		if(prob(10))
 			to_chat(owner, "<span class='notice'><i>You feel lucidity returning to your mind as the mindshield buzzes, attempting to return your brain to normal function.</i></span>")
 		if(phase == 4)
@@ -301,18 +303,18 @@
 				if(owner.lewd)
 					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
 		if (2) //partially enthralled
-			if (enthrallTally > 200)
+			if (enthrallTally > 250)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
 				resistanceTally /= 2
 				if(owner.lewd)
-					to_chat(owner, "<span class='notice'><i>Your mind gives, eagerly obeying and serving [master].</i></span>")
-					to_chat(owner, "<span class='big nicegreen'><i>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
+					to_chat(owner, "<span class='userlove'><i>Your mind gives, eagerly obeying and serving [master].</i></span>")
+					to_chat(owner, "<span class='big love'><i>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
 				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
-			else if (resistanceTally > 200)
+			else if (resistanceTally > 250)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
@@ -332,7 +334,7 @@
 				owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
 			if(prob(2))
 				if(owner.lewd)
-					to_chat(owner, "<span class='notice'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
+					to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
 			if (mental_capacity >= 499 && (owner.getBrainLoss() >=20 || M.has_trait(TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
 				phase = 2
@@ -362,14 +364,14 @@
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
-		if(9 to INFINITY)//If
+		if(9 to INFINITY)//If they're not nearby, enable withdrawl effects.
 			withdrawal = TRUE
 
 	//Withdrawal subproc:
 	if (withdrawal == TRUE)//Your minions are really REALLY needy.
 		switch(withdrawalTick)//denial
 			if(5)//To reduce spam
-				to_chat(owner, "<span class='big warning'><i>You are unable to complete your [master]'s orders without their presence, and any commands given to you prior are not in effect until you are back with them.</i></span>")
+				to_chat(owner, "<span class='big warning'><b>You are unable to complete your [master]'s orders without their presence, and any commands and objectives given to you prior are not in effect until you are back with them.</b></span>")
 			if(10 to 35)//Gives wiggle room, so you're not SUPER needy
 				if(prob(5))
 					to_chat(owner, "<span class='notice'><i>You're starting to miss [(owner.lewd?"your [enthrallGender]":"[master]")].</i></span>")
@@ -422,7 +424,7 @@
 				var/message = "[(owner.lewd?"I'm all alone, It's so hard to continute without [enthrallGender]...":"I really need to find [master]!!!")]"
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing4", /datum/mood_event/enthrallmissing4, message)
 				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without your [enthrallGender].</i></span>")
-			if(120 to 140) //depression
+			if(120 to 140) //depression 2, revengeance
 				if(prob(15))
 					owner.Stun(50)
 					owner.emote("cry")//does this exist?
@@ -447,7 +449,7 @@
 					owner.adjustBrainLoss(2)
 					M.hallucination += 50
 
-		withdrawalTick += 0.5
+		withdrawalTick += 0.5//Usually enough to leave you with a major brain trauma, but not kill you.
 
 	//Status subproc - statuses given to you from your Master
 	//currently 3 statuses; antiresist -if you press resist, increases your enthrallment instead, HEAL - which slowly heals the pet, CHARGE - which breifly increases speed, PACIFY - makes pet a pacifist, ANTIRESIST - frustrates resist presses.
@@ -498,19 +500,20 @@
 	resistanceTally  += deltaResist
 	deltaResist = 0
 	if (cooldown > 0)
-		cooldown -= (1 + (mental_capacity/1000))
+		cooldown -= (0.8 + (mental_capacity/500))
 		cooldownMsg = FALSE
 	else if (cooldownMsg == FALSE)
 		if(master.lewd)
-			to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
+			to_chat(master, "<span class='love'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
 		else
 			to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 		cooldownMsg = TRUE
 		cooldown = 0
 	if (tranceTime > 0) //custom trances only last 50 ticks.
 		tranceTime -= 1
-	else
+	else if (!tranceTime == null) //remove trance after.
 		M.remove_status_effect(/datum/status_effect/trance)
+		tranceTime = null
 	//..()
 
 //Remove all stuff
@@ -579,6 +582,7 @@
 				if (C.has_trait(TRAIT_NYMPHO))
 					if (C.getArousalLoss() > 80)
 						C.mob_climax(forced_climax=TRUE)
+						C.SetStun(20)//We got your stun effects in somewhere, Kev.
 					else
 						C.adjustArousalLoss(10)
 				else

@@ -30,8 +30,9 @@
 		pHmod = 2
 
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
-		if (istype(reagent, /datum/reagent/fermi))
+		/*if (istype(reagent, /datum/reagent/fermi))
 			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
+		*/
 		R.add_reagent(reagent, reagent.volume)
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
@@ -114,11 +115,11 @@
 	CurveSharpT 		= 4 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 4 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -5 		// Temperature change per 1u produced
-	HIonRelease 		= 0.05 		// pH change per 1u reaction
-	RateUpLim 			= 2 		// Optimal/max rate possible if all conditions are perfect
+	HIonRelease 		= 0.05 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 3 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
-	PurityMin 			= 0.25
+	PurityMin 			= 0.2
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
 	var/turf/T = get_turf(my_atom)
@@ -201,8 +202,8 @@
 /datum/chemical_reaction/fermi/astral //done //BORKEN
 	name = "Astrogen"
 	id = "astral"
-	results = list("astral" = 5)
-	required_reagents = list("eigenstate" = 1, "plasma" = 1, "synaptizine" = 1, "aluminium" = 5)
+	results = list("astral" = 0.5)
+	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.1, "synaptizine" = 0.1, "aluminium" = 0.5)
 	//FermiChem vars:
 	OptimalTempMin 			= 700
 	OptimalTempMax			= 800
@@ -328,7 +329,7 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
 	HIonRelease 	= -0.1
-	RateUpLim 		= 2
+	RateUpLim 		= 10
 	FermiChem 		= TRUE
 	PurityMin		= 0.30
 
@@ -379,11 +380,15 @@
 	RateUpLim 		= 20
 	FermiChem 		= TRUE
 
-//This reaction bugs and turns everything in it to FermiABuffer - but now it's a feature instead!
+//This reaction bugs and turns everything in it to FermiABuffer - but now it's a feature instead! And then I fixed it anyways
 /datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
+	if (Fa.pH <= 3)
+		Fa.pH = 3
+		Fa.data = 3
+		return
 	Fa.pH = my_atom.reagents.pH
-	Fa.data = "merge"
+	Fa.data = Fa.pH
 
 /datum/chemical_reaction/fermi/fermiBBuffer//done test
 	name = "Ethyl Ethanoate buffer"
@@ -406,8 +411,12 @@
 	RateUpLim 		= 15
 	FermiChem 		= TRUE
 
-//This reaction bugs and turns everything in it to FermiBBuffer - but now it's a feature instead!
+//This reaction bugs and turns everything in it to FermiBBuffer - but now it's a feature instead! And then I fixed it anyways
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
+	if (Fb.pH >= 11)
+		Fb.pH = 11
+		Fb.data = 11
+		return
 	Fb.pH = my_atom.reagents.pH
-	Fb.data = "merge"
+	Fb.data = Fb.pH
