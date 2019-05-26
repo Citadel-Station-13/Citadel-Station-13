@@ -54,7 +54,7 @@
 	//Note this value returned is significant, as it will determine
 	//if a stun is applied or not
 	. = cell.use(chrgdeductamt)
-	if(status && (!. || (chargecheck && cell.charge < hitcost)))
+	if(status && (!. || (chargecheck && cell.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
