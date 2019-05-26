@@ -433,7 +433,6 @@
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
-	hidden = TRUE
 	contraband = TRUE
 	cost = 5000 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/security/officer/russian,
