@@ -132,7 +132,7 @@
 			var/mob/living/carbon/human/H = owner
 			H.Force_update_genitals()
 		prev_size = size
-	/* for future use:
+	/* for future use, DO NOT DELETE:
 	else if (cached_size >= 16)
 		if(size != "huge")
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom.</b></span>")// taking both of your hands to hold!.</b></span>")
