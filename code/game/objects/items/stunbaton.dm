@@ -45,14 +45,14 @@
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
+/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE)
 	if(!cell)
 		switch_status(FALSE, TRUE)
 		return FALSE
 	//Note this value returned is significant, as it will determine
 	//if a stun is applied or not
 	. = cell.use(chrgdeductamt)
-	if(status && cell.charge < hitcost)
+	if(status && (!. || (chargecheck && cell.charge < hitcost)))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
@@ -69,7 +69,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/process()
-	deductcharge(15 * hitcost * 0.001)
+	deductcharge(hitcost * 0.004, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -168,17 +168,21 @@
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			return FALSE
+	var/stunpwr = stunforce
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
+		if(!istype(R) || !R.cell || !R.cell.use(hitcost))
+			return FALSE
 	else
-		if(!deductcharge(hitcost))
-			return 0
+		var/stuncharge = cell.charge
+		if(!deductcharge(hitcost, FALSE))
+			stunpwr *= round(stuncharge/hitcost)
+			if(stunpwr < stunforce * 0.2)
+				return FALSE
 
-	L.Knockdown(stunforce)
-	L.adjustStaminaLoss(stunforce*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.Knockdown(stunpwr)
+	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -195,14 +199,14 @@
 		H.forcesay(GLOB.hit_appends)
 
 
-	return 1
+	return TRUE
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
 		deductcharge(1000 / severity)
-		var/downtime = 4 SECONDS / severity
+		var/downtime = 5 SECONDS / severity
 		if(emped_timer > world.time)
 			emped_timer += downtime * 0.5
 		else
