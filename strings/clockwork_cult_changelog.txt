@@ -1,1 +1,4 @@
 Stargazers have been removed. Integration cogs are now the primary way of creating power.
+Brass Skewers now deal damage to mechs.
+Mech Sensors are now available. They're similar to pressure sensors, but trigger if a mech steps on them, and can be built the same way.
+Power nullifiers are now available. Upon triggering, they send out a small 3x3 EMP, affecting cultists and enemies alike.

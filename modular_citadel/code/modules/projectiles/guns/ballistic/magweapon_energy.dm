@@ -9,7 +9,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/magrifle
-	energy_cost = 300
+	energy_cost = 200
 
 /obj/item/ammo_casing/caseless/mag_e/anlmagm_e
 	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
@@ -17,7 +17,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
-	energy_cost = 300
+	energy_cost = 200
 
 /obj/item/ammo_casing/caseless/mag_e/amags
 	desc = "A ferromagnetic slug intended to be launched out of a compatible weapon."
@@ -25,7 +25,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/mags
-	energy_cost = 200
+	energy_cost = 125
 
 /obj/item/ammo_casing/caseless/mag_e/anlmags
 	desc = "A specialized ferromagnetic slug designed with a less-than-lethal payload."
@@ -33,7 +33,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmags
-	energy_cost = 200
+	energy_cost = 125
 
 ///magazines///
 
@@ -53,14 +53,13 @@
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/amagm_e
 	max_ammo = 24
 
-
 /obj/item/ammo_box/magazine/mmag_e/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/anlmags
 	caliber = "mag_e"
-	max_ammo = 15
+	max_ammo = 16
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag_e/small/lethal
@@ -68,16 +67,19 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/mag_e/amags
+	max_ammo = 16
 
 ///cells///
 
 /obj/item/stock_parts/cell/magrifle_e
 	name = "magrifle power supply"
 	maxcharge = 14400
+	chargerate = 3520
 
 /obj/item/stock_parts/cell/magpistol_e
 	name = "magpistol power supply"
 	maxcharge = 6000
+	chargerate = 1000
 
 ///sci designs///
 
@@ -216,7 +218,6 @@
 	pin = null
 	spawnwithmagazine = FALSE
 
-
 ///magpistol///
 
 /obj/item/gun/ballistic/automatic/pistol/mag_e
@@ -276,7 +277,6 @@
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 
-
 /obj/item/gun/ballistic/automatic/pistol/mag_e/update_icon()
 	..()
 	if(magazine)
@@ -285,7 +285,6 @@
 	else
 		cut_overlays()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-
 
 /obj/item/gun/ballistic/automatic/pistol/mag_e/nopin
 	pin = null

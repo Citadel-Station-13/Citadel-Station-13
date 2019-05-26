@@ -48,6 +48,13 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
+/obj/item/storage/backpack/holding/satchel
+	name = "satchel of holding"
+	desc = "A satchel that opens into a localized pocket of Blue Space."
+	icon_state = "holdingsat"
+	item_state = "holdingsat"
+	species_exception = list(/datum/species/angel)
+
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)

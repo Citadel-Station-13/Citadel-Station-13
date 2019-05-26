@@ -509,7 +509,9 @@
 /obj/machinery/button/door{
 	id = "a3";
 	name = "privacy button";
-	pixel_y = -24
+	normaldoorcontrol = 1;
+	pixel_y = -24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -557,7 +559,9 @@
 /obj/machinery/button/door{
 	id = "a4";
 	name = "privacy button";
-	pixel_y = -24
+	normaldoorcontrol = 1;
+	pixel_y = -24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -605,7 +609,9 @@
 /obj/machinery/button/door{
 	id = "a5";
 	name = "privacy button";
-	pixel_y = -24
+	normaldoorcontrol = 1;
+	pixel_y = -24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -653,7 +659,9 @@
 /obj/machinery/button/door{
 	id = "a6";
 	name = "privacy button";
-	pixel_y = -24
+	normaldoorcontrol = 1;
+	pixel_y = -24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -1097,7 +1105,9 @@
 /obj/machinery/button/door{
 	id = "a2";
 	name = "privacy button";
-	pixel_y = 24
+	normaldoorcontrol = 1;
+	pixel_y = 24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -1159,7 +1169,9 @@
 /obj/machinery/button/door{
 	id = "a1";
 	name = "privacy button";
-	pixel_y = 24
+	normaldoorcontrol = 1;
+	pixel_y = 24;
+	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -1807,7 +1819,9 @@
 /area/ruin/space/has_grav/hotel/bar)
 "fE" = (
 /obj/machinery/vending/boozeomat{
-	req_access_txt = "200"
+	extended_inventory = 1;
+	req_access_txt = "200";
+	scan_id = 0
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4496,7 +4510,6 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/custodial)
 "me" = (
-/mob/living/simple_animal/bot/cleanbot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4507,6 +4520,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/custodial)
 "mf" = (

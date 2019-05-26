@@ -45,7 +45,8 @@
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
-	var/body_markings 	//for bodypart markings
+	var/body_markings = ""	//for bodypart markings
+	var/body_markings_icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	var/list/markings_color = list()
 	var/auxmarking
 	var/list/auxmarking_color = list()
@@ -260,6 +261,7 @@
 			icon = DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
 			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			body_markings = null
 
 	if(owner)
 		owner.updatehealth()
@@ -332,14 +334,18 @@
 			species_color = ""
 
 		if("mam_body_markings" in S.default_features)
+			var/datum/sprite_accessory/Smark
+			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			if(H.dna.features.["mam_body_markings"] != "None")
+				body_markings_icon = Smark.icon
 				body_markings = lowertext(H.dna.features.["mam_body_markings"])
 				if(MATRIXED)
 					markings_color = list(colorlist)
 			else
+				body_markings = "plain"
 				markings_color = (H.dna.features.["mcolor"])
 		else
-			body_markings = "None"
+			body_markings = null
 			markings_color = ""
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
@@ -354,6 +360,7 @@
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
+		body_markings = null
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
@@ -378,6 +385,8 @@
 	. = list()
 
 	var/image_dir = 0
+	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
+
 	if(dropped)
 		image_dir = SOUTH
 		if(dmg_overlay_type)
@@ -385,11 +394,14 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, image_dir)
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
-		if(body_markings)
-			if(use_digitigrade == NOT_DIGITIGRADE)
-				. += image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+		if(body_markings && status != BODYPART_ROBOTIC)
+			if(!use_digitigrade)
+				if(BODY_ZONE_CHEST)
+					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+				else
+					. += image(body_markings_icon, "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				. += image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				. += image(body_markings_icon, "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
@@ -409,8 +421,6 @@
 			limb.icon = 'icons/mob/augmentation/augments.dmi'
 			limb.icon_state = "[animal_origin]_[body_zone]"
 		return
-
-	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
@@ -447,9 +457,12 @@
 				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 			else if(!use_digitigrade)
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+				if(body_zone == BODY_ZONE_CHEST)
+					marking = image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+				else
+					marking = image(body_markings_icon, "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image(body_markings_icon, "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 			. += marking
 
 		// Citadel End
@@ -461,7 +474,7 @@
 				if(species_id == "husk")
 					auxmarking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[aux_zone]", -aux_layer, image_dir)
 				else
-					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -aux_layer, image_dir)
+					auxmarking = image(body_markings_icon, "[body_markings]_[aux_zone]", -aux_layer, image_dir)
 				. += auxmarking
 
 	else
@@ -475,21 +488,24 @@
 			. += aux
 			if(body_markings)
 				if(species_id == "husk")
-					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "husk_[aux_zone]", -aux_layer, image_dir)
+					auxmarking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[aux_zone]", -aux_layer, image_dir)
 				else
-					auxmarking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[aux_zone]", -aux_layer, image_dir)
+					auxmarking = image(body_markings_icon, "[body_markings]_[aux_zone]", -aux_layer, image_dir)
 				. += auxmarking
 
 		if(body_markings)
 			if(species_id == "husk")
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
 			else if(species_id == "husk" && use_digitigrade)
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "husk_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 
 			else if(!use_digitigrade)
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
+				if(body_zone == BODY_ZONE_CHEST)
+					marking = image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+				else
+					marking = image(body_markings_icon, "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
-				marking = image('modular_citadel/icons/mob/mam_markings.dmi', "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking = image(body_markings_icon, "[body_markings]_digitigrade_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 			. += marking
 		return
 

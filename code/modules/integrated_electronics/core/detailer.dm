@@ -25,7 +25,9 @@
 		"green" = COLOR_ASSEMBLY_GREEN,
 		"light blue" = COLOR_ASSEMBLY_LBLUE,
 		"blue" = COLOR_ASSEMBLY_BLUE,
-		"purple" = COLOR_ASSEMBLY_PURPLE
+		"purple" = COLOR_ASSEMBLY_PURPLE,
+		"pink" = COLOR_ASSEMBLY_PINK,
+		"custom" = COLOR_ASSEMBLY_WHITE
 		)
 
 /obj/item/integrated_electronics/detailer/Initialize()
@@ -43,6 +45,9 @@
 	if(!color_list[color_choice])
 		return
 	if(!in_range(src, user))
-		return
-	detail_color = color_list[color_choice]
+		return		
+	if(color_choice == "custom")
+		detail_color = input(user,"","Choose Color",detail_color) as color|null
+	else
+		detail_color = color_list[color_choice]
 	update_icon()

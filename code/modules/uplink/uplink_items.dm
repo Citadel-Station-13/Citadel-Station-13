@@ -988,6 +988,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
+/datum/uplink_item/device_tools/nutcracker
+	name = "Nutcracker"
+	desc = "An oversized version of what you'd initially expect here. Big enough to crush skulls."
+	item = /obj/item/nutcracker
+	cost = 1
+
 /datum/uplink_item/device_tools/surgerybag_adv
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
@@ -1437,6 +1443,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
 	restricted_roles = list("Assistant")
+
+/datum/uplink_item/role_restricted/goldenbox
+	name = "Gold Toolbox"
+	desc = "A gold planted plastitanium toolbox loaded with tools. Comes with a set of AI detection multi-tool and a pare of combat gloves."
+	item = /obj/item/storage/toolbox/gold_real
+	cost = 5 // Has synda tools + gloves + a robust weapon
+	restricted_roles = list("Assistant", "Curator") //Curator do to being made of gold - It fits the theme
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"

@@ -548,9 +548,12 @@
 	desc = "Unlike most electronics, creating smoke is completely intentional."
 	icon_state = "smoke"
 	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
-	into the smoke clouds when activated. The reagents are consumed when the smoke is made."
+	into the smoke clouds when activated. The reagents are consumed when the smoke is made. Requires at least 10 units of reagents to generate smoke."
 	ext_cooldown = 1
+
 	volume = 100
+	container_type = OPENCONTAINER
+
 	complexity = 20
 	cooldown_per_use = 1 SECONDS
 	inputs = list()
@@ -573,6 +576,7 @@
 	if(changetype == ADD_REAGENT)
 		notified = FALSE
 	push_vol()
+
 /obj/item/integrated_circuit/reagent/smoke/do_work(ord)
 	switch(ord)
 		if(1)
@@ -598,9 +602,10 @@
 	name = "integrated extinguisher"
 	desc = "This circuit sprays any of its contents out like an extinguisher."
 	icon_state = "injector"
-	extended_desc = "This circuit can hold up to 30 units of any given chemicals. On each use, it sprays these reagents like a fire extinguisher."
+	extended_desc = "This circuit can hold up to 30 units of any given chemicals. On each use, it sprays these reagents like a fire extinguisher. Requires at least 10 units of reagents to work."
 
 	volume = 30
+	container_type = OPENCONTAINER
 
 	complexity = 20
 	cooldown_per_use = 6 SECONDS
@@ -631,7 +636,7 @@
 /obj/item/integrated_circuit/reagent/extinguisher/do_work()
 	//Check if enough volume
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
-	if(!reagents || reagents.total_volume < 5 || busy)
+	if(!reagents || reagents.total_volume < IC_SMOKE_REAGENTS_MINIMUM_UNITS || busy)
 		push_data()
 		activate_pin(3)
 		return

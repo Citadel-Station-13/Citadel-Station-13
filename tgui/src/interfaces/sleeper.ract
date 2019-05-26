@@ -15,6 +15,16 @@
         <ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</ui-bar>
       </ui-section>
     {{/each}}
+    {{#if data.occupant.blood}}
+      <ui-section label='Blood'>
+        <ui-section label='Volume'>
+          <ui-bar min='0' max='{{data.occupant.blood.maxBloodVolume}}' value='{{data.occupant.blood.currentBloodVolume}}' state='{{data.occupant.blood.currentBloodVolume <= data.occupant.blood.dangerBloodVolume ? "bad" : "good"}}'>{{& data.occupant.blood.currentBloodVolume <= data.occupant.blood.dangerBloodVolume ? "<b>LOW</b>" : "OK"}} - {{Math.round(data.occupant.blood.currentBloodVolume)}} cl</ui-bar>
+        </ui-section>
+        <ui-section label='Type'>
+          <span class='highlight'>{{data.occupant.blood.bloodType}}</span>
+        </ui-section>
+      </ui-section>
+    {{/if}}
     <ui-section label='Cells'>
         <span class='{{data.occupant.cloneLoss ? "bad" : "good"}}'>{{data.occupant.cloneLoss ? "Damaged" : "Healthy"}}</span>
     </ui-section>

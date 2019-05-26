@@ -320,13 +320,14 @@
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
 		if(10 to 20)
 			M.confused += 1
 			M.drowsyness += 1
+			M.adjustStaminaLoss(7.5)
 		if(20 to INFINITY)
 			M.Sleeping(40, 0)
 	..()

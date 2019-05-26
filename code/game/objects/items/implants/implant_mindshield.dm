@@ -1,6 +1,7 @@
 /obj/item/implant/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
+	resistance_flags = INDESTRUCTIBLE
 	activated = 0
 
 /obj/item/implant/mindshield/get_data()

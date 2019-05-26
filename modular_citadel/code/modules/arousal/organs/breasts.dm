@@ -47,8 +47,6 @@
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))
 
 /obj/item/organ/genital/breasts/update_appearance()
-	var/string = "breasts_[lowertext(shape)]_[size]"
-	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
 	switch(lowershape)
 		if("pair")
@@ -66,11 +64,13 @@
 
 	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."
+	var/string
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
+				string = "breasts_[lowertext(shape)]_[size]-s"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
 			string = "breasts_[lowertext(shape)]_[size]"
