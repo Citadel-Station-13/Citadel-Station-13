@@ -134,6 +134,13 @@
 	static_inventory += using
 	//END OF CITADEL CHANGES
 
+	//same as above but buffer.
+	using = new /obj/screen/sprint_buffer
+	using.screen_loc = ui_sprintbufferloc
+	sprint_buffer = using
+	static_inventory += using
+
+
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
@@ -318,9 +325,6 @@
 
 	staminas = new /obj/screen/staminas()
 	infodisplay += staminas
-
-	sprint_buffer = new
-	infodisplay += sprint_buffer
 
 	if(!CONFIG_GET(flag/disable_stambuffer))
 		staminabuffer = new /obj/screen/staminabuffer()

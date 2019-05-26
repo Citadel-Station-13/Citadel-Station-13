@@ -24,7 +24,7 @@
 /datum/hud/var/obj/screen/sprint_buffer/sprint_buffer
 
 /obj/screen/sprint_buffer
-	name = "sprint ubffer"
+	name = "sprint buffer"
 	icon = 'icons/effects/progessbar.dmi'
 	icon_state = "prog_bar_100"
 
@@ -35,4 +35,7 @@
 		Sprinting while this is empty will incur a [L.sprint_stamina_cost] stamina cost per tile.</span>")
 
 /obj/screen/sprint_buffer/proc/update_to_mob(mob/living/L)
-	icon_state = "prog_bar_[round(min((L.sprint_buffer / L.sprint_buffer_max) * 100, 100), 5)]"
+	var/amount = 0
+	if(L.sprint_buffer_max > 0)
+		amount = round(CLAMP((L.sprint_buffer / L.sprint_buffer_max) * 100, 0, 100), 5)
+	icon_state = "prog_bar_[amount]"

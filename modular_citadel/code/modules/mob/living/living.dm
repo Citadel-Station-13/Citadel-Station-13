@@ -10,10 +10,10 @@
 
 	//Sprint buffer---
 	var/sprint_buffer = 35					//Tiles
-	var/sprint_buffer_max
+	var/sprint_buffer_max = 35
 	var/sprint_buffer_regen_ds = 0.2		//Tiles per world.time decisecond
 	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
-	var/sprint_stamina_cost = 0.3			//stamina loss per tile while insufficient sprint buffer.
+	var/sprint_stamina_cost = 0.55			//stamina loss per tile while insufficient sprint buffer.
 	//---End
 
 /mob/living/movement_delay(ignorewalk = 0)
