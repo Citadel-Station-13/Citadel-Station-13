@@ -1,3 +1,5 @@
+#define STUNBATON_CHARGE_LENIENCY 0.3
+
 /obj/item/melee/baton
 	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
@@ -112,9 +114,9 @@
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost)
+	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
 		if(emped_timer > world.time)
-			to_chat(user, "<span class='warning'>[src] briefly flickers as you try to turn it on, looks like it's momentarily out of service.</span>")
+			to_chat(user, "<span class='warning'>[src] briefly flickers as you fail to turn it on, looks like it's momentarily out of service.</span>")
 		else
 			switch_status(!status)
 			to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
@@ -178,7 +180,7 @@
 		var/stuncharge = cell.charge
 		if(!deductcharge(hitcost, FALSE))
 			stunpwr *= round(stuncharge/hitcost)
-			if(stunpwr < stunforce * 0.2)
+			if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
 				return FALSE
 
 	L.Knockdown(stunpwr)
