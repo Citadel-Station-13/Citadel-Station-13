@@ -130,10 +130,7 @@
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
-							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
-		deductcharge(hitcost)
+		clowning_around(user)
 		return
 
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
@@ -203,6 +200,12 @@
 
 	return TRUE
 
+/obj/item/melee/baton/proc/clowning_around(mob/living/user)
+	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
+						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+	user.Knockdown(stunforce*3)
+	deductcharge(hitcost)
+
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
@@ -238,3 +241,5 @@
 /obj/item/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+#undef STUNBATON_CHARGE_LENIENCY
