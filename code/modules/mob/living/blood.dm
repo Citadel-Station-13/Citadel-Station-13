@@ -46,6 +46,8 @@
 					nutrition_ratio = 0.8
 				else
 					nutrition_ratio = 1
+			if(has_trait(TRAIT_HIGH_BLOOD))
+				nutrition_ratio *= 1.2
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
 			nutrition = max(0, nutrition - nutrition_ratio * HUNGER_FACTOR)

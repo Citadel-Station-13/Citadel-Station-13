@@ -296,3 +296,109 @@
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
+
+//Cat made
+/mob/living/simple_animal/pet/cat/custom_cat
+	name = "White cat" //Incase it somehow gets spawned without an ID
+	desc = "A cute white catto!"
+	icon_state = "custom_cat"
+	icon_living = "custom_cat"
+	icon_dead = "custom_cat_dead"
+	gender = FEMALE
+	gold_core_spawnable = NO_SPAWN
+	health = 50 //So people can't instakill it
+	maxHealth = 50
+
+//secretcatchemcode, shh!! Of couse I hide it amongst cats. Also, yes, I expect you, Mr.Maintaner to read and review this, dispite it being hidden and not mentioned in the changelogs.
+//ChemReactionVars:
+/datum/chemical_reaction/fermi/secretcatchem //DONE
+	name = "secretcatchem"
+	id = "secretcatchem"
+	results = list("secretcatchem" = 2)
+	required_reagents = list("stable_plasma" = 0.5, "sugar" = 0.5, "cream" = 0.5, "blood" = 0.5)
+	required_catalysts = list("felinidmutationtoxin" = 5)
+	mix_message = "the reaction gives off a meow!"
+	//FermiChem vars:
+	OptimalTempMin 		= 700 		// Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax 		= 800 		// Upper end for above
+	ExplodeTemp 		= 900		// Temperature at which reaction explodes
+	OptimalpHMin 		= 6 		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax 		= 8 		// Higest value for above
+	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 0 		// How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 0 		// How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 0 		// Temperature change per 1u produced
+	HIonRelease 		= 0 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 0.1 		// Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
+	FermiExplode 		= FALSE		// If the chemical explodes in a special way
+	PurityMin 			= 0.2
+
+/datum/chemical_reaction/fermi/secretcatchem/Initialize()
+	message_admins("randomizing reaction")
+	OptimalTempMin 		+= rand(-100, 100)
+	OptimalTempMax 		+= rand(-100, 100)
+	ExplodeTemp 		+= rand(-100, 100)
+	OptimalpHMin 		+= rand(-1, 1)
+	OptimalpHMax 		+= rand(-1, 1)
+	ReactpHLim 			+= rand(-2, 2)
+	CurveSharpT 		+= rand(0.01, 5)
+	CurveSharppH 		+= rand(0.01, 5)
+	ThermicConstant		+= rand(-50, 50)
+	HIonRelease 		+= rand(-0.25, 0.25)
+	RateUpLim 			+= rand(0, 100)
+	PurityMin 			+= rand(-0.1, 0.1)
+	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace")
+	var/chosenA = pick(additions)
+	required_reagents[chosenA] = rand(0.1, 1)
+
+/datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
+	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermi!!")
+
+//ReagentVars
+//Turns you into a cute catto while it's in your system.
+//If you manage to gamble perfectly, makes you a catgirl after you transform back. But really, you shouldn't end up with that with how random it is.
+/datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
+	name = "secretcatchem" //an attempt at hiding it
+	id = "secretcatchem"
+	description = "An illegal and hidden chem that turns people into cats/catgirls. It's said that it's so rare and unstable that having it means you've been blessed."
+	taste_description = "hairballs and cream"
+	color = "#ffc224"
+	var/catshift = FALSE
+	var/mob/living/simple_animal/pet/cat/custom_cat/catto
+	//var/mob/living/carbon/human/origin maybe unneeded
+
+/datum/reagent/fermi/secretcatchem/New()
+	name = "Catgirli[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
+
+/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
+	. = ..()
+	//origin = H
+	var/current_species = H.dna.species.type
+	var/datum/species/mutation = /datum/species/human/felinid
+	if((mutation && mutation != current_species) && (purity > 0.9))//ONLY if purity is 1, and given the stuff is random. It's basically impossible to get this to 1.
+		H.set_species(mutation)
+		H.gender = FEMALE
+		catshift = TRUE
+	catto = new(get_turf(H.loc))
+	H.mind.transfer_to(catto)
+	H.moveToNullspace()
+	catto.name = M.name
+	catto.desc = "A cute catto! They remind you of [M] somehow."
+	catto.color = "#[dna.features["mcolor"]]"
+
+/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/human/H)
+	if(prob(5))
+		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+		catto.emote("me","lets out a meowrowr!")
+	..()
+
+/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
+	var/words = "<span class='notice'>Your body shifts back to normal."
+	if(catshift == TRUE)
+		words += " ...But wait, are those ears and a tail?")
+	to_chat(H, "[words]</span>")
+	H.doMove(catto)
+	catto.mind.transfer_to(M)
+	qdel(catto)

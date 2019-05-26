@@ -41,9 +41,12 @@
 		else
 			L.mind.add_antag_datum(/datum/antagonist/heartbreaker)
 
-/proc/forge_valentines_objective(mob/living/lover,mob/living/date)
+/proc/forge_valentines_objective(mob/living/lover,mob/living/date,var/chemLove = FALSE)
 	lover.mind.special_role = "valentine"
-	var/datum/antagonist/valentine/V = new
+	if (chemLove == TRUE)
+		var/datum/antagonist/valentine/chem/V = new //Changes text and EOG check basically.
+	else
+		var/datum/antagonist/valentine/V = new
 	V.date = date.mind
 	lover.mind.add_antag_datum(V) //These really should be teams but i can't be assed to incorporate third wheels right now
 

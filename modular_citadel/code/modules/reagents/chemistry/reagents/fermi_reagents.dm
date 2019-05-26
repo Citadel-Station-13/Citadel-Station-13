@@ -1159,13 +1159,17 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(!creatorID)
 		message_admins("Something went wrong in enthral creation THIS SHOULD NOT APPEAR")
 		return
-	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
+	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
+		return
+	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall) //Somehow a beaker got here? (what)
 	if(E)
 		return
 	message_admins("key: [M.ckey] vs [creatorID], ")
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
+		//if(M.has_status_effect(STATUS_EFFECT_INLOVE) Not sure if I need/want this.
+		//	to_chat(M, "<span class='warning'><i>You are too busy being in love for this to work!</i></span>")
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
@@ -1254,7 +1258,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		E.master = creator
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	to_chat(M, "<span class='warning'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
+	to_chat(M, "<span class='love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4
@@ -1288,7 +1292,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "<span class='notice'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
+		to_chat(M, "<span class='big love'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
 	else
 		if(get_dist(M, love) < 8)
 			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
@@ -1301,7 +1305,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			if(prob(10))
 				M.Stun(10)
 				M.emote("whimper")//does this exist?
-				to_chat(M, "<span class='notice'> You're overcome with a desire to see [love].</span>")
+				to_chat(M, "<span class='love'> You're overcome with a desire to see [love].</span>")
 				M.adjustBrainLoss(1)//I found out why everyone was so damaged!
 	..()
 
@@ -1316,12 +1320,12 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
 		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
 		return
-	to_chat(Lover, "<span class='notice'>You develop deep feelings for [Love], your heart beginning to race as you look upon them with new eyes.</span>")
+	to_chat(Lover, "<span class='love'>You develop deep feelings for [Love], your heart beginning to race as you look upon them with new eyes.</span>")
 	if(Lover.mind)
 		Lover.mind.store_memory("You are in love with [Love].")
 	Lover.faction |= "[REF(Love)]"
 	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
-	forge_valentines_objective(Lover, Love)
+	forge_valentines_objective(Lover, Love, TRUE)
 	return
 
 //Requires player to be within vicinity of creator
@@ -1367,7 +1371,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
 	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
-	var/hatArmor = (1+(current_cycle/100))*purity
+	var/hatArmor = (1+(current_cycle/30))*purity
 	if(!overdosed)
 		hat.armor = list("melee" = hatArmor, "bullet" = hatArmor, "laser" = hatArmor, "energy" = hatArmor, "bomb" = hatArmor, "bio" = hatArmor, "rad" = hatArmor, "fire" = hatArmor)
 	else
@@ -1393,6 +1397,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/obj/item/organ/tongue/nT
 	DoNotSplit = TRUE
 	pH = 5
+	var/obj/item/organ/tongue/T
 
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
 
@@ -1415,7 +1420,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(21)
-			var/obj/item/organ/tongue/T = M.getorganslot(ORGAN_SLOT_TONGUE)
+			T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
 			T.Remove(M)
 			nT.Insert(M)
@@ -1435,6 +1440,14 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 	..()
+
+/datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
+	if(purity <= 0.9)//Only permanent if you're a good chemist.
+		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
+		nT.Remove(M)
+		T.Insert(M)
+		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>"
+		M.say("Pleh!")
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

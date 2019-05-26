@@ -26,18 +26,18 @@
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	if(pH < 4) //if acidic, make acid spray
 		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
-		R.add_reagent("fermiAcid", ((volume/3)/pH))
-		pHmod = 2
+		my_atom.reagents.add_reagent("fermiAcid", ((volume/3)/pH))
+		//pHmod = 2
 
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
 		/*if (istype(reagent, /datum/reagent/fermi))
 			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
 		*/
-		R.add_reagent(reagent, reagent.volume)
+		//R.add_reagent(reagent, reagent.volume)
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 	if(R.reagent_list)
-		s.set_up(R, (volume/10)*pHmod, 10, T)
+		s.set_up(my_atom.reagents, (volume/10), 10, T)
 		s.start()
 
 	if(temp>500)//if hot, start a fire
@@ -59,7 +59,7 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
 		e.start()
-		pHmod = 1.5
+		//pHmod = 1.5
 
 	if(!ImpureTot == 0) //If impure, v.small emp
 		ImpureTot *= volume
@@ -92,7 +92,7 @@
 
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
-	var/location = get_turf(my_atom)
+	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	E.location_created = location
 	//add on_new() handling of vars
@@ -253,11 +253,11 @@
 	message_admins("On finish for enthral proc'd")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
-	if(!B)
+	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>")
-			//E.purity = 0
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //if this appears, WHAT?!
+			E.purity = 0
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
 		E.creatorGender = "Mistress"
@@ -278,7 +278,7 @@
 	s.set_up(R, volume, T)
 	s.start()
 	my_atom.reagents.clear_reagents()
-	..(volume = 0, pH = 7, purity = 1) //Just a lil fire.
+	..(volume = 0, pH = 7) //Just a lil fire.
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"

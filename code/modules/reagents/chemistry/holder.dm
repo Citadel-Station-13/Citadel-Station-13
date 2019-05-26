@@ -128,7 +128,7 @@ im
 
 		update_total()
 		handle_reactions()
-		//pH = REAGENT_NORMAL_PH Maybe unnessicary?
+		pH = REAGENT_NORMAL_PH //Maybe unnessicary? NO incredibly nessicary, blows the beaker up otherwise
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -347,7 +347,7 @@ im
 /datum/reagents/proc/beaker_check(atom/A)
 	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta))
 		return
-	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))
+	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))//reaclly weird how this runtimes but the previous doesn't
 		if(chem_temp > 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(A))
 			var/iconhtml = icon2html(A, seen)
@@ -378,6 +378,10 @@ im
 	var/datum/cached_my_atom = my_atom //It says my atom, but I didn't bring one with me!!
 	if(reagents_holder_flags & REAGENT_NOREACT) //Not sure on reagents_holder_flags, but I think it checks to see if theres a reaction with current stuff.
 		return //Yup, no reactions here. No siree.
+
+	//QPlasticCheck - this is done to reduce calculations
+	if (istype(my_atom, /obj/item/reagent_containers/glass/beaker/plastic))
+		beaker_check()
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
@@ -692,7 +696,7 @@ im
 		deltapH = 1
 	//This should never proc:
 	else
-		//message_admins("Fermichem's pH broke!! Please let Fermis know!!")
+		message_admins("Fermichem's pH broke!! Please let Fermis know!!")
 		WARNING("[my_atom] attempted to determine FermiChem pH for '[C.id]' which broke for some reason! ([usr])")
 	//TODO Add CatalystFact
 	//message_admins("calculating pH factor(purity), pH: [pH], min: [C.OptimalpHMin]-[C.ReactpHLim], max: [C.OptimalpHMax]+[C.ReactpHLim], deltapH: [deltapH]")
@@ -728,8 +732,6 @@ im
 
 	// End.
 	/*
-	for(var/B in cached_required_reagents) //
-		tempVol = min(reactedVol, round(get_reagent_amount(B) / cached_required_reagents[B]))//a simple one over the other? (Is this for multiplying end product? Useful for toxinsludge buildup)
 	*/
 	//message_admins("cached_results: [cached_results], reactedVol: [reactedVol], stepChemAmmount [stepChemAmmount]")
 

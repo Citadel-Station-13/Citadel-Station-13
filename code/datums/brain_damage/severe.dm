@@ -205,6 +205,7 @@
 	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
 
+//ported from TG
 /datum/brain_trauma/severe/hypnotic_stupor
 	name = "Hypnotic Stupor"
 	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."

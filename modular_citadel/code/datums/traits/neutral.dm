@@ -1,6 +1,5 @@
 // Citadel-specific Neutral Traits
 
-//For reviewers: If you think it's a bad idea, feel free to remove it. I won't be upset :blobcat:
 /datum/quirk/libido
 	name = "Nymphomania"
 	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."

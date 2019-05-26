@@ -18,7 +18,7 @@
 
 	var/shapeshift_type //Incase I ever get lucky enough to be a wizard. Also why can you be a dog but not a cat!! I know this isn't fermichem related, but this is really important!!!
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
-		/mob/living/simple_animal/pet/cat,\
+		/mob/living/simple_animal/pet/cat,\ //TODO: Remember to remove this before making final commit and make a new request for this. But until then, I'm gonna be a catto wizard!
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/ed209,\

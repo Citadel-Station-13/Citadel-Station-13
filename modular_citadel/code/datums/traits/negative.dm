@@ -1,5 +1,6 @@
 // Citadel-specific Negative Traits
 
+//For reviewers: If you think it's a bad idea, feel free to remove it. I won't be upset :blobcat:
 /datum/quirk/Hypno
 	name = "Hypnotherapy user"
 	desc = "You had hypnotherapy right before your shift, you're not sure it had any effects, though."
