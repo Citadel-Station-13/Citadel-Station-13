@@ -69,7 +69,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/process()
-	deductcharge(10)
+	deductcharge(18 * hitcost * 0.001)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
