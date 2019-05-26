@@ -52,15 +52,15 @@
 			string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			icon_state = sanitize_text(string)
 			H.update_genitals()
-
-	icon_state = sanitize_text(string)
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)
 		linked_organ = (owner.getorganslot("testicles"))
 		if(linked_organ)
 			linked_organ.linked_organ = src
+			linked_organ.size = size
 	else
 		if(linked_organ)
 			linked_organ.linked_organ = null

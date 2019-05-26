@@ -77,6 +77,8 @@
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
+	if(!GLOB.balls_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 	if(!GLOB.vagina_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)

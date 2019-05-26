@@ -55,8 +55,19 @@
 	center = TRUE //Center the image 'cause 2-tile wide.
 	dimension_x = 64
 
+//Testicles
+//These ones aren't inert
+/datum/sprite_accessory/testicles
+	icon = 'modular_citadel/icons/obj/genitals/penis_onmob.dmi'
+	icon_state = "testicle"
+	name = "testicle"		//the preview name of the accessory
+	color_src = "balls_color"
+	locked = 0
 
-
+/datum/sprite_accessory/testicles/single
+	icon_state = "single"
+	name = "single"
+	alt_aroused = TRUE
 
 //Vaginas
 /datum/sprite_accessory/vagina

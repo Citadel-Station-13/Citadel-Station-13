@@ -60,7 +60,5 @@
 			string = "breasts_[lowertext(shape)]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			icon_state = sanitize_text(string)
 			H.update_genitals()
-
-	icon_state = sanitize_text(string)
-
