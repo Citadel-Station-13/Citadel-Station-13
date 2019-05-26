@@ -13,11 +13,12 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stunforce = 140
-	var/status = 0
+	var/status = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/emped_timer = 0
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -45,16 +46,30 @@
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
-	if(cell)
-		//Note this value returned is significant, as it will determine
-		//if a stun is applied or not
-		. = cell.use(chrgdeductamt)
-		if(status && cell.charge < hitcost)
-			//we're below minimum, turn off
-			status = 0
-			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+	if(!cell)
+		switch_status(FALSE, TRUE)
+		return FALSE
+	//Note this value returned is significant, as it will determine
+	//if a stun is applied or not
+	. = cell.use(chrgdeductamt)
+	if(status && cell.charge < hitcost)
+		//we're below minimum, turn off
+		switch_status(FALSE)
 
+/obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
+	if(status == new_status)
+		return
+	status = new_status
+	update_icon()
+	if(!silent)
+		playsound(loc, "sparks", 75, 1, -1)
+	if(status)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/melee/baton/process()
+	deductcharge(10)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -92,23 +107,23 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			status = 0
-			update_icon()
+			switch_status(FALSE, TRUE)
 	else
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	if(cell && cell.charge > hitcost)
-		status = !status
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		if(emped_timer > world.time)
+			to_chat(user, "<span class='warning'>[src] briefly flickers as you try to turn it on, looks like it's momentarily out of service.</span>")
+		else
+			switch_status(!status)
+			to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	else
-		status = 0
+		switch_status(FALSE, TRUE)
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
-	update_icon()
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
@@ -185,7 +200,13 @@
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
+		switch_status(FALSE)
 		deductcharge(1000 / severity)
+		var/downtime = 4 SECONDS / severity
+		if(emped_timer > world.time)
+			emped_timer += downtime * 0.5
+		else
+			emped_timer = world.time + downtime
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
