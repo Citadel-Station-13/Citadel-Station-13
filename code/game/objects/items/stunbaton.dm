@@ -202,13 +202,13 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	var/obj/item/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()
 	sparkler = new (src)
-	sparkler.activate_cooldown = 15
+	sparkler.activate_cooldown = 5
 
 /obj/item/melee/baton/cattleprod/baton_stun()
-	if(sparkler.activate())
-		..()
+	sparkler.activate()
+	return ..()
