@@ -210,5 +210,5 @@
 	sparkler.activate_cooldown = 5
 
 /obj/item/melee/baton/cattleprod/baton_stun()
-	sparkler.activate()
+	sparkler?.activate()
 	return ..()
