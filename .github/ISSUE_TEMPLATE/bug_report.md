@@ -17,4 +17,7 @@ If you discovered this issue from playing tgstation hosted servers:
 
 <!-- Explain your issue in detail, including the steps to reproduce it. Issues without proper reproduction steps or explanation are open to being ignored/closed by maintainers.-->
 
+<!-- This includes Screenshots, Byond version, full context that lead up to situation. Remember the more data you provide, the more complete of a fix that can be made.-->
+
+
 <!-- **For Admins:** Oddities induced by var-edits and other admin tools are not necessarily bugs. Verify that your issues occur under regular circumstances before reporting them. -->
