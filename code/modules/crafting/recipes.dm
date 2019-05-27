@@ -55,7 +55,7 @@
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/makeshiftshield
-	name = "Makeshift Metal Sheild"
+	name = "Makeshift Metal Shield"
 	result = /obj/item/shield/makeshift
 	reqs = list(/obj/item/stack/cable_coil = 30,
 				/obj/item/stack/sheet/metal = 10,
