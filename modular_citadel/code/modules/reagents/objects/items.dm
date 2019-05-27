@@ -97,5 +97,5 @@
 /obj/item/pHmeter/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
     if(!istype(cont))
         return
-    to_chat(M, "<span class='notice'><i>gives a beep and displays [round(cont.reagents.pH, 0.1)]</i></span>")
+    to_chat(src, "<span class='notice'><i>gives a beep and displays [round(cont.reagents.pH, 0.1)]</i></span>")
     desc = "An electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays [round(cont.reagents.pH, 0.1)]."
