@@ -1041,7 +1041,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/encryptionkey/binary
-	cost = 5
+	cost = 2
 	surplus = 75
 	restricted = TRUE
 
