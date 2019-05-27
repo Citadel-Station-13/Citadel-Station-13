@@ -41,7 +41,7 @@
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom)
+		baton_stun(hit_atom, multiplier = 2.5)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -158,7 +158,7 @@
 		..()
 
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, multiplier = 1)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
@@ -176,16 +176,16 @@
 			if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
 				return FALSE
 
-	L.Knockdown(stunpwr)
-	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	L.Knockdown(stunpwr * multiplier)
+	L.adjustStaminaLoss(stunpwr * 0.1 * multiplier, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.apply_effect(EFFECT_STUTTER, stunforce * multiplier)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		log_combat(user, L, "stunned")
+		log_combat(user, L, "stunned with a multipier of [multiplier]")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
