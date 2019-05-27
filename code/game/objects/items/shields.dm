@@ -156,7 +156,7 @@
 
 /obj/item/shield/makeshift
 	name = "metal shield"
-	desc = "A larg shield made of wired and welded sheets of metal. The handle is made of cloth and leather making it unwieldy."
+	desc = "A large shield made of wired and welded sheets of metal. The handle is made of cloth and leather making it unwieldy."
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 5, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 80)
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
