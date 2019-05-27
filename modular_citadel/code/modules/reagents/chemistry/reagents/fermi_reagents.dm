@@ -109,7 +109,8 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
-	var/turf/open/location_created
+	var/location_created
+	//var/turf/open/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 0
 	var/addictCyc2 = 0
@@ -1553,20 +1554,13 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	color = "#fbc314"
 	pH = 3
 
-
+//Consumes self on addition and shifts pH
 /datum/reagent/fermi/fermiABuffer/on_new(datapH)
 	message_admins("Adding acid")
 	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	/*to be fixed later
-	pH = data
-	if (pH <= 3)
-		pH = 3
-	else if (pH >= 7)
-		pH = 7
-	*/
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (src.volume*3)))/(holder.total_volume + (src.volume*3)) //Shouldn't be required
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
@@ -1587,14 +1581,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	/*to be fixed later
-	src.pH = data
-	if (pH >= 11)
-		pH = 11
-	else if (pH <= 7)
-		pH = 7
-	*/
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required Might be..?
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (src.volume*3)))/(holder.total_volume + (src.volume*3)) //Shouldn't be required Might be..?
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")

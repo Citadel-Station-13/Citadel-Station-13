@@ -92,7 +92,7 @@
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
-
+//I can never get this to work, please pitch in if you can figure it out. Runtime: Cannot modify null.location_created.
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list

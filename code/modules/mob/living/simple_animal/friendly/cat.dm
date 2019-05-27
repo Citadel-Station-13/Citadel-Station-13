@@ -348,22 +348,22 @@
 	//rand doesn't seem to work with n^-e
 	//message_admins("randomizing reaction")
 	OptimalTempMin 		+= rand(-100, 100)
-	OptimalTempMax 		+= (OptimalTempMin+rand(0, 200))
-	ExplodeTemp 		+= (OptimalTempMaxx+rand(0, 200))
-	OptimalpHMin 		+= rand(1, 10)
-	OptimalpHMax 		+= (OptimalpHMin + rand(0, 5))
+	OptimalTempMax 		= (OptimalTempMin+rand(0, 200))
+	ExplodeTemp 		= (OptimalTempMax+rand(0, 200))
+	OptimalpHMin 		+= rand(1, 10
+	OptimalpHMax 		= (OptimalpHMin + rand(1, 5))
 	ReactpHLim 			+= rand(-2, 2)
 	CurveSharpT 		+= (rand(1, 500)/100)
 	CurveSharppH 		+= (rand(1, 500)/100)
 	ThermicConstant		+= rand(-50, 50)
 	HIonRelease 		+= (rand(-25, 25)/100)
-	RateUpLim 			+= (rand(1, 1000)/10)
+	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace")
 	//var/chosenA = pick(additions)
-	var/cataly = list ("felinidmutationtoxin", "uranium", "bluespace")
-	required_reagents[pick(additions)] = rand(0.1, 1))
-	required_catalysts = list("[pick(cataly)]" = rand(0.1, 1))
+	var/cataly = list ("felinidmutationtoxin", "uranium", "bluespace", "milk")
+	required_reagents[pick(additions)] = rand(1, 5)//weird
+	required_catalysts = list("[pick(cataly)]" = 1)
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
@@ -388,7 +388,7 @@
 	//origin = H
 	var/current_species = H.dna.species.type
 	var/datum/species/mutation = /datum/species/human/felinid
-	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's basically impossible to get this to 1.
+	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's basically impossible to get this to 1. It already requires felind too, so no new functionality there.
 		H.set_species(mutation)
 		H.gender = FEMALE
 		//exception(al) handler, I said cat tail damnit!
@@ -437,4 +437,4 @@
 	catto.name = "FermiCat"
 	catto.desc = "A cute Fermichem cat, created by a lot of compicated and confusing chemistry!"
 	catto.color = "#770000"
-	my_atom.reagents.remove_reagent("secretcatchem", 10)
+	my_atom.reagents.remove_any(10)
