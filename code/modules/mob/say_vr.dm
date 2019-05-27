@@ -8,9 +8,9 @@
 	set src in usr
 	if(usr != src)
 		usr << "No."
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
-
-	if(msg != null)
+	var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(flavor_text), MAX_MESSAGE_LEN*2, TRUE)
+	
+	if(!isnull(msg))
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 		msg = html_encode(msg)
 
@@ -23,11 +23,12 @@
 
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
-		var/msg = replacetext(flavor_text, "\n", " ")
+		// We are decoding and then encoding to not only get correct amount of characters, but also to prevent partial escaping characters being shown.
+		var/msg = html_decode(replacetext(flavor_text, "\n", " "))
 		if(lentext(msg) <= 40)
-			return "<span class='notice'>[msg]</span>"
+			return "<span class='notice'>[html_encode(msg)]</span>"
 		else
-			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
+			return "<span class='notice'>[html_encode(copytext(msg, 1, 37))]... <a href='?src=[REF(src)];flavor_more=1'>More...</span></a>"
 
 /mob/proc/get_top_level_mob()
 	if(istype(src.loc,/mob)&&src.loc!=src)
