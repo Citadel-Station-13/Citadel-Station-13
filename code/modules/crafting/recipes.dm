@@ -54,6 +54,18 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/makeshiftshield
+	name = "Makeshift Metal Sheild"
+	result = /obj/item/shield/makeshift
+	reqs = list(/obj/item/stack/cable_coil = 30,
+				/obj/item/stack/sheet/metal = 10,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 3)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 100
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/reagent_containers/food/drinks/bottle/molotov
