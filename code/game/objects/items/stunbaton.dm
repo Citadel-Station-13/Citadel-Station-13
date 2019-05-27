@@ -41,7 +41,7 @@
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom, multiplier = 2.5)
+		baton_stun(hit_atom, multiplier = 1.5)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
