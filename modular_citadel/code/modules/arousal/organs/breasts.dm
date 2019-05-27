@@ -53,8 +53,8 @@
 			desc = "You see a pair of breasts."
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
-	if(isnum(size))
-		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "two big old tonhongerekoogers", "a couple of giant bonkhonagahoogs", "a pair of humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [round(size)]cm in diameter."
+	if(cached_size > 16)
+		desc = "You see [pick("some serious honkers", "a real set of badonkers", "some dobonhonkeros", "massive dohoonkabhankoloos", "two big old tonhongerekoogers", "a couple of giant bonkhonagahoogs", "a pair of humongous hungolomghnonoloughongous")]. Their volume is way beyond cupsize now, measuring in about [round(cached_size)]cm in diameter."
 	else if (!isnum(size))
 		if (size == "flat")
 			desc += " They're very small and flatchested, however."
@@ -121,20 +121,14 @@
 			size = "flat"
 		if(isnum(prev_size))
 			prev_size = breast_sizes[prev_size]
-		//message_admins("2. [breast_values[size]] vs [breast_values[prev_size]] || [size] vs [prev_size]")
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner
-			message_admins("Cached: [cached_size], prev: [prev_size], size: [size]")
 			H.Force_update_genitals()
 		else if (breast_values[size] < breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "contracts into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner
 			H.Force_update_genitals()
 		prev_size = size
-	/* for future use, DO NOT DELETE:
 	else if (cached_size >= 16)
-		if(size != "huge")
-			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a hefty [uppertext(size)]cm diameter bosom.</b></span>")// taking both of your hands to hold!.</b></span>")
 		size = "huge"
-	*/

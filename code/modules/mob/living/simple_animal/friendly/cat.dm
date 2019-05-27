@@ -308,53 +308,63 @@
 	gold_core_spawnable = NO_SPAWN
 	health = 50 //So people can't instakill it
 	maxHealth = 50
+	speak = list("Meowrowr!", "Mew!", "Miauen!")
+	speak_emote = list("wigglepurrs", "mewls")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("looks at you eagerly for pets!", "wiggles enthusiastically.")
+	gold_core_spawnable = NO_SPAWN
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Also, yes, I expect you, Mr.Maintaner to read and review this, dispite it being hidden and not mentioned in the changelogs.
+//I'm not trying to be sneaky, I'm trying to keep it a secret!
+//I don't know how to do hidden chems like Aurora
 //ChemReactionVars:
 /datum/chemical_reaction/fermi/secretcatchem //DONE
 	name = "secretcatchem"
 	id = "secretcatchem"
-	results = list("secretcatchem" = 2)
-	required_reagents = list("stable_plasma" = 0.5, "sugar" = 0.5, "cream" = 0.5, "blood" = 0.5)
+	results = list("secretcatchem" = 0.5)
+	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "blood" = 0.1, "slimejelly" = 0.1)
 	required_catalysts = list("felinidmutationtoxin" = 5)
+	required_temp = 600
 	mix_message = "the reaction gives off a meow!"
+	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
 	//FermiChem vars:
-	OptimalTempMin 		= 700 		// Lower area of bell curve for determining heat based rate reactions
-	OptimalTempMax 		= 800 		// Upper end for above
-	ExplodeTemp 		= 900		// Temperature at which reaction explodes
-	OptimalpHMin 		= 6 		// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	OptimalpHMax 		= 8 		// Higest value for above
-	ReactpHLim 			= 2 		// How far out pH wil react, giving impurity place (Exponential phase)
-	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 0 		// How sharp the temperature exponential curve is (to the power of value)
-	CurveSharppH 		= 0 		// How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= 0 		// Temperature change per 1u produced
-	HIonRelease 		= 0 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 0.1 		// Optimal/max rate possible if all conditions are perfect
-	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode 		= FALSE		// If the chemical explodes in a special way
+	OptimalTempMin 		= 650
+	//OptimalTempMax 	= 800
+	//ExplodeTemp 		= 900
+	OptimalpHMin 		= 0
+	//OptimalpHMax 		= 8
+	ReactpHLim 			= 2
+	//CatalystFact 		= 0
+	CurveSharpT 		= 0
+	CurveSharppH 		= 0
+	ThermicConstant		= 0
+	HIonRelease 		= 0
+	RateUpLim 			= 0.1
+	FermiChem 			= TRUE
+	FermiExplode 		= FALSE
 	PurityMin 			= 0.2
 
-/datum/chemical_reaction/fermi/secretcatchem/Initialize()
-	message_admins("randomizing reaction")
+/datum/chemical_reaction/fermi/secretcatchem/New()
+	//rand doesn't seem to work with n^-e
+	//message_admins("randomizing reaction")
 	OptimalTempMin 		+= rand(-100, 100)
-	OptimalTempMax 		+= rand(-100, 100)
-	ExplodeTemp 		+= rand(-100, 100)
-	OptimalpHMin 		+= rand(-1, 1)
-	OptimalpHMax 		+= rand(-1, 1)
+	OptimalTempMax 		+= (OptimalpHMin+rand(0, 200))
+	ExplodeTemp 		+= (OptimalpHMax+rand(0, 200))
+	OptimalpHMin 		+= rand(1, 10)
+	OptimalpHMax 		+= (OptimalpHMin + rand(0, 5))
 	ReactpHLim 			+= rand(-2, 2)
-	CurveSharpT 		+= rand(0.01, 5)
-	CurveSharppH 		+= rand(0.01, 5)
+	CurveSharpT 		+= (rand(1, 500)/100)
+	CurveSharppH 		+= (rand(1, 500)/100)
 	ThermicConstant		+= rand(-50, 50)
-	HIonRelease 		+= rand(-0.25, 0.25)
-	RateUpLim 			+= rand(0, 100)
-	PurityMin 			+= rand(-0.1, 0.1)
+	HIonRelease 		+= (rand(-25, 25)/100)
+	RateUpLim 			+= (rand(1, 1000)/10)
+	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace")
-	var/chosenA = pick(additions)
-	required_reagents[chosenA] = rand(0.1, 1)
+	//var/chosenA = pick(additions)
+	required_reagents += list("[pick(additions)]", rand(0.1, 1))
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
-	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermi!!")
+	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
 
 //ReagentVars
 //Turns you into a cute catto while it's in your system.
@@ -366,8 +376,7 @@
 	taste_description = "hairballs and cream"
 	color = "#ffc224"
 	var/catshift = FALSE
-	var/mob/living/simple_animal/pet/cat/custom_cat/catto
-	//var/mob/living/carbon/human/origin maybe unneeded
+	var/mob/living/simple_animal/pet/cat/custom_cat/catto = null
 
 /datum/reagent/fermi/secretcatchem/New()
 	name = "Catgirli[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
@@ -377,28 +386,53 @@
 	//origin = H
 	var/current_species = H.dna.species.type
 	var/datum/species/mutation = /datum/species/human/felinid
-	if((mutation && mutation != current_species) && (purity > 0.9))//ONLY if purity is 1, and given the stuff is random. It's basically impossible to get this to 1.
+	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's basically impossible to get this to 1.
 		H.set_species(mutation)
 		H.gender = FEMALE
+		//exception(al) handler, I said cat tail damnit!
+		H.dna.features["mam_tail"] = "Cat"
+		H.dna.features["tail_human"] = "Cat"
+		H.dna.features["ears"]  = "Cat"
+		H.dna.features["mam_ears"] = "Cat"
+		H.dna.features["tail_lizard"] = "Cat"
+		H.dna.features["mam_tail"] = "Cat"
+		H.dna.features["mam_tail_animated"] = "Cat"
+		H.facial_hair_style = "Shaved"
+		H.verb_say = "mewls"
 		catshift = TRUE
+		playsound(get_turf(H), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	to_chat(H, "<span class='notice'>You suddenly turn into a cat!</span>")
 	catto = new(get_turf(H.loc))
 	H.mind.transfer_to(catto)
-	H.moveToNullspace()
-	catto.name = M.name
-	catto.desc = "A cute catto! They remind you of [M] somehow."
-	catto.color = "#[dna.features["mcolor"]]"
+	catto.name = H.name
+	catto.desc = "A cute catto! They remind you of [H] somehow."
+	catto.color = "#[H.dna.features["mcolor"]]"
+	//H.moveToNullspace() classic breaking Japes
+	H.forceMove(locate(10,6,1))//To the zelda room.
 
-/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(prob(5))
 		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
-		catto.emote("me","lets out a meowrowr!")
+		catto.say("lets out a meowrowr!*")
 	..()
 
-/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
-	var/words = "<span class='notice'>Your body shifts back to normal."
+/datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
+	var/words = "Your body shifts back to normal."
+	do_teleport(H, catto.loc)
+	catto.mind.transfer_to(H)
 	if(catshift == TRUE)
-		words += " ...But wait, are those ears and a tail?")
-	to_chat(H, "[words]</span>")
-	H.doMove(catto)
-	catto.mind.transfer_to(M)
+		words += " ...But wait, are those ears and a tail?"
+		H.say("*wag")//force update sprites.
+	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
+
+/datum/chemical_reaction/fermi/secretcatchem/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+	var/mob/living/simple_animal/pet/cat/custom_cat/catto = new(get_turf(my_atom))
+	var/list/seen = viewers(8, get_turf(my_atom))
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
+	playsound(get_turf(my_atom), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	catto.name = "FermiCat"
+	catto.desc = "A cute Fermichem cat, created by a lot of compicated and confusing chemistry!"
+	catto.color = "#770000"
+	my_atom.reagents.remove_reagent("secretcatchem", 10)

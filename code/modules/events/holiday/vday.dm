@@ -45,10 +45,12 @@
 	lover.mind.special_role = "valentine"
 	if (chemLove == TRUE)
 		var/datum/antagonist/valentine/chem/V = new //Changes text and EOG check basically.
+		V.date = date.mind
+		lover.mind.add_antag_datum(V)
 	else
 		var/datum/antagonist/valentine/V = new
-	V.date = date.mind
-	lover.mind.add_antag_datum(V) //These really should be teams but i can't be assed to incorporate third wheels right now
+		V.date = date.mind
+		lover.mind.add_antag_datum(V) //These really should be teams but i can't be assed to incorporate third wheels right now
 
 /datum/round_event/valentines/announce(fake)
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")

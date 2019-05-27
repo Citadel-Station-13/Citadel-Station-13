@@ -809,7 +809,7 @@
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
 	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
-	var/static/regex/recognise_words = regex("recognise me|i'm back|did you miss me?")
+	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
@@ -951,6 +951,8 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			E.status = "Antiresist"
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>Your mind clouds over, as you find yourself unable to resist!</b></span>"), 5)
 			E.statusStrength = (1 * power_multiplier * E.phase)
 			E.cooldown += 15//Too short? yes, made 15
 
@@ -1105,6 +1107,7 @@
 	//tier3
 
 	//STATE TRIGGERS
+	//Doesn't work, Maintaners, help.
 	else if((findtext(message, statecustom_words)))//doesn't work
 		for(var/V in listeners)
 			var/speaktrigger = ""
@@ -1113,9 +1116,9 @@
 			if (E.phase > 2)
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-					C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
-					C.remove_trait(TRAIT_DEAF, "Triggers")
+				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
+				C.remove_trait(TRAIT_DEAF, "Triggers")
 
 
 	//CUSTOM TRIGGERS

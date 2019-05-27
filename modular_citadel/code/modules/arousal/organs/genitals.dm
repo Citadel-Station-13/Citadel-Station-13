@@ -288,7 +288,7 @@
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 	if (organCheck == FALSE)
-		if(ishuman(src))
+		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
 			return
@@ -297,8 +297,7 @@
 		dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
 	return
 
-/datum/species/proc/handle_genitals(mob/living/carbon/human/H)
-	//message_admins("attempting to update sprite")
+/datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
 	if(!H)//no args
 		CRASH("H = null")
 	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done
@@ -316,7 +315,6 @@
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
 	//start scanning for genitals
-	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
 		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
@@ -362,23 +360,7 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-					/* This was removed for some reason?
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							genital_overlay.color = "#[fixed_mut_color]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							genital_overlay.color = "#[fixed_mut_color2]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							genital_overlay.color = "#[fixed_mut_color3]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
-					*/
+
 			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()
@@ -387,7 +369,7 @@
 	for(var/L in relevant_layers)
 		H.apply_overlay(L)
 
-/* Behold the maddness I went through.
+/* Behold the maddness I went through. This is here until the genetial problem is confirmed fixed.
 /datum/species/proc/handle_breasts(mob/living/carbon/human/H)
 	//check for breasts first!
 

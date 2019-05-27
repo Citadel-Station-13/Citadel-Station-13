@@ -16,30 +16,12 @@
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	if (Exploding == TRUE)
 		return
+
 	if(!pH)//Dunno how things got here without a pH.
 		pH = 7
 	var/ImpureTot = 0
-	var/pHmod = 1
+	//var/pHmod = 1
 	var/turf/T = get_turf(my_atom)
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot], containing [my_atom.reagents.reagent_list]")
-	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
-	var/datum/effect_system/smoke_spread/chem/s = new()
-	if(pH < 4) //if acidic, make acid spray
-		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
-		my_atom.reagents.add_reagent("fermiAcid", ((volume/3)/pH))
-		//pHmod = 2
-
-	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
-		/*if (istype(reagent, /datum/reagent/fermi))
-			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
-		*/
-		//R.add_reagent(reagent, reagent.volume)
-		if (reagent.purity < 0.6)
-			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
-	if(R.reagent_list)
-		s.set_up(my_atom.reagents, (volume/10), 10, T)
-		s.start()
-
 	if(temp>500)//if hot, start a fire
 		switch(temp)
 			if (500 to 750)
@@ -54,6 +36,26 @@
 				for(var/turf/turf in range(3,T))
 					new /obj/effect/hotspot(turf)
 					//volume /= 5
+
+	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
+	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	/*Endless loop hell
+	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
+		if (istype(reagent, /datum/reagent/fermi))
+			my_atom.reagents.remove_reagent(reagent.id, 1000)//Prevent endless loops
+			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
+		//R.add_reagent(reagent, reagent.volume)
+		if (reagent.purity < 0.6)
+			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
+	*/
+	if(pH < 4) //if acidic, make acid spray
+		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
+		R.add_reagent("fermiAcid", ((volume/3)/pH))
+		//pHmod = 2
+	if(R.reagent_list)
+		s.set_up(R, (volume/10), 10, T)
+		s.start()
 
 	if (pH > 10) //if alkaline, small explosion.
 		var/datum/effect_system/reagents_explosion/e = new()
@@ -86,7 +88,7 @@
 	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant = 5 //Temperature change per 1u produced
 	HIonRelease = -0.1 //pH change per 1u reaction
-	RateUpLim = 55 //Optimal/max rate possible if all conditions are perfect (NEEDS TO BE A MULTIPLE OF 10 IF RESULTS IS DOWN BY A FACTOR OF 10)
+	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect (NEEDS TO BE A MULTIPLE OF 10 IF RESULTS IS DOWN BY A FACTOR OF 10)
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
@@ -225,10 +227,10 @@
 /datum/chemical_reaction/fermi/enthrall//done
 	name = "MKUltra"
 	id = "enthrall"
-	results = list("enthrall" = 0.3)
-	required_reagents = list("iron" = 1, "iodine" = 1)
-	//required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
-	required_catalysts = list("blood" = 0.1)
+	results = list("enthrall" = 0.5)
+	//required_reagents = list("iron" = 1, "iodine" = 1) Test vars
+	required_reagents = list("cocoa" = 0.1, "astral" = 0.1, "mindbreaker" = 0.1, "psicodine" = 0.1, "happiness" = 0.1)
+	required_catalysts = list("blood" = 1)
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
 	OptimalTempMin 			= 780
@@ -340,7 +342,7 @@
 /datum/chemical_reaction/fermi/naninte_b_gone//done test
 	name = "Naninte bain"
 	id = "naninte_b_gone"
-	results = list("naninte_b_gone" = 20)
+	results = list("naninte_b_gone" = 2)
 	required_reagents = list("synthflesh" = 5, "uranium" = 5, "iron" = 5, "salglu_solution" = 5)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
 	required_temp = 499//To force fermireactions before EMP.
@@ -356,7 +358,7 @@
 	CurveSharppH 	= 1
 	ThermicConstant = 5
 	HIonRelease 	= 0.01
-	RateUpLim 		= 20
+	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.15
 
@@ -387,6 +389,10 @@
 		Fa.pH = 3
 		Fa.data = 3
 		return
+	else if (Fa.pH >= 7)
+		Fa.pH = 7
+		Fa.data = 7
+		return
 	Fa.pH = my_atom.reagents.pH
 	Fa.data = Fa.pH
 
@@ -395,7 +401,7 @@
 	id = "fermiBBuffer"
 	results = list("fermiBBuffer" = 15)
 	required_reagents = list("fermiABuffer" = 5, "ethanol" = 5, "salglu_solution" = 1, "water" = 5)
-	required_catalysts = list("sacid" = 5) //vagely acetic
+	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -418,5 +424,8 @@
 		Fb.pH = 11
 		Fb.data = 11
 		return
+	else if (Fb.pH <= 7)
+		Fb.pH = 7
+		Fb.data = 7
 	Fb.pH = my_atom.reagents.pH
 	Fb.data = Fb.pH

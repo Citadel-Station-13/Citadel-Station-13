@@ -49,11 +49,6 @@
 /datum/antagonist/valentine/chem/greet()
 	to_chat(owner, "<span class='warning'><B>You're in love with [date.name]! Protect [date.p_them()] at all costs. This takes priority over all other loyalties.</B></span>")
 
-/datum/antagonist/valentine/chem/check_completion()
-	if(date.M.stat != DEAD)
-		return TRUE
-	return FALSE
-
 /datum/antagonist/valentine/chem/roundend_report()
 	var/objectives_complete = TRUE
 	if(owner.objectives.len)
@@ -63,6 +58,6 @@
 				break
 
 	if(objectives_complete)
-		return "<span class='love big'>[owner.name] protected [owner.p_their()] love: [date.name]! <i>What a cutie!</i></span>"
+		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] love: [date.name]! <i>What a cutie!</i></span>"
 	else
 		return "<span class='redtext big'>[owner.name] date failed!</span>"

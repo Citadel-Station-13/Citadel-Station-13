@@ -160,12 +160,12 @@
 		if(21)
 			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
 			o.remove_movespeed_modifier("hugedick")
-			o.AdjustBloodVol(bloodCalc/2)
+			o.AdjustBloodVol(bloodCalc)
 		if(22 to INFINITY)
 			if(prob(2))
 				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
 			o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
-			o.AdjustBloodVol(bloodCalc/2)
+			o.AdjustBloodVol(bloodCalc)
 	..()
 
 /datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
@@ -286,7 +286,7 @@
 				cooldown -= 1
 			return
 		if(1)//Initial enthrallment
-			if (enthrallTally > 150)
+			if (enthrallTally > 125)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				resistanceTally /= 2
@@ -301,7 +301,7 @@
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
 				if(owner.lewd)
-					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</i></span>")
+					to_chat(owner, "<span class='small hypnophrase'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</b></span>")
 		if (2) //partially enthralled
 			if (enthrallTally > 250)
 				phase += 1
@@ -310,11 +310,11 @@
 				resistanceTally /= 2
 				if(owner.lewd)
 					to_chat(owner, "<span class='userlove'><i>Your mind gives, eagerly obeying and serving [master].</i></span>")
-					to_chat(owner, "<span class='big love'><i>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
+					to_chat(owner, "<span class='big warning'><b>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
 				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
-			else if (resistanceTally > 250)
+			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
@@ -458,14 +458,14 @@
 		if(status == "Antiresist")
 			if (statusStrength < 0)
 				status = null
-				to_chat(owner, "Your mind feels able to resist oncemore.")
+				to_chat(owner, "<span class='notice'><i>Your mind feels able to resist oncemore.</i></span>")
 			else
 				statusStrength -= 1
 
 		else if(status == "heal")
 			if (statusStrength < 0)
 				status = null
-				to_chat(owner, "You finish licking your wounds.")
+				to_chat(owner, "<span class='notice'><i>You finish licking your wounds.</i></span>")
 			else
 				statusStrength -= 1
 				owner.heal_overall_damage(1, 1, 0, FALSE, FALSE)
@@ -475,16 +475,16 @@
 			owner.add_trait(TRAIT_GOTTAGOFAST, "MKUltra")
 			status = "charged"
 			if(master.lewd)
-				to_chat(owner, "Your [enthrallGender]'s order fills you with a burst of speed!")
+				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
 			else
-				to_chat(owner, "[master]'s command fills you with a burst of speed!")
+				to_chat(owner, "<span class='notice'><i>[master]'s command fills you with a burst of speed!</i></span>")
 
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
 				owner.remove_trait(TRAIT_GOTTAGOFAST, "MKUltra")
 				owner.Knockdown(50)
-				to_chat(owner, "Your body gives out as the adrenaline in your system runs out.")
+				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
 				statusStrength -= 1
 				cooldown += 1 //Cooldown doesn't process till status is done
@@ -504,7 +504,7 @@
 		cooldownMsg = FALSE
 	else if (cooldownMsg == FALSE)
 		if(master.lewd)
-			to_chat(master, "<span class='love'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
+			to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
 		else
 			to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 		cooldownMsg = TRUE
@@ -653,7 +653,7 @@
 		deltaResist += 0.1 //Though I commend your spamming efforts.
 		return
 	else
-		deltaResist = 2 + resistGrowth
+		deltaResist = 1.75 + resistGrowth
 		resistGrowth += 0.05
 
 	//distance modifer

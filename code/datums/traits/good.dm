@@ -157,7 +157,7 @@
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
 
-/datum/quirk/trandening
+/datum/quirk/trandening //What does trandening mean?
 	name = "High Luminosity Eyes"
 	desc = "When the next big fancy implant came out you had to buy one on impluse!"
 	value = 1
@@ -169,3 +169,16 @@
 	var/obj/item/autosurgeon/gloweyes/gloweyes = new(get_turf(H))
 	H.equip_to_slot(gloweyes, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
+
+/datum/quirk/BloodPressure
+	name = "Synthetic blood"
+	desc = "You've got a new form of synthetic blood that increases the total blood volume inside of you as well as the rate of replenishment!"
+	value = 1 //I honeslty dunno if this is a good trait? I just means you use more of medbays blood and make janitors madder, but you also regen blood a lil faster.
+	mob_trait = TRAIT_HIGH_BLOOD
+	gain_text = "<span class='notice'>You feel full of blood!</span>"
+	lose_text = "<span class='notice'>You feel like your blood pressure went down.</span>"
+
+/datum/quirk/BloodPressure/add()
+	var/mob/living/M = quirk_holder
+	M.blood_ratio = 1.2
+	M.blood_volume += 150

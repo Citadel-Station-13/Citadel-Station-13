@@ -2820,7 +2820,6 @@
 #include "modular_citadel\code\datums\status_effects\debuffs.dm"
 #include "modular_citadel\code\datums\traits\negative.dm"
 #include "modular_citadel\code\datums\traits\neutral.dm"
-#include "modular_citadel\code\datums\traits\positive.dm"
 #include "modular_citadel\code\datums\wires\airlock.dm"
 #include "modular_citadel\code\datums\wires\autoylathe.dm"
 #include "modular_citadel\code\game\area\cit_areas.dm"
