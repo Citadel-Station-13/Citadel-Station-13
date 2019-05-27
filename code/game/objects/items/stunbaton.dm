@@ -20,7 +20,6 @@
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/emped_timer = 0
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -115,11 +114,8 @@
 
 /obj/item/melee/baton/attack_self(mob/user)
 	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
-		if(emped_timer > world.time)
-			to_chat(user, "<span class='warning'>[src] briefly flickers as you fail to turn it on, looks like it's momentarily out of service.</span>")
-		else
-			switch_status(!status)
-			to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
+		switch_status(!status)
+		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	else
 		switch_status(FALSE, TRUE)
 		if(!cell)
@@ -211,11 +207,6 @@
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
 		deductcharge(1000 / severity)
-		var/downtime = 5 SECONDS / severity
-		if(emped_timer > world.time)
-			emped_timer += downtime * 0.5
-		else
-			emped_timer = world.time + downtime
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
