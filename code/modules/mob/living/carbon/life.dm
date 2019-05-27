@@ -35,6 +35,17 @@
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		rot()
 
+	if(stat != DEAD)
+		if(InCritical())
+			critical_ticks++
+			if(critical_ticks >= 150)
+				adjustBruteLoss(-0.1)
+				adjustFireLoss(-0.1)
+				adjustToxLoss(-0.1)
+				adjustOxyLoss(-0.1)
+			else
+				critical_ticks = 0
+
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 

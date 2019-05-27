@@ -63,3 +63,5 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+
+	var/critical_ticks = 0
