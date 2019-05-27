@@ -1336,7 +1336,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/anti_stun
-	cost = 12
+	cost = 6
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
