@@ -1564,6 +1564,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	else if (pH >= 7)
 		pH = 7
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required
+	var/list/seen = viewers(5, get_turf(my_atom))
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='warning'>The beaker fizzes as the buffer's pH changes!</b></span>")
+	playsound(get_turf(holder), 'modular_citadel/sound/FermiChem/bufferadd.ogg', 50, 1, -1)
 	holder.remove_reagent(src.id, 1000)
 	..()
 
@@ -1586,5 +1590,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	else if (pH <= 7)
 		pH = 7
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required Might be..?
+	var/list/seen = viewers(5, get_turf(my_atom))
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='warning'>The beaker froths as the buffer's pH changes!</b></span>")
+	playsound(get_turf(holder), 'modular_citadel/sound/FermiChem/bufferadd.ogg', 50, 1, -1)
 	holder.remove_reagent(src.id, 1000)
 	..()

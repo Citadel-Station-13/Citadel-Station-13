@@ -372,7 +372,7 @@
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
 	name = "secretcatchem" //an attempt at hiding it
 	id = "secretcatchem"
-	description = "An illegal and hidden chem that turns people into cats/catgirls. It's said that it's so rare and unstable that having it means you've been blessed."
+	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed."
 	taste_description = "hairballs and cream"
 	color = "#ffc224"
 	var/catshift = FALSE

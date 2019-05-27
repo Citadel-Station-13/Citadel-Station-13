@@ -9,6 +9,7 @@
     w_class = WEIGHT_CLASS_TINY
     //set flammable somehow
 
+//A little janky with pockets
 /obj/item/pHbooklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))
 		if(numberOfPages >= 1)
@@ -84,3 +85,17 @@
             color = "#c6040c"
     desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
     used = TRUE
+
+/obj/item/pHmeter
+    name = "pH meter"
+    desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
+    icon_state = "pHmeter"
+    icon = 'modular_citadel/icons/obj/FermiChem.dmi'
+    resistance_flags = FLAMMABLE
+    w_class = WEIGHT_CLASS_TINY
+
+/obj/item/pHmeter/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
+    if(!istype(cont))
+        return
+    to_chat(M, "<span class='notice'><i>gives a beep and displays [round(cont.reagents.pH, 0.1)]</i></span>")
+    desc = "An electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays [round(cont.reagents.pH, 0.1)]."
