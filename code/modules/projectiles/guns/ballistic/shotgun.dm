@@ -122,6 +122,7 @@
 	item_state = "shotgun"
 	desc = "A large zip gun more or less that takes a single 7.62mm bullet"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
+	can_bayonet = FALSE
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
