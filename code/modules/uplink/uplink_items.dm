@@ -844,7 +844,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/cartridge/virus/frame
-	cost = 4
+	cost = 2
 	restricted = TRUE
 
 /datum/uplink_item/stealthy_tools/agent_card
