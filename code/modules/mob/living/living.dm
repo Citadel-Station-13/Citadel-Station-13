@@ -698,7 +698,7 @@
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay))
+	if(do_mob(src, who, what.strip_delay, ignorehelditem = TRUE))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
