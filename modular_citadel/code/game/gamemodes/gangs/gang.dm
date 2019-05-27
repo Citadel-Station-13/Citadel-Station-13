@@ -193,7 +193,7 @@
 		"hands" = SLOT_HANDS
 	)
 
-	if(gangtool)
+	if(gangtool)//Here is where all of the text occurs when a gang boss first spawns in.
 		var/obj/item/device/gangtool/G = new()
 		var/where = H.equip_in_one_of_slots(G, slots)
 		if (!where)
@@ -201,7 +201,7 @@
 		else
 			G.register_device(H)
 			to_chat(H, "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station.")
-			to_chat(H, "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools.")
+			to_chat(H, "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use gangtools too.")
 
 	if(pen)
 		var/obj/item/pen/gang/T = new()
@@ -209,7 +209,7 @@
 		if (!where2)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen to start.")
 		else
-			to_chat(H, "The <b>recruitment pen</b> in your [where2] will help you get your gang started. Stab unsuspecting crew members with it to recruit them.")
+			to_chat(H, "The <b>recruitment pen</b> in your [where2] will help you get your gang started. Stab unsuspecting crew members with it to recruit them. All gangsters can use these, distribute them to see your gang grow.")
 
 	if(spraycan)
 		var/obj/item/toy/crayon/spraycan/gang/SC = new(null,gang)
@@ -327,7 +327,7 @@
 	GLOB.gangs -= src
 	..()
 
-/datum/team/gang/roundend_report()
+/datum/team/gang/roundend_report() //roundend report.
 	var/list/report = list()
 	report += "<span class='header'>[name]:</span>"
 	if(winner)
@@ -342,9 +342,10 @@
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
-/datum/team/gang/proc/greet_gangster(datum/mind/gangster)
+/datum/team/gang/proc/greet_gangster(datum/mind/gangster) //The text a person receives when recruited.
 	to_chat(gangster, "<FONT size=3 color=red><B>You are now a member of the <font color='[color]'>[name]</font> Gang!</B></FONT>")
-	to_chat(gangster, "<font color='red'>Help your bosses take over the station by claiming territory with <b>special spraycans</b> only they can provide. Simply spray on any unclaimed area of the station.</font>")
+	to_chat(gangster, "<font color='red'>Help your bosses take over the station by claiming territory with <b>spraycans</b>. Simply spray on any unclaimed area of the station.</font>")
+	to_chat(gangster, "<font color='red'>You can also use recruitment pens to recruit more to your cause, If your boss provides you one.</font>")
 	to_chat(gangster, "<font color='red'>Their ultimate objective is to take over the station with a Dominator machine.</font>")
 	to_chat(gangster, "<font color='red'>You can identify your mates by their <b>large, <font color='[color]'> \[G\]</font> icon</b>.</font>")
 	gangster.store_memory("You are a member of the [name] Gang!")

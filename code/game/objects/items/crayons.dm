@@ -69,6 +69,7 @@
 	var/post_noise = FALSE
 
 	var/datum/team/gang/gang //For marking territory.
+	var/gang_tag_delay = 30 //this is the delay for gang mode tag applications on anything that gang = true on.
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -324,7 +325,7 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/takes_time = !instant
+	var/takes_time = !instant //For order purposes, since I'm maximum bad.
 	if(gang_mode)
 		takes_time = TRUE
 
@@ -333,7 +334,7 @@
 		wait_time *= 3
 
 	if(takes_time) //This is what deteremines the time it takes to spray a tag in gang mode. 50 is Default.
-		if(!do_after(user, 25, target = target)) //Lets try 25 instead of giving them all spraycans.
+		if(!do_after(user, gang_tag_delay, target = target)) //25 is a good number, but we have gang_tag_delay var now.
 			return
 
 	if(length(text_buffer))
@@ -345,7 +346,7 @@
 
 	if(actually_paints)
 		if(gang_mode)
-			// Double check it wasn't tagged in the meanwhile
+			// Double check it wasn't tagged in the meanwhile.
 			if(!can_claim_for_gang(user, target))
 				return
 			tag_for_gang(user, target)
@@ -588,6 +589,7 @@
 	is_capped = TRUE
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
+	gang = TRUE //Gang check is true for all things upon the honored hierarchy of spraycans, except those that are FALSE.
 
 	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
@@ -733,6 +735,7 @@
 	icon_capped = "deathcan2_cap"
 	icon_uncapped = "deathcan2"
 	use_overlays = FALSE
+	gang = FALSE
 
 	volume_multiplier = 25
 	charges = 100
@@ -747,6 +750,7 @@
 	icon_capped = "clowncan2_cap"
 	icon_uncapped = "clowncan2"
 	use_overlays = FALSE
+	gang = FALSE
 
 	reagent_contents = list("lube" = 1, "banana" = 1)
 	volume_multiplier = 5
@@ -759,6 +763,7 @@
 	icon_capped = "mimecan_cap"
 	icon_uncapped = "mimecan"
 	use_overlays = FALSE
+	gang = FALSE
 
 	can_change_colour = FALSE
 	paint_color = "#FFFFFF" //RGB
@@ -770,9 +775,10 @@
 /obj/item/toy/crayon/spraycan/gang
 	charges = 20 // Charges back to 20, which is the default value for them.
 	gang = TRUE
+	gang_tag_delay = 15 //Its 50% faster than a regular spraycan, for tagging. After-all they did spend points/meet the boss.
 
 	pre_noise = FALSE
-	post_noise = TRUE
+	post_noise = TRUE // Its even more stealthy just a tad.
 
 /obj/item/toy/crayon/spraycan/gang/Initialize(loc, datum/team/gang/G)
 	..()
@@ -784,7 +790,7 @@
 /obj/item/toy/crayon/spraycan/gang/examine(mob/user)
 	. = ..()
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/gang) || isobserver(user))
-		to_chat(user, "This spraycan has been specially modified for tagging territory.")
+		to_chat(user, "This spraycan has been specially modified with a stage 2 nozzle kit, making it faster.")
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

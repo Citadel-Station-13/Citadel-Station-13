@@ -9,12 +9,13 @@
 	. = ..()
 	last_used = world.time
 
-/obj/item/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
+/obj/item/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE) //ha
 	if(!istype(M))
 		return
 	if(!ishuman(M) || !ishuman(user) || M.stat == DEAD)
 		return ..()
-	var/datum/antagonist/gang/boss/L = user.mind.has_antag_datum(/datum/antagonist/gang/boss)
+	//var/datum/antagonist/gang/boss/L = user.mind.has_antag_datum(/datum/antagonist/gang/boss) //Pen works with bosses only.
+	var/datum/antagonist/gang/L = user.mind.has_antag_datum(/datum/antagonist/gang) //Pen works with anyone in gang.
 	if(!L)
 		return ..()
 	if(!..())

@@ -3,7 +3,7 @@
 // color (must be a hex, "blue" isn't acceptable due to how spraycans are handled)
 // inner_outfits (must be a list() with typepaths of the clothes in it. One is fine, but there is support for multiple: one will be picked at random when bought)
 // outer_outfits (same as above)
-// You also need to make a gang graffiti, that will go in crayondecal.dmi inside our icons(not tg's), with the same name of the gang it's assigned to. Nothing else,just the icon.
+// You also need to make a gang graffiti, that will go in crayondecal.dmi inside our icons, with the same name of the gang it's assigned to. Nothing else,just the icon.
 // Those are all required. If one is missed, stuff could break.
 
 /datum/team/gang/clandestine

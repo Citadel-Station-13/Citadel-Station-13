@@ -76,7 +76,7 @@
 		var/outfit = pick(gang.outer_outfits)
 		if(outfit)
 			var/obj/item/O = new outfit(user.loc)
-			O.armor = O.armor.setRating(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+			O.armor = O.armor.setRating(melee = 25, bullet = 35, laser = 15, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
 			O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			user.put_in_hands(O)
 			to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
@@ -135,6 +135,12 @@
 	icon_state = "knuckles"
 	w_class = 3
 
+datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang member anyways?
+	name = "Cool Sunglasses"
+	id = "glasses"
+	cost = 5
+	item_path = /obj/item/clothing/glasses/sunglasses
+
 /datum/gang_item/clothing/belt
 	name = "Badass Belt"
 	id = "belt"
@@ -168,7 +174,7 @@
 	cost = 5
 	item_path = /obj/item/switchblade
 
-/datum/gang_item/weapon/surplus
+/datum/gang_item/weapon/surplus //For when a gang boss is extra broke or cheap.
 	name = "Surplus Rifle"
 	id = "surplus"
 	cost = 6
@@ -177,7 +183,7 @@
 /datum/gang_item/weapon/ammo/surplus_ammo
 	name = "Surplus Rifle Ammo"
 	id = "surplus_ammo"
-	cost = 5
+	cost = 3
 	item_path = /obj/item/ammo_box/magazine/m10mm/rifle
 
 /datum/gang_item/weapon/improvised
@@ -308,7 +314,7 @@
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
-	cost = 10
+	cost = 8
 	item_path = /obj/item/clothing/shoes/combat/gang
 
 /obj/item/clothing/shoes/combat/gang
