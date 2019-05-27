@@ -1475,9 +1475,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 
-		user.visible_message(
-			"<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'>You slap [user == target ? "yourself" : target] in the face! </span>",\
+		user.visible_message(\
+			"<span class='danger'>\The [user] slaps \the [target] in the face!</span>",\
+			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
 			"You hear a slap."
 		)
 		if (!target.has_trait(TRAIT_NYMPHO))
@@ -1487,9 +1487,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message(
-			"<span class='danger'>[user] slaps [target]'s ass!</span>",
-			"<span class='notice'>You slap [user == target ? "your" : target + "'s"] ass! </span>",\
+		user.visible_message(\
+			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
+			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
 			"You hear a slap."
 		)
 		if (target.canbearoused)
