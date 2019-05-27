@@ -293,8 +293,8 @@
 			dna.species.use_skintones = TRUE
 			return
 		//So people who haven't set stuff up don't get rainbow surprises.
-		dna.features["cock_color"] = "#[dna.features["mcolor"]]"
-		dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
+		//dna.features["cock_color"] = "#[dna.features["mcolor"]]"
+		//dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
 	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
@@ -360,7 +360,22 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-
+					//This was removed for some reason, but it breaks my code, so now it's back!! Tadahhh.
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							genital_overlay.color = "#[fixed_mut_color]"
+						else
+							genital_overlay.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							genital_overlay.color = "#[fixed_mut_color2]"
+						else
+							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							genital_overlay.color = "#[fixed_mut_color3]"
+						else
+							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
 			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()

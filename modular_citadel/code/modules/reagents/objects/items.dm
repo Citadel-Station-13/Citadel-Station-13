@@ -1,4 +1,4 @@
-/obj/item/pHbooklet
+/obj/item/FermiChem/pHbooklet
     name = "pH indicator booklet"
     desc = "A booklet containing paper soaked in universal indicator."
     icon_state = "pHbooklet"
@@ -10,10 +10,10 @@
     //set flammable somehow
 
 //A little janky with pockets
-/obj/item/pHbooklet/attack_hand(mob/user)
+/obj/item/FermiChem/pHbooklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))
 		if(numberOfPages >= 1)
-			var/obj/item/pHpaper/P = new /obj/item/pHpaper
+			var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
 			P.add_fingerprint(user)
 			P.forceMove(user.loc)
 			user.put_in_active_hand(P)
@@ -34,7 +34,7 @@
 		user.put_in_active_hand(src)
 	return
 
-/obj/item/pHpaper
+/obj/item/FermiChem/pHpaper
     name = "pH indicator strip"
     desc = "A piece of paper that will change colour depending on the pH of a solution."
     icon_state = "pHpaper"
@@ -46,11 +46,13 @@
     w_class = WEIGHT_CLASS_TINY
     //set flammable somehow
 
-/obj/item/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
+/obj/item/FermiChem/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
     if(!istype(cont))
         return
     if(used == TRUE)
         to_chat(user, "<span class='warning'>[user] has already been used!</span>")
+        return
+    if(LAZYLEN(cont.reagents.reagent_list) == null)
         return
     switch(round(cont.reagents.pH, 1))
         if(14 to INFINITY)
@@ -86,7 +88,7 @@
     desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
     used = TRUE
 
-/obj/item/pHmeter
+/obj/item/FermiChem/pHmeter
     name = "pH meter"
     desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
     icon_state = "pHmeter"
@@ -94,8 +96,10 @@
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
 
-/obj/item/pHmeter/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
+/obj/item/FermiChem/pHmeter/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
     if(!istype(cont))
         return
-    to_chat(src, "<span class='notice'><i>gives a beep and displays [round(cont.reagents.pH, 0.1)]</i></span>")
+    if(LAZYLEN(cont.reagents.reagent_list) == null)
+        return
+    to_chat(user, "<span class='notice'>The pH meter beeps and displays [round(cont.reagents.pH, 0.1)]</span>")
     desc = "An electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays [round(cont.reagents.pH, 0.1)]."

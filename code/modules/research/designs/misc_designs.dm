@@ -462,7 +462,7 @@
 	id   = "pHmeter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_SILVER = 100, MAT_DIAMOND = 100)
-	build_path = /obj/item/pHmeter
+	build_path = /obj/item/FermiChem/pHmeter
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

@@ -127,7 +127,7 @@ Chemist
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	l_hand = /obj/item/pHbooklet
+	l_hand = /obj/item/FermiChem/pHbooklet
 
 	chameleon_extras = /obj/item/gun/syringe
 

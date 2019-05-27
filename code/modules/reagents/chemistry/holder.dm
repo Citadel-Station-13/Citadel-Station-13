@@ -128,7 +128,7 @@ im
 
 		update_total()
 		handle_reactions()
-		pH = REAGENT_NORMAL_PH //Maybe unnessicary? NO incredibly nessicary, blows the beaker up otherwise
+		//pH = REAGENT_NORMAL_PH //Maybe unnessicary? NO incredibly nessicary, blows the beaker up otherwise. YES 100% NOT REQUIRED, THIS IS FOR REAMOVING AN AMMOUNT, NOT ALL.
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -684,20 +684,37 @@ im
 	//Then adjust purity of result with reagent purity.
 	purity *= reactant_purity(C)
 
+	/*old
+	stepChemAmmount = CLAMP(((deltaT * cached_results[P]) * multiplier), 0, (targetVol - reactedVol))  //used to have multipler, now it does
+	if (stepChemAmmount * cached_results[P] > C.RateUpLim)
+		stepChemAmmount = C.RateUpLim
+	else if (stepChemAmmount <= 0.01)
+		stepChemAmmount = 0.01
+	*/
+	var/removeChemAmmount
+	var/addChemAmmount
+	//ONLY WORKS FOR ONE PRODUCT AT THE MOMENT
+	for(var/P in cached_results)
+		//stepChemAmmount = CLAMP(((deltaT * multiplier), 0, ((targetVol - reactedVol)/cached_results[P]))  //used to have multipler, now it does
+		stepChemAmmount = (multiplier*cached_results[P])
+		if (stepChemAmmount >= C.RateUpLim)
+			stepChemAmmount = (C.RateUpLim)//something weird with this line maybe.
+		addChemAmmount = deltaT * stepChemAmmount
+		if (addChemAmmount >= (targetVol - reactedVol))
+			addChemAmmount = (targetVol - reactedVol)
+		if (addChemAmmount < 0.01)
+			addChemAmmount = 0.01
+		removeChemAmmount = (addChemAmmount/cached_results[P])
+		message_admins("Reaction vars: PreReacted: [reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*cached_results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [cached_results[P]], adding [addChemAmmount]")
+
 	for(var/B in cached_required_reagents)
-		remove_reagent(B, (stepChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
+		remove_reagent(B, (removeChemAmmount * cached_required_reagents[B]), safety = 1)//safety? removes reagents from beaker using remove function.
 
 	var/TotalStep = 0
 	for(var/P in cached_results)//Not sure how this works, what is selected_reaction.results?
-		stepChemAmmount = CLAMP(((deltaT * cached_results[P]) * multiplier), 0, (targetVol - reactedVol))  //used to have multipler, now it does
-		if (stepChemAmmount * cached_results[P] > C.RateUpLim)
-			stepChemAmmount = C.RateUpLim
-		else if (stepChemAmmount <= 0.01)
-			stepChemAmmount = 0.01
-
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
-		add_reagent(P, (stepChemAmmount), null, cached_temp, purity)//add reagent function!! I THINK I can do this:
-		TotalStep += stepChemAmmount//for multiple products
+		add_reagent(P, (addChemAmmount), null, cached_temp, purity)//add reagent function!! I THINK I can do this:
+		TotalStep += addChemAmmount//for multiple products
 	//Above should reduce yeild based on holder purity.
 	//Purity Check
 		//NOT MULTIPROD SAFE. TODO: Add multiproduct support
@@ -711,10 +728,10 @@ im
 	C.FermiCreate(src)//proc that calls when step is done
 
 	//Apply pH changes and thermal output of reaction to beaker
-	chem_temp = round(cached_temp + (C.ThermicConstant * stepChemAmmount)) //Why won't you update!!! Because I'm silly.
-	pH += (C.HIonRelease * stepChemAmmount)//honestly pH shifting is so confusing
+	chem_temp = round(cached_temp + (C.ThermicConstant * addChemAmmount)) //Why won't you update!!! Because I'm silly.
+	pH += (C.HIonRelease * addChemAmmount)//honestly pH shifting is so confusing
 	//keep track of the current reacted amount
-	reactedVol = reactedVol + stepChemAmmount
+	reactedVol = reactedVol + addChemAmmount
 	//return said amount to compare for next step.
 	return (reactedVol)
 
@@ -891,8 +908,6 @@ im
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
-			//if(R.FermiChem == TRUE)
-			//	R.on_mob_add(my_atom)
 			R.on_merge(data, amount, my_atom, other_purity)
 			if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
 				var/datum/reagent/fermi/Ferm = D //It's Fermi time!
@@ -958,7 +973,7 @@ im
 		if (R.id == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			if((total_volume - amount) == 0)//Because this can result in 0, I don't want it to crash.
+			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
 				pH = 7
 			else
 				pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)

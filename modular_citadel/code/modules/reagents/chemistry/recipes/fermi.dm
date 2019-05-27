@@ -88,7 +88,7 @@
 	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant = 5 //Temperature change per 1u produced
 	HIonRelease = -0.1 //pH change per 1u reaction
-	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect (NEEDS TO BE A MULTIPLE OF 10 IF RESULTS IS DOWN BY A FACTOR OF 10)
+	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
@@ -218,7 +218,7 @@
 	CurveSharppH 			= 1
 	ThermicConstant 		= 25
 	HIonRelease 			= -0.5
-	RateUpLim 				= 10
+	RateUpLim 				= 20
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25 // explode purity!
@@ -235,7 +235,7 @@
 	//FermiChem vars:
 	OptimalTempMin 			= 780
 	OptimalTempMax			= 800
-	ExplodeTemp 			= 820
+	ExplodeTemp 			= 830
 	OptimalpHMin 			= 12
 	OptimalpHMax 			= 13
 	ReactpHLim 				= 2
@@ -244,7 +244,7 @@
 	CurveSharppH 			= 4
 	ThermicConstant 		= 10
 	HIonRelease 			= -0.1
-	RateUpLim 				= 2
+	RateUpLim 				= 1
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.2
@@ -280,7 +280,6 @@
 	s.set_up(R, volume, T)
 	s.start()
 	my_atom.reagents.clear_reagents()
-	..(volume = 0, pH = 7) //Just a lil fire.
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"
@@ -342,7 +341,7 @@
 /datum/chemical_reaction/fermi/naninte_b_gone//done test
 	name = "Naninte bain"
 	id = "naninte_b_gone"
-	results = list("naninte_b_gone" = 2)
+	results = list("naninte_b_gone" = 20)
 	required_reagents = list("synthflesh" = 5, "uranium" = 5, "iron" = 5, "salglu_solution" = 5)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
 	required_temp = 499//To force fermireactions before EMP.
@@ -382,19 +381,10 @@
 	RateUpLim 		= 20
 	FermiChem 		= TRUE
 
-//This reaction bugs and turns everything in it to FermiABuffer - but now it's a feature instead! And then I fixed it anyways
+
 /datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
-	if (Fa.pH <= 3)
-		Fa.pH = 3
-		Fa.data = 3
-		return
-	else if (Fa.pH >= 7)
-		Fa.pH = 7
-		Fa.data = 7
-		return
-	Fa.pH = my_atom.reagents.pH
-	Fa.data = Fa.pH
+	Fa.data = 3
 
 /datum/chemical_reaction/fermi/fermiBBuffer//done test
 	name = "Ethyl Ethanoate buffer"
@@ -417,15 +407,7 @@
 	RateUpLim 		= 15
 	FermiChem 		= TRUE
 
-//This reaction bugs and turns everything in it to FermiBBuffer - but now it's a feature instead! And then I fixed it anyways
+
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
-	if (Fb.pH >= 11)
-		Fb.pH = 11
-		Fb.data = 11
-		return
-	else if (Fb.pH <= 7)
-		Fb.pH = 7
-		Fb.data = 7
-	Fb.pH = my_atom.reagents.pH
-	Fb.data = Fb.pH
+	Fb.data = 11

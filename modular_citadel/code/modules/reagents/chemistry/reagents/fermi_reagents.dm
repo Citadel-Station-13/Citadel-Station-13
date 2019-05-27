@@ -617,9 +617,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(!B)
 		H.emergent_genital_call()
 		return
-	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
-	B.prev_size = B.size
-	B.cached_size = sizeConv[B.size]
+	if(!B.size == "huge")
+		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
+		B.prev_size = B.size
+		B.cached_size = sizeConv[B.size]
 	//message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
@@ -1110,10 +1111,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 //FERMICHEM2 split into different chems
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
-	if(!creatorID)
-		CRASH("Something went wrong in enthral creation THIS SHOULD NOT APPEAR")
-		return
 	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
+		return
+	if(!creatorID)
+		CRASH("Something went wrong in enthral creation THIS SHOULD NOT APPEAR") //nervermind this appears when you blow up the reaction. I dunno how
 		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall) //Somehow a beaker got here? (what)
 	if(E)
@@ -1141,7 +1142,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				return
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 			for(var/victim in seen)
-				if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+				if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (!M.client))
 					seen = seen - victim
 			if(!seen)
 				return
@@ -1150,9 +1151,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			return
 		else // If someone else drinks it, the creator falls in love with them!
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
-			if(C.has_status_effect(STATUS_EFFECT_INLOVE))
+			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
-			if(C in viewers(7, get_turf(M)))
+			if((C in viewers(7, get_turf(M))) && (C.client))
 				M.reagents.remove_reagent(src.id, src.volume)
 				FallInLove(C, M)
 			return
@@ -1550,23 +1551,25 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
 	taste_description = "an acidy sort of taste, blech."
 	color = "#fbc314"
-	addProc = FALSE
-	pH = 6
+	pH = 3
 
 
-/datum/reagent/fermi/fermiABuffer/on_new()
+/datum/reagent/fermi/fermiABuffer/on_new(datapH)
 	message_admins("Adding acid")
+	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	src.pH = data
+	/*to be fixed later
+	pH = data
 	if (pH <= 3)
 		pH = 3
 	else if (pH >= 7)
 		pH = 7
+	*/
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The beaker fizzes as the buffer's pH changes!</b></span>")
+		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1, -1)
 	holder.remove_reagent(src.id, 1000)
 	..()
@@ -1577,22 +1580,24 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
 	taste_description = "an soapy sort of taste, blech."
 	color = "#3853a4"
-	addProc = FALSE
-	pH = 8
+	pH = 11
 
-/datum/reagent/fermi/fermiBBuffer/on_new()
+/datum/reagent/fermi/fermiBBuffer/on_new(datapH)
 	message_admins("Adding base")
+	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
+	/*to be fixed later
 	src.pH = data
 	if (pH >= 11)
 		pH = 11
 	else if (pH <= 7)
 		pH = 7
+	*/
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * src.volume))/(holder.total_volume + src.volume) //Shouldn't be required Might be..?
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The beaker froths as the buffer's pH changes!</b></span>")
-	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1, -1)
+		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
+	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(src.id, 1000)
 	..()
