@@ -428,7 +428,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
-							M.reagents.remove_reagent(src.id, 1000)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
+							M.reagents.remove_reagent(src.id, src.volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 
 
 	..()
@@ -609,7 +609,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.Knockdown(50)
 			M.Stun(50)
 			B.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(src.id, 1000)
+		M.reagents.remove_reagent(src.id, src.volume)
 		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
@@ -733,7 +733,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.Knockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(src.id, 1000)
+		M.reagents.remove_reagent(src.id, src.volume)
 		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
@@ -1507,7 +1507,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	else
-		holder.remove_reagent("fermiTest", 1000)//Avoiding recurrsion
+		holder.remove_reagent("fermiTest", src.volume)//Avoiding recurrsion
 	message_admins("FermiTest addition!")
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)
@@ -1528,7 +1528,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				Ferm.on_reaction(holder, reagent.volume)
 	for(var/mob/M in viewers(8, location))
 		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
-		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
 	holder.clear_reagents()
 
 /datum/reagent/fermi/fermiTox
@@ -1570,8 +1570,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
-	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1, -1)
-	holder.remove_reagent(src.id, 1000)
+	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+	holder.remove_reagent(src.id, src.volume)
 	..()
 
 /datum/reagent/fermi/fermiBBuffer
@@ -1599,5 +1599,5 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(src.id, 1000)
+	holder.remove_reagent(src.id, src.volume)
 	..()

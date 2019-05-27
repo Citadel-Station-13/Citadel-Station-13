@@ -323,7 +323,7 @@
 	id = "secretcatchem"
 	results = list("secretcatchem" = 0.5)
 	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "blood" = 0.1, "slimejelly" = 0.1)
-	required_catalysts = list("felinidmutationtoxin" = 5)
+	//required_catalysts = list("water" = 5)
 	required_temp = 600
 	mix_message = "the reaction gives off a meow!"
 	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
@@ -348,8 +348,8 @@
 	//rand doesn't seem to work with n^-e
 	//message_admins("randomizing reaction")
 	OptimalTempMin 		+= rand(-100, 100)
-	OptimalTempMax 		+= (OptimalpHMin+rand(0, 200))
-	ExplodeTemp 		+= (OptimalpHMax+rand(0, 200))
+	OptimalTempMax 		+= (OptimalTempMin+rand(0, 200))
+	ExplodeTemp 		+= (OptimalTempMaxx+rand(0, 200))
 	OptimalpHMin 		+= rand(1, 10)
 	OptimalpHMax 		+= (OptimalpHMin + rand(0, 5))
 	ReactpHLim 			+= rand(-2, 2)
@@ -361,7 +361,9 @@
 	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace")
 	//var/chosenA = pick(additions)
-	required_reagents += list("[pick(additions)]", rand(0.1, 1))
+	var/cataly = list ("felinidmutationtoxin", "uranium", "bluespace")
+	required_reagents[pick(additions)] = rand(0.1, 1))
+	required_catalysts = list("[pick(cataly)]" = rand(0.1, 1))
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
