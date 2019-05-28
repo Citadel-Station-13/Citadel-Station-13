@@ -6,8 +6,8 @@
 	zone 					= "chest"
 	slot 					= "breasts"
 	w_class 				= 3
-	size 					= BREASTS_SIZE_DEF  //SHOULD BE A LETTER, starts as a number...???
-	var/cached_size			= null//for enlargement SHOULD BE A NUMBER
+	size 					= "c"  //SHOULD BE A LETTER, starts as a number...???
+	var/cached_size			= BREASTS_SIZE_DEF //for enlargement SHOULD BE A NUMBER
 	var/prev_size			//For flavour texts SHOULD BE A LETTER
 	var/breast_sizes 		= list ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "huge", "flat")
 	var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
@@ -24,12 +24,6 @@
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)
-	//prev_size = size
-	//cached_size = breast_values[size]
-	/* This breaks the character creation sceen. for some reason sizes are set to numbers there.
-	if (cached_size == "c")//fix for a weird bug that has something to do with how they're set up on the character create screen.
-		cached_size = 3
-	*/
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))

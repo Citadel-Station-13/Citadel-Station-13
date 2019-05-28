@@ -82,7 +82,7 @@
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
 	if (B.size == "huge")
 		if(prob(2))
-			to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
+			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
 			var/target = o.get_bodypart(BODY_ZONE_CHEST)
 			o.apply_damage(0.1, BRUTE, target)
 		if(!B.cached_size == B.breast_values[B.prev_size])
@@ -104,7 +104,7 @@
 				if (!(B.breast_sizes[B.prev_size] == B.size))
 					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
 		if(prob(5))
-			to_chat(H, "<span class='notice'>Your back is feeling a little sore.</b></span>")
+			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
 		..()
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)

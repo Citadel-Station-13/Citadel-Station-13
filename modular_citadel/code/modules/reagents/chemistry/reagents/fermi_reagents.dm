@@ -136,7 +136,6 @@
 			if(purity > 0.75) //Teleports you home if it's pure enough
 				do_sparks(5,FALSE,M)
 				do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-				//M.forceMove(location_created) //Teleports to creation location
 				do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -330,12 +329,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Ghost candidate found! [candies] is becoming a clone of [M]! Hee~!! Exciting!!")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
-				//var/typepath = owner.type
-				//clone = new typepath(owner.loc)
 				var/typepath = M.type
 				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
-				//var/mob/living/carbon/SM = owner
-				//var/mob/living/carbon/M = M
 				var/mob/living/carbon/human/SM = fermi_Gclone
 				if(istype(SM) && istype(M))
 					SM.real_name = M.real_name
@@ -352,7 +347,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					ZI.Remove(M)
 					ZI.Insert(SM)
 
-				//SM.sentience_act()
 				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 				to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. [pick("However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original", "Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.")]</span>")
 				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
@@ -370,7 +364,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				//Really hacky way to deal with this stupid problem I have, and heal the clone. I think around 30u will make a healthy clone.
 				SM.reagents.add_reagent("SDGFheal", volume)
-				M.reagents.remove_reagent(src.id, src.vol)
+				M.reagents.remove_reagent(src.id, src.volume)
 
 				//Give the new clone an idea of their character
 				//SHOULD print last 5 messages said by the original to the clones chatbox
@@ -387,8 +381,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				return
 				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
-				//after_success(user, SM)
-				//qdel(src)
 
 			else if(src.playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
 				src.unitCheck = TRUE
@@ -458,17 +450,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.next_move_modifier = 1
 		if (M.nutrition < 1500)
 			M.nutrition += 500
-//If the reaction explodes
-/*
-/datum/reagent/fermi/SDGF/FermiExplode(turf/open/T)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
-	//var/mob/living/simple_animal/slime/S = new(get_turf(location_created),"grey")
-	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
-	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)//I dunno how slimes work cause fire is burny
-	S.name = "Living teratoma"
-	S.real_name = "Living teratoma"//horrifying!!
-	S.rabid = 1//Make them an angery boi, grr grr
-	to_chat("<span class='notice'>The cells clump up into a horrifying tumour.</span>")
-*/
 
 //Unobtainable, used in clone spawn.
 /datum/reagent/fermi/SDGFheal
@@ -527,7 +508,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
 		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
-		if(86)
+		if(86)//mean clone time!
 			if (!M.reagents.has_reagent("pen_acid"))//Counterplay is pent.)
 				message_admins("(non-infectious) Zombie spawned at [M.loc], produced by impure chem, wah!")
 				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
@@ -541,7 +522,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
-				//ZI.updateappearance(mutcolor_update=1)
+
 				M.reagents.remove_reagent(src.id, 20)
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
@@ -622,7 +603,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
 		B.prev_size = B.size
 		B.cached_size = sizeConv[B.size]
-	//message_admins("init B size: [B.size], prev: [B.prev_size], cache = [B.cached_size], raw: [sizeConv[B.size]]") //if this runtimes it's cause someone's breasts are too big!
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
@@ -718,7 +698,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.3
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
-	//var/mob/living/carbon/human/H
 
 /datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -841,13 +820,12 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	var/antiGenetics = 255
 	var/sleepytime = 0
 	InverseChemVal = 0.25
-	//var/Svol = volume
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
-	//M.alpha = 255//Reset addiction
-	//antiGenetics = 255// DOesn't work for some reason?
+	M.alpha = 255//Reset addiction
+	antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
-		if(2)//Require a minimum
+		if(0)//Require a minimum
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -869,7 +847,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle/2, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle-1, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)

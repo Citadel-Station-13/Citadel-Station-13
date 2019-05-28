@@ -211,8 +211,12 @@
 				B.color = "#[dna.features["breasts_color"]]"
 			B.size = dna.features["breasts_size"]
 			B.prev_size = B.size
+			message_admins("B.size[B.size]")
 			if (!B.size == "huge")
-				B.cached_size = B.breast_values[B.size]
+				if(isnum(B.size))
+					B.cached_size = B.size
+				else
+					B.cached_size = B.breast_values[B.size]
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
 			B.update()
@@ -288,11 +292,15 @@
 	for(var/obj/item/organ/O in internal_organs)
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
+			if(/obj/item/organ/genital/penis)
+				if(!dna.features["has_cock"] == 1)
+					dna.features["has_cock"] = 1//Goddamnit get in there.
 	if (organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
-			return
+
+		/* I can't get this to work.
 		if(MUTCOLORS)
 			if(src.dna.species.fixed_mut_color)
 				dna.features["cock_color"] = "#[src.dna.species.fixed_mut_color]"
@@ -301,6 +309,7 @@
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "#[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
+		*/
 	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
@@ -341,8 +350,6 @@
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
-					//var/temp_aroused_state = 0//Breasts don't have aroused_states, there's literally no difference in the spite. When someone touched up/edits the code for their implementation, remove this and change temp_aroused_state to aroused_state
-					//if(size == "huge")
 
 
 
