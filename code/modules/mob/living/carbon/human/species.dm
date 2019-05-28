@@ -1729,7 +1729,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.update_damage_overlays()
 					if (H.has_trait(TRAIT_MASO))
 						(H.adjustArousalLoss(damage * brutemod * H.physiology.brute_mod))
-					if (H.getArousalLoss() >= 100 && ishuman(H) && H.has_trait(TRAIT_MASO) && H.has_dna())
+						if (H.getArousalLoss() >= 100 && ishuman(H) && H.has_dna())
 							H.mob_climax(forced_climax=TRUE)
 
 			else//no bodypart, we deal damage with a more general method.
