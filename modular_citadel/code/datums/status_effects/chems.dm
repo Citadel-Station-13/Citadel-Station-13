@@ -340,7 +340,7 @@
 				phase = 2
 				mental_capacity = 500
 				customTriggers = list()
-				to_chat(owner, "<span class='notice'><i>Your mind starts to heal, fixing the damage caused by the massive ammounts of chem injected into your system earlier, .</i></span>")
+				to_chat(owner, "<span class='notice'><i>Your mind starts to heal, fixing the damage caused by the massive amounts of chem injected into your system earlier, returning clarity to your mind. Though, you still feel drawn towards [master]'s words...'</i></span>")
 				M.slurring = 0
 				M.confused = 0
 				resistGrowth = 0
