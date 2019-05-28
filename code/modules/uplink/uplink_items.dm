@@ -837,6 +837,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+datum/uplink_item/stealthy_tools/taeclowndo_shoes
+	name = "Tae-clown-do Shoes"
+	desc = "A pair of shoes for the most elite agents of the honkmotherland. They grant the mastery of taeclowndo as long as they're worn."
+	cost = 12
+	item = /obj/item/clothing/shoes/clown_shoes/taeclowndo
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/stealthy_tools/frame
 	name = "F.R.A.M.E. PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
@@ -1380,6 +1387,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
 	cost = 1
 	item = /obj/item/dnainjector/clumsymut
+	restricted_roles = list("Clown")
+
+/datum/uplink_item/role_restricted/taeclowndo_shoes
+	name = "Tae-clown-do Shoes"
+	desc = "A pair of shoes for the most elite agents of the honkmotherland. They grant the mastery of taeclowndo as long as they're worn."
+	cost = 16
+	item = /obj/item/clothing/shoes/clown_shoes/taeclowndo
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/mimery
