@@ -36664,14 +36664,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bHT" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "medpriv1";
-	name = "privacy door"
-	},
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "bHU" = (
@@ -37987,22 +37984,23 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKM" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKN" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room 2";
+	name = "Apothecary";
 	req_access_txt = "5"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKO" = (
@@ -38456,24 +38454,17 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bLU" = (
-/obj/structure/table,
-/obj/item/folder/white,
-/obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLV" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/machinery/button/door{
-	id = "medpriv1";
-	name = "Privacy Shutters";
-	pixel_y = -25
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bLW" = (
@@ -46031,6 +46022,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cek" = (
@@ -46039,6 +46033,9 @@
 	name = "engineering security door"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cel" = (
@@ -56742,6 +56739,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"fTg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "gbq" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -57499,6 +57506,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"tRe" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "tRF" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -95728,8 +95739,8 @@ bof
 bof
 bof
 bJE
-bof
-bof
+bJE
+bJE
 bNd
 bIJ
 bPo
@@ -95985,7 +95996,7 @@ bof
 bGT
 bIo
 bof
-bIo
+tRe
 bLU
 bNd
 bII
@@ -96499,7 +96510,7 @@ bof
 bGU
 bqQ
 bof
-bCR
+fTg
 bLV
 bNd
 bOm

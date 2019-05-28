@@ -252,7 +252,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("bedsheet", /obj/item/bedsheet, 3), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4), \
 	null, \
-	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1), \
+	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1),\
+	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 1),\
 	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
@@ -284,6 +285,13 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
+	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
+	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
+	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
+	new/datum/stack_recipe("12g ammo box", /obj/item/storage/box/lethalslugs), \
+	new/datum/stack_recipe("stun slug ammo box", /obj/item/storage/box/stunslug), \
+	new/datum/stack_recipe("tech shell ammo box", /obj/item/storage/box/techsslug), \
+	new/datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \

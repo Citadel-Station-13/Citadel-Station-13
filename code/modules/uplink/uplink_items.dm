@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "12g Scatter Laser shot Slugs"
 	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 5 // most armor has less laser protection then bullet
+	cost = 4 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/bag
 	name = "12g Ammo Duffel Bag"
@@ -776,7 +776,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Fitted for use on any small caliber weapon with a threaded barrel, this suppressor will silence the \
 			shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/suppressor
-	cost = 3
+	cost = 1
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -844,7 +844,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/cartridge/virus/frame
-	cost = 4
+	cost = 2
 	restricted = TRUE
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -995,11 +995,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 
 /datum/uplink_item/device_tools/surgerybag_adv
-	name = "Syndicate Surgery Duffel Bag"
+	name = "Advanced Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all newest surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, a muzzle, and a full Syndicate Combat Medic Kit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
-	cost = 15 //Mite be to cheap
+	cost = 10
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -1041,7 +1041,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/encryptionkey/binary
-	cost = 5
+	cost = 2
 	surplus = 75
 	restricted = TRUE
 
@@ -1517,12 +1517,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
-/datum/uplink_item/device_tools/honkpins //Idealy so they can place it into their own guns without needing cargo
+/datum/uplink_item/device_tools/ultrahonkpins //Idealy so they can place it into their own guns without needing cargo
 	name = "Hilarious firing pin"
 	desc = "A single firing pin made for Clown agents, this firing pin makes any gun honk when fired if not a true clown! \
 	This firing pin also helps you fire the gun correctly. May the HonkMother HONK you agent."
-	item = /obj/item/firing_pin/clown
-	cost = 1
+	item = /obj/item/firing_pin/clown/ultra
+	cost = 2
 	restricted_roles = list("Clown")
 
 /*
