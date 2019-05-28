@@ -161,7 +161,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	item_state = "makeshift_shield"
+	materials = list(MAT_METAL = 18000)
 	slot_flags = null
-	block_chance = 20
+	block_chance = 25
 	force = 5
 	throwforce = 7
