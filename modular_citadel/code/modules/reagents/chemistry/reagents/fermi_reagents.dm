@@ -1203,7 +1203,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		E.master = creator
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	to_chat(M, "<span class='love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName].</i></span>")
+	to_chat(M, "<span class='love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side at all costs.</i></span>")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4
@@ -1538,7 +1538,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	description = "You should be really careful with this...! Also, how did you get this?"
 	data = "merge"
 	color = "FFFFFF"
-	
+
 //I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
