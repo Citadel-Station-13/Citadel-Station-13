@@ -319,10 +319,3 @@
 			beaker.reagents.remove_reagent("sugar", amount)
 			beaker.reagents.remove_reagent("moonshine", amount)
 			beaker.reagents.add_reagent("moonsugar", amount*2)
-		/*Add later
-		if(beaker.reagents.has_reagent("synthflesh") &&
-			var/amount = min(beaker.reagents.get_reagent_amount("synthflesh"), beaker.reagents.get_reagent_amount("whiskey"))
-			beaker.reagents.remove_reagent("sugar", amount)
-			beaker.reagents.remove_reagent("moonshine", amount)
-			beaker.reagents.add_reagent("meat", amount*2)
-		*/

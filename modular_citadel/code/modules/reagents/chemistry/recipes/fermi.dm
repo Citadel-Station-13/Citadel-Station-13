@@ -40,15 +40,17 @@
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	/*Endless loop hell
+	Endless loop hell
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
 		if (istype(reagent, /datum/reagent/fermi))
-			my_atom.reagents.remove_reagent(reagent.id, 1000)//Prevent endless loops
-			continue //Don't allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
+			R.add_reagent(reagent.id, reagent.volume)
+		else if (istype(reagent, /datum/reagent/toxin/plasma))
+			R.add_reagent(reagent.id, reagent.volume) //for !FUN! (am I doing this right?)
+		continue //Only allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
 		//R.add_reagent(reagent, reagent.volume)
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
-	*/
+
 	if(pH < 4) //if acidic, make acid spray
 		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
 		R.add_reagent("fermiAcid", ((volume/3)/pH))

@@ -1444,7 +1444,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 //Increases shock events.
 /datum/reagent/fermi/naninte_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
-	if(prob(5))
+	if(prob(15))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(50))
@@ -1538,12 +1538,13 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	description = "You should be really careful with this...! Also, how did you get this?"
 	data = "merge"
 	color = "FFFFFF"
-
+	
+//I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
-		C.adjustToxLoss(-1)
+		C.adjustToxLoss(-2.5)
 	else
-		C.adjustToxLoss(1)
+		C.adjustToxLoss(2.5)
 	..()
 
 /datum/reagent/fermi/fermiABuffer

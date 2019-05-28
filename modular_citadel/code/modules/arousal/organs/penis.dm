@@ -48,12 +48,12 @@
 			size = 3
 			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.remove_status_effect(/datum/status_effect/chem/PElarger)
-		if(21 to 29) //If massive and due for large effects
+		if(21 to 34) //If massive and due for large effects
 			length = cached_length
 			size = 3
 			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))
 				o.apply_status_effect(/datum/status_effect/chem/PElarger)
-		if(30 to INFINITY) //If comical
+		if(35 to INFINITY) //If comical
 			length = cached_length
 			size = 4 //no new sprites for anything larger yet
 			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))

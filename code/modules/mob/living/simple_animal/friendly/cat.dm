@@ -323,7 +323,7 @@
 	id = "secretcatchem"
 	results = list("secretcatchem" = 0.5)
 	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "blood" = 0.1, "slimejelly" = 0.1)
-	//required_catalysts = list("water" = 5)
+	required_catalysts = list("felinidmutationtoxin" = 1)
 	required_temp = 600
 	mix_message = "the reaction gives off a meow!"
 	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
@@ -359,11 +359,10 @@
 	HIonRelease 		+= (rand(-25, 25)/100)
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
-	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace")
+	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
 	//var/chosenA = pick(additions)
-	var/cataly = list ("felinidmutationtoxin", "uranium", "bluespace", "milk")
 	required_reagents[pick(additions)] = rand(1, 5)//weird
-	required_catalysts = list("[pick(cataly)]" = 1)
+	//required_catalysts = list("[pick(cataly)]" = 1)
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
@@ -391,7 +390,7 @@
 	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's basically impossible to get this to 1. It already requires felind too, so no new functionality there.
 		H.set_species(mutation)
 		H.gender = FEMALE
-		//exception(al) handler, I said cat tail damnit!
+		//exception(al) handler:
 		H.dna.features["mam_tail"] = "Cat"
 		H.dna.features["tail_human"] = "Cat"
 		H.dna.features["ears"]  = "Cat"
@@ -409,7 +408,6 @@
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
-	//H.moveToNullspace() classic breaking Japes
 	H.forceMove(locate(10,6,1))//To the zelda room.
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)

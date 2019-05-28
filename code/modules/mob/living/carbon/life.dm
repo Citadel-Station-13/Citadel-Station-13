@@ -49,12 +49,6 @@
 /mob/living/carbon/handle_breathing(times_fired)
 	if((times_fired % 4) == 2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
-		/* Hey maintainer reading this right now, should we handle suffocation this way?
-		if(failed_last_breath)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
-		*/
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
