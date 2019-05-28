@@ -370,7 +370,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				//Really hacky way to deal with this stupid problem I have, and heal the clone. I think around 30u will make a healthy clone.
 				SM.reagents.add_reagent("SDGFheal", volume)
-				M.reagents.remove_reagent(src.id, 999)
+				M.reagents.remove_reagent(src.id, src.vol)
 
 				//Give the new clone an idea of their character
 				//SHOULD print last 5 messages said by the original to the clones chatbox
@@ -552,7 +552,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.real_name = "Living teratoma"//horrifying!!
 				S.rabid = 1//Make them an angery boi
 				//S.updateappearance(mutcolor_update=1)
-				M.reagents.remove_reagent(src.id, 20)
+				M.reagents.remove_reagent(src.id, src.volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
@@ -847,7 +847,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	//M.alpha = 255//Reset addiction
 	//antiGenetics = 255// DOesn't work for some reason?
 	switch(current_cycle)
-		if(0)//Require a minimum
+		if(2)//Require a minimum
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -869,7 +869,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle-1, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle/2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -885,7 +885,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	if(M.reagents.has_reagent("astral"))
 		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
-	if(prob(60))
+	if(prob(65))
 		M.alpha--
 		antiGenetics--
 	switch(antiGenetics)
@@ -1369,7 +1369,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
 			T.Remove(M)
 			nT.Insert(M)
-			qdel(T)
+			T.forceMove(locate(10,6,1))//To the zelda room.
+			to_chat(M, "<span class='notice'>Youw tongue feews... weally fwuffy!!</span>")
 		if(22 to INFINITY)
 			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
@@ -1387,9 +1388,10 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	..()
 
 /datum/reagent/fermi/furranium/on_mob_delete(mob/living/carbon/M)
-	if(purity <= 0.9)//Only permanent if you're a good chemist.
+	if(purity < 0.9)//Only permanent if you're a good chemist.
 		nT = M.getorganslot(ORGAN_SLOT_TONGUE)
 		nT.Remove(M)
+		qdel(nT)
 		T.Insert(M)
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 		M.say("Pleh!")
@@ -1533,9 +1535,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	holder.clear_reagents()
 
 /datum/reagent/fermi/fermiTox
-	name = ""//defined on setup
+	name = "FermiTox"//defined on setup
 	id = "fermiTox"
-	description = "You should be really careful with this...! Also, how did you get this?"
+	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
 	data = "merge"
 	color = "FFFFFF"
 

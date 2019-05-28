@@ -350,7 +350,7 @@
 	OptimalTempMin 		+= rand(-100, 100)
 	OptimalTempMax 		= (OptimalTempMin+rand(0, 200))
 	ExplodeTemp 		= (OptimalTempMax+rand(0, 200))
-	OptimalpHMin 		+= rand(1, 10
+	OptimalpHMin 		+= rand(1, 10)
 	OptimalpHMax 		= (OptimalpHMin + rand(1, 5))
 	ReactpHLim 			+= rand(-2, 2)
 	CurveSharpT 		+= (rand(1, 500)/100)

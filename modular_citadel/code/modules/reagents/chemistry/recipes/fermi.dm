@@ -40,7 +40,7 @@
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	Endless loop hell
+	//Endless loop hell?
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
 		if (istype(reagent, /datum/reagent/fermi))
 			R.add_reagent(reagent.id, reagent.volume)
@@ -219,8 +219,8 @@
 	CurveSharpT 			= 1
 	CurveSharppH 			= 1
 	ThermicConstant 		= 25
-	HIonRelease 			= -0.5
-	RateUpLim 				= 20
+	HIonRelease 			= 1
+	RateUpLim 				= 15
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.25 // explode purity!
@@ -244,8 +244,8 @@
 	//CatalystFact 			= 0
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
-	ThermicConstant 		= 10
-	HIonRelease 			= -0.1
+	ThermicConstant 		= 15
+	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -301,7 +301,7 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -2
 	HIonRelease 	= -0.05
-	RateUpLim 		= 5
+	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	FermiExplode 	= TRUE
 	PurityMin		= 0.5
@@ -318,7 +318,7 @@
 	name = "Furranium"
 	id = "furranium"
 	results = list("furranium" = 0.5)
-	required_reagents = list("aphro" = 1, "moonsugar" = 1, "silver" = 2, "salglu_solution" = 1)
+	required_reagents = list("aphro" = 0.1, "moonsugar" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -332,7 +332,7 @@
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
 	HIonRelease 	= -0.1
-	RateUpLim 		= 10
+	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.30
 
@@ -343,8 +343,8 @@
 /datum/chemical_reaction/fermi/naninte_b_gone//done test
 	name = "Naninte bain"
 	id = "naninte_b_gone"
-	results = list("naninte_b_gone" = 20)
-	required_reagents = list("synthflesh" = 5, "uranium" = 5, "iron" = 5, "salglu_solution" = 5)
+	results = list("naninte_b_gone" = 4)
+	required_reagents = list("synthflesh" = 1, "uranium" = 1, "iron" = 1, "salglu_solution" = 1)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
 	required_temp = 499//To force fermireactions before EMP.
 	//FermiChem vars:
@@ -359,7 +359,7 @@
 	CurveSharppH 	= 1
 	ThermicConstant = 5
 	HIonRelease 	= 0.01
-	RateUpLim 		= 2
+	RateUpLim 		= 1
 	FermiChem 		= TRUE
 	PurityMin		= 0.15
 
