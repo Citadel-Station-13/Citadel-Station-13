@@ -12,9 +12,9 @@
 	. = ..()
 	if(!ishuman(user))
 		return
-	if(!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown"))
-		return
 	var/mob/living/carbon/human/H = user
+	if(!(H.has_trait(TRAIT_CLUMSY)) && !(H.mind && H.mind.assigned_role == "Clown"))
+		return
 	if(slot == SLOT_SHOES)
 		spells = new
 		for(var/spell in spelltypes)
