@@ -308,7 +308,7 @@
 	list_reagents = list("grappa" = 100)
 
 /obj/item/reagent_containers/food/drinks/bottle/sake
-	name = "Ryo's traditional sake"
+	name = "4 Fox Sake"
 	desc = "Sweet as can be, and burns like fire going down."
 	icon_state = "sakebottle"
 	list_reagents = list("sake" = 100)
