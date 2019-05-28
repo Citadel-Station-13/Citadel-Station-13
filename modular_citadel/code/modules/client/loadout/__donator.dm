@@ -374,3 +374,15 @@ datum/gear/darksabresheath
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/frenchberet
 	ckeywhitelist = list("notazoltan")
+
+/datum/gear/zuliecloak
+	name = "Project: Zul-E"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/cloak/zuliecloak
+	ckeywhitelist = list("asky")
+
+/datum/gear/blackredgold
+	name = "Black, Red, and Gold Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/blackredgold
+	ckeywhitelist = list("ttbnc")
