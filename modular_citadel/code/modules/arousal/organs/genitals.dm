@@ -341,7 +341,7 @@
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
 					S = GLOB.breasts_shapes_list[G.shape]
-					var/temp_aroused_state = 0//Breasts don't have aroused_states, there's literally no difference in the spite. When someone touched up/edits the code for their implementation, remove this and change temp_aroused_state to aroused_state
+					//var/temp_aroused_state = 0//Breasts don't have aroused_states, there's literally no difference in the spite. When someone touched up/edits the code for their implementation, remove this and change temp_aroused_state to aroused_state
 					//if(size == "huge")
 
 
@@ -350,14 +350,14 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[temp_aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
 
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
-				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[temp_aroused_state]_[layertext]"
+				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")

@@ -813,7 +813,7 @@
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/hallucinate_words = regex("trip balls|hallucinate")
+	var/static/regex/hallucinate_words = regex("get high|hallucinate")
 	var/static/regex/hot_words = regex("heat|hot|hell")
 	var/static/regex/cold_words = regex("cold|cool down|chill|freeze")
 	var/static/regex/getup_words = regex("get up")
