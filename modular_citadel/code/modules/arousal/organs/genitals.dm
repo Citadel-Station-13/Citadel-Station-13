@@ -216,7 +216,6 @@
 					B.prev_size = 0
 				else if (B.cached_size == "huge")
 					B.prev_size = "huge"
-					message_admins("I hate genitals, this should not appear. I'm so mad.")
 				else
 					B.cached_size = B.breast_values[B.size]
 					B.prev_size = B.size

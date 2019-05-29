@@ -400,7 +400,6 @@
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
-	//H.forceMove(locate(10,6,1))//To the zelda room.
 	H.moveToNullspace()
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
@@ -411,7 +410,7 @@
 
 /datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
 	var/words = "Your body shifts back to normal."
-	H.forceMove(catto)
+	H.forceMove(catto.loc)
 	catto.mind.transfer_to(H)
 	if(catshift == TRUE)
 		words += " ...But wait, are those ears and a tail?"
