@@ -51,7 +51,7 @@
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
 		M.throw_at(target_turf, 5, 10)
-		
+
 	if(!silent)
 		M.visible_message("<span class='notice'>[M] drops out of \the [src]!</span>")
 	return TRUE
@@ -84,8 +84,7 @@
 	inserted_key = null
 
 /obj/vehicle/sealed/Destroy()
-	DumpMobs()
-	explosion(loc, 0, 1, 2, 3, 0)
+	DumpMobs(TRUE)
 	return ..()
 
 /obj/vehicle/sealed/proc/DumpMobs(randomstep = TRUE)
@@ -102,7 +101,7 @@
 			if(iscarbon(i))
 				var/mob/living/carbon/C = i
 				C.Knockdown(40)
-			
-			
+
+
 /obj/vehicle/sealed/AllowDrop()
 	return FALSE

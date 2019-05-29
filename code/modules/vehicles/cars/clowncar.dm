@@ -49,6 +49,8 @@
 	if(isliving(M))
 		if(ismegafauna(M))
 			return
+		if(occupant_amount() >= max_occupants)
+			return
 		var/mob/living/L = M
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
@@ -70,8 +72,17 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
-  playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
-  return ..()
+	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
+	visible_message("<span class='danger'>\The [src] explodes in a shower of lube, throwing out all [occupant_amount()] people!</span>")
+	explosion(loc,0,0,1,2,FALSE,FALSE,1,FALSE,FALSE)
+	var/datum/reagents/R = new/datum/reagents(300)
+	R.my_atom = src
+	R.add_reagent("lube", 300)
+	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	smoke.set_up(R, 4)
+	smoke.attach(src)
+	smoke.start()
+	return ..()
 
 /obj/vehicle/sealed/car/clowncar/after_move(direction)
 	. = ..()
