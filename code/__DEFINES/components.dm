@@ -137,10 +137,6 @@
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
-//#define COMSIG_LIVING_SAY "say"                              //mob/living/say() - return COMSIG_I_FORGET_WHAT_TO_CALL_IT to interrupt before message sent.
-//	#define COMPONENT_NO_SAY 1									// Here I am pretending to know what I'm doing.
-//#define
-
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))

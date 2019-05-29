@@ -295,18 +295,14 @@
 
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
-	if((dna.features["has_breasts"]) && (dna.features["has_breasts"]))
-		return
 	var/organCheck = FALSE
 	for(var/obj/item/organ/O in internal_organs)
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 			if(/obj/item/organ/genital/penis)
-				if(!dna.features["has_cock"])
-					dna.features["has_cock"] = TRUE
+				dna.features["has_cock"] = TRUE
 			if(/obj/item/organ/genital/breasts)
-				if(!dna.features["has_breasts"])
-					dna.features["has_breasts"] = TRUE//Goddamnit get in there.
+				dna.features["has_breasts"] = TRUE//Goddamnit get in there.
 	if (organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE

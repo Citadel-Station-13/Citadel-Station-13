@@ -666,6 +666,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
+		H.emergent_genital_call()
 		return
 	P.prev_size = P.length
 	P.cached_length = P.length
@@ -678,7 +679,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
-		H.emergent_genital_call()
 		if(nP)
 			nP.length = 1
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
@@ -768,7 +768,6 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	InverseChemVal = 0.25
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
-	resetAddiction = TRUE
 	switch(current_cycle)
 		if(0)//Require a minimum
 			origin = M
@@ -806,7 +805,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(addiction_stage < 0)
+	if(addiction_stage < 2)
 		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
 	if(prob(65))

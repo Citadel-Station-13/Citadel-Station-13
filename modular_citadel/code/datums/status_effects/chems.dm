@@ -3,23 +3,12 @@
 	var/mob/living/fermi_Clone
 	alert_type = null
 
-/*
-/obj/screen/alert/status_effect/SDGF
-	name = "SDGF"
-	desc = "You've cloned yourself! How cute."
-	icon_state = "SDGF"
-*/
-
 /datum/status_effect/chem/SGDF/on_apply()
 	message_admins("SGDF status appied")
 	var/typepath = owner.type
 	fermi_Clone = new typepath(owner.loc)
 	var/mob/living/carbon/M = owner
 	var/mob/living/carbon/C = fermi_Clone
-
-	//fermi_Clone = new typepath(get_turf(M))
-	//var/mob/living/carbon/C = fermi_Clone
-	//var/mob/living/carbon/SM = fermi_Gclone
 
 	if(istype(C) && istype(M))
 		C.real_name = M.real_name
@@ -28,9 +17,7 @@
 	return ..()
 
 /datum/status_effect/chem/SGDF/tick()
-	//message_admins("SDGF ticking")
 	if(owner.stat == DEAD)
-		//message_admins("SGDF status swapping")
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(owner.mind)
 				owner.mind.transfer_to(fermi_Clone)
@@ -38,20 +25,16 @@
 				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				fermi_Clone = null
 				owner.remove_status_effect(src)
-		//	to_chat(owner, "<span class='notice'>[linked_extract] desperately tries to move your soul to a living body, but can't find one!</span>")
 	..()
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/status_effect/chem/BElarger
 	id = "BElarger"
 	alert_type = null
 	var/moveCalc = 1
 	var/cachedmoveCalc = 1
-	//var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
-	//var/list/items = list()
-	//var/items = o.get_contents()
 
-//mob/living/carbon/M = M tried, no dice
-//owner, tried, no dice
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
@@ -118,6 +101,7 @@
 	owner.next_move_modifier *= value
 	cachedmoveCalc = value
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/status_effect/chem/PElarger
 	id = "PElarger"
@@ -179,7 +163,7 @@
 
 //Preamble
 /mob/living
-	var/lewd = TRUE //Maybe false?
+	var/lewd = TRUE
 
 /mob/living/verb/toggle_lewd()
 	set category = "IC"
@@ -206,41 +190,33 @@
 
 	var/mental_capacity //Higher it is, lower the cooldown on commands, capacity reduces with resistance.
 	var/datum/weakref/redirect_component //resistance
-	//var/datum/weakref/redirect_component2 //say
-	//var/datum/weakref/redirect_component3 //hear
 
 	var/distancelist = list(2,1.5,1,0.8,0.6,0.5,0.4,0.3,0.2) //Distance multipliers
 
 	var/withdrawal = FALSE //withdrawl
 	var/withdrawalTick = 0 //counts how long withdrawl is going on for
 
-	var/list/customTriggers = list() //the list of custom triggers (maybe have to split into two)
+	var/list/customTriggers = list() //the list of custom triggers
 
-	var/cooldown = 0
-	var/cooldownMsg = TRUE
-	var/cTriggered = FALSE
-	var/resistGrowth = 0
-	var/DistApart = 1
-	var/tranceTime = 0
+	var/cooldown = 0 //cooldown on commands
+	var/cooldownMsg = TRUE //If cooldown message has been sent
+	var/cTriggered = FALSE //If someone is triggered (so they can't trigger themselves with what they say for infinite loops)
+	var/resistGrowth = 0 //Resistance accrues over time
+	var/DistApart = 1 //Distance between master and owner
+	var/tranceTime = 0 //how long trance effects apply on trance status
 
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
 	if(!E)
-		message_admins("WARNING: FermiChem: No chem found in thrall, did you bus in the chem? Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
+		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? You need to set up the vars manually if it's not reacted. Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
-	if(!master)
-		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
 	if(M.ckey == enthrallID)
 		owner.remove_status_effect(src)//This shouldn't happen, but just in case
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
-	//redirect_component2 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_SAY = CALLBACK(src, .proc/owner_say)))) //Do resistance calc if resist is pressed
-	//redirect_component3 = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_HEAR = CALLBACK(src, .proc/owner_hear)))) //Do resistance calc if resist is pressed
-	//RegisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL, .proc/owner_say) //to add, maybe.
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
-	//Might need to add redirect component for listening too.
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	mental_capacity = 500 - B.get_brain_damage()
 	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
@@ -249,7 +225,6 @@
 	return ..()
 
 /datum/status_effect/chem/enthrall/tick()
-	//. = ..() //loop Please
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
@@ -535,13 +510,7 @@
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore!'</i></span>")
 	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
 
-/*
-/datum/status_effect/chem/enthrall/mob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-		    if(master in message || master in message)
-		        return
-		    else
-		        . = ..()
-*/
+
 //WORKS!! AAAAA
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
@@ -610,14 +579,10 @@
 				o.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 				tranceTime = 50
 
-		//add more fun stuff!
 
 			cTriggered = FALSE
 	return
-/*
-/datum/status_effect/chem/enthrall/proc/owner_withdrawal(mob/living/carbon/M)
-	//3 stages, each getting worse
-*/
+
 /datum/status_effect/chem/enthrall/proc/owner_resist()
 	var/mob/living/carbon/M = owner
 	to_chat(owner, "<span class='notice'><i>You attempt to fight against against [(owner.lewd?"[enthrallGender]":"[master]")]'s influence!'</i></span>")
