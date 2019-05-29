@@ -12,6 +12,7 @@
 	crit_fail = FALSE     //Is the flash burnt out?
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
@@ -36,8 +37,8 @@
 		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 	if(flash)
-		add_overlay("flash-f")
-		attached_overlays += "flash-f"
+		add_overlay(flashing_overlay)
+		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, .proc/update_icon), 5)
 	if(holder)
 		holder.update_icon()
@@ -317,7 +318,7 @@
 //ported from tg - check to make sure it can't appear where it's not supposed to.
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
-	//flashing_overlay = "flash-hypno" doesn't seem to be in citcode yet.
+	flashing_overlay = "flash-hypno" //I cannot find this icon no matter how hard I look in tg, so I might just make my own.
 	light_color = LIGHT_COLOR_PINK
 	cooldown = 20
 
@@ -346,7 +347,7 @@
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
-				//M.apply_status_effect(STATUS_EFFECT_PACIFY, 100) for when we port apply_status_effect pacifist (maybe I'll do it)
+				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
 			else
 				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 

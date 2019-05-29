@@ -508,6 +508,25 @@
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
 
+datum/status_effect/pacify
+	id = "pacify"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	duration = 100
+	alert_type = null
+
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/pacify/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+
 /datum/status_effect/trance
 	id = "trance"
 	status_type = STATUS_EFFECT_UNIQUE
