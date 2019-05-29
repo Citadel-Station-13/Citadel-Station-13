@@ -86,7 +86,7 @@
 	return 0
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
-	if(D.lying || D.resting)
+	if(D.lying || D.IsKnockdown())
 		return 0
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
