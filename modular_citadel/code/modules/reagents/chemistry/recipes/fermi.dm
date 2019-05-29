@@ -11,7 +11,7 @@
 /datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	return
 
-//Called when temperature is above a certain threshold
+//Called when temperature is above a certain threshold, or if purity is too low.
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	if (Exploding == TRUE)
 		return
@@ -26,15 +26,15 @@
 			if (500 to 750)
 				for(var/turf/turf in range(1,T))
 					new /obj/effect/hotspot(turf)
-					//volume /= 3
+
 			if (751 to 1100)
 				for(var/turf/turf in range(2,T))
 					new /obj/effect/hotspot(turf)
-					//volume /= 4
+
 			if (1101 to INFINITY) //If you're crafty
 				for(var/turf/turf in range(3,T))
 					new /obj/effect/hotspot(turf)
-					//volume /= 5
+
 
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
@@ -50,9 +50,8 @@
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 
 	if(pH < 4) //if acidic, make acid spray
-		//s.set_up(/datum/reagent/fermi/fermiAcid, (volume/3), pH*10, T)
 		R.add_reagent("fermiAcid", ((volume/3)/pH))
-		//pHmod = 2
+
 	if(R.reagent_list)
 		s.set_up(R, (volume/10), 10, T)
 		s.start()
@@ -61,13 +60,12 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round((volume/30)*(pH-9)), T, 0, 0)
 		e.start()
-		//pHmod = 1.5
 
 	if(!ImpureTot == 0) //If impure, v.small emp
 		ImpureTot *= volume
 		empulse(T, volume/10, ImpureTot/10, 1)
 
-	my_atom.reagents.clear_reagents()
+	my_atom.reagents.clear_reagents() //just in case
 	return
 
 /datum/chemical_reaction/fermi/eigenstate//done
