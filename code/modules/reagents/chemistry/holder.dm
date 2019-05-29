@@ -840,7 +840,9 @@
 
 	//cacluate reagent based pH shift.
 	pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
-	holder.pH_check()//checks beaker resilience
+	if(istype(my_atom, /obj/item/reagent_containers/))
+		var/obj/item/reagent_containers/RC = my_atom
+		RC.pH_check()//checks beaker resilience
 
 	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)
@@ -924,7 +926,9 @@
 				pH = 7
 			else
 				pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
-			holder.pH_check()
+			if(istype(my_atom, /obj/item/reagent_containers/))
+				var/obj/item/reagent_containers/RC = my_atom
+				RC.pH_check()//checks beaker resilience)
 			amount = CLAMP(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()

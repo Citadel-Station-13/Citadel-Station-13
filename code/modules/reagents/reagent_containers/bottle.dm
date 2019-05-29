@@ -7,6 +7,8 @@
 	item_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
+	temp_immune = TRUE //required so that things don't melt when you dispence them in the chem_master.
+	pH_immunne = TRUE
 
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
@@ -240,7 +242,7 @@
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/cold
-	
+
 /obj/item/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

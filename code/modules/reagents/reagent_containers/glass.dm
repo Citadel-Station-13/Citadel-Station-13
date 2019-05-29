@@ -176,6 +176,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150)
 	temp_immune = FALSE
+	pH_immunne = TRUE
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -190,6 +191,8 @@
 	volume = 200
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
+	temp_immune = TRUE
+	pH_immunne = TRUE
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -199,6 +202,8 @@
 	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	temp_immune = TRUE
+	pH_immunne = TRUE
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	. = ..()

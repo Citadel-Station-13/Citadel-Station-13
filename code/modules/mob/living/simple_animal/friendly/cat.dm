@@ -358,7 +358,7 @@
 	required_reagents[pick(additions)] = rand(1, 5)//weird
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
-	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
+	SSblackbox.record_feedback("catgirlium", "catgirlium made!")//log
 
 //ReagentVars
 //Turns you into a cute catto while it's in your system.
@@ -400,7 +400,8 @@
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
-	H.forceMove(locate(10,6,1))//To the zelda room.
+	//H.forceMove(locate(10,6,1))//To the zelda room.
+	H.moveToNullspace()
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(prob(5))
@@ -410,7 +411,7 @@
 
 /datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
 	var/words = "Your body shifts back to normal."
-	do_teleport(H, catto.loc)
+	H.forceMove(catto)
 	catto.mind.transfer_to(H)
 	if(catshift == TRUE)
 		words += " ...But wait, are those ears and a tail?"

@@ -131,10 +131,10 @@
 		return
 	var/list/seen = viewers(5, get_turf(src))
 	var/iconhtml = icon2html(src, seen)
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+	for(var/mob/H in seen)
+		to_chat(H, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
 		playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
-	qdel(A)
+	qdel(src)
 	..()
 
 //melts plastic beakers
@@ -148,16 +148,16 @@
 		for(var/mob/M in seen)
 			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
 			playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
-		qdel(A)
+		qdel(src)
 
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
 	if(pH_immunne == TRUE)
 		return
-	else if((pH < 0.5) || (pH > 13.5))
+	else if((reagents.pH < 0.5) || (reagents.pH > 13.5))
 		var/list/seen = viewers(5, get_turf(src))
-		var/iconhtml = icon2html(A, seen)
+		var/iconhtml = icon2html(src, seen)
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
+			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the extreme pH!</span>")
 			playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
-		qdel(A)
+		qdel(src)
