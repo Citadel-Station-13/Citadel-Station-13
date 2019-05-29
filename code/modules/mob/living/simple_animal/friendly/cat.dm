@@ -354,7 +354,7 @@
 	HIonRelease 		+= (rand(-25, 25)/100)
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
-	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
+	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
 	required_reagents[pick(additions)] = rand(1, 5)//weird
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
