@@ -121,12 +121,6 @@
 	mob/living/carbon/purgeBody
 	pH = 3.7
 
-/*
-/datum/reagent/fermi/eigenstate/on_new()
-	location_created = get_turf(loc) //Sets up coordinate of where it was created
-	message_admins("Attempting to get creation location from init() [location_created]")
-	//..()
-*/
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	switch(current_cycle)
@@ -134,8 +128,9 @@
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			if(purity > 0.75) //Teleports you home if it's pure enough
+				var/turf/open/creation = location_created
 				do_sparks(5,FALSE,M)
-				do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+				do_teleport(M, creation, 0, asoundin = 'sound/effects/phasein.ogg')
 				do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -1486,7 +1481,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		return
 	else
 		holder.remove_reagent("fermiTest", src.volume)//Avoiding recurrsion
-	message_admins("FermiTest addition!")
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
@@ -1534,7 +1528,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/fermiABuffer/on_new(datapH)
-	message_admins("Adding acid")
 	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
@@ -1555,7 +1548,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	pH = 11
 
 /datum/reagent/fermi/fermiBBuffer/on_new(datapH)
-	message_admins("Adding base")
 	src.data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
