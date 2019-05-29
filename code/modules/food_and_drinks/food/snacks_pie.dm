@@ -57,13 +57,32 @@
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
-	for(var/atom/movable/A in contents)
-		A.forceMove(T)
-		A.throw_at(hit_atom, 1, 1)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
 	stunning = FALSE
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body/Destroy()
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/A in contents)
+		A.forceMove(T)
+		A.throw_at(T, 1, 1)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body/On_Consume(mob/living/carbon/M)
+	if(!reagents.total_volume) //so that it happens on the last bite
+		if(iscarbon(M) && contents.len)
+			var/turf/T = get_turf(src)
+			for(var/atom/movable/A in contents)
+				A.forceMove(T)
+				A.throw_at(T, 1, 1)
+				M.visible_message("[src] bursts out of [M]!</span>")
+			M.emote("scream")
+			M.Knockdown(40)
+			M.adjustBruteLoss(60)
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/pie/berryclafoutis
 	name = "berry clafoutis"
