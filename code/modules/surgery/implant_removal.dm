@@ -4,7 +4,6 @@
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 
-
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"

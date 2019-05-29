@@ -13,7 +13,8 @@
 	if(!C.get_bodypart(user.zone_selected)) //can only start if limb is missing
 		return 1
 
-
+/datum/surgery/prosthetic_replacement/can_self_surgery()
+	return target != BODY_ZONE_HEAD //I MEAN I DON'T THINK THIS IS POSSIBLE BUT...
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"

@@ -47,6 +47,9 @@
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
 
+/datum/surgery/augmentation/can_self_surgery()
+	return !(target in list(BODY_ZONE_HEAD,BODY_ZONE_CHEST))
+
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/replace_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)

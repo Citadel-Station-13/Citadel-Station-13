@@ -16,6 +16,9 @@
 	var/success_multiplier = 0								//Step success propability multiplier
 	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
 
+/datum/surgery/proc/can_self_surgery()
+	return FALSE
+
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
 	if(surgery_target)
@@ -68,7 +71,7 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-/datum/surgery/proc/get_propability_multiplier()
+/datum/surgery/proc/get_propability_multiplier(var/mob/user)
 	var/propability = 0.5
 	var/turf/T = get_turf(target)
 
@@ -78,6 +81,9 @@
 		propability = 0.8
 	else if(locate(/obj/structure/bed, T))
 		propability = 0.7
+
+	if(target == user)
+		propability *= 0.5
 
 	return propability + success_multiplier
 
@@ -93,7 +99,7 @@
 		var/datum/species/abductor/S = H.dna.species
 		if(S.scientist)
 			return TRUE
-	
+
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
@@ -101,7 +107,7 @@
 			return FALSE
 		if(type in SP.advanced_surgeries)
 			return TRUE
-	
+
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)

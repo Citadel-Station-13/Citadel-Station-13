@@ -87,8 +87,11 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
-		if(user != src && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
+		if(user.a_intent != INTENT_HARM)
 			for(var/datum/surgery/S in surgeries)
+				if(!S.can_self_surgery() && user != src)
+					continue
+
 				if(S.next_step(user,user.a_intent))
 					return 1
 	return ..()

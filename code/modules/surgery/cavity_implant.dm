@@ -4,6 +4,8 @@
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 
+/datum/surgery/cavity_implant/can_self_surgery()
+	return TRUE
 
 //handle cavity
 /datum/surgery_step/handle_cavity

@@ -3,6 +3,9 @@
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
 	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 
+/datum/surgery/dental_implant/can_self_surgery()
+	return TRUE
+
 /datum/surgery_step/insert_pill
 	name = "insert pill"
 	implements = list(/obj/item/reagent_containers/pill = 100)
