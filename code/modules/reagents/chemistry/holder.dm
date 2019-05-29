@@ -386,7 +386,7 @@ im
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
 
 	do
-		var/list/possible_reactions = list() /
+		var/list/possible_reactions = list()
 		reaction_occurred = 0
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
@@ -455,7 +455,7 @@ im
 			//select the reaction with the most extreme temperature requirements
 			for(var/V in possible_reactions)
 				var/datum/chemical_reaction/competitor = V
-				if(selected_reaction.is_cold_recipe) /
+				if(selected_reaction.is_cold_recipe)
 					if(competitor.required_temp <= selected_reaction.required_temp)
 						selected_reaction = competitor
 				else
