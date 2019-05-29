@@ -53,7 +53,7 @@
 		R.add_reagent("fermiAcid", ((volume/3)/pH))
 
 	if(R.reagent_list)
-		s.set_up(R, (volume/10), 10, T)
+		s.set_up(R, (volume/10), T)
 		s.start()
 
 	if (pH > 10) //if alkaline, small explosion.
@@ -150,7 +150,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= 0.5
+	HIonRelease 			= 0.2
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -182,7 +182,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= -0.5
+	HIonRelease 			= -0.2
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -213,7 +213,7 @@
 	CurveSharpT 			= 1
 	CurveSharppH 			= 1
 	ThermicConstant 		= 25
-	HIonRelease 			= 1
+	HIonRelease 			= 0.02
 	RateUpLim 				= 15
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -239,7 +239,7 @@
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
 	ThermicConstant 		= 15
-	HIonRelease 			= 0.1
+	HIonRelease 			= 0.05
 	RateUpLim 				= 1
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -271,8 +271,8 @@
 	var/turf/T = get_turf(my_atom)
 	var/datum/reagents/R = new/datum/reagents(1000)
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("enthrallExplo", volume/2)
-	s.set_up(R, volume, T)
+	R.add_reagent("enthrallExplo", volume)
+	s.set_up(R, volume/2, T)
 	s.start()
 	my_atom.reagents.clear_reagents()
 
@@ -293,7 +293,7 @@
 	CurveSharpT 	= 8
 	CurveSharppH 	= 0.5
 	ThermicConstant = -2
-	HIonRelease 	= -0.5
+	HIonRelease 	= -0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	FermiExplode 	= TRUE
