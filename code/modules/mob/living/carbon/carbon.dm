@@ -89,7 +89,7 @@
 	if(lying && surgeries.len)
 		if(user.a_intent != INTENT_HARM)
 			for(var/datum/surgery/S in surgeries)
-				if(!S.can_self_surgery() && user != src)
+				if(user == src && !S.can_self_surgery())
 					continue
 
 				if(S.next_step(user,user.a_intent))
