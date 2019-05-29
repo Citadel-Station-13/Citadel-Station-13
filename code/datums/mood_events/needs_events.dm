@@ -59,4 +59,4 @@
 /datum/mood_event/nice_shower
 	description = "<span class='nicegreen'>I have recently had a nice shower.</span>\n"
 	mood_change = 2
-	timeout = 1800
+	timeout = THREEMINUTES
