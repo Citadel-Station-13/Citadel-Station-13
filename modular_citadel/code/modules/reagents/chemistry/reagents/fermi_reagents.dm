@@ -72,15 +72,7 @@
 //Addiction send you on a wild ride and replaces you with an alternative reality version of yourself.
 //During the process you get really hungry, then your items start teleporting randomly,
 //then alternative versions of yourself are brought in from a different universe and they yell at you.
-//and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative (this used to reroll objectives, but Kevin said prooobably not).
-//Currently the creation loc doesn't work, so it  teleports you back to where you took it. Which is fine too. This should be fixed, so it either does one or the other.
-//Bugginess level: low - I can't get the remove all status effects and moodlets to work. Basically I'd like to reset the character to roundstart if possible.
-
-//Important factors to consider while balancing:
-//1.It's... Fun. And thats mostly it. The teleport thing isn't that useful, since you have to be not stunned to take it.
-//You could use it as an antag and OD someone, but you have to inject 20u, which is 5 more than a syringe, and it doesn't kill you.
-//I'd like to make it reroll your objectives or expand upon the alternative version of you.
-//It's maybe one of the most fun chems, I would say so by far. It's hillarious
+//and finally you yourself get teleported to an alternative universe, and character your playing is replaced with said alternative
 
 /datum/reagent/fermi/eigenstate
 	name = "Eigenstasium"
@@ -505,7 +497,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //I'm not a very kinky person, sorry if it's not great
 //I tried to make it interesting..!!
 
-//Normal function increases your breast size by 0.1, 1 unit = 1 cup.
+//Normal function increases your breast size by 0.1, 5units = 1 cup.
 //If you get stupid big, it presses against your clothes, causing brute and oxydamage. Then rips them off.
 //If you keep going, it makes you slower, in speed and action.
 //decreasing your size will return you to normal.
@@ -747,8 +739,6 @@ When it's out of your system, you return back to yourself. It doesn't last long 
 Addiction is particularlly brutal, it slowly turns you invisible with flavour text, then kills you at a low enough alpha. (i've also added something to prevent geneticists speeding this up)
 There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
 I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
-
-Buginess level: works as intended - except teleport makes sparks for some reason. I'd like it to not if possible..?
 */
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
@@ -844,7 +834,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 			antiGenetics--
 		if(0 to 30)
 			to_chat(M, "<span class='warning'>Your body disperses from existence, as you become one with the universe.</b></span>")
-			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life and afterlife remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
+			to_chat(M, "<span class='userdanger'>As your body disappears, your consciousness doesn't. Should you find a way back into the mortal coil, your memories of your previous life remain with you. (At the cost of staying in character while dead. Failure to do this may get you banned from this chem. You are still obligated to follow your directives if you play a midround antag)</span>")//Legalised IC OOK? I have a suspicion this won't make it past the review. At least it'll be presented as a neat idea! If this is unacceptable how about the player can retain living memories across lives if they die in this way only.
 			deadchat_broadcast("<span class='warning'>[M] has become one with the universe, meaning that their IC conciousness is continuous throughout death. If they find a way back to life, they are allowed to remember what was said in deadchat and their previous life. Be careful what you say. If they don't act IC while dead, bwoink the FUCK outta them.</span>")
 			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
 			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout death should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role). They MUST stay within characer while dead.")
@@ -1196,7 +1186,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //Also has a speech alteration effect when the hat is there
 //Increase armour; 1 armour per 10u
 //but if you OD it becomes negative.
-
 
 
 /datum/reagent/fermi/hatmium //for hatterhat
