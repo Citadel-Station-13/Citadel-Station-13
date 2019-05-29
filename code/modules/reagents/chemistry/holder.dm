@@ -342,30 +342,6 @@
 		R.on_update (A)
 	update_total()
 
-//beaker check proc,
-/datum/reagents/proc/beaker_check(atom/A)
-	if(istype(A, /obj/item/reagent_containers/glass/beaker/meta) || istype(A, /obj/item/reagent_containers/glass/bottle)) //prevent bottles from being dispenced and melting.
-		return
-	if(istype(A, /obj/item/reagent_containers/glass/beaker/plastic))//reaclly weird how this runtimes but the previous doesn't
-		if(chem_temp > 444)//assuming polypropylene
-			var/list/seen = viewers(5, get_turf(A))
-			var/iconhtml = icon2html(A, seen)
-			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the temperature!</span>")
-				playsound(get_turf(A), 'sound/FermiChem/heatmelt.ogg', 80, 1)
-
-			qdel(A)
-			return
-	else if(istype(A, /obj/item/reagent_containers/glass) && ((pH < 0.5) || (pH > 13.5)))//maybe make it higher?
-		var/list/seen = viewers(5, get_turf(A))
-		var/iconhtml = icon2html(A, seen)
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
-			playsound(get_turf(A), 'sound/FermiChem/acidmelt.ogg', 80, 1)
-		qdel(A)
-	return
-
-
 
 /datum/reagents/proc/handle_reactions()//HERE EDIT HERE THE MAIN REACTION
 	if(fermiIsReacting == TRUE)
@@ -376,10 +352,6 @@
 	var/datum/cached_my_atom = my_atom
 	if(reagents_holder_flags & REAGENT_NOREACT)
 		return
-
-	//QPlasticCheck - this is done to reduce calculations
-	if (istype(my_atom, /obj/item/reagent_containers/glass/beaker/plastic))
-		beaker_check()
 
 	var/reaction_occurred = 0 // checks if reaction, binary variable
 	var/continue_reacting = FALSE //Helps keep track what kind of reaction is occuring; standard or fermi.
@@ -604,7 +576,7 @@
 		return
 
 
-/datum/reagents/proc/FermiReact(selected_reaction, cached_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+/datum/reagents/proc/FermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -614,40 +586,24 @@
 	var/purity = 1
 
 	//Begin checks
-
-	//Check extremes first
-	if (cached_temp > C.ExplodeTemp)
-		//go to explode proc
-		fermiIsReacting = FALSE
-		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
-		STOP_PROCESSING(SSprocessing, src)
-		return
-
-	//Make sure things are limited.
-	if (pH > 14)
-		pH = 14
-	else if (pH < 0)
-		pH = 0
-		//some beakers melt at extremes.
-
 	//For now, purity is handled elsewhere (on add)
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Lower range
-	if (pH < C.OptimalpHMin)
-		if (pH < (C.OptimalpHMin - C.ReactpHLim))
+	if (cached_pH < C.OptimalpHMin)
+		if (cached_pH < (C.OptimalpHMin - C.ReactpHLim))
 			deltapH = 0
 			return//If outside pH range, no reaction
 		else
-			deltapH = (((pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH)))
+			deltapH = (((cached_pH - (C.OptimalpHMin - C.ReactpHLim))**C.CurveSharppH)/((C.ReactpHLim**C.CurveSharppH)))
 	//Upper range
-	else if (pH > C.OptimalpHMax)
-		if (pH > (C.OptimalpHMax + C.ReactpHLim))
+	else if (cached_pH > C.OptimalpHMax)
+		if (cached_pH > (C.OptimalpHMax + C.ReactpHLim))
 			deltapH = 0
 			return //If outside pH range, no reaction
 		else
-			deltapH = (((- pH + (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))//Reverse - to + to prevent math operation failures.
+			deltapH = (((- cached_pH + (C.OptimalpHMax + C.ReactpHLim))**C.CurveSharppH)/(C.ReactpHLim**C.CurveSharppH))//Reverse - to + to prevent math operation failures.
 	//Within mid range
-	else if (pH >= C.OptimalpHMin  && pH <= C.OptimalpHMax)
+	else if (cached_pH >= C.OptimalpHMin  && cached_pH <= C.OptimalpHMax)
 		deltapH = 1
 	//This should never proc:
 	else
@@ -711,6 +667,22 @@
 	pH += (C.HIonRelease * addChemAmmount)
 	//keep track of the current reacted amount
 	reactedVol = reactedVol + addChemAmmount
+
+	//Check extremes
+	if (chem_temp > C.ExplodeTemp)
+		//go to explode proc
+		fermiIsReacting = FALSE
+		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
+		STOP_PROCESSING(SSprocessing, src)
+		return
+
+	//Make sure things are limited.
+	if (pH > 14)
+		pH = 14
+	else if (pH < 0)
+		pH = 0
+		//some beakers melt at extremes. This proc is called in add_reagent
+
 	//return said amount to compare for next step.
 	return (reactedVol)
 
@@ -815,7 +787,6 @@
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
-	//beaker_check(my_atom)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -840,8 +811,6 @@
 			s.set_up(R, CLAMP(amount/10, 0, 2), T)
 			s.start()
 			return FALSE
-
-	beaker_check(my_atom) //Beaker resilience test
 
 	if(!pH)
 		other_pH = D.pH
@@ -869,10 +838,11 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 	////
 
-	//pH = round(-log(10, ((cached_total * (10^(-cached_pH))) + (amount * (10^(-other_pH)))) / new_total), REAGENT_PH_ACCURACY) I think this is wrong? I'm getting negative numbers?
+	//cacluate reagent based pH shift.
 	pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
-	//add the reagent to the existing if it exists
+	holder.pH_check()//checks beaker resilience
 
+	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -954,6 +924,7 @@
 				pH = 7
 			else
 				pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
+			holder.pH_check()
 			amount = CLAMP(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()

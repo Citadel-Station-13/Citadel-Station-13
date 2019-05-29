@@ -11,6 +11,8 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
+	var/pH_immunne = TRUE//true for now, just so things that shouldn't melt don't.
+	var/temp_immune = TRUE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -122,9 +124,40 @@
 
 	reagents.clear_reagents()
 
+//melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
+	if(temp_immune == TRUE)
+		return
+	var/list/seen = viewers(5, get_turf(src))
+	var/iconhtml = icon2html(src, seen)
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+		playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+	qdel(A)
 	..()
 
+//melts plastic beakers
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
+	if(temp_immune == TRUE)
+		return
+	if(reagents.chem_temp > 444)//assuming polypropylene
+		var/list/seen = viewers(5, get_turf(src))
+		var/iconhtml = icon2html(src, seen)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
+			playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
+		qdel(A)
+
+//melts glass beakers
+/obj/item/reagent_containers/proc/pH_check()
+	if(pH_immunne == TRUE)
+		return
+	else if((pH < 0.5) || (pH > 13.5))
+		var/list/seen = viewers(5, get_turf(src))
+		var/iconhtml = icon2html(A, seen)
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s melts from the extreme pH!</span>")
+			playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+		qdel(A)
