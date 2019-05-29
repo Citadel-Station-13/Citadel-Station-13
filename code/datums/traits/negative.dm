@@ -348,5 +348,4 @@
    else
       to_chat(H, "<span class='notice'><i>[pick(seen)] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
    H.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
-   message_admins("Trance applied")
    qdel(src)

@@ -223,7 +223,6 @@
 			else
 				B.cached_size = B.size
 				B.prev_size = B.size
-			message_admins("B.size [B.size], Cache [B.cached_size], prev [B.prev_size]")
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
 			B.update()
@@ -294,6 +293,7 @@
 	dna.species.handle_genitals(src)//should work.
 	//dna.species.handle_breasts(src)
 
+//Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
 	var/organCheck = FALSE
 	for(var/obj/item/organ/O in internal_organs)
@@ -378,24 +378,7 @@
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-					//This was removed for some reason, but it breaks my code, so now it's back!! Tadahhh.
-					/*
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							genital_overlay.color = "#[fixed_mut_color]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							genital_overlay.color = "#[fixed_mut_color2]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							genital_overlay.color = "#[fixed_mut_color3]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
-					*/
+
 			standing += genital_overlay
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()

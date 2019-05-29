@@ -157,7 +157,7 @@
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
 
-/datum/quirk/trandening //What does trandening mean?
+/datum/quirk/trandening
 	name = "High Luminosity Eyes"
 	desc = "When the next big fancy implant came out you had to buy one on impluse!"
 	value = 1

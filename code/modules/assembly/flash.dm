@@ -360,4 +360,3 @@
 		M.confused += min(M.confused + 4, 20)
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.drowsyness += min(M.drowsyness + 4, 20)
-		//M.apply_status_effect(STATUS_EFFECT_PACIFY, 40) for when we port apply_status_effect pacifist (maybe I'll do it)

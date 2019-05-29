@@ -1,14 +1,6 @@
  //Fermichem!!
 //Fun chems for all the family
 
-//MCchem
-//BE PE chemical
-//Angel/astral chemical
-//And tips their hat
-//Naninte chem
-
-
-
 /datum/reagent/fermi
 	name = "Fermi" 	//Why did I putthis here?
 	id = "fermi"	//It's meeee
@@ -18,17 +10,10 @@
 	var/InverseChem 		= "fermiTox" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
 	var/OnMobMergeCheck		= FALSE
-	//var/addProc 			= FALSE //When this reagent is added to a new beaker, it does something.
-
-///datum/reagent/fermi/on_mob_life(mob/living/carbon/M)
-	//current_cycle++
-	//M.reagents.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency, FALSE) //fermi reagents stay longer if you have a better metabolism
-	//return ..()
-
-//Called when reaction stops. #STOP_PROCESSING
+	//var/addProc 			= FALSE //When this reagent is added to a new beaker, it does something. Implemented but unused.
 
 //Called when added to a beaker without any of the reagent present. #add_reagent
-/datum/reagent/fermi/proc/FermiNew(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/reagent/fermi/proc/FermiNew(holder)
 	return
 
 //This should process fermichems to find out how pure they are and what effect to do.
@@ -238,12 +223,6 @@
 	src.addictCyc4++
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[src.id]_overdose")//holdover until above fix works
 	..()
-	//. = 1
-
-//TODO
-///datum/reagent/fermi/eigenstate/overheat_explode(mob/living/M)
-//	return
-
 
 //eigenstate END
 
@@ -306,11 +285,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChemVal 		= 0.5
 	InverseChem 		= "SDZF"
 
-	//var/fClone_current_controller = OWNER
-	//var/mob/living/split_personality/clone//there's two so they can swap without overwriting
-	//var/mob/living/split_personality/owner
-	//var/mob/living/carbon/SM
-
 //Main SDGF chemical
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
 	//Setup clone
@@ -360,22 +334,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Really hacky way to deal with this stupid problem I have, and heal the clone. I think around 30u will make a healthy clone.
 				SM.reagents.add_reagent("SDGFheal", volume)
 				M.reagents.remove_reagent(src.id, src.volume)
-
-				//Give the new clone an idea of their character
-				//SHOULD print last 5 messages said by the original to the clones chatbox
-				//I don't think it works however.
-				var/list/say_log = M.logging[LOG_SAY]
-				var/recent_speech
-				if(LAZYLEN(say_log) > 5)
-					recent_speech = say_log.Copy(say_log.len+5,0) //0 so len-LING_ARS+1 to end of list
-				else
-					recent_speech = say_log
-				for(var/spoken_memory in recent_speech)
-					to_chat(SM, spoken_memory)
-
-
 				return
-				//BALANCE: should I make them a pacifist, or give them some cellular damage or weaknesses?
 
 			else if(src.playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
 				src.unitCheck = TRUE
@@ -551,14 +510,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //If you keep going, it makes you slower, in speed and action.
 //decreasing your size will return you to normal.
 //(see the status effect in chem.dm)
-//Need to add something that checks to see if the breasts are gone to remove negative debuffs, as well as improve how they're added instead of a flat +/-
-//I think most of the layering stuff Works
-//but by god does it make me mad, never again.
 //Overdosing on (what is essentially space estrogen) makes you female, removes balls and shrinks your dick.
 //OD is low for a reason. I'd like fermichems to have low ODs, and dangerous ODs, and since this is a meme chem that everyone will rush to make, it'll be a lesson learnt early.
 
-//Bug status: Maybe a bit buggy with the spritecode, and the sprites themselves need touching up.
-//TODO - fail reaction explosion makes breasts and baps you with them.
 /datum/reagent/fermi/BElarger
 	name = "Sucubus milk"
 	id = "BElarger"
@@ -605,8 +559,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
 		var/obj/item/organ/genital/breasts/nB = new
-		nB.Insert(M)
 		H.emergent_genital_call()
+		nB.Insert(M)
 		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
 				nB.color = skintone2hex(H.skin_tone)
@@ -678,10 +632,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //										PENIS ENLARGE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //See breast explanation, it's the same but with taliwhackers
-//Oh and I refuse to draw dicks. Someone else can or I'll replace large sprites with a redtail.
-//Since someone else made this in the time it took me to PR it, I merged the two ideas.
-//Which basically means I took the description.
-//TODO: failing the reaction creates a penis instead.
+//instead of slower movement and attacks, it slows you and increases the total blood you need in your system.
+//Since someone else made this in the time it took me to PR it, I merged them.
 /datum/reagent/fermi/PElarger // Due to popular demand...!
 	name = "Incubus draft"
 	id = "PElarger"
@@ -692,7 +644,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	metabolization_rate = 0.5
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.3
-	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse
+	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 
 /datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -729,14 +681,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		H.emergent_genital_call()
 		if(nP)
 			nP.length = 1
-			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
+			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
 			nP.cached_length = 1
 			nP.prev_size = 1
 			M.reagents.remove_reagent(src.id, 5)
 			P = nP
 
 	P.cached_length = P.cached_length + 0.1
-	if (P.cached_length >= 20.5 && P.cached_length < 21) //too low? Yes, 20 is the max
+	if (P.cached_length >= 20.5 && P.cached_length < 21)
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
@@ -789,10 +741,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //										ASTROGEN
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 More fun chems!
-When you take it, it spawns a ghost that shouldn't be able to interact with the world, it can talk cause eh, it's space whattya gonna do
+When you take it, it spawns a ghost that the player controls. (No access to deadchat)
 This ghost moves pretty quickly and is mostly invisible, but is still visible for people with eyes.
 When it's out of your system, you return back to yourself. It doesn't last long and metabolism of the chem is exponential.
-ODing doesn't seem to work, I dunno why, I'd like it to frustrate your attempts to move around and make you fall aleep after.
 Addiction is particularlly brutal, it slowly turns you invisible with flavour text, then kills you at a low enough alpha. (i've also added something to prevent geneticists speeding this up)
 There's afairly major catch regarding the death though. I'm not gonna say here, go read the code, it explains it and puts my comments on it in context. I know that anyone reading it without understanding it is going to freak out so, this is my attempt to get you to read it and understand it.
 I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
@@ -813,12 +764,12 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/antiGenetics = 255
+	var/resetAddiction = FALSE //to get around this weird problem I'm having.
 	var/sleepytime = 0
 	InverseChemVal = 0.25
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
-	M.alpha = 255//Reset addiction
-	antiGenetics = 255// DOesn't work for some reason?
+	resetAddiction = TRUE
 	switch(current_cycle)
 		if(0)//Require a minimum
 			origin = M
@@ -842,7 +793,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle-1, FALSE)
+	M.reagents.remove_reagent(src.id, current_cycle/2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -851,13 +802,15 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	if(overdosed)
 		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
+	antiGenetics = 255
 	..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(M.reagents.has_reagent("astral"))
+	if(resetAddiction == TRUE)
 		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
+		resetAddiction = FALSE
 	if(prob(65))
 		M.alpha--
 		antiGenetics--
@@ -908,7 +861,6 @@ The magnum opus of FermiChem -
 Long and complicated, I highly recomend you look at the two other files heavily involved in this
 modular_citadel/code/datums/status_effects/chems.dm - handles the subject's reactions
 code/modules/surgery/organs/vocal_cords.dm - handles the enchanter speaking
-What started as a chem for bhijin became way too ambitious, because I live in the sky with pie.
 
 HOW IT WORKS
 Fermis_Reagent.dm
@@ -917,7 +869,7 @@ Upon reacting with blood as a catalyst, the blood is used to define who the enth
 This uses the fermichem only proc; FermiCreate, which is basically the same as On_new, except it doesn't require "data" which is something to do with blood and breaks everything so I said bugger it and made my own proc. It basically sets up vars.
 When it's first made, the creator has to drink some of it, in order to give them the vocal chords needed.
 When it's given to someone, it gives them the status effect and kicks off that side of things. For every metabolism tick, it increases the enthrall tally.
-Finally, if you manage to pump 150u into some poor soul, you overload them, and mindbreak them. Making them your willing, but broken slave. Which can only be reversed by; fixing their brain with mannitol and neurine (100 / 50u respectively) (or less with both),
+Finally, if you manage to pump 100u into some poor soul, you overload them, and mindbreak them. Making them your willing, but broken slave. Which can only be reversed by; fixing their brain with mannitol and neurine (100 / 50u respectively) (or less with both),
 
 vocal_cords.dm
 This handles when the enchanter speaks - basically uses code from voice of god, but only for people with the staus effect. Most of the words are self explainitory, and has a smaller range of commands. If you're not sure what one does, it likely affects the enthrall tally, or the resist tally.
@@ -1026,14 +978,10 @@ This is only state 3 pets, state 4 pets cannot get custom triggers, you broke th
 If you give your pet a collar then their resistance reduced too.
 (I think thats everything?)
 
-BALANCE ISSUES:
-There are none, but I'm glad you asked.
+Failstates:
+Blowing up the reaction produces a gas that causes everyone to fall in love with one another.
 
-Okay, seriously, unless you're an antag, it will be difficult to enthrall people, you'll need to put a lot of work into it, and really it's supposed to be a mix of rp and combat(?) use. If you get a small army of pets then it can be useful, but equally, they can revered with a ananphro + mannitol grenade.
-If it becomes an issue, I'll make all pets pacifists and apply more weakness effects based on mood and state. I'll probably do this anyways as I want the bond between the two to be imperative.
-As stated earlier the biggest concern is the use as a murder aid, which I have ideas for. (weaken the enthraller during the enthrallment process?)
-
-And as stated earlier, this chem is hard to make, and is punishing on failure. You fall in love with someone if it's impure, and then your piorities change.
+Creating a chem with a low purity will make you permanently fall in love with someone, and tasked with keeping them safe. If someone else drinks it, you fall for them.
 */
 
 /datum/reagent/fermi/enthrall
@@ -1058,9 +1006,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	id = "enthrallTest"
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of joy, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
 	color = "#2C051A" // rgb: , 0, 255
-	//ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	//InverseChemVal 		= 0.5
-	//InverseChem 		= "enthrall" //At really impure vols, it just becomes 100% inverse
 	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
 	creatorGender = "Mistress"
@@ -1079,13 +1024,12 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	creatorName = data.["creatorName"]
 	creator = get_mob_by_key(creatorID)
 
-//FERMICHEM2 split into different chems
 /datum/reagent/fermi/enthrall/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!ishuman(M))//Just to make sure screwy stuff doesn't happen.
 		return
 	if(!creatorID)
-		CRASH("Something went wrong in enthral creation THIS SHOULD NOT APPEAR") //nervermind this appears when you blow up the reaction. I dunno how
+		//This happens when the reaction explodes.
 		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall) //Somehow a beaker got here? (what)
 	if(E)
@@ -1093,8 +1037,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
-		//if(M.has_status_effect(STATUS_EFFECT_INLOVE) Not sure if I need/want this.
-		//	to_chat(M, "<span class='warning'><i>You are too busy being in love for this to work!</i></span>")
+		/*if(M.has_status_effect(STATUS_EFFECT_INLOVE) //Not sure if I need/want this.
+			to_chat(M, "<span class='warning'><i>You are too captivated by your love to think about anything else</i></span>")
+			return*/
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
@@ -1111,7 +1056,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
-			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
+			var/list/seen = viewers(7, get_turf(M))
 			for(var/victim in seen)
 				if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (!M.client) || (M.stat == DEAD))
 					seen = seen - victim
@@ -1133,7 +1078,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it does nothing.
 		return
 	if(!M.client)
-		metabolization_rate = 0 //Stops powergamers from quitting to avoid affects.
+		metabolization_rate = 0 //Stops powergamers from quitting to avoid affects. but prevents affects on players that don't exist for performance.
 		return
 	if(metabolization_rate == 0)
 		metabolization_rate = 0.5
@@ -1142,11 +1087,11 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		return
 	else
 		E.enthrallTally += 1
-	if(prob(25))
-		M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
+	if(prob(1))
+		M.adjustBrainLoss(1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
-/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I have no idea what happens if you OD yourself honestly. I made it so the creator is set to gain the status for someone random.
+/datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I made it so the creator is set to gain the status for someone random.
 	. = ..()
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 100u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
@@ -1243,20 +1188,16 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	forge_valentines_objective(Lover, Love, TRUE)
 	return
 
-//Requires player to be within vicinity of creator
-//bonuses to mood
-//gives creator a silver(velvet?) tongue
-//Addiction is applied when creator is out of viewer
-//
+//For addiction see chem.dm
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										HATIMUIM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//Fun chem, simply adds a heat upon your head, and tips their hat
+//Adds a heat upon your head, and tips their hat
 //Also has a speech alteration effect when the hat is there
-//Should, but doesn't currently, increase armour; 1 armour per 10u
+//Increase armour; 1 armour per 10u
 //but if you OD it becomes negative.
-//please help fix that
+
 
 
 /datum/reagent/fermi/hatmium //for hatterhat
@@ -1297,10 +1238,8 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 //										FURRANIUM
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //OwO whats this?
-//Works as intended!!
 //Makes you nya and awoo
-//At a certain amount of time in your system it gives you a fluffy tongue owo!
-//STATUS: ready
+//At a certain amount of time in your system it gives you a fluffy tongue, if pure enough, it's permanent.
 
 /datum/reagent/fermi/furranium
 	name = "Furranium"
@@ -1367,10 +1306,9 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 		M.say("Pleh!")
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-
 //Nanite removal
-//Writen by Trilby!!
-//Status: Done - needs bug test
+//Writen by Trilby!! Embellsished a little by me.
+
 /datum/reagent/fermi/naninte_b_gone
 	name = "Naninte bain"
 	id = "naninte_b_gone"
@@ -1472,7 +1410,6 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	name = "Fermis Test Reagent"
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
-	//data = list("Big bang" = 1, "please work" = 2)
 	addProc = TRUE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
@@ -1504,7 +1441,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	holder.clear_reagents()
 
 /datum/reagent/fermi/fermiTox
-	name = "FermiTox"//defined on setup
+	name = "FermiTox"
 	id = "fermiTox"
 	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
 	data = "merge"

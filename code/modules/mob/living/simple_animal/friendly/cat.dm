@@ -329,12 +329,8 @@
 	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
 	//FermiChem vars:
 	OptimalTempMin 		= 650
-	//OptimalTempMax 	= 800
-	//ExplodeTemp 		= 900
 	OptimalpHMin 		= 0
-	//OptimalpHMax 		= 8
 	ReactpHLim 			= 2
-	//CatalystFact 		= 0
 	CurveSharpT 		= 0
 	CurveSharppH 		= 0
 	ThermicConstant		= 0
@@ -346,7 +342,6 @@
 
 /datum/chemical_reaction/fermi/secretcatchem/New()
 	//rand doesn't seem to work with n^-e
-	//message_admins("randomizing reaction")
 	OptimalTempMin 		+= rand(-100, 100)
 	OptimalTempMax 		= (OptimalTempMin+rand(0, 200))
 	ExplodeTemp 		= (OptimalTempMax+rand(0, 200))
@@ -360,9 +355,7 @@
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminum", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
-	//var/chosenA = pick(additions)
 	required_reagents[pick(additions)] = rand(1, 5)//weird
-	//required_catalysts = list("[pick(cataly)]" = 1)
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	message_admins("Someone found the hidden reaction. Amazing!! Please tell Fermis!!")
@@ -384,7 +377,6 @@
 
 /datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
 	. = ..()
-	//origin = H
 	var/current_species = H.dna.species.type
 	var/datum/species/mutation = /datum/species/human/felinid
 	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's basically impossible to get this to 1. It already requires felind too, so no new functionality there.
