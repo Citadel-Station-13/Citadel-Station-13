@@ -246,7 +246,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return 0
 	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to stop resisting the truth.</a> Or you could choose to continue resisting...</span>")
+	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie.</a> Or you could choose to continue resisting and suffer a fate worse than death...</span>")
 	currentconversionman = convertee
 	conversiontimeout = world.time + (10 SECONDS)
 	convertee.Stun(100)
