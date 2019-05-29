@@ -88,12 +88,11 @@
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(D.lying || D.IsKnockdown())
 		return 0
-	var/hardstun = D.resting ? null : 10
 	D.visible_message("<span class='warning'>[A] leg sweeps [D]!</span>", \
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Knockdown(40, override_duration = hardstun, 25)
+	D.Knockdown(40, override_stam = 45)
 	log_combat(A, D, "leg sweeped")
 	return 1
 
