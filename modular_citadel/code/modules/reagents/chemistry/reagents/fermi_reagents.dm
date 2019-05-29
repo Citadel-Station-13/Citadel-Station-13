@@ -546,6 +546,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
+		H.emergent_genital_call()
 		return
 	if(!B.size == "huge")
 		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
@@ -559,7 +560,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
 		var/obj/item/organ/genital/breasts/nB = new
-		H.emergent_genital_call()
 		nB.Insert(M)
 		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
@@ -768,6 +768,7 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	InverseChemVal = 0.25
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
+	M.alpha = 255
 	switch(current_cycle)
 		if(0)//Require a minimum
 			origin = M

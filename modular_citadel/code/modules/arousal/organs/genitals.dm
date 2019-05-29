@@ -296,14 +296,18 @@
 //Checks to see if organs are new on the mob, and changes their colours so that they don't get crazy colours.
 /mob/living/carbon/human/proc/emergent_genital_call()
 	var/organCheck = FALSE
+	var/breastCheck = FALSE
+	var/willyCheck = FALSE
 	for(var/obj/item/organ/O in internal_organs)
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 			if(/obj/item/organ/genital/penis)
 				dna.features["has_cock"] = TRUE
+				willyCheck = TRUE
 			if(/obj/item/organ/genital/breasts)
 				dna.features["has_breasts"] = TRUE//Goddamnit get in there.
-	if (organCheck == FALSE)
+				breastCheck = TRUE
+	if(organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
@@ -315,6 +319,11 @@
 		//So people who haven't set stuff up don't get rainbow surprises.
 		dna.features["cock_color"] = "[dna.features["mcolor"]]"
 		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
+	else //If there's a new organ, make it the same colour.
+		if(breastCheck == FALSE)
+			dna.features["breasts_color"] = dna.features["cock_color"]
+		else if (willyCheck == FALSE)
+			dna.features["cock_color"] = dna.features["breasts_color"]
 	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness
