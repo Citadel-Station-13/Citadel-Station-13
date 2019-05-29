@@ -44,15 +44,14 @@
 		if (istype(reagent, /datum/reagent/fermi))
 			R.add_reagent(reagent.id, reagent.volume)
 		else if (istype(reagent, /datum/reagent/toxin/plasma))
-			R.add_reagent(reagent.id, reagent.volume) //for !FUN! (am I doing this right?)
-		continue //Only allow fermichems into the mix (specific fermi explosions are handled elsewhere)
+			R.add_reagent(reagent.id, reagent.volume/2) //for !FUN! (am I doing this right?) reduced to half so it's less punishing. This is mostly for astrogen failures.
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 
 	if(pH < 4) //if acidic, make acid spray
 		R.add_reagent("fermiAcid", ((volume/3)/pH))
-
 	if(R.reagent_list)
+		message_admins("gas")
 		s.set_up(R, (volume/10), T)
 		s.start()
 
@@ -85,7 +84,7 @@
 	CurveSharpT = 0.6 // How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant = 5 //Temperature change per 1u produced
-	HIonRelease = -0.1 //pH change per 1u reaction
+	HIonRelease = -0.05 //pH change per 1u reaction
 	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
@@ -114,7 +113,7 @@
 	CurveSharpT 		= 4 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 4 		// How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= -5 		// Temperature change per 1u produced
-	HIonRelease 		= 0.05 		// pH change per 1u reaction (inverse for some reason)
+	HIonRelease 		= 0.01 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 3 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
@@ -150,7 +149,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= 0.2
+	HIonRelease 			= 0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -182,7 +181,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= -0.2
+	HIonRelease 			= -0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -239,7 +238,7 @@
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
 	ThermicConstant 		= 15
-	HIonRelease 			= 0.05
+	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -319,12 +318,12 @@
 	ExplodeTemp 	= 700
 	OptimalpHMin 	= 8
 	OptimalpHMax 	= 10
-	ReactpHLim 		= 1
+	ReactpHLim 		= 2
 	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 2
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
-	HIonRelease 	= -0.2
+	HIonRelease 	= -0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.30

@@ -443,6 +443,12 @@
 			var/datum/chemical_reaction/C = selected_reaction
 
 			if (C.FermiChem == TRUE && !continue_reacting)
+				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
+					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
+					fermiIsReacting = FALSE
+					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
+					return 0
+
 				for(var/B in cached_required_reagents)
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
 				for(var/P in selected_reaction.results)
@@ -460,11 +466,6 @@
 							fermiReactID = selected_reaction
 							reaction_occurred = 1
 							SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
-				if (chem_temp > C.ExplodeTemp)
-					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
-					fermiIsReacting = FALSE
-					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
 				else
 					return 0
 
