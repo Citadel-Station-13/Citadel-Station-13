@@ -52,7 +52,7 @@
 /datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
-	moveCalc = 1+((round(B.cached_size) - 9)/5) //Afffects how fast you move, and how often you can click.
+	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
 	if(!B)
 		o.remove_movespeed_modifier("megamilk")
 		sizeMoveMod(1)
@@ -127,7 +127,7 @@
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
-	moveCalc = 1+((round(P.length) - 21)/5) //effects how fast you can move
+	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
 	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
 		o.remove_movespeed_modifier("hugedick")
@@ -510,8 +510,6 @@
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore!'</i></span>")
 	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
 
-
-//WORKS!! AAAAA
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if (cTriggered == TRUE)

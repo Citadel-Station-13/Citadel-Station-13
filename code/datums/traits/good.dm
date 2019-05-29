@@ -170,7 +170,7 @@
 	H.equip_to_slot(gloweyes, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
-/datum/quirk/BloodPressure
+/datum/quirk/bloodpressure
 	name = "Synthetic blood"
 	desc = "You've got a new form of synthetic blood that increases the total blood volume inside of you as well as the rate of replenishment!"
 	value = 1 //I honeslty dunno if this is a good trait? I just means you use more of medbays blood and make janitors madder, but you also regen blood a lil faster.
@@ -178,7 +178,7 @@
 	gain_text = "<span class='notice'>You feel full of blood!</span>"
 	lose_text = "<span class='notice'>You feel like your blood pressure went down.</span>"
 
-/datum/quirk/BloodPressure/add()
+/datum/quirk/bloodpressure/add()
 	var/mob/living/M = quirk_holder
 	M.blood_ratio = 1.2
 	M.blood_volume += 150
