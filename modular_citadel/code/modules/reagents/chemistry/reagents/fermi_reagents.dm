@@ -1039,10 +1039,7 @@ If it becomes an issue, I'll make all pets pacifists and apply more weakness eff
 As stated earlier the biggest concern is the use as a murder aid, which I have ideas for. (weaken the enthraller during the enthrallment process?)
 
 And as stated earlier, this chem is hard to make, and is punishing on failure. You fall in love with someone if it's impure, and then your piorities change.
-(thats not written yet but thats the idea.)
 */
-
-//TODO rewrite code so that the low purity stuff is a seperate chem for clarity.
 
 /datum/reagent/fermi/enthrall
 	name = "MKUltra"
@@ -1121,7 +1118,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 				return
 			var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 			for(var/victim in seen)
-				if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (!M.client))
+				if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (!M.client) || (M.stat == DEAD))
 					seen = seen - victim
 			if(!seen)
 				return
@@ -1207,7 +1204,7 @@ And as stated earlier, this chem is hard to make, and is punishing on failure. Y
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/victim in seen)
-			if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+			if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (M.stat == DEAD))
 				seen = seen - victim
 		if(seen.len == 0)
 			return

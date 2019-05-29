@@ -290,7 +290,7 @@
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 500
-	OptimalTempMax 	= 650
+	OptimalTempMax 	= 700
 	ExplodeTemp 	= 750
 	OptimalpHMin 	= 2
 	OptimalpHMax 	= 5
@@ -299,7 +299,7 @@
 	CurveSharpT 	= 8
 	CurveSharppH 	= 0.5
 	ThermicConstant = -2
-	HIonRelease 	= -0.05
+	HIonRelease 	= -0.5
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	FermiExplode 	= TRUE
@@ -330,7 +330,7 @@
 	CurveSharpT 	= 2
 	CurveSharppH 	= 0.5
 	ThermicConstant = -10
-	HIonRelease 	= -0.1
+	HIonRelease 	= -0.2
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.30
