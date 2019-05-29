@@ -104,10 +104,9 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_honker"
 
-/obj/item/melee/touch_attack/megahonk/afterattack(atom/target, mob/user, proximity)
-	if(!iscarbon(target))
+/obj/item/melee/touch_attack/megahonk/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || !iscarbon(target) || !iscarbon(user) || user.handcuffed)
 		return
-
 	user.say(catchphrase, forced = "spell")
 	playsound(get_turf(target), on_use_sound,100,1)
 	for(var/mob/living/carbon/M in (hearers(1, target) - user)) //3x3 around the target, not affecting the user
@@ -149,15 +148,14 @@
 	to_chat(user, "<span class='notice'>You smear \the [src] on your chest! </span>")
 	qdel(src)
 
-/obj/item/melee/touch_attack/bspie/afterattack(atom/target, mob/user, proximity)
+/obj/item/melee/touch_attack/bspie/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || !iscarbon(target) || !iscarbon(user) || user.handcuffed)
+		return
 	if(target == user)
 		to_chat(user, "<span class='notice'>You smear \the [src] on your chest!</span>")
 		qdel(src)
 		return
-	if(!iscarbon(target))
-		return
 	var/mob/living/carbon/M = target
-	var/obj/item/bodypart/head = M.get_bodypart("head")
 
 	user.visible_message("<span class='warning'>[user] is trying to stuff [M]\s body into \the [src]!</span>")
 	if(do_mob(user, M, 250))
@@ -167,10 +165,14 @@
 
 		playsound(get_turf(target), on_use_sound, 50, 1)
 
+		/*
+		var/obj/item/bodypart/head = M.get_bodypart("head")
 		if(head)
 			head.drop_limb()
-		head.throw_at(get_turf(head), 1, 1, user)
+		head.throw_at(get_turf(head), 1, 1)
 		qdel(M)
+		*/
+		M.forceMove(pie)
 
 
 		charges--
