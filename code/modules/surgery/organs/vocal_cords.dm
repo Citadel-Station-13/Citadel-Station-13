@@ -784,8 +784,8 @@
 
 	//Mixables
 	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara") //enthral_words works
-	var/static/regex/reward_words = regex("good boy|good girl|good pet") //reward_words works
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet") ////punish_words works
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job") //reward_words works
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job") ////punish_words works
 	//phase 0
 	var/static/regex/saymyname_words = regex("say my name|who am i|whoami") //works I think
 	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
@@ -801,8 +801,8 @@
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/strip_words = regex("strip|derobe|nude")
-	var/static/regex/walk_words = regex("slow down")
-	var/static/regex/run_words = regex("run")
+	var/static/regex/walk_words = regex("slow down|walk")
+	var/static/regex/run_words = regex("run|speed up")
 	var/static/regex/liedown_words = regex("lie down") //TO ADD
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown|kneel")
 	//phase 3
@@ -951,7 +951,6 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			E.status = "Antiresist"
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>Your mind clouds over, as you find yourself unable to resist!</b></span>"), 5)
 			E.statusStrength = (1 * power_multiplier * E.phase)
 			E.cooldown += 15//Too short? yes, made 15

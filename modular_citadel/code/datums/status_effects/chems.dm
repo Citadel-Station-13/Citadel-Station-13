@@ -98,12 +98,13 @@
 	if((B.cached_size) < 16)
 		switch(round(B.cached_size))
 			if(9)
-				if (!(B.breast_sizes[B.prev_size] == B.size))
+				if (B.breast_sizes[B.prev_size] != B.breast_sizes[B.size])
 					to_chat(o, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 			if(10 to INFINITY)
-				if (!(B.breast_sizes[B.prev_size] == B.size))
+				if (B.breast_sizes[B.prev_size] != B.breast_sizes[B.size])
 					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
 		if(prob(5))
+
 			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
 		..()
 
@@ -126,7 +127,6 @@
 	var/moveCalc
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
-	message_admins("PElarge started!")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
 	if(o.w_uniform || o.wear_suit)
@@ -144,7 +144,7 @@
 /datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
-	moveCalc = 1+((round(P.length) - 21)/10) //effects how fast you can move
+	moveCalc = 1+((round(P.length) - 21)/5) //effects how fast you can move
 	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
 		o.remove_movespeed_modifier("hugedick")
@@ -298,6 +298,8 @@
 			else if (resistanceTally > 150)
 				phase = -1
 				to_chat(owner, "<span class='warning'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
+				if(DistApart < 10)
+					to_chat(master, "<span class='warning'>[(H.lewd?"Your pet":"Your thrall")] seems to have broken free of your enthrallment!</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
 				if(owner.lewd)
@@ -503,10 +505,11 @@
 		cooldown -= (0.8 + (mental_capacity/500))
 		cooldownMsg = FALSE
 	else if (cooldownMsg == FALSE)
-		if(master.lewd)
-			to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
-		else
-			to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
+		if(DistApart < 10)
+			if(master.lewd)
+				to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
+			else
+				to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 		cooldownMsg = TRUE
 		cooldown = 0
 	if (tranceTime > 0) //custom trances only last 50 ticks.
@@ -653,7 +656,7 @@
 		deltaResist += 0.1 //Though I commend your spamming efforts.
 		return
 	else
-		deltaResist = 1.75 + resistGrowth
+		deltaResist = 1.7 + resistGrowth
 		resistGrowth += 0.05
 
 	//distance modifer
@@ -692,24 +695,23 @@
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))
-		deltaResist *= 1.5
+		deltaResist *= 1.3
 	else if (is_servant_of_ratvar(owner))
-		deltaResist *= 1.5
+		deltaResist *= 1.3
 	//antags should be able to resist, so they can do their other objectives. This chem does frustrate them, but they've all the tools to break free when an oportunity presents itself.
 	else if (owner.mind.assigned_role in GLOB.antagonists)
-		deltaResist *= 1.4
+		deltaResist *= 1.2
 
 	//role resistance
 	//Chaplains are already brainwashed by their god
 	if(owner.mind.assigned_role == "Chaplain")
-		deltaResist *= 1.5
+		deltaResist *= 1.2
 	//Command staff has authority,
 	if(owner.mind.assigned_role in GLOB.command_positions)
-		deltaResist *= 1.4
-		//if(owner.has_status == "sub"); power_multiplier *= 0.8 //for skylar //I'm kidding <3
+		deltaResist *= 1.1
 	//Chemists should be familiar with drug effects
 	if(owner.mind.assigned_role == "Chemist")
-		deltaResist *= 1.3
+		deltaResist *= 1.2
 
 	//Happiness resistance
 	//Your Thralls are like pets, you need to keep them happy.
@@ -727,22 +729,5 @@
 	if(M.has_trait(TRAIT_MINDSHIELD))
 		deltaResist += 5//even faster!
 
-	/*
-	if (deltaResist>0)//just in case
-		deltaResist /= phase//later phases require more resistance
-	*/
 	message_admins("Enthrall processing for [M]: enthrallTally: [enthrallTally], resistanceTally: [resistanceTally], delta: [deltaResist]")
 	return
-
-//I think this can be left out, but I'll leave the code incase anyone wants to add to it.
-/*
-/datum/status_effect/chem/enthrall/proc/owner_say(mob/speaker, message) //I can only hope this works
-
-	//var/datum/status_effect/chem/enthrall/E = owner.has_status_effect(/datum/status_effect/chem/enthrall)
-	//var/mob/living/master = E.master
-	message_admins("[owner] said something")
-	var/static/regex/owner_words = regex("[master]")
-	if(findtext(message, owner_words))
-		message = replacetext(lowertext(message), lowertext(master), "[enthrallGender]")
-	return message
-*/

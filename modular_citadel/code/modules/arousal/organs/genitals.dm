@@ -1,6 +1,6 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	var/shape = "human"
+	var/shape = "Human" //Changed to be uppercase, let me know if this breaks everything..!!
 	var/sensitivity = 1
 	var/list/genital_flags = list()
 	var/can_masturbate_with = FALSE
@@ -210,13 +210,20 @@
 			else
 				B.color = "#[dna.features["breasts_color"]]"
 			B.size = dna.features["breasts_size"]
-			B.prev_size = B.size
-			message_admins("B.size[B.size]")
-			if (!B.size == "huge")
-				if(isnum(B.size))
-					B.cached_size = B.size
+			if(!isnum(B.size))
+				if(B.size == "flat")
+					B.cached_size = 0
+					B.prev_size = 0
+				else if (B.cached_size == "huge")
+					B.prev_size = "huge"
+					message_admins("I hate genitals, this should not appear. I'm so mad.")
 				else
 					B.cached_size = B.breast_values[B.size]
+					B.prev_size = B.size
+			else
+				B.cached_size = B.size
+				B.prev_size = B.size
+			message_admins("B.size [B.size], Cache [B.cached_size], prev [B.prev_size]")
 			B.shape = dna.features["breasts_shape"]
 			B.fluid_id = dna.features["breasts_fluid"]
 			B.update()
@@ -293,23 +300,21 @@
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 			if(/obj/item/organ/genital/penis)
-				if(!dna.features["has_cock"] == 1)
-					dna.features["has_cock"] = 1//Goddamnit get in there.
+				dna.features["has_cock"] = TRUE
+			if(/obj/item/organ/genital/breasts)
+				dna.features["has_breasts"] = TRUE//Goddamnit get in there.
 	if (organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
 			dna.features["genitals_use_skintone"] = TRUE
 			dna.species.use_skintones = TRUE
-
-		/* I can't get this to work.
 		if(MUTCOLORS)
 			if(src.dna.species.fixed_mut_color)
-				dna.features["cock_color"] = "#[src.dna.species.fixed_mut_color]"
-				dna.features["breasts_color"] = "#[src.dna.species.fixed_mut_color]"
+				dna.features["cock_color"] = "[src.dna.species.fixed_mut_color]"
+				dna.features["breasts_color"] = "[src.dna.species.fixed_mut_color]"
 				return
 		//So people who haven't set stuff up don't get rainbow surprises.
-		dna.features["cock_color"] = "#[dna.features["mcolor"]]"
-		dna.features["breasts_color"] = "#[dna.features["mcolor"]]"
-		*/
+		dna.features["cock_color"] = "[dna.features["mcolor"]]"
+		dna.features["breasts_color"] = "[dna.features["mcolor"]]"
 	return
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)//more like handle sadness

@@ -597,7 +597,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
 	if(!B)
-		H.emergent_genital_call()
 		return
 	if(!B.size == "huge")
 		var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
@@ -612,6 +611,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(!B) //If they don't have breasts, give them breasts.
 		var/obj/item/organ/genital/breasts/nB = new
 		nB.Insert(M)
+		H.emergent_genital_call()
 		if(nB)
 			if(M.dna.species.use_skintones && M.dna.features["genitals_use_skintone"])
 				nB.color = skintone2hex(H.skin_tone)
@@ -719,7 +719,6 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
-		H.emergent_genital_call()
 		return
 	P.prev_size = P.length
 	P.cached_length = P.length
@@ -732,6 +731,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
+		H.emergent_genital_call()
 		if(nP)
 			nP.length = 1
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")//OwO
@@ -1038,7 +1038,7 @@ Okay, seriously, unless you're an antag, it will be difficult to enthrall people
 If it becomes an issue, I'll make all pets pacifists and apply more weakness effects based on mood and state. I'll probably do this anyways as I want the bond between the two to be imperative.
 As stated earlier the biggest concern is the use as a murder aid, which I have ideas for. (weaken the enthraller during the enthrallment process?)
 
-And as stated earlier, this chem is hard to make, and is punishing on failure. You fall in love with the chem dispencer and have to stay within 8 tiles of it. Additionally, you hug the dispencer instead of using it - thus making you unable to continue chemistry for that round, and likely getting the CMO mad as hecc at you.
+And as stated earlier, this chem is hard to make, and is punishing on failure. You fall in love with someone if it's impure, and then your piorities change.
 (thats not written yet but thats the idea.)
 */
 
