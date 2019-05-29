@@ -46,8 +46,7 @@
 			R.add_reagent(reagent.id, reagent.volume)
 		else if (istype(reagent, /datum/reagent/toxin/plasma))
 			R.add_reagent(reagent.id, reagent.volume) //for !FUN! (am I doing this right?)
-		continue //Only allow fermichems into the mix (fermi explosions are handled elsewhere and it's a huge pain)
-		//R.add_reagent(reagent, reagent.volume)
+		continue //Only allow fermichems into the mix (specific fermi explosions are handled elsewhere)
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 
@@ -106,7 +105,7 @@
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 0.3)
-	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "synthflesh" = 0.1, "blood" = 0.1)
+	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "uranium" = 0.5, "synthflesh" = 0.5, "blood" = 0.5)
 	mix_message = "the reaction gives off a blorble!"
 	//FermiChem vars:
 	OptimalTempMin 		= 600 		// Lower area of bell curve for determining heat based rate reactions
@@ -207,7 +206,7 @@
 	name = "Astrogen"
 	id = "astral"
 	results = list("astral" = 0.5)
-	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.1, "synaptizine" = 0.1, "aluminium" = 0.5)
+	required_reagents = list("eigenstate" = 0.1, "plasma" = 0.3, "synaptizine" = 0.1, "aluminium" = 0.5)
 	//FermiChem vars:
 	OptimalTempMin 			= 700
 	OptimalTempMax			= 800
