@@ -298,7 +298,7 @@
 				phase = -1
 				to_chat(owner, "<span class='warning'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
 				if(DistApart < 10)
-					to_chat(master, "<span class='warning'>[(H.lewd?"Your pet":"Your thrall")] seems to have broken free of your enthrallment!</i></span>")
+					to_chat(master, "<span class='warning'>[(master.lewd?"Your pet":"Your thrall")] seems to have broken free of your enthrallment!</i></span>")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
 				if(owner.lewd)

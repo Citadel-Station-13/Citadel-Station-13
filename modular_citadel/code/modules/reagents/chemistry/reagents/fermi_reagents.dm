@@ -759,12 +759,11 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 	taste_description = "velvety brambles"
 	metabolization_rate = 0//Removal is exponential, see code
 	overdose_threshold = 20
-	addiction_threshold = 25
+	addiction_threshold = 24.5
 	addiction_stage1_end = 9999//Should never end. There is no escape make your time
 	var/mob/living/carbon/origin
 	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
 	var/antiGenetics = 255
-	var/resetAddiction = FALSE //to get around this weird problem I'm having.
 	var/sleepytime = 0
 	InverseChemVal = 0.25
 
@@ -807,10 +806,9 @@ Buginess level: works as intended - except teleport makes sparks for some reason
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
-	if(resetAddiction == TRUE)
+	if(addiction_stage < 0)
 		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
-		resetAddiction = FALSE
 	if(prob(65))
 		M.alpha--
 		antiGenetics--
@@ -1048,6 +1046,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
 	else
+		message_admins("MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)

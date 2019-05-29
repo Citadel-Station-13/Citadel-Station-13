@@ -12,7 +12,6 @@
 	return
 
 //Called when temperature is above a certain threshold
-//....Is this too much?
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
 	if (Exploding == TRUE)
 		return
@@ -40,7 +39,7 @@
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	//Endless loop hell?
+
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
 		if (istype(reagent, /datum/reagent/fermi))
 			R.add_reagent(reagent.id, reagent.volume)
@@ -93,12 +92,11 @@
 	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode = FALSE //If the chemical explodes in a special way
 
-//I can never get this to work, please pitch in if you can figure it out. Runtime: Cannot modify null.location_created.
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	E.location_created = location
-	//add on_new() handling of vars
+
 
 //serum
 /datum/chemical_reaction/fermi/SDGF //DONE
@@ -126,10 +124,10 @@
 
 /datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
 	var/turf/T = get_turf(my_atom)
-	var/mob/living/simple_animal/slime/S = new(T,"grey")//should work, in theory
-	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)//I dunno how slimes work cause fire is burny
+	var/mob/living/simple_animal/slime/S = new(T,"grey")
+	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	S.name = "Living teratoma"
-	S.real_name = "Living teratoma"//horrifying!!
+	S.real_name = "Living teratoma"
 	S.rabid = 1//Make them an angery boi, grr grr
 	S.color = "#810010"
 	my_atom.reagents.clear_reagents()
@@ -137,7 +135,7 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The cells clump up into a horrifying tumour!</span>")
 
-/datum/chemical_reaction/fermi/BElarger //done
+/datum/chemical_reaction/fermi/BElarger
 	name = "Sucubus milk"
 	id = "BElarger"
 	results = list("BElarger" = 0.6)
@@ -169,12 +167,12 @@
 	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
 	my_atom.reagents.clear_reagents()
 
-/datum/chemical_reaction/fermi/PElarger //done
+/datum/chemical_reaction/fermi/PElarger
 	name = "Incubus draft"
 	id = "PElarger"
 	results = list("PElarger" = 0.3)
 	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
-	mix_message = ""
+	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
@@ -200,9 +198,8 @@
 	var/datum/reagent/fermi/PElarger/PE = locate(/datum/reagent/fermi/PElarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
-	//..()
 
-/datum/chemical_reaction/fermi/astral //done //BORKEN
+/datum/chemical_reaction/fermi/astral
 	name = "Astrogen"
 	id = "astral"
 	results = list("astral" = 0.5)
@@ -222,10 +219,10 @@
 	RateUpLim 				= 15
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
-	PurityMin 				= 0.25 // explode purity!
+	PurityMin 				= 0.25
 
 
-/datum/chemical_reaction/fermi/enthrall//done
+/datum/chemical_reaction/fermi/enthrall/
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 0.5)
@@ -271,7 +268,6 @@
 	E.creatorName = B.data.["real_name"]
 	E.data.["creatorID"] = B.data.["ckey"]
 	E.creatorID = B.data.["ckey"]
-	message_admins("MKUltra made name: [E.creatorName], ID: [E.creatorID], gender: [E.creatorGender]")
 
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/turf/T = get_turf(my_atom)
@@ -313,12 +309,12 @@
 		to_chat(M, "<span class='warning'>The makes an off sounding pop, as a hat suddenly climbs out of the beaker!</b></span>")
 	my_atom.reagents.clear_reagents()
 
-/datum/chemical_reaction/fermi/furranium //low temp and medium pH - done
+/datum/chemical_reaction/fermi/furranium
 	name = "Furranium"
 	id = "furranium"
 	results = list("furranium" = 0.5)
 	required_reagents = list("aphro" = 0.1, "moonsugar" = 0.1, "silver" = 0.2, "salglu_solution" = 0.1)
-	//mix_message = ""
+	mix_message = "You think you can hear a howl come from the beaker."
 	//FermiChem vars:
 	OptimalTempMin 	= 350
 	OptimalTempMax 	= 600

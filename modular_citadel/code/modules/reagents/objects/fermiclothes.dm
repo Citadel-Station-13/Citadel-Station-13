@@ -9,11 +9,6 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	//item_flags = NODROP //Tips their hat!
 
-/*
-/obj/item/clothing/head/hattip/equipped(mob/living/carbon/human/user, slot)
-	C = user //grumble grumble loc
-*/
-
 /obj/item/clothing/head/hattip/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -27,7 +22,6 @@
 /obj/item/clothing/head/hattip/speechModification(message, /mob/living/carbon/C)
 	..()
 	var/mob/living/carbon/C = get_wearer()//user
-	//if(istype(C, /mob/living/carbon/C))
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	if (T.name == "fluffy tongue")
 		if(prob(0.01))
