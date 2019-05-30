@@ -1,8 +1,8 @@
 /obj/item/compressionkit
 	name = "bluespace compression kit"
 	desc = "An illegally modified BSRPED, capable of reducing the size of most items."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "compression" // aicard-full
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "compression"
 	item_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -49,14 +49,18 @@
 		if(O.w_class > 1)
 			O.w_class -= 1
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			to_chat(user, "<span class='notice'>You successfully compress [target]!</span>")
 			charges -= 1
+			to_chat(user, "<span class='notice'>You successfully compress [target]!The compressor now has [charges] charges.</span>")
 		else
 			to_chat(user, "<span class='notice'>Anomalous error. Summon a coder.</span>")
 
 /obj/item/compressionkit/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		qdel(I)
+		var/obj/item/stack/ore/bluespace_crystal/B = I
 		charges += 2
+		to_chat(user, "<span class='notice'>You insert [I] into [src]. It now has [charges] charges.</span>")
+		if(B.amount > 1)
+			B.amount -= 1
+		else
+			qdel(I)
