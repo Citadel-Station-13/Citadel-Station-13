@@ -623,6 +623,7 @@
 #include "code\game\machinery\computer\cloning.dm"
 #include "code\game\machinery\computer\communications.dm"
 #include "code\game\machinery\computer\crew.dm"
+#include "code\game\machinery\computer\datingsim.dm"
 #include "code\game\machinery\computer\dna_console.dm"
 #include "code\game\machinery\computer\gulag_teleporter.dm"
 #include "code\game\machinery\computer\launchpad_control.dm"
