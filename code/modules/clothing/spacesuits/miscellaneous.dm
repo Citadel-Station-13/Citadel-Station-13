@@ -183,9 +183,10 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
-	slowdown = 0 //Huh
+	slowdown = 0
 	strip_delay = 130
 	resistance_flags = ACID_PROOF
+	tauric = TRUE	//Citadel Add for tauric hardsuits
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -199,7 +200,6 @@ Contains:
 	icon_state = "ert_security"
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
@@ -213,7 +213,6 @@ Contains:
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
@@ -228,7 +227,6 @@ Contains:
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//Red alert ERT
 
@@ -252,9 +250,9 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	slowdown = 0 //Huh
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
@@ -268,7 +266,6 @@ Contains:
 	icon_state = "ert_security-alert"
 	item_state = "ert_security-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
@@ -282,7 +279,6 @@ Contains:
 	icon_state = "ert_engineer-alert"
 	item_state = "ert_engineer-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
@@ -297,7 +293,6 @@ Contains:
 	item_state = "ert_medical-alert"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
 	species_exception = list(/datum/species/angel)
-	tauric = TRUE		//Citadel Add for tauric hardsuits 
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -350,7 +345,6 @@ Contains:
 	item_flags = NODROP
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
-
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
 	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
@@ -360,7 +354,6 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
-
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response unit helmet"
