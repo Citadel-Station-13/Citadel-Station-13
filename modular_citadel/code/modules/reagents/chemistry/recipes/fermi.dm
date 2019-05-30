@@ -41,10 +41,8 @@
 	var/datum/effect_system/smoke_spread/chem/s = new()
 
 	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
-		if (istype(reagent, /datum/reagent/fermi))
-			R.add_reagent(reagent.id, reagent.volume)
-		else if (istype(reagent, /datum/reagent/toxin/plasma))
-			R.add_reagent(reagent.id, reagent.volume/2.5) //for !FUN! (am I doing this right?) reduced to half so it's less punishing. This is mostly for astrogen failures.
+		R.add_reagent(reagent.id, reagent.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
+
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 

@@ -46,10 +46,10 @@
 	description = "<span class='nicegreen'>YES! YES!! YES!!!</span>\n"
 	mood_change = 100
 	timeout = 300
-	//special_screen_obj = "mood_happiness_good" uncomment when added from tg
+	//special_screen_obj = "mood_happiness_good" Originally in tg, but I personally think they look dumb
 
 /datum/mood_event/happiness_drug_bad_od
 	description = "<span class='boldwarning'>NO! NO!! NO!!!</span>\n"
 	mood_change = -100
 	timeout = 300
-	//special_screen_obj = "mood_happiness_bad" uncomment when added from tg
+	//special_screen_obj = "mood_happiness_bad" Originally in tg
