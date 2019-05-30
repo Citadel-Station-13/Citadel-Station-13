@@ -395,7 +395,6 @@
 	reqs = list(/obj/item/paper = 5)
 	category = CAT_MISC
 
-
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
 	result = /obj/item/organ/eyes/robotic/flashlight
@@ -536,8 +535,8 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/bonearmor
-	name = "Bone Armor"
+/datum/crafting_recipe/bonebag
+	name = "Bone Satchel"
 	result = /obj/item/storage/backpack/satchel/bone
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
