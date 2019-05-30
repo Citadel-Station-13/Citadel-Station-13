@@ -467,8 +467,8 @@
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/hooded/cloakhood/zuliecloak
-	name = "cloak hood"
-	desc = "It's a bluespace cap that somehow functions like a hood! Revolutionary patented space-age technology!"
+	name = "NT Special Issue"
+	desc = "This hat is unquestionably the best one, bluespaced to and from CentComm. It smells of Fish and Tea with a hint of antagonism"
 	icon_state = "zuliecap"
 	item_state = "zuliecap"
 	icon = 'icons/obj/custom.dmi'
