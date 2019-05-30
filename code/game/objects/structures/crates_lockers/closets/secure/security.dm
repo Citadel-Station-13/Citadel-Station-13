@@ -139,6 +139,7 @@
 /obj/structure/closet/secure_closet/security/sec/PopulateContents()
 	..()
 	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/melee/baseball_bat/riot(src)
 
 /obj/structure/closet/secure_closet/security/cargo
 
