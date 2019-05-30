@@ -21,6 +21,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/board/dating_sim
+	name = "Computer Design (DatingSim Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Dating Sim machine."
+	id = "arcade_dating"
+	build_path = /obj/item/circuitboard/computer/arcade/datingsim
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/board/slot_machine
 	name = "Computer Design (Slot Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
