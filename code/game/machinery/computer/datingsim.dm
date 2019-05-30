@@ -175,21 +175,20 @@
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
-	temp = "New Round"
-	day = 1
-	day_time = 0 //Player health/attack points
-	player_money = 100
-	player_strength = 3
-	player_charm = 3
-	player_intel = 3
-	enemy_love = 10 //Enemy health/attack points
-	enemy_lust = 20
-	gameover = FALSE
-	turtle = 0
-
-		if(obj_flags & EMAGGED)
-			Reset()
-			obj_flags &= ~EMAGGED
+		temp = "New Round"
+		day = 1
+		day_time = 0 //Player health/attack points
+		player_money = 100
+		player_strength = 3
+		player_charm = 3
+		player_intel = 3
+		enemy_love = 10 //Enemy health/attack points
+		enemy_lust = 20
+		gameover = FALSE
+		turtle = 0
+			if(obj_flags & EMAGGED)
+				Reset()
+				obj_flags &= ~EMAGGED
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -219,19 +218,19 @@
 
 	else if (dating)
 		if (datecost == 0)
-			enemy_love += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
+			enemy_love += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
 		else
-			enemy_love += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
-			enemy_lust += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
+			enemy_love += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
+			enemy_lust += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
 
-	else if (flirting)
+	else if (flirtingv == 1)
 		var/flirtval = rand(1,99)
 		enemy_lust += flirtval
 		enemy_love -= (flirtval - defense)
 
 	else if ((enemy_love <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
-		temp = "[enemy_name] kicks you in the balls!"
+		temp = "[date_name] kicks you in the balls!"
 		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
 		player_strength -= stealamt
 		updateUsrDialog()
@@ -276,7 +275,7 @@
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "charm", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	if (player_intelligence <= 0)
+	if (player_intel <= 0)
 		gameover = TRUE
 		temp = "You forget to breathe and die! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
