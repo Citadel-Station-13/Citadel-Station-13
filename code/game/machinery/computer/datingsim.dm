@@ -20,7 +20,6 @@
 	circuit = /obj/item/circuitboard/computer/arcade/datingsim
 	var/date_name = "Space Waifu"
 	var/temp = "Pretend to Get Laid!" //Temporary message, for attack messages, etc
-	circuit = /obj/item/circuitboard/computer/arcade/datingsim
 	var/day = 1
 	var/day_time = 12 //Player health/attack points
 	var/player_money = 100
