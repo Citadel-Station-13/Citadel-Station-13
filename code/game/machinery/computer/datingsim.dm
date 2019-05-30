@@ -31,6 +31,10 @@
 	var/gameover = FALSE
 	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
+	var/datecost = 0
+	var/datelove = 0
+	var/datelust = pick(3,3,3,10,5,5)
+	var/dating = 0
 
 /obj/machinery/computer/arcade/datingsim/Reset()
 	var/name_action
@@ -81,10 +85,10 @@
 		if (href_list["talk"])
 			blocked = TRUE
 			temp = "You try to talk to [date_name]!"
-			var/datecost = 0
-			var/datelove = pick(5,5,5,10,10,-10,-10,20,20)
-			var/datelust = pick(3,3,3,10,5,5)
-			var/dating = 1
+			datecost = 0
+			datelove = pick(5,5,5,10,10,-10,-10,20,20)
+			datelust = pick(3,3,3,10,5,5)
+			dating = 1
 			//playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
@@ -95,10 +99,10 @@
 			arcade_action(usr)
 
 		else if (href_list["date"])
-			var/datecost = pick(5,5,5,5,10,10,10,10,10,10,10,10,50,50,100)
-			var/datelove = pick(5,5,5,10,10,-10,-10,20,20)
-			var/datelust = pick(3,3,3,10,5,5)
-			var/dating = 1
+			datecost = pick(5,5,5,5,10,10,10,10,10,10,10,10,50,50,100)
+			datelove = pick(5,5,5,10,10,-10,-10,20,20)
+			datelust = pick(3,3,3,10,5,5)
+			dating = 1
 			blocked = TRUE
 			updateUsrDialog()
 			player_money -= datecost
@@ -172,16 +176,16 @@
 
 	else if (href_list["newgame"]) //Reset everything
 	temp = "New Round"
-	var/day = 1
-	var/day_time = 0 //Player health/attack points
-	var/player_money = 100
-	var/player_strength = 3
-	var/player_charm = 3
-	var/player_intel = 3
-	var/enemy_love = 10 //Enemy health/attack points
-	var/enemy_lust = 20
-	var/gameover = FALSE
-	var/turtle = 0
+	day = 1
+	day_time = 0 //Player health/attack points
+	player_money = 100
+	player_strength = 3
+	player_charm = 3
+	player_intel = 3
+	enemy_love = 10 //Enemy health/attack points
+	enemy_lust = 20
+	gameover = FALSE
+	turtle = 0
 
 		if(obj_flags & EMAGGED)
 			Reset()
