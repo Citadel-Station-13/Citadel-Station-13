@@ -28,7 +28,6 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
-
 /*
  * Backpack Types
  */
@@ -243,6 +242,18 @@
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
 	item_state = "securitypack"
+
+/obj/item/storage/backpack/satchel/bone
+	name = "bone satchel"
+	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"
+	slot_flags = ITEM_SLOT_BACK	| ITEM_SLOT_BELT
+
+/obj/item/storage/backpack/satchel/bone/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 10
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
