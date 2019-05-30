@@ -756,7 +756,7 @@
 /obj/item/toy/plush/mammal/edgar
 	icon_state = "edgar"
 	item_state = "edgar"
-	attack_verb = list("collard", "tricked", "headpatted")
+	attack_verb = list("collared", "tricked", "headpatted")
 
 /obj/item/toy/plush/mammal/frank
 	icon_state = "frank"
