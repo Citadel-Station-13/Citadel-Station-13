@@ -154,12 +154,13 @@
 
 		else if (href_list["sleep"])
 			blocked = TRUE
-			var/chargeamt = rand(4,7)
 			temp = "You pay $10 in rent!"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
-			player_intel += chargeamt
+			player_money -= 10
 			if(turtle > 0)
 				turtle--
+			day_time = 12
+			day += 1
 
 			updateUsrDialog()
 			sleep(10)
