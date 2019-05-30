@@ -358,3 +358,7 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/arcade/datingsim
+	name = "Arcade Dating (Computer Board)"
+	build_path = /obj/machinery/computer/arcade/datingsim

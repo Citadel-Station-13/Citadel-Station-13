@@ -303,3 +303,12 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+
+/datum/design/board/datingsim
+	name = "Computer Design (DatingSim Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
+	id = "arcade_dating"
+	build_path = /obj/item/circuitboard/computer/arcade/datingsim
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL

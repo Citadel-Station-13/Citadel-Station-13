@@ -80,8 +80,11 @@
 	if (!blocked && !gameover)
 		if (href_list["talk"])
 			blocked = TRUE
-			var/attackamt = rand(2,6)
 			temp = "You try to talk to [date_name]!"
+			var/datecost = 0
+			var/datelove = pick(5,5,5,10,10,-10,-10,20,20)
+			var/datelust = pick(3,3,3,10,5,5)
+			var/dating = 1
 			//playsound(loc, 'sound/arcade/hit.ogg', 50, 1, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
@@ -95,7 +98,7 @@
 			var/datecost = pick(5,5,5,5,10,10,10,10,10,10,10,10,50,50,100)
 			var/datelove = pick(5,5,5,10,10,-10,-10,20,20)
 			var/datelust = pick(3,3,3,10,5,5)
-			var/
+			var/dating = 1
 			blocked = TRUE
 			updateUsrDialog()
 			player_money -= datecost
@@ -104,6 +107,7 @@
 
 		else if (href_list["flirt"])
 			blocked = TRUE
+			var/flirting = 1
 
 			updateUsrDialog()
 			sleep(10)
@@ -112,41 +116,54 @@
 		else if (href_list["gym"])
 			blocked = TRUE
 			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points"
+			temp = "You get [chargeamt] points stronger!"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
-			player_mp += chargeamt
+			player_strength += chargeamt
 			if(turtle > 0)
 				turtle--
 
 			updateUsrDialog()
 			sleep(10)
-			//arcade_action(usr)
+			arcade_action(usr)
 
 		else if (href_list["work"])
 			blocked = TRUE
-			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points"
+			var/pay = rand(10,50)
+			temp = "You make $[pay]"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
-			player_mp += chargeamt
+			player_money += pay
 			if(turtle > 0)
 				turtle--
 
 			updateUsrDialog()
 			sleep(10)
-			//arcade_action(usr)
+			arcade_action(usr)
 
 		else if (href_list["study"])
 			blocked = TRUE
 			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points"
+			temp = "You get [chargeamt] smarter!"
 			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
-			player_mp += chargeamt
+			player_intel += chargeamt
 			if(turtle > 0)
 				turtle--
 
 			updateUsrDialog()
 			sleep(10)
-			//arcade_action(usr)
+			arcade_action(usr)
+
+		else if (href_list["sleep"])
+			blocked = TRUE
+			var/chargeamt = rand(4,7)
+			temp = "You pay $10 in rent!"
+			playsound(loc, 'sound/arcade/mana.ogg', 50, 1, extrarange = -3, falloff = 10)
+			player_intel += chargeamt
+			if(turtle > 0)
+				turtle--
+
+			updateUsrDialog()
+			sleep(10)
+			arcade_action(usr)
 
 	if (href_list["close"])
 		usr.unset_machine()
@@ -174,6 +191,10 @@
 	return
 
 /obj/machinery/computer/arcade/datingsim/proc/arcade_action(mob/user)
+	var/defense = player_strength * player_charm * player_intel
+	var/str_mod = player_strength - 10
+	var/charm_mod = player_charm - 10
+	var/intel_mod = player_intel - 10
 	if ((enemy_love >= 100) & (enemy_lust >= 100))
 		if(!gameover)
 			gameover = TRUE
@@ -191,17 +212,23 @@
 				prizevend(user)
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	else if ((obj_flags & EMAGGED) && (turtle >= 4))
-		var/boomamt = rand(5,10)
-		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/boom.ogg', 50, 1, extrarange = -3, falloff = 10)
-		player_hp -= boomamt
+	else if (dating)
+		if (datecost == 0)
+			enemy_love += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
+		else
+			enemy_love += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
+			enemy_lust += rand(1,5) + (date_love + str_mod + charm_mod + intel_mod)
+
+	else if (flirting)
+		var/flirtval = rand(1,99)
+		enemy_lust += flirtval
+		enemy_love -= (flirtval - defense)
 
 	else if ((enemy_love <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
-		temp = "[enemy_name] kicks you in the balls! [stealamt] of your power!"
+		temp = "[enemy_name] kicks you in the balls!"
 		playsound(loc, 'sound/arcade/steal.ogg', 50, 1, extrarange = -3, falloff = 10)
-		player_mp -= stealamt
+		player_strength -= stealamt
 		updateUsrDialog()
 
 		if (enemy_love <= 0)
@@ -213,7 +240,14 @@
 				usr.gib()
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
 
-	else if (day_time <= 0)
+
+	else if(player_money <= 0)
+		sleep (10)
+		temp = "You went broke, asshole! You beg [date_name] for money!"
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		var/loselove = rand(10,50)
+
+	if (day_time <= 0)
 		gameover = TRUE
 		sleep (10)
 		temp = "You overexert yourself and die. GAME OVER"
@@ -221,6 +255,29 @@
 			usr.gib()
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 
+	if (player_strength <= 0)
+		gameover = TRUE
+		temp = "You have a heart attack and die! GAME OVER"
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		if(obj_flags & EMAGGED)
+			usr.gib()
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "strength", (obj_flags & EMAGGED ? "emagged":"normal")))
+
+	if (player_charm <= 0)
+		gameover = TRUE
+		temp = "You are \"mistaken\" for a disgusting monster and shot! GAME OVER"
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		if(obj_flags & EMAGGED)
+			usr.gib()
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "charm", (obj_flags & EMAGGED ? "emagged":"normal")))
+
+	if (player_intelligence <= 0)
+		gameover = TRUE
+		temp = "You forget to breathe and die! GAME OVER"
+		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+		if(obj_flags & EMAGGED)
+			usr.gib()
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "intelligence", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	if (enemy_love <= 0)
 		gameover = TRUE
@@ -228,7 +285,7 @@
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(obj_flags & EMAGGED)
 			usr.gib()
-		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "love", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	blocked = FALSE
 	return
