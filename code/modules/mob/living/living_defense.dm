@@ -37,7 +37,7 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag, null, null,P.armour_penetration)
+	var/armor = run_armor_check(def_zone, P.flag, null, null, P.armour_penetration, null)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
