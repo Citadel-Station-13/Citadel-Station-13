@@ -1369,7 +1369,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
 	var/acidstr = ((5-C.reagents.pH)*2)
 	C.adjustFireLoss(acidstr/2, 0)
-	if((method==VAPOR) && if(!C.wear_mask))
+	if((method==VAPOR) && (!C.wear_mask))
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
