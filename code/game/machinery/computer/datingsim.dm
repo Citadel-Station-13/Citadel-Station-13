@@ -5,7 +5,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE
-	/list/prizes = list(
+	var/list/kprizes = list(
 		/obj/item/clothing/under/maid = 5,
 		/obj/item/clothing/under/stripper_pink = 5,
 		/obj/item/clothing/under/stripper_green = 5,
@@ -21,20 +21,42 @@
 	var/date_name = "Space Waifu"
 	var/temp = "Pretend to Get Laid!" //Temporary message, for attack messages, etc
 	var/day = 1
-	var/day_time = 12 //Player health/attack points
+	var/day_time = 12 //time left in the day
 	var/player_money = 100
-	var/player_strength = 3
-	var/player_charm = 3
-	var/player_intel = 3
-	var/enemy_love = 10 //Enemy health/attack points
+	var/player_strength = 3 //if this gets to 0, you lose
+	var/player_charm = 3 //if this gets to 0, you lose
+	var/player_intel = 3 //if this gets to 0, you lose
+	var/enemy_love = 10 //if this gets to 0, you lose
 	var/enemy_lust = 20
 	var/gameover = FALSE
-	var/blocked = FALSE //Player cannot attack/heal while set
+	var/blocked = FALSE //Player cannot do normal actions while set
 	var/turtle = 0
 	var/datecost = 0
 	var/datelove = 0
 	var/datelust = 0
 	var/dating = 0
+	var/date_intel = 3
+	var/date_strength = 3
+	var/date_horny = 3
+	var/date_charm = 3
+	var/date_kinky = 3
+	var/flirting = 0
+	light_color = LIGHT_COLOR_PINK
+
+/obj/machinery/computer/arcade/proc/kprizevend(mob/user)
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+	if(prob(0.0001)) //1 in a million
+		new /obj/item/gun/energy/pulse/prize(src)
+		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
+
+	if(!contents.len)
+		var/prizeselect = pickweight(kprizes)
+		new prizeselect(src)
+
+	var/atom/movable/prize = pick(contents)
+	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+
+	prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/datingsim/Reset()
 	var/name_action
@@ -43,8 +65,9 @@
 
 	name_action = pick("Yiff ", "Fuck ", "Screw ", "Cuddle ", "Glomp ", "Dominate ", "Romance ")
 
-	name_part1 = pick("Crystal the ","Syntheia the ","Robin the ","Cheryl the","Sekke the ","Coldsteel the")
-	name_part2 = pick("Fox","Human","Plasmaman","Podperson","Angel","Princess","Hedgehog","Bat","Echidna","Wolf","Cat","Lizard","Snake")
+	name_part1 = pick("Crystal the ","Syntheia the ","Robin the ","Cheryl the","Sekke the ","Coldsteel the","Deluthe Dwayne")
+//Boy names ("Benny Burrito the","Omar Sulikson the","Sulik the","Asahraun Superbob the")
+	name_part2 = pick("Fox","Human","Plasmaman","Podperson","Angel","Princess","Hedgehog","Bat","Echidna","Wolf","Cat","Lizard","Snake", "Leatherman")
 
 	date_name = (name_part1 + name_part2)
 	name = (name_action + name_part1 + name_part2)
@@ -213,7 +236,7 @@
 				Reset()
 				obj_flags &= ~EMAGGED
 			else
-				prizevend(user)
+				kprizevend(user)
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	else if (dating)
@@ -222,6 +245,7 @@
 		else
 			enemy_love += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
 			enemy_lust += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
+		day_time -= 1
 
 	else if (flirting == 1)
 		var/flirtval = rand(1,99)
@@ -243,6 +267,7 @@
 			if(obj_flags & EMAGGED)
 				usr.gib()
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
+		day_time -= 1
 
 
 	else if(player_money <= 0)
@@ -290,6 +315,8 @@
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "love", (obj_flags & EMAGGED ? "emagged":"normal")))
+//Random events!
+
 
 	blocked = FALSE
 	return
