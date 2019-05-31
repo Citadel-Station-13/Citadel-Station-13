@@ -15,10 +15,10 @@
 		/obj/item/clothing/under/mankini = 1,
 		/obj/item/dildo/flared/huge = 1,
 		/obj/item/electropack/shockcollar = 3,
-		/obj/item/clothing/neck/petcollar/locked = 1,
+		/obj/item/clothing/neck/petcollar/locked = 1
 		)
 	var/list/devents = list(
-		"" = 50,
+		"" = 50
 
 		)
 
