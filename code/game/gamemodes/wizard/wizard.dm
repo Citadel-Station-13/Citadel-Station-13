@@ -11,12 +11,19 @@
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 7
-	round_ends_with_antag_death = 1
 	announce_span = "danger"
 	announce_text = "There is a space wizard attacking the station!\n\
 	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\
 	<span class='notice'>Crew</span>: Eliminate the wizard before they can succeed!"
 	var/finished = 0
+	var/ends_when_wizard_dead = TRUE
+
+/datum/game_mode/wizard/check_finished()
+	if(ends_when_wizard_dead && are_special_antags_dead())
+		finished = 1
+		return TRUE
+	else
+		return ..()
 
 /datum/game_mode/wizard/pre_setup()
 	var/datum/mind/wizard = antag_pick(antag_candidates)
