@@ -281,7 +281,7 @@
 	activate_pin(2)
 
 // Required for making the connector port script work
-/obj/item/integrated_circuit/atmospherics/connector/connected_device.air_contents
+obj/item/integrated_circuit/atmospherics/connector/connected_device.air_contents
 	return air_contents
 
 // - gas filter - // **works**
