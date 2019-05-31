@@ -207,7 +207,7 @@
 			if(istype(ling))
 				blood_data["changeling_loudness"] = ling.loudfactor
 		return blood_data
-	if(blood_id == "slimejelly")
+	if(blood_id == "slimejelly") //Just so MKUltra works. Takes the minimum required data. Sishen is testing if this breaks stuff.
 		var/blood_data = list()
 		if(mind)
 			blood_data["mind"] = mind
