@@ -18,7 +18,8 @@
 
 	if(acid_amt)
 		acid_level = min(acid_amt*acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
-
+		if(acid_level < 0)//Fix for a weird runtime.
+			acid_level = 0
 	//handle APCs and newscasters and stuff nicely
 	pixel_x = target.pixel_x + rand(-4,4)
 	pixel_y = target.pixel_y + rand(-4,4)
