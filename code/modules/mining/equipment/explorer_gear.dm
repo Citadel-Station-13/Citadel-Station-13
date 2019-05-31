@@ -15,6 +15,7 @@
 	resistance_flags = FIRE_PROOF
 	tauric = TRUE		//Citadel Add for tauric hardsuits
 
+
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
 	desc = "An armoured hood for exploring harsh environments."
@@ -26,11 +27,15 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/hooded/explorer/Initialize()
+/obj/item/clothing/suit/hooded/explorer/standard
+
+/obj/item/clothing/head/hooded/explorer/standard
+
+/obj/item/clothing/suit/hooded/explorer/standard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 
-/obj/item/clothing/head/hooded/explorer/Initialize()
+/obj/item/clothing/head/hooded/explorer/standard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 

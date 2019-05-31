@@ -1,6 +1,10 @@
-/////////////////////////////////////////
-/////////////////Weapons/////////////////
-/////////////////////////////////////////
+///////////////////////////////
+///////Weapons & Ammo//////////
+///////////////////////////////
+
+//////////////
+//Ammo Boxes//
+//////////////
 
 /datum/design/c38/sec
 	id = "sec_38"
@@ -12,6 +16,40 @@
 	name = "Speed Loader (.38)"
 	id = "sec_38lethal"
 	build_path = /obj/item/ammo_box/c38/lethal
+
+//////////////
+//WT550 Mags//
+//////////////
+
+/datum/design/mag_oldsmg
+	name = "WT-550 Semi-Auto SMG Magazine (4.6x30mm)"
+	desc = "A 20 round magazine for the out of date security WT-550 Semi-Auto SMG."
+	id = "mag_oldsmg"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/mag_oldsmg/ap_mag
+	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
+	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	id = "mag_oldsmg_ap"
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/mag_oldsmg/ic_mag
+	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
+	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	id = "mag_oldsmg_ic"
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
+	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+//////////////
+//Ammo Shells/
+//////////////
 
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
@@ -43,6 +81,40 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/stunshell
+	name = "Stun Shell"
+	desc = "A stunning shell for a shotgun."
+	id = "stunshell"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200)
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/techshell
+	name = "Unloaded Technological Shotshell"
+	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
+	id = "techshotshell"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 200)
+	build_path = /obj/item/ammo_casing/shotgun/techshell
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/cryostatis_shotgun_dart
+	name = "Cryostasis Shotgun Dart"
+	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
+	id = "shotgundartcryostatis"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3500)
+	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+//////////////
+//Firing Pins/
+//////////////
+
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
@@ -63,6 +135,20 @@
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+//////////////
+//Guns////////
+//////////////
+
+/datum/design/lasercarbine
+	name = "Laser Carbine"
+	desc = "Beefed up version of a standard laser gun."
+	id = "lasercarbine"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000, MAT_GOLD = 2500, MAT_SILVER = 2500)
+	build_path = /obj/item/gun/energy/laser/carbine/nopin
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/stunrevolver
 	name = "Tesla Revolver"
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
@@ -80,16 +166,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 1000)
 	build_path = /obj/item/gun/energy/e_gun/nuclear
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/tele_shield
-	name = "Telescopic Riot Shield"
-	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
-	id = "tele_shield"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_SILVER = 300, MAT_TITANIUM = 200)
-	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -122,11 +198,11 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/syringe/rapidsyringe
 	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL		//uwu
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/temp_gun
 	name = "Temperature Gun"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+	desc = "A gun that shoots temperature beam like projectiles to change temperature."
 	id = "temp_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
@@ -144,46 +220,6 @@
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/large_grenade
-	name = "Large Grenade"
-	desc = "A grenade that affects a larger area and use larger containers."
-	id = "large_Grenade"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000)
-	build_path = /obj/item/grenade/chem_grenade/large
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE //Citadel edit added to science
-
-/datum/design/pyro_grenade
-	name = "Pyro Grenade"
-	desc = "An advanced grenade that is able to self ignite its mixture."
-	id = "pyro_Grenade"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
-	build_path = /obj/item/grenade/chem_grenade/pyro
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cryo_grenade
-	name = "Cryo Grenade"
-	desc = "An advanced grenade that rapidly cools its contents upon detonation."
-	id = "cryo_Grenade"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
-	build_path = /obj/item/grenade/chem_grenade/cryo
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/adv_grenade
-	name = "Advanced Release Grenade"
-	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
-	id = "adv_Grenade"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
-	build_path = /obj/item/grenade/chem_grenade/adv_release
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/xray
 	name = "X-ray Laser Gun"
@@ -215,64 +251,6 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-//WT550 Mags
-
-/datum/design/mag_oldsmg
-	name = "WT-550 Semi-Auto SMG Magazine (4.6x30mm)"
-	desc = "A 20 round magazine for the out of date security WT-550 Semi-Auto SMG."
-	id = "mag_oldsmg"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_box/magazine/wt550m9
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/mag_oldsmg/ap_mag
-	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
-	id = "mag_oldsmg_ap"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
-	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/mag_oldsmg/ic_mag
-	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
-	id = "mag_oldsmg_ic"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
-	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/stunshell
-	name = "Stun Shell"
-	desc = "A stunning shell for a shotgun."
-	id = "stunshell"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200)
-	build_path = /obj/item/ammo_casing/shotgun/stunslug
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/techshell
-	name = "Unloaded Technological Shotshell"
-	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
-	id = "techshotshell"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 200)
-	build_path = /obj/item/ammo_casing/shotgun/techshell
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/suppressor
-	name = "Universal Suppressor"
-	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
-	id = "suppressor"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
-	build_path = /obj/item/suppressor
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/gravitygun
 	name = "One-point Bluespace-gravitational Manipulator"
 	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
@@ -293,12 +271,70 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cryostatis_shotgun_dart
-	name = "Cryostasis Shotgun Dart"
-	desc = "A shotgun dart designed with similar internals to that of a cryostatis beaker, allowing reagents to not react when inside."
-	id = "shotgundartcryostatis"
+///////////
+//Grenades/
+///////////
+
+/datum/design/large_grenade
+	name = "Large Grenade"
+	desc = "A grenade that affects a larger area and use larger containers."
+	id = "large_Grenade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500)
-	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/grenade/chem_grenade/large
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/pyro_grenade
+	name = "Pyro Grenade"
+	desc = "An advanced grenade that is able to self ignite its mixture."
+	id = "pyro_Grenade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_PLASMA = 500)
+	build_path = /obj/item/grenade/chem_grenade/pyro
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cryo_grenade
+	name = "Cryo Grenade"
+	desc = "An advanced grenade that rapidly cools its contents upon detonation."
+	id = "cryo_Grenade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	build_path = /obj/item/grenade/chem_grenade/cryo
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/adv_grenade
+	name = "Advanced Release Grenade"
+	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
+	id = "adv_Grenade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 500)
+	build_path = /obj/item/grenade/chem_grenade/adv_release
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+
+//////////
+//MISC////
+//////////
+
+/datum/design/tele_shield
+	name = "Telescopic Riot Shield"
+	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	id = "tele_shield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_SILVER = 300, MAT_TITANIUM = 200)
+	build_path = /obj/item/shield/riot/tele
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/suppressor
+	name = "Universal Suppressor"
+	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."
+	id = "suppressor"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	build_path = /obj/item/suppressor
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

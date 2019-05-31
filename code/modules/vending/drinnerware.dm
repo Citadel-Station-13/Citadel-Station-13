@@ -13,7 +13,7 @@
 		            /obj/item/reagent_containers/food/condiment/pack/hotsauce = 5,
 		            /obj/item/reagent_containers/food/condiment/saltshaker = 5,
 		            /obj/item/reagent_containers/food/condiment/peppermill = 5,
-		            /obj/item/reagent_containers/glass/bowl = 20)
+		            /obj/item/reagent_containers/glass/bowl = 30)
 	contraband = list(/obj/item/kitchen/rollingpin = 2,
 		              /obj/item/kitchen/knife/butcher = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)

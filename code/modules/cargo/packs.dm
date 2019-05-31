@@ -1699,7 +1699,7 @@
 			/obj/item/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/radio/headset/headset_cargo/mining,
 			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
+			/obj/item/clothing/suit/hooded/explorer/standard,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure

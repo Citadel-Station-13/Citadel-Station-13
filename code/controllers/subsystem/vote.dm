@@ -228,6 +228,7 @@ SUBSYSTEM_DEF(vote)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		time_remaining = round(vp/10)
 		for(var/c in GLOB.clients)
+			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
 			var/client/C = c
 			var/datum/action/vote/V = new
 			if(question)

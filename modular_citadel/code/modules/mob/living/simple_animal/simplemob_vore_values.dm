@@ -91,7 +91,7 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/bear
 	devourable = TRUE
@@ -99,14 +99,14 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/poison/giant_spider
 	devourable = TRUE
 	digestable = TRUE
 	feeding = TRUE
 	vore_active = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
 	devourable = TRUE
@@ -114,7 +114,7 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/gorilla
 	devourable = TRUE
@@ -122,7 +122,7 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	devourable = TRUE
@@ -130,7 +130,7 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/carp
 	devourable = TRUE
@@ -138,4 +138,4 @@
 	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
-	vore_default_mode = DM_HOLD
+	vore_default_mode = DM_DIGEST

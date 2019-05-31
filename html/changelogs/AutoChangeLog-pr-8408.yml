@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes cult potentially stalling if the target is erased from existence without being sacced."

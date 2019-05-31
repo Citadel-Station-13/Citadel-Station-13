@@ -50,6 +50,8 @@
 		radio.canhear_range = 0
 		radio.recalculateChannels()
 
+	update_icon()
+
 /obj/machinery/clonepod/Destroy()
 	go_out()
 	QDEL_NULL(radio)
@@ -151,7 +153,6 @@
 	if(clonemind.damnation_type) //Can't clone the damned.
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = TRUE
-		icon_state = "pod_g"
 		update_icon()
 		return FALSE
 
@@ -179,7 +180,6 @@
 		clonename = "clone ([rand(1,999)])"
 	H.real_name = clonename
 
-	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
 	H.add_trait(TRAIT_STABLEHEART, "cloning")
@@ -278,9 +278,9 @@
 
 	else if (!mob_occupant || mob_occupant.loc != src)
 		occupant = null
-		if (!mess && !panel_open)
-			icon_state = "pod_0"
 		use_power(200)
+
+	update_icon()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/W, mob/user, params)
@@ -355,7 +355,7 @@
 		mess = FALSE
 		new /obj/effect/gibspawner/generic(get_turf(src))
 		audible_message("<span class='italics'>You hear a splat.</span>")
-		icon_state = "pod_0"
+		update_icon()
 		return
 
 	if(!mob_occupant)
@@ -373,7 +373,7 @@
 		mob_occupant.flash_act()
 
 	occupant.forceMove(T)
-	icon_state = "pod_0"
+	update_icon()
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
 	for(var/fl in unattached_flesh)
 		qdel(fl)
@@ -389,7 +389,7 @@
 			technician, as your warranty may be affected.")
 		mess = TRUE
 		maim_clone(mob_occupant)	//Remove every bit that's grown back so far to drop later, also destroys bits that haven't grown yet
-		icon_state = "pod_g"
+		update_icon()
 		if(mob_occupant.mind != clonemind)
 			clonemind.transfer_to(mob_occupant)
 		mob_occupant.grab_ghost() // We really just want to make you suffer.
@@ -470,6 +470,54 @@
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
+
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
+/obj/machinery/clonepod/update_icon()
+	cut_overlays()
+
+	if(mess)
+		icon_state = "pod_g"
+		var/image/gib1 = image(CRYOMOBS, "gibup")
+		var/image/gib2 = image(CRYOMOBS, "gibdown")
+		gib1.pixel_y = 27 + round(sin(world.time) * 3)
+		gib1.pixel_x = round(sin(world.time * 3))
+		gib2.pixel_y = 27 + round(cos(world.time) * 3)
+		gib2.pixel_x = round(cos(world.time * 3))
+		add_overlay(gib2)
+		add_overlay(gib1)
+		add_overlay("cover-on")
+
+	else if(occupant)
+		icon_state = "pod_1"
+
+		var/image/occupant_overlay
+		var/completion = (flesh_number - unattached_flesh.len) / flesh_number
+
+		if(unattached_flesh.len <= 0)
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+		else
+			occupant_overlay = image(CRYOMOBS, "clone_meat")
+			var/matrix/tform = matrix()
+			tform.Scale(completion)
+			tform.Turn(cos(world.time * 2) * 3)
+			occupant_overlay.transform = tform
+			occupant_overlay.appearance_flags = 0
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 27 + round(sin(world.time) * 3)
+		occupant_overlay.pixel_x = round(sin(world.time * 3))
+
+		add_overlay(occupant_overlay)
+		add_overlay("cover-on")
+	else
+		icon_state = "pod_0"
+
+	if(panel_open)
+		icon_state = "pod_0_maintenance"
+
+	add_overlay("panel")
 
 /*
  *	Manual -- A big ol' manual.

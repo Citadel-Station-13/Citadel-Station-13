@@ -84,31 +84,62 @@
 	name = "DS9 Overcoat (use uniform)"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/trek/ds9
+	restricted_desc = "All, barring Service and Civilian"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster",
 							"Medical Doctor","Chemist","Virologist","Geneticist","Scientist", "Roboticist",
 							"Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer",
 							"Cargo Technician", "Shaft Miner") //everyone who actually deserves a job.
 //Federation jackets from movies
 /datum/gear/trekcmdcap
-	name = "fed (movie) uniform, Captain"
+	name = "Fed (movie) uniform, Black"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/capt
 	restricted_roles = list("Captain","Head of Personnel")
 
 /datum/gear/trekcmdmov
-	name = "fed (movie) uniform, sec"
+	name = "Fed (movie) uniform, Red"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat
+	restricted_desc = "Heads of Staff and Security"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster","Warden","Detective","Security Officer")
 
 /datum/gear/trekmedscimov
-	name = "fed (movie) uniform, med/sci"
+	name = "Fed (movie) uniform, Blue"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/medsci
+	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengmov
-	name = "fed (movie) uniform, ops/eng"
+	name = "Fed (movie) uniform, Yellow"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/storage/fluff/fedcoat/eng
+	restricted_desc = "Engineering and Cargo"
+	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
+
+/datum/gear/trekcmdcapmod
+	name = "Fed (Modern) uniform, White"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat
+	restricted_roles = list("Captain","Head of Personnel")
+
+/datum/gear/trekcmdmod
+	name = "Fed (Modern) uniform, Red"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/sec
+	restricted_desc = "Heads of Staff and Security"
+	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster","Warden","Detective","Security Officer")
+
+/datum/gear/trekmedscimod
+	name = "Fed (Modern) uniform, Blue"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/medsci
+	restricted_desc = "Medical and Science"
+	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
+
+/datum/gear/trekengmod
+	name = "Fed (Modern) uniform, Yellow"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
+	restricted_desc = "Engineering and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")

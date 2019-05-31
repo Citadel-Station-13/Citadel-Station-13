@@ -14,7 +14,7 @@
 	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
-	hair_alpha = 180
+	hair_alpha = 160 //a notch brighter so it blends better.
 	liked_food = MEAT
 	coldmod = 3
 	heatmod = 1

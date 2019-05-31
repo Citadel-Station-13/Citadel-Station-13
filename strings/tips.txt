@@ -229,6 +229,8 @@ As a Servant, wraith spectacles let you see everything through walls at virtuall
 As a Servant, declaring war empowers a huge amount of your tools and constructs, and makes you into a spaceproof, armored clockwork automaton.
 As a Servant, converting or sabotaging Science and Genetics can make defending the Ark much easier.
 As a Servant, the Clockwork Armaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
+As a Servant, Brass created from your replica fabricators can be ground down in reagent grinders for teslium and iron.
+You can bypass Servant created pressure sensors if you walk instead of jog on them. Alternatively, you can also become a Servant of Ratvar.
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water. Unlike revolutionaries, implanting them with mindshield implants won't do it!
 Tiles sprayed with holy water will permanently block Servants of Ratvar from teleporting onto them.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.

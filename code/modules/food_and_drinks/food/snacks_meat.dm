@@ -54,6 +54,43 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
 
+/obj/item/reagent_containers/food/snacks/sushi_basic
+	name = "funa hosomaki"
+	desc = "A small cylindrical kudzu skin, filled with rice and fish."
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "sushie_basic"
+	bonus_reagents = list("vitamin" = 2)
+	list_reagents = list("nutriment" = 4)
+	bitesize = 10
+	filling_color = "#F2EEEA" //rgb(242, 238, 234)
+	tastes = list("fish" = 1, "rice" = 2, "salt" = 1)
+	foodtype = MEAT | VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/sushi_adv
+	name = "funa nigiri"
+	desc = "A peace  of carp lightly placed on some rice."
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "sushie_adv"
+	bonus_reagents = list("vitamin" = 2)
+	list_reagents = list("nutriment" = 6)
+	bitesize = 10
+	filling_color = "#F2EEEA" //rgb(242, 238, 234)
+	tastes = list("fish" = 2, "rice" = 2, "salt" = 1)
+	foodtype = MEAT | VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/sushi_pro
+	name = "funa nigiri"
+	desc = "A well prepared peace  of the best of the carp fillet placed on rice. Looks fancy and fresh!"
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "sushie_pro"
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	bitesize = 10
+	filling_color = "#F2EEEA" //rgb(242, 238, 234)
+	tastes = list("fish" = 3, "rice" = 2, "salt" = 1)
+	foodtype = MEAT | VEGETABLES
+
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/tofu

@@ -27,14 +27,19 @@
 			if("mam_snouts" in pref_species.default_features)
 				if(H.dna.features["mam_snouts"] != "None")
 					muzzle_var = ALT_STYLE
+				else
+					muzzle_var = NORMAL_STYLE
 
 			else if("snout" in pref_species.default_features)
 				if(H.dna.features["snout"] != "None")
 					muzzle_var = ALT_STYLE
+				else
+					muzzle_var = NORMAL_STYLE
 
 			else
 				muzzle_var = NORMAL_STYLE
-				H.update_inv_head()
+
+			H.update_inv_head()
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()

@@ -12,6 +12,7 @@
 	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
 	var/recharging = FALSE
+	var/gun_charger = FALSE
 
 /obj/item/inducer/Initialize()
 	. = ..()
@@ -104,7 +105,7 @@
 	var/obj/item/stock_parts/cell/C = A.get_cell()
 	var/obj/O
 	var/coefficient = 1
-	if(istype(A, /obj/item/gun/energy))
+	if(istype(A, /obj/item/gun/energy) && gun_charger != TRUE)
 		to_chat(user,"Error unable to interface with device")
 		return FALSE
 	if(istype(A, /obj))
@@ -179,5 +180,28 @@
 	opened = TRUE
 
 /obj/item/inducer/sci/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/inducer/sci/combat
+	icon_state = "inducer-combat"
+	item_state = "inducer-combat"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BELT
+	desc = "A tool for inductively charging internal power cells. This one has been modified and upgraded to be able to charge into guns as well as normal electronics."
+	cell_type = /obj/item/stock_parts/cell/hyper
+	powertransfer = 1300
+	opened = FALSE
+	gun_charger = TRUE
+
+/obj/item/inducer/sci/combat/dry
+	cell_type = null
+	opened = TRUE
+
+/obj/item/inducer/sci/combat/dry/Initialize() //Just in case
+	. = ..()
+	update_icon()
+
+/obj/item/inducer/sci/combat/Initialize()
 	. = ..()
 	update_icon()

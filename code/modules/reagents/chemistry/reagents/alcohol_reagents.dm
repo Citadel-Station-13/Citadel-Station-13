@@ -1277,8 +1277,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
 		M.confused = max(M.confused+2,0)
 		M.Dizzy(10)
-	if (!M.slurring)
-		M.slurring = 1
+	M.slurring = max(M.slurring,50)
 	M.slurring += 3
 	switch(current_cycle)
 		if(51 to 200)
@@ -1306,8 +1305,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness +=1.5
 	switch(current_cycle)
 		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1
+			M.slurring = max(M.slurring,50)
 			M.slurring += 3
 		if(45 to 55)
 			if(prob(50))
@@ -1336,8 +1334,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness +=2
 	switch(current_cycle)
 		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1
+			M.slurring = max(M.slurring,50)
 			M.slurring += 3
 		if(45 to 55)
 			if(prob(50))
@@ -1364,8 +1361,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink enjoyed by people during the 1960's."
 
 /datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/M)
-	if (!M.slurring)
-		M.slurring = 1
+	M.slurring = max(M.slurring,50)
 	switch(current_cycle)
 		if(1 to 5)
 			M.Dizzy(10)

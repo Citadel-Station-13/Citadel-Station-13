@@ -345,3 +345,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/riceball
+	name = "Onigiri"
+	reqs = list(
+		/datum/reagent/consumable/soysauce = 1,
+		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/riceball
+	subcategory = CAT_MISCFOOD

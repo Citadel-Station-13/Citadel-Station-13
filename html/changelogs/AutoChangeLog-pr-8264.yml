@@ -1,0 +1,7 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscdel: "Fun"
+  - tweak: "costs of suit voucher"
+  - balance: "Unblances miner vender"
+  - bugfix: "spare cheaper brute kit"

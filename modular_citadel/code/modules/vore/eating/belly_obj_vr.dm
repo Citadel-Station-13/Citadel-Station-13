@@ -232,10 +232,11 @@
 
 	M.forceMove(drop_location())  // Move the belly contents into the same location as belly's owner.
 	items_preserved -= M
-	for(var/mob/H in get_hearers_in_view(2, get_turf(owner)))
-		if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
-			var/sound/releasement = GLOB.release_sounds[release_sound]
-			playsound(get_turf(owner),releasement,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
+	if(!silent)
+		for(var/mob/H in get_hearers_in_view(2, get_turf(owner)))
+			if(H.client && (H.client.prefs.cit_toggles & EATING_NOISES))
+				var/sound/releasement = GLOB.release_sounds[release_sound]
+				playsound(get_turf(owner),releasement,50,0,-5,0,ignore_walls = FALSE,channel=CHANNEL_PRED)
 
 	if(istype(M,/mob/living))
 		var/mob/living/ML = M

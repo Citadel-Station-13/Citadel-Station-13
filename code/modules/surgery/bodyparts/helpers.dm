@@ -178,6 +178,7 @@
 		L.update_limb(fixed_icon, src)
 		if(robotic)
 			L.change_bodypart_status(BODYPART_ROBOTIC)
+			L.body_markings = null
 	. = L
 
 /mob/living/carbon/monkey/newBodyPart(zone, robotic, fixed_icon)

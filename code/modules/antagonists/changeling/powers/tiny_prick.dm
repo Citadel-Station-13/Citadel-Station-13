@@ -64,11 +64,11 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
+	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human. This ability is loud, and might cause our blood to react violently to heat."
 	sting_icon = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
-	loudness = 1
+	loudness = 2
 	var/datum/changelingprofile/selected_dna = null
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_sting_transform"

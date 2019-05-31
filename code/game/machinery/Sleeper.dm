@@ -151,6 +151,22 @@
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+			var/mob/living/carbon/C = mob_occupant
+			var/blood_id = C.get_blood_id()
+			if(blood_id)
+				data["occupant"]["blood"] = list() // We can start populating this list.
+				var/blood_type = C.dna.blood_type
+				if(blood_id != "blood") // special blood substance
+					var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+					if(R)
+						blood_type = R.name
+					else
+						blood_type = blood_id
+				data["occupant"]["blood"]["maxBloodVolume"] = BLOOD_VOLUME_NORMAL
+				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
+				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
+				data["occupant"]["blood"]["bloodType"] = blood_type
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)

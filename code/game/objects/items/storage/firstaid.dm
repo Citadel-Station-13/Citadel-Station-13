@@ -122,7 +122,7 @@
 	new /obj/item/reagent_containers/pill/antirad(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka(src)
 	new /obj/item/healthanalyzer(src)
-	
+
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -312,3 +312,11 @@
 /obj/item/storage/pill_bottle/mutarad/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutarad(src)
+
+/obj/item/storage/pill_bottle/penis_enlargement
+	name = "penis enlargement pills"
+	desc = "You want penis enlargement pills?"
+
+/obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/penis_enlargement(src)

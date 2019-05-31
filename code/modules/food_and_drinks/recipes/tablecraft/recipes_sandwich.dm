@@ -62,5 +62,13 @@
 	result = /obj/item/reagent_containers/food/snacks/notasandwich
 	subcategory = CAT_SANDWICH
 
-
-
+/datum/crafting_recipe/food/notasandwich
+	name = "Tuna sandwich"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/reagent_containers/food/snacks/tuna = 1,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/condiment/mayonnaise = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/tuna_sandwich
+	subcategory = CAT_SANDWICH

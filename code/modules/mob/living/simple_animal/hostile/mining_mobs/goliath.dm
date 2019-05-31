@@ -187,12 +187,12 @@
 		var/mob/living/carbon/C = L
 		var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 		if(S && S.resistance_flags & GOLIATH_RESISTANCE)
-			L.Stun(75)
+			L.Stun(25)
 		else if(S && S.resistance_flags & GOLIATH_WEAKNESS)
-			L.Stun(125)
+			L.Stun(115)
 		else
-			L.Stun(100)
-		L.adjustBruteLoss(rand(10,15))
+			L.Stun(75)
+		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
 		latched = TRUE
 	if(!latched)
 		retract()
