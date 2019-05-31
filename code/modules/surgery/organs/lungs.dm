@@ -62,7 +62,6 @@
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M)
-	message_admins("lung damage: [damage_mod], damage: [damage]")
 	if (maxHealth == "plasma")
 		return
 	if(damage+damage_mod < 0)

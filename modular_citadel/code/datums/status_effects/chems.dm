@@ -209,7 +209,7 @@
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
 	if(!E)
-		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? You need to set up the vars manually if it's not reacted. Someone set up the reaction incorrectly if not. Console them with a fermiplush please.")
+		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? You need to set up the vars manually if it's not reacted/bussed. Someone set up the reaction incorrectly if not (Don't use donor blood). Console them with a fermiplush maybe?")
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)

@@ -1365,16 +1365,16 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	color = "#FFFFFF"
 	pH = 0
 
-/datum/reagent/fermi/fermiAcid/on_mob_life(mob/living/carbon/C, method)
+/datum/reagent/fermi/fermiAcid/reaction_mob(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
 	var/acidstr = ((5-C.reagents.pH)*2)
-	C.adjustFireLoss(acidstr, 0)
-	if(method==VAPOR)
+	C.adjustFireLoss(acidstr/2, 0)
+	if((method==VAPOR) && if(!C.wear_mask))
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 		L.adjustLungLoss(acidstr, C)
-		C.apply_damage(acidstr/3, BURN, target)
+		C.apply_damage(acidstr/5, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
 
