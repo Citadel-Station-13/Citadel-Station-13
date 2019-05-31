@@ -237,6 +237,8 @@
 	var/total_heat_capacity = 0
 	var/datum/gas_mixture/total_gas_mixture = new(0)
 
+	var/list/total_gases = total_gas_mixture.gases
+
 	for(var/i in GL)
 		var/datum/gas_mixture/G = i
 		total_gas_mixture.volume += G.volume
