@@ -1,4 +1,4 @@
-#define TONGUE_MAX_HEALTH 50
+#define TONGUE_MAX_HEALTH 560
 
 /obj/item/organ/tongue
 	name = "tongue"
@@ -74,7 +74,7 @@
 	icon_state = "tonguelizard"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
-	maxHealth = 35 //extra sensitivity means tongue is more susceptible to damage
+	maxHealth = 40 //extra sensitivity means tongue is more susceptible to damage
 
 /obj/item/organ/tongue/lizard/TongueSpeech(var/message)
 	var/regex/lizard_hiss = new("s+", "g")
@@ -133,7 +133,7 @@
 	icon_state = "tonguezombie"
 	say_mod = "moans"
 	taste_sensitivity = 32
-	maxHealth = 60 //Stop! It's already dead...!
+	maxHealth = 65 //Stop! It's already dead...!
 
 /obj/item/organ/tongue/zombie/TongueSpeech(var/message)
 	var/list/message_list = splittext(message, " ")
@@ -157,7 +157,7 @@
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
-	maxHealth = "alien"
+	maxHealth = "alien" //Their blood is acid, so, no, though a tongueless xeno might be funny
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,

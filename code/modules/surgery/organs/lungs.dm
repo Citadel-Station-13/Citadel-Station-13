@@ -1,4 +1,4 @@
-#define LUNGS_MAX_HEALTH 450
+#define LUNGS_MAX_HEALTH 300
 
 /obj/item/organ/lungs
 	name = "lungs"
@@ -61,7 +61,8 @@
 	var/damage = 0
 
 //TODO: lung health affects lung function
-/obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M)
+/obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M) //damage might be too low atm.
+	message_admins("[M] lung damage: [damage_mod], damage: [damage]")
 	if (maxHealth == "plasma")
 		return
 	if(damage+damage_mod < 0)
@@ -452,7 +453,7 @@
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
 	synthetic = TRUE
-	maxHealth = 600
+	maxHealth = 400
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	. = ..()
@@ -472,7 +473,7 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
-	maxHealth = 750
+	maxHealth = 550
 
 /obj/item/organ/lungs/ashwalker
 	name = "ash lungs"
