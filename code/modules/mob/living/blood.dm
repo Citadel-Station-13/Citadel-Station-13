@@ -164,7 +164,7 @@
 	return
 
 /mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == "blood") //actual blood reagent
+	if(blood_id == "blood")  //actual blood reagent
 		var/blood_data = list()
 		//set the blood data
 		blood_data["donor"] = src
@@ -207,6 +207,21 @@
 			if(istype(ling))
 				blood_data["changeling_loudness"] = ling.loudfactor
 		return blood_data
+	if(blood_id == "slimejelly")
+		var/blood_data = list()
+		if(mind)
+			blood_data["mind"] = mind
+		else if(last_mind)
+			blood_data["mind"] = last_mind
+		if(ckey)
+			blood_data["ckey"] = ckey
+		else if(last_mind)
+			blood_data["ckey"] = ckey(last_mind.key)
+		blood_data["gender"] = gender
+		blood_data["real_name"] = real_name
+		return blood_data
+
+
 
 //get the id of the substance this mob use as blood.
 /mob/proc/get_blood_id()

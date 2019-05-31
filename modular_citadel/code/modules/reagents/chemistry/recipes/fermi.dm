@@ -148,7 +148,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= 0.1
+	HIonRelease 			= -0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -180,7 +180,7 @@
 	CurveSharpT 			= 2
 	CurveSharppH 			= 2
 	ThermicConstant 		= 1
-	HIonRelease 			= -0.1
+	HIonRelease 			= 0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
@@ -236,17 +236,38 @@
 	//CatalystFact 			= 0
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
-	ThermicConstant 		= 15
+	ThermicConstant 		= 20
 	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.2
 
-
-
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if(!B.data)
+		var/list/seen = viewers(5, get_turf(my_atom))
+		for(var/mob/M in seen)
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //if this appears, WHAT?!
+			E.purity = 0
+	if (B.data.["gender"] == "female")
+		E.data.["creatorGender"] = "Mistress"
+		E.creatorGender = "Mistress"
+	else
+		E.data.["creatorGender"] = "Master"
+		E.creatorGender = "Master"
+	E.data["creatorName"] = B.data.["real_name"]
+	E.creatorName = B.data.["real_name"]
+	E.data.["creatorID"] = B.data.["ckey"]
+	E.creatorID = B.data.["ckey"]
+
+//So slimes can play too.
+/datum/chemical_reaction/fermi/enthrall/slime
+	required_catalysts = list("slimejelly" = 1)
+
+/datum/chemical_reaction/fermi/enthrall/slime/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	var/datum/reagent/toxin/slimejelly/B = locate(/datum/reagent/toxin/slimejelly) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
 	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))
@@ -404,7 +425,7 @@
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
 	Fb.data = 11
 
-//secretcatchemcode, shh!! Of couse I hide it amongst cats. Also, yes, I expect you, Mr.Maintaner to read and review this, dispite it being hidden and not mentioned in the changelogs.
+//secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
 //I'm not trying to be sneaky, I'm trying to keep it a secret!
 //I don't know how to do hidden chems like Aurora
 //ChemReactionVars:

@@ -1440,9 +1440,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)
 	if(C.dna && istype(C.dna.species, /datum/species/jelly))
-		C.adjustToxLoss(-2.5)
+		C.adjustToxLoss(-2)
 	else
-		C.adjustToxLoss(2.5)
+		C.adjustToxLoss(2)
 	..()
 
 /datum/reagent/fermi/fermiABuffer
