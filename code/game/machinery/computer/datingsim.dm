@@ -5,7 +5,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE
-	var/list/prizes = list(
+	/list/prizes = list(
 		/obj/item/clothing/under/maid = 5,
 		/obj/item/clothing/under/stripper_pink = 5,
 		/obj/item/clothing/under/stripper_green = 5,
@@ -33,7 +33,7 @@
 	var/turtle = 0
 	var/datecost = 0
 	var/datelove = 0
-	var/datelust = pick(3,3,3,10,5,5)
+	var/datelust = 0
 	var/dating = 0
 
 /obj/machinery/computer/arcade/datingsim/Reset()
@@ -43,7 +43,7 @@
 
 	name_action = pick("Yiff ", "Fuck ", "Screw ", "Cuddle ", "Glomp ", "Dominate ", "Romance ")
 
-	name_part1 = pick("Crystal the ","Syntheia the ","Robin the ","Cheryl the","Sekke the ")
+	name_part1 = pick("Crystal the ","Syntheia the ","Robin the ","Cheryl the","Sekke the ","Coldsteel the")
 	name_part2 = pick("Fox","Human","Plasmaman","Podperson","Angel","Princess","Hedgehog","Bat","Echidna","Wolf","Cat","Lizard","Snake")
 
 	date_name = (name_part1 + name_part2)
@@ -223,7 +223,7 @@
 			enemy_love += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
 			enemy_lust += rand(1,5) + (datelove + str_mod + charm_mod + intel_mod)
 
-	else if (flirtingv == 1)
+	else if (flirting == 1)
 		var/flirtval = rand(1,99)
 		enemy_lust += flirtval
 		enemy_love -= (flirtval - defense)
