@@ -43,7 +43,6 @@
 	. = ..()
 	temperature = initial_temperature
 
-
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB
@@ -56,7 +55,6 @@
 
 /datum/gas_mixture/immutable/space/remove_ratio()
 	return copy() //we're always empty, so we can just return a copy.
-
 
 //used by cloners
 /datum/gas_mixture/immutable/cloner
