@@ -800,10 +800,6 @@
 		. = t_air.return_temperature()
 	return
 
-/obj/mecha/portableConnectorReturnAir()
-	return internal_tank.return_air()
-
-
 /obj/mecha/MouseDrop_T(mob/M, mob/user)
 	if (!user.canUseTopic(src) || (user != M))
 		return
