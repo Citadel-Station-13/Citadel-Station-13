@@ -5,7 +5,6 @@
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE*24)
 #define PUMP_MAX_VOLUME 100
 
-
 /obj/item/integrated_circuit/atmospherics
 	category_text = "Atmospherics"
 	cooldown_per_use = 2 SECONDS
@@ -38,7 +37,6 @@
 //Needed in circuits where source and target types differ
 /obj/item/integrated_circuit/atmospherics/proc/check_gastarget(atom/gasholder)
 	return check_gassource(gasholder)
-
 
 // - gas pump - // **works**
 /obj/item/integrated_circuit/atmospherics/pump
@@ -135,7 +133,6 @@
 		var/datum/gas_mixture/removed = source_air.remove(transfer_moles)
 		target_air.merge(removed)
 
-
 // - volume pump - // **Works**
 /obj/item/integrated_circuit/atmospherics/pump/volume
 	name = "volume pump"
@@ -185,7 +182,6 @@
 
 	target_air.merge(removed)
 
-
 // - gas vent - // **works**
 /obj/item/integrated_circuit/atmospherics/pump/vent
 	name = "gas vent"
@@ -215,14 +211,12 @@
 		return FALSE
 	return TRUE
 
-
 /obj/item/integrated_circuit/atmospherics/pump/vent/check_gassource(atom/target)
 	if(!target)
 		return FALSE
 	if(!istype(target, /turf))
 		return FALSE
 	return TRUE
-
 
 // - integrated connector - // Can connect and disconnect properly
 /obj/item/integrated_circuit/atmospherics/connector
@@ -287,9 +281,8 @@
 	activate_pin(2)
 
 // Required for making the connector port script work
-obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
+/obj/item/integrated_circuit/atmospherics/connector/connected_device.air_contents
 	return air_contents
-
 
 // - gas filter - // **works**
 /obj/item/integrated_circuit/atmospherics/pump/filter
@@ -386,7 +379,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	target.merge(filtered_out)
 	contaminated_air.merge(removed)
 
-
 /obj/item/integrated_circuit/atmospherics/pump/filter/Initialize()
 	air_contents = new(volume)
 	. = ..()
@@ -448,7 +440,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	//Basically: number of moles = percentage of pressure filled up * efficiency coefficient * (pressure from both gases * volume of output) / (R * Temperature)
 	var/transfer_moles = (get_pin_data(IC_INPUT, 5) / max(1,output_gases.return_pressure())) * PUMP_EFFICIENCY * (source_1_gases.return_pressure() * gas_percentage +  source_2_gases.return_pressure() * (1 - gas_percentage)) * output_gases.volume/ (R_IDEAL_GAS_EQUATION * max(output_gases.temperature,TCMB))
 
-
 	if(transfer_moles <= 0)
 		return
 
@@ -456,7 +447,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	output_gases.merge(mix)
 	mix = source_2_gases.remove(transfer_moles * (1-gas_percentage))
 	output_gases.merge(mix)
-
 
 // - integrated tank - // **works**
 /obj/item/integrated_circuit/atmospherics/tank
@@ -508,7 +498,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 		exterior_gas = current_turf.return_air()
 		exterior_gas.merge(expelled_gas)
 
-
 // - large integrated tank - // **works**
 /obj/item/integrated_circuit/atmospherics/tank/large
 	name = "large integrated tank"
@@ -516,7 +505,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	volume = 9
 	size = 12
 	spawn_flags = IC_SPAWN_RESEARCH
-
 
 // - freezer tank - // **works**
 /obj/item/integrated_circuit/atmospherics/tank/freezer
@@ -551,7 +539,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	air_contents.temperature = max(73.15,air_contents.temperature - (air_contents.temperature - temperature) * heater_coefficient)
 
-
 // - heater tank - // **works**
 /obj/item/integrated_circuit/atmospherics/tank/freezer/heater
 	name = "heater tank"
@@ -580,7 +567,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 		return
 
 	air_contents.temperature = min(573.15,air_contents.temperature + (temperature - air_contents.temperature) * heater_coefficient)
-
 
 // - atmospheric cooler - // **works**
 /obj/item/integrated_circuit/atmospherics/cooler
@@ -616,7 +602,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	set_pin_data(IC_OUTPUT, 2, air_contents.return_pressure())
 	push_data()
 
-
 	//Get the turf you're on and its gas mixture
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
@@ -628,7 +613,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	//Cool the gas
 	turf_air.temperature = max(243.15,turf_air.temperature - (turf_air.temperature - temperature) * heater_coefficient)
-
 
 // - atmospheric heater - // **works**
 /obj/item/integrated_circuit/atmospherics/cooler/heater
@@ -657,7 +641,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	//Heat the gas
 	turf_air.temperature = min(323.15,turf_air.temperature + (temperature - turf_air.temperature) * heater_coefficient)
-
 
 // - tank slot - // **works**
 /obj/item/integrated_circuit/input/tank_slot
@@ -715,7 +698,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 	push_data()
 	do_work(1)
 
-
 /obj/item/integrated_circuit/input/tank_slot/ask_for_input(mob/user)
 	attack_self(user)
 
@@ -752,7 +734,6 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	set_pin_data(IC_OUTPUT, 1, tank_air.return_pressure())
 	push_data()
-
 
 #undef SOURCE_TO_TARGET
 #undef TARGET_TO_SOURCE
