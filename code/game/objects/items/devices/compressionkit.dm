@@ -9,6 +9,15 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/charges = 5
 
+/obj/item/compressionkit/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It has [charges] charges left.</span>")
+
+/obj/item/compressionkit/proc/sparks()
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(5, 1, get_turf(src))
+	s.start()
+
 /obj/item/compressionkit/suicide_act(mob/living/carbon/M)
 	M.visible_message("<span class='suicide'>[M] is sticking their head in [src] and turning it on! [M.p_theyre(TRUE)] going to compress their own skull!</span>")
 	var/obj/item/bodypart/head = M.get_bodypart("head")
@@ -24,7 +33,7 @@
 	qdel(head)
 	new M.gib_type(T,1,M.get_static_viruses())
 	M.add_splatter_floor(T)
-	playsound(M, 'sound/weapons/flash.ogg', 100, 1, -6)
+	playsound(M, 'sound/weapons/flash.ogg', 50, 1)
 	playsound(M, 'sound/effects/splat.ogg', 50, 1)
 
 	return OXYLOSS
@@ -33,26 +42,58 @@
 	. = ..()
 	if(!proximity || !target)
 		return
-	if(istype(target, /obj/item))
-		var/obj/item/O = target
+	else
 		if(charges == 0)
-			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 100, 1, -6)
+			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>The bluespace compression kit is out of charges! Recharge it with bluespace crystals.</span>")
 			return
+	if(istype(target, /obj/item))
+		var/obj/item/O = target
 		if(O.w_class == 1)
-			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 100, 1, -6)
+			playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>[target] cannot be compressed smaller!.</span>")
 			return
 		if(O.GetComponent(/datum/component/storage))
 			to_chat(user, "<span class='notice'>You feel like compressing an item that stores other items would be counterproductive.</span>")
 			return
 		if(O.w_class > 1)
-			O.w_class -= 1
-			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
-			charges -= 1
-			to_chat(user, "<span class='notice'>You successfully compress [target]!The compressor now has [charges] charges.</span>")
+			playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
+			user.visible_message("<span class='warning'>[user] is compressing [O] with their bluespace compression kit!</span>")
+			if(do_mob(user, O, 40) && charges > 0 && O.w_class > 1)
+				playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
+				sparks()
+				flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
+				O.w_class -= 1
+				charges -= 1
+				to_chat(user, "<span class='notice'>You successfully compress [target]! The compressor now has [charges] charges.</span>")
 		else
 			to_chat(user, "<span class='notice'>Anomalous error. Summon a coder.</span>")
+
+	if(istype(target, /mob/living))
+		var/mob/living/victim = target
+		if(istype(victim, /mob/living/carbon/human))
+			if(user.zone_selected == "groin") // pp smol. There's probably a smarter way to do this but im retarded. If you have a simpler method let me know.
+				var/list/organs = victim.getorganszone("groin")
+				for(var/internal_organ in organs)
+					if(istype(internal_organ, /obj/item/organ/genital/penis))
+						var/obj/item/organ/genital/penis/O = internal_organ
+						playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1)
+						victim.visible_message("<span class='warning'>[user] is preparing to shrink [victim]\'s [O.name] with their bluespace compression kit!</span>")
+						if(do_mob(user, victim, 40) && charges > 0 && O.length > 0)
+							victim.visible_message("<span class='warning'>[user] has shrunk [victim]\'s [O.name]!</span>")
+							playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 50, 1)
+							sparks()
+							flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
+							charges -= 1
+							O.length -= 5
+							if(O.length < 1)
+								victim.visible_message("<span class='warning'>[user]\'s [O.name] vanishes!</span>")
+								qdel(O) // no pp for you
+							else
+								O.update_size()
+								O.update_appearance()
+
+
 
 /obj/item/compressionkit/attackby(obj/item/I, mob/user, params)
 	..()
