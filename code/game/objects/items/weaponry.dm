@@ -516,7 +516,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "riot_bat"
 	item_state = "riot_bat"
 	force = 20
-	mass = 6.5		//no infinite stunlock/batonning please!
+	total_mass = 6.5		//no infinite stunlock/batonning please!
 	w_class = WEIGHT_CLASS_MEDIUM
 	impact_throw_distance_lower = 0
 	impact_throw_distance_upper = 0
