@@ -39,18 +39,19 @@
 	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
+	R.my_atom = my_atom //Give the gas a fingerprint
 
-	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents
+	for (var/datum/reagent/reagent in my_atom.reagents.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		R.add_reagent(reagent.id, reagent.volume/3) //Seems fine? I think I fixed the infinite explosion bug.
 
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
 
 	if(pH < 4) //if acidic, make acid spray
-		R.add_reagent("fermiAcid", ((volume/3)/pH))
+		R.add_reagent("fermiAcid", (volume/3))
 	if(R.reagent_list)
 		message_admins("gas")
-		s.set_up(R, (volume/10), T)
+		s.set_up(R, (volume/10), my_atom)
 		s.start()
 
 	if (pH > 10) //if alkaline, small explosion.
@@ -403,3 +404,60 @@
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
 	Fb.data = 11
+
+//secretcatchemcode, shh!! Of couse I hide it amongst cats. Also, yes, I expect you, Mr.Maintaner to read and review this, dispite it being hidden and not mentioned in the changelogs.
+//I'm not trying to be sneaky, I'm trying to keep it a secret!
+//I don't know how to do hidden chems like Aurora
+//ChemReactionVars:
+/datum/chemical_reaction/fermi/secretcatchem //DONE
+	name = "secretcatchem"
+	id = "secretcatchem"
+	results = list("secretcatchem" = 0.5)
+	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "blood" = 0.1, "slimejelly" = 0.1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
+	required_catalysts = list("felinidmutationtoxin" = 1)
+	required_temp = 600
+	mix_message = "the reaction gives off a meow!"
+	mix_sound = "modular_citadel/sound/voice/merowr.ogg"
+	//FermiChem vars:
+	OptimalTempMin 		= 650
+	OptimalpHMin 		= 0
+	ReactpHLim 			= 2
+	CurveSharpT 		= 0
+	CurveSharppH 		= 0
+	ThermicConstant		= 0
+	HIonRelease 		= 0
+	RateUpLim 			= 0.1
+	FermiChem 			= TRUE
+	FermiExplode 		= FALSE
+	PurityMin 			= 0.2
+
+/datum/chemical_reaction/fermi/secretcatchem/New()
+	//rand doesn't seem to work with n^-e
+	OptimalTempMin 		+= rand(-100, 100)
+	OptimalTempMax 		= (OptimalTempMin+rand(0, 200))
+	ExplodeTemp 		= (OptimalTempMax+rand(0, 200))
+	OptimalpHMin 		+= rand(1, 10)
+	OptimalpHMax 		= (OptimalpHMin + rand(1, 5))
+	ReactpHLim 			+= rand(-2, 2)
+	CurveSharpT 		+= (rand(1, 500)/100)
+	CurveSharppH 		+= (rand(1, 500)/100)
+	ThermicConstant		+= rand(-50, 50)
+	HIonRelease 		+= (rand(-25, 25)/100)
+	RateUpLim 			+= (rand(1, 1000)/100)
+	PurityMin 			+= (rand(-1, 1)/10)
+	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
+	required_reagents[pick(additions)] = rand(1, 5)//weird
+
+/datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
+	SSblackbox.record_feedback("tally", "catgirlium")//log
+
+/datum/chemical_reaction/fermi/secretcatchem/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+	var/mob/living/simple_animal/pet/cat/custom_cat/catto = new(get_turf(my_atom))
+	var/list/seen = viewers(8, get_turf(my_atom))
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
+	playsound(get_turf(my_atom), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	catto.name = "FermiCat"
+	catto.desc = "A cute Fermichem cat, created by a lot of compicated and confusing chemistry!"
+	catto.color = "#770000"
+	my_atom.reagents.remove_any(10)

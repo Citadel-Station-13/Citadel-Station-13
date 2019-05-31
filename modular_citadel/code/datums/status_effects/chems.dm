@@ -214,7 +214,7 @@
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
 	if(M.ckey == enthrallID)
-		owner.remove_status_effect(src)//This shouldn't happen, but just in case
+		owner.remove_status_effect(src)//This shouldn't happen, but just in case, also it's not worth the overhead of giving someone themselves; they can't proc themselves as velvet removes them from the list.
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!

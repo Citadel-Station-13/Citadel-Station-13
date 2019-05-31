@@ -1381,8 +1381,10 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/fermiAcid/reaction_obj(obj/O, reac_volume)
 	if(ismob(O.loc)) //handled in human acid_act()
 		return
+	if((holder.pH > 5) || (volume < 0.1)) //Shouldn't happen, but just in case
+		return
 	reac_volume = round(volume,0.1)
-	var/acidstr = (5-holder.pH)
+	var/acidstr = (5-holder.pH)*2 //(max is 10)
 	O.acid_act(acidstr, volume)
 	..()
 
@@ -1483,3 +1485,61 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(src.id, src.volume)
 	..()
+
+//ReagentVars
+//Turns you into a cute catto while it's in your system.
+//If you manage to gamble perfectly, makes you a catgirl after you transform back. But really, you shouldn't end up with that with how random it is.
+/datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
+	name = "secretcatchem" //an attempt at hiding it
+	id = "secretcatchem"
+	description = "An illegal and hidden chem that turns people into cats. It's said that it's so rare and unstable that having it means you've been blessed."
+	taste_description = "hairballs and cream"
+	color = "#ffc224"
+	var/catshift = FALSE
+	var/mob/living/simple_animal/pet/cat/custom_cat/catto = null
+
+/datum/reagent/fermi/secretcatchem/New()
+	name = "Catbalti[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
+
+/datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
+	. = ..()
+	var/current_species = H.dna.species.type
+	var/datum/species/mutation = /datum/species/human/felinid
+	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1. It already requires felind too, so no new functionality there.
+		H.set_species(mutation)
+		H.gender = FEMALE
+		//exception(al) handler:
+		H.dna.features["mam_tail"] = "Cat"
+		H.dna.features["tail_human"] = "Cat"
+		H.dna.features["ears"]  = "Cat"
+		H.dna.features["mam_ears"] = "Cat"
+		H.dna.features["tail_lizard"] = "Cat"
+		H.dna.features["mam_tail"] = "Cat"
+		H.dna.features["mam_tail_animated"] = "Cat"
+		H.facial_hair_style = "Shaved"
+		H.verb_say = "mewls"
+		catshift = TRUE
+		playsound(get_turf(H), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+	to_chat(H, "<span class='notice'>You suddenly turn into a cat!</span>")
+	catto = new(get_turf(H.loc))
+	H.mind.transfer_to(catto)
+	catto.name = H.name
+	catto.desc = "A cute catto! They remind you of [H] somehow."
+	catto.color = "#[H.dna.features["mcolor"]]"
+	H.moveToNullspace()
+
+/datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
+	if(prob(5))
+		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
+		catto.say("lets out a meowrowr!*")
+	..()
+
+/datum/reagent/fermi/secretcatchem/on_mob_delete(mob/living/carbon/H)
+	var/words = "Your body shifts back to normal."
+	H.forceMove(catto.loc)
+	catto.mind.transfer_to(H)
+	if(catshift == TRUE)
+		words += " ...But wait, are those ears and a tail?"
+		H.say("*wag")//force update sprites.
+	to_chat(H, "<span class='notice'>[words]</span>")
+	qdel(catto)
