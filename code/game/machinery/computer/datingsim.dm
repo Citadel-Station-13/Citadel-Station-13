@@ -17,6 +17,11 @@
 		/obj/item/electropack/shockcollar = 3,
 		/obj/item/clothing/neck/petcollar/locked = 1,
 		)
+	var/list/devents = list(
+		"" = 50,
+
+		)
+
 	circuit = /obj/item/circuitboard/computer/arcade/datingsim
 	var/date_name = "Space Waifu"
 	var/temp = "Pretend to Get Laid!" //Temporary message, for attack messages, etc
@@ -41,6 +46,7 @@
 	var/date_charm = 3
 	var/date_kinky = 3
 	var/flirting = 0
+	var/event = ""
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/arcade/proc/kprizevend(mob/user)
@@ -208,10 +214,6 @@
 		enemy_love = 10 //Enemy health/attack points
 		enemy_lust = 20
 		gameover = FALSE
-		turtle = 0
-			if(obj_flags & EMAGGED)
-				Reset()
-				obj_flags &= ~EMAGGED
 
 	add_fingerprint(usr)
 	updateUsrDialog()
@@ -275,6 +277,12 @@
 		temp = "You went broke, asshole! You beg [date_name] for money!"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		var/loselove = rand(10,50)
+//Random events!
+	events = pickweight(devents)
+
+
+//end random events
+//Start loss conditions
 
 	if (day_time <= 0)
 		gameover = TRUE
@@ -315,8 +323,6 @@
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "love", (obj_flags & EMAGGED ? "emagged":"normal")))
-//Random events!
-
 
 	blocked = FALSE
 	return
