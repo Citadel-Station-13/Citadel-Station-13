@@ -113,6 +113,7 @@
 	if(I.force)
 	//CIT CHANGES START HERE - combatmode and resting checks
 		var/totitemdamage = I.force
+		totitemdamage *= I.force_mult //Compression kit uses this
 		if(iscarbon(user))
 			var/mob/living/carbon/tempcarb = user
 			if(!tempcarb.combatmode)
