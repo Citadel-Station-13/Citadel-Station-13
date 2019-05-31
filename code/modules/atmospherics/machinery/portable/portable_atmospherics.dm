@@ -77,9 +77,6 @@
 	pixel_y = 0
 	return TRUE
 
-/obj/machinery/portable_atmospherics/portableConnectorReturnAir()
-	return air_contents
-
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
 		return
