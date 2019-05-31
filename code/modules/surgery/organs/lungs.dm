@@ -61,7 +61,8 @@
 	var/damage = 0
 
 //TODO: lung health affects lung function
-/obj/item/organ/lungs/proc/adjustLungLoss(mob/living/carbon/M, damage_mod)
+/obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M)
+	message_admins("lung damage: [damage_mod], damage: [damage]")
 	if (maxHealth == "plasma")
 		return
 	if(damage+damage_mod < 0)
@@ -405,13 +406,13 @@
 		var/cold_modifier = H.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
 			H.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss(cold_level_3_damage*cold_modifier)
+			adjustLungLoss(cold_level_3_damage*cold_modifier, H)
 		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
 			H.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss(cold_level_2_damage*cold_modifier)
+			adjustLungLoss(cold_level_2_damage*cold_modifier, H)
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
 			H.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
-			adjustLungLoss(cold_level_1_damage*cold_modifier)
+			adjustLungLoss(cold_level_1_damage*cold_modifier, H)
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [cold_message] in your [name]!</span>")
@@ -420,13 +421,13 @@
 		var/heat_modifier = H.dna.species.heatmod
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
 			H.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss(cold_level_1_damage*heat_modifier)
+			adjustLungLoss(cold_level_1_damage*heat_modifier, H)
 		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
 			H.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss(cold_level_1_damage*heat_modifier)
+			adjustLungLoss(cold_level_1_damage*heat_modifier, H)
 		if(breath_temperature > heat_level_3_threshold)
 			H.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
-			adjustLungLoss(cold_level_1_damage*heat_modifier)
+			adjustLungLoss(cold_level_1_damage*heat_modifier, H)
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")

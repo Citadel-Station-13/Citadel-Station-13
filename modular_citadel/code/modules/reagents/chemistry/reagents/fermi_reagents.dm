@@ -114,10 +114,10 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/on_mob_delete(mob/living/M) //returns back to original location
-	do_sparks(5,FALSE,src)
+	do_sparks(5,FALSE,M)
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
 	do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
-	do_sparks(5,FALSE,src)
+	do_sparks(5,FALSE,M)
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
@@ -1373,8 +1373,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(prob(20))
 			to_chat(C, "<span class='warning'>You can feel your lungs burning!</b></span>")
 		var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-		L.adjustLungLoss(acidstr)
-		C.apply_damage(acidstr/2, BURN, target)
+		L.adjustLungLoss(acidstr, C)
+		C.apply_damage(acidstr/3, BURN, target)
 	C.acid_act(acidstr, volume)
 	..()
 
