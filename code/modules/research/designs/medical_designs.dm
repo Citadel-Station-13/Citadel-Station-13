@@ -580,6 +580,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cybernetic_tongue
+	name = "Cybernetic tongue"
+	desc = "A fancy cybernetic tongue."
+	id = "cybernetic_tongue"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/organ/tongue/cybernetic
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 //Adv Surgery Tools//
 /////////////////////

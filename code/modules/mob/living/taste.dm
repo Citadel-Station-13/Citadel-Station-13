@@ -44,6 +44,10 @@
 	if ((from.pH > 12.5) || (from.pH < 1.5))
 		to_chat(src, "<span class='warning'>You taste chemical burns!</span>")
 		T.adjustTongueLoss(src, 4)
+	if(istype(T, /obj/item/organ/tongue/cybernetic))
+		to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the liquid.</span>")
+		src.say("The pH is appropriately [round(from.pH, 1)].")
+		return
 	if (!has_trait(TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
 		switch(from.pH)
 			if(11.5 to INFINITY)

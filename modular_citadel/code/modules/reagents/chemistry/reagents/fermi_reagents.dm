@@ -1247,7 +1247,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(1 to 9)
 			if(prob(20))
 				to_chat(M, "<span class='notice'>Your tongue feels... fluffy</span>")
-		if(10 to 20)
+		if(10 to 15)
 			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")
@@ -1261,14 +1261,14 @@ Creating a chem with a low purity will make you permanently fall in love with so
 						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
-		if(21)
+		if(16)
 			T = M.getorganslot(ORGAN_SLOT_TONGUE)
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
 			T.Remove(M)
 			nT.Insert(M)
-			T.forceMove(locate(10,6,1))//To the zelda room.
+			T.moveToNullspace()//To the zelda room.
 			to_chat(M, "<span class='notice'>Youw tongue feews... weally fwuffy!!</span>")
-		if(22 to INFINITY)
+		if(17 to INFINITY)
 			if(prob(10))
 				to_chat(M, "You find yourself unable to supress the desire to meow!")
 				M.emote("nya")

@@ -235,7 +235,7 @@
 /obj/item/organ/tongue/OwO
 	name = "fluffy tongue"
 	desc = "OwO what's this?"
-	icon_state = "tonguenormal"
+	icon_state = "tonguefluffy"
 	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
 	maxHealth = 35 //Sensitive tongue!
 
@@ -253,3 +253,13 @@
 		message +=  pick(" OwO", " uwu")
 	message = lowertext(message)
 	return message
+
+/obj/item/organ/tongue/cybernetic
+	name = "cybernetic tongue"
+	desc = "A state of the art robotic tongue that can detect the pH of anything drank."
+	icon_state = "tonguecybernetic"
+	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
+	maxHealth = 70 //It's robotic!
+
+/obj/item/organ/tongue/cybernetic/get_spans()
+	return ..() | SPAN_ROBOT
