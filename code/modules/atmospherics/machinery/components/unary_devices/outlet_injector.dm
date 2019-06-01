@@ -72,6 +72,18 @@
 	name = "toxins mixing input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_spare01
+	name = "atmos waste outlet injector"
+	id =  ATMOS_GAS_MONITOR_INPUT_SPARE_01
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_spare02
+	name = "atmos waste outlet injector"
+	id =  ATMOS_GAS_MONITOR_INPUT_SPARE_02
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_spare03
+	name = "atmos waste outlet injector"
+	id =  ATMOS_GAS_MONITOR_INPUT_SPARE_03
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 

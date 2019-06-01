@@ -37,3 +37,11 @@
 	name = "neutral corner"
 	color = "#D4D4D4"
 	alpha = 50
+
+/obj/effect/turf_decal/tile/white
+	name = "white corner"
+	color = "#D4D4D4"
+
+/obj/effect/turf_decal/tile/orange
+	name = "orange corner"
+	color = "#FF6A00"
