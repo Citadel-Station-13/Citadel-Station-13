@@ -119,7 +119,7 @@
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/paraplegic
-	random_gain = FALSE
+	can_gain = FALSE
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
