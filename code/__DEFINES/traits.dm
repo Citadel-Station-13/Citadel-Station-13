@@ -72,6 +72,8 @@
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
+#define TRAIT_EMPATH			"empath"
+#define TRAIT_FRIENDLY			"friendly"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
