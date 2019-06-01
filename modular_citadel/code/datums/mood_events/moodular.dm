@@ -7,12 +7,14 @@
 	if(mood)
 		mood.add_event("hugbox", /datum/mood_event/hugbox)
 
+/*
 // headpats (IMPORTANT)
 /mob/living/carbon/help_shake_act(mob/living/carbon/M)
 	. = ..()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)
 		mood.add_event("headpat", /datum/mood_event/headpat)
+*/
 
 // plush petting
 /obj/item/toy/plush/attack_self(mob/user)

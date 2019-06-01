@@ -281,7 +281,7 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(user.has_trait(TRAIT_EMPATH) && !appears_dead && (src != user))
+	if(has_trait(TRAIT_EMPATH) && !appears_dead && (src != user))
 		if (a_intent != INTENT_HELP)
 			msg += "[t_He] seem[p_s()] to be on guard.\n"
 		if (getOxyLoss() >= 10)
@@ -292,8 +292,8 @@
 		if(mood.sanity <= SANITY_DISTURBED)
 			msg += "[t_He] seem[p_s()] distressed.\n"
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
-		if(mood.sanity >= SANITY_GREAT)
-			msg += "[t_He] seem[p_s()] to be doing well!\n"
+		if(mood.mood >= 5) //So roundstart people aren't all "happy"
+			msg += "[t_He] seem[p_s()] to have had something nice happen to them recently.\n"
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empathH", /datum/mood_event/happy_empath, src)
 		if (has_trait(TRAIT_BLIND))
 			msg += "[t_He] appear[p_s()] to be staring off into space.\n"
