@@ -130,7 +130,7 @@
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
 	M.reagents.remove_reagent(src.id, 0.5)//So you're not stuck for 10 minutes teleporting
-	..() //loop function
+	..()
 
 //Addiction
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
@@ -191,7 +191,7 @@
 	src.addictCyc3++
 	do_teleport(M, get_turf(M), 2, no_effects=TRUE) //Teleports player randomly
 	do_sparks(5,FALSE,M)
-	..() //loop function
+	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
 	switch(src.addictCyc4)
@@ -323,7 +323,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SM.setBrainLoss(40)
 				SM.nutrition = startHunger/2
 
-				//Really hacky way to deal with this stupid problem I have, and heal the clone. I think around 30u will make a healthy clone.
+				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
 				SM.reagents.add_reagent("SDGFheal", volume)
 				M.reagents.remove_reagent(src.id, src.volume)
 				return
@@ -1083,6 +1083,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I made it so the creator is set to gain the status for someone random.
 	. = ..()
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 100u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
+		to_chat(M, "<span class='love'><i>You are unable to resist your own charms anymore, and become a full blown narcissist.</i></span>")
+		/*Old way of handling, left in as an option B
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/mob/living/carbon/victim in seen)
 			if(victim == M)//as much as I want you to fall for beepsky, he doesn't have a ckey
@@ -1097,6 +1099,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			creatorGender = "Master"
 		creatorName = chosen.real_name
 		creator = get_mob_by_key(creatorID)
+		*/
 	M.add_trait(TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
@@ -1107,7 +1110,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		E.master = creator
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	to_chat(M, "<span class='love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side at all costs.</i></span>")
+	to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side at all costs.</i></span>")
 	M.slurring = 100
 	M.confused = 100
 	E.phase = 4

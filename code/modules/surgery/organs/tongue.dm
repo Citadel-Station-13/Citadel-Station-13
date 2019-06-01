@@ -258,8 +258,8 @@
 	name = "cybernetic tongue"
 	desc = "A state of the art robotic tongue that can detect the pH of anything drank."
 	icon_state = "tonguecybernetic"
-	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
-	maxHealth = 70 //It's robotic!
+	taste_sensitivity = 10
+	maxHealth = 60 //It's robotic!
 
 /obj/item/organ/tongue/cybernetic/get_spans()
 	return ..() | SPAN_ROBOT

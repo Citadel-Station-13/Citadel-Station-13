@@ -677,26 +677,15 @@
 		return 0 //no cooldown
 
 	var/log_message = message
-	/*
-	if(!span_list || !span_list.len) //Not too sure what this does, I think it changes your output message depending if you're a cultist or not? I.e. font
-		if(iscultist(user))
-			span_list = list("narsiesmall")
-		else if (is_servant_of_ratvar(user))
-			span_list = list("ratvar")
-		else
-			span_list = list()
-	*/
-	//user.say(message, sanitize = TRUE)//Removed spans = span_list, It should just augment normal speech//DO NOT ENABLE, RECURSION HELL
 
 	//FIND THRALLS
-
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L.has_status_effect(/datum/status_effect/chem/enthrall))//Check to see if they have the status
-				if(L == user && !include_speaker)
-					continue
+				//if(L == user && !include_speaker) //Remove this if I decide to make OD apply to self.
+				//	continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -854,12 +843,10 @@
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</b></span>"), 5)
 				if(L.has_trait(TRAIT_NYMPHO))
 					L.adjustArousalLoss(2*power_multiplier)
-				/*enable when maso is added
 				if(L.has_trait(TRAIT_MASO))
 					E.enthrallTally -= power_multiplier
 					E.resistanceTally += power_multiplier
 					E.cooldown += 1
-				*/
 			else
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='nicegreen'><b><i>I've been praised for doing a good job!</b></i></span>"), 5)
 			E.resistanceTally -= power_multiplier
@@ -877,16 +864,14 @@
 			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
 			var/descmessage = "[(L.lewd?"I've failed [E.enthrallGender]... What a bad, bad pet!":"I did a bad job...")]"
 			if (L.lewd)
-				//TODO: ADD THIS IN WHEN MASO IS MERGED
-				/*
 				if(L.has_trait(TRAIT_MASO))
 					L.adjustArousalLoss(3*power_multiplier)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>I've let [E.enthrallGender] down...!</b></span>"), 5)
-				else*/
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
+				else
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've let [E.enthrallGender] down...</b></span>"), 5)
 			else
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='warning'>I've failed [E.master]...</b></span>"), 5)
 				E.resistanceTally += power_multiplier
@@ -1115,7 +1100,7 @@
 			if (E.phase > 2)
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
+				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself! Actually this will trigger yourself oops.
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
 				C.remove_trait(TRAIT_DEAF, "Triggers")
 
@@ -1207,12 +1192,12 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3)//Tier 3 only
 					E.status = "heal"
 					E.statusStrength = (5 * power_multiplier)
 					E.cooldown += 5
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You begin to lick your wounds.</b></span>"), 5)
-					L.Stun(5 * power_multiplier)
+					L.Stun(15 * power_multiplier)
 
 	//STUN
 	else if(findtext(message, stun_words))
@@ -1276,7 +1261,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3)//Tier 3 only
 					E.status = "pacify"
 					E.cooldown += 10
 
@@ -1286,7 +1271,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3)//Tier 3 only
 					E.statusStrength = 2* power_multiplier
 					E.status = "charge"
 					E.cooldown += 10

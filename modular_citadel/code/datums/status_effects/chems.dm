@@ -213,8 +213,8 @@
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
-	if(M.ckey == enthrallID)
-		owner.remove_status_effect(src)//This shouldn't happen, but just in case, also it's not worth the overhead of giving someone themselves; they can't proc themselves as velvet removes them from the list.
+	//if(M.ckey == enthrallID)
+	//	owner.remove_status_effect(src)//This shouldn't happen, but just in case, also it's not worth the overhead of giving someone themselves; they can't proc themselves as velvet removes them from the list.
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
@@ -321,6 +321,15 @@
 				M.confused = 0
 				resistGrowth = 0
 			else
+				if (cooldown > 0)
+					cooldown -= (0.8 + (mental_capacity/500))
+					cooldownMsg = FALSE
+				else if (cooldownMsg == FALSE)
+					if(DistApart < 10)
+						if(master.lewd)
+							to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
+						else
+							to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 				return//If you break the mind of someone, you can't use status effects on them.
 
 
@@ -515,13 +524,10 @@
 	if (cTriggered == TRUE)
 		return
 	var/mob/living/carbon/C = owner
-	//message_admins("[C] heard something!")
 	raw_message = lowertext(raw_message)
 	for (var/trigger in customTriggers)
 		var/cached_trigger = lowertext(trigger)
-		//message_admins("[C] heard something: [message] vs [trigger] vs [raw_message]")
 		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
-			message_admins("[C] has been triggered with [trigger]!")
 			cTriggered = TRUE
 
 			//Speak (Forces player to talk) works
@@ -551,7 +557,7 @@
 				if (C.has_trait(TRAIT_NYMPHO))
 					if (C.getArousalLoss() > 80)
 						C.mob_climax(forced_climax=TRUE)
-						C.SetStun(20)//We got your stun effects in somewhere, Kev.
+						C.SetStun(10)//We got your stun effects in somewhere, Kev.
 					else
 						C.adjustArousalLoss(10)
 				else
@@ -637,7 +643,7 @@
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
 	//nymphomania
 	if (M.canbearoused && M.has_trait(TRAIT_NYMPHO))//I'm okay with this being removed.
-		deltaResist*= ((100 - M.arousalloss/100)/100)//more aroused you are, the weaker resistance you can give
+		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
 
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
 	if (owner.reagents.has_reagent("mannitol"))
