@@ -1,3 +1,5 @@
+#define STUNBATON_CHARGE_LENIENCY 0.3
+
 /obj/item/melee/baton
 	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
@@ -13,7 +15,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stunforce = 140
-	var/status = 0
+	var/status = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
@@ -44,17 +46,31 @@
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
-	if(cell)
-		//Note this value returned is significant, as it will determine
-		//if a stun is applied or not
-		. = cell.use(chrgdeductamt)
-		if(status && cell.charge < hitcost)
-			//we're below minimum, turn off
-			status = 0
-			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE)
+	if(!cell)
+		switch_status(FALSE, TRUE)
+		return FALSE
+	//Note this value returned is significant, as it will determine
+	//if a stun is applied or not
+	. = cell.use(chrgdeductamt)
+	if(status && (!. || (chargecheck && cell.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
+		//we're below minimum, turn off
+		switch_status(FALSE)
 
+/obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
+	if(status == new_status)
+		return
+	status = new_status
+	update_icon()
+	if(!silent)
+		playsound(loc, "sparks", 75, 1, -1)
+	if(status)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/melee/baton/process()
+	deductcharge(hitcost * 0.004, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -92,31 +108,25 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			status = 0
-			update_icon()
+			switch_status(FALSE, TRUE)
 	else
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost)
-		status = !status
+	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
+		switch_status(!status)
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
 	else
-		status = 0
+		switch_status(FALSE, TRUE)
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
-	update_icon()
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
-							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
-		deductcharge(hitcost)
+		clowning_around(user)
 		return
 
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - makes it impossible to baton in stamina softcrit
@@ -153,17 +163,21 @@
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			return FALSE
+	var/stunpwr = stunforce
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
+		if(!istype(R) || !R.cell || !R.cell.use(hitcost))
+			return FALSE
 	else
-		if(!deductcharge(hitcost))
-			return 0
+		var/stuncharge = cell.charge
+		if(!deductcharge(hitcost, FALSE))
+			stunpwr *= round(stuncharge/hitcost)
+			if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
+				return FALSE
 
-	L.Knockdown(stunforce)
-	L.adjustStaminaLoss(stunforce*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
+	L.Knockdown(stunpwr)
+	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
@@ -180,11 +194,18 @@
 		H.forcesay(GLOB.hit_appends)
 
 
-	return 1
+	return TRUE
+
+/obj/item/melee/baton/proc/clowning_around(mob/living/user)
+	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
+						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+	user.Knockdown(stunforce*3)
+	deductcharge(hitcost)
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
+		switch_status(FALSE)
 		deductcharge(1000 / severity)
 
 //Makeshift stun baton. Replacement for stun gloves.
@@ -211,3 +232,5 @@
 /obj/item/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()
+
+#undef STUNBATON_CHARGE_LENIENCY
