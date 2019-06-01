@@ -59,3 +59,10 @@
 		S.forceMove(D)
 		D.injector = S
 	..()
+
+/obj/item/ammo_casing/syringegun/dart
+	name = "syringe gun spring"
+	desc = "A high-power spring that throws syringes."
+	projectile_type = /obj/item/projectile/bullet/dart/syringe
+	firing_effect_type = null
+	harmful = FALSE

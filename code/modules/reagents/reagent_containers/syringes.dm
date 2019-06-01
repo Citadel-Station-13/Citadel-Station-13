@@ -14,6 +14,7 @@
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 	container_type = TRANSPARENT
+	var/Sname = "syringe"
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -72,7 +73,7 @@
 		if(SYRINGE_DRAW)
 
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>The syringe is full.</span>")
+				to_chat(user, "<span class='notice'>The [Sname] is full.</span>")
 				return
 
 			if(L) //living mob
@@ -137,8 +138,8 @@
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
-									"<span class='userdanger'>[user] injects [L] with the syringe!</span>")
+					L.visible_message("<span class='danger'>[user] injects [L] with the [Sname]!", \
+									"<span class='userdanger'>[user] injects [L] with the [Sname]!</span>")
 
 				if(L != user)
 					log_combat(user, L, "injected", src, addition="which had [contained]")
@@ -147,7 +148,7 @@
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)
 			reagents.trans_to(target, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
+			to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The [Sname] now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
@@ -158,7 +159,7 @@
 	var/rounded_vol
 	if(reagents && reagents.total_volume)
 		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "[Sname][rounded_vol]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling_overlay)
 	else
@@ -262,3 +263,26 @@
 
 /obj/item/reagent_containers/syringe/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
+
+/obj/item/reagent_containers/syringe/dart
+	name = "medicinal dart"
+	desc = "A non-harmful dart that can administer medication from a range. Unable to hold any caustic or toxic chemicals without disintegrating"
+	volume = 20
+	amount_per_transfer_from_this = 20
+	icon = 'icons/obj/dart.dmi'
+	Sname = "dart"
+	//harmful = FALSE
+
+/obj/item/reagent_containers/syringe/dart/afterattack(atom/target, mob/user , proximity)
+	..()
+	for(var/datum/reagent/R in src.reagents.reagent_list)//(!R == /datum/reagent/fermi) ||
+		if((!R == /datum/reagent/medicine) || (!R == /datum/reagent/consumable))
+			qdel(src)
+			to_chat(user, "<span class='notice'>The dart dissolves under the caustic nature of the chems!</span>")
+
+/obj/item/reagent_containers/syringe/dart/bluespace
+	name = "bluespace dart"
+	desc = "A non-harmful dart that can administer medication from a range, with extended 60u capacity. Unable to hold any caustic or toxic chemicals without disintegrating"
+	amount_per_transfer_from_this = 20
+	volume = 60
+	//harmful = FALSE
