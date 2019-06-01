@@ -121,7 +121,7 @@
 		M.adjustEarDamage(0, 30*mul)
 		M.Knockdown(60*mul)
 		if(prob(40))
-			M.Stun(200*mul)
+			M.Knockdown(200*mul)
 		else
 			M.Jitter(500*mul)
 
