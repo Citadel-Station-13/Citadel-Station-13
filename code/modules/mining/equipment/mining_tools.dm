@@ -129,6 +129,7 @@
 	item_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	toolspeed = 0.5
 	force = 5
 	throwforce = 7
 	materials = list(MAT_METAL=50)
