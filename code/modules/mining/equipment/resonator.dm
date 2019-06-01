@@ -20,6 +20,7 @@
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
+	force = 20
 	fieldlimit = 8
 	quick_burst_mod = 1
 
