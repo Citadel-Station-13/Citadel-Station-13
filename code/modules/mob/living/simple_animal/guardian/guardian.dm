@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(3)
 			adjustBruteLoss(30)
 
-/mob/living/simple_animal/hostile/guardian/gib()
+/mob/living/simple_animal/hostile/guardian/gib(no_drops)
 	if(summoner)
 		to_chat(summoner, "<span class='danger'><B>Your [src] was blown up!</span></B>")
 		summoner.gib()

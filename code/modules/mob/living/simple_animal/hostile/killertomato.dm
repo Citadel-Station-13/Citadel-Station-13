@@ -20,8 +20,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("plants")
+	robust_searching = 1
 
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 150
 	maxbodytemp = 500
 	gold_core_spawnable = HOSTILE_SPAWN
+
+
+/mob/living/simple_animal/hostile/killertomato/hunter
+	name = "Hunter Tomato"
+	desc = "It's a horrifyingly enormous beef tomato, and it's packing extra beef! This one seems to be a special breed, especially for hunting fauna of all sizes."
+	turns_per_move = 4 //slightly faster
+	friend_types = list("/mob/living/carbon/human")

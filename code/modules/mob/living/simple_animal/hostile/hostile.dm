@@ -19,6 +19,7 @@
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
+	var/list/friend_types = list() //converted to typecacheof(list()) in Initialize()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
@@ -57,6 +58,7 @@
 	if(!targets_from)
 		targets_from = src
 	wanted_objects = typecacheof(wanted_objects)
+	friend_types = typecacheof(friend_types)
 
 
 /mob/living/simple_animal/hostile/Destroy()
@@ -143,6 +145,8 @@
 		for (var/mob/A in oview(vision_range, targets_from))
 			. += A
 
+
+
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
 	if(!HasTargetsList)
@@ -214,6 +218,8 @@
 				if(L.stat > stat_attack)
 					return FALSE
 				if(L in friends)
+					return FALSE
+				if(is_type_in_typecache(L, friend_types))
 					return FALSE
 			else
 				if((faction_check && !attack_same) || L.stat)

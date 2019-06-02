@@ -260,8 +260,8 @@
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
 		adjustHealth(unsuitable_atmos_damage)
 
-/mob/living/simple_animal/gib()
-	if(butcher_results)
+/mob/living/simple_animal/gib(no_drops)
+	if(butcher_results && !no_drops)
 		var/atom/Tsec = drop_location()
 		for(var/path in butcher_results)
 			for(var/i in 1 to butcher_results[path])

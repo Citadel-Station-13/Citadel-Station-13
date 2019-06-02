@@ -48,8 +48,8 @@
 		collar_type = "[initial(collar_type)]_dead"
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/gib()
-	if(pcollar)
+/mob/living/simple_animal/pet/gib(no_drops)
+	if(pcollar && !no_drops)
 		new pcollar(drop_location())
 	..()
 

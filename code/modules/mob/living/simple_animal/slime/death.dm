@@ -31,6 +31,6 @@
 
 	return ..(gibbed)
 
-/mob/living/simple_animal/slime/gib()
+/mob/living/simple_animal/slime/gib(no_drops)
 	death(TRUE)
 	qdel(src)

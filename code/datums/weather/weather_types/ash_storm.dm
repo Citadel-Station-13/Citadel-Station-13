@@ -69,6 +69,12 @@
 	sound_wo.start()
 	sound_wi.start()
 
+	for(var/area/A in impacted_areas)
+		var/mob/living/simple_animal/hostile/megafauna/bubblegum/B = locate() in A
+		for(var/obj/effect/decal/cleanable/CL in A)
+			if(!(CL.can_bloodcrawl_in() && B)) //If Bubblegum is not present in the area, we'll clean blood too.
+				qdel(CL)
+
 /datum/weather/ash_storm/end()
 	. = ..()
 	sound_wo.stop()

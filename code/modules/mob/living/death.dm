@@ -1,4 +1,4 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/gib(no_brain, no_organs, no_bodyparts, no_drops)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)

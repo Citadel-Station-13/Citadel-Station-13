@@ -143,7 +143,7 @@
 	alert_drones(DRONE_NET_DISCONNECT)
 
 
-/mob/living/simple_animal/drone/gib()
+/mob/living/simple_animal/drone/gib(no_drops)
 	dust()
 
 /mob/living/simple_animal/drone/ratvar_act()
