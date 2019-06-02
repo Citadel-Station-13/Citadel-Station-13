@@ -768,6 +768,19 @@
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
+/obj/item/storage/box/mechfigures
+	name = "box of mech figures"
+	desc = "The latest set of collectable mech figures."
+	icon_state = "box"
+
+/obj/item/storage/box/mechfigures/PopulateContents()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/prize/))
+		new randomFigure(src)
+
+
+
+
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
