@@ -10,7 +10,7 @@
 	maxHealth = 30
 	health = 30
 	see_in_dark = 3
-	butcher_results = list()
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/killertomato = 2)
 	response_help  = "prods"
 	response_disarm = "pushes aside"
 	response_harm   = "smacks"
@@ -34,4 +34,5 @@
 	turns_per_move = 4 //slightly faster
 	maxHealth = 45 //slightly sturdier
 	health = 45
+	butcher_results = list()
 	friend_types = list(/mob/living/carbon/human)
