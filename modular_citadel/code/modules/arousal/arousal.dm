@@ -222,17 +222,17 @@
 		fluid_source = G.linked_organ.reagents
 	total_fluids = fluid_source.total_volume
 	if(mb_time)
-		src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] [p_their()] [G.name].</span>", \
-							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>", \
-							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>")
+		src.visible_message("<span class='love'>[src] starts to [G.masturbation_verb] [p_their()] [G.name].</span>", \
+							"<span class='userlove'>You start to [G.masturbation_verb] your [G.name].</span>", \
+							"<span class='userlove'>You start to [G.masturbation_verb] your [G.name].</span>")
 
 	if(do_after(src, mb_time, target = src))
 		if(total_fluids > 5)
 			fluid_source.reaction(src.loc, TOUCH, 1, 0)
 			fluid_source.clear_reagents()
-		src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
-							"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
-							"<span class='green'>You have relieved yourself.</span>")
+		src.visible_message("<span class='love'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
+							"<span class='userlove'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
+							"<span class='userlove'>You have relieved yourself.</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
@@ -260,16 +260,16 @@
 	else
 		total_fluids = fluid_source.total_volume
 		if(mb_time) //as long as it's not instant, give a warning
-			src.visible_message("<span class='danger'>[src] looks like they're about to cum.</span>", \
-								"<span class='green'>You feel yourself about to orgasm.</span>", \
-								"<span class='green'>You feel yourself about to orgasm.</span>")
+			src.visible_message("<span class='love'>[src] looks like they're about to cum.</span>", \
+								"<span class='userlove'>You feel yourself about to orgasm.</span>", \
+								"<span class='userlove'>You feel yourself about to orgasm.</span>")
 		if(do_after(src, mb_time, target = src))
 			if(total_fluids > 5)
 				fluid_source.reaction(src.loc, TOUCH, 1, 0)
 			fluid_source.clear_reagents()
-			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
-								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
-								"<span class='green'>You climax using your [G.name].</span>")
+			src.visible_message("<span class='love'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
+								"<span class='userlove'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
+								"<span class='userlove'>You climax using your [G.name].</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
 				setArousalLoss(min_arousal)
@@ -288,9 +288,9 @@
 		fluid_source = G.linked_organ.reagents
 	total_fluids = fluid_source.total_volume
 	if(mb_time) //Skip warning if this is an instant climax.
-		src.visible_message("[src] is about to climax with [L]!", \
-							"You're about to climax with [L]!", \
-							"<span class='danger'>You're preparing to climax with someone!</span>")
+		src.visible_message("<span class='love'>[src] is about to climax with [L]!</span>", \
+							"<span class='userlove'>You're about to climax with [L]!</span>", \
+							"<span class='userlove'>You're preparing to climax with someone!</span>")
 	if(spillage)
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids*G.fluid_transfer_factor)
@@ -298,9 +298,9 @@
 			if(total_fluids > 5)
 				fluid_source.reaction(L.loc, TOUCH, 1, 0)
 			fluid_source.clear_reagents()
-			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
-								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
-								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
+			src.visible_message("<span class='love'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
+								"<span class='userlove'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
+								"<span class='userlove'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
@@ -309,9 +309,9 @@
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids)
 			total_fluids = 0
-			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
-								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
-								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
+			src.visible_message("<span class='love'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
+								"<span class='userlove'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
+								"<span class='userlove'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 			if(G.can_climax)
@@ -335,14 +335,14 @@
 	//	to_chat(src, "<span class='warning'>You need a container to do this!</span>")
 	//	return
 
-	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] their [G.name] over [container].</span>", \
-						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over [container].</span>", \
-						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over something.</span>")
+	src.visible_message("<span class='love'>[src] starts to [G.masturbation_verb] their [G.name] over [container].</span>", \
+						"<span class='userlove'>You start to [G.masturbation_verb] your [G.name] over [container].</span>", \
+						"<span class='userlove'>You start to [G.masturbation_verb] your [G.name] over something.</span>")
 	if(do_after(src, mb_time, target = src) && in_range(src, container))
 		fluid_source.trans_to(container, total_fluids)
-		src.visible_message("<span class='danger'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
-							"<span class='green'>You used your [G.name] to fill [container].</span>", \
-							"<span class='green'>You have relieved some pressure.</span>")
+		src.visible_message("<span class='love'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
+							"<span class='userlove'>You used your [G.name] to fill [container].</span>", \
+							"<span class='userlove'>You have relieved some pressure.</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
