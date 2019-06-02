@@ -79,12 +79,21 @@
 						make_podman = 1
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
-						make_podman = 1
-						if(isliving(M))
-							var/mob/living/L = M
-							make_podman = !L.hellbound
-						break
+					if(M.stat == DEAD)
+						if(M.ckey == ckey && !M.suiciding)
+							make_podman = 1
+							if(isliving(M))
+								var/mob/living/L = M
+								make_podman = !L.hellbound
+							break
+					else
+						if(ckey == user.ckey)
+							var/transfer_choice = alert("Let your mind be transferred to the new pod-person body? (Warning, your old body will die!)",,"Yes","No")
+							if(transfer_choice != "Yes")
+								break
+							else
+								make_podman = 1
+								user.death()
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
 				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding)
@@ -98,6 +107,8 @@
 						make_podman = !L.hellbound
 					ckey_holder = M.ckey
 					break
+
+
 
 	if(make_podman)	//all conditions met!
 		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
