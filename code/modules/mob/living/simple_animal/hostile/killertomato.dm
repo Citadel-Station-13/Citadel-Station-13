@@ -34,4 +34,4 @@
 	turns_per_move = 4 //slightly faster
 	maxHealth = 45 //slightly sturdier
 	health = 45
-	friend_types = list("/mob/living/carbon/human")
+	friend_types = list(/mob/living/carbon/human)
