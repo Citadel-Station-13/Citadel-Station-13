@@ -283,7 +283,7 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(src != user && user.has_trait(TRAIT_EMPATH) && !appears_dead)
+		if(src != user && L.has_trait(TRAIT_EMPATH) && !appears_dead)
 			if (a_intent != INTENT_HELP)
 				msg += "[t_He] seem[p_s()] to be on guard.\n"
 			if (getOxyLoss() >= 10)
