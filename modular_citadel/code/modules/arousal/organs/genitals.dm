@@ -141,14 +141,14 @@
 	if (NOGENITALS in dna.species.species_traits)
 		return
 	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
-	if(dna.features["has_breasts"])
-		give_breasts()
 	if(dna.features["has_vag"])
 		give_vagina()
 	if(dna.features["has_womb"])
 		give_womb()
 	if(dna.features["has_balls"])
 		give_balls()
+	if(dna.features["has_breasts"]) // since we have multi-boobs as a thing, we'll want to at least draw over these. but not over the pingas.
+		give_breasts()
 	if(dna.features["has_cock"])
 		give_penis()
 	if(dna.features["has_ovi"])

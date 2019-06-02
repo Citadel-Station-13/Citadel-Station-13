@@ -53,9 +53,10 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	GLOB.breasts_size_list = list("a","b","c","d","e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-	for(var/K in GLOB.breast_shapes_list)
+	for(var/K in GLOB.breasts_shapes_list)
 		var/datum/sprite_accessory/breasts/value = GLOB.breasts_shapes_list[K]
 		GLOB.breasts_shapes_icons[K] = value.icon_state
+
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 	for(var/K in GLOB.balls_shapes_list)
 		var/datum/sprite_accessory/testicles/value = GLOB.balls_shapes_list[K]
