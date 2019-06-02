@@ -19,7 +19,7 @@
 /datum/mood_event/burnt_thumb
 	description = "<span class='warning'>I shouldn't play with lighters...</span>\n"
 	mood_change = -1
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/cold
 	description = "<span class='warning'>It's way too cold in here.</span>\n"
@@ -32,17 +32,17 @@
 /datum/mood_event/creampie
 	description = "<span class='warning'>I've been creamed. Tastes like pie flavor.</span>\n"
 	mood_change = -2
-	timeout = 3 MINUTESS
+	timeout = 3 MINUTE
 
 /datum/mood_event/slipped
 	description = "<span class='warning'>I slipped. I should be more careful next time...</span>\n"
 	mood_change = -2
-	timeout = 3 MINUTESS
+	timeout = 3 MINUTE
 
 /datum/mood_event/eye_stab
 	description = "<span class='boldwarning'>I used to be an adventurer like you, until I took a screwdriver to the eye.</span>\n"
 	mood_change = -4
-	timeout = 3 MINUTESS
+	timeout = 3 MINUTE
 
 /datum/mood_event/delam //SM delamination
 	description = "<span class='boldwarning'>Those God damn engineers can't do anything right...</span>\n"
@@ -52,7 +52,7 @@
 /datum/mood_event/depression
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
 	mood_change = -9
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
@@ -71,7 +71,7 @@
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
 	mood_change = -3
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/embedded
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
@@ -80,7 +80,7 @@
 /datum/mood_event/table
 	description = "<span class='warning'>Someone threw me on a table!</span>\n"
 	mood_change = -2
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))
@@ -122,7 +122,7 @@
 /datum/mood_event/healsbadman
 	description = "<span class='warning'>I feel a lot better, but wow that was disgusting.</span>\n"
 	mood_change = -4
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/jittery
 	description = "<span class='warning'>I'm nervous and on edge and I can't stand still!!</span>\n"
@@ -131,12 +131,12 @@
 /datum/mood_event/vomit
 	description = "<span class='warning'>I just threw up. Gross.</span>\n"
 	mood_change = -2
-	timeout = 2 MINUTESS
+	timeout = 2 MINUTE
 
 /datum/mood_event/vomitself
 	description = "<span class='warning'>I just threw up all over myself. This is disgusting.</span>\n"
 	mood_change = -4
-	timeout = 3 MINUTESS
+	timeout = 3 MINUTE
 
 /datum/mood_event/painful_medicine
 	description = "<span class='warning'>Medicine may be good for me but right now it stings like hell.</span>\n"

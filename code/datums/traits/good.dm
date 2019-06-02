@@ -171,8 +171,8 @@
 	H.regenerate_icons()
 
 /datum/quirk/bloodpressure
-	name = "Synthetic blood"
-	desc = "You've got a new form of synthetic blood that increases the total blood volume inside of you as well as the rate of replenishment!"
+	name = "Polycythemia vera"
+	desc = "You've a treated form of Polycythemia vera that increases the total blood volume inside of you as well as the rate of replenishment!"
 	value = 1 //I honeslty dunno if this is a good trait? I just means you use more of medbays blood and make janitors madder, but you also regen blood a lil faster.
 	mob_trait = TRAIT_HIGH_BLOOD
 	gain_text = "<span class='notice'>You feel full of blood!</span>"
