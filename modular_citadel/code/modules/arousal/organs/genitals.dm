@@ -1,25 +1,26 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	var/shape = "human"
-	var/sensitivity = 1
-	var/list/genital_flags = list()
-	var/can_masturbate_with = FALSE
-	var/masturbation_verb = "masturbate"
-	var/can_climax = FALSE
-	var/fluid_transfer_factor = 0.0 //How much would a partner get in them if they climax using this?
-	var/size = 2 //can vary between num or text, just used in icon_state strings
-	var/fluid_id = null
-	var/fluid_max_volume = 50
-	var/fluid_efficiency = 1
-	var/fluid_rate = 1
-	var/fluid_mult = 1
-	var/producing = FALSE
-	var/aroused_state = FALSE //Boolean used in icon_state strings
-	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
+	w_class 					= WEIGHT_CLASS_NORMAL
+	var/shape					= "human"
+	var/sensitivity				= AROUSAL_START_VALUE
+	var/list/genital_flags		= list()
+	var/can_masturbate_with 	= FALSE
+	var/masturbation_verb		= "masturbate"
+	var/can_climax				= FALSE
+	var/fluid_transfer_factor	= 0.0 //How much would a partner get in them if they climax using this?
+	var/size					= 2 //can vary between num or text, just used in icon_state strings
+	var/fluid_id				= null
+	var/fluid_max_volume		= 50
+	var/fluid_efficiency		= 1
+	var/fluid_rate				= 1
+	var/fluid_mult				= 1
+	var/producing				= FALSE
+	var/aroused_state			= FALSE //Boolean used in icon_state strings
+	var/aroused_amount			= 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
-	var/through_clothes = FALSE
-	var/internal 		= FALSE
-	var/hidden			= FALSE
+	var/through_clothes			= FALSE
+	var/internal				= FALSE
+	var/hidden					= FALSE
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
@@ -188,7 +189,11 @@
 				T.color = "#[dna.features["balls_color"]]"
 			T.size = dna.features["balls_size"]
 			T.sack_size = dna.features["balls_sack_size"]
-			T.shape = "single"
+			T.shape = dna.features["balls_shape"]
+			if(dna.features["balls_shape"] == "Hidden")
+				T.internal = TRUE
+			else
+				T.internal = FALSE
 			T.fluid_id = dna.features["balls_fluid"]
 			T.fluid_rate = dna.features["balls_cum_rate"]
 			T.fluid_mult = dna.features["balls_cum_mult"]
@@ -298,9 +303,7 @@
 	for(var/obj/item/organ/O in H.internal_organs)
 		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
-			to_chat(world, "checking [G] for exposure")
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
-				to_chat(world, "[G] is [G.is_exposed() ? "true" : "false"]")
 				genitals_to_add += H.getorganslot(G.slot)
 	//Now we added all genitals that aren't internal and should be rendered
 
@@ -311,7 +314,6 @@
 			var/datum/sprite_accessory/S
 			size = G.size
 			aroused_state = G.aroused_state
-			to_chat(world, "switching [G.type] for sprite loading")
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
@@ -327,7 +329,6 @@
 
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
 			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
-			to_chat(world, "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext] is icon state")
 
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
