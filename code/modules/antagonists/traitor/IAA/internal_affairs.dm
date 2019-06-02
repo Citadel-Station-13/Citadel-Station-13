@@ -130,6 +130,7 @@
 	if(!owner.current||owner.current.stat==DEAD)
 		return
 	to_chat(owner.current, "<span class='userdanger'> Target eliminated: [victim.name]</span>")
+	LAZYINITLIST(targets_stolen)
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_

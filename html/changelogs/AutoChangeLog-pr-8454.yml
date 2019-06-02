@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - tweak: "15 - >10"
+  - bugfix: "both bags have the same name"

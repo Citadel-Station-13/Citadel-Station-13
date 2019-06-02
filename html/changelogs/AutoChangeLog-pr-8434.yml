@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Stops pulls of resting mobs breaking off whenever you swap turfs with someone else because of crawling delays."
