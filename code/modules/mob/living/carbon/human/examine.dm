@@ -281,7 +281,7 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
-	if(src != user && user.has_trait(TRAIT_EMPATH) && !appears_dead && !stat == DEAD)
+	if(src != user && user.has_trait(TRAIT_EMPATH) && !appears_dead)
 		if (a_intent != INTENT_HELP)
 			msg += "[t_He] seem[p_s()] to be on guard.\n"
 		if (getOxyLoss() >= 10)
