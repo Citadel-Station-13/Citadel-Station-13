@@ -61,8 +61,8 @@
 	..()
 
 /obj/item/ammo_casing/syringegun/dart
-	name = "syringe gun spring"
-	desc = "A high-power spring that throws syringes."
-	projectile_type = /obj/item/projectile/bullet/dart/syringe
+	name = "dart gun air canister"
+	desc = "A small canister of compressed gas."
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
 	firing_effect_type = null
 	harmful = FALSE

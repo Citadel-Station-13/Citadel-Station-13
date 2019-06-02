@@ -110,6 +110,7 @@
 	item_state = "dartgun"
 	materials = list(MAT_METAL=2000, MAT_GLASS=500)
 	suppressed = TRUE //Softer fire sound
+	can_unsuppress = FALSE
 
 /obj/item/gun/syringe/dart/Initialize()
 	..()
