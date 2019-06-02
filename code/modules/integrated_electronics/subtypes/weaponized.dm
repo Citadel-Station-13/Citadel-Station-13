@@ -215,7 +215,7 @@
 	The 'fire' activator will cause the mechanism to attempt to launch objects at the coordinates, if possible. Note that the \
 	projectile needs to be inside the machine, or on an adjacent tile, and must be medium sized or smaller. The assembly \
 	must also be a gun if you wish to launch something while the assembly is in hand."
-	complexity = 75
+	complexity = 50
 	w_class = WEIGHT_CLASS_SMALL
 	size = 4
 	cooldown_per_use = 30
@@ -306,7 +306,7 @@
 	desc = "Used to stun a target holding the device via electricity."
 	icon_state = "power_relay"
 	extended_desc = "Attempts to stun the holder of this device, with the strength input being the strength of the stun, from 1 to 70."
-	complexity = 60
+	complexity = 30
 	size = 4
 	inputs = list("strength" = IC_PINTYPE_NUMBER)
 	activators = list("stun" = IC_PINTYPE_PULSE_IN, "on success" = IC_PINTYPE_PULSE_OUT, "on fail" = IC_PINTYPE_PULSE_OUT)
