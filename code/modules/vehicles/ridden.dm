@@ -4,7 +4,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = FALSE
 	default_driver_move = FALSE
-	var/legs_required = 2
+	var/legs_required = 1
 	var/arms_required = 0	//why not?
 
 /obj/vehicle/ridden/Initialize()
@@ -31,6 +31,9 @@
 
 /obj/vehicle/ridden/post_buckle_mob(mob/living/M)
 	add_occupant(M)
+	if(M.get_num_legs() < legs_required)
+		to_chat(M, "<span class='warning'>You don't have enough legs to operate the pedals!</span>")
+		unbuckle_mob(M)
 	return ..()
 
 /obj/vehicle/ridden/attackby(obj/item/I, mob/user, params)
@@ -59,11 +62,6 @@
 /obj/vehicle/ridden/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
-		return FALSE
-	if(canmove && (user.get_num_legs() < legs_required))
-		to_chat(user, "<span class='warning'>You don't have enough legs to operate the pedals!</span>")
-		canmove = FALSE
-		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 		return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
