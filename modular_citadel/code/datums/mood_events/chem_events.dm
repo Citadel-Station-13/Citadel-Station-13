@@ -10,14 +10,14 @@
 
 /datum/mood_event/enthrallpraise
 	mood_change = 10
-	timeout = ONEMINUTE
+	timeout = 1 MINUTES
 
 /datum/mood_event/enthrallpraise/add_effects(message)
    description = "<span class='nicegreen'>[message]</span>\n"
 
 /datum/mood_event/enthrallscold
    mood_change = -10
-   timeout = ONEMINUTE
+   timeout = 1 MINUTES
 
 /datum/mood_event/enthrallscold/add_effects(message)
 	description = "<span class='warning'>[message]</span>\n"//aaa I'm not kinky enough for this

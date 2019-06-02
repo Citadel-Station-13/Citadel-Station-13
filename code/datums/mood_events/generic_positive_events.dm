@@ -1,7 +1,7 @@
 /datum/mood_event/hug
 	description = "<span class='nicegreen'>Hugs are nice.</span>\n"
 	mood_change = 1
-	timeout = TWOMINUTES
+	timeout = 2 MINUTESS
 
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
@@ -50,7 +50,7 @@
 /datum/mood_event/jolly
 	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
 	mood_change = 6
-	timeout = TWOMINUTES
+	timeout = 2 MINUTESS
 
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
@@ -74,7 +74,7 @@
 /datum/mood_event/goodmusic
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
-	timeout = ONEMINUTE
+	timeout = 1 MINUTES
 
 /datum/mood_event/chemical_euphoria
 	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
@@ -83,9 +83,9 @@
  /datum/mood_event/chemical_laughter
 	description = "<span class='nicegreen'>Laughter really is the best medicine! Or is it?</span>\n"
 	mood_change = 4
-	timeout = THREEMINUTES
+	timeout = 3 MINUTESS
 
  /datum/mood_event/chemical_superlaughter
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
-	timeout = THREEMINUTES
+	timeout = 3 MINUTESS

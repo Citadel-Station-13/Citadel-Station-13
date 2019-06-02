@@ -3,12 +3,12 @@
 /datum/mood_event/headpat
 	description = "<span class='nicegreen'>Headpats are nice.</span>\n"
 	mood_change = 2
-	timeout = TWOMINUTES
+	timeout = 2 MINUTESS
 
 /datum/mood_event/hugbox
 	description = "<span class='nicegreen'>I hugged a box of hugs recently.</span>\n"
 	mood_change = 1
-	timeout = TWOMINUTES
+	timeout = 2 MINUTESS
 
 /datum/mood_event/plushpet
 	description = "<span class='nicegreen'>I pet a plush recently.</span>\n"
