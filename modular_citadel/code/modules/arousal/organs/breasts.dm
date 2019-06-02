@@ -9,7 +9,7 @@
 	size 					= BREASTS_SIZE_DEF  //SHOULD BE A LETTER, starts as a number...???
 	var/cached_size			= null //for enlargement SHOULD BE A NUMBER
 	var/prev_size			//For flavour texts SHOULD BE A LETTER
-	var/breast_sizes 		= list ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "huge", "flat")
+	//var/breast_sizes 		= list ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "huge", "flat")
 	var/breast_values 		= list ("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5, "f" = 6, "g" = 7, "h" = 8, "i" = 9, "j" = 10, "k" = 11, "l" = 12, "m" = 13, "n" = 14, "o" = 15, "huge" = 16, "flat" = 0)
 	var/statuscheck			= FALSE
 	fluid_id				= "milk"
@@ -95,12 +95,12 @@
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = FALSE
 		if(1 to 8) //If modest size
-			size = breast_sizes[round(cached_size)]
+			size = GLOB.breasts_size_list[round(cached_size)]
 			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = FALSE
 		if(9 to 15) //If massive
-			size = breast_sizes[round(cached_size)]
+			size = GLOB.breasts_size_list[round(cached_size)]
 			if(!owner.has_status_effect(/datum/status_effect/chem/BElarger))
 				owner.apply_status_effect(/datum/status_effect/chem/BElarger)
 				statuscheck = TRUE
@@ -113,7 +113,7 @@
 		if(size == 0)//Bloody byond with it's counting from 1
 			size = "flat"
 		if(isnum(prev_size))
-			prev_size = breast_sizes[prev_size]
+			prev_size = GLOB.breasts_size_list[prev_size]
 		if (breast_values[size] > breast_values[prev_size])
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner

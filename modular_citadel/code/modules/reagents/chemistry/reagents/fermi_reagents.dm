@@ -660,7 +660,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if(!P)
 		H.emergent_genital_call()
 		return
-	P.prev_size = P.length
+	P.prev_length = P.length
 	P.cached_length = P.length
 
 /datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
@@ -675,7 +675,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			nP.length = 1
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
 			nP.cached_length = 1
-			nP.prev_size = 1
+			nP.prev_length = 1
 			M.reagents.remove_reagent(src.id, 5)
 			P = nP
 

@@ -171,7 +171,7 @@
 			P.length = dna.features["cock_length"]
 			P.girth_ratio = dna.features["cock_girth_ratio"]
 			P.shape = dna.features["cock_shape"]
-			P.prev_size = P.length
+			P.prev_length = P.length
 			P.cached_length = P.length
 			P.update()
 
