@@ -41,11 +41,6 @@
 	QDEL_NULL(internal)
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/attack_animal(mob/living/simple_animal/M)
-	. = ..()
-	for(var/mob/living/simple_animal/SA in orange(1, src)
-		devour(SA)
-
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return

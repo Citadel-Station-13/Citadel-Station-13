@@ -179,5 +179,7 @@
 			K.melee_damage_upper += round(seed.potency / 10)
 			K.move_to_delay -= round(seed.production / 50)
 			K.health = K.maxHealth
+			for(var/datum/plant_gene/trait/fire_resistance/FR in seed.genes)
+				K.damage_coeff[BURN] = 0
 			K.visible_message("<span class='notice'>The Hunter Tomato growls as it suddenly awakens.</span>")
 			qdel(src)
