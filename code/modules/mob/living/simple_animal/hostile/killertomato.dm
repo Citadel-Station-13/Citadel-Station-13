@@ -32,4 +32,6 @@
 	name = "Hunter Tomato"
 	desc = "It's a horrifyingly enormous beef tomato, and it's packing extra beef! This one seems to be a special breed, especially for hunting fauna of all sizes."
 	turns_per_move = 4 //slightly faster
+	maxHealth = 45 //slightly sturdier
+	health = 45
 	friend_types = list("/mob/living/carbon/human")

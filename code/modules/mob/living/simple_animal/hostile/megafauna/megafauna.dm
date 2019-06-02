@@ -41,6 +41,11 @@
 	QDEL_NULL(internal)
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/attack_animal(mob/living/simple_animal/M)
+	. = ..()
+	for(var/mob/living/simple_animal/SA in orange(1, src)
+		devour(SA)
+
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
@@ -74,11 +79,6 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/attack_animal(mob/living/simple_animal/M)
-	. = ..()
-	for(var/mob/living/simple_animal/SA in orange(1, src))
-		devour(SA)
-
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	if(recovery_time >= world.time)
 		return
@@ -103,7 +103,7 @@
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
-	L.gib(no_drops = TRUE)
+	L.gib(no_drops=1)
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
