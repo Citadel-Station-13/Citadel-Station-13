@@ -265,12 +265,12 @@
 
 /obj/item/reagent_containers/syringe/dart
 	name = "medicinal smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action."
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD."
 	volume = 20
 	amount_per_transfer_from_this = 20
-	icon = 'icons/obj/dart.dmi'
-	item_state = "dart_0"
-	//harmful = FALSE
+	//icon = 'icons/obj/dart.dmi'
+	icon_state = "empty"
+	item_state = "syringe_empty"
 
 /obj/item/reagent_containers/syringe/dart/afterattack(atom/target, mob/user , proximity)
 
@@ -320,9 +320,30 @@
 /obj/item/reagent_containers/syringe/dart/attack_self(mob/user)
 	return
 
+/obj/item/reagent_containers/syringe/update_icon()
+	cut_overlays()
+	var/rounded_vol
+
+	rounded_vol = "empty"
+	if(reagents && reagents.total_volume)
+		if(volume/reagents.total_volume == 1)
+			rounded_vol="full"
+
+	icon_state = "[rounded_vol]"
+	item_state = "syringe_[rounded_vol]"
+	if(ismob(loc))
+		var/mob/M = loc
+		var/injoverlay
+		switch(mode)
+			if (SYRINGE_DRAW)
+				injoverlay = "draw"
+			if (SYRINGE_INJECT)
+				injoverlay = "ready"
+		add_overlay(injoverlay)
+		M.update_inv_hands()
+
 /obj/item/reagent_containers/syringe/dart/bluespace
 	name = "bluespace smartdart"
-	desc = "A non-harmful dart that can administer medication from a range, with extended 60u capacity. Unable to hold any caustic or toxic chemicals without disintegrating"
-	amount_per_transfer_from_this = 20
-	volume = 60
-	//harmful = FALSE
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD. Has an extended volume capacity thanks to bluespace foam."
+	amount_per_transfer_from_this = 50
+	volume = 50

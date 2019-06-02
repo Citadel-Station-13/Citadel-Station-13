@@ -64,20 +64,21 @@
 							if(R.overdose_threshold == 0) //Is there a possible OD?
 								M.reagents.add_reagent(R.id, R.volume)
 							else
-								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - Rm.volume) -1)
+								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - Rm.volume) -1) //Doesn't work
+								message_admins("Merge: Adding [transVol], OD: [R.overdose_threshold], curvol [Rm.volume]")
 								M.reagents.add_reagent(R.id, transVol)
-							target.visible_message("<span class='notice'>\The [src] beeps!</span>")
-							return TRUE
 						else
 							if(!R.overdose_threshold == 0)
 								var/transVol = CLAMP(R.volume, 0, R.overdose_threshold-1)
 								M.reagents.add_reagent(R.id, transVol)
 							else
 								M.reagents.add_reagent(R.id, R.volume)
-							target.visible_message("<span class='notice'>\The [src] beeps!</span>")
-							to_chat("<span class='notice'><i>You feel a tiny prick, and turn around to see a smartdart embedded in your butt.</i.</span>")
-							return TRUE
 
+
+
+				target.visible_message("<span class='notice'>\The [src] beeps!</span>")
+				to_chat("<span class='notice'><i>You feel a tiny prick, and turn around to see a smartdart embedded in your butt.</i></span>")
+				return TRUE
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \

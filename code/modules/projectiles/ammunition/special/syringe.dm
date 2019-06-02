@@ -61,7 +61,7 @@
 	..()
 
 /obj/item/ammo_casing/syringegun/dart
-	name = "dart gun air canister"
+	name = "used air canister"
 	desc = "A small canister of compressed gas."
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/dart
 	firing_effect_type = null
