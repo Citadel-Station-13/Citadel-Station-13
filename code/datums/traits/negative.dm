@@ -191,6 +191,7 @@
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
 	value = -3
+	mob_trait = TRAIT_PARA
 	human_only = TRUE
 	gain_text = null // Handled by trauma.
 	lose_text = null
@@ -242,8 +243,12 @@
 	var/slot_string = "limb"
 
 /datum/quirk/prosthetic_limb/on_spawn()
-	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/H = quirk_holder
+	var/limb_slot
+	if(H.has_trait("TRAIT_PARA"))//Prevent paraplegic legs being replaced
+		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	else
+		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)

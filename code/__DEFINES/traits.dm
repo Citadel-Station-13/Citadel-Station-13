@@ -78,6 +78,7 @@
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
+#define TRAIT_PARA              "paraplegic"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

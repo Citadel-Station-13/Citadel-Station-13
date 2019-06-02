@@ -60,7 +60,7 @@
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
-	if(canmove && (user.get_num_lehs() < legs_required))
+	if(canmove && (user.get_num_legs() < legs_required))
 		to_chat(user, "<span class='warning'>You don't have enough legs to operate the pedals!</span>")
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
