@@ -69,8 +69,7 @@
 		/obj/item/clothing/shoes/kindleKicks = ARCADE_WEIGHT_RARE,
 		/obj/item/storage/belt/military/snack = ARCADE_WEIGHT_RARE,
 
-		/obj/item/clothing/mask/fakemoustache/italian = ARCADE_WEIGHT_RARE,
-		/obj/item/disk/nuclear/fake = ARCADE_WEIGHT_RARE
+		/obj/item/clothing/mask/fakemoustache/italian = ARCADE_WEIGHT_RARE
 	)
 
 	light_color = LIGHT_COLOR_GREEN
