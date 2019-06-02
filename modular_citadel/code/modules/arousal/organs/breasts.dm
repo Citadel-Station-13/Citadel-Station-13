@@ -41,8 +41,8 @@
 			desc = "You see a pair of breasts."
 		if("quad")
 			desc = "You see two pairs of breast, one just under the other."
-		if("six")
-			desc = "You see three pairs of breasts, running from their chest to their belly."
+		if("sextuple")
+			desc = "You see three sets of breasts, running from their chest to their belly."
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
 	if (size)
@@ -57,10 +57,10 @@
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
-				string = "breasts_[GLOB.breasts_shapes_icons[lowertext(shape)]]_[size]-s"
+				string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]-s"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
-			string = "breasts_[GLOB.breasts_shapes_icons[lowertext(shape)]]_[size]"
+			string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			icon_state = sanitize_text(string)

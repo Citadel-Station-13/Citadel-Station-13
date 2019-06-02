@@ -26,14 +26,6 @@
 	if(reagents && producing)
 		generate_cum()
 
-/obj/item/organ/genital/testicles/update_size()
-	if(size == 1)
-		size_name = "average"
-	if(size == 2)
-		size_name = "enlarged"
-	if(size >= 3)
-		size_name = "engorged"
-
 /obj/item/organ/genital/testicles/proc/generate_cum()
 	reagents.maximum_volume = fluid_max_volume
 	if(reagents.total_volume >= reagents.maximum_volume)
@@ -53,8 +45,7 @@
 		linked_organ = (owner.getorganslot("penis"))
 		if(linked_organ)
 			linked_organ.linked_organ = src
-			size = linked_organ.size
-			update_size()
+
 	else
 		if(linked_organ)
 			linked_organ.linked_organ = null
@@ -67,8 +58,17 @@
 
 /obj/item/organ/genital/testicles/update_appearance()
 	if(owner)
+		if(size == 0)
+			size_name = "nonexistant"
+		if(size == 1)
+			size_name = "average"
+		if(size == 2)
+			size_name = "enlarged"
+		if(size >= 3)
+			size_name = "engorged"
+
 		if(!internal)
-			desc = "You see an [lowertext(size_name)] pair of testicles dangling."
+			desc = "You see an [size_name] pair of testicles dangling."
 		else
 			desc = "They don't have any testicles you can see."
 		var/string
