@@ -386,3 +386,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/blackredgold
 	ckeywhitelist = list("ttbnc")
+
+/datum/gear/nerfallthethings
+	name = "N.E.R.F gun"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/gun/magic/nerf
+	ckeywhitelist = list("poojawa")
