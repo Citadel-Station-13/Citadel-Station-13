@@ -637,13 +637,14 @@
 /mob/living/resist_grab(moving_resist)
 	. = 1
 	if(pulledby.grab_state)
-		if(!resting && prob(30/pulledby.grab_state))
+		var/resist_chance = (moving_resist == TRUE) ? 10/pulledby.grab_state : 30/pulledby.grab_state
+		if(!resting && prob(resist_chance))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return 0
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 20
+			client.move_delay = world.time + 30
 	else
 		pulledby.stop_pulling()
 		return 0
