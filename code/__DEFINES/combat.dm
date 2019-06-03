@@ -79,6 +79,8 @@
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
 #define ATTACK_EFFECT_DISARM	"disarm"
+#define ATTACK_EFFECT_ASS_SLAP  "ass_slap"
+#define ATTACK_EFFECT_FACE_SLAP "face_slap"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
