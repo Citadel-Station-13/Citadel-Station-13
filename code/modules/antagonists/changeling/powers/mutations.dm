@@ -172,7 +172,7 @@
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
 	if(ismob(loc) && !silent)
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists ng it inand mutates, transformito a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, 60, 80)
