@@ -157,7 +157,9 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
+	total_mass = 3.5
 	force = 25
+	armour_penetration = 35 //I mean, the shadowling's blade has this too. 25 force is not a particular lot either, for a super-loud and obvious weapon.
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
@@ -170,7 +172,7 @@
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
 	if(ismob(loc) && !silent)
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists ng it inand mutates, transformito a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, 60, 80)
