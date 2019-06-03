@@ -637,8 +637,7 @@
 /mob/living/resist_grab(moving_resist)
 	. = 1
 	if(pulledby.grab_state)
-		var/resist_chance = (moving_resist == TRUE) ? 10/pulledby.grab_state : 30/pulledby.grab_state
-		if(!resting && prob(resist_chance))
+		if(!resting && prob((moving_resist == TRUE) ? 10/pulledby.grab_state : 30/pulledby.grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
