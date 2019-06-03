@@ -157,9 +157,9 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	total_mass = 3.5
+	total_mass = 4
 	force = 25
-	armour_penetration = 35 //I mean, the shadowling's blade has this too. 25 force is not a particular lot either, for a super-loud and obvious weapon.
+	armour_penetration = 20 //I mean, the shadowling's blade has this too. 25 force is not a particular lot either, for a super-loud and obvious weapon.
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
