@@ -17,6 +17,29 @@
 	pixel_x = -PIPING_LAYER_P_X
 	pixel_y = -PIPING_LAYER_P_Y
 
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos //Used for atmos waste loops
+	on = TRUE
+	icon_state = "filter_on"
+
+
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos/n2
+	name = "nitrogen filter"
+	filter_type = "n2"
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos/o2
+	name = "oxygen filter"
+	filter_type = "o2"
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos/co2
+	name = "carbon dioxide filter"
+	filter_type = "co2"
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos/n2o
+	name = "nitrous oxide filter"
+	filter_type = "n2o"
+/obj/machinery/atmospherics/components/trinary/filter/layer1/atmos/plasma
+	name = "plasma filter"
+	filter_type = "plasma"
+
+
+
 /obj/machinery/atmospherics/components/trinary/filter/layer3
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X

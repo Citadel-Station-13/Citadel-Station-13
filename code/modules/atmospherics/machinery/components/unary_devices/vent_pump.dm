@@ -100,9 +100,25 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output
 	name = "nitrogen tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
+
+
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output
 	name = "mix tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output/alpha
+	name = "mix tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output_spare01
+	name = "spare mix tank output 1 inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output_spare02
+	name = "spare mix tank output 1 inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+
+
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output
 	name = "nitrous oxide tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
