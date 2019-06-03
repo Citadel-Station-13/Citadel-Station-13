@@ -173,6 +173,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
+	total_mass = 3.5
 	sharpness = IS_SHARP
 
 /obj/item/light_eater/Initialize()
