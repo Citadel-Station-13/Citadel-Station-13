@@ -41,11 +41,6 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
-	var/last_bloodtype = ""//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
-	var/last_blood_DNA = ""//same as last one
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(ispath(pocket_storage_component_path))
