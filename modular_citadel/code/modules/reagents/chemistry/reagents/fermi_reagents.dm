@@ -547,10 +547,19 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 /datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
-		return
+		return..()
+
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B) //If they don't have breasts, give them breasts.
+
+		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+		if(M.has_trait(TRAIT_PHARMA))
+			var/obj/item/organ/liver/L = M.getorganslot("liver")
+			L.swelling+= 0.1
+			return..()
+
+		//otherwise proceed as normal
 		var/obj/item/organ/genital/breasts/nB = new
 		nB.Insert(M)
 		if(nB)
@@ -578,6 +587,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	..()
 
 /datum/reagent/fermi/BElarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
+
+	//Acute hepatic pharmacokinesis.
+	if(M.has_trait(TRAIT_PHARMA))
+		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		L.swelling+= 0.05
+		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
@@ -614,7 +629,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B)
-		return
+		//Acute hepatic pharmacokinesis.
+		if(M.has_trait(TRAIT_PHARMA))
+			var/obj/item/organ/liver/L = M.getorganslot("liver")
+			L.swelling-= 0.1
+			return ..()
+
+		//otherwise proceed as normal
+		return..()
 	B.cached_size = B.cached_size - 0.1
 	B.update()
 	..()
@@ -669,6 +691,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
+
+		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
+		if(M.has_trait(TRAIT_PHARMA))
+			var/obj/item/organ/liver/L = M.getorganslot("liver")
+			L.swelling+= 0.1
+			return..()
+
+		//otherwise proceed as normal
 		var/obj/item/organ/genital/penis/nP = new
 		nP.Insert(M)
 		if(nP)
@@ -690,6 +720,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	..()
 
 /datum/reagent/fermi/PElarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+	//Acute hepatic pharmacokinesis.
+	if(M.has_trait(TRAIT_PHARMA))
+		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		L.swelling+= 0.05
+		return..()
+
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	var/obj/item/organ/genital/testicles/T = M.getorganslot("testicles")
 	var/obj/item/organ/genital/vagina/V = M.getorganslot("vagina")
@@ -724,7 +760,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
 	if(!P)
-		return
+		//Acute hepatic pharmacokinesis.
+		if(M.has_trait(TRAIT_PHARMA))
+			var/obj/item/organ/liver/L = M.getorganslot("liver")
+			L.swelling-= 0.1
+			return..()
+
+		//otherwise proceed as normal
+		return..()
 	P.cached_length = P.cached_length - 0.1
 	P.update()
 	..()

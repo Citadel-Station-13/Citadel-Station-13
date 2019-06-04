@@ -137,6 +137,15 @@ SLIME SCANNER
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
+		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		if(L.swelling > 20)
+			to_chat(user, "<span class='danger'>Subject is suffering from hyperhepatia.</span>") //i.e. shrink their liver or give them a transplant.
+		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
+		if(!T || T.damage > 40)
+			to_chat(user, "<span class='danger'>Subject is suffering from caustic burns on their tongue./span>") //i.e. their tongue is shot
+		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
+		if(Lung.damage > 150)
+			to_chat(user, "<span class='danger'>Subject is suffering from an acute inhalation injury.</span>") //i.e. Their lungs are shot
 
 	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]\n"
 

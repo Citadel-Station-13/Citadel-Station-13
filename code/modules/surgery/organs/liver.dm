@@ -16,6 +16,8 @@
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
+	var/swelling = 0
+	var/cachedmoveCalc = 1
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -45,10 +47,38 @@
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
 
+	if(swelling >= 10)
+		pharmacokinesis()
+
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("iron", 5)
 	return S
+
+//Just in case
+/obj/item/organ/liver/Remove(mob/living/carbon/M, special = 0)
+	M.remove_movespeed_modifier("pharma")
+	M.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
+	sizeMoveMod(1, M)
+
+//Applies some of the effects to the patient.
+/obj/item/organ/liver/proc/pharmacokinesis()
+	var/moveCalc = 1+((round(swelling) - 9)/3)
+	if(moveCalc == cachedmoveCalc)//reduce calculations
+		return
+	if(prob(5))
+		to_chat(owner, "<span class='notice'>You feel a stange ache in your side, almost like a sitch. You notice a hint of perspiration as your breathing becomes labored, this pain is affeting your movements and amking you feel lightheaded.</span>")
+	var/mob/living/carbon/human/H = owner
+	H.add_movespeed_modifier("pharma", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+	H.AdjustBloodVol(moveCalc/3)
+	sizeMoveMod(moveCalc, H)
+
+/obj/item/organ/liver/proc/sizeMoveMod(var/value, mob/living/carbon/human/H)
+	if(cachedmoveCalc == value)
+		return
+	H.next_move_modifier /= cachedmoveCalc
+	H.next_move_modifier *= value
+	cachedmoveCalc = value
 
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
