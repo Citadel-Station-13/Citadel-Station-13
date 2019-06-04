@@ -188,6 +188,16 @@
 					"Fight for what's right.",\
 					"Fight for your life!")
 
+/datum/ai_laws/hrp
+	name = "H.R.P."
+	id = "hrp"
+	inherent = list(
+		"Protect: Protect NanoTrasen personnel from harm, with priority as according to their rank, role, and need.",
+		"Safeguard: Protect your assigned space station from damage.",
+		"Preserve: Do not allow unauthorized personnel to tamper with your equipment.",
+		"Serve: Obey and serve NanoTrasen personnel, with priority as according to their rank, role, and need."
+	)
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 

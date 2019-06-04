@@ -145,3 +145,12 @@
 	build_path = /obj/item/aiModule/core/full/custom
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/hrp
+	name = "Core Module Design (H.R.P.)"
+	desc = "Allows for the construction of an H.R.P. AI Core Module."
+	id = "hrp_module"
+	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/aiModule/core/full/hrp
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
