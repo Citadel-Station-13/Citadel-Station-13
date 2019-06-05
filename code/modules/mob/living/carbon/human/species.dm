@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-	var/obj/effect/decal/cleanable/blood/footprints/tracks/move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/shoe // What marks are left when walking
+	var/obj/effect/decal/cleanable/blood/tracks/move_trail = /obj/effect/decal/cleanable/blood/tracks/shoe // What marks are left when walking
 
 ///////////
 // PROCS //
@@ -643,9 +643,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(H.dna.features["taur"] != "None")
 			if(H.dna.features["taur"] in GLOB.noodle_taurs)
-				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/snake
+				move_trail = /obj/effect/decal/cleanable/blood/tracks/snake
 			else if(H.dna.features["taur"] in GLOB.paw_taurs)
-				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/paw
+				move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
 //END EDIT
 
@@ -941,7 +941,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
 	if(H.lying)
-		return /obj/effect/decal/cleanable/blood/footprints/tracks/body
+		return /obj/effect/decal/cleanable/blood/tracks/body
 	if(H.shoes || (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)))
 		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
 		return shoes.move_trail

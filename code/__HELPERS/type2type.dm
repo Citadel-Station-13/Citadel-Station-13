@@ -75,6 +75,20 @@
 		return splittext(trim(file2text(filename)),seperator)
 	return splittext(file2text(filename),seperator)
 
+// Turns a direction into text
+/proc/num2dir(direction)
+	switch (direction)
+		if (1.0) return NORTH
+		if (2.0) return SOUTH
+		if (4.0) return EAST
+		if (5.0) return NORTHEAST
+		if (6.0) return SOUTHEAST
+		if (8.0) return WEST
+		if (9.0) return NORTHWEST
+		if (10.0) return SOUTHWEST
+		else
+			world.log << "UNKNOWN DIRECTION: [direction]"
+
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)

@@ -194,8 +194,8 @@
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
 
-	if(isliving(A))
-		var/mob/living/M = A
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			// Tracking blood
@@ -226,7 +226,7 @@
 /turf/proc/is_plasteel_floor()
 	return FALSE
 
-/turf/open/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor=COLOR_BLOOD_HUMAN)
+/turf/open/proc/AddTracks(var/typepath,var/bloodDNA,var/comingdir,var/goingdir,var/bloodcolor=BLOOD_COLOR_HUMAN)
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
