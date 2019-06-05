@@ -262,6 +262,7 @@
 		else if(status == BODYPART_ROBOTIC)
 			icon = DEFAULT_BODYPART_ICON_ROBOTIC
 			body_markings = null
+			auxmarking = null
 
 	if(owner)
 		owner.updatehealth()
@@ -292,6 +293,7 @@
 		should_draw_greyscale = FALSE
 		no_update = TRUE
 		body_markings = "husk" // reeee
+		auxmarking = "husk"
 
 	if(no_update)
 		return
@@ -339,13 +341,16 @@
 			if(H.dna.features.["mam_body_markings"] != "None")
 				body_markings_icon = Smark.icon
 				body_markings = lowertext(H.dna.features.["mam_body_markings"])
+				auxmarking = lowertext(H.dna.features.["mam_body_markings"])
 				if(MATRIXED)
 					markings_color = list(colorlist)
 			else
 				body_markings = "plain"
+				auxmarking = "plain"
 				markings_color = (H.dna.features.["mcolor"])
 		else
 			body_markings = null
+			auxmarking = null
 			markings_color = ""
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
@@ -361,6 +366,7 @@
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
 		body_markings = null
+		auxmarking = null
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
