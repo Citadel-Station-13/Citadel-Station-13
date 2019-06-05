@@ -91,3 +91,9 @@
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 
+/obj/item/gun/ballistic/automatic/pistol/sec
+	name = "standerd .22 pistol"
+	desc = "A small, easily concealable .22 handgun, mass made for law enforcement. Has a threaded barrel for suppressors."
+	icon_state = "secguncomp"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/m22
