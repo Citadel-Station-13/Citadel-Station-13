@@ -59,3 +59,21 @@
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m22
+	name = "handgun magazine (.22)"
+	icon_state = "22x19p"
+	ammo_type = /obj/item/ammo_casing/c22mm
+	caliber = ".22"
+	max_ammo = 7
+
+/obj/item/ammo_box/magazine/m22/l
+	name = "handgun magazine (.22)"
+	icon_state = "22x19p"
+	ammo_type = /obj/item/ammo_casing/c22mm/l
+	caliber = ".22"
+	max_ammo = 7
+
+/obj/item/ammo_box/magazine/m22/update_icon()
+	..()
+	icon_state = "22x19p-[ammo_count() ? "7" : "0"]"
