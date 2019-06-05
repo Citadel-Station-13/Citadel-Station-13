@@ -345,6 +345,10 @@
 				auxmarking = "plain"
 			markings_color = list(colorlist)
 
+		else
+			body_markings = null
+			auxmarking = null
+
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"
 		else
