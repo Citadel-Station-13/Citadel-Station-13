@@ -255,7 +255,7 @@
 			f_name = "some "
 		else
 			f_name = "a "
-		f_name += "<span class='danger'>blood-stained</span> [name]!"
+		f_name += "<span class='danger'>stained</span> [name]!"
 
 	to_chat(user, "[icon2html(src, user)] That's [f_name]")
 
@@ -366,8 +366,11 @@
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
 	var/list/blood_dna = M.get_blood_dna_list()
+	blood_color = BLOOD_COLOR_HUMAN
 	if(!blood_dna)
 		return FALSE
+	if(M.blood_DNA.len)
+		blood_color = M.blood_DNA_to_color()
 	return add_blood(blood_dna)
 
 //to add blood onto something, with blood dna info to include.
@@ -380,18 +383,30 @@
 /obj/item/add_blood(list/blood_dna)
 	if(!..())
 		return FALSE
-	add_blood_overlay()
+
+	//if we haven't made our blood_overlay already
+	if(!blood_overlay )
+		add_blood_overlay()
+
+	//apply the blood-splatter overlay if it isn't already in there
+	if(!blood_DNA.len)
+		overlays += blood_overlay
+
 	return TRUE //we applied blood to the item
 
 /obj/item/proc/add_blood_overlay()
 	if(!blood_DNA.len)
+		return
+	if(GLOB.blood_overlay_cache["[icon]" + icon_state])
+		blood_overlay = GLOB.blood_overlay_cache["[icon]" + icon_state]
 		return
 	if(initial(icon) && initial(icon_state))
 		blood_splatter_icon = icon(initial(icon), initial(icon_state), , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 		blood_splatter_icon.Blend(blood_DNA_to_color(), ICON_MULTIPLY)
-		add_overlay(blood_splatter_icon)
+		blood_overlay = image(I)
+		GLOB.blood_overlay_cache["[icon]" + icon_state] = blood_overlay
 
 /obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
 	. = ..()
