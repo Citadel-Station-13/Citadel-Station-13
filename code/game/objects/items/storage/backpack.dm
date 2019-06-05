@@ -447,6 +447,8 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
+	new /obj/item/implantcase(src)
+	new /obj/item/implanter(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	name = "advanced surgery duffel bag"
@@ -464,6 +466,8 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
+	new /obj/item/implantcase(src)
+	new /obj/item/implanter(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
