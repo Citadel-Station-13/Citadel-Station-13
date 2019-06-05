@@ -48,3 +48,13 @@
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/a50AE
 
+// .22 (Sec Firearm)
+
+/obj/item/ammo_casing/c22mm
+	name = ".22 bullet casing"
+	desc = "A .22 bullet casing."
+	caliber = ".22"
+	projectile_type = /obj/item/projectile/bullet/c22mm
+
+/obj/item/ammo_casing/c22mm/l
+	projectile_type =/obj/item/projectile/bullet/c22mml
