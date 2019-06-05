@@ -340,8 +340,8 @@
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/armor
-	name = "Point .22 Standard Sec Pistol Crate"
-	desc = "Three .22 secpistol. Requires Security access to open."
+	name = ".22 Standard Sec Pistol Crate"
+	desc = "Three .22 secpistols. Requires Security access to open."
 	cost = 2000
 	contains = list(/obj/item/gun/ballistic/automatic/pistol/sec,
 					/obj/item/gun/ballistic/automatic/pistol/sec,
