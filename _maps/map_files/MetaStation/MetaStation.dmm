@@ -2,10 +2,29 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/item/storage/box/lights/mixed,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space)
+"aad" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"aae" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "aaf" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -52203,12 +52222,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"bXx" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bXy" = (
 /obj/structure/closet,
 /obj/item/flashlight,
@@ -77672,11 +77685,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"cTw" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/item/storage/box/lights/mixed,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "cTy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -99538,7 +99546,7 @@ bSr
 alK
 bJs
 bVU
-bXx
+aae
 alK
 aaa
 aaf
@@ -124974,7 +124982,7 @@ bIK
 bBt
 atm
 bLZ
-bPm
+aab
 apc
 bSf
 apc
@@ -125230,7 +125238,7 @@ bHs
 bIL
 cVD
 atm
-cTw
+aad
 bPn
 bQR
 apc

@@ -41,6 +41,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"aad" = (
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "aae" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -574,6 +578,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/security/execution/transfer)
+"abz" = (
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "abA" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -2099,6 +2107,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"aeD" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -44091,11 +44104,6 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
-"bZM" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/maintenance/aft)
 "bZN" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -50624,10 +50632,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cqv" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "cqw" = (
 /obj/machinery/light{
 	dir = 8
@@ -79052,7 +79056,7 @@ bLu
 bCq
 bLu
 bCq
-cdb
+abz
 bSs
 bCq
 bCq
@@ -79068,7 +79072,7 @@ bLv
 bLv
 bLv
 bCq
-cqv
+aeD
 cqL
 bJe
 bLv
@@ -95243,7 +95247,7 @@ bWe
 cdE
 bAw
 bzs
-bAw
+bXZ
 caK
 cfj
 ciB
@@ -95496,7 +95500,7 @@ bzs
 bWV
 bzs
 bzs
-bZM
+bBR
 cbJ
 ceC
 ceC
@@ -95751,8 +95755,8 @@ bTZ
 bKH
 bzs
 bAw
-bBR
-bHX
+aad
+bzs
 bzs
 bzs
 bzs
@@ -96007,9 +96011,9 @@ bMa
 bTZ
 bKH
 bzs
-bAw
-bXZ
 bHX
+bHX
+bzs
 bZN
 caK
 bzs

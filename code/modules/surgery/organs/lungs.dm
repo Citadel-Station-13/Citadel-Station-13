@@ -84,7 +84,7 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen, /datum/gas/tritium, /datum/gas/nitryl, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/pheromones)
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
@@ -292,6 +292,12 @@
 			var/existing = H.reagents.get_reagent_amount("stimulum")
 			H.reagents.add_reagent("stimulum",max(0, 1 - existing))
 		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
+
+	//pheromones
+		gas_breathed = breath_gases[/datum/gas/pheromones][MOLES]
+		if(gas_breathed > gas_stimulation_min)
+			H.reagents.add_reagent("pheromones",1)
+		breath_gases[/datum/gas/pheromones][MOLES] -= gas_breathed
 
 	// Miasma
 		if (breath_gases[/datum/gas/miasma])

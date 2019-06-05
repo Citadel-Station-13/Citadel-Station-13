@@ -104,7 +104,8 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pheromones		= new/datum/tlv(-1, -1, 1000, 1000) // Worst you can get is a boner
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -123,7 +124,8 @@
 		/datum/gas/tritium			= new/datum/tlv/no_checks,
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
-		/datum/gas/pluoxium			= new/datum/tlv/no_checks
+		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
+		/datum/gas/pheromones		= new/datum/tlv/no_checks
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -142,7 +144,8 @@
 		/datum/gas/tritium			= new/datum/tlv/dangerous,
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
-		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000) // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/pheromones		= new/datum/tlv(-1, -1, 1000, 1000) // Worst you can get is a boner
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -538,7 +541,8 @@
 						/datum/gas/tritium,
 						/datum/gas/bz,
 						/datum/gas/stimulum,
-						/datum/gas/pluoxium
+						/datum/gas/pluoxium,
+						/datum/gas/pheromones
 					),
 					"scrubbing" = 1,
 					"widenet" = 1,

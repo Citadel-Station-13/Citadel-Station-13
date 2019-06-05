@@ -130,10 +130,18 @@
 		Tempstun = 0
 
 	if(stat != DEAD)
-		var/bz_percentage =0
+		var/bz_percentage = 0
+		var/phe_percentage = 0
+		var/total_moles = environment.total_moles()
 		if(environment.gases[/datum/gas/bz])
-			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
+			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / total_moles
+		if(environment.gases[/datum/gas/pheromones])
+			phe_percentage = environment.gases[/datum/gas/pheromones][MOLES] / total_moles
+
+		bz_percentage = max(0,bz_percentage - phe_percentage)
+
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
+		var/frenzy = (phe_percentage >= 0.10 && bodytemperature >= (T0C + -50))
 
 		if(stat == CONSCIOUS && stasis)
 			to_chat(src, "<span class='danger'>Nerve gas in the air has put you in stasis!</span>")
@@ -147,6 +155,15 @@
 			stat = CONSCIOUS
 			update_canmove()
 			regenerate_icons()
+		else if(stat == CONSCIOUS && frenzy && !rabid && !stasis)
+			to_chat(src, "<span class='danger'>The amount of pheromones in the air is driving you mad!</span>")
+			rabid = 1
+			regenerate_icons()
+
+		if(isopenturf(loc) && prob(25) && (buckled || Target))
+			var/turf/open/T = src.loc
+			T.atmos_spawn_air("pheromones=0.1")
+
 
 	updatehealth()
 
@@ -262,6 +279,7 @@
 			Evolve()
 
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
+
 	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)

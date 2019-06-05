@@ -50,7 +50,8 @@
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
+		"pheromones" = /obj/machinery/portable_atmospherics/canister/pheromones
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -143,6 +144,13 @@
 	desc = "Miasma. Makes you wish your nose were blocked."
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/pheromones
+	name = "pheromones canister"
+	desc = "Contains rare slime pheromones that boost libido and stamina in most organic lifeforms."
+	icon_state = "pink"
+	gas_type = /datum/gas/pheromones
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()

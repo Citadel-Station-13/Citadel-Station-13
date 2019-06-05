@@ -164,6 +164,25 @@
 		M.adjustArousalLoss(2)
 	..()
 
+/datum/reagent/drug/pheromones
+	name = "slime pheromones"
+	id = "pheromones"
+	description = "Pheromones released by slimes, in liquid concentrated form. Has about the same strength of Hexacrocin, but without the brain damage and addiction."
+	taste_description = "ants"
+	color = "#FFADFF"
+
+/datum/reagent/drug/pheromones/on_mob_life(mob/living/M)
+	if(M && M.canbearoused)
+		M.adjustArousalLoss(4)
+		if(prob(15))
+			var/aroused_message
+			if(M.getArousalLoss() > 90)
+				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
+			else
+				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
+			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+	..()
+
 /datum/reagent/drug/anaphrodisiac
 	name = "Camphor"
 	id = "anaphro"

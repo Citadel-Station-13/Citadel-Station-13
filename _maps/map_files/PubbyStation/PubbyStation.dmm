@@ -2,12 +2,53 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"aac" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"aae" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"aaf" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"aag" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/engine)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -8257,15 +8298,6 @@
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"auo" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
 "aup" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -8273,16 +8305,6 @@
 /obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
-"auq" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
@@ -43721,15 +43743,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
-"bVv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /area/maintenance/department/engine)
 "bVw" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -86236,7 +86249,7 @@ bSs
 bTg
 bUa
 jYh
-bVv
+aag
 bva
 nQc
 bXU
@@ -102865,7 +102878,7 @@ ale
 ale
 ale
 ale
-auo
+aab
 atn
 awy
 axw
@@ -103378,8 +103391,8 @@ aaa
 aaa
 aiS
 apu
-ale
-auq
+aac
+aaf
 atn
 awB
 axw
@@ -103635,7 +103648,7 @@ aaa
 aaa
 aiS
 akn
-ajv
+aae
 aqZ
 atn
 gcj

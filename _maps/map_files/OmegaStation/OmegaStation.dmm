@@ -955,6 +955,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"abn" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/pheromones,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "abo" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -12089,13 +12097,6 @@
 	},
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/maintenance/port/fore)
-"auG" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "auH" = (
 /obj/structure/cable/white{
@@ -77177,7 +77178,7 @@ aqJ
 arE
 asK
 agF
-auG
+abn
 avL
 aqz
 axu
