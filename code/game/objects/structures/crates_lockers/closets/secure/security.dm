@@ -133,6 +133,7 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/gun/ballistic/automatic/pistol/sec(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -309,3 +310,4 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/storage/box/lethalshot(src)
+		new /obj/item/ammo_box/c22mml(src)
