@@ -5,7 +5,6 @@
 	icon 					= 'modular_citadel/icons/obj/genitals/breasts.dmi'
 	zone 					= "chest"
 	slot 					= "breasts"
-	w_class 				= 3
 	size 					= BREASTS_SIZE_DEF
 	fluid_id				= "milk"
 	var/amount				= 2
@@ -14,7 +13,7 @@
 	can_masturbate_with		= TRUE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
-	fluid_transfer_factor 	=0.5
+	fluid_transfer_factor 	= 0.5
 
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
@@ -40,6 +39,10 @@
 	switch(lowershape)
 		if("pair")
 			desc = "You see a pair of breasts."
+		if("quad")
+			desc = "You see two pairs of breast, one just under the other."
+		if("sextuple")
+			desc = "You see three sets of breasts, running from their chest to their belly."
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
 	if (size)
@@ -54,13 +57,11 @@
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
-				string = "breasts_[lowertext(shape)]_[size]-s"
+				string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]-s"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
-			string = "breasts_[lowertext(shape)]_[size]"
+			string = "breasts_[GLOB.breasts_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			icon_state = sanitize_text(string)
 			H.update_genitals()
-
-	icon_state = sanitize_text(string)
-

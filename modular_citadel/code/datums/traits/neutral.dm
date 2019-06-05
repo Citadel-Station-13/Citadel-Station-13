@@ -4,6 +4,7 @@
 	name = "Nymphomania"
 	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
 	value = 0
+	mob_trait = TRAIT_NYMPHO
 	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
 	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
 
@@ -22,3 +23,11 @@
 	if(M.canbearoused == FALSE)
 		to_chat(quirk_holder, "<span class='notice'>Having high libido is useless when you can't feel arousal at all!</span>")
 		qdel(src)
+
+/datum/quirk/maso
+	name = "Masochism"
+	desc = "You are aroused by pain."
+	value = 0
+	mob_trait = TRAIT_MASO
+	gain_text = "<span class='notice'>You desire to be hurt.</span>"
+	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
