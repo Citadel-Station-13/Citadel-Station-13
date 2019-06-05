@@ -716,6 +716,10 @@
 	icon_state = "blep"
 	item_state = "blep"
 
+/obj/item/toy/plush/mammal/redtail
+	icon_state = "redtail"
+	item_state = "redtail"
+
 /obj/item/toy/plush/mammal/circe
 	icon_state = "circe"
 	item_state = "circe"
