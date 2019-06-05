@@ -23,9 +23,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
 
-/datum/techweb_node/ballistic_weapons
-	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_tx")
-
 /datum/techweb_node/advanced_illegl_ballistics
 	id = "advanced_illegal_ballistics"
 	display_name = "Advanced Illegal Ballistics"
