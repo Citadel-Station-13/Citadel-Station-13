@@ -58,8 +58,11 @@ GLOBAL_LIST_EMPTY(ipc_antennas_list)
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
 GLOBAL_LIST_EMPTY(cock_shapes_icons) //Associated list for names->icon_states for cockshapes.
+GLOBAL_LIST_EMPTY(balls_shapes_list)
+GLOBAL_LIST_EMPTY(balls_shapes_icons)
 GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
+GLOBAL_LIST_EMPTY(breasts_shapes_icons)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
@@ -123,36 +126,36 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 /mob/living/carbon/proc/has_penis()
 	if(getorganslot("penis"))//slot shared with ovipositor
 		if(istype(getorganslot("penis"), /obj/item/organ/genital/penis))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_balls()
 	if(getorganslot("balls"))
 		if(istype(getorganslot("balls"), /obj/item/organ/genital/testicles))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_vagina()
 	if(getorganslot("vagina"))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_breasts()
 	if(getorganslot("breasts"))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/proc/has_ovipositor()
 	if(getorganslot("penis"))//shared slot
 		if(istype(getorganslot("penis"), /obj/item/organ/genital/ovipositor))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/has_eggsack()
 	if(getorganslot("balls"))
 		if(istype(getorganslot("balls"), /obj/item/organ/genital/eggsack))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
 
@@ -161,16 +164,16 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		L = get_equipped_items()
 	for(var/obj/item/I in L)
 		if(I.body_parts_covered & GROIN)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /mob/living/carbon/proc/is_chest_exposed(var/list/L)
 	if(!L)
 		L = get_equipped_items()
 	for(var/obj/item/I in L)
 		if(I.body_parts_covered & CHEST)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 ////////////////////////
 //DANGER | DEBUG PROCS//
@@ -191,40 +194,3 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 			H.give_vagina()
 			H.give_womb()
 			H.give_breasts()
-
-/client/proc/test_mammal_overlays()
-	set name = "Mass Give Mammalitus"
-	set category = "Dangerous"
-	set desc = "Turns every human into a mammal with tails, ears, etc. WARNING: NOT FOR LIVE SERVER USAGE!!"
-
-	log_admin("[src] turned everyone into mammals.")
-	message_admins("[src] turned everyone into mammals.")
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(!H.dna)
-			continue
-		var/datum/dna/hdna = H.dna
-		H.set_species(/datum/species/mammal)
-		var/subspec = pick("Fox","Wolf","Fennec")
-		switch(subspec)
-			if("Wolf")
-				hdna.features["mam_tail"] = "Wolf"
-				hdna.features["mam_ears"] = "Wolf"
-				hdna.features["mam_snouts"] = "Wolf"
-				hdna.features["mam_body_markings"] = "Wolf"
-				hdna.features["mcolor"] = "555"
-				hdna.features["mcolor2"] = "999"
-				hdna.features["mcolor3"] = "999"
-			if("Fox")
-				hdna.features["mam_tail"] = "Fox"
-				hdna.features["mam_ears"] = "Fox"
-				hdna.features["mam_snouts"] = "Fox, Long"
-				hdna.features["mam_body_markings"] = "Fox"
-				hdna.features["mcolor"] = "f60"
-				hdna.features["mcolor2"] = "fff"
-				hdna.features["mcolor3"] = "fff"
-			if("Fennec")
-				hdna.features["mam_tail"] = "Fennec"
-				hdna.features["mam_ears"] = "Fennec"
-				hdna.features["mam_snouts"] = "Fox, Short"
-				hdna.features["mam_body_markings"] = "Fox"
-		H.regenerate_icons()
