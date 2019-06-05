@@ -190,7 +190,7 @@ Auto Patrol: []"},
 			return
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")

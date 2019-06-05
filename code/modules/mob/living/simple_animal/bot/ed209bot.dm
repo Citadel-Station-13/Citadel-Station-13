@@ -195,7 +195,7 @@ Auto Patrol[]"},
 				shootAt(user)
 
 /mob/living/simple_animal/bot/ed209/emag_act(mob/user)
-	..()
+	. = ..()
 	if(emagged == 2)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s target assessment circuits.</span>")

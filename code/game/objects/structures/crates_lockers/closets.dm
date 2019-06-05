@@ -437,14 +437,17 @@
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
 
 /obj/structure/closet/emag_act(mob/user)
-	if(secure && !broken)
-		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-						"<span class='italics'>You hear a faint electrical spark.</span>")
-		playsound(src, "sparks", 50, 1)
-		broken = TRUE
-		locked = FALSE
-		update_icon()
+	. = ..()
+	if(!secure || broken)
+		return
+	user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
+					"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
+					"<span class='italics'>You hear a faint electrical spark.</span>")
+	playsound(src, "sparks", 50, 1)
+	broken = TRUE
+	locked = FALSE
+	update_icon()
+	return TRUE
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))

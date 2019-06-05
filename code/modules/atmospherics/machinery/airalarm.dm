@@ -848,11 +848,13 @@
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
 	playsound(src, "sparks", 50, 1)
+	return TRUE
 
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()
