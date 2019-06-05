@@ -339,6 +339,15 @@
 	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
+/datum/supply_pack/security/armor
+	name = "point .22 secpistol Crate"
+	desc = "Three .22 secpistol. Requires Security access to open."
+	cost = 2000
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/sec,
+					/obj/item/gun/ballistic/automatic/pistol/sec,
+					/obj/item/gun/ballistic/automatic/pistol/sec)
+	crate_name = ".22 gun crate"
+
 /datum/supply_pack/security/sechardsuit
 	name = "Sec Hardsuit"
 	desc = "One Sec Hardsuit with a small air tank and mask."
