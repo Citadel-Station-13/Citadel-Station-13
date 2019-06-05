@@ -34,3 +34,14 @@
 	name = "10mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+
+// .22 (Sec Firearm)
+
+/obj/item/projectile/bullet/c22mm
+	name = ".22 rubber bullet"
+	damage = 2.5
+	stamina = 25
+
+/obj/item/projectile/bullet/c22mml
+	name = ".22 bullet"
+	damage = 15
