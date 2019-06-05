@@ -17,6 +17,43 @@
 	id = "sec_38lethal"
 	build_path = /obj/item/ammo_box/c38/lethal
 
+
+/datum/design/c22nl_box
+	name = "Box of Rubber bullets (.22)"
+	id = "22nlbox"
+	build_path = /obj/item/ammo_box/c22mm
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c22l_box
+	name = "Box of bullets (.22)"
+	id = "22lbox"
+	build_path = /obj/item/ammo_box/c22mml
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c22nl
+	name = ".22 Non-Lethal Mag"
+	id = "22nlmag"
+	build_path = /obj/item/ammo_box/magazine/m22
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/c22l
+	name = ".22 Lethal Mag"
+	id = "22lmag"
+	build_path = /obj/item/ammo_box/magazine/m22/l
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 //////////////
 //WT550 Mags//
 //////////////
