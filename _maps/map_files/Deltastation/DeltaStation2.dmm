@@ -124,20 +124,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
-"aaq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/maintenance/port/fore)
-"aar" = (
-/obj/machinery/portable_atmospherics/canister/pheromones,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -157,29 +143,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/starboard/fore)
-"aav" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/department/electrical)
-"aaw" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/light_switch{
-	pixel_y = -26
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/portable_atmospherics/canister/pheromones,
-/turf/open/floor/plasteel,
-/area/maintenance/department/electrical)
 "aaE" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -86147,6 +86110,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"cOo" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/poster/official/help_others{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
 "cOp" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -92227,6 +92200,18 @@
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
+"cYy" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_y = -26
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
@@ -148330,7 +148315,7 @@ car
 cIu
 cLt
 cMO
-aav
+cOo
 cQe
 cRz
 cTm
@@ -148593,7 +148578,7 @@ cRA
 cTn
 cVp
 gXn
-aaw
+cYy
 cMO
 dbR
 ddF
@@ -157535,7 +157520,7 @@ avm
 aug
 bla
 ary
-bne
+aug
 bqt
 bst
 aad
@@ -158305,7 +158290,7 @@ alf
 alf
 bjo
 alg
-aar
+bne
 bbQ
 bqu
 bss
@@ -158561,9 +158546,9 @@ avm
 aug
 alg
 avm
-alf
-aaq
-aaq
+alg
+aug
+aug
 bqw
 bsu
 bss
