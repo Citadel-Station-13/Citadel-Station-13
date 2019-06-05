@@ -1,0 +1,5 @@
+author: "Coolgat3"
+delete-after: True
+changes: 
+  - rscadd: "Added combat gloves sprite"
+  - imageadd: "Added said sprite"
