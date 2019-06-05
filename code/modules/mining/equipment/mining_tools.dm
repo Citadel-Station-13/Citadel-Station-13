@@ -60,7 +60,6 @@
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
-	force = 17
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/pickaxe/drill/cyborg
@@ -73,7 +72,6 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
-	force = 19
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
