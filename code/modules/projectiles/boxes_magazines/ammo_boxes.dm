@@ -58,6 +58,18 @@
 	ammo_type = /obj/item/ammo_casing/n762
 	max_ammo = 14
 
+/obj/item/ammo_box/c22mm
+	name = "non-lethal ammo box (22mm)"
+	icon_state = "22mmbox"
+	ammo_type = /obj/item/ammo_casing/c22mm
+	max_ammo = 20
+
+/obj/item/ammo_box/c22mml
+	name = "lethal ammo box (22mm)"
+	icon_state = "22mmlbox"
+	ammo_type = /obj/item/ammo_casing/c22mm/l
+	max_ammo = 20
+
 /obj/item/ammo_box/foambox
 	name = "ammo box (Foam Darts)"
 	icon = 'icons/obj/guns/toy.dmi'
