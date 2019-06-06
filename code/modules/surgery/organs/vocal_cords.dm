@@ -617,61 +617,16 @@
 	name = "velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
 	icon_state = "in_love"
-	//actions_types = list(/datum/action/item_action/organ_action/velvet)
 	var/next_command = 0
 	var/cooldown_mod = 1
 	var/base_multiplier = 1
-	spans = list("say","yell")
+	//spans = list("say","yell")
 
-/*
-/datum/action/item_action/organ_action/velvet
-	name = "Velvet voice"
-	var/obj/item/organ/vocal_cords/velvet/cords = null
-
-/datum/action/item_action/organ_action/velvet/New()
-	..()
-	cords = target
-
-/datum/action/item_action/organ_action/velvet/IsAvailable()
-	return TRUE
-
-/datum/action/item_action/organ_action/velvet/Trigger()
-	. = ..()
-	if(!IsAvailable())
-		if(world.time < cords.next_command)
-			to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again.</span>")
-		return
-	var/command = input(owner, "Speak with the Voice of God", "Command")
-	if(QDELETED(src) || QDELETED(owner))
-		return
-	if(!command)
-		return
-	owner.say(".x[command]")
-
-/obj/item/organ/vocal_cords/colossus/can_speak_with()
-	if(!owner)
-		return FALSE
-	if(!owner.can_speak())
-		to_chat(owner, "<span class='warning'>You are unable to speak!</span>")
-		return FALSE
-	return TRUE
-
-/obj/item/organ/vocal_cords/velvet/handle_speech(message)
-	velvetspeech(message, owner, spans, base_multiplier)
-	return //velvetspeech should handle speech
-
-
-
-/obj/item/organ/vocal_cords/velvet/speak_with(message)
-	velvetspeech(message, owner, spans, base_multiplier)
-	//next_command = world.time + (cooldown * cooldown_mod)
-*/
 //////////////////////////////////////
 ///////////FermiChem//////////////////
 //////////////////////////////////////
 //Removed span_list from input arguments. //mob/living/user
 /proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = FALSE)
-	//message_admins("Velvet speech proc'd on [user]")
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
@@ -764,13 +719,6 @@
 	if(debug == TRUE)
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
-	/* CHECK THIS STUFF IN THE CHEM STATUS INSTEAD.
-	if(istype(H.neck, /obj/item/clothing/neck/petcollar))
-		power_multiplier *= 1.5 //Collaring players makes them more docile and accepting of their place as a pet
-	if(H.has_trait(TRAIT_CROCRIN_IMMUNE) || !M.canbearoused)
-		power_multiplier *= 1.5//Immune/asexual players are immune to the arousal based multiplier, this is to offset that so they can still be affected. Their unfamiliarty with desire makes it more on them.
-	*/
-
 	//Mixables
 	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara") //enthral_words works
 	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job") //reward_words works
@@ -822,7 +770,8 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, V)+1]
-			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
+			if(L == user)
+				continue
 			if(length(message))
 				E.enthrallTally += (power_multiplier*(((length(message))/200) + 1)) //encourage players to say more than one word.
 			else
@@ -838,7 +787,8 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, V)+1]
-			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
+			if(L == user)
+				continue
 			if (L.lewd)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</b></span>"), 5)
 				if(L.has_trait(TRAIT_NYMPHO))
@@ -860,9 +810,9 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
-			//power_multiplier *= distancelist[get_dist(user, V)+1]
-			//power_multiplier += (get_dist(V, user)**-2)*2 //2, 2, 0.5, 0.2, 0.125, 0.05, 0.04, 0.03, alternatively make a list and use the return as index values
 			var/descmessage = "[(L.lewd?"I've failed [E.enthrallGender]... What a bad, bad pet!":"I did a bad job...")]"
+			if(L == user)
+				continue
 			if (L.lewd)
 				if(L.has_trait(TRAIT_MASO))
 					L.adjustArousalLoss(3*power_multiplier)

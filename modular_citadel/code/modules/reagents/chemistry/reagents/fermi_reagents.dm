@@ -1064,6 +1064,11 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall) //Somehow a beaker got here? (what)
 	if(E)
+		if(E.creatorID == M.ckey && creatorName != M.real_name)//If you're enthralled to yourself (from OD) and someone else tries to enthrall you, you become thralled to them instantly.
+			E.enthrallID = creatorID
+			E.enthrallGender = creatorGender
+			E.master = get_mob_by_key(creatorID)
+			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(owner.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 		return
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
@@ -1086,7 +1091,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	. = ..()
 	if(purity < 0.5)//DO NOT SPLIT INTO DIFFERENT CHEM: This relies on DoNotSplit - has to be done this way.
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
-			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+			if(M.has_status_effect(STATUS_EFFECT_INLOVE))//Can't be enthralled when enthralled, so to speak.
 				return
 			var/list/seen = viewers(7, get_turf(M))
 			for(var/victim in seen)

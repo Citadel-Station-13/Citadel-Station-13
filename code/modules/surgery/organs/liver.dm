@@ -67,7 +67,7 @@
 	if(moveCalc == cachedmoveCalc)//reduce calculations
 		return
 	if(prob(5))
-		to_chat(owner, "<span class='notice'>You feel a stange ache in your side, almost like a sitch. You notice a hint of perspiration as your breathing becomes labored, this pain is affeting your movements and amking you feel lightheaded.</span>")
+		to_chat(owner, "<span class='notice'>You feel a stange ache in your side, almost like a sitch. This pain is affecting your movements and making you feel lightheaded.</span>")
 	var/mob/living/carbon/human/H = owner
 	H.add_movespeed_modifier("pharma", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 	H.AdjustBloodVol(moveCalc/3)
