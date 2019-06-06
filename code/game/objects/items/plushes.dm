@@ -591,23 +591,20 @@
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
-	attack_verb = list("blorbled", "slimed", "absorbed")
+	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
 /obj/item/toy/plush/slimeplushie/annie
-	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slimey crewmember."
 	icon_state = "annie"
 	item_state = "annie"
-	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
 
 /obj/item/toy/plush/slimeplushie/paxton
-	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slimey crewmember."
 	icon_state = "paxton"
 	item_state = "paxton"
-	attack_verb = list("blorbled", "slimed", "absorbed", "glomped", "CQC'd", "jabroni'd", "powergamed", "robusted", "cakehatted")
+	attack_verb = list("CQC'd", "jabroni'd", "powergamed", "robusted", "cakehatted")
 	gender = MALE
 
 /obj/item/toy/plush/awakenedplushie
@@ -767,6 +764,10 @@
 /obj/item/toy/plush/mammal/ray
 	icon_state = "ray"
 	item_state = "ray"
+
+/obj/item/toy/plush/mammal/redtail
+	icon_state = "redtail"
+	item_state = "redtail"
 
 /obj/item/toy/plush/mammal/dawud
 	icon_state = "dawud"
