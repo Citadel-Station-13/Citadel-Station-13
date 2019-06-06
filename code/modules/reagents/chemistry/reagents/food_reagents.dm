@@ -22,7 +22,7 @@
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == INGEST)
-		if (quality && !M.has_trait(TRAIT_AGEUSIA))
+		if (quality && !HAS_TRAIT(M, TRAIT_AGEUSIA))
 			switch(quality)
 				if (DRINK_NICE)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)

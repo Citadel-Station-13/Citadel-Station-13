@@ -286,7 +286,7 @@
 		return
 	if(NOGENITALS in species_traits)//golems and such
 		return
-	if(H.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
 
 	var/list/genitals_to_add = list()

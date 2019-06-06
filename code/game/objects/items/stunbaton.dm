@@ -124,7 +124,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 		return
 

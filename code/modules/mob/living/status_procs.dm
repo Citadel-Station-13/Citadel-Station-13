@@ -15,7 +15,7 @@
 	return 0
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -26,7 +26,7 @@
 		return S
 
 /mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
-	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(amount <= 0)
 			if(S)
@@ -41,7 +41,7 @@
 		return S
 
 /mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
-	if(((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canstun)
+	if(((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -63,7 +63,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(amount, ignore_canknockdown))
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
@@ -74,7 +74,7 @@
 		return K
 
 /mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Sets remaining duration
-	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(amount <= 0)
 			if(K)
@@ -89,7 +89,7 @@
 		return K
 
 /mob/living/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Adds to remaining duration
-	if(((status_flags & CANKNOCKDOWN) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canknockdown)
+	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canknockdown)
 		if(absorb_stun(amount, ignore_canknockdown))
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
@@ -141,7 +141,7 @@
 /////////////////////////////////// DISABILITIES ////////////////////////////////////
 
 /mob/living/proc/add_quirk(quirk, spawn_effects) //separate proc due to the way these ones are handled
-	if(has_trait(quirk))
+	if(HAS_TRAIT(src, quirk))
 		return
 	if(!SSquirks || !SSquirks.quirks[quirk])
 		return
@@ -161,42 +161,42 @@
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 
 /mob/living/proc/cure_blind(list/sources)
-	remove_trait(TRAIT_BLIND, sources)
-	if(!has_trait(TRAIT_BLIND))
+	REMOVE_TRAIT(src, TRAIT_BLIND, sources)
+	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
-	if(!has_trait(TRAIT_BLIND))
+	if(!HAS_TRAIT(src, TRAIT_BLIND))
 		blind_eyes(1)
-	add_trait(TRAIT_BLIND, source)
+	ADD_TRAIT(src, TRAIT_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(list/sources)
-	remove_trait(TRAIT_NEARSIGHT, sources)
-	if(!has_trait(TRAIT_NEARSIGHT))
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, sources)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 		clear_fullscreen("nearsighted")
 
 /mob/living/proc/become_nearsighted(source)
-	if(!has_trait(TRAIT_NEARSIGHT))
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-	add_trait(TRAIT_NEARSIGHT, source)
+	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(list/sources)
-	remove_trait(TRAIT_HUSK, sources)
-	if(!has_trait(TRAIT_HUSK))
-		remove_trait(TRAIT_DISFIGURED, "husk")
+	REMOVE_TRAIT(src, TRAIT_HUSK, sources)
+	if(!HAS_TRAIT(src, TRAIT_HUSK))
+		REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
 		update_body()
 		return TRUE
 
 /mob/living/proc/become_husk(source)
-	if(!has_trait(TRAIT_HUSK))
-		add_trait(TRAIT_DISFIGURED, "husk")
+	if(!HAS_TRAIT(src, TRAIT_HUSK))
+		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
 		update_body()
 		. = TRUE
-	add_trait(TRAIT_HUSK, source)
+	ADD_TRAIT(src, TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(list/sources)
-	remove_trait(TRAIT_FAKEDEATH, sources)
-	remove_trait(TRAIT_DEATHCOMA, sources)
+	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, sources)
+	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, sources)
 	if(stat != DEAD)
 		tod = null
 	update_stat()
@@ -206,15 +206,15 @@
 		return
 	if(!silent)
 		emote("deathgasp")
-	add_trait(TRAIT_FAKEDEATH, source)
-	add_trait(TRAIT_DEATHCOMA, source)
+	ADD_TRAIT(src, TRAIT_FAKEDEATH, source)
+	ADD_TRAIT(src, TRAIT_DEATHCOMA, source)
 	tod = STATION_TIME_TIMESTAMP("hh:mm:ss")
 	update_stat()
 
 /mob/living/proc/unignore_slowdown(list/sources)
-	remove_trait(TRAIT_IGNORESLOWDOWN, sources)
+	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, sources)
 	update_movespeed(FALSE)
 
 /mob/living/proc/ignore_slowdown(source)
-	add_trait(TRAIT_IGNORESLOWDOWN, source)
+	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
 	update_movespeed(FALSE)

@@ -253,16 +253,16 @@
 
 /datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -372,7 +372,7 @@
 
 /datum/reagent/drug/skooma/on_mob_add(mob/living/L)
 	. = ..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -383,7 +383,7 @@
 
 /datum/reagent/drug/skooma/on_mob_delete(mob/living/L)
 	. = ..()
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

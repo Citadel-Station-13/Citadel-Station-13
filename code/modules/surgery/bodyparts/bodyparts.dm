@@ -88,7 +88,7 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(C.has_trait(TRAIT_LIMBATTACHMENT))
+		if(HAS_TRAIT(C, TRAIT_LIMBATTACHMENT))
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
@@ -221,7 +221,7 @@
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/check_disabled()
-	if(!can_dismember() || owner.has_trait(TRAIT_NODISMEMBER))
+	if(!can_dismember() || HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		return
 	if(!disabled && (get_damage(TRUE) >= max_damage))
 		set_disabled(TRUE)
@@ -284,7 +284,7 @@
 		C = owner
 		no_update = FALSE
 
-	if(C.has_trait(TRAIT_HUSK) && is_organic_limb())
+	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE

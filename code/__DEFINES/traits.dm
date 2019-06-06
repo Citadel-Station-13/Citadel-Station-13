@@ -131,6 +131,7 @@
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
 #define TRAIT_ASSBLASTUSA       "assblastusa"
+#define TRAIT_CULT_EYES 		"cult_eyes"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -153,4 +154,3 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
-#define CULT_EYES "cult_eyes"
