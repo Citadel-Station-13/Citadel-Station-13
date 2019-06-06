@@ -50,15 +50,15 @@
 
 /obj/item/clothing/suit/witchhunter/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 /obj/item/clothing/suit/nun/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 /obj/item/clothing/suit/studentuni/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
