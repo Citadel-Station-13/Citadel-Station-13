@@ -167,20 +167,28 @@
 /datum/reagent/drug/pheromones
 	name = "slime pheromones"
 	id = "pheromones"
-	description = "Pheromones released by slimes, in liquid concentrated form. Has about the same strength of Hexacrocin, but without the brain damage and addiction."
-	taste_description = "ants"
-	color = "#FFADFF"
+	description = "Pheromones released by slimes, in liquid concentrated form."
+	taste_description = "slime"
+	color = "#8888FF"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/pheromones/on_mob_life(mob/living/M)
-	if(M && M.canbearoused)
-		M.adjustArousalLoss(4)
-		if(prob(15))
-			var/aroused_message
-			if(M.getArousalLoss() > 90)
-				aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
+	if(M)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pheromones", /datum/mood_event/pheromones, name)
+		var/current_arousal = 0
+		if(M.canbearoused && !M.has_trait(TRAIT_CROCRIN_IMMUNE))
+			current_arousal = M.getArousalLoss()
+			var/mod = max(0,volume - current_arousal)
+			if(mod)
+				M.adjustArousalLoss(mod)
+
+		if(prob(8))
+			var/hug_message
+			if(current_arousal > 50)
+				hug_message = pick("You feel like heavily embracing someone!", "You just want to hug someone and not let go!")
 			else
-				aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
-			to_chat(M, "<span class='userlove'>[aroused_message]</span>")
+				hug_message = pick("You feel a strong urge to hug someone.", "You feel like you just want to hug everyone!.", "You really want to touch people, for some reason.")
+			to_chat(M, "<span class='userlove'>[hug_message]</span>")
 	..()
 
 /datum/reagent/drug/anaphrodisiac

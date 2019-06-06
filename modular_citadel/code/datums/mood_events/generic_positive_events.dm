@@ -24,11 +24,15 @@
 	description = "<span class='userlove'>I came!</span>\n" //funny meme haha
 	mood_change = 3
 	timeout = 1000
-	
+
 /datum/mood_event/fedpred
 	description = "<span class='nicegreen'>I've devoured someone!</span>\n"
 	mood_change = 3
 
 /datum/mood_event/fedprey
 	description = "<span class='nicegreen'>It feels quite cozy in here.</span>\n"
+	mood_change = 3
+
+/datum/mood_event/pheromones
+	description = "<span class='nicegreen'>I really want to hug people!</span>\n"
 	mood_change = 3
