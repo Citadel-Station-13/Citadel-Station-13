@@ -21,7 +21,7 @@
 	name = "brain"
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (C.has_trait(TRAIT_DEATHCOMA))))
+		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
 		forceMove(C)
 		C.update_hair()
@@ -64,7 +64,7 @@
 	name = "[L.name]'s brain"
 	if(brainmob)
 		return
-		
+
 	if(!L.mind)
 		return
 	brainmob = new(src)
@@ -76,7 +76,7 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.has_trait(TRAIT_NOCLONE))
+		if(HAS_TRAIT(L, TRAIT_NOCLONE))
 			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)

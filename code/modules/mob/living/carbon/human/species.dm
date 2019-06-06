@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
-	if(H.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
 
 	var/datum/sprite_accessory/S
@@ -462,7 +462,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
-	if(HD && !(H.has_trait(TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -757,7 +757,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			for(var/index=1, index<=colorlist.len, index++)
 				colorlist[index] = colorlist[index]/255
 
-			if(!(H.has_trait(TRAIT_HUSK)))
+			if(!HAS_TRAIT(H, TRAIT_HUSK))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(SKINTONE)
@@ -916,11 +916,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
-	if(H.has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
+		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 
@@ -1158,7 +1158,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.has_trait(TRAIT_FAT))//I share your pain, past coder.
+	if(HAS_TRAIT(H, TRAIT_FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			H.remove_trait(TRAIT_FAT, OBESITY)
@@ -1172,7 +1172,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.update_inv_wear_suit()
 
 	// nutrition decrease and satiety
-	if (H.nutrition > 0 && H.stat != DEAD && !H.has_trait(TRAIT_NOHUNGER))
+	if (H.nutrition > 0 && H.stat != DEAD && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
@@ -1201,7 +1201,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.nutrition > NUTRITION_LEVEL_FAT)
 		H.metabolism_efficiency = 1
 	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25 && !H.has_trait(TRAIT_NOHUNGER))
+		if(H.metabolism_efficiency != 1.25 && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
 			H.metabolism_efficiency = 1.25
 	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
@@ -1230,7 +1230,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	. = FALSE
 	var/radiation = H.radiation
 
-	if(H.has_trait(TRAIT_RADIMMUNE))
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
 		radiation = 0
 		return TRUE
 
@@ -1277,17 +1277,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	gravity = H.has_gravity()
 
 	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
-		if(H.has_trait(TRAIT_GOTTAGOFAST))
+		if(HAS_TRAIT(H, TRAIT_GOTTAGOFAST))
 			. -= 1
-		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
+		if(HAS_TRAIT(H, TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
 		. += speedmod
 		. += H.physiology.speed_mod
 
-	if (H.m_intent == MOVE_INTENT_WALK && H.has_trait(TRAIT_SPEEDY_STEP))
+	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
 		. -= 1
 
-	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
+	if(HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
 
 	if(!gravity)
@@ -1338,9 +1338,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(SANITY_UNSTABLE to SANITY_DISTURBED)
 					. += 0.5
 
-		if(H.has_trait(TRAIT_FAT))
+		if(HAS_TRAIT(H, TRAIT_FAT))
 			. += (1.5 - flight)
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
+		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
 
@@ -1353,13 +1353,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
+	if(target.health >= 0 && !HAS_TRAIT(target, TRAIT_FAKEDEATH))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaked")
 		return 1
 	else
-		var/we_breathe = !user.has_trait(TRAIT_NOBREATH)
+		var/we_breathe = !HAS_TRAIT(user, TRAIT_NOBREATH)
 		var/we_lung = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 		if(we_breathe && we_lung)
@@ -1384,7 +1384,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT) //CITADEL CHANGE - makes it impossible to punch while in stamina softcrit
@@ -1480,7 +1480,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
 			"You hear a slap."
 		)
-		if (!target.has_trait(TRAIT_NYMPHO))
+		if (!target.HAS_TRAIT(TRAIT_NYMPHO))
 			stop_wagging_tail(target)
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		user.adjustStaminaLossBuffered(3)

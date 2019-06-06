@@ -167,10 +167,10 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.ignore_slowdown(id)
 
 /datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.unignore_slowdown(id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)

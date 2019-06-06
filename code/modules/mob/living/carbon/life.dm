@@ -116,7 +116,7 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	if(has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return TRUE
 	return FALSE
 
@@ -324,7 +324,7 @@
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent("formaldehyde", 15) || has_trait(TRAIT_HUSK))
+	if(reagents.has_reagent("formaldehyde", 15) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
@@ -551,7 +551,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			jitteriness = max(jitteriness - 3, 0)
-			if(has_trait(TRAIT_DRUNK_HEALING))
+			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				adjustBruteLoss(-0.12, FALSE)
 				adjustFireLoss(-0.06, FALSE)
 
@@ -576,7 +576,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(25))
 				confused += 2
 			Dizzy(10)
-			if(has_trait(TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
+			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
 				adjustBruteLoss(-0.3, FALSE)
 				adjustFireLoss(-0.15, FALSE)
 
@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 61)
 			if(prob(50))
 				blur_eyes(5)
-			if(has_trait(TRAIT_DRUNK_HEALING))
+			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				adjustBruteLoss(-0.4, FALSE)
 				adjustFireLoss(-0.2, FALSE)
 
@@ -657,7 +657,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 /mob/living/carbon/proc/liver_failure()
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
-	if(has_trait(TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
@@ -693,7 +693,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	return TRUE
 
 /mob/living/carbon/proc/needs_heart()
-	if(has_trait(TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
