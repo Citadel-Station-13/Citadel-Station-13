@@ -959,6 +959,13 @@
 	name = "Eevee"
 	icon_state = "eevee"
 
+
+/datum/sprite_accessory/mam_ears/elf
+	name = "Elf"
+	icon_state = "elf"
+	color_src = MUTCOLORS3
+
+
 /datum/sprite_accessory/mam_ears/elephant
 	name = "Elephant"
 	icon_state = "elephant"
@@ -1496,6 +1503,12 @@ datum/sprite_accessory/mam_tails/insect
 	name = "Cow"
 	icon_state = "cow"
 	taur_mode = HOOF_TAURIC
+
+/datum/sprite_accessory/taur/deer
+	name = "Deer"
+	icon_state = "deer"
+	taur_mode = HOOF_TAURIC
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/taur/drake
 	name = "Drake"

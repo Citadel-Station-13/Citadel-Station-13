@@ -283,7 +283,7 @@
 	else
 		var/turf/T = get_turf(src)
 		if(!isspaceturf(T))
-			consume_turf(T)
+			shard.consume_turf(T)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	. = ..()
@@ -330,18 +330,7 @@
 	else if(!isturf(target))
 		shard.Bumped(target)
 	else
-		consume_turf(target)
-
-/obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
-	var/oldtype = T.type
-	var/turf/newT = T.ScrapeAway()
-	if(newT.type == oldtype)
-		return
-	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
-	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	shard.Consume()
-	T.CalculateAdjacentTurfs()
+		shard.consume_turf(target)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE

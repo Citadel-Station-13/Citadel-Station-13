@@ -58,16 +58,15 @@
 		switch_status(FALSE)
 
 /obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
-	if(status == new_status)
-		return
-	status = new_status
+	if(status != new_status)
+		status = new_status
+		if(!silent)
+			playsound(loc, "sparks", 75, 1, -1)
+		if(status)
+			START_PROCESSING(SSobj, src)
+		else
+			STOP_PROCESSING(SSobj, src)
 	update_icon()
-	if(!silent)
-		playsound(loc, "sparks", 75, 1, -1)
-	if(status)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/process()
 	deductcharge(hitcost * 0.004, FALSE)
@@ -93,7 +92,7 @@
 		if(cell)
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
-			if(C.maxcharge < hitcost)
+			if(C.maxcharge < hitcost * STUNBATON_CHARGE_LENIENCY)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))

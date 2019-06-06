@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - tweak: "\"Unwillingly\" eating food now sends a warning message instead of a notice. Unable to stuff food down your throat sends a danger message instead of a warning message."

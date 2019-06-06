@@ -27,7 +27,7 @@
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
-		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
+		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable || target.mind.has_antag_datum(/datum/antagonist/gang/boss))
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			var/obj/item/implanter/I = loc
@@ -38,9 +38,12 @@
 				I.update_icon()
 			return FALSE
 
+		var/datum/antagonist/gang/gang = target.mind.has_antag_datum(/datum/antagonist/gang)
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(FALSE, user)
+		if(gang)
+			target.mind.remove_antag_datum(/datum/antagonist/gang)
 		if(!silent)
 			if(target.mind in SSticker.mode.cult)
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")

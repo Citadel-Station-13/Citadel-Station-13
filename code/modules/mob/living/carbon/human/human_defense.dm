@@ -256,7 +256,7 @@
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart(BODY_ZONE_CHEST)
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
+			var/armor_block = run_armor_check(affecting, "melee", null, null,10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
