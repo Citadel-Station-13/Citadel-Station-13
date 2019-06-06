@@ -1541,7 +1541,6 @@
 /datum/supply_pack/service
 	group = "Service"
 
-
 /datum/supply_pack/service/advlighting
 	name = "Advanced Lighting crate"
 	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
@@ -1566,6 +1565,14 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
+/datum/supply_pack/service/food_cart
+	name = "Food Cart Crate"
+	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
+	cost = 1000
+	contains = list(/obj/machinery/food_cart)
+	crate_name = "food cart crate"
+	crate_type = /obj/structure/closet/crate
+
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
 	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
@@ -1573,6 +1580,14 @@
 	contains = list(/obj/item/stack/tile/noslip/thirty,
 					/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
+
+/datum/supply_pack/service/icecream_cart
+	name = "Ice Cream Cart Crate"
+	desc = "Plasma fire a to hot for you, want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	cost = 2750 //Comes prestocked with basic ingredients
+	contains = list(/obj/machinery/icecream_vat)
+	crate_name = "ice cream vat crate"
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
@@ -1701,6 +1716,10 @@
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////// Vending Restocks /////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
