@@ -56,7 +56,7 @@
 
 /obj/item/reagent_containers/food/snacks/snowcones/lime
 	name = "lime flavored snowcone"
-	desc = "A pineapple flavord snowball in a paper cup."
+	desc = "A lime flavord snowball in a paper cup."
 	icon_state = "lime_sc"
 	list_reagents = list("nutriment" = 1, "limejuice" = 5)
 	tastes = list("ice" = 1, "water" = 1, "limes" = 5)
@@ -64,7 +64,7 @@
 
 /obj/item/reagent_containers/food/snacks/snowcones/lemon
 	name = "lemon flavored snowcone"
-	desc = "A pineapple flavord snowball in a paper cup."
+	desc = "A lemon flavord snowball in a paper cup."
 	icon_state = "lemon_sc"
 	list_reagents = list("nutriment" = 1, "lemonjuice" = 5)
 	tastes = list("ice" = 1, "water" = 1, "lemons" = 5)
@@ -72,7 +72,7 @@
 
 /obj/item/reagent_containers/food/snacks/snowcones/apple
 	name = "apple flavored snowcone"
-	desc = "A pineapple flavord snowball in a paper cup."
+	desc = "A apple flavord snowball in a paper cup."
 	icon_state = "blue_sc"
 	list_reagents = list("nutriment" = 1, "applejuice" = 5)
 	tastes = list("ice" = 1, "water" = 1, "apples" = 5)
@@ -173,8 +173,8 @@
 	foodtype = JUNKFOOD | SUGAR
 
 /obj/item/reagent_containers/food/snacks/snowcones/honey
-	name = "pwergamer flavored snowcone"
-	desc = "A waterd down pwergamer soda flavord snowball in a paper cup."
+	name = "honey flavored snowcone"
+	desc = "A honey flavord snowball in a paper cup."
 	icon_state = "honey_sc"
 	list_reagents = list("nutriment" = 1, "honey" = 5)
 	tastes = list("pollen" = 5, "sweetness" = 5, "wax" = 1)
