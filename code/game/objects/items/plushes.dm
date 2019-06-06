@@ -595,6 +595,21 @@
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
+/obj/item/toy/plush/slimeplushie/annie
+	name = "slime plushie"
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "annie"
+	item_state = "annie"
+	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
+
+/obj/item/toy/plush/slimeplushie/paxton
+	name = "slime plushie"
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "paxton"
+	item_state = "paxton"
+	attack_verb = list("blorbled", "slimed", "absorbed", "glomped", "CQC'd", "jabroni'd", "powergamed", "robusted", "cakehatted")
+	gender = MALE
+
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
@@ -740,6 +755,10 @@
 /obj/item/toy/plush/mammal/pavel
 	icon_state = "pavel"
 	item_state = "pavel"
+
+/obj/item/toy/plush/mammal/mason
+	icon_state = "mason"
+	item_state = "mason"
 
 /obj/item/toy/plush/mammal/oten
 	icon_state = "oten"
