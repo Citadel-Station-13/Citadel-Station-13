@@ -300,6 +300,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		if(C.client)
 			C.canbearoused = C.client.prefs.arousable
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(NOGENITALS in H.dna.species.species_traits)
+			H.give_genitals(TRUE) //call the clean up proc to delete anything on the mob then return.
+
 // EDIT ENDS
 
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
@@ -1452,39 +1457,68 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	// CITADEL EDIT slap mouthy gits and booty
-	var/aim_for_mouth  = user.zone_selected == "mouth"
-	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+	var/aim_for_mouth = user.zone_selected == "mouth"
+	var/target_on_help = target.a_intent == INTENT_HELP
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
 	var/target_restrained = target.restrained()
-	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
-		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'>You slap [target] in the face! </span>",\
-		"You hear a slap.")
-		if (!target.has_trait(TRAIT_NYMPHO))
-			stop_wagging_tail(target)
-		return FALSE
+	var/same_dir = (target.dir & user.dir)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
-	if(aim_for_groin && (target_on_help_and_unarmed || target_restrained || target_aiming_for_groin))
+
+	if(target.check_block()) //END EDIT
+		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
+		return 0
+	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+		to_chat(user, "<span class='warning'>You're too exhausted!</span>")
+		return FALSE
+
+	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target]'s ass!</span>",
-			"<span class='notice'>You slap [target]'s ass! </span>",\
-		"You hear a slap.")
+
+		user.visible_message(\
+			"<span class='danger'>\The [user] slaps \the [target] in the face!</span>",\
+			"<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>",\
+			"You hear a slap."
+		)
+		if (!target.has_trait(TRAIT_NYMPHO))
+			stop_wagging_tail(target)
+		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
+		user.adjustStaminaLossBuffered(3)
+		return FALSE
+	else if(aim_for_groin && (target == user || target.lying || same_dir) && (target_on_help || target_restrained || target_aiming_for_groin))
+		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
+		user.adjustStaminaLossBuffered(3)
+		if(target.has_trait(TRAIT_ASSBLASTUSA))
+			var/hit_zone = (user.held_index_to_dir(user.active_hand_index) == "l" ? "l_":"r_") + "arm"
+			user.adjustStaminaLoss(50, affected_zone = hit_zone)
+			var/obj/item/bodypart/affecting = user.get_bodypart(hit_zone)
+			if(affecting)
+				if(affecting.receive_damage(5, 0))
+					user.update_damage_overlays()
+			user.visible_message(\
+				"<span class='danger'>\The [user] slaps \the [target]'s ass, but their hand bounces off like they hit metal!</span>",\
+				"<span class='danger'>You slap [user == target ? "your" : "\the [target]'s"] ass, but feel an intense amount of pain as you realise their buns are harder than steel!</span>",\
+				"You hear a slap."
+			)
+			playsound(target.loc, 'sound/weapons/tap.ogg', 50, 1, -1)
+			user.emote("scream")
+			return FALSE
+
+		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message(\
+			"<span class='danger'>\The [user] slaps \the [target]'s ass!</span>",\
+			"<span class='notice'>You slap [user == target ? "your" : "\the [target]'s"] ass!</span>",\
+			"You hear a slap."
+		)
 		if (target.canbearoused)
 			target.adjustArousalLoss(5)
-		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_NYMPHO) && target.has_dna())
+		if (target.getArousalLoss() >= 100 && ishuman(target) && target.has_trait(TRAIT_MASO) && target.has_dna())
 			target.mob_climax(forced_climax=TRUE)
 		if (!target.has_trait(TRAIT_NYMPHO))
 			stop_wagging_tail(target)
+
 		return FALSE
-	else if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
-		to_chat(user, "<span class='warning'>You're too exhausted.</span>")
-		return FALSE
-	else if(target.check_block()) //END EDIT
-		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
-		return 0
-	if(attacker_style && attacker_style.disarm_act(user,target))
+	else if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
@@ -1649,8 +1683,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
+						var/datum/antagonist/gang/gang = H.mind.has_antag_datum(/datum/antagonist/gang/)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
+						if(gang)
+							H.mind.remove_antag_datum(/datum/antagonist/gang)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1710,6 +1747,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(BP)
 				if(damage > 0 ? BP.receive_damage(damage * hit_percent * brutemod * H.physiology.brute_mod, 0) : BP.heal_damage(abs(damage * hit_percent * brutemod * H.physiology.brute_mod), 0))
 					H.update_damage_overlays()
+					if(H.has_trait(TRAIT_MASO))
+						H.adjustArousalLoss(damage * brutemod * H.physiology.brute_mod)
+						if (H.getArousalLoss() >= 100 && ishuman(H) && H.has_dna())
+							H.mob_climax(forced_climax=TRUE)
+
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod * H.physiology.brute_mod)
 		if(BURN)

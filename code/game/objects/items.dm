@@ -449,7 +449,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
-
+	if(user.has_trait(TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
+		return
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+		M = user
 	var/is_human_victim = 0
 	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
