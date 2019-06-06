@@ -11,6 +11,10 @@
 	strip_delay = 80
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 // CITADEL CHANGES: More variants
 /obj/item/clothing/head/helmet/chaplain/bland
 	icon_state = "knight_generic"
@@ -34,6 +38,10 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+/obj/item/clothing/suit/armor/riot/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 // CITADEL CHANGES: More variants
 /obj/item/clothing/suit/armor/riot/chaplain/teutonic
@@ -201,6 +209,14 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
+/obj/item/clothing/head/hooded/chaplain_hood/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 	name = "leader hoodie"
 	desc = "Now you're ready for some 50 dollar bling water."
@@ -212,7 +228,6 @@
 	name = "leader hood"
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
-
 
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
@@ -435,7 +450,6 @@
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
-
 /obj/item/nullrod/scythe/spellblade
 	icon_state = "spellblade"
 	item_state = "spellblade"
@@ -504,7 +518,6 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
-
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -671,7 +684,6 @@
 
 /obj/item/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
-
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
