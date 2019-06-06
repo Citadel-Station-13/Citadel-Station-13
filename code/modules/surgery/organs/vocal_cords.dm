@@ -857,7 +857,6 @@
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					else
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
-						//to_chat(L, )
 
 
 	//tier 1
