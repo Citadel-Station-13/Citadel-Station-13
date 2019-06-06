@@ -47,26 +47,18 @@
 	damage = 0
 
 /obj/item/projectile/bullet/dart/syringe/dart/on_hit(atom/target, blocked = FALSE)
-	message_admins("Dart landed!")
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..(target, blocked, TRUE)
-				message_admins("Checking reagents")
 				for(var/datum/reagent/R in reagents.reagent_list) //OD prevention time!
-					message_admins("Reagent: [R]")
 					if(istype(R, /datum/reagent/medicine)) //Is this a medicine?
-						message_admins("Is a medicine")
 						if(M.reagents.has_reagent(R.id))
-							message_admins("reagent found! with new")
-							var/datum/reagent/medicine/Rm = locate(R) in M
 							if(R.overdose_threshold == 0) //Is there a possible OD?
 								M.reagents.add_reagent(R.id, R.volume)
 							else
-								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - Rm.volume) -1) //Doesn't work
-								message_admins("DEBUG: R.vol [R.volume], R.OD [R.overdose_threshold], Rm.vol: [Rm.volume], trans: [transVol]")
-								message_admins("Merge: Adding [transVol], OD: [R.overdose_threshold], curvol [Rm.volume]")
+								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1) //Doesn't work
 								M.reagents.add_reagent(R.id, transVol)
 						else
 							if(!R.overdose_threshold == 0)
