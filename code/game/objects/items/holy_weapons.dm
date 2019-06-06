@@ -13,7 +13,7 @@
 
 /obj/item/clothing/head/helmet/chaplain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 // CITADEL CHANGES: More variants
 /obj/item/clothing/head/helmet/chaplain/bland
@@ -41,7 +41,7 @@
 
 /obj/item/clothing/suit/armor/riot/chaplain/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 // CITADEL CHANGES: More variants
 /obj/item/clothing/suit/armor/riot/chaplain/teutonic
@@ -211,11 +211,11 @@
 
 /obj/item/clothing/head/hooded/chaplain_hood/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 	name = "leader hoodie"
