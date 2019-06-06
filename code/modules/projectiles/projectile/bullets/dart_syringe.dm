@@ -65,6 +65,7 @@
 								M.reagents.add_reagent(R.id, R.volume)
 							else
 								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - Rm.volume) -1) //Doesn't work
+								message_admins("DEBUG: R.vol [R.volume], R.OD [R.overdose_threshold], Rm.vol: [Rm.volume], trans: [transVol]")
 								message_admins("Merge: Adding [transVol], OD: [R.overdose_threshold], curvol [Rm.volume]")
 								M.reagents.add_reagent(R.id, transVol)
 						else
