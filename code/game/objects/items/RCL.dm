@@ -88,7 +88,6 @@
 	last = null
 	QDEL_NULL(mobhook)
 	QDEL_NULL(wiring_gui_menu)
-	setActive(FALSE, null) // setactive(FALSE) removes mobhook
 	return ..()
 
 /obj/item/twohanded/rcl/update_icon()
