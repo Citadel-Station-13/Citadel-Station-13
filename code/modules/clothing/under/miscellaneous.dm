@@ -750,8 +750,6 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
-/obj/item/clothing/var/hides_bulges = FALSE // OwO wats this?
-
 /obj/item/clothing/under/permit
 	name = "public nudity permit"
 	desc = "This permit entitles the bearer to conduct their duties without a uniform. Normally issued to furred crewmembers or those with nothing to hide."
