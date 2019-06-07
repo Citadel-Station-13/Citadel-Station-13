@@ -742,7 +742,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
-			dat += "<b>Right-Click Context Menu:</b> <a href='?_src_=prefs;preference=context_menu_on'>[(context_menu_on) ? "Enabled" : "Default"]</a><br>"
+			dat += "<b>Right-Click Context Menu:</b> <a href='?_src_=prefs;preference=context_menu_on'>[(context_menu_on) ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<br>"
 			dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
 			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
