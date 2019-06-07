@@ -13,6 +13,11 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+	var/blood_state = BLOOD_STATE_NOT_BLOODY
+	var/list/bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/last_bloodtype = ""//used to track the last bloodtype to have graced these shoes; makes for better performing footprint shenanigans
+	var/last_blood_DNA = ""//same as last one
+
 	//CITADEL EDIT Enables digitigrade shoe styles
 	var/adjusted = NORMAL_STYLE
 	mutantrace_variation = MUTANTRACE_VARIATION
@@ -45,7 +50,7 @@
 		if(blood_DNA)
 			bloody = TRUE
 		else
-			bloody = blood_smear[BLOOD_STATE_BLOOD]
+			bloody = bloody_shoes[BLOOD_STATE_BLOOD]
 
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
@@ -91,7 +96,7 @@
 
 /obj/item/clothing/shoes/clean_blood()
 	..()
-	blood_smear = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	bloody_shoes = list(BLOOD_STATE_BLOOD = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	blood_state = BLOOD_STATE_NOT_BLOODY
 	blood_color = null
 	if(ismob(loc))
@@ -100,3 +105,9 @@
 
 /obj/item/proc/negates_gravity()
 	return FALSE
+
+/obj/item/clothing/shoes/transfer_blood_dna(list/blood_dna)
+	..()
+	if(blood_dna.len)
+		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
+		last_blood_DNA = blood_dna[blood_dna.len]

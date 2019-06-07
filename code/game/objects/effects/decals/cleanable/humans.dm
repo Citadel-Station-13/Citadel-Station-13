@@ -6,9 +6,8 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_DNA = list()
 	blood_state = BLOOD_STATE_BLOOD
+	bloodiness = MAX_SHOE_BLOODINESS
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
-
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
@@ -35,7 +34,6 @@
 	name = "dried blood"
 	desc = "Looks like it's been here a while. Eew."
 	bloodiness = 0
-	color = "#3a0505"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	..()
@@ -45,14 +43,14 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
-/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose so that it shows up even on regular splatters
+/obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	var/list/existing_dirs = list()
+	blood_DNA = list()
 	color = BLOOD_COLOR_HUMAN
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	color = blood_DNA_to_color()
@@ -89,10 +87,10 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.blood_smear[blood_state])
+		if(S && S.bloody_shoes[blood_state])
 			if(color != bloodtype_to_color(S.last_bloodtype))
 				return
-			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types |= S.type
 			if (!(entered_dirs & H.dir))
 				entered_dirs |= H.dir
@@ -110,10 +108,10 @@
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
-		if(S && S.blood_smear[blood_state])
+		if(S && S.bloody_shoes[blood_state])
 			if(color != bloodtype_to_color(S.last_bloodtype))//last entry - we check its color
 				return
-			S.blood_smear[blood_state] = max(S.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			shoe_types  |= S.type
 			if (!(exited_dirs & H.dir))
 				exited_dirs |= H.dir
@@ -158,6 +156,8 @@
 
 /obj/effect/decal/cleanable/blood/footprints/tracks/replace_decal(obj/effect/decal/cleanable/blood/footprints/tracks/C)
 	if(print_state != C.print_state) //We only replace footprints of the same type as us
+		return
+	if(blood_state != C.blood_state)
 		return
 	if(color != C.color)
 		return

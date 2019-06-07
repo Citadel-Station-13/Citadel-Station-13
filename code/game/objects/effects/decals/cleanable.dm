@@ -70,6 +70,7 @@
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/O)
+	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
@@ -80,10 +81,12 @@
 			else
 				add_blood = bloodiness
 			bloodiness -= add_blood
-			S.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,S.blood_smear[blood_state]+add_blood)
+			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
 			if(blood_DNA && blood_DNA.len)
 				S.add_blood(blood_DNA)
-			S.blood_smear = blood_state
+				if(S.last_blood_DNA != blood_DNA)
+					S.last_blood_DNA += blood_DNA
+			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
 
@@ -96,10 +99,11 @@
 			bloodiness -= add_blood
 			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
 			if(blood_DNA && blood_DNA.len)
-				H.add_blood(blood_DNA)
-			H.blood_smear = blood_state
+				if(H.last_blood_DNA != blood_DNA)
+					H.last_blood_DNA += blood_DNA
+			H.blood_state = blood_state
 			update_icon()
-			H.update_inv_shoes()
+			//H.update_inv_shoes()
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
