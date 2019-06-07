@@ -80,6 +80,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
 	S["hotkeys"]			>> hotkeys
+	S["context_menu_on"]	>> context_menu_on
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 	S["buttons_locked"]		>> buttons_locked
@@ -174,6 +175,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
 	WRITE_FILE(S["hotkeys"], hotkeys)
+	WRITE_FILE(S["context_menu_on"], context_menu_on)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)

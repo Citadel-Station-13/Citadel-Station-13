@@ -382,6 +382,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
 
+	if(!prefs.context_menu_on)
+		toggle_popup_menus(FALSE, FALSE, TRUE)
+
 	if(ckey in GLOB.clientmessages)
 		for(var/message in GLOB.clientmessages[ckey])
 			to_chat(src, message)
@@ -898,3 +901,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+/client/proc/toggle_popup_menus(mode = TRUE, disable = FALSE, forced = FALSE)
+	if(prefs.context_menu_on && !forced)
+		return
+	if(mob.combatmode)
+		mode = FALSE
+	show_popup_menus = mode
+	prefs.context_menu_on = disable

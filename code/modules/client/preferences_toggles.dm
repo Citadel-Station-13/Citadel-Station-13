@@ -364,6 +364,15 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		to_chat(src, "<span class='notice'>You will no longer examine things you click on.</span>")
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost Inquisitiveness", "[prefs.inquisitive_ghost ? "Enabled" : "Disabled"]"))
 
+/client/verb/togglerightclickstuff()
+	set category = "Preferences"
+	set name = "Toggle Rightclick"
+	set desc = "Toggles the Right Click Context Menu on and off."
+
+	var/nmode = prefs.context_menu_on
+	toggle_popup_menus(nmode, !prefs.context_menu_on, TRUE)
+	to_chat(src, "<span class='notice'>The right-click context menu is now [nmode ? "enabled" : "disabled"].</span>")
+
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
