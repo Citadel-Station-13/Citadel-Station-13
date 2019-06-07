@@ -370,7 +370,8 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = "Toggles the Right Click Context Menu on and off."
 
 	var/nmode = prefs.context_menu_on
-	toggle_popup_menus(nmode, !prefs.context_menu_on, TRUE)
+	prefs.context_menu_on = !nmode
+	toggle_popup_menus(nmode, TRUE)
 	to_chat(src, "<span class='notice'>The right-click context menu is now [nmode ? "enabled" : "disabled"].</span>")
 
 //Admin Preferences

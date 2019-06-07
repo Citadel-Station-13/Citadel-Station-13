@@ -2053,7 +2053,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						winset(user, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=old_default")
 				if("context_menu_on")
 					context_menu_on = !context_menu_on
-					parent?.toggle_popup_menus(context_menu_on, !context_menu_on, TRUE)
+					parent?.toggle_popup_menus(context_menu_on, TRUE)
 				if("action_buttons")
 					buttons_locked = !buttons_locked
 				if("tgui_fancy")
