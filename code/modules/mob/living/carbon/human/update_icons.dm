@@ -276,7 +276,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 		inv.update_icon()
 
-	if(!shoes)
+	if(!shoes && bloody_feet)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyfeet", -SHOES_LAYER, color = blood_DNA_to_color())
 		if(dna.features["taur"] != "None")
 			if(dna.features["taur"] in GLOB.noodle_taurs)

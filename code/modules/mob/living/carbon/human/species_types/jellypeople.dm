@@ -18,7 +18,7 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
-	move_trail = /obj/effect/decal/cleanable/blood/tracks/foot
+	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)

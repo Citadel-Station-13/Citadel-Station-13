@@ -66,8 +66,46 @@
 		reagents.expose_temperature(exposed_temperature)
 	..()
 
-/obj/effect/decal/cleanable/clean_blood(var/ignore = FALSE)
-	if(!ignore)
-		qdel(src)
-		return
+
+//Add "bloodiness" of this blood's type, to the human's shoes
+//This is on /cleanable because fuck this ancient mess
+/obj/effect/decal/cleanable/Crossed(atom/movable/O)
 	..()
+	if(ishuman(O))
+		var/mob/living/carbon/human/H = O
+		if(H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
+			var/obj/item/clothing/shoes/S = H.shoes
+			var/add_blood = 0
+			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+				add_blood = BLOOD_GAIN_PER_STEP
+			else
+				add_blood = bloodiness
+			bloodiness -= add_blood
+			to_chat(world, "S.blood_state is [S.blood_state], & blood smear state is [S.blood_smear[S.blood_state]]")
+			S.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,S.blood_smear[blood_state]+add_blood)
+			if(blood_DNA && blood_DNA.len)
+				S.add_blood(blood_DNA)
+			S.blood_smear = blood_state
+			update_icon()
+			H.update_inv_shoes()
+
+		else if(!H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
+			var/add_blood = 0
+			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+				add_blood = BLOOD_GAIN_PER_STEP
+			else
+				add_blood = bloodiness
+			bloodiness -= add_blood
+			to_chat(world, "blood_state is [blood_state], & blood smear state is [H.blood_smear[blood_state]]")
+			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
+			if(blood_DNA && blood_DNA.len)
+				H.add_blood(blood_DNA)
+			H.blood_smear = blood_state
+			update_icon()
+			H.update_inv_shoes()
+
+/obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+		return bloodiness
+	else
+		return FALSE
