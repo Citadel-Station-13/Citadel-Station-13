@@ -1,16 +1,13 @@
 
 /mob
 	var/bloody_hands = 0
-	var/track_blood = 0
-	var/feet_blood_color
-	var/last_bloodtype = ""//used to track the last bloodtype to have graced this filthy spaceman; makes for better performing footprint shenanigans
-	var/last_blood_DNA = ""//same as last one
+	var/bloody_feet = 0
 
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
 
 /obj/item/clothing/shoes
-	var/track_blood = 0
+	var/transfer_blood = 0
 
 
 /obj/item/reagent_containers/glass/rag

@@ -130,7 +130,7 @@
 /obj/effect/decal/cleanable/blood/footprints/tracks/update_icon()
 	..()
 	cut_overlays()
-	to_chat(world, "[src] called update_icon with [print_state]")
+
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]

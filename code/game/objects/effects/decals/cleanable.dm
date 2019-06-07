@@ -70,7 +70,6 @@
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
 /obj/effect/decal/cleanable/Crossed(atom/movable/O)
-	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		if(H.shoes && blood_state && bloodiness && (!H.has_trait(TRAIT_LIGHT_STEP) || !H.mind.assigned_role == "Detective"))
@@ -81,7 +80,6 @@
 			else
 				add_blood = bloodiness
 			bloodiness -= add_blood
-			to_chat(world, "S.blood_state is [S.blood_state], & blood smear state is [S.blood_smear[S.blood_state]]")
 			S.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,S.blood_smear[blood_state]+add_blood)
 			if(blood_DNA && blood_DNA.len)
 				S.add_blood(blood_DNA)
@@ -96,7 +94,6 @@
 			else
 				add_blood = bloodiness
 			bloodiness -= add_blood
-			to_chat(world, "blood_state is [blood_state], & blood smear state is [H.blood_smear[blood_state]]")
 			H.blood_smear[blood_state] = min(MAX_SHOE_BLOODINESS,H.blood_smear[blood_state]+add_blood)
 			if(blood_DNA && blood_DNA.len)
 				H.add_blood(blood_DNA)
