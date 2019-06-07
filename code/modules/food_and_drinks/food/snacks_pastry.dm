@@ -203,7 +203,7 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
-	foodtype = GRAIN | SUGAR
+	foodtype = SUGAR
 
 /obj/item/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"

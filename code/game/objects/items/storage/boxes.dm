@@ -14,8 +14,9 @@
  *		ID and security PDA cart boxes,
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
- *		Replacement light boxes.
- *		Action Figure Boxes
+ *		Replacement light boxes,
+ *		Shotgun Ammo boxes,
+ *		Action Figure Boxes,
  *		Various paper bags.
  *
  *		For syndicate call-ins see uplink_kits.dm
@@ -84,7 +85,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-
 /obj/item/storage/box/disks_plantgene
 	name = "plant data disks box"
 	illustration = "disk_kit"
@@ -116,7 +116,6 @@
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-
 
 // Engineer survival box
 /obj/item/storage/box/engineer/PopulateContents()
@@ -260,7 +259,6 @@
 	frame.id = id
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
-
 
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -615,7 +613,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/light/bulb(src)
 
-
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."
@@ -720,6 +717,46 @@
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/storage/box/lethalslugs
+	name = "box of 12g shotgun slugs"
+	desc = "A box full of lethal 12g slug, designed for riot shotguns."
+	icon_state = "12g_box"
+	illustration = null
+
+/obj/item/storage/box/lethalslugs/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/projectile/bullet/shotgun_slug(src)
+
+/obj/item/storage/box/stunslug
+	name = "box of stun slugs"
+	desc = "A box full of stun 12g slugs."
+	icon_state = "stunslug_box"
+	illustration = null
+
+/obj/item/storage/box/stunslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/projectile/bullet/shotgun_stunslug(src)
+
+/obj/item/storage/box/techsslug
+	name = "box of tech shotgun shells"
+	desc = "A box full of tech shotgun shells."
+	icon_state = "techslug_box"
+	illustration = null
+
+/obj/item/storage/box/techsslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/techshell(src)
+
+/obj/item/storage/box/fireshot
+	name = "box of incendiary ammo"
+	desc = "A box full of tech incendiary ammo."
+	icon_state = "fireshot_box"
+	illustration = null
+
+/obj/item/storage/box/techsslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/incendiary(src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"

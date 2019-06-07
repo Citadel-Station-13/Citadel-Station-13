@@ -59,6 +59,14 @@
 	build_path = /obj/item/reagent_containers/food/snacks/monkeycube
 	category = list("initial", "Food")
 
+/datum/design/smeat
+	name = "Biomass Meat Slab"
+	id = "smeat"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 175)
+	build_path = /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat
+	category = list("initial", "Food")
+
 /datum/design/ez_nut
 	name = "E-Z Nutrient"
 	id = "ez_nut"
