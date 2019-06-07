@@ -13,14 +13,19 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	icon_state = "radial_slice"
 	var/choice
 	var/next_page = FALSE
+	var/tooltips = FALSE
 
 /obj/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_slice_focus"
+	if(tooltips)
+		openToolTip(usr, src, params, title = name)
 
 /obj/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_slice"
+	if(tooltips)
+		closeToolTip(usr)
 
 /obj/screen/radial/slice/Click(location, control, params)
 	if(usr.client == parent.current_user)
@@ -31,6 +36,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /obj/screen/radial/center
 	name = "Close Menu"
+	icon_state = "radial_center"
+
+/obj/screen/radial/center/MouseEntered(location, control, params)
+	. = ..()
+	icon_state = "radial_center_focus"
+
+/obj/screen/radial/center/MouseExited(location, control, params)
+	. = ..()
 	icon_state = "radial_center"
 
 /obj/screen/radial/center/Click(location, control, params)
@@ -97,7 +110,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			starting_angle = 180
 			ending_angle = 45
 
-/datum/radial_menu/proc/setup_menu()
+/datum/radial_menu/proc/setup_menu(use_tooltips)
 	if(ending_angle > starting_angle)
 		zone = ending_angle - starting_angle
 	else
@@ -108,7 +121,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(elements.len < max_elements)
 		var/elements_to_add = max_elements - elements.len
 		for(var/i in 1 to elements_to_add) //Create all elements
-			var/obj/screen/radial/new_element = new /obj/screen/radial/slice
+			var/obj/screen/radial/slice/new_element = new /obj/screen/radial/slice
+			new_element.tooltips = use_tooltips
 			new_element.parent = src
 			elements += new_element
 
@@ -199,7 +213,6 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	choices_icons.Cut()
 	choices_values.Cut()
 	current_page = 1
-	QDEL_NULL(custom_check_callback)
 
 /datum/radial_menu/proc/element_chosen(choice_id,mob/user)
 	selected_choice = choices_values[choice_id]
@@ -207,7 +220,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/proc/get_next_id()
 	return "c_[choices.len]"
 
-/datum/radial_menu/proc/set_choices(list/new_choices)
+/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips)
 	if(choices.len)
 		Reset()
 	for(var/E in new_choices)
@@ -218,7 +231,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/I = extract_image(new_choices[E])
 			if(I)
 				choices_icons[id] = I
-	setup_menu()
+	setup_menu(use_tooltips)
 
 
 /datum/radial_menu/proc/extract_image(E)
@@ -250,25 +263,29 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(current_user)
 		current_user.images -= menu_holder
 
-/datum/radial_menu/proc/wait()
+/datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
 	while (current_user && !finished && !selected_choice)
-		if(custom_check_callback && next_check < world.time)
-			if(!custom_check_callback.Invoke())
-				return
-			else
-				next_check = world.time + check_delay
+	if(require_near && !in_range(anchor, user))
+		return
+	if(custom_check_callback && next_check < world.time)
+		if(!custom_check_callback.Invoke())
+			return
+		else
+			next_check = world.time + check_delay
 		stoplag(1)
 
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
+	QDEL_NULL(custom_check_callback)
 	. = ..()
+
 /*
 	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user,atom/anchor,list/choices, uniqueid , radius , datum/callback/custom_check)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -285,9 +302,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
-	menu.set_choices(choices)
+	menu.set_choices(choices, tooltips)
 	menu.show_to(user)
-	menu.wait()
+	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
 	qdel(menu)
 	GLOB.radial_menus -= uniqueid

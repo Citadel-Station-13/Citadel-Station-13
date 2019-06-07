@@ -124,7 +124,7 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
-	if(!(A in range(custom_range, get_turf(user))))
+	if(!(A in view(7, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
 		return FALSE
 	else
@@ -146,7 +146,7 @@ RLD
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	var/mode = 1
+	var/mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
@@ -161,13 +161,18 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type()
-	set name = "Toggle Window Type"
+/obj/item/construction/rcd/verb/toggle_window_type_verb()
+	set name = "RCD : Toggle Window Type"
 	set category = "Object"
-	set src in usr // What does this do?
+	set src in view(1)
 
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	toggle_window_type(usr)
+
+/obj/item/construction/rcd/proc/toggle_window_type(mob/user)
 	var/window_type_name
-
 	if (window_type == /obj/structure/window/fulltile)
 		window_type = /obj/structure/window/reinforced/fulltile
 		window_type_name = "reinforced glass"
@@ -177,13 +182,9 @@ RLD
 
 	to_chat(usr, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
-/obj/item/construction/rcd/verb/change_airlock_access()
-	set name = "Change Airlock Access"
-	set category = "Object"
-	set src in usr
-
-	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
-		return ..(usr)
+/obj/item/construction/rcd/proc/change_airlock_access(mob/user)
+	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
+		return
 
 	var/t1 = ""
 
@@ -255,7 +256,7 @@ RLD
 
 /obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
 	var/obj/machinery/door/airlock/proto = airlock_type
-	var/icon/ic = initial(proto.icon)
+	var/ic = initial(proto.icon)
 	var/mutable_appearance/MA = mutable_appearance(ic, "closed")
 	if(!initial(proto.glass))
 		MA.overlays += "fill_closed"
@@ -315,13 +316,13 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near, tooltips = TRUE)
+	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -428,48 +429,48 @@ RLD
 	. = ..()
 
 /obj/item/construction/rcd/attack_self(mob/user)
-		..()
-		var/list/choices = list(
-			"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
-			"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
-			"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
-			"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
-		)
-		if(mode == RCD_AIRLOCK)
-			 choices += list(
-			"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
-			"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
-			)
-		var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
-		if(!check_menu(user))
-				return
-		switch(choice)
-				if("Floors & Walls")
-						mode = RCD_FLOORWALL
-				if("Airlock")
-						mode = RCD_AIRLOCK
-				if("Deconstruct")
-						mode = RCD_DECONSTRUCT
-				if("Grilles & Windows")
-						mode = RCD_WINDOWGRILLE
-				if("Change Access")
-						change_airlock_access(user)
-						return
-				if("Change Airlock Type")
-						change_airlock_setting(user)
-						return
-				if("Change Window Type")
-						toggle_window_type(user)
-						return
-				else
-						return
-		playsound(src, 'sound/effects/pop.ogg', 50, 0)
-		to_chat(user, "<span class='notice'>You change RCD's mode to '[choice]'.</span>")
+	..()
+	var/list/choices = list(
+		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
+	)
+	if(mode == RCD_AIRLOCK)
+		choices += list(
+		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
+	)
+	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	if(!check_menu(user))
+		return
+	switch(choice)
+		if("Floors & Walls")
+			mode = RCD_FLOORWALL
+		if("Airlock")
+			mode = RCD_AIRLOCK
+		if("Deconstruct")
+			mode = RCD_DECONSTRUCT
+		if("Grilles & Windows")
+			mode = RCD_WINDOWGRILLE
+		if("Change Access")
+			change_airlock_access(user)
+			return
+		if("Change Airlock Type")
+			change_airlock_setting(user)
+			return
+		if("Change Window Type")
+			toggle_window_type(user)
+			return
+		else
+			return
+	playsound(src, 'sound/effects/pop.ogg', 50, 0)
+	to_chat(user, "<span class='notice'>You change RCD's mode to '[choice]'.</span>")
 
 /obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with
 	if((isturf(A) && A.density && mode==RCD_DECONSTRUCT) || (isturf(A) && !A.density) || (istype(A, /obj/machinery/door/airlock) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window) && mode==RCD_DECONSTRUCT) || istype(A, /obj/structure/girder))
 		return TRUE
- else
+	else
 		return FALSE
 
 /obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
