@@ -95,8 +95,9 @@
 		CtrlClickOn(A)
 		return
 
-	if(modifiers["right"] && combatmode) //CIT CHANGE - allows right clicking to perform actions
-		RightClickOn(A,params) //CIT CHANGE - ditto
+	if(modifiers["right"]) //CIT CHANGE - allows right clicking to perform actions
+		if(combatmode)
+			RightClickOn(A,params) //CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
 	if(incapacitated(ignore_restraints = 1))
