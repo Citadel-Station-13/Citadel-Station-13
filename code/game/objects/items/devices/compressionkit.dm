@@ -1,7 +1,7 @@
 /obj/item/compressionkit
 	name = "bluespace compression kit"
 	desc = "An illegally modified BSRPED, capable of reducing the size of most items."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "compression_c"
 	item_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
