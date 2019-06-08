@@ -71,10 +71,12 @@
 
 	for(var/area/A in impacted_areas)
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/B = locate() in A
-		if(!B)
-			continue
-		for(var/obj/effect/decal/cleanable/CL in A)
-			if(!CL.can_bloodcrawl_in()) //If Bubblegum is not present in the area, we'll clean blood too.
+		if(B)
+			for(var/obj/effect/decal/cleanable/CL in A)
+				if(!CL.can_bloodcrawl_in()).
+					qdel(CL)
+		else
+			for(var/obj/effect/decal/cleanable/CL in A)
 				qdel(CL)
 
 /datum/weather/ash_storm/end()
