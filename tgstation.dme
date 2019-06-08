@@ -2874,7 +2874,6 @@
 #include "modular_citadel\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "modular_citadel\code\game\objects\items\devices\aicard.dm"
 #include "modular_citadel\code\game\objects\items\devices\flashlight.dm"
-#include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\encryptionkey.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\headset.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"

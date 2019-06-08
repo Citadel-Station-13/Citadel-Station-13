@@ -226,6 +226,20 @@
 			CL.flags_cover = initial(PCL.flags_cover)
 	target.icon = initial(picked_item.icon)
 
+/datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
+	if(!istype(picked_item) || !istype(target, /obj/item/pda))
+		return ..()
+	var/obj/item/pda/P = target
+	P.icon = initial(picked_item.icon)
+	P.name = initial(picked_item.name)
+	P.desc = initial(picked_item.desc)
+	P.base_skin = initial(picked_item.icon_state)
+	P.item_state = initial(picked_item.item_state)
+	P.item_color = initial(picked_item.item_color)
+	P.overlays_offsets = initial(picked_item.overlays_offsets)
+	P.set_new_overlays_offsets()
+	P.update_icon()
+
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
 		return
@@ -584,7 +598,7 @@
 
 /obj/item/pda/chameleon
 	name = "PDA"
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	var/datum/action/item_action/chameleon/change/pda/chameleon_action
 
 /obj/item/pda/chameleon/Initialize()
 	. = ..()
