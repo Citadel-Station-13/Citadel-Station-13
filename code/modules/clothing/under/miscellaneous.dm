@@ -756,6 +756,4 @@
 	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint1"
 	item_state = "golem"  //This is dumb and hacky but was here when I got here.//No, it really isn't. Why make a new blank clothing sprite if we already have one?
-	body_parts_covered = 0
-
-//	sprite_sheets = list() //Dunno why this is here so I'm gonna comment it out and hope it still works.
+	body_parts_covered = CHEST|GROIN
