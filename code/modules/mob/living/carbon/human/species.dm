@@ -1490,11 +1490,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.adjustStaminaLossBuffered(3)
 		if(target.has_trait(TRAIT_ASSBLASTUSA))
 			var/hit_zone = (user.held_index_to_dir(user.active_hand_index) == "l" ? "l_":"r_") + "arm"
-			user.adjustStaminaLoss(50, affected_zone = hit_zone)
-			var/obj/item/bodypart/affecting = user.get_bodypart(hit_zone)
-			if(affecting)
-				if(affecting.receive_damage(5, 0))
-					user.update_damage_overlays()
+			user.adjustStaminaLoss(20, affected_zone = hit_zone)
 			user.visible_message(\
 				"<span class='danger'>\The [user] slaps \the [target]'s ass, but their hand bounces off like they hit metal!</span>",\
 				"<span class='danger'>You slap [user == target ? "your" : "\the [target]'s"] ass, but feel an intense amount of pain as you realise their buns are harder than steel!</span>",\
