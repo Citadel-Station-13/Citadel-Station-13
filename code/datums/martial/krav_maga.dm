@@ -92,7 +92,7 @@
 					  	"<span class='userdanger'>[A] leg sweeps you!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 	D.apply_damage(5, BRUTE)
-	D.Knockdown(40, override_hardstun = 0.01, override_stam = 25)
+	D.Knockdown(40, override_hardstun = 0.01, 25)
 	log_combat(A, D, "leg sweeped")
 	return 1
 
