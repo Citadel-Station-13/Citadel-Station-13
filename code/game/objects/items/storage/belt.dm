@@ -551,7 +551,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 18
-	STR.display_numerical_stacking = TRUE
+	STR.display_numerical_stacking = FALSE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
 		))
