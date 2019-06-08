@@ -191,6 +191,9 @@
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
 	playsound(loc, 'sound/machines/click.ogg', 30, 1)
+	var/boom = rand(1,1000)
+	if(boom >= 999)
+		try_detonate(TRUE)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
