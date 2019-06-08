@@ -103,21 +103,23 @@
 
 	//CIT CHANGES START HERE - makes it so resting stops you from moving through standing folks without a short delay
 		if(resting && !L.resting)
-			if(attemptingcrawl)
-				return TRUE
-			if(getStaminaLoss() >= STAMINA_SOFTCRIT)
-				to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
-				return TRUE
-			attemptingcrawl = TRUE
 			var/origtargetloc = L.loc
-			visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
-			if(do_after(src, CRAWLUNDER_DELAY, target = src))
-				if(resting)
-					var/src_passmob = (pass_flags & PASSMOB)
-					pass_flags |= PASSMOB
-					Move(origtargetloc)
-					if(!src_passmob)
-						pass_flags &= ~PASSMOB
+			if(!pulledby)
+				if(attemptingcrawl)
+					return TRUE
+				if(getStaminaLoss() >= STAMINA_SOFTCRIT)
+					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
+					return TRUE
+				attemptingcrawl = TRUE
+				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
+				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || !resting)
+					attemptingcrawl = FALSE
+					return TRUE
+			var/src_passmob = (pass_flags & PASSMOB)
+			pass_flags |= PASSMOB
+			Move(origtargetloc)
+			if(!src_passmob)
+				pass_flags &= ~PASSMOB
 			attemptingcrawl = FALSE
 			return TRUE
 	//END OF CIT CHANGES
@@ -698,7 +700,7 @@
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
-	if(do_mob(src, who, what.strip_delay))
+	if(do_mob(src, who, what.strip_delay, ignorehelditem = TRUE))
 		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
@@ -1180,3 +1182,32 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/proc/do_adrenaline(
+			stamina_boost = 150,
+			put_on_feet = TRUE,
+			clamp_unconscious_to = 0,
+			clamp_immobility_to = 0,
+			reset_misc = TRUE,
+			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10),
+			message = "<span class='boldnotice'>You feel a surge of energy!</span>"
+		)
+	if(AmountSleeping() > clamp_unconscious_to)
+		SetSleeping(clamp_unconscious_to)
+	if(AmountUnconscious() > clamp_unconscious_to)
+		SetUnconscious(clamp_unconscious_to)
+	if(AmountStun() > clamp_immobility_to)
+		SetStun(clamp_immobility_to)
+	if(AmountKnockdown() > clamp_immobility_to)
+		SetKnockdown(clamp_immobility_to)
+	adjustStaminaLoss(max(0, -stamina_boost))
+	if(put_on_feet)
+		resting = FALSE
+		lying = FALSE
+	if(reset_misc)
+		stuttering = 0
+	updatehealth()
+	update_stamina()
+	update_canmove()
+	for(var/chem in healing_chems)
+		reagents.add_reagent(chem, healing_chems[chem])

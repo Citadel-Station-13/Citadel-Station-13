@@ -1165,8 +1165,8 @@
 	var/list/gas_names = list()
 	var/list/gas_amounts = list()
 	for(var/id in gases)
-		var/name = gases[id][GAS_META][META_GAS_NAME]
-		var/amt = round(gases[id][MOLES], 0.001)
+		var/name = GLOB.meta_gas_names[id]
+		var/amt = round(gases[id], 0.001)
 		gas_names.Add(name)
 		gas_amounts.Add(amt)
 

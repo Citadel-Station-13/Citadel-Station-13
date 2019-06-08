@@ -1171,6 +1171,7 @@
 	M.AdjustUnconscious(-20, 0)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
+	M.AdjustSleeping(-20, 0)
 	M.adjustStaminaLoss(-30, 0)
 	..()
 	return TRUE

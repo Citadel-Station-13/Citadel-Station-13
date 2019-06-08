@@ -14,9 +14,11 @@
  *		ID and security PDA cart boxes,
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
- *		Replacement light boxes.
- *		Action Figure Boxes
- *		Various paper bags.
+ *		Replacement light boxes,
+ *		Ammo types,
+ *		Action Figure Boxes,
+ *		Various paper bags,
+ *		Colored boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -74,7 +76,6 @@
 		return 0
 	return ..()
 
-
 //Disk boxes
 /obj/item/storage/box/disks
 	name = "diskette box"
@@ -83,7 +84,6 @@
 /obj/item/storage/box/disks/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
-
 
 /obj/item/storage/box/disks_plantgene
 	name = "plant data disks box"
@@ -117,7 +117,6 @@
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-
 // Engineer survival box
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
@@ -142,6 +141,29 @@
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/seclooking
+	icon_state = "secbox"
+	illustration = null
+
+/obj/item/storage/box/cells
+	name = "box of powercells"
+	desc = "Contains powercells."
+	illustration = "power_cell"
+
+/obj/item/storage/box/ammoshells
+	name = "box of loose ammo"
+	desc = "Contains loose ammo."
+	illustration = "loose_ammo"
+
+/obj/item/storage/box/otwo
+	name = "box of o2 supplies"
+	desc = "Contains o2 supplies."
+	illustration = "02"
+
+/obj/item/storage/box/otwo/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -260,7 +282,6 @@
 	frame.id = id
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
-
 
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -465,7 +486,7 @@
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
 	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
@@ -474,7 +495,7 @@
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
@@ -615,7 +636,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/light/bulb(src)
 
-
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."
@@ -720,6 +740,46 @@
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/obj/item/storage/box/lethalslugs
+	name = "box of 12g shotgun slugs"
+	desc = "A box full of lethal 12g slug, designed for riot shotguns."
+	icon_state = "12g_box"
+	illustration = null
+
+/obj/item/storage/box/lethalslugs/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/projectile/bullet/shotgun_slug(src)
+
+/obj/item/storage/box/stunslug
+	name = "box of stun slugs"
+	desc = "A box full of stun 12g slugs."
+	icon_state = "stunslug_box"
+	illustration = null
+
+/obj/item/storage/box/stunslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/projectile/bullet/shotgun_stunslug(src)
+
+/obj/item/storage/box/techsslug
+	name = "box of tech shotgun shells"
+	desc = "A box full of tech shotgun shells."
+	icon_state = "techslug_box"
+	illustration = null
+
+/obj/item/storage/box/techsslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/techshell(src)
+
+/obj/item/storage/box/fireshot
+	name = "box of incendiary ammo"
+	desc = "A box full of tech incendiary ammo."
+	icon_state = "fireshot_box"
+	illustration = null
+
+/obj/item/storage/box/techsslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/incendiary(src)
 
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
@@ -966,7 +1026,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
-
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
@@ -1025,3 +1084,32 @@
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
+
+//Colored boxes.
+/obj/item/storage/box/green
+	icon_state = "box_green"
+	illustration = null
+
+/obj/item/storage/box/blue
+	icon_state = "box_blue"
+	illustration = null
+
+/obj/item/storage/box/purple
+	icon_state = "box_purple"
+	illustration = null
+
+/obj/item/storage/box/red
+	icon_state = "box_red"
+	illustration = null
+
+/obj/item/storage/box/yellow
+	icon_state = "box_yellow"
+	illustration = null
+
+/obj/item/storage/box/brown
+	icon_state = "box_brown"
+	illustration = null
+
+/obj/item/storage/box/pink
+	icon_state = "box_pink"
+	illustration = null

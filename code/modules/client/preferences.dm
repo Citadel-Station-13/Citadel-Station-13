@@ -117,6 +117,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_color" = "fff",
 		"balls_amount" = 2,
 		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_shape" = "Single",
 		"balls_size" = BALLS_SIZE_DEF,
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
@@ -701,6 +702,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							dat += "<b>Testicles Color:</b>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
+						dat += "<b>Testicles showing:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=balls_shape;task=input'>[features["balls_shape"]]</a>"
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<b>Has Vagina:</b>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a>"
@@ -1458,7 +1460,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as null|message
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE)
 					if(!isnull(msg))
 						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
 						features["flavor_text"] = msg
@@ -1836,7 +1838,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
 					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
@@ -1858,7 +1860,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+
+				if("balls_shape")
+					var/new_shape
+					new_shape = input(user, "Testicle Type:", "Character Preference") as null|anything in GLOB.balls_shapes_list
+					if(new_shape)
+						features["balls_shape"] = new_shape
 
 				if("egg_size")
 					var/new_size
@@ -1874,7 +1882,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("breasts_size")
 					var/new_size
@@ -1897,7 +1905,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("vag_shape")
 					var/new_shape
@@ -1914,7 +1922,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["vag_color"] = sanitize_hexcolor(new_vagcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null

@@ -433,7 +433,6 @@
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
-	hidden = TRUE
 	contraband = TRUE
 	cost = 5000 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/security/officer/russian,
@@ -873,8 +872,7 @@
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
-	cost = 3000
-	special = TRUE
+	cost = 4000
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
 					/obj/machinery/satellite/meteor_shield,
@@ -882,15 +880,12 @@
 					)
 	crate_name= "shield sat crate"
 
-
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
-	cost = 5000
-	special = TRUE
+	cost = 4000
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
-
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
@@ -960,6 +955,15 @@
 					/obj/machinery/power/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/mason
+	name = "M.A.S.O.N RIG Crate"
+	desc = "The rare M.A.S.O.N RIG. Requires CE access to open."
+	cost = 15000
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/suit/space/hardsuit/ancient/mason)
+	crate_name = "M.A.S.O.N Rig"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator Crate"

@@ -164,6 +164,9 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	var/brain_damage = TRUE
+	var/jitter = TRUE
+	var/confusion = TRUE
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
@@ -181,10 +184,10 @@
 	M.AdjustKnockdown(-40, 0)
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-7.5 * REM, 0)
-	M.Jitter(2)
-	M.adjustBrainLoss(rand(1,4))
-	if(prob(30))
-		M.confused = max(1, M.confused)
+	if(jitter)
+		M.Jitter(2)
+	if(brain_damage)
+		M.adjustBrainLoss(rand(1,4))
 	M.heal_overall_damage(2, 2)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
@@ -239,6 +242,14 @@
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	. = 1
+
+/datum/reagent/drug/methamphetamine/changeling
+	id = "changelingmeth"
+	name = "Changeling Adrenaline"
+	addiction_threshold = 35
+	overdose_threshold = 35
+	jitter = FALSE
+	brain_damage = FALSE
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

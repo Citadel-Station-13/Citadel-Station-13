@@ -245,43 +245,6 @@
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
-	var/list/target_candidates = list()
-
-	if(istype(SSticker.mode, /datum/antagonist/cult))//thank
-		if("sacrifice" in SSticker.mode.cult)
-			for(var/mob/living/carbon/human/player in GLOB.player_list)
-				if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
-					target_candidates += player.mind
-
-			target_candidates -= mob_occupant.mind
-
-			if(target_candidates.len == 0)
-				message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
-				for(var/mob/living/carbon/human/player in GLOB.player_list)
-					if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
-						target_candidates += player.mind
-
-			listclearnulls(target_candidates)
-			if(LAZYLEN(target_candidates))
-				var/datum/objective/sacrifice/sac_objective = locate() in GLOB.objectives
-				sac_objective.target = pick(target_candidates)
-				sac_objective.update_explanation_text()
-
-				var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
-				var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-				var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
-				reshape.Shift(SOUTH, 4)
-				reshape.Shift(EAST, 1)
-				reshape.Crop(7,4,26,31)
-				reshape.Crop(-5,-3,26,30)
-				sac_objective.sac_image = reshape
-
-				for(var/datum/mind/H in SSticker.mode.cult)
-					if(H.current)
-						to_chat(H.current, "<span class='danger'>Nar'Sie</span> murmurs, <span class='cultlarge'>[occupant] is beyond your reach. Sacrifice [sac_objective.target.current] instead...</span></span>")
-
-			else
-				message_admins("Cult Sacrifice: Could not find unconvertable or convertable target after cryopod. WELP!")
 
 	//Update any existing objectives involving this mob.
 	for(var/datum/objective/O in GLOB.objectives)

@@ -17,8 +17,7 @@
 /obj/item/tank/jetpack/New()
 	..()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+		air_contents.gases[gas_type] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	ion_trail = new
 	ion_trail.set_up(src)
@@ -237,3 +236,4 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+

@@ -27901,8 +27901,8 @@
 	pixel_x = 30
 	},
 /obj/machinery/light,
-/mob/living/simple_animal/bot/cleanbot{
-	name = "C.L.E.A.N."
+/obj/machinery/computer/crew{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -31596,7 +31596,7 @@
 /area/medical/sleeper)
 "bwC" = (
 /obj/machinery/computer/med_data{
-	dir = 4
+	dir = 3
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -46022,6 +46022,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cek" = (
@@ -46030,6 +46033,9 @@
 	name = "engineering security door"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cel" = (
@@ -56876,6 +56882,12 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ium" = (
+/mob/living/simple_animal/bot/cleanbot{
+	name = "C.L.E.A.N."
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "izv" = (
 /obj/machinery/vending/clothing,
 /obj/machinery/light/small{
@@ -94176,7 +94188,7 @@ blm
 bmL
 boi
 bpw
-bhh
+ium
 bsx
 btX
 bvj

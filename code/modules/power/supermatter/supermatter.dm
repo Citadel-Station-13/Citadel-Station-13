@@ -295,6 +295,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			E.energy = power
 		qdel(src)
 
+/obj/machinery/power/supermatter_crystal/proc/consume_turf(turf/T)
+	var/oldtype = T.type
+	var/turf/newT = T.ScrapeAway()
+	if(newT.type == oldtype)
+		return
+	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
+	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
+	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+	T.CalculateAdjacentTurfs()
+
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	var/turf/T = loc
 
@@ -303,6 +313,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(!istype(T)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
+	if(istype(T, /turf/closed))
+		consume_turf(T)
 
 	if(power)
 		soundloop.volume = min(40, (round(power/100)/50)+1) // 5 +1 volume per 20 power. 2500 power is max
@@ -339,16 +351,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(damage > damage_archived && prob(10))
 				playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
-		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen)
 		//calculating gas related values
 		combined_gas = max(removed.total_moles(), 0)
 
-		plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0)
-		o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0)
-		co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0)
+		plasmacomp = max(removed.gases[/datum/gas/plasma]/combined_gas, 0)
+		o2comp = max(removed.gases[/datum/gas/oxygen]/combined_gas, 0)
+		co2comp = max(removed.gases[/datum/gas/carbon_dioxide]/combined_gas, 0)
 
-		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
-		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
+		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide]/combined_gas, 0)
+		n2comp = max(removed.gases[/datum/gas/nitrogen]/combined_gas, 0)
 
 		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp, 0), 1)
 
@@ -400,9 +411,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
-		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
+		removed.gases[/datum/gas/plasma] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 
-		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		removed.gases[/datum/gas/oxygen] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 		if(produces_gas)
 			env.merge(removed)
