@@ -120,4 +120,5 @@
 	if(istype(A, /obj/item/reagent_containers/syringe/dart))
 		..()
 	else
+		to_chat(user, "<span class='notice'>You can't put the [A] into \the [src]!</span>")
 		return FALSE
