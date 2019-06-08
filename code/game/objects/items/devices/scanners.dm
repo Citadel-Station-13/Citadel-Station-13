@@ -95,7 +95,7 @@ SLIME SCANNER
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
+	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		var/msg = "<span class='info'>*---------*\nAnalyzing results for The floor:\n\tOverall status: <b>Healthy</b>\n"
@@ -127,7 +127,7 @@ SLIME SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
+	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -199,10 +199,10 @@ SLIME SCANNER
 			msg += "\t<span class='info'><b>==EAR STATUS==</b></span>\n"
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_DEAF, GENETIC_MUTATION))
+				if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					msg += "\t<span class='alert'>Subject is genetically deaf.</span>\n"
-				else if(C.has_trait(TRAIT_DEAF))
+				else if(HAS_TRAIT(C, TRAIT_DEAF))
 					healthy = FALSE
 					msg += "\t<span class='alert'>Subject is deaf.</span>\n"
 				else
@@ -220,10 +220,10 @@ SLIME SCANNER
 			msg += "\t<span class='info'><b>==EYE STATUS==</b></span>\n"
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_trait(TRAIT_BLIND))
+				if(HAS_TRAIT(C, TRAIT_BLIND))
 					msg += "\t<span class='alert'>Subject is blind.</span>\n"
 					healthy = FALSE
-				if(C.has_trait(TRAIT_NEARSIGHT))
+				if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
 					msg += "\t<span class='alert'>Subject is nearsighted.</span>\n"
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -290,7 +290,7 @@ SLIME SCANNER
 	msg += "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
+	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		msg += "<span class='info'>Time of Death:</span> [M.tod]\n"
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
