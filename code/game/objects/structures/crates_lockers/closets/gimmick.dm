@@ -5,6 +5,11 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 
+/obj/structure/closet/cabinet/cryo_drop
+	name = "empty cryogenic retrieval box"
+	max_integrity = 20			//don't use this as a barricade
+	material_drop_amount = 0
+
 /obj/structure/closet/acloset
 	name = "strange closet"
 	desc = "It looks alien!"

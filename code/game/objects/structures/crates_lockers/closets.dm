@@ -35,7 +35,6 @@
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
 
-
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 	update_icon()

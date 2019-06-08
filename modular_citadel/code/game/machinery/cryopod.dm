@@ -22,7 +22,7 @@
 
 	//Used for logging people entering cryosleep and important items they are carrying.
 	var/list/frozen_crew = list()
-	var/list/frozen_items = list()
+	var/list/obj/stored_packages = list()
 
 	var/storage_type = "crewmembers"
 	var/storage_name = "Cryogenic Oversight Control"
@@ -68,50 +68,52 @@
 		if(!allow_items) return
 
 		var/dat = "<b>Recently stored objects</b><br/><hr/><br/>"
-		for(var/obj/item/I in frozen_items)
+		for(var/obj/O in stored_packages)
 			dat += "[I.name]<br/>"
 		dat += "<hr/>"
 
 		user << browse(dat, "window=cryoitems")
 
 	else if(href_list["item"])
-		if(!allowed(user))
+		if(!allowed(user) && !(obj_flags & EMAGGED))
 			to_chat(user, "<span class='warning'>Access Denied.</span>")
 			return
-		if(!allow_items) return
+		if(!allow_items)
+			return
 
-		if(frozen_items.len == 0)
+		if(stored_packages.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
-		var/obj/item/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in frozen_items
+		var/obj/I = input(user, "Please choose which object to retrieve.","Object recovery",null) as null|anything in stored_packages
 		if(!I)
 			return
 
-		if(!(I in frozen_items))
+		if(!(I in stored_packages))
 			to_chat(user, "<span class='notice'>\The [I] is no longer in storage.</span>")
 			return
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>")
 
 		I.forceMove(get_turf(src))
-		frozen_items -= I
+		stored_packages -= I
 
 	else if(href_list["allitems"])
-		if(!allowed(user))
+		if(!allowed(user) && !(obj_flags & EMAGGED))
 			to_chat(user, "<span class='warning'>Access Denied.</span>")
 			return
-		if(!allow_items) return
+		if(!allow_items)
+			return
 
-		if(frozen_items.len == 0)
+		if(stored_packages.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
 			return
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>")
 
-		for(var/obj/item/I in frozen_items)
-			I.forceMove(get_turf(src))
-			frozen_items -= I
+		for(var/obj/O in stored_packages)
+			O.forceMove(get_turf(src))
+		stored_packages.Cut()
 
 	updateUsrDialog()
 
@@ -119,6 +121,8 @@
 	name = "Circuit board (Cryogenic Oversight Console)"
 	build_path = "/obj/machinery/computer/cryopod"
 
+/obj/machinery/computer/cryopod/contents_explosion()
+	return			//don't blow everyone's shit up.
 
 //Cryopods themselves.
 /obj/machinery/cryopod
@@ -138,48 +142,13 @@
 	var/despawn_world_time = null          // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
+	var/item_storage_type = /obj/structure/closet/cabinet/cryo_drop			//with how storage components work this can be anything the player can open or anything with a storage component.
 	var/last_no_computer_message = 0
 
-	// These items are preserved when the process() despawn proc occurs.
-	var/list/preserve_items = list(
-		/obj/item/hand_tele,
-		/obj/item/card/id/captains_spare,
-		/obj/item/aicard,
-		/obj/item/mmi,
-		/obj/item/paicard,
-		/obj/item/gun,
-		/obj/item/pinpointer,
-		/obj/item/clothing/shoes/magboots,
-		/obj/item/areaeditor/blueprints,
-		/obj/item/clothing/head/helmet/space,
-		/obj/item/clothing/suit/space,
-		/obj/item/clothing/suit/armor,
-		/obj/item/defibrillator/compact,
-		/obj/item/reagent_containers/hypospray/CMO,
-		/obj/item/clothing/accessory/medal/gold/captain,
-		/obj/item/clothing/gloves/krav_maga,
-		/obj/item/nullrod,
-		/obj/item/tank/jetpack,
-		/obj/item/documents,
-		/obj/item/nuke_core_container
-	)
-	// These items will NOT be preserved
-	var/list/do_not_preserve_items = list (
-		/obj/item/mmi/posibrain,
-		/obj/item/gun/energy/laser/mounted,
-		/obj/item/gun/energy/e_gun/advtaser/mounted,
-		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/gun/energy/e_gun/advtaser/cyborg,
-		/obj/item/gun/energy/printer,
-		/obj/item/gun/energy/kinetic_accelerator/cyborg,
-		/obj/item/gun/energy/laser/cyborg
-	)
-
-/obj/machinery/cryopod/Initialize()
+/obj/machinery/cryopod/Initialize(mapload)
 	. = ..()
 	update_icon()
-	find_control_computer(TRUE)
+	find_control_computer(mapload)
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
 	for(var/obj/machinery/computer/cryopod/C in get_area(src))
@@ -244,6 +213,9 @@
 
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
+	if(!control_computer)
+		find_control_computer()
+
 	var/mob/living/mob_occupant = occupant
 
 	//Update any existing objectives involving this mob.
@@ -302,18 +274,38 @@
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
+	//ITEM STORAGE
+	//First, getallcontents and eject mobs
+	//Then, get_equipped_items and held_items and store anything we should store
+	//Lastly, getallcontents and purge
+	//If anyone knows how to cache the getallcontents and not have it delete stuff that it shouldn't delete because equipped items can have recursive storage lemme know I guess.
 
-	for(var/obj/item/W in mob_occupant.GetAllContents())
-		if(W.loc.loc && (( W.loc.loc == loc ) || (W.loc.loc == control_computer)))
-			continue//means we already moved whatever this thing was in
-			//I'm a professional, okay
-		for(var/T in preserve_items)
-			if(istype(W, T))
-				if(control_computer && control_computer.allow_items)
-					control_computer.frozen_items += W
-					mob_occupant.transferItemToLoc(W, control_computer, TRUE)
-				else
-					mob_occupant.transferItemToLoc(W, loc, TRUE)
+	for(var/i in mob_occupant.getAllContents())
+		if(ismob(i))
+			var/mob/M = i
+			M.forceMove(drop_location())
+
+	var/list/obj/item/occupant_items = list() | mob_occupant.get_equipped_items(TRUE) | mob_occupant.held_items		//the list is to ensure that even if the first one is null for some reason this works.
+	var/list/obj/item/stored = list()
+	var/atom/target_store = (control_computer?.allow_items && control_computer) || src		//the double control computer check makes it return the control computer.
+	var/drop_to_ground = !istype(target_store, /obj/machinery/computer/cryopod)
+
+	for(var/i in occupant_items)
+		var/obj/item/I = i
+		if(I.item_flags & CRYO_DELETE)
+			continue
+		stored += I
+		mob_occupant.transferItemToLoc(I, target_store, TRUE)
+
+	if(stored.len)
+		var/obj/O = new item_storage_type
+		O.name = "cryogenic retrieval package: [mob_occupant.real_name]"
+		for(var/i in stored)
+			var/obj/item/I = i
+			I.forceMove(O)
+		O.forceMove(drop_to_ground? target_store.drop_location() : target_store)
+		if((target_store == control_computer) && !drop_to_ground)
+			control_computer.stored_packages += O
 
 	for(var/obj/item/W in mob_occupant.GetAllContents())
 		qdel(W)//because we moved all items to preserve away

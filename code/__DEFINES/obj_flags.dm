@@ -27,6 +27,8 @@
 #define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff
 #define IMMUTABLE_SLOW          (1<<10) //When players should not be able to change the slowdown of the item (Speed potions, ect)
 
+#define CRYO_DELETE				(1<<23)			//delete on cryo removal rather than kept.
+
 // Flags for the clothing_flags var on /obj/item/clothing
 
 #define LAVAPROTECT (1<<0)

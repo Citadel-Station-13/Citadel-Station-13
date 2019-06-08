@@ -35,34 +35,40 @@
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
-/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+#define OUTFIT_SETUP(path, slot, mob, cryo_destroy)\
+	var/obj/item/__CURRENT = new path(mob);\
+	mob.equip_to_slot_or_del(__CURRENT, slot);\
+	if(cryo_destroy)\
+		__CURRENT.item_flags |= CRYO_DESTROY
+
+/datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, cryo_destroy = FALSE)
 	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H),SLOT_W_UNIFORM)
+		OUTFIT_SETUP(uniform, SLOT_W_UNIFORM, H, cryo_destroy)
 	if(suit)
-		H.equip_to_slot_or_del(new suit(H),SLOT_WEAR_SUIT)
+		OUTFIT_SETUP(suit, SLOT_WEAR_SUIT, H, cryo_destroy)
 	if(back)
-		H.equip_to_slot_or_del(new back(H),SLOT_BACK)
+		OUTFIT_SETUP(back, SLOT_BACK, H, cryo_destroy)
 	if(belt)
-		H.equip_to_slot_or_del(new belt(H),SLOT_BELT)
+		OUTFIT_SETUP(belt, SLOT_BELT, H, cryo_destroy)
 	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H),SLOT_GLOVES)
+		OUTFIT_SETUP(gloves, SLOT_GLOVES, H, cryo_destroy)
 	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H),SLOT_SHOES)
+		OUTFIT_SETUP(shoes, SLOT_SHOES, H, cryo_destroy)
 	if(head)
-		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
+		OUTFIT_SETUP(head, SLOT_HEAD, H, cryo_destroy)
 	if(mask)
-		H.equip_to_slot_or_del(new mask(H),SLOT_WEAR_MASK)
+		OUTFIT_SETUP(mask, SLOT_WEAR_MASK, H, cryo_destroy)
 	if(neck)
-		H.equip_to_slot_or_del(new neck(H),SLOT_NECK)
+		OUTFIT_SETUP(neck, SLOT_NECK, H, cryo_destroy)
 	if(ears)
-		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
+		OUTFIT_SETUP(ears, SLOT_EARS, H, cryo_destroy)
 	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H),SLOT_GLASSES)
+		OUTFIT_SETUP(glasses, SLOT_GLASSES, H, cryo_destroy)
 	if(id)
-		H.equip_to_slot_or_del(new id(H),SLOT_WEAR_ID)
+		OUTFIT_SETUP(id, SLOT_WEAR_ID, H, cryo_destroy)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
 
@@ -89,7 +95,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H),SLOT_IN_BACKPACK)
+					OUTFIT_SETUP(path, SLOT_IN_BACKPACK, H, cryo_destroy)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
@@ -109,6 +115,8 @@
 
 	H.update_body()
 	return TRUE
+
+#undef OUTFIT_SETUP
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))

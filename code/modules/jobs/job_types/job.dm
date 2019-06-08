@@ -89,7 +89,7 @@
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
 	if(outfit_override || outfit)
-		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
+		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly, cryo_destroy = TRUE)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 

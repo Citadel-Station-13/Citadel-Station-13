@@ -39,14 +39,17 @@
 		var/obj/item/I = new i(src)
 		basic_modules += I
 		basic_modules -= i
+		I.item_flags |= CRYO_DESTROY
 	for(var/i in emag_modules)
 		var/obj/item/I = new i(src)
 		emag_modules += I
 		emag_modules -= i
+		I.item_flags |= CRYO_DESTROY
 	for(var/i in ratvar_modules)
 		var/obj/item/I = new i(src)
 		ratvar_modules += I
 		ratvar_modules -= i
+		I.item_flags |= CRYO_DESTROY
 
 /obj/item/robot_module/Destroy()
 	basic_modules.Cut()
@@ -120,6 +123,7 @@
 		I.forceMove(src)
 	modules += I
 	I.item_flags |= NODROP
+	I.item_flags |= CRYO_DESTROY
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I
