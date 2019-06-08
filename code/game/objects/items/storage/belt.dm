@@ -553,12 +553,12 @@
 	STR.max_items = 18
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
-		/obj/item/projectile/bullet/dart/syringe/dart
+		/obj/item/reagent_containers/syringe/dart
 		))
 
 /obj/item/storage/belt/medolier/full/PopulateContents()
 	for(var/i in 1 to 8)
-		new /obj/item/projectile/bullet/dart/syringe/dart(src)
+		new /obj/item/reagent_containers/syringe/dart/(src)
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"

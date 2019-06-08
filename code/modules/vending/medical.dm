@@ -30,7 +30,9 @@
 	premium = list(/obj/item/storage/box/hug/medical = 1,
 		           /obj/item/reagent_containers/hypospray/medipen = 3,
 		           /obj/item/storage/belt/medical = 3,
-		           /obj/item/wrench/medical = 1)
+		           /obj/item/wrench/medical = 1,
+				   /obj/item/storage/belt/medolier/full = 2,
+				   /obj/item/gun/syringe/dart = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
