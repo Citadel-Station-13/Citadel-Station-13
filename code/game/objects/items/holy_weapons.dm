@@ -546,6 +546,9 @@
 
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
+	item_state = "pride"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
 	force = 16
@@ -553,7 +556,7 @@
 	w_class = 4
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/weapons/resonator_blast.ogg'
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()

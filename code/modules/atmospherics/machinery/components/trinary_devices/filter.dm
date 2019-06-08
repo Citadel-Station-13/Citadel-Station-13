@@ -12,6 +12,25 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+/obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
+	var/area/A = get_area(src)
+	var/turf/T = get_turf(src)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+		on = !on
+		update_icon()
+		investigate_log("Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		return ..()
+		
+/obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
+	var/area/A = get_area(src)
+	var/turf/T = get_turf(src)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+		target_pressure = MAX_OUTPUT_PRESSURE
+		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
+		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+
 /obj/machinery/atmospherics/components/trinary/filter/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -159,11 +178,10 @@
 			var/datum/gas_mixture/filtered_out = new
 
 			filtered_out.temperature = removed.temperature
-			filtered_out.add_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+			filtered_out.gases[filter_type] = removed.gases[filter_type]
 
-			removed.gases[filter_type][MOLES] = 0
-			removed.garbage_collect()
+			removed.gases[filter_type] = 0
+			GAS_GARBAGE_COLLECT(removed.gases)
 
 			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
 			target.merge(filtered_out)
@@ -191,9 +209,8 @@
 
 	data["filter_types"] = list()
 	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !filter_type))
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(filter_type))))
+	for(var/path in GLOB.meta_gas_ids)
+		data["filter_types"] += list(list("name" = GLOB.meta_gas_names[path], "id" = GLOB.meta_gas_ids[path], "selected" = (path == gas_id2path(filter_type))))
 
 	return data
 
@@ -224,9 +241,9 @@
 			filter_type = null
 			var/filter_name = "nothing"
 			var/gas = gas_id2path(params["mode"])
-			if(gas in GLOB.meta_gas_info)
+			if(gas in GLOB.meta_gas_names)
 				filter_type = gas
-				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
+				filter_name	= GLOB.meta_gas_names[gas]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()

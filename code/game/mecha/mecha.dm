@@ -237,9 +237,8 @@
 	cabin_air = new
 	cabin_air.temperature = T20C
 	cabin_air.volume = 200
-	cabin_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	cabin_air.gases[/datum/gas/oxygen][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
-	cabin_air.gases[/datum/gas/nitrogen][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases[/datum/gas/oxygen] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air.gases[/datum/gas/nitrogen] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
 
 /obj/mecha/proc/add_radio()
@@ -446,13 +445,13 @@
 	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
-			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
+			if(HAS_TRAIT(L, TRAIT_PACIFISM) && selected.harmful)
 				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
+		if(isliving(target) && selected.harmful && HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		if(selected.action(target,params))

@@ -17,14 +17,14 @@
 /datum/mutation/human/cold_resistance/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_RESISTCOLD, "cold_resistance")
-//	owner.add_trait(TRAIT_RESISTLOWPRESSURE, "cold_resistance")  CITADEL CHANGE
+	ADD_TRAIT(owner, TRAIT_RESISTCOLD, "cold_resistance")
+//	ADD_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "cold_resistance")  CITADEL CHANGE
 
 /datum/mutation/human/cold_resistance/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_RESISTCOLD, "cold_resistance")
-//	owner.remove_trait(TRAIT_RESISTLOWPRESSURE, "cold_resistance")   CITADEL CHANGE
+	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, "cold_resistance")
+//	REMOVE_TRAIT(owner, TRAIT_RESISTLOWPRESSURE, "cold_resistance")   CITADEL CHANGE
 
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())

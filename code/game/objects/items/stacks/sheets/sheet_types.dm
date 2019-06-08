@@ -282,9 +282,14 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
  */
 GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("box", /obj/item/storage/box), \
+	new/datum/stack_recipe("sec box", /obj/item/storage/box/seclooking), \
 	new/datum/stack_recipe("light tubes", /obj/item/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/storage/box/lights/bulbs), \
 	new/datum/stack_recipe("mouse traps", /obj/item/storage/box/mousetraps), \
+	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
+	new/datum/stack_recipe("power cell", /obj/item/storage/box/cells), \
+	new/datum/stack_recipe("02", /obj/item/storage/box/otwo), \
+	null, \
 	new/datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot), \
 	new/datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot), \
 	new/datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag), \
@@ -292,13 +297,23 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("stun slug ammo box", /obj/item/storage/box/stunslug), \
 	new/datum/stack_recipe("tech shell ammo box", /obj/item/storage/box/techsslug), \
 	new/datum/stack_recipe("incendiary ammo box", /obj/item/storage/box/fireshot), \
+	new/datum/stack_recipe("firing pins", /obj/item/storage/box/firingpins), \
+	new/datum/stack_recipe("loose ammo", /obj/item/storage/box/ammoshells), \
+	null, \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
-	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
-))
+	null, \
+	new/datum/stack_recipe("colored brown", /obj/item/storage/box/brown), \
+	new/datum/stack_recipe("colored green", /obj/item/storage/box/green), \
+	new/datum/stack_recipe("colored red", /obj/item/storage/box/blue), \
+	new/datum/stack_recipe("colored blue", /obj/item/storage/box/red), \
+	new/datum/stack_recipe("colored yellow", /obj/item/storage/box/yellow), \
+	new/datum/stack_recipe("colored pink", /obj/item/storage/box/pink), \
+	new/datum/stack_recipe("colored purple", /obj/item/storage/box/purple), \
+	))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"

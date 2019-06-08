@@ -64,7 +64,7 @@ Credit where due:
 		return FALSE
 	if(isliving(M))
 		var/mob/living/L = M
-		if(L.has_trait(TRAIT_MINDSHIELD))
+		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
 			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
@@ -131,7 +131,7 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
-	required_players = 30
+	required_players = 35
 	required_enemies = 3
 	recommended_enemies = 5
 	enemy_minimum_age = 7

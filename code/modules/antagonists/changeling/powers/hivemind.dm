@@ -10,7 +10,7 @@
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/hivemind_comms/sting_action(var/mob/living/user)
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/input = html_decode(stripped_input(usr, "Please choose a message to transmit.", "Changeling Hivemind", ""))
@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/living/user)
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 /obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
+	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

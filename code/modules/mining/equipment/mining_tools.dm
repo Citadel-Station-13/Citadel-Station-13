@@ -31,7 +31,7 @@
 	force = 10
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=1000)
 
 /obj/item/pickaxe/silver
@@ -41,6 +41,7 @@
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
+	materials = list(MAT_SILVER=4000)
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -49,6 +50,7 @@
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
+	materials = list(MAT_DIAMOND=4000)
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
@@ -75,12 +77,13 @@
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
-	toolspeed = 0.2
+	toolspeed = 0.1
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
+	w_class = WEIGHT_CLASS_HUGE
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -97,12 +100,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
 	tool_behaviour = TOOL_SHOVEL
-	toolspeed = 1
+	toolspeed = 0.1 //Can only dig ash and thats about it, out classed by the picks and drills no more!
 	usesound = 'sound/effects/shovel_dig.ogg'
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=50)
+	materials = list(MAT_METAL=350)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
@@ -124,6 +127,8 @@
 	item_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	toolspeed = 0.5
 	force = 5
 	throwforce = 7
+	materials = list(MAT_METAL=50)
 	w_class = WEIGHT_CLASS_SMALL

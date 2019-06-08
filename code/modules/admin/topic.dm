@@ -903,6 +903,13 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien;jobban4=[REF(M)]'>Alien</a></td>"
 
+		//Gang
+		if(jobban_isbanned(M, ROLE_GANG) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'><font color=red>Gang</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=gang;jobban4=[REF(M)]'>Gang</a></td>"
+
+
 	//Other Roles (black)
 		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		dat += "<tr bgcolor='000000'><th colspan='5'><a href='?src=[REF(src)];[HrefToken()];jobban3=otherroles;jobban4=[REF(M)]' style='color: white;'>Other Roles</a></th></tr><tr align='center'>"
@@ -974,7 +981,7 @@
 			if("ghostroles")
 				joblist += list(ROLE_PAI, ROLE_POSIBRAIN, ROLE_DRONE , ROLE_DEATHSQUAD, ROLE_LAVALAND, ROLE_SENTIENCE)
 			if("teamantags")
-				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN)
+				joblist += list(ROLE_OPERATIVE, ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_GANG)
 			if("convertantags")
 				joblist += list(ROLE_REV, ROLE_CULTIST, ROLE_SERVANT_OF_RATVAR, ROLE_ALIEN)
 			if("otherroles")

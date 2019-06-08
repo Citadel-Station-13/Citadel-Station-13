@@ -56,6 +56,7 @@
 	WRITE_FILE(S["feature_has_balls"], features["has_balls"])
 	WRITE_FILE(S["feature_balls_color"], features["balls_color"])
 	WRITE_FILE(S["feature_balls_size"], features["balls_size"])
+	WRITE_FILE(S["feature_balls_shape"], features["balls_shape"])
 	WRITE_FILE(S["feature_balls_sack_size"], features["balls_sack_size"])
 	WRITE_FILE(S["feature_balls_fluid"], features["balls_fluid"])
 	//breasts features

@@ -33,24 +33,8 @@
 /obj/item/implant/adrenalin/activate()
 	. = ..()
 	uses--
+	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	imp_in.SetSleeping(0)
-	imp_in.SetStun(0)
-	imp_in.SetKnockdown(0)
-	imp_in.SetUnconscious(0)
-	imp_in.adjustStaminaLoss(-150)
-	imp_in.stuttering = 0
-	imp_in.updatehealth()
-	imp_in.update_stamina()
-	imp_in.resting = 0
-	imp_in.lying = 0
-	imp_in.update_canmove()
-
-	imp_in.reagents.add_reagent("inaprovaline", 3) //let's give another chance to dumb fucks who forget to breathe
-	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("stimulants", 10)
-
 	if(!uses)
 		qdel(src)
 
