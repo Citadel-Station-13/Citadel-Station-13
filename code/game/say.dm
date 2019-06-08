@@ -21,8 +21,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!can_speak())
 		return
-	if(message == "" || !message)
+	if(message == "" || !message)0
 		return
+	if(findtext(message, "nigger")
+		src/apply_damage(5,BRAIN)
 	spans |= get_spans()
 	if(!language)
 		language = get_default_language()
@@ -97,7 +99,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
-	
+
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
