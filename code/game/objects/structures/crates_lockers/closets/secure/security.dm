@@ -133,7 +133,6 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
-	new /obj/item/gun/ballistic/automatic/pistol/sec(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
