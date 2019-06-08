@@ -328,7 +328,7 @@
 /obj/item/storage/belt/organbox
 	name = "Organ Storge"
 	desc = "A compact box that helps hold massive amounts of implants, organs, and some tools. Has a belt clip for easy carrying"
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/mysterybox.dmi'
 	icon_state = "organbox_open"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
