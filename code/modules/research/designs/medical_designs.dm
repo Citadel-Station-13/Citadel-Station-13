@@ -105,7 +105,7 @@
 /datum/design/bluespacesmartdart
 	name = "bluespace smartdart"
 	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD. Has an extended volume capacity thanks to bluespace foam."
-	id = "medicinalsmartdart"
+	id = "bluespacesmartdart"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 2000, MAT_PLASTIC = 500, MAT_METAL = 500, MAT_BLUESPACE = 500)
 	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
