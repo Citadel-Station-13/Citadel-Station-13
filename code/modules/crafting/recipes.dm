@@ -754,10 +754,10 @@
 
 /datum/crafting_recipe/paperwork
 	name = "Filed Paper Work"
-	result =  /obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
-	time = 90 //Takes time for people to file and complete paper work!
+	result =  /obj/item/folder/paperwork_correct
+	time = 60 //Takes time for people to file and complete paper work!
 	reqs = list(/obj/item/pen = 1,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork = 2)
+					/obj/item/folder/paperwork = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/ghettojetpack
