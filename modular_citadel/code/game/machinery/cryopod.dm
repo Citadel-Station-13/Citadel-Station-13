@@ -28,6 +28,12 @@
 	var/storage_name = "Cryogenic Oversight Control"
 	var/allow_items = TRUE
 
+/obj/machinery/computer/cryopod/deconstruct()
+	. = ..()
+	for(var/i in stored_packages)
+		var/obj/O = i
+		O.forceMove(drop_location())
+
 /obj/machinery/computer/cryopod/ui_interact(mob/user = usr)
 	. = ..()
 
@@ -69,7 +75,7 @@
 
 		var/dat = "<b>Recently stored objects</b><br/><hr/><br/>"
 		for(var/obj/O in stored_packages)
-			dat += "[I.name]<br/>"
+			dat += "[O.name]<br/>"
 		dat += "<hr/>"
 
 		user << browse(dat, "window=cryoitems")
@@ -280,7 +286,7 @@
 	//Lastly, getallcontents and purge
 	//If anyone knows how to cache the getallcontents and not have it delete stuff that it shouldn't delete because equipped items can have recursive storage lemme know I guess.
 
-	for(var/i in mob_occupant.getAllContents())
+	for(var/i in mob_occupant.GetAllContents())
 		if(ismob(i))
 			var/mob/M = i
 			M.forceMove(drop_location())

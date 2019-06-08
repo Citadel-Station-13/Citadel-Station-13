@@ -39,7 +39,7 @@
 	var/obj/item/__CURRENT = new path(mob);\
 	mob.equip_to_slot_or_del(__CURRENT, slot);\
 	if(cryo_destroy)\
-		__CURRENT.item_flags |= CRYO_DESTROY
+		__CURRENT.item_flags |= CRYO_DELETE
 
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, cryo_destroy = FALSE)
 	pre_equip(H, visualsOnly)
