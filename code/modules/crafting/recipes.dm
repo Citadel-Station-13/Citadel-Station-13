@@ -558,6 +558,14 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bonebag
+	name = "Bone Satchel"
+	result = /obj/item/storage/backpack/satchel/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 3,
+				/obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
 	result = /obj/item/bikehorn/golden
