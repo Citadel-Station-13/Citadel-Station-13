@@ -320,7 +320,7 @@
 /obj/item/reagent_containers/syringe/dart/attack_self(mob/user)
 	return
 
-/obj/item/reagent_containers/syringe/update_icon()
+/obj/item/reagent_containers/syringe/dart/update_icon()
 	cut_overlays()
 	var/rounded_vol
 
