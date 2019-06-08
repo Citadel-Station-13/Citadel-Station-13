@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //pda icon reskins
 #define PDA_SKIN_CLASSIC "Classic"
-#define PDA_SKIN_ALT "Alternative"
+#define PDA_SKIN_ALT "Holographic"
 
 GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = "", PDA_SKIN_ALT = "_alt"))
 

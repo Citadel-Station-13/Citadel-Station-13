@@ -145,6 +145,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
+	pda_skin		= sanitize_inlist(pda_skin, GLOB.pda_reskins, PDA_SKIN_ALT)
 
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
