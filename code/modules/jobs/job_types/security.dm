@@ -51,7 +51,8 @@ Head of Security
 	suit_store = /obj/item/gun/energy/e_gun
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol/sec
 	l_pocket = /obj/item/restraints/handcuffs
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1,
+		/obj/item/assembly/flash/handheld=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -112,7 +113,8 @@ Warden
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/baton/loaded=1,
+		/obj/item/assembly/flash/handheld=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -295,7 +297,8 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol/sec
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/melee/baton/loaded=1,
+		/obj/item/assembly/flash/handheld=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
