@@ -36,16 +36,17 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types
-#define MOB_ORGANIC 	"organic"
-#define MOB_INORGANIC 	"inorganic"
-#define MOB_ROBOTIC 	"robotic"
-#define MOB_UNDEAD		"undead"
-#define MOB_HUMANOID 	"humanoid"
-#define MOB_BUG 		"bug"
-#define MOB_BEAST		"beast"
-#define MOB_EPIC		"epic" //megafauna
-#define MOB_REPTILE		"reptile"
-#define MOB_SPIRIT		"spirit"
+#define MOB_ORGANIC 			"organic"
+#define MOB_INORGANIC 			"inorganic"
+#define MOB_ROBOTIC 			"robotic"
+#define MOB_UNDEAD				"undead"
+#define MOB_HUMANOID 			"humanoid"
+#define MOB_BUG 				"bug"
+#define MOB_BEAST				"beast"
+#define MOB_EPIC				"epic" //megafauna
+#define MOB_REPTILE				"reptile"
+#define MOB_SPIRIT				"spirit"
+#define MOB_WEAK_AGAINST_EPIC	"weakepic"
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1

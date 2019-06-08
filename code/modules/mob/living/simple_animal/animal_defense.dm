@@ -79,7 +79,7 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(MOB_EPIC in mob_biotypes && !(MOB_EPIC in M.mob_biotypes)) //epic mobs can still deal full damage to each other
+		if(MOB_EPIC in mob_biotypes && MOB_WEAK_AGAINST_EPIC in M.mob_biotypes)
 			damage *= 0.2
 		return attack_threshold_check(damage, M.melee_damage_type)
 
