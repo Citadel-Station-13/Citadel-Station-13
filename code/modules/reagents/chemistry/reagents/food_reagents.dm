@@ -319,7 +319,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Knockdown(60, override_stamdmg = min(reac_volume * 3, 15))
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 3, 15))
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -332,7 +332,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(100, override_stamdmg = min(reac_volume * 5, 25))
+			victim.Knockdown(80, override_hardstun = 0.1, override_stamdmg = min(reac_volume * 5, 25))
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
