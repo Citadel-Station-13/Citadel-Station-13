@@ -49,7 +49,7 @@
 /obj/item/projectile/bullet/dart/syringe/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		if(blocked != 100) // not completely blocked
+		if(blocked != 100)
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..(target, blocked, TRUE)
 				for(var/datum/reagent/R in reagents.reagent_list) //OD prevention time!
@@ -58,7 +58,7 @@
 							if(R.overdose_threshold == 0) //Is there a possible OD?
 								M.reagents.add_reagent(R.id, R.volume)
 							else
-								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1) //Doesn't work
+								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
 								M.reagents.add_reagent(R.id, transVol)
 						else
 							if(!R.overdose_threshold == 0)
@@ -70,7 +70,7 @@
 
 
 				target.visible_message("<span class='notice'>\The [src] beeps!</span>")
-				to_chat("<span class='notice'><i>You feel a tiny prick, and turn around to see a smartdart embedded in your butt.</i></span>")
+				to_chat("<span class='notice'><i>You feel a tiny prick as a smartdart embeds itself in you with a beep.</i></span>")
 				return TRUE
 			else
 				blocked = 100

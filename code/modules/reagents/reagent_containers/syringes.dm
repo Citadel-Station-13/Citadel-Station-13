@@ -268,7 +268,6 @@
 	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD."
 	volume = 20
 	amount_per_transfer_from_this = 20
-	//icon = 'icons/obj/dart.dmi'
 	icon_state = "empty"
 	item_state = "syringe_empty"
 
@@ -307,7 +306,7 @@
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
-				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
+				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
 				to_chat(user, "<span class='notice'>You soak the [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
