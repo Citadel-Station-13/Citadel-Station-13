@@ -573,6 +573,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
+	reach = 2
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
