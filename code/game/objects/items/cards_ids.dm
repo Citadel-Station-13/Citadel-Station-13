@@ -105,7 +105,7 @@
 
 	if(isturf(A))
 		return
-	if(istype(A,/obj/item/storage/lockbox))
+	if(istype(A,/obj/item/storage/lockbox) || istype(A, /obj/item/storage/pod))
 		A.emag_act(user)
 		uses = max(uses - 1, 0)
 		if(!uses)

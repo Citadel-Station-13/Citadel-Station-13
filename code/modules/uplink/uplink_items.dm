@@ -303,6 +303,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/melee/powerfist
 	cost = 8
 
+/datum/uplink_item/badass/combatglovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
+			to learn the abilities of krav maga to the wearer."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \

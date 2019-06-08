@@ -30,12 +30,12 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 
 /datum/mutation/human/smile

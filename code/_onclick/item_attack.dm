@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
 		return // CIT CHANGE - ditto
 
-	if(force && user.has_trait(TRAIT_PACIFISM))
+	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
