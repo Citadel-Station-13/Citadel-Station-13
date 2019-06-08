@@ -314,7 +314,7 @@
 				update_icon()
 
 		if(SYRINGE_INJECT)
-			src.visible_message("<span class='danger'>The smartdart gives a frustrated boop! It's ready and full; You need to shoot someone with it!</span>")
+			src.visible_message("<span class='danger'>The smartdart gives a frustrated boop! It's fully saturated; You need to shoot someone with it!</span>")
 
 /obj/item/reagent_containers/syringe/dart/attack_self(mob/user)
 	return
