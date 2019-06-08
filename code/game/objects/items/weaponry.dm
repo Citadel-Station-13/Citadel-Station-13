@@ -625,6 +625,32 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else
 		..()
 
+/obj/item/crush
+	name = "thigh crush"
+	desc = "This is how real thots fight."
+	icon_state = "latexballon"
+	item_state = "nothing"
+	force = 0
+	throwforce = 0
+	item_flags = DROPDEL | ABSTRACT
+	attack_verb = list("crushed")
+	hitsound = 'sound/effects/snap.ogg'
+
+/obj/item/crush/attack(mob/M, mob/living/carbon/human/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(L && L.dna && L.dna.species)
+			L.dna.species.stop_wagging_tail(M)
+	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
+		user.do_attack_animation(M)
+		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
+		user.visible_message("<span class='danger'>[user] crushes [M]'s head between their thighs!</span>",
+		"<span class='notice'>You crush [M]'s head between your thighs!</span>",\
+		"You hear a head being crushed between a thot's thighs.")
+		return
+	else
+		..()
+
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
 		return FALSE

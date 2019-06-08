@@ -228,3 +228,19 @@
 		user.nextsoundemote = world.time + 7
 		playsound(user, 'modular_citadel/sound/voice/merp.ogg', 50, 1, -1)
 	. = ..()
+
+/datum/emote/living/crush
+	key = "crush"
+	key_third_person = "crushes"
+	restraint_check = TRUE
+
+
+/datum/emote/living/crush/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/crush/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your crushing thighs!</span>")
+	else
+to_chat(user, "<span class='warning'>You're incapable of thigh crushing in your current state.</span>")
