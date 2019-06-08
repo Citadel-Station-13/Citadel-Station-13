@@ -1182,3 +1182,32 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/proc/do_adrenaline(
+			stamina_boost = 150,
+			put_on_feet = TRUE,
+			clamp_unconscious_to = 0,
+			clamp_immobility_to = 0,
+			reset_misc = TRUE,
+			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10),
+			message = "<span class='boldnotice'>You feel a surge of energy!</span>"
+		)
+	if(AmountSleeping() > clamp_unconscious_to)
+		SetSleeping(clamp_unconscious_to)
+	if(AmountUnconscious() > clamp_unconscious_to)
+		SetUnconscious(clamp_unconscious_to)
+	if(AmountStun() > clamp_immobility_to)
+		SetStun(clamp_immobility_to)
+	if(AmountKnockdown() > clamp_immobility_to)
+		SetKnockdown(clamp_immobility_to)
+	adjustStaminaLoss(max(0, -stamina_boost))
+	if(put_on_feet)
+		resting = FALSE
+		lying = FALSE
+	if(reset_misc)
+		stuttering = 0
+	updatehealth()
+	update_stamina()
+	update_canmove()
+	for(var/chem in healing_chems)
+		reagents.add_reagent(chem, healing_chems[chem])
