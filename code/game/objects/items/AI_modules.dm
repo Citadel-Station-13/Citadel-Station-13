@@ -369,7 +369,7 @@ AI MODULES
 	if(!targName)
 		return
 	subject = targName
-	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
+	laws = list("You may not injure a [subject], cause a [subject] to come to harm, or, through inaction, allow a [subject] to suffer critical condition inducing harm, loss of limb or life, or permanent functional incapacitation.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	..()
