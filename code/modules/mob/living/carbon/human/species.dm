@@ -77,7 +77,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-	var/obj/effect/decal/cleanable/blood/footprints/tracks/move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/shoe // What marks are left when walking
 
 ///////////
 // PROCS //
@@ -641,12 +640,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
 			bodyparts_to_add -= "taur"
 
-		if(H.dna.features["taur"] != "None")
-			if(H.dna.features["taur"] in GLOB.noodle_taurs)
-				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/snake
-			else if(H.dna.features["taur"] in GLOB.paw_taurs)
-				move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/paw
-
 //END EDIT
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
@@ -938,6 +931,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return "TAUR"
 	//END EDIT
 
+/* TODO: Snowflake trail marks
 // Impliments different trails for species depending on if they're wearing shoes.
 /datum/species/proc/get_move_trail(var/mob/living/carbon/human/H)
 	if(H.lying)
@@ -946,7 +940,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/clothing/shoes/shoes = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) ? H.wear_suit : H.shoes // suits take priority over shoes
 		return shoes.move_trail
 	else
-		return move_trail
+		return move_trail */
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOBREATH))

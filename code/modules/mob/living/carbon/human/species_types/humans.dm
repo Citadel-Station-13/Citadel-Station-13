@@ -9,7 +9,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.

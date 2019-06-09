@@ -26,10 +26,6 @@
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = blood_DNA_to_color()
 
-//obj/effect/decal/cleanable/blood/update_color()
- // if(SEND_SIGNAL(COMSIG_BLOOD_COLOR) & COMPONENT_BLOCK_UPDATE_COLOR)
- //   return
-
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
 	desc = "Looks like it's been here a while. Eew."
@@ -43,6 +39,11 @@
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
+/obj/effect/decal/cleanable/blood/tracks
+	icon_state = "tracks"
+	desc = "They look like tracks left by wheels."
+	random_icon_states = null
+
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon_state = "ltrails_1"
@@ -50,7 +51,6 @@
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()
-	color = BLOOD_COLOR_HUMAN
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	color = blood_DNA_to_color()
@@ -71,19 +71,18 @@
 	update_icon()
 
 //BLOODY FOOTPRINTS
-/obj/effect/decal/cleanable/blood/footprints/tracks
-	name = "tracks"
-	icon = 'icons/effects/fluidtracks.dmi'
+/obj/effect/decal/cleanable/blood/footprints
+	name = "footprints"
+	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
 	desc = "WHOSE FOOTPRINTS ARE THESE?"
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0
 	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
-	var/print_state = FOOTPRINT_SHOE //the print state for different feet
 	var/list/shoe_types = list()
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/Crossed(atom/movable/O)
+/obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
@@ -96,15 +95,7 @@
 				entered_dirs |= H.dir
 				update_icon()
 
-		else if(H && H.blood_smear[blood_state])
-			if(color != bloodtype_to_color(H.last_bloodtype))
-				return
-			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			if (!(entered_dirs & H.dir))
-				entered_dirs |= H.dir
-				update_icon()
-
-/obj/effect/decal/cleanable/blood/footprints/tracks/Uncrossed(atom/movable/O)
+/obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
 		var/obj/item/clothing/shoes/S = H.shoes
@@ -117,36 +108,28 @@
 				exited_dirs |= H.dir
 				update_icon()
 
-		else if(H && H.blood_smear[blood_state])
-			if(color != bloodtype_to_color(H.last_bloodtype))//last entry - we check its color
-				return
-			H.blood_smear[blood_state] = max(H.blood_smear[blood_state] - BLOOD_LOSS_PER_STEP, 0)
-			if (!(exited_dirs & H.dir))
-				exited_dirs |= H.dir
-				update_icon()
-
-/obj/effect/decal/cleanable/blood/footprints/tracks/update_icon()
+/obj/effect/decal/cleanable/blood/footprints/update_icon()
 	..()
 	cut_overlays()
 
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
-			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"]
+			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[print_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[print_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
 			add_overlay(bloodstep_overlay)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA + bloodiness
 
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/examine(mob/user)
+/obj/effect/decal/cleanable/blood/footprints/examine(mob/user)
 	. = ..()
-	if(shoe_types.len && ishuman(user) && user.mind.assigned_role == "Detective") //gumshoe does the detective thing, not every fucking assistant
+	if(shoe_types.len)
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
@@ -154,20 +137,19 @@
 
 	to_chat(user, .)
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/replace_decal(obj/effect/decal/cleanable/blood/footprints/tracks/C)
-	if(print_state != C.print_state) //We only replace footprints of the same type as us
-		return
-	if(blood_state != C.blood_state)
+/obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
+	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
 		return
 	if(color != C.color)
 		return
 	..()
 
-/obj/effect/decal/cleanable/blood/footprints/tracks/can_bloodcrawl_in()
+/obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return TRUE
 	return FALSE
 
+/* Eventually TODO: make snowflake trails like baycode's
 /obj/effect/decal/cleanable/blood/footprints/tracks/shoe
 	name = "footprints"
 	desc = "They look like tracks left by footwear."
@@ -209,4 +191,4 @@
 	name = "trails"
 	desc = "A trail left by something being dragged."
 	icon_state = FOOTPRINT_DRAG
-	print_state = FOOTPRINT_DRAG
+	print_state = FOOTPRINT_DRAG */

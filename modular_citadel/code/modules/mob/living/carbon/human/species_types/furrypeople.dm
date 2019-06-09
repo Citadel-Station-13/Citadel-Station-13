@@ -13,7 +13,6 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal
 	liked_food = MEAT | FRIED
 	disliked_food = TOXIC
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/paw
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
@@ -46,7 +45,6 @@
 /datum/species/mammal/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
-		move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/paw
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 	return ..()
@@ -54,7 +52,6 @@
 /datum/species/mammal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
 		species_traits -= DIGITIGRADE
-		move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
 
@@ -78,7 +75,6 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/claw
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -126,7 +122,6 @@
 	liked_food = MEAT
 	disliked_food = TOXIC
 	meat = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -173,7 +168,6 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/claw
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -230,7 +224,6 @@
 /datum/species/xeno/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
-		move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/claw
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 	return ..()
@@ -238,7 +231,6 @@
 /datum/species/xeno/on_species_loss(mob/living/carbon/human/C, datum/species/new_species)
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Normal Legs")
 		species_traits -= DIGITIGRADE
-		move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
 

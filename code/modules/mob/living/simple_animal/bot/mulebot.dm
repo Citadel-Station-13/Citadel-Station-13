@@ -473,7 +473,7 @@
 					return
 				if(isturf(next))
 					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/footprints/tracks/wheels/B = new(loc)
+						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						if(blood_DNA && blood_DNA.len)
 							B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)

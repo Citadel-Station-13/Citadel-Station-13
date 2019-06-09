@@ -17,7 +17,6 @@
 	var/light_oxyheal = 1
 	var/light_burnheal = 1
 	var/light_bruteheal = 1
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/foot
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

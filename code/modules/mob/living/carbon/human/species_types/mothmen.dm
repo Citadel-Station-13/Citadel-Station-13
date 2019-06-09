@@ -15,7 +15,6 @@
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
-	move_trail = /obj/effect/decal/cleanable/blood/footprints/tracks/claw
 
 /datum/species/moth/on_species_gain(mob/living/carbon/C)
 	. = ..()
