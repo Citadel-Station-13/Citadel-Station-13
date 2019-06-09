@@ -286,7 +286,7 @@
 	//Lastly, getallcontents and purge
 	//If anyone knows how to cache the getallcontents and not have it delete stuff that it shouldn't delete because equipped items can have recursive storage lemme know I guess.
 
-	for(var/i in mob_occupant.GetAllContents())
+	for(var/i in mob_occupant.GetAllContents() - mob_occupant)
 		if(ismob(i))
 			var/mob/M = i
 			M.forceMove(drop_location())

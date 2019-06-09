@@ -70,25 +70,40 @@
 	if(id)
 		OUTFIT_SETUP(id, SLOT_WEAR_ID, H, cryo_destroy)
 	if(suit_store)
-		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
+		OUTFIT_SETUP(suit_store, SLOT_S_STORE, H, cryo_destroy)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
 		if(U)
-			U.attach_accessory(new accessory(H))
+			var/obj/item/A = new accessory(H)
+			if(cryo_destroy)
+				A.item_flags |= CRYO_DELETE
+			U.attach_accessory(A)
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
-		H.put_in_l_hand(new l_hand(H))
+		var/obj/item/I = new l_hand(H)
+		if(cryo_destroy)
+			H.item_flags |= CRYO_DELETE
+		H.put_in_l_hand(I)
 	if(r_hand)
-		H.put_in_r_hand(new r_hand(H))
+		var/obj/item/I = new r_hand(H)
+		if(cryo_destroy)
+			H.item_flags |= CRYO_DELETE
+		H.put_in_r_hand(I)
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H),SLOT_L_STORE)
+			var/obj/item/I = new l_pocket(H)
+			if(cryo_destroy)
+				H.item_flags |= CRYO_DELETE
+			H.equip_to_slot_or_del(I, SLOT_L_STORE)
 		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H),SLOT_R_STORE)
+			var/obj/item/I = new r_pocket(H)
+			if(cryo_destroy)
+				H.item_flags |= CRYO_DELETE
+			H.equip_to_slot_or_del(I, SLOT_R_STORE)
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
