@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/set_new_overlays_offsets()
 	overlays_x_offset = 0
 	overlays_y_offset = 0
-	if(!overlays_offsets)
+	if(!overlays_offsets || !(current_skin in overlays_offsets))
 		return
 	var/list/new_offsets = overlays_offsets[current_skin]
 	if(new_offsets)
