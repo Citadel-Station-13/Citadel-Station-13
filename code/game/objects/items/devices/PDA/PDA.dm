@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_HALOGEN		4
 #define PDA_SCANNER_GAS			5
 #define PDA_SPAM_DELAY		    2 MINUTES
+#define PDA_STANDARD_OVERLAYS list("pda-r", "blank", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay")
 
 /obj/item/pda
 	name = "\improper PDA"
@@ -31,12 +32,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
-	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
-	var/icon_screen = "screen_default" //Icon to be overlayed when the above is not around.
+	var/list/overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_default", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
+	var/current_overlays = PDA_STANDARD_OVERLAYS
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
-	var/base_skin
 
 	#define FONT_MONO "font-family:monospace;"
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
@@ -105,7 +105,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/Initialize()
 	. = ..()
-	base_skin = icon_state
 	if(fon)
 		set_light(f_lum, f_pow, f_col)
 
@@ -128,28 +127,32 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	var/dat = "<b>Reskin options for [name]:</b>"
 	for(var/V in GLOB.pda_reskins)
-		var/output = icon2html(icon, M, "[base_skin][GLOB.pda_reskins[V]]")
+		var/output = icon2html(GLOB.pda_reskins[V], M, icon_state)
 		dat += "\n[V]: <span class='reallybig'>[output]</span>"
 	to_chat(M, dat)
 
 	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
-	var/new_skin = GLOB.pda_reskins[choice]
-	if(QDELETED(src) || isnull(new_skin) || new_skin == current_skin || M.incapacitated() || !in_range(M,src))
+	var/new_icon = GLOB.pda_reskins[choice]
+	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
 		return
-	current_skin = new_skin
-	set_new_overlays_offsets()
+	icon = new_icon
+	set_new_overlays()
 	update_icon()
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
-/obj/item/pda/proc/set_new_overlays_offsets()
-	overlays_x_offset = 0
-	overlays_y_offset = 0
-	if(!overlays_offsets || !(current_skin in overlays_offsets))
+/obj/item/pda/proc/set_new_overlays()
+	if(!overlays_offsets || !(icon in overlays_offsets))
+		overlays_x_offset = 0
+		overlays_y_offset = 0
+	else
+		var/list/new_offsets = overlays_offsets[icon]
+		if(new_offsets)
+			overlays_x_offset = new_offsets[1]
+			overlays_y_offset = new_offsets[2]
+	if(!(icon in overlays_icons))
+		current_overlays = PDA_STANDARD_OVERLAYS
 		return
-	var/list/new_offsets = overlays_offsets[current_skin]
-	if(new_offsets)
-		overlays_x_offset = new_offsets[1]
-		overlays_y_offset = new_offsets[2]
+	current_overlays = overlays_icons[icon]
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
@@ -174,9 +177,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				font_index = MODE_MONO
 				font_mode = FONT_MONO
 		var/pref_skin = GLOB.pda_reskins[user.client.prefs.pda_skin]
-		if(current_skin != pref_skin)
-			current_skin = pref_skin
-			set_new_overlays_offsets()
+		if(icon != pref_skin)
+			icon = pref_skin
+			set_new_overlays()
 			update_icon()
 		equipped = TRUE
 
@@ -194,26 +197,21 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_icon(alert = FALSE)
 	cut_overlays()
-	icon_state = "[base_skin][current_skin]"
-	add_overlay("[alert ? icon_alert : icon_screen][current_skin]")
+	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
 	var/mutable_appearance/overlay = new()
 	overlay.pixel_x = overlays_x_offset
 	if(id)
-		overlay.icon_state = "id_overlay[current_skin]"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
 		add_overlay(new /mutable_appearance(overlay))
 	if(inserted_item)
-		overlay.icon_state = "insert_overlay[current_skin]"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_ITEM]
 		add_overlay(new /mutable_appearance(overlay))
 	if(fon)
-		overlay.icon_state = "light_overlay[current_skin]"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_LIGHT]
 		add_overlay(new /mutable_appearance(overlay))
 	if(pai)
-		if(pai.pai)
-			overlay.icon_state = "pai_overlay[current_skin]"
-			add_overlay(new /mutable_appearance(overlay))
-		else
-			overlay.icon_state = "pai_off_overlay[current_skin]"
-			add_overlay(new /mutable_appearance(overlay))
+		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
+		add_overlay(new /mutable_appearance(overlay))
 
 /obj/item/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -1119,4 +1117,5 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY
+#undef PDA_STANDARD_OVERLAYS
 

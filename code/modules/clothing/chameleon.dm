@@ -230,14 +230,13 @@
 	if(!istype(target, /obj/item/pda))
 		return ..()
 	var/obj/item/pda/P = target
-	P.icon = initial(picked_item.icon)
 	P.name = initial(picked_item.name)
 	P.desc = initial(picked_item.desc)
-	P.base_skin = initial(picked_item.icon_state)
+	P.icon_state = initial(picked_item.icon_state)
 	P.item_state = initial(picked_item.item_state)
 	P.item_color = initial(picked_item.item_color)
 	P.overlays_offsets = initial(picked_item.overlays_offsets)
-	P.set_new_overlays_offsets()
+	P.set_new_overlays()
 	P.update_icon()
 
 /datum/action/item_action/chameleon/change/Trigger()

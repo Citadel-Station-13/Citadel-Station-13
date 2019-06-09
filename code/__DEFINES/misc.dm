@@ -264,11 +264,18 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //pda icon reskins
 #define PDA_SKIN_CLASSIC "Classic"
-#define RESKIN_SUFFIX_CLASSIC ""
 #define PDA_SKIN_ALT "Holographic"
-#define RESKIN_SUFFIX_ALT "_alt"
+#define PDA_SKIN_RUGGED "Rugged"
 
-GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = RESKIN_SUFFIX_CLASSIC, PDA_SKIN_ALT = RESKIN_SUFFIX_ALT))
+GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_SKIN_ALT = 'icons/obj/pda_alt.dmi', PDA_SKIN_RUGGED = 'icons/obj/pda_rugged.dmi'))
+
+//pda icon overlays list defines
+#define PDA_OVERLAY_ALERT		1
+#define PDA_OVERLAY_SCREEN		2
+#define PDA_OVERLAY_ID			3
+#define PDA_OVERLAY_ITEM		4
+#define PDA_OVERLAY_LIGHT		5
+#define PDA_OVERLAY_PAI			6
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"

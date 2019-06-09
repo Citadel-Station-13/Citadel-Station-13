@@ -181,13 +181,15 @@
 /obj/item/pda/curator
 	name = "curator PDA"
 	icon_state = "pda-library"
-	icon_alert = "pda-r-library"
+	overlays_icons = list('icons/obj/pda.dmi' = list("pda-r-library","blank","id_overlay","insert_overlay", "light_overlay", "pai_overlay"),
+						'icons/obj/pda_alt.dmi' = list("pda-r","screen_default","id_overlay","insert_overlay", "light_overlay", "pai_overlay"))
+	current_overlays = list("pda-r-library","blank","id_overlay","insert_overlay", "light_overlay", "pai_overlay")
 	default_cartridge = /obj/item/cartridge/curator
 	inserted_item = /obj/item/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 	silent = TRUE //Quiet in the library!
-	overlays_offsets = list(RESKIN_SUFFIX_CLASSIC = list(-3,0))
+	overlays_offsets = list('icons/obj/pda.dmi' = list(-3,0))
 	overlays_x_offset = -3
 
 /obj/item/pda/clear
@@ -199,7 +201,7 @@
 /obj/item/pda/neko
 	name = "neko PDA"
 	icon_state = "pda-neko"
-	icon_screen = "screen_neko"
+	overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_neko", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a special feline edition."
 	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Mew Turbo Limited Edition NYA~! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 
