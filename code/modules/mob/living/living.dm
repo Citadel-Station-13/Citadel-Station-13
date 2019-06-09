@@ -1190,7 +1190,10 @@
 			clamp_immobility_to = 0,
 			reset_misc = TRUE,
 			healing_chems = list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10),
-			message = "<span class='boldnotice'>You feel a surge of energy!</span>"
+			message = "<span class='boldnotice'>You feel a surge of energy!</span>",
+			stamina_buffer_boost = 0,				//restores stamina buffer rather than just health
+			scale_stamina_loss_recovery,			//defaults to null. if this is set, restores loss * this stamina. make sure it's a fraction.
+			stamina_loss_recovery_bypass = 0		//amount of stamina loss to ignore during calculation
 		)
 	if(AmountSleeping() > clamp_unconscious_to)
 		SetSleeping(clamp_unconscious_to)
@@ -1201,6 +1204,9 @@
 	if(AmountKnockdown() > clamp_immobility_to)
 		SetKnockdown(clamp_immobility_to)
 	adjustStaminaLoss(max(0, -stamina_boost))
+	adjustStaminaLossBuffered(max(0, -stamina_buffer_boost))
+	if(scale_stamina_loss_recovery)
+		adjustStaminaLoss(max(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)
 		resting = FALSE
 		lying = FALSE
