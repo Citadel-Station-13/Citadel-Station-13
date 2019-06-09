@@ -17,10 +17,10 @@
 		/obj/item/electropack/shockcollar = 3,
 		/obj/item/clothing/neck/petcollar/locked = 1
 		)
-	var/list/devents = list(
-		"" = 50
+//	var/list/devents = list(
+//		"" = 50
 
-		)
+//		)
 
 	circuit = /obj/item/circuitboard/computer/arcade/datingsim
 	var/date_name = "Space Waifu"
@@ -279,7 +279,7 @@
 		var/loselove = rand(10,50)
 		datelove -= loselove
 //Random events!
-	var/events = pickweight(devents)
+//	var/events = pickweight(devents)
 
 
 //end random events
