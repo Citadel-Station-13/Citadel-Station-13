@@ -248,7 +248,9 @@
 	if(SSreligion.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_weapon
-	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
+	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
+	/obj/item/melee/transforming/energy/sword/cx/chaplain
+	)
 	var/list/display_names = list()
 	for(var/V in holy_weapons_list)
 		var/obj/item/nullrod/rodtype = V
@@ -544,6 +546,9 @@
 
 /obj/item/nullrod/pride_hammer
 	icon_state = "pride"
+	item_state = "pride"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
 	force = 16
@@ -551,7 +556,7 @@
 	w_class = 4
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/weapons/resonator_blast.ogg'
 
 /obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()

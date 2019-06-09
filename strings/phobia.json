@@ -14,6 +14,19 @@
 		"spess"
 	],
 
+	"eye": [
+		"eye",
+		"blink",
+		"look",
+		"see",
+		"laser",
+		"iris",
+		"cornea",
+		"pupil",
+		"lens",
+		"optic"
+	],
+
 	"security": [
 		"sec",
 		"security",
@@ -281,6 +294,25 @@
 		"let go",
 		"i'll catch you",
 		"slip"
+	],
+	
+	"syndicate": [
+		"syndicate",
+		"changeling",
+		"rev",
+		"nuke ops",
+		"syndicats",
+		"nukies",
+		"ops",
+		"traitor",
+		"second shooter",
+		"revolution",
+		"fuck nt",
+		"rigged from the start",
+		"debt to pay",
+		"brainwashing",
+		"enemy corporation",
+		"agent"
 	],
 	
 "anime": [

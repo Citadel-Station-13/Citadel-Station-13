@@ -66,7 +66,7 @@
 			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
 			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
-			if(!(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH))))
+			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
 				if(heart && istype(heart))
 					heart_strength = "<span class='danger'>an unstable</span>"
 					if(heart.beating)
@@ -171,16 +171,113 @@
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
 
-/obj/item/clothing/neck/petcollar //don't really wear this though please c'mon seriously guys
+///////////
+//COLLARS//
+///////////
+
+/obj/item/clothing/neck/petcollar
 	name = "pet collar"
-	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule. It seems to be made out of a polychromic material."
 	icon_state = "petcollar"
 	item_color = "petcollar"
+	alternate_worn_icon = 'icons/mob/neck.dmi' //Because, as it appears, the item itself is normally not directly aware of its worn overlays, so this is about the easiest way, without adding a new var.
+	hasprimary = TRUE
+	primary_color = "#00BBBB"
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
 	var/tagname = null
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
+
+/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(hasprimary | hassecondary | hastertiary)
+		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
+			if(hasprimary)	//checks if overlays are enabled
+				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
+				primary_worn.color = primary_color	//colors the overlay
+				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite
+			if(hassecondary)
+				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
+				secondary_worn.color = secondary_color
+				. += secondary_worn
+			if(hastertiary)
+				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
+				tertiary_worn.color = tertiary_color
+				. += tertiary_worn
+
+/obj/item/clothing/neck/petcollar/leather
+	name = "leather pet collar"
+	icon_state = "leathercollar"
+	item_color = "leathercollar"
+
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#222222"
+	secondary_color = "#888888"
+
+/obj/item/clothing/neck/petcollar/choker
+	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
+	name = "choker"
+	icon_state = "choker"
+	item_color = "choker"
+
+	hasprimary = TRUE
+	primary_color = "#222222"
+
+/obj/item/clothing/neck/petcollar/locked
+	name = "locked collar"
+	desc = "A collar that has a small lock on it to keep it from being removed."
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar/locked
+	var/lock = FALSE
+
+/obj/item/clothing/neck/petcollar/locked/attackby(obj/item/K, mob/user, params)
+	if(istype(K, /obj/item/key/collar))
+		if(lock != FALSE)
+			to_chat(user, "<span class='warning'>With a click the collar unlocks!</span>")
+			lock = FALSE
+		else
+			to_chat(user, "<span class='warning'>With a click the collar locks!</span>")
+			lock = TRUE
+	return
+
+/obj/item/clothing/neck/petcollar/locked/attack_hand(mob/user)
+	if(loc == user && user.get_item_by_slot(SLOT_NECK) && lock != FALSE)
+		to_chat(user, "<span class='warning'>The collar is locked! You'll need unlock the collar before you can take it off!</span>")
+		return
+	..()
+
+/obj/item/clothing/neck/petcollar/locked/leather
+	name = "leather pet collar"
+	icon_state = "leathercollar"
+	item_color = "leathercollar"
+
+	hasprimary = TRUE
+	hassecondary = TRUE
+	primary_color = "#222222"
+	secondary_color = "#888888"
+
+/obj/item/clothing/neck/petcollar/locked/choker
+	name = "choker"
+	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
+	icon_state = "choker"
+	item_color = "choker"
+
+	hasprimary = TRUE
+	primary_color = "#222222"
+
+/obj/item/key/collar
+	name = "Collar Key"
+	desc = "A key for a tiny lock on a collar or bag."
+
+/obj/item/clothing/neck/petcollar/Initialize()
+	. = ..()
+	new /obj/item/reagent_containers/food/snacks/cookie(src)
+
+/obj/item/clothing/neck/petcollar/locked/Initialize()
+	. = ..()
+	new /obj/item/key/collar(src)
 
 //////////////
 //DOPE BLING//

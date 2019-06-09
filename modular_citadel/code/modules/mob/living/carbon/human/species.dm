@@ -82,7 +82,7 @@
 			if(get_turf(target) == target_oldturf)
 				target_table = locate(/obj/structure/table) in target_shove_turf.contents
 				shove_blocked = TRUE
-		
+
 		if(shove_blocked && !target.is_shove_knockdown_blocked())
 			var/directional_blocked = FALSE
 			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
@@ -151,28 +151,3 @@
 
 /obj/item/bodypart
 	var/should_draw_citadel = FALSE
-
-/datum/species/proc/citadel_mutant_bodyparts(bodypart, mob/living/carbon/human/H)
-	switch(bodypart)
-		if("ipc_screen")
-			return GLOB.ipc_screens_list[H.dna.features["ipc_screen"]]
-		if("ipc_antenna")
-			return GLOB.ipc_antennas_list[H.dna.features["ipc_antenna"]]
-		if("mam_tail")
-			return GLOB.mam_tails_list[H.dna.features["mam_tail"]]
-		if("mam_waggingtail")
-			return GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
-		if("mam_body_markings")
-			return GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
-		if("mam_ears")
-			return GLOB.mam_ears_list[H.dna.features["mam_ears"]]
-		if("mam_snouts")
-			return GLOB.mam_snouts_list[H.dna.features["mam_snouts"]]
-		if("taur")
-			return GLOB.taur_list[H.dna.features["taur"]]
-		if("xenodorsal")
-			return GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
-		if("xenohead")
-			return GLOB.xeno_head_list[H.dna.features["xenohead"]]
-		if("xenotail")
-			return GLOB.xeno_tail_list[H.dna.features["xenotail"]]

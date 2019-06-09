@@ -358,9 +358,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 					if (total_moles)
 						for(var/id in env_gases)
-							var/gas_level = env_gases[id][MOLES]/total_moles
+							var/gas_level = env_gases[id]/total_moles
 							if(gas_level > 0)
-								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
+								dat += "[GLOB.meta_gas_names[id]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
@@ -391,7 +391,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BASIC FUNCTIONS===================================
 
 			if("Refresh")//Refresh, goes to the end of the proc.
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Toggle_Font")
 				//CODE REVISION 2
@@ -406,16 +407,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 						font_mode = FONT_ORBITRON
 					if (MODE_VT)
 						font_mode = FONT_VT
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+						if (!silent)
+							playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Change_Color")
 				var/new_color = input("Please enter a color name or hex value (Default is \'#808000\').",background_color)as color
 				background_color = new_color
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Toggle_Underline")
 				underline_flag = !underline_flag
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Return")//Return
 				if(mode<=9)
@@ -424,7 +428,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					mode = round(mode/10)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if ("Authenticate")//Checks for ID
 				id_check(U)
@@ -434,8 +439,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(istype(id, /obj/item/card/id/syndicate))
 					owner = id.registered_name
 				update_label()
-				playsound(src, 'sound/machines/terminal_processing.ogg', 50, 1)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 50, 1), 13)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_processing.ogg', 15, 1)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 15, 1), 13)
 
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -445,56 +451,67 @@ GLOBAL_LIST_EMPTY(PDAs)
 					cartridge.host_pda = null
 					cartridge = null
 					update_icon()
-				playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_eject_disc.ogg', 50, 1)
 
 //MENU FUNCTIONS===================================
 
 			if("0")//Hub
 				mode = 0
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 			if("1")//Notes
 				mode = 1
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 			if("2")//Messenger
 				mode = 2
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 			if("21")//Read messeges
 				mode = 21
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 			if("3")//Atmos scan
 				mode = 3
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 			if("4")//Redirects to hub
 				mode = 0
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 
 //MAIN FUNCTIONS===================================
 
 			if("Light")
 				toggle_light()
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Medical Scan")
 				if(scanmode == PDA_SCANNER_MEDICAL)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_MEDICAL))
 					scanmode = PDA_SCANNER_MEDICAL
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Reagent Scan")
 				if(scanmode == PDA_SCANNER_REAGENT)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_REAGENT_SCANNER))
 					scanmode = PDA_SCANNER_REAGENT
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Halogen Counter")
 				if(scanmode == PDA_SCANNER_HALOGEN)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
 					scanmode = PDA_SCANNER_HALOGEN
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
@@ -511,7 +528,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ATMOS))
 					scanmode = PDA_SCANNER_GAS
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 1)
+				if (!silent)
+					playsound(src, 'sound/machines/terminal_select.ogg', 15, 1)
 
 			if("Drone Phone")
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
@@ -520,7 +538,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
 					_alert_drones(msg, TRUE, U)
 					to_chat(U, msg)
-					playsound(src, 'sound/machines/terminal_success.ogg', 50, 1)
+					if (!silent)
+						playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
 
 
 //NOTEKEEPER FUNCTIONS===================================
@@ -672,7 +691,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (!signal.data["done"])
 		to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
 		return
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 1)
+		if (!silent)
+			playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
 
 	var/target_text = signal.format_target()
 	// Log it in our logs
@@ -685,7 +705,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
-	playsound(src, 'sound/machines/terminal_success.ogg', 50, 1)
+	if (!silent)
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
 	// Reset the photo
 	picture = null
 	last_text = world.time
@@ -830,14 +851,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, 1)
+			if (!silent)
+				playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
 
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			update_label()
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
-			playsound(src, 'sound/machines/terminal_success.ogg', 50, 1)
+			if (!silent)
+				playsound(src, 'sound/machines/terminal_success.ogg', 15, 1)
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
@@ -1053,3 +1076,4 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY
+

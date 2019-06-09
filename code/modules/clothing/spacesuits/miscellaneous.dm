@@ -8,7 +8,8 @@ Contains:
  - NASA Voidsuit
  - Father Christmas' magical clothes
  - Pirate's spacesuit
- - ERT hardsuit: command, sec, engi, med
+ - ERT hardsuit: Command, Sec, Engi, Med
+ - ERT High Alarm - Command, Sec, Engi, Med
  - EVA spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
@@ -64,6 +65,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
@@ -114,6 +116,7 @@ Contains:
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 	dog_fashion = /datum/dog_fashion/head/santa
 
@@ -137,12 +140,14 @@ Contains:
 	strip_delay = 40
 	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	name = "royal bandana"
 	desc = "A space-proof bandanna crafted with reflective kevlar."
 	icon_state = "bandana"
 	item_state = "bandana"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/pirate
 	name = "royal waistcoat "
@@ -181,6 +186,7 @@ Contains:
 	slowdown = 0
 	strip_delay = 130
 	resistance_flags = ACID_PROOF
+	tauric = TRUE	//Citadel Add for tauric hardsuits
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -194,7 +200,6 @@ Contains:
 	icon_state = "ert_security"
 	item_state = "ert_security"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
@@ -208,7 +213,6 @@ Contains:
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
@@ -223,7 +227,72 @@ Contains:
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
 	species_exception = list(/datum/species/angel)
+
+	//Red alert ERT
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert
+	name = "emergency response unit helmet"
+	desc = "Red alert command helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_commander-alert"
+	item_state = "hardsuit0-ert_commander-alert"
+	item_color = "ert_commander-alert"
+	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	strip_delay = 130
+	item_flags = NODROP
+	brightness_on = 8
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert
+	name = "emergency response team suit"
+	desc = "Red alert command suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_command-alert"
+	item_state = "ert_command-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	armor = list("melee" = 70, "bullet" = 55, "laser" = 50, "energy" = 50, "bomb" = 65, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	tauric = TRUE		//Citadel Add for tauric hardsuits
+
+	//ERT Security
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
+	desc = "Red alert security helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_security-alert"
+	item_state = "hardsuit0-ert_security-alert"
+	item_color = "ert_security-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/sec
+	desc = "Red alert security suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_security-alert"
+	item_state = "ert_security-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/sec
+
+	//ERT Engineering
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
+	desc = "Red alert engineer helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_engineer-alert"
+	item_state = "hardsuit0-ert_engineer-alert"
+	item_color = "ert_engineer-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/engi
+	desc = "Red alert engineer suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_engineer-alert"
+	item_state = "ert_engineer-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/engi
+
+	//ERT Medical
+/obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
+	desc = "Red alert medical helmet for the ERT. This one is more armored than its standard version."
+	icon_state = "hardsuit0-ert_medical-alert"
+	item_state = "hardsuit0-ert_medical-alert"
+	item_color = "ert_medical-alert"
+
+/obj/item/clothing/suit/space/hardsuit/ert/alert/med
+	desc = "Red alert medical suit for the ERT. This one is more armored than its standard version."
+	icon_state = "ert_medical-alert"
+	item_state = "ert_medical-alert"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/alert/med
+	species_exception = list(/datum/species/angel)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -250,6 +319,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
@@ -273,7 +343,7 @@ Contains:
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
 	item_flags = NODROP
-
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
@@ -285,7 +355,6 @@ Contains:
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
-
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response unit helmet"
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
@@ -295,6 +364,7 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	name = "paranormal response team suit"
@@ -304,6 +374,7 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	tauric = TRUE		//Citadel Add for tauric hardsuits
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/Initialize()
 	. = ..()

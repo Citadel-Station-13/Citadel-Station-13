@@ -324,13 +324,22 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	..()
 	update_mutant_bodyparts()
-	var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
-	if(head_overlay)
+	if(head)
 		remove_overlay(HEAD_LAYER)
+		var/obj/item/clothing/head/H = head
+		if(H.mutantrace_variation)
+			if(H.muzzle_var == ALT_STYLE)
+				H.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_helmet.dmi'
+			else
+				H.alternate_worn_icon = null
+
+		overlays_standing[HEAD_LAYER] = H.build_worn_icon(state = H.icon_state, default_layer = HEAD_LAYER, default_icon_file = ((head.alternate_worn_icon) ? H.alternate_worn_icon : 'icons/mob/head.dmi'))
+		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
+
 		if(OFFSET_HEAD in dna.species.offset_features)
 			head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
-			overlays_standing[HEAD_LAYER] = head_overlay
+		overlays_standing[HEAD_LAYER] = head_overlay
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_inv_belt()
@@ -429,13 +438,22 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_wear_mask()
 	..()
-	var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
-	if(mask_overlay)
+	if(wear_mask)
+		var/obj/item/clothing/mask/M = wear_mask
 		remove_overlay(FACEMASK_LAYER)
+		if(M.mutantrace_variation)
+			if(M.muzzle_var == ALT_STYLE)
+				M.alternate_worn_icon = 'modular_citadel/icons/mob/muzzled_mask.dmi'
+			else
+				M.alternate_worn_icon = null
+
+		overlays_standing[FACEMASK_LAYER] = M.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = ((wear_mask.alternate_worn_icon) ? M.alternate_worn_icon : 'icons/mob/mask.dmi'))
+		var/mutable_appearance/mask_overlay = overlays_standing[FACEMASK_LAYER]
+
 		if(OFFSET_FACEMASK in dna.species.offset_features)
 			mask_overlay.pixel_x += dna.species.offset_features[OFFSET_FACEMASK][1]
 			mask_overlay.pixel_y += dna.species.offset_features[OFFSET_FACEMASK][2]
-			overlays_standing[FACEMASK_LAYER] = mask_overlay
+		overlays_standing[FACEMASK_LAYER] = mask_overlay
 		apply_overlay(FACEMASK_LAYER)
 	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
@@ -642,8 +660,10 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "-[BP.dmg_overlay_type]"
 		if(BP.body_markings)
 			. += "-[BP.body_markings]"
+		else
+			. += "-no_marking"
 
-	if(has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()
@@ -685,7 +705,7 @@ generate/load female uniform sprites matching all previously decided variables
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
 
-	if(HD && !(has_trait(TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		// lipstick
 		if(lip_style && (LIPS in dna.species.species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)

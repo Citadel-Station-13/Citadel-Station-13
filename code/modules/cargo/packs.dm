@@ -81,6 +81,21 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/radiatione_emergency
+	name = "Emergenc Radiation Protection Crate"
+	desc = "Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a few pill bottles that are able to handles radiation and the affects of the poisoning."
+	cost = 2500
+	contains = list(/obj/item/clothing/head/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/emergency/rcds
 	name = "Emergency RCDs"
 	desc = "Bombs going off on station? SME blown and now you need to fix the hole it left behind? Well this crate has a pare of Rcds to be able to easily fix up any problem you may have!"
@@ -418,7 +433,6 @@
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
-	hidden = TRUE
 	contraband = TRUE
 	cost = 5000 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/security/officer/russian,
@@ -858,8 +872,7 @@
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
-	cost = 3000
-	special = TRUE
+	cost = 4000
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
 					/obj/machinery/satellite/meteor_shield,
@@ -867,15 +880,12 @@
 					)
 	crate_name= "shield sat crate"
 
-
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
-	cost = 5000
-	special = TRUE
+	cost = 4000
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
-
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
@@ -945,6 +955,15 @@
 					/obj/machinery/power/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/mason
+	name = "M.A.S.O.N RIG Crate"
+	desc = "The rare M.A.S.O.N RIG. Requires CE access to open."
+	cost = 15000
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/suit/space/hardsuit/ancient/mason)
+	crate_name = "M.A.S.O.N Rig"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator Crate"
@@ -1357,6 +1376,19 @@
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
 
+/datum/supply_pack/medical/advrad
+	name = "Radiation Treatment Crate Deluxe"
+	desc = "A crate for when radiation is out of hand... Contains two rad-b-gone kits, one bottle of anti radiation deluxe pill bottle, as well as a radiation treatment deluxe pill bottle!"
+	cost = 3500
+	contains = list(/obj/item/storage/pill_bottle/antirad_plus,
+					/obj/item/storage/pill_bottle/mutarad,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/storage/firstaid/radbgone,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter)
+	crate_name = "radiation protection crate"
+	crate_type = /obj/structure/closet/crate/radiation
+
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
 	desc = "Do you want to perform surgery, but don't have one of those fancy shmancy degrees? Just get started with this crate containing a medical duffelbag, Sterilizine spray and collapsible roller bed."
@@ -1515,7 +1547,6 @@
 /datum/supply_pack/service
 	group = "Service"
 
-
 /datum/supply_pack/service/advlighting
 	name = "Advanced Lighting crate"
 	desc = "Thanks to advanced lighting tech we here at the Lamp Factory have be able to produce more lamps and lamp items! This crate has three lamps, a box of lights and a state of the art rapid-light-device!"
@@ -1540,6 +1571,14 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
+/datum/supply_pack/service/food_cart
+	name = "Food Cart Crate"
+	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
+	cost = 1000
+	contains = list(/obj/machinery/food_cart)
+	crate_name = "food cart crate"
+	crate_type = /obj/structure/closet/crate
+
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
 	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
@@ -1547,6 +1586,14 @@
 	contains = list(/obj/item/stack/tile/noslip/thirty,
 					/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
+
+/datum/supply_pack/service/icecream_cart
+	name = "Ice Cream Cart Crate"
+	desc = "Plasma fire a to hot for you, want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	cost = 2750 //Comes prestocked with basic ingredients
+	contains = list(/obj/machinery/icecream_vat)
+	crate_name = "ice cream vat crate"
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
@@ -1671,10 +1718,14 @@
 			/obj/item/t_scanner/adv_mining_scanner/lesser,
 			/obj/item/radio/headset/headset_cargo/mining,
 			/obj/item/storage/bag/ore,
-			/obj/item/clothing/suit/hooded/explorer,
+			/obj/item/clothing/suit/hooded/explorer/standard,
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////// Vending Restocks /////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
@@ -2645,16 +2696,16 @@
 	name = "Freelance Paper work"
 	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
 	cost = 400 // Net of 0 credits
-	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+	contains = list(/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain,

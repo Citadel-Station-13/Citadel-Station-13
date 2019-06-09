@@ -19,6 +19,7 @@
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/clothing/head/caphat/parade(src)
+	new /obj/item/clothing/head/caphat/beret(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/rank/captain/femformal(src)  //citadel edit
 	new /obj/item/clothing/head/crown/fancy(src)
@@ -44,6 +45,7 @@
 	new /obj/item/clothing/neck/cloak/hop(src)
 	new /obj/item/clothing/under/rank/head_of_personnel(src)
 	new /obj/item/clothing/head/hopcap(src)
+	new /obj/item/clothing/head/hopcap/beret(src)
 	new /obj/item/cartridge/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)

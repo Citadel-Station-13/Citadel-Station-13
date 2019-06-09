@@ -4,12 +4,10 @@
 
 	if(!ninjacost(0,N_ADRENALINE))
 		var/mob/living/carbon/human/H = affecting
-		H.SetUnconscious(0)
-		H.SetStun(0)
-		H.SetKnockdown(0)
-		H.adjustStaminaLoss(-75)
-		H.stuttering = 0
+		H.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
+
 		H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
+
 		a_boost--
 		to_chat(H, "<span class='notice'>There are <B>[a_boost]</B> adrenaline boosts remaining.</span>")
 		s_coold = 3

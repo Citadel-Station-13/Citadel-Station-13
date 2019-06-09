@@ -54,8 +54,11 @@
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/under/mankini = 1,
 				/obj/item/dildo/flared/huge = 1
-					)
-	premium = list(/obj/item/electropack/shockcollar = 3)
+				)
+	premium = list(
+				/obj/item/electropack/shockcollar = 3,
+				/obj/item/clothing/neck/petcollar/locked = 1
+				)
 	refill_canister = /obj/item/vending_refill/kink
 /*
 /obj/machinery/vending/nazivend

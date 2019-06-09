@@ -1,0 +1,6 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - balance: "Ass slapping only works if you're actually behind the target. Ass slapping now respects disarm blocking. You can no longer face/ass slap someone on an intent other than help, unless they are also face/ass slapping."
+  - bugfix: "Fixed ass and face slapping grammar."
+  - rscadd: "Adds meh effects for ass and face slapping."

@@ -28,7 +28,6 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
-
 /*
  * Backpack Types
  */
@@ -47,6 +46,13 @@
 	item_flags = NO_MAT_REDEMPTION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
+
+/obj/item/storage/backpack/holding/satchel
+	name = "satchel of holding"
+	desc = "A satchel that opens into a localized pocket of Blue Space."
+	icon_state = "holdingsat"
+	item_state = "holdingsat"
+	species_exception = list(/datum/species/angel)
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
@@ -236,6 +242,18 @@
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
 	item_state = "securitypack"
+
+/obj/item/storage/backpack/satchel/bone
+	name = "bone satchel"
+	desc = "A bone satchel fashend with watcher wings and large bones from goliath. Can be worn on the belt."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"
+	slot_flags = ITEM_SLOT_BACK	| ITEM_SLOT_BELT
+
+/obj/item/storage/backpack/satchel/bone/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 10
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
@@ -440,6 +458,8 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
+	new /obj/item/implantcase(src)
+	new /obj/item/implanter(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery_adv
 	name = "advanced surgery duffel bag"
@@ -457,6 +477,8 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
+	new /obj/item/implantcase(src)
+	new /obj/item/implanter(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

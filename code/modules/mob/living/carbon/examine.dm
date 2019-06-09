@@ -67,7 +67,7 @@
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
-	if(has_trait(TRAIT_DUMB))
+	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)
@@ -88,7 +88,7 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
-	
+
 	if(combatmode)
 		msg += "[t_He] [t_is] visibly tense[resting ? "." : ", and [t_is] standing in combative stance."]\n"
 

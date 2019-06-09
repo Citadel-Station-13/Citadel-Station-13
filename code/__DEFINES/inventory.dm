@@ -99,6 +99,7 @@
 #define HIDEFACIALHAIR	(1<<9)
 #define HIDENECK		(1<<10)
 #define HIDETAUR		(1<<11) //gotta hide that snowflake
+#define HIDESNOUT		(1<<12) //or do we actually hide our snoots
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)
@@ -131,10 +132,16 @@
 #define NORMAL_SUIT_STYLE		0
 #define DIGITIGRADE_SUIT_STYLE 	1
 
+//Tauric Specific suits
 #define NOT_TAURIC			0
 #define SNEK_TAURIC			1
 #define PAW_TAURIC			2
 #define HOOF_TAURIC			3
+
+//Helmets/masks for muzzles or beaks
+#define NORMAL_FACED		0
+#define	MUZZLE_FACED		1
+#define	BEAKED_FACED		2
 
 //flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
 #define NO_MUTANTRACE_VARIATION		0

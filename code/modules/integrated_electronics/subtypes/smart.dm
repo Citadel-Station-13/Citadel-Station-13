@@ -125,7 +125,7 @@
 	name = "man-machine interface tank"
 	desc = "This circuit is just a jar filled with an artificial liquid mimicking the cerebrospinal fluid."
 	extended_desc = "This jar can hold 1 man-machine interface and let it take control of some basic functions of the assembly."
-	complexity = 29
+	complexity = 60
 	inputs = list("laws" = IC_PINTYPE_LIST)
 	outputs = list(
 		"man-machine interface" = IC_PINTYPE_REF,
@@ -254,7 +254,7 @@
 	name = "pAI connector circuit"
 	desc = "This circuit lets you fit in a personal artificial intelligence to give it some form of control over the bot."
 	extended_desc = "You can wire various functions to it."
-	complexity = 29
+	complexity = 60
 	inputs = list("laws" = IC_PINTYPE_LIST)
 	outputs = list(
 		"personal artificial intelligence" = IC_PINTYPE_REF,

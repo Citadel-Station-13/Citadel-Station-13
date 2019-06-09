@@ -112,12 +112,17 @@
 /obj/item/storage/firstaid/radbgone/PopulateContents()
 	if(empty)
 		return
+	if(prob(50))
+		new /obj/item/reagent_containers/pill/mutarad(src)
+	if(prob(80))
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
 	new /obj/item/reagent_containers/syringe/charcoal(src)
 	new /obj/item/storage/pill_bottle/charcoal(src)
 	new /obj/item/reagent_containers/pill/mutadone(src)
 	new /obj/item/reagent_containers/pill/antirad(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka(src)
 	new /obj/item/healthanalyzer(src)
+
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -291,3 +296,27 @@
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
+
+/obj/item/storage/pill_bottle/antirad_plus
+	name = "anti radiation deluxe pill bottle"
+	desc = "The label says 'Med-Co branded pills'."
+
+/obj/item/storage/pill_bottle/antirad_plus/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/antirad_plus(src)
+
+/obj/item/storage/pill_bottle/mutarad
+	name = "radiation treatment deluxe pill bottle"
+	desc = "The label says 'Med-Co branded pills' and below that 'Contains Mutadone in each pill!`."
+
+/obj/item/storage/pill_bottle/mutarad/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/mutarad(src)
+
+/obj/item/storage/pill_bottle/penis_enlargement
+	name = "penis enlargement pills"
+	desc = "You want penis enlargement pills?"
+
+/obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/penis_enlargement(src)

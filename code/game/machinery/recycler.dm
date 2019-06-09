@@ -96,7 +96,7 @@
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
-	if(istype(AM0, /obj/item))
+	if(isitem(AM0))
 		to_eat = AM0.GetAllContents()
 	else
 		to_eat = list(AM0)
@@ -107,7 +107,7 @@
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM)
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
@@ -115,9 +115,14 @@
 				crush_living(AM)
 			else
 				emergency_stop(AM)
-		else if(istype(AM, /obj/item))
-			recycle_item(AM)
-			items_recycled++
+		else if(isitem(AM))
+			var/obj/O = AM
+			if(O.resistance_flags & INDESTRUCTIBLE)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+				O.forceMove(loc)
+			else
+				recycle_item(AM)
+				items_recycled++
 		else
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			AM.forceMove(loc)

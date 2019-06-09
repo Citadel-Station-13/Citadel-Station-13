@@ -57,6 +57,7 @@
 /datum/vore_look/proc/gen_vui(var/mob/living/user)
 	var/dat
 	dat += "Remember to toggle the vore mode, it's to the left of your combat toggle. Open mouth means you're voracious!<br>"
+	dat += "Remember that your prey is blind, use audible mode subtle messages to communicate to them with posts!<br>"
 	dat += "<HR>"
 	var/atom/userloc = user.loc
 	if (isbelly(userloc))
@@ -229,7 +230,6 @@
 		dat += "<br><a style='background:#990000;' href='?src=\ref[src];b_del=\ref[selected]'>Delete Belly</a>"
 
 	dat += "<a href='?src=\ref[src];setflavor=1'>Set Flavor</a>"
-	dat += "<a href='?src=\ref[src];togglenoisy=1'>Toggle Hunger Noises</a>"
 
 	dat += "<HR>"
 
@@ -729,16 +729,6 @@
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.feeding = user.feeding
-
-	if(href_list["togglenoisy"])
-		var/choice = alert(user, "Toggle audible hunger noises. Currently: [user.noisy ? "Enabled" : "Disabled"]", "", "Enable audible hunger", "Cancel", "Disable audible hunger")
-		switch(choice)
-			if("Cancel")
-				return 0
-			if("Enable audible hunger")
-				user.noisy = TRUE
-			if("Disable audible hunger")
-				user.noisy = FALSE
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

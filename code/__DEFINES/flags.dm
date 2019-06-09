@@ -56,9 +56,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLYING (1<<1)
 #define VENTCRAWLING (1<<2)
 
-// Flags for reagents
-#define REAGENT_NOREACT (1<<0)
-
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
 #define FIRE_PROOF		(1<<1) //100% immune to fire damage (but not necessarily to lava or heat)

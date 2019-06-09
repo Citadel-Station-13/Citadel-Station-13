@@ -43,16 +43,6 @@
 	result = /obj/item/reagent_containers/food/snacks/jellysandwich/cherry
 	subcategory = CAT_SANDWICH
 
-/datum/crafting_recipe/food/icecreamsandwich
-	name = "Icecream sandwich"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/datum/reagent/consumable/ice = 5,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/icecreamsandwich
-	subcategory = CAT_SANDWICH
-
 /datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
 	reqs = list(
@@ -62,5 +52,13 @@
 	result = /obj/item/reagent_containers/food/snacks/notasandwich
 	subcategory = CAT_SANDWICH
 
-
-
+/datum/crafting_recipe/food/notasandwich
+	name = "Tuna sandwich"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
+		/obj/item/reagent_containers/food/snacks/tuna = 1,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/condiment/mayonnaise = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/tuna_sandwich
+	subcategory = CAT_SANDWICH

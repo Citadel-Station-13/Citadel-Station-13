@@ -77,6 +77,8 @@
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
+	if(!GLOB.balls_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 	if(!GLOB.vagina_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
@@ -94,43 +96,61 @@
 	if(!GLOB.mam_snouts_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_snouts, GLOB.mam_snouts_list)
 
-//	if(ishuman(src))
-	//	var/mob/living/carbon/human/H = src
-	/*	if(H.gender == MALE) Fuck if I know how to fix this.
-			penis = 1
-			balls = 1
-			vagina = 0
-			womb = 0
-			breasts = 0
-		if(H.gender == FEMALE)
-			penis = 0
-			balls = 0
-			vagina = 1
-			womb = 1
-			breasts = 1 */
+	//snowflake check so people's ckey features don't get randomly put on unmonkeys/spawns
+	var/list/snowflake_mam_tails_list = list()
+	for(var/mtpath in GLOB.mam_tails_list)
+		var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[mtpath]
+		if(istype(instance, /datum/sprite_accessory))
+			var/datum/sprite_accessory/S = instance
+			if(!S.ckeys_allowed)
+				snowflake_mam_tails_list[S.name] = mtpath
+	var/list/snowflake_markings_list = list()
+	for(var/mmpath in GLOB.mam_body_markings_list)
+		var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[mmpath]
+		if(istype(instance, /datum/sprite_accessory))
+			var/datum/sprite_accessory/S = instance
+			if(!S.ckeys_allowed)
+				snowflake_markings_list[S.name] = mmpath
+	var/list/snowflake_ears_list = list()
+	for(var/mepath in GLOB.mam_ears_list)
+		var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[mepath]
+		if(istype(instance, /datum/sprite_accessory))
+			var/datum/sprite_accessory/S = instance
+			if(!S.ckeys_allowed)
+				snowflake_ears_list[S.name] = mepath
+	var/list/snowflake_mam_snouts_list = list()
+	for(var/mspath in GLOB.mam_snouts_list)
+		var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[mspath]
+		if(istype(instance, /datum/sprite_accessory))
+			var/datum/sprite_accessory/S = instance
+			if(!S.ckeys_allowed)
+				snowflake_mam_snouts_list[S.name] = mspath
+	var/color1 = random_short_color()
+	var/color2 = random_short_color()
+	var/color3 = random_short_color()
 
 	//CIT CHANGE - changes this entire return to support cit's snowflake parts
 	return(list(
-		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"mcolor" = color1,
+		"mcolor2" = color2,
+		"mcolor3" = color3,
 		"tail_lizard" = pick(GLOB.tails_list_lizard),
-		"tail_human" = pick(GLOB.tails_list_human),
+		"tail_human" = "None",
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
 		"horns" = pick(GLOB.horns_list),
-		"ears" = pick(GLOB.ears_list),
+		"ears" = "None",
 		"frills" = pick(GLOB.frills_list),
 		"spines" = pick(GLOB.spines_list),
 		"body_markings" = pick(GLOB.body_markings_list),
-		"legs" = "Normal Legs",
+		"legs" = pick("Normal Legs","Digitigrade Legs"),
 		"caps" = pick(GLOB.caps_list),
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"taur" = "None",
-		"mam_body_markings" = pick(GLOB.mam_body_markings_list),
-		"mam_ears" 			= pick(GLOB.mam_ears_list),
-		"mam_snouts"		= pick(GLOB.mam_snouts_list),
-		"mam_tail"			= pick(GLOB.mam_tails_list),
+		"mam_body_markings" = pick(snowflake_markings_list),
+		"mam_ears" 			= pick(snowflake_ears_list),
+		"mam_snouts"		= pick(snowflake_mam_snouts_list),
+		"mam_tail"			= pick(snowflake_mam_tails_list),
 		"mam_tail_animated" = "None",
 		"xenodorsal" 		= "Standard",
 		"xenohead" 			= "Standard",
@@ -150,6 +170,7 @@
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
 		"balls_size"		= BALLS_SIZE_DEF,
+		"balls_shape"		= "Pair",
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
@@ -167,7 +188,7 @@
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
-		"breasts_shape"		= pick(GLOB.breasts_shapes_list),
+		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
@@ -276,7 +297,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = 0)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -309,7 +330,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)

@@ -74,6 +74,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -210,10 +211,11 @@
 	icon_state = "knight_green"
 	item_state = "knight_green"
 	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
@@ -242,6 +244,7 @@
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 //LightToggle
 

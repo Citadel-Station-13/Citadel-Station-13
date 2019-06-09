@@ -211,8 +211,6 @@
 	else
 		return FALSE
 
-
-
 /datum/action/innate/cult/spin2win
 	name = "Geometer's Fury"
 	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
@@ -267,7 +265,6 @@
 		return
 	. = ..()
 
-
 /obj/item/clothing/head/culthood
 	name = "ancient cultist hood"
 	icon_state = "culthood"
@@ -294,7 +291,6 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 
-
 /obj/item/clothing/head/culthood/alt
 	name = "cultist hood"
 	desc = "An armored hood worn by the followers of Nar'Sie."
@@ -313,15 +309,15 @@
 /obj/item/clothing/suit/cultrobes/alt/ghost
 	item_flags = NODROP | DROPDEL
 
-
 /obj/item/clothing/head/magus
 	name = "magus helm"
 	icon_state = "magus"
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	mutantrace_variation = MUTANTRACE_VARIATION
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
@@ -528,7 +524,12 @@
 			"The shuttle's custodian was found washing the windows with their own blood.",
 			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh.",
 			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine.",
+			"An assistant was found on the shuttle.",
+			"A medical officer was found pouring out several blood bags onto the shuttle's instrument panels, before slitting both wrists open and screaming 'DEATH IS NOT THE END'.",
+			"A fuel technician was found replacing the fuel with his blood.",
+			"All the lights aboard the shuttle turned a crimson red before blowing out..",
 			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh.",
+			"An engine turbine began leaking blood when it was powered on.",
 			"The shuttle's transponder is emitting the encoded message 'FEAR THE OLD BLOOD' in lieu of its assigned identification signal.")
 		var/message = pick_n_take(curses)
 		message += " The shuttle will be delayed by three minutes."
@@ -989,6 +990,6 @@
 							continue
 						throw_at(Next, 3, 1, D.thrower)
 						return
-					throw_at(D.thrower, 7, 1, D.thrower)
+					throw_at(D.thrower, 7, 1, null)
 	else
 		..()

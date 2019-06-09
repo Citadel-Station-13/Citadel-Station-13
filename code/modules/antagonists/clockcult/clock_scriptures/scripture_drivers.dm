@@ -2,6 +2,32 @@
 // DRIVERS //
 /////////////
 
+//Stargazer: Creates a stargazer, a cheap power generator that utilizes starlight.
+/datum/clockwork_scripture/create_object/stargazer
+	descname = "Generates Power From Starlight"
+	name = "Stargazer"
+	desc = "Forms a weak structure that generates power every second while within three tiles of starlight."
+	invocations = list("Capture their inferior light for us!")
+	channel_time = 50
+	power_cost = 200
+	object_path = /obj/structure/destructible/clockwork/stargazer
+	creator_message = "<span class='brass'>You form a stargazer, which will generate power near starlight.</span>"
+	observer_message = "<span class='warning'>A large lantern-shaped machine forms!</span>"
+	usage_tip = "For obvious reasons, make sure to place this near a window or somewhere else that can see space!"
+	tier = SCRIPTURE_DRIVER
+	one_per_tile = TRUE
+	primary_component = HIEROPHANT_ANSIBLE
+	sort_priority = 1
+	quickbind = TRUE
+	quickbind_desc = "Creates a stargazer, which generates power when near starlight."
+
+/datum/clockwork_scripture/create_object/stargazer/check_special_requirements()
+	var/area/A = get_area(invoker)
+	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
+		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
+		return
+	return ..()
+	
 
 //Integration Cog: Creates an integration cog that can be inserted into APCs to passively siphon power.
 /datum/clockwork_scripture/create_object/integration_cog
@@ -18,7 +44,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 1
+	sort_priority = 2
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates an integration cog, which can be used to siphon power from an open APC."
@@ -39,7 +65,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 2
+	sort_priority = 3
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transgression, which will briefly stun and slow the next non-Servant to cross it."
 
@@ -59,7 +85,7 @@
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 3
+	sort_priority = 4
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Submission, which will convert non-Servants that remain on it."
 
@@ -76,7 +102,7 @@
 	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
 	tier = SCRIPTURE_DRIVER
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 4
+	sort_priority = 5
 	slab_overlay = "volt"
 	ranged_type = /obj/effect/proc_holder/slab/kindle
 	ranged_message = "<span class='brass'><i>You charge the clockwork slab with divine energy.</i>\n\
@@ -100,7 +126,7 @@
 	usage_tip = "The manacles are about as strong as zipties, and break when removed."
 	tier = SCRIPTURE_DRIVER
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 5
+	sort_priority = 6
 	ranged_type = /obj/effect/proc_holder/slab/hateful_manacles
 	slab_overlay = "hateful_manacles"
 	ranged_message = "<span class='neovgre_small'><i>You charge the clockwork slab with divine energy.</i>\n\
@@ -124,7 +150,7 @@
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. All stuns absorbed will affect you when disabled."
 
@@ -156,7 +182,7 @@
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "compromise"
@@ -180,7 +206,7 @@
 	usage_tip = "This can't be used while on Reebe, for obvious reasons."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 8
+	sort_priority = 9
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
@@ -238,7 +264,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 9
+	sort_priority = 10
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
@@ -259,6 +285,6 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 10
+	sort_priority = 11
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
