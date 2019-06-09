@@ -49,7 +49,7 @@
 	var/event = ""
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/arcade/proc/kprizevend(mob/user)
+/obj/machinery/computer/arcade/proc/datingsim/kprizevend(mob/user)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
@@ -140,7 +140,7 @@
 
 		else if (href_list["flirt"])
 			blocked = TRUE
-			var/flirting = 1
+//			var/flirting = 1
 
 			updateUsrDialog()
 			sleep(10)
@@ -277,8 +277,9 @@
 		temp = "You went broke, asshole! You beg [date_name] for money!"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		var/loselove = rand(10,50)
+		datelove -= loselove
 //Random events!
-	events = pickweight(devents)
+	var/events = pickweight(devents)
 
 
 //end random events
