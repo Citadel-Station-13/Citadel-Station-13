@@ -12,6 +12,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SPAM_DELAY		    2 MINUTES
 #define PDA_STANDARD_OVERLAYS list("pda-r", "blank", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay")
 
+//pda icon overlays list defines
+#define PDA_OVERLAY_ALERT		1
+#define PDA_OVERLAY_SCREEN		2
+#define PDA_OVERLAY_ID			3
+#define PDA_OVERLAY_ITEM		4
+#define PDA_OVERLAY_LIGHT		5
+#define PDA_OVERLAY_PAI			6
+
 /obj/item/pda
 	name = "\improper PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
@@ -1119,3 +1127,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SPAM_DELAY
 #undef PDA_STANDARD_OVERLAYS
 
+#undef PDA_OVERLAY_ALERT
+#undef PDA_OVERLAY_SCREEN
+#undef PDA_OVERLAY_ID
+#undef PDA_OVERLAY_ITEM
+#undef PDA_OVERLAY_LIGHT
+#undef PDA_OVERLAY_PAI
