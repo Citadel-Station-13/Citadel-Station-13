@@ -92,7 +92,7 @@
 		user.dropItemToGround(src)
 
 /obj/item/gun/ballistic/automatic/pistol/sec
-	name = "standard .22 pisto .22 pistol"
+	name = "standard .22 pistol"
 	desc = "A small, easily concealable .22 handgun, mass made for law enforcement. Has a threaded barrel for suppressors."
 	icon_state = "secguncomp"
 	w_class = WEIGHT_CLASS_SMALL
