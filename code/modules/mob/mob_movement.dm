@@ -8,7 +8,7 @@
 	if(ismob(mover))
 		if (mover in buckled_mobs)
 			return TRUE
-	return (!mover.density || !density || lying)
+	return (!mover.density || !density || lying || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
 
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm

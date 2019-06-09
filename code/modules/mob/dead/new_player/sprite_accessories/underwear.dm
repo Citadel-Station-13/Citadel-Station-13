@@ -78,7 +78,7 @@
 	name = "Boxer Briefs - Black"
 	icon_state = "boxer_briefs_black"
 
-/datum/sprite_accessory/underwear/female_pinkalt
+/datum/sprite_accessory/underwear/female_pink
 	name = "Boxer Briefs - Pink"
 	icon_state = "boxer_briefs_pink"
 
@@ -94,10 +94,6 @@
 /datum/sprite_accessory/underwear/female_black
 	name = "Panties - Black"
 	icon_state = "panties_black"
-
-/datum/sprite_accessory/underwear/female_pink
-	name = "Panties - Pink"
-	icon_state = "panties_pink"
 
 /datum/sprite_accessory/underwear/female_blue
 	name = "Panties - Blue"

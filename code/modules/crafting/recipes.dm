@@ -558,6 +558,14 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bonebag
+	name = "Bone Satchel"
+	result = /obj/item/storage/backpack/satchel/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 3,
+				/obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
 	result = /obj/item/bikehorn/golden
@@ -746,10 +754,10 @@
 
 /datum/crafting_recipe/paperwork
 	name = "Filed Paper Work"
-	result =  /obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
-	time = 90 //Takes time for people to file and complete paper work!
+	result =  /obj/item/folder/paperwork_correct
+	time = 60 //Takes time for people to file and complete paper work!
 	reqs = list(/obj/item/pen = 1,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork = 2)
+					/obj/item/folder/paperwork = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/ghettojetpack
