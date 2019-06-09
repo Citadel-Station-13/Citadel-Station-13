@@ -49,7 +49,7 @@
 	var/event = ""
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/arcade/proc/datingsim/kprizevend(mob/user)
+/obj/machinery/computer/arcade/datingsim/proc/kprizevend(mob/user)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
