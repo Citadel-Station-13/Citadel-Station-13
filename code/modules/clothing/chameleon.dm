@@ -227,7 +227,7 @@
 	target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
-	if(!istype(picked_item) || !istype(target, /obj/item/pda))
+	if(!istype(target, /obj/item/pda))
 		return ..()
 	var/obj/item/pda/P = target
 	P.icon = initial(picked_item.icon)

@@ -187,7 +187,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft."
 	silent = TRUE //Quiet in the library!
-	overlays_offsets = list(PDA_SKIN_CLASSIC = list(-3,0))
+	overlays_offsets = list(RESKIN_SUFFIX_CLASSIC = list(-3,0))
 	overlays_x_offset = -3
 
 /obj/item/pda/clear

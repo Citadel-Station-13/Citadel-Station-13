@@ -264,9 +264,11 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
 //pda icon reskins
 #define PDA_SKIN_CLASSIC "Classic"
+#define RESKIN_SUFFIX_CLASSIC ""
 #define PDA_SKIN_ALT "Holographic"
+#define RESKIN_SUFFIX_ALT "_alt"
 
-GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = "", PDA_SKIN_ALT = "_alt"))
+GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = RESKIN_SUFFIX_CLASSIC, PDA_SKIN_ALT = RESKIN_SUFFIX_ALT))
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"

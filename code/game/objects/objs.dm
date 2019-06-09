@@ -247,9 +247,8 @@
 	to_chat(M, dat)
 
 	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(!QDELETED(src) && choice && (!current_skin || always_reskinnable) && !M.incapacitated() && in_range(M,src))
-		if(!unique_reskin[choice] || unique_reskin[choice] == current_skin)
-			return
-		current_skin = choice
-		icon_state = unique_reskin[choice]
-		to_chat(M, "[src] is now skinned as '[choice]'.")
+	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
+		return
+	current_skin = choice
+	icon_state = unique_reskin[choice]
+	to_chat(M, "[src] is now skinned as '[choice]'.")

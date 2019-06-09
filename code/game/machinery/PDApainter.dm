@@ -110,13 +110,10 @@
 	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
-	var/list/P = input(user, "Select the new skin!", "PDA Painting") as null|anything in colorlist
-	if(!P)
+	var/choice = input(user, "Select the new skin!", "PDA Painting") as null|anything in colorlist
+	if(!choice || !storedpda || !in_range(src, user))
 		return
-	if(!in_range(src, user))
-		return
-	if(!storedpda)//is the pda still there?
-		return
+	var/list/P = colorlist[choice]
 	storedpda.base_skin = P[1]
 	storedpda.desc = P[2]
 	storedpda.overlays_offsets = P[3]

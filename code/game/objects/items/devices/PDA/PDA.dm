@@ -126,19 +126,19 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/reskin_obj(mob/M)
 	if(!LAZYLEN(GLOB.pda_reskins))
 		return
-	var/dat = "<b>Reskin options for [name]:</b>\n"
+	var/dat = "<b>Reskin options for [name]:</b>"
 	for(var/V in GLOB.pda_reskins)
-		var/output = icon2html(src, M, "[base_skin][unique_reskin[V]]")
-		dat += "[V]: <span class='reallybig'>[output]</span>\n"
+		var/output = icon2html(icon, M, "[base_skin][GLOB.pda_reskins[V]]")
+		dat += "\n[V]: <span class='reallybig'>[output]</span>"
 	to_chat(M, dat)
 
-	var/choice = input(M,"Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
-	if(!QDELETED(src) && choice && !M.incapacitated() && in_range(M,src))
-		if(unique_reskin[choice] == current_skin || isnull(unique_reskin[choice]))
-			return
-		current_skin = unique_reskin[choice]
-		set_new_overlays_offsets()
-		update_icon()
+	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
+	var/new_skin = GLOB.pda_reskins[choice]
+	if(QDELETED(src) || isnull(new_skin) || new_skin == current_skin || M.incapacitated() || !in_range(M,src))
+		return
+	current_skin = new_skin
+	set_new_overlays_offsets()
+	update_icon()
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays_offsets()
