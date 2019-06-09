@@ -45,7 +45,7 @@
 		linked_organ = (owner.getorganslot("penis"))
 		if(linked_organ)
 			linked_organ.linked_organ = src
-			src.size = linked_organ.size
+			size = linked_organ.size
 
 	else
 		if(linked_organ)
