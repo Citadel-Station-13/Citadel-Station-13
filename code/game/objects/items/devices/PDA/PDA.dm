@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/dat = id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
 	if(inserted_item && (!isturf(loc)))
 		dat += "\n<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
-	if(GLOB.pda_reskins)
+	if(LAZYLEN(GLOB.pda_reskins))
 		dat += "\n<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
 	to_chat(user, dat)
 
