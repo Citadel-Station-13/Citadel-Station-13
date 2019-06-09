@@ -21,3 +21,10 @@
 
 /obj/item/implant/uplink/precharged
 	starting_tc = 10
+
+/obj/item/implanter/uplink/precharged/mining
+	name = "implanter (precharged mining uplink)"
+	imp_type = /obj/item/implant/uplink/precharged/mining
+
+/obj/item/implant/uplink/precharged/mining
+	starting_tc = 5
