@@ -240,7 +240,7 @@
 	//CIT CHANGES - rest and combat mode buttons
 	using = new /obj/screen/restbutton()
 	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.screen_loc = ui_restbutton
+	using.screen_loc = ui_pull_resist
 	static_inventory += using
 
 	using = new /obj/screen/combattoggle()
