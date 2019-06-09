@@ -31,6 +31,10 @@
 	name = "Knee-high (Striped)"
 	icon_state = "striped_knee"
 
+/datum/sprite_accessory/socks/dotted_knee
+	name = "Knee-high (Dotted)"
+	icon_state = "dotted_knee"
+
 /datum/sprite_accessory/socks/thin_knee
 	name = "Knee-high (Thin)"
 	icon_state = "thin_knee"
@@ -51,6 +55,10 @@
 	name = "Normal (White)"
 	icon_state = "white_norm"
 
+/datum/sprite_accessory/socks/dotted_norm
+	name = "Normal (Dotted)"
+	icon_state = "dotted_norm"
+
 /datum/sprite_accessory/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
@@ -62,6 +70,10 @@
 /datum/sprite_accessory/socks/white_short
 	name = "Short (White)"
 	icon_state = "white_short"
+
+/datum/sprite_accessory/socks/dotted_short
+	name = "Short (Dotted)"
+	icon_state = "dotted_short"
 
 /datum/sprite_accessory/socks/black_thigh
 	name = "Thigh-high (Black)"
@@ -82,6 +94,10 @@
 /datum/sprite_accessory/socks/striped_thigh
 	name = "Thigh-high (Striped)"
 	icon_state = "striped_thigh"
+
+/datum/sprite_accessory/socks/dotted_thigh
+	name = "Thigh-high (Dotted)"
+	icon_state = "dotted_thigh"
 
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high (Thin)"
