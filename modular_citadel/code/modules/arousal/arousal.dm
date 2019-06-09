@@ -14,6 +14,10 @@
 
 	var/saved_underwear = ""//saves their underwear so it can be toggled later
 	var/saved_undershirt = ""
+	var/saved_socks = ""
+	var/hidden_underwear = FALSE
+	var/hidden_undershirt = FALSE
+	var/hidden_socks = FALSE
 
 /mob/living/carbon/human/New()
 	..()
@@ -29,6 +33,33 @@
 	var/list/femcum_fluids = list("femcum")
 
 //Mob procs
+/mob/living/carbon/human/proc/underwear_toggle()
+	set name = "Toggle undergarments"
+	set category = "Object"
+	if(ishuman(src))
+		var/mob/living/carbon/human/humz = src
+		var/confirm = input(src, "Select what part of your form to alter", "Undergarment Toggling", "Cancel") in list("Top", "Bottom", "Socks", "All", "Cancel")
+		if(confirm == "Top")
+			humz.hidden_undershirt = !humz.hidden_undershirt
+
+		if(confirm == "Bottom")
+			humz.hidden_underwear = !humz.hidden_underwear
+
+		if(confirm == "Socks")
+			humz.hidden_socks = !humz.hidden_socks
+
+		if(confirm == "All")
+			humz.hidden_undershirt = !humz.hidden_undershirt
+			humz.hidden_underwear = !humz.hidden_underwear
+			humz.hidden_socks = !humz.hidden_socks
+
+		if(confirm == "Cancel")
+			return
+		src.update_body()
+
+	else
+		to_chat(src, "Humans only. How the fuck did you get this verb anyway.")
+
 /mob/living/proc/handle_arousal()
 
 
