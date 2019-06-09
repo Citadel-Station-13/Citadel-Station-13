@@ -851,7 +851,7 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-	if(user == target && can_piggyback(target) && pulling == target && (HAS_TRAIT(src, TRAIT_PACIFIST) || grab_state >= GRAB_AGGRESSIVE) && stat == CONSCIOUS)
+	if(user == target && can_piggyback(target) && pulling == target && (HAS_TRAIT(src, TRAIT_PACIFISM) || grab_state >= GRAB_AGGRESSIVE) && stat == CONSCIOUS)
 		buckle_mob(target,TRUE,TRUE)
 	. = ..()
 
