@@ -277,6 +277,12 @@
 			M.visible_message("<span class='notice'>[M] gives [H] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [H] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+			if(M.has_trait(TRAIT_FRIENDLY))
+				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+				if (mood.sanity >= SANITY_GREAT)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+				else if (mood.sanity >= SANITY_DISTURBED)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 			if(H.dna.species.can_wag_tail(H))
 				if("tail_human" in pref_species.default_features)
 					if(H.dna.features["tail_human"] == "None")
@@ -306,6 +312,12 @@
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+			if(M.has_trait(TRAIT_FRIENDLY))
+				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+				if (mood.sanity >= SANITY_GREAT)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+				else if (mood.sanity >= SANITY_DISTURBED)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
