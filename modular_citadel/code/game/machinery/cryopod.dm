@@ -291,10 +291,13 @@
 			var/mob/M = i
 			M.forceMove(drop_location())
 
-	var/list/obj/item/occupant_items = list() | mob_occupant.get_equipped_items(TRUE) | mob_occupant.held_items		//the list is to ensure that even if the first one is null for some reason this works.
+	var/list/obj/item/occupant_items = list() | mob_occupant.get_equipped_items(TRUE)	//the list is to ensure that even if the first one is null for some reason this works.
 	var/list/obj/item/stored = list()
 	var/atom/target_store = (control_computer?.allow_items && control_computer) || src		//the double control computer check makes it return the control computer.
 	var/drop_to_ground = !istype(target_store, /obj/machinery/computer/cryopod)
+
+	for(var/obj/item/I in mob_occupant.held_items)
+		occupant_items += I
 
 	for(var/i in occupant_items)
 		var/obj/item/I = i
