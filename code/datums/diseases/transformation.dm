@@ -63,11 +63,11 @@
 		if(istype(new_mob))
 			if(bantype && jobban_isbanned(affected_mob, bantype))
 				replace_banned_player(new_mob)
-				new_mob.a_intent = INTENT_HARM
-				if(affected_mob.mind)
-					affected_mob.mind.transfer_to(new_mob)
-				else
-					affected_mob.transfer_key(new_mob)
+			new_mob.a_intent = INTENT_HARM
+			if(affected_mob.mind)
+				affected_mob.mind.transfer_to(new_mob)
+			else
+				affected_mob.transfer_key(new_mob)
 
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
