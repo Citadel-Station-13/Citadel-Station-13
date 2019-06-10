@@ -79,7 +79,7 @@ H.put_in_hands(mine)
 	.  = ..()
 	if(!iscarbon(hit_atom))
 		return
-		var/mob/living/carbon/M = hit_atom
+	var/mob/living/carbon/M = hit_atom
 	if(!.)
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		visible_message("<span class='danger'>[M] explodes violently into gore!</span>")
