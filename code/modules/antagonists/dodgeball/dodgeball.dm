@@ -66,7 +66,7 @@
 //	if(!GLOB.doomballer)
 //		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 //	sword.pickup(H) //For the stun shielding
-H.put_in_hands(mine)
+	H.put_in_hands(mine)
 
 
 /obj/item/toy/beach_ball/doomball
