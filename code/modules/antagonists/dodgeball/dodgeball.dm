@@ -84,7 +84,7 @@ H.put_in_hands(mine)
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		visible_message("<span class='danger'>[M] explodes violently into gore!</span>")
 		M.gib()
-	return
+		return
 	var/mob/living/carbon/H = throwing.thrower
 	if(H)
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
