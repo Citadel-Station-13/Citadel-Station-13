@@ -40,7 +40,8 @@
 
 /obj/item/storage/briefcase/lawyer/family 
 	name = "battered  briefcase"
-	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. The corners are modified with metal trim adding in weight!"
+	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. Comes with an added belt clip!"
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/briefcase/lawyer/family/PopulateContents()
 	new /obj/item/stamp/law(src)
