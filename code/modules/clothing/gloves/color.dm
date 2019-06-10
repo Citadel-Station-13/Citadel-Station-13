@@ -32,15 +32,17 @@
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
-/obj/item/clothing/gloves/color/yellow/cut			
+/obj/item/clothing/gloves/cut			
 	desc = "These gloves would protect the wearer from electric shock.. if the fingers were covered."
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	item_state = "yglovescut"
 	siemens_coefficient = 1
 	permeability_coefficient = 1
+	resistance_flags = NONE
+	transfer_prints = TRUE
 
-/obj/item/clothing/gloves/color/yellow/cut/family
+/obj/item/clothing/gloves/cut/family
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 	name = "fingerless insulated gloves"
 
@@ -49,7 +51,7 @@
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/color/yellow/cut(drop_location())
+			new /obj/item/clothing/gloves/cut(drop_location())
 			qdel(src)
 	..()
 
@@ -58,7 +60,7 @@
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			I.play_tool_sound(src)
-			new /obj/item/clothing/gloves/color/yellow/cut(drop_location())
+			new /obj/item/clothing/gloves/cut(drop_location())
 			qdel(src)
 	..()
 
