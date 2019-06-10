@@ -860,6 +860,13 @@
 	icon_state = "flynn"
 	item_state = "flynn"
 
+/obj/item/toy/plush/mammal/dog/fritz
+	icon_state = "fritz"
+	item_state = "fritz"
+	attack_verb = list("barked", "boofed", "shotgun'd")
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
 	desc = "An adorable stuffed toy that resembles a feline."
