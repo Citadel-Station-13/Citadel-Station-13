@@ -260,16 +260,16 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = 1)
-	if(key)
-		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
-			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
-			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.can_reenter_round = (can_reenter_corpse && !suiciding)
-			ghost.key = key
-			return ghost
+/mob/proc/ghostize(can_reenter_corpse = TRUE, send_the_signal = TRUE)
+	if(!key || cmptext(copytext(key,1,2),"@") || (send_the_signal && SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse) & COMPONENT_BLOCK_GHOSTING))
+		return //mob has no key, is an aghost or some component hijack.
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+	ghost.can_reenter_corpse = can_reenter_corpse
+	ghost.can_reenter_round = (can_reenter_corpse && !suiciding)
+	transfer_key(ghost, FALSE)
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -348,7 +348,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	mind.current.key = key
+	transfer_key(mind.current, FALSE)
 	return 1
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -631,7 +631,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
-	target.key = key
+	transfer_key(target, FALSE)
 	target.faction = list("neutral")
 	return 1
 

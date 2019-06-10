@@ -133,7 +133,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
-		current_wizard.key = C.key
+		C.transfer_key(current_wizard, FALSE)
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
@@ -274,7 +274,7 @@
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
-				H.key = C.key
+				C.transfer_key(H, FALSE)
 
 			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new
 			S.target_mob = H

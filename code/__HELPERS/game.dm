@@ -479,7 +479,7 @@
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = G_found.key
+	G_found.transfer_key(new_character, FALSE)
 
 	return new_character
 

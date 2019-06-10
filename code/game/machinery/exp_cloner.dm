@@ -52,7 +52,7 @@
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		H.key = C.key
+		C.transfer_key(H)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		H.grab_ghost()

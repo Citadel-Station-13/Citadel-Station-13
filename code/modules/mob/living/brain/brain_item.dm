@@ -34,7 +34,7 @@
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(C)
 		else
-			C.key = brainmob.key
+			brainmob.transfer_key(C)
 
 		QDEL_NULL(brainmob)
 
@@ -64,7 +64,7 @@
 	name = "[L.name]'s brain"
 	if(brainmob)
 		return
-		
+
 	if(!L.mind)
 		return
 	brainmob = new(src)

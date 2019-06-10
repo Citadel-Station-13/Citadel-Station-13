@@ -436,7 +436,10 @@
 //	M.Login()	//wat
 	return
 
-
+/mob/proc/transfer_key(mob/new_mob, send_signal = TRUE)
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob)
+	new_mob.key = key
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"

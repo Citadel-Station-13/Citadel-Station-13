@@ -920,7 +920,7 @@
 		if(mind)
 			mind.transfer_to(G)
 		else
-			G.key = key
+			transfer_key(G)
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()

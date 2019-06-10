@@ -382,7 +382,7 @@
 			mind.active = FALSE
 		mind.transfer_to(R)
 	else if(transfer_after)
-		R.key = key
+		transfer_key(R)
 
 	R.apply_pref_name("cyborg")
 
@@ -425,7 +425,7 @@
 			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
 
 	new_xeno.a_intent = INTENT_HARM
-	new_xeno.key = key
+	transfer_key(new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -457,7 +457,7 @@
 	else
 		new_slime = new /mob/living/simple_animal/slime(loc)
 	new_slime.a_intent = INTENT_HARM
-	new_slime.key = key
+	transfer_key(new_slime)
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	. = new_slime
@@ -465,7 +465,7 @@
 
 /mob/proc/become_overmind(starting_points = 60)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
-	B.key = key
+	transfer_key(B)
 	. = B
 	qdel(src)
 
@@ -485,7 +485,7 @@
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
 	new_corgi.a_intent = INTENT_HARM
-	new_corgi.key = key
+	transfer_key(new_corgi)
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	. = new_corgi
@@ -512,7 +512,7 @@
 	if(mind)
 		mind.transfer_to(new_gorilla)
 	else
-		new_gorilla.key = key
+		transfer_key(new_gorilla)
 	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
 	. = new_gorilla
 	qdel(src)
@@ -542,7 +542,7 @@
 
 	var/mob/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	transfer_key(new_mob)
 	new_mob.a_intent = INTENT_HARM
 
 
@@ -561,7 +561,7 @@
 
 	var/mob/new_mob = new mobpath(src.loc)
 
-	new_mob.key = key
+	transfer_key(new_mob)
 	new_mob.a_intent = INTENT_HARM
 	to_chat(new_mob, "You feel more... animalistic")
 

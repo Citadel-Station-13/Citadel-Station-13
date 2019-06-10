@@ -429,8 +429,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
-		M.ghostize(0)
-		M.key = C.key
+		M.ghostize(FALSE, FALSE)
+		C.transfer_key(M, FALSE)
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")
