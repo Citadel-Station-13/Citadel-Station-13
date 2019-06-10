@@ -52,7 +52,7 @@
 		if("Atmospheric Technician")
 			heirloom_type = /obj/item/extinguisher/mini/family
 		if("Lawyer")
-			heirloom_type = /obj/item/storage/briefcase/lawyer/family
+			heirloom_type = /obj/item/gavelhammer/family
 		if("Janitor")
 			heirloom_type = /obj/item/mop
 		if("Security Officer")
