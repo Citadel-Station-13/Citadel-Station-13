@@ -686,8 +686,8 @@
 		to_chat(user, "[src] is empty.")
 
 /obj/item/storage/belt/sabre/update_icon()
-	icon_state = "sheath"
-	item_state = "sheath"
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
 	if(contents.len)
 		icon_state += "-sabre"
 		item_state += "-sabre"
@@ -698,4 +698,8 @@
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
+	update_icon()
+
+/obj/item/storage/belt/sabre/rapier/PopulateContents()
+	new /obj/item/melee/rapier(src)
 	update_icon()
