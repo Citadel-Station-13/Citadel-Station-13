@@ -124,7 +124,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 		return
 
@@ -222,14 +222,15 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	var/obj/item/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()
 	sparkler = new (src)
+	sparkler.activate_cooldown = 5
 
 /obj/item/melee/baton/cattleprod/baton_stun()
-	if(sparkler.activate())
-		..()
+	sparkler?.activate()
+	. = ..()
 
 #undef STUNBATON_CHARGE_LENIENCY

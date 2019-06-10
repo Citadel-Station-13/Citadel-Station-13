@@ -1,0 +1,4 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - tweak: "The tentacle now directly puts the item in your hands, instead of toggling your throwing and tossing it at you. Tentacles suffer from ranged inaccuracies as if they were guns, I think it's enough of an inconvenience."

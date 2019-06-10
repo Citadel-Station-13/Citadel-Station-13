@@ -33,7 +33,7 @@
 			RV.action.Grant(user)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
-	if(user.has_trait(TRAIT_DEATHCOMA, "changeling"))
+	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling"))
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death

@@ -103,11 +103,11 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		if(!(A_gases[/datum/gas/oxygen] && A_gases[/datum/gas/oxygen][MOLES] >= 16))
+		if(A_gases[/datum/gas/oxygen] >= 16)
 			continue
 		if(A_gases[/datum/gas/plasma])
 			continue
-		if(A_gases[/datum/gas/carbon_dioxide] && A_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
+		if(A_gases[/datum/gas/carbon_dioxide] >= 10)
 			continue
 
 		// Aim for goldilocks temperatures and pressure

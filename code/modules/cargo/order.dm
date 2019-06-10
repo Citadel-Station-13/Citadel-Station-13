@@ -97,12 +97,14 @@
 	return C
 
 //Paperwork for NT
-/obj/item/paper/fluff/jobs/cargo/manifest/paperwork
+/obj/item/folder/paperwork
 	name = "Incomplete Paperwork"
 	desc = "These should've been filled out four months ago! Unfinished grant papers issued by Nanotrasen's finance department. Complete this page for additional funding."
 	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "docs_generic"
 
-/obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
+/obj/item/folder/paperwork_correct
 	name = "Finished Paperwork"
 	desc = "A neat stack of filled-out forms, in triplicate and signed. Is there anything more satisfying? Make sure they get stamped."
 	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "docs_verified"
