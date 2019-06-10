@@ -1264,6 +1264,7 @@
 #include "code\modules\antagonists\disease\disease_disease.dm"
 #include "code\modules\antagonists\disease\disease_event.dm"
 #include "code\modules\antagonists\disease\disease_mob.dm"
+#include "code\modules\antagonists\dodgeball\dodgeball.dm"
 #include "code\modules\antagonists\ert\ert.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
