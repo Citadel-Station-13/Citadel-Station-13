@@ -77,7 +77,6 @@
 
 	return ..()
 
-
 /turf/closed/wall/clockwork/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(heated && the_rcd.canRturf)
 		return ..()
@@ -85,6 +84,19 @@
 /turf/closed/wall/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(heated && the_rcd.canRturf)
 		return ..()
+
+/turf/closed/wall/clockwork/try_destroy(obj/item/I, mob/user, turf/T)
+	if(!heated)
+		return ..()
+	if(!istype(I, /obj/item/pickaxe/drill/jackhammer))
+		return FALSE
+	to_chat(user, "<span class='notice'>You begin to smash though [src]...</span>")
+	if(!do_after(user, 70, TRUE, src))
+		return FALSE
+	I.play_tool_sound(src)
+	visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+	dismantle_wall()
+	return TRUE
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
 	..()

@@ -386,3 +386,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/blackredgold
 	ckeywhitelist = list("ttbnc")
+
+/datum/gear/fritzplush
+	name = "Fritz Plushie"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/mammal/dog/fritz
+	ckeywhitelist = list("analwerewolf")

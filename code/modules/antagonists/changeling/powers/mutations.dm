@@ -344,9 +344,8 @@
 	if(isitem(target))
 		var/obj/item/I = target
 		if(!I.anchored)
-			to_chat(firer, "<span class='notice'>You pull [I] towards yourself.</span>")
-			H.throw_mode_on()
-			I.throw_at(H, 10, 2)
+			to_chat(firer, "<span class='notice'>You pull [I] right into your grasp.</span>")
+			H.put_in_hands(I) //Because throwing it is goofy as fuck and unreliable. If you land the tentacle despite the penalties to accuracy, you should have your reward.
 			. = 1
 
 	else if(isliving(target))

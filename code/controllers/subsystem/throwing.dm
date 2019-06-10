@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
@@ -154,7 +154,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
-		if (AM == thrownthing)
+		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)

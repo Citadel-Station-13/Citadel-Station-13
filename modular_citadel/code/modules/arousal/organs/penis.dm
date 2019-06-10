@@ -5,14 +5,13 @@
 	icon 					= 'modular_citadel/icons/obj/genitals/penis.dmi'
 	zone 					= "groin"
 	slot 					= ORGAN_SLOT_PENIS
-	w_class 				= 3
 	can_masturbate_with 	= TRUE
 	masturbation_verb 		= "stroke"
 	can_climax 				= TRUE
-	fluid_transfer_factor = 0.5
+	fluid_transfer_factor	= 0.5
 	size 					= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 				= 6	//inches
-	var/cached_length //used to detect a change in length
+	var/cached_length			//used to detect a change in length
 	var/girth  				= 0
 	var/girth_ratio 		= COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
@@ -52,15 +51,15 @@
 			string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			icon_state = sanitize_text(string)
 			H.update_genitals()
-
-	icon_state = sanitize_text(string)
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)
 		linked_organ = (owner.getorganslot("testicles"))
 		if(linked_organ)
 			linked_organ.linked_organ = src
+			linked_organ.size = size
 	else
 		if(linked_organ)
 			linked_organ.linked_organ = null

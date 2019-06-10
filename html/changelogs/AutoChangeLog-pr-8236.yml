@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - refactor: "Added unomos, which is basically listmos except gas mixtures only use one single list for handling their gasses. This is a significant performance improvement that also offers a mild memory improvement under normal circumstances."

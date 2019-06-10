@@ -14,7 +14,25 @@
 	pipe_state = "mixer"
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
-
+/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
+	var/area/A = get_area(src)
+	var/turf/T = get_turf(src)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+		on = !on
+		update_icon()
+		investigate_log("Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		return ..()
+		
+/obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
+	var/area/A = get_area(src)
+	var/turf/T = get_turf(src)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
+		target_pressure = MAX_OUTPUT_PRESSURE
+		to_chat(user,"<span class='notice'>You maximize the pressure on the [src].</span>")
+		investigate_log("Pump, [src.name], was maximized by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], was maximized by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		
 /obj/machinery/atmospherics/components/trinary/mixer/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
