@@ -41,6 +41,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"aad" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "aae" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -574,6 +580,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/security/execution/transfer)
+"abz" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "abA" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -100110,7 +100122,7 @@ byf
 byf
 bDb
 bEm
-bEm
+aad
 bEm
 bDb
 bJH
@@ -100121,15 +100133,15 @@ bOx
 bPx
 bJN
 bRT
-bEm
-bEm
-bJN
-bRT
-bEm
+aad
 bEm
 bJN
 bRT
+aad
 bEm
+bJN
+bRT
+aad
 bEm
 bDb
 cfr
@@ -101652,7 +101664,7 @@ bAC
 bBW
 bDb
 bEm
-bEm
+abz
 bEm
 bDb
 cTX
@@ -103205,15 +103217,15 @@ bOx
 bPI
 bJN
 bEm
-bEm
+abz
 bUi
 bJN
 bEm
-bEm
+abz
 bUi
 bJN
 bEm
-bEm
+abz
 bUi
 bDb
 aaf
