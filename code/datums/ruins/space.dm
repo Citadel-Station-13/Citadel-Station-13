@@ -281,3 +281,9 @@
 	suffix = "cloning_facility.dmm"
 	name = "Ancient Cloning Lab"
 	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
+
+/datum/map_template/ruin/space/augmentation
+	id = "augmentationfacility"
+	suffix = "augmentationfacility.dmm"
+	name = "Roboticst Augmentation Facility"
+	description = "A mysterious lab in the depths of space containing robotics supplies and a one use autosurgeon."
