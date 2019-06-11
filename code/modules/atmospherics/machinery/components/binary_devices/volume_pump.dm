@@ -28,16 +28,21 @@ Thus, the two variables affect pump operation are set in New():
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 
+/obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
+	..()
+	to_chat(user,"<span class='notice'>You can hold CTRL and click on it to toggle it on and off.</span>")
+	to_chat(user,"<span class='notice'>You can hold ALT and click on it to maximize its pressure.</span>")
+
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE,))
 		on = !on
 		update_icon()
-		investigate_log("Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+		investigate_log("Volume Pump, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 		return ..()
-		
+
 /obj/machinery/atmospherics/components/binary/volume_pump/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
