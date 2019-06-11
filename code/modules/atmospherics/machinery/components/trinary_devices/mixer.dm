@@ -28,7 +28,7 @@
 		investigate_log("Mixer, [src.name], turned on by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Mixer, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 		return ..()
-
+		
 /obj/machinery/atmospherics/components/trinary/mixer/AltClick(mob/user)
 	var/area/A = get_area(src)
 	var/turf/T = get_turf(src)
