@@ -21,8 +21,6 @@
 
 /datum/ert/amber
 	code = "Amber"
-	leader_role = /datum/antagonist/ert/commander/red
-	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
 
 /datum/ert/red
 	leader_role = /datum/antagonist/ert/commander/red
