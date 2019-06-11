@@ -57141,7 +57141,7 @@
 "lMi" = (
 /obj/machinery/light{
 	dir = 4;
-	step_x = 0
+
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
