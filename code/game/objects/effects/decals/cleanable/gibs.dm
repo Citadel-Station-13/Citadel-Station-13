@@ -7,23 +7,26 @@
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
 	var/body_colors = "e3ba84"	//a default color just in case.
-	var/unique_body = "c"
+
+/obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
-	. = ..()
-	guts()
+	cut_overlays()
+	var/list/guts = list()
+	var/mutable_appearance/blood = new(icon, "[icon_state]")
+	blood.appearance_flags |= RESET_COLOR|KEEP_APART
+	blood.color = blood_DNA_to_color()
+	guts += blood
+	var/mutable_appearance/gibz = new(icon, "[icon_state]-guts")
+	gibz.appearance_flags |= RESET_COLOR|KEEP_APART
+	guts += gibz
+	var/mutable_appearance/gibz2 = new(icon, "[icon_state]c-overlay")
+	gibz2.appearance_flags |= RESET_COLOR|KEEP_APART
+	gibz2.color = body_colors
+	guts += gibz2
 
-/obj/effect/decal/cleanable/blood/gibs/proc/guts()
-	if(gib_overlay)
-		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
-		var/image/gibz2 = new(icon, icon_state + "[unique_body]-overlay")
-		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
-		gibz2.color = body_colors
-		icon = blood
-		cut_overlays()
-		add_overlay(gibz)
-		add_overlay(gibz2)
+	add_overlay(guts)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -107,20 +110,6 @@
 /obj/effect/decal/cleanable/blood/gibs/human/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
-	update_icon()
-
-/obj/effect/decal/cleanable/blood/gibs/human/guts()
-	if(gib_overlay)
-		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
-		var/image/gibz2 = new(icon, icon_state + "[unique_body]-overlay")
-		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
-		gibz2.color = body_colors
-		icon = blood
-		cut_overlays()
-		add_overlay(gibz)
-		add_overlay(gibz2)
-
 
 /obj/effect/decal/cleanable/blood/gibs/human/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
@@ -150,24 +139,6 @@
 /obj/effect/decal/cleanable/blood/gibs/human/lizard
 	body_colors = "117720"
 
-/obj/effect/decal/cleanable/blood/gibs/human/lizard/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	reagents.add_reagent("liquidgibs", 5)
-	update_icon()
-
-/obj/effect/decal/cleanable/blood/gibs/human/lizard/guts()
-	if(gib_overlay)
-		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/icon/gibz = new(icon, icon_state + "-overlay")
-		var/image/gibz2 = new(icon, icon_state + "[unique_body]-overlay")
-		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
-		gibz2.color = body_colors
-		icon = blood
-		cut_overlays()
-		add_overlay(gibz)
-		add_overlay(gibz2)
-
-
 /obj/effect/decal/cleanable/blood/gibs/human/lizard/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 	gib_overlay = TRUE
@@ -195,24 +166,16 @@
 // Slime Gibs
 /obj/effect/decal/cleanable/blood/gibs/slime
 	desc = "They look gooey and gruesome."
-	unique_body = "c"
-	body_colors = "00fff"
 
 /obj/effect/decal/cleanable/blood/gibs/slime/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidslimegibs", 5)
-	update_icon()
-	guts()
-
-/obj/effect/decal/cleanable/blood/gibs/slime/guts()
+/*
+/obj/effect/decal/cleanable/blood/gibs/slime/update_icon()
 	if(gib_overlay)
-		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/image/gibz = new(icon, icon_state + "[unique_body]-overlay")
-		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
+		var/image/gibz = new(icon, icon_state + "c-overlay")
 		gibz.color = body_colors
-		icon = blood
-		cut_overlays()
-		add_overlay(gibz)
+		add_overlay(gibz) */
 
 /obj/effect/decal/cleanable/blood/gibs/slime/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
@@ -240,34 +203,26 @@
 
 /obj/effect/decal/cleanable/blood/gibs/synth
 	desc = "They look sludgy and disgusting."
-	unique_body = "r"
 
 /obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidsyntheticgibs", 5)
-	update_icon()
-	guts()
 
 //IPCs
 /obj/effect/decal/cleanable/blood/gibs/ipc
 	desc = "They look sharp yet oozing."
-	unique_body = "r"
 	body_colors = "00ff00"
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidoilgibs", 5)
-	update_icon()
-	guts()
 
-/obj/effect/decal/cleanable/blood/gibs/ipc/guts()
+/obj/effect/decal/cleanable/blood/gibs/ipc/update_icon()
 	if(gib_overlay)
 		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/image/gibz = new(icon, icon_state + "[unique_body]-overlay")
+		var/image/gibz = new(icon, icon_state + "r-overlay")
 		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
-		gibz.color = body_colors
-		icon = blood
-		cut_overlays()
+		gibz.appearance_flags = RESET_COLOR
 		add_overlay(gibz)
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/up
@@ -293,12 +248,3 @@
 /obj/effect/decal/cleanable/blood/gibs/ipc/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
 	gib_overlay = TRUE
-
-/obj/effect/decal/cleanable/blood/gibs/synth
-	desc = "They look sludgy and disgusting."
-
-/obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
-	reagents.add_reagent("liquidsyntheticgibs", 5)
-	update_icon()
-	guts()
