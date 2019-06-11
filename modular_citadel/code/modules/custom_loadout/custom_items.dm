@@ -49,6 +49,66 @@
 	item_color = "steele"
 	medaltype = "medal-silver"
 
+/obj/item/toy/sword/darksabre
+	name = "Kiara's Sabre"
+	desc = "This blade looks as dangerous as its owner."
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "darksabre"
+	item_state = "darksabre"
+	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
+	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("attacked", "struck", "hit")
+
+
+/obj/item/storage/belt/sabre/darksabre
+	name = "Ornate Sheathe"
+	desc = "An ornate and rather sinister looking sabre sheathe."
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "darksheath"
+	item_state = "darksheath"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
+		/obj/item/toy/sword/darksabre
+		))
+
+/obj/item/storage/belt/sabre/darksabre/update_icon()
+	icon_state = "darksheath"
+	item_state = "darksheath"
+	if(contents.len)
+		icon_state += "-darksabre"
+		item_state += "-darksabre"
+	if(loc && isliving(loc))
+		var/mob/living/L = loc
+		L.regenerate_icons()
+	..()
+
+/obj/item/storage/belt/sabre/darksabre/PopulateContents()
+	new /obj/item/toy/sword/darksabre(src)
+	update_icon()
+
+/obj/item/clothing/suit/armor/vest/darkcarapace
+	name = "Dark Armor"
+	desc = "A dark, non-functional piece of armor sporting a red and black finish."
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "darkcarapace"
+	item_state = "darkcarapace"
+	blood_overlay_type = "armor"
+	dog_fashion = /datum/dog_fashion/back
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+
 /obj/item/lighter/gold
 	name = "\improper Engraved Zippo"
 	desc = "A shiny and relatively expensive zippo lighter. There's a small etched in verse on the bottom that reads, 'No Gods, No Masters, Only Man.'"
@@ -307,51 +367,6 @@
 		if(prob(5) && H.hallucination < 15)
 			H.hallucination += 10
 
-/obj/item/toy/sword/darksabre
-	name = "Kiara's Sabre"
-	desc = "This blade looks as dangerous as its owner."
-	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	icon_state = "darksabre"
-	item_state = "darksabre"
-	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
-	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("attacked", "struck", "hit")
-
-
-/obj/item/storage/belt/sabre/darksabre
-	name = "Ornate Sheathe"
-	desc = "An ornate and rather sinister looking sabre sheathe."
-	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	icon_state = "darksheath"
-	item_state = "darksheath"
-	w_class = WEIGHT_CLASS_BULKY
-
-/obj/item/storage/belt/sabre/darksabre/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 1
-	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.can_hold = typecacheof(list(
-		/obj/item/toy/sword/darksabre
-		))
-
-/obj/item/clothing/suit/armor/vest/darkcarapace
-	name = "Dark Armor"
-	desc = "A dark, non-functional piece of armor sporting a red and black finish."
-	icon = 'icons/obj/custom.dmi'
-	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	icon_state = "darkcarapace"
-	item_state = "darkcarapace"
-	blood_overlay_type = "armor"
-	dog_fashion = /datum/dog_fashion/back
-	mutantrace_variation = NO_MUTANTRACE_VARIATION
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-
-
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
 	desc = "This cloak doesn't seem too special."
@@ -439,3 +454,34 @@
 	icon_state = "moveralls"
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
+/obj/item/clothing/suit/hooded/cloak/zuliecloak
+	name = "Project: Zul-E"
+	desc = "A standard version of a prototype cloak given out by Nanotrasen higher ups. It's surprisingly thick and heavy for a cloak despite having most of it's tech stripped. It also comes with a bluespace trinket which calls it's accompanying hat onto the user. A worn inscription on the inside of the cloak reads 'Fleuret' ...the rest is faded away."
+	icon_state = "zuliecloak"
+	item_state = "zuliecloak"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
+	body_parts_covered = CHEST|GROIN|ARMS
+	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/hooded/cloakhood/zuliecloak
+	name = "NT Special Issue"
+	desc = "This hat is unquestionably the best one, bluespaced to and from CentComm. It smells of Fish and Tea with a hint of antagonism"
+	icon_state = "zuliecap"
+	item_state = "zuliecap"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	flags_inv = HIDEEARS|HIDEHAIR
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/blackredgold
+	name = "Multicolor Coat"
+	desc = "An oddly special looking coat with black, red, and gold"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "redgoldjacket"
+	item_state = "redgoldjacket"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION

@@ -516,10 +516,10 @@
 	name = "emergency space suits"
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
 	anchored = TRUE
-	density = FALSE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
-	var/unlocked = FALSE
+	integrity_failure = 100
+	component_type = /datum/component/storage/concrete/emergency
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
@@ -534,26 +534,6 @@
 	new /obj/item/pickaxe/emergency(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/storage/toolbox/emergency(src)
-
-/obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
-	if (can_interact(user))
-		return ..()
-
-/obj/item/storage/pod/attack_hand(mob/user)
-	if (can_interact(user))
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
-	return TRUE
-
-/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(can_interact(usr))
-		return ..()
-
-/obj/item/storage/pod/can_interact(mob/user)
-	if(!..())
-		return FALSE
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
-		return TRUE
-	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"

@@ -1,25 +1,26 @@
 /obj/item/organ/genital
 	color = "#fcccb3"
-	var/shape = "human"
-	var/sensitivity = 1
-	var/list/genital_flags = list()
-	var/can_masturbate_with = FALSE
-	var/masturbation_verb = "masturbate"
-	var/can_climax = FALSE
-	var/fluid_transfer_factor = 0.0 //How much would a partner get in them if they climax using this?
-	var/size = 2 //can vary between num or text, just used in icon_state strings
-	var/fluid_id = null
-	var/fluid_max_volume = 50
-	var/fluid_efficiency = 1
-	var/fluid_rate = 1
-	var/fluid_mult = 1
-	var/producing = FALSE
-	var/aroused_state = FALSE //Boolean used in icon_state strings
-	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
+	w_class 					= WEIGHT_CLASS_NORMAL
+	var/shape					= "human"
+	var/sensitivity				= AROUSAL_START_VALUE
+	var/list/genital_flags		= list()
+	var/can_masturbate_with 	= FALSE
+	var/masturbation_verb		= "masturbate"
+	var/can_climax				= FALSE
+	var/fluid_transfer_factor	= 0.0 //How much would a partner get in them if they climax using this?
+	var/size					= 2 //can vary between num or text, just used in icon_state strings
+	var/fluid_id				= null
+	var/fluid_max_volume		= 50
+	var/fluid_efficiency		= 1
+	var/fluid_rate				= 1
+	var/fluid_mult				= 1
+	var/producing				= FALSE
+	var/aroused_state			= FALSE //Boolean used in icon_state strings
+	var/aroused_amount			= 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 	var/obj/item/organ/genital/linked_organ
-	var/through_clothes = FALSE
-	var/internal 		= FALSE
-	var/hidden			= FALSE
+	var/through_clothes			= FALSE
+	var/internal				= FALSE
+	var/hidden					= FALSE
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
@@ -92,7 +93,7 @@
 
 	var/list/genital_list = list()
 	for(var/obj/item/organ/O in internal_organs)
-		if(istype(O, /obj/item/organ/genital))
+		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
 			if(!G.internal)
 				genital_list += G
@@ -110,10 +111,13 @@
 
 
 /obj/item/organ/genital/proc/update_size()
+	return
 
 /obj/item/organ/genital/proc/update_appearance()
+	return
 
 /obj/item/organ/genital/proc/update_link()
+	return
 
 /obj/item/organ/genital/proc/remove_ref()
 	if(linked_organ)
@@ -130,21 +134,21 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
-	if (NOGENITALS in dna.species.species_traits)
-		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
+	if (NOGENITALS in dna.species.species_traits)
+		return
 	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
-	if(dna.features["has_breasts"])
-		give_breasts()
 	if(dna.features["has_vag"])
 		give_vagina()
 	if(dna.features["has_womb"])
 		give_womb()
 	if(dna.features["has_balls"])
 		give_balls()
+	if(dna.features["has_breasts"]) // since we have multi-boobs as a thing, we'll want to at least draw over these. but not over the pingas.
+		give_breasts()
 	if(dna.features["has_cock"])
 		give_penis()
 	if(dna.features["has_ovi"])
@@ -162,7 +166,7 @@
 		P.Insert(src)
 		if(P)
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				P.color = skintone2hex(skin_tone)
+				P.color = "#[skintone2hex(skin_tone)]"
 			else
 				P.color = "#[dna.features["cock_color"]]"
 			P.length = dna.features["cock_length"]
@@ -178,13 +182,18 @@
 	if(!getorganslot("testicles"))
 		var/obj/item/organ/genital/testicles/T = new
 		T.Insert(src)
-//		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-//			T.color = skintone2hex(skin_tone)
-//		else
-//			T.color = "#[dna.features["balls_color"]]"
 		if(T)
+			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
+				T.color = "#[skintone2hex(skin_tone)]"
+			else
+				T.color = "#[dna.features["balls_color"]]"
 			T.size = dna.features["balls_size"]
 			T.sack_size = dna.features["balls_sack_size"]
+			T.shape = dna.features["balls_shape"]
+			if(dna.features["balls_shape"] == "Hidden")
+				T.internal = TRUE
+			else
+				T.internal = FALSE
 			T.fluid_id = dna.features["balls_fluid"]
 			T.fluid_rate = dna.features["balls_cum_rate"]
 			T.fluid_mult = dna.features["balls_cum_mult"]
@@ -201,7 +210,7 @@
 		B.Insert(src)
 		if(B)
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				B.color = skintone2hex(skin_tone)
+				B.color = "#[skintone2hex(skin_tone)]"
 			else
 				B.color = "#[dna.features["breasts_color"]]"
 			B.size = dna.features["breasts_size"]
@@ -211,7 +220,10 @@
 
 
 /mob/living/carbon/human/proc/give_ovipositor()
+	return
 /mob/living/carbon/human/proc/give_eggsack()
+	return
+
 /mob/living/carbon/human/proc/give_vagina()
 	if(!dna)
 		return FALSE
@@ -222,7 +234,7 @@
 		V.Insert(src)
 		if(V)
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				V.color = skintone2hex(skin_tone)
+				V.color = "#[skintone2hex(skin_tone)]"
 			else
 				V.color = "[dna.features["vag_color"]]"
 			V.shape = "[dna.features["vag_shape"]]"
@@ -274,13 +286,14 @@
 		return
 	if(NOGENITALS in species_traits)//golems and such
 		return
-	if(H.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(H, TRAIT_HUSK))
 		return
 
 	var/list/genitals_to_add = list()
 	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
-	var/size = null
+	var/size
+	var/aroused_state
 
 	for(var/L in relevant_layers) //Less hardcode
 		H.remove_overlay(L)
@@ -288,7 +301,7 @@
 	//start scanning for genitals
 	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	for(var/obj/item/organ/O in H.internal_organs)
-		if(istype(O, /obj/item/organ/genital))
+		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 				genitals_to_add += H.getorganslot(G.slot)
@@ -300,9 +313,12 @@
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
 			size = G.size
+			aroused_state = G.aroused_state
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/testicles)
+					S = GLOB.balls_shapes_list[G.shape]
 				if(/obj/item/organ/genital/vagina)
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
@@ -310,38 +326,29 @@
 
 			if(!S || S.icon_state == "none")
 				continue
+
 			var/mutable_appearance/genital_overlay = mutable_appearance(S.icon, layer = -layer)
-			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
+			genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]_[aroused_state]_[layertext]"
 
 			if(S.center)
 				genital_overlay = center_image(genital_overlay, S.dimension_x, S.dimension_y)
 
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				genital_overlay.color = "#[skintone2hex(H.skin_tone)]"
+				genital_overlay.icon_state = "[G.slot]_[S.icon_state]_[size]-s_[aroused_state]_[layertext]"
 			else
 				switch(S.color_src)
 					if("cock_color")
 						genital_overlay.color = "#[H.dna.features["cock_color"]]"
+					if("balls_color")
+						genital_overlay.color = "#[H.dna.features["balls_color"]]"
 					if("breasts_color")
 						genital_overlay.color = "#[H.dna.features["breasts_color"]]"
 					if("vag_color")
 						genital_overlay.color = "#[H.dna.features["vag_color"]]"
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							genital_overlay.color = "#[fixed_mut_color]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							genital_overlay.color = "#[fixed_mut_color2]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							genital_overlay.color = "#[fixed_mut_color3]"
-						else
-							genital_overlay.color = "#[H.dna.features["mcolor3"]]"
+
 			standing += genital_overlay
+
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()
 			standing = list()

@@ -289,8 +289,7 @@
 		if(!confirm == "Okay" || loc != B)
 			return
 		//Actual escaping
-		forceMove(get_turf(src)) //Just move me up to the turf, let's not cascade through bellies, there's been a problem, let's just leave.
-		src.cure_blind("belly_[REF(src)]")
+		B.release_specific_contents(src,TRUE) //we might as well take advantage of that specific belly's handling. Else we stay blinded forever.
 		src.stop_sound_channel(CHANNEL_PREYLOOP)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "fedprey", /datum/mood_event/fedprey)
 		for(var/mob/living/simple_animal/SA in range(10))

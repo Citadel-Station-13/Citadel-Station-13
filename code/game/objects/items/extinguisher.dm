@@ -15,7 +15,6 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
-	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/chem = "water"
@@ -56,7 +55,7 @@
 
 /obj/item/extinguisher/Initialize()
 	. = ..()
-	create_reagents(max_water)
+	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
 
@@ -70,6 +69,10 @@
 	tanktype = /obj/structure/reagent_dispensers/foamtank
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+
+/obj/item/extinguisher/proc/refill()
+	create_reagents(max_water, AMOUNT_VISIBLE)
+	reagents.add_reagent(chem, max_water)
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
@@ -183,7 +186,7 @@
 			W.reagents = R
 			R.my_atom = W
 			reagents.trans_to(W,1)
-	
+
 		//Make em move dat ass, hun
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
@@ -243,3 +246,12 @@
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
 
+//firebot assembly
+/obj/item/extinguisher/attackby(obj/O, mob/user, params)
+	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
+		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
+		qdel(O)
+		qdel(src)
+		user.put_in_hands(new /obj/item/bot_assembly/firebot)
+	else
+		..()

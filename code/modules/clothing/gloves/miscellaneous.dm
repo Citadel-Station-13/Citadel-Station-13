@@ -27,7 +27,7 @@
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
 	desc = "These tactical gloves are fireproof and shock resistant."
-	icon_state = "black"
+	icon_state = "combat"
 	item_state = "blackgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05

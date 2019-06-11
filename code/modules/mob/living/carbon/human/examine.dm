@@ -10,13 +10,23 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.has_trait(TRAIT_PROSOPAGNOSIA))
+		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
 			obscure_name = TRUE
 
 	var/msg = "<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+
+	if(ishuman(src)) //user just returned, y'know, the user's own species. dumb.
+		var/mob/living/carbon/human/H = src
+		var/datum/species/pref_species = H.dna.species
+		if(get_visible_name() == "Unknown") // same as flavor text, but hey it works.
+			msg += "You can't make out what species they are.\n"
+		else if(skipface)
+			msg += "You can't make out what species they are.\n"
+		else
+			msg += "[t_He] [t_is] a [H.dna.custom_species ? H.dna.custom_species : pref_species.name]!\n"
 
 	//uniform
 	if(w_uniform && !(SLOT_W_UNIFORM in obscured))
@@ -83,7 +93,7 @@
 	if(!(SLOT_GLASSES in obscured))
 		if(glasses)
 			msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
-		else if(eye_color == BLOODCULT_EYE && iscultist(src) && has_trait(CULT_EYES))
+		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
 			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//ears
@@ -116,7 +126,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
+	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		appears_dead = 1
 		if(suiciding)
 			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
@@ -271,13 +281,34 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(src != user && HAS_TRAIT(L, TRAIT_EMPATH) && !appears_dead)
+			if (a_intent != INTENT_HELP)
+				msg += "[t_He] seem[p_s()] to be on guard.\n"
+			if (getOxyLoss() >= 10)
+				msg += "[t_He] seem[p_s()] winded.\n"
+			if (getToxLoss() >= 10)
+				msg += "[t_He] seem[p_s()] sickly.\n"
+			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+			if(mood.sanity <= SANITY_DISTURBED)
+				msg += "[t_He] seem[p_s()] distressed.\n"
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
+			if(mood.mood >= 5) //So roundstart people aren't all "happy"
+				msg += "[t_He] seem[p_s()] to have had something nice happen to them recently.\n"
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empathH", /datum/mood_event/happy_empath, src)
+			if (HAS_TRAIT(src, TRAIT_BLIND))
+				msg += "[t_He] appear[p_s()] to be staring off into space.\n"
+			if (HAS_TRAIT(src, TRAIT_DEAF))
+				msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
+
 	msg += "</span>"
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(has_trait(TRAIT_DUMB))
+			if(HAS_TRAIT(src, TRAIT_DUMB))
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"

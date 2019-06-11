@@ -444,11 +444,12 @@
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
 	var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
-	return	(!H.suiciding && !(H.has_trait(TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
+	return	(!H.suiciding && !(HAS_TRAIT(H, TRAIT_NOCLONE)) && !H.hellbound && ((world.time - H.timeofdeath) < tlimit) && (H.getBruteLoss() < 180) && (H.getFireLoss() < 180) && H.getorgan(/obj/item/organ/heart) && BR && !BR.damaged_brain)
 
 /obj/item/twohanded/shockpaddles/proc/shock_touching(dmg, mob/H)
-	if(defib.pullshocksafely && isliving(H.pulledby))
-		H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
+	if(req_defib)
+		if(defib.pullshocksafely && isliving(H.pulledby))
+			H.visible_message("<span class='danger'>The defibrillator safely discharges the excessive charge into the floor!</span>")
 	else
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(30, src))
@@ -542,7 +543,20 @@
 	user.visible_message("<span class='warning'>[user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
-	if(do_after(user, 30 - defib.primetime, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+
+	var/primetimer
+	var/primetimer2
+	var/deathtimer
+	if(req_defib)
+		primetimer = 30 - defib.primetime //I swear to god if I find shit like this elsewhere
+		primetimer2 = 20 - defib.primetime
+		deathtimer = DEFIB_TIME_LOSS * defib.timedeath
+	else
+		primetimer = 30
+		primetimer2 = 20
+		deathtimer = DEFIB_TIME_LOSS * 10
+
+	if(do_after(user, primetimer, target = H)) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
 		playsound(src, 'sound/machines/defib_charge.ogg', 75, 0)
 		var/tplus = world.time - H.timeofdeath
@@ -550,10 +564,10 @@
 		// (in deciseconds)
 		// brain damage starts setting in on the patient after
 		// some time left rotting
-		var/tloss = DEFIB_TIME_LOSS * defib.timedeath
+		var/tloss = deathtimer
 		var/total_burn	= 0
 		var/total_brute	= 0
-		if(do_after(user, 20 - defib.primetime, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, primetimer2, target = H)) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			for(var/obj/item/carried_item in H.contents)
 				if(istype(carried_item, /obj/item/clothing/suit/space))
 					if((!combat && !req_defib) || (req_defib && !defib.combat))
@@ -571,7 +585,7 @@
 				shock_touching(30, H)
 				var/failed
 
-				if (H.suiciding || (H.has_trait(TRAIT_NOCLONE)))
+				if (H.suiciding || (HAS_TRAIT(H, TRAIT_NOCLONE)))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
@@ -613,8 +627,9 @@
 					if(tplus > tloss)
 						H.adjustBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))), 150)
 					log_combat(user, H, "revived", defib)
-					if(defib.healdisk)
-						H.heal_overall_damage(25, 25)
+					if(req_defib)
+						if(defib.healdisk)
+							H.heal_overall_damage(25, 25)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
@@ -698,12 +713,12 @@
 	req_defib = FALSE
 
 ///////////////////////////////////////////
-/////////Dedibrillators Disks//////////////
+/////////Defibrillator Disks//////////////
 ///////////////////////////////////////////
 
 /obj/item/disk/medical
 	name = "Defibrillator Upgrade Disk"
-	desc = "A blank defibrillator disk..."
+	desc = "A blank upgrade disk, made for a defibrillator"
 	icon = 'modular_citadel/icons/obj/defib_disks.dmi'
 	icon_state = "upgrade_disk"
 	item_state = "heal_disk"
@@ -711,25 +726,25 @@
 
 /obj/item/disk/medical/defib_heal
 	name = "Defibrillator Healing Disk"
-	desc = "A disk alowing for grater amounts of healing"
+	desc = "An upgrade which increases the healing power of the defibrillator"
 	icon_state = "heal_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
 
 /obj/item/disk/medical/defib_shock
 	name = "Defibrillator Anti-Shock Disk"
-	desc = "A disk that helps agains shocking anyone, other then the intented target"
+	desc = "A safety upgrade that guarantees only the patient will get shocked"
 	icon_state = "zap_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
 
 /obj/item/disk/medical/defib_decay
 	name = "Defibrillator Body-Decay Extender Disk"
-	desc = "A disk that helps defibrillators revive the longer decayed"
+	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
 	icon_state = "body_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
 
 /obj/item/disk/medical/defib_speed
-	name = "Defibrllator Pre-Primer Disk"
-	desc = "A disk that cuts the time charg time in half for defibrillator use"
+	name = "Defibrillator Fast Charge Disk"
+	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	icon_state = "fast_disk"
 	materials = list(MAT_METAL=16000, MAT_GLASS = 8000, MAT_GOLD = 26000, MAT_SILVER = 26000)
 

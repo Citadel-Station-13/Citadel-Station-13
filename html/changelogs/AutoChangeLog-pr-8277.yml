@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - balance: "Significantly tweaks the Wizard race transformation event to be less unreasonably troublesome."

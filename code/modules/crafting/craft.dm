@@ -21,6 +21,8 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
+							CAT_SUSHI, //Called Fish
+							CAT_ICE,   //Called Frozen
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,

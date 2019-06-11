@@ -1,3 +1,8 @@
+#define ARCADE_WEIGHT_TRICK 4
+#define ARCADE_WEIGHT_USELESS 2
+#define ARCADE_WEIGHT_RARE 1
+
+
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
@@ -6,55 +11,66 @@
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
-		/obj/item/storage/box/snappops							= 8,
-		/obj/item/toy/talking/AI								= 8,
-		/obj/item/toy/talking/codex_gigas						= 8,
-		/obj/item/clothing/under/syndicate/tacticool			= 8,
-		/obj/item/toy/sword										= 8,
-		/obj/item/toy/gun										= 8,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow			= 8,
-		/obj/item/storage/box/fakesyndiesuit					= 8,
-		/obj/item/storage/crayons								= 8,
-		/obj/item/toy/spinningtoy								= 8,
-		/obj/item/toy/prize/ripley								= 4,
-		/obj/item/toy/prize/fireripley							= 4,
-		/obj/item/toy/prize/deathripley							= 4,
-		/obj/item/toy/prize/gygax								= 4,
-		/obj/item/toy/prize/durand								= 4,
-		/obj/item/toy/prize/honk								= 4,
-		/obj/item/toy/prize/marauder							= 4,
-		/obj/item/toy/prize/seraph								= 4,
-		/obj/item/toy/prize/mauler								= 4,
-		/obj/item/toy/prize/odysseus							= 4,
-		/obj/item/toy/prize/phazon								= 4,
-		/obj/item/toy/prize/reticence							= 4,
-		/obj/item/toy/cards/deck								= 8,
-		/obj/item/toy/nuke										= 8,
-		/obj/item/toy/minimeteor								= 8,
-		/obj/item/toy/redbutton									= 8,
-		/obj/item/toy/talking/owl								= 8,
-		/obj/item/toy/talking/griffin							= 8,
-		/obj/item/coin/antagtoken								= 8,
-		/obj/item/stack/tile/fakespace/loaded					= 8,
-		/obj/item/stack/tile/fakepit/loaded						= 8,
-		/obj/item/toy/toy_xeno									= 8,
-		/obj/item/storage/box/actionfigure						= 4,
-		/obj/item/restraints/handcuffs/fake						= 8,
-		/obj/item/grenade/chem_grenade/glitter/pink				= 4,
-		/obj/item/grenade/chem_grenade/glitter/blue				= 4,
-		/obj/item/grenade/chem_grenade/glitter/white			= 4,
-		/obj/item/toy/eightball									= 8,
-		/obj/item/toy/windupToolbox								= 8,
-		/obj/item/toy/clockwork_watch							= 8,
-		/obj/item/toy/toy_dagger								= 8,
-		/obj/item/extendohand/acme								= 4,
-		/obj/item/hot_potato/harmless/toy						= 4,
-		/obj/item/card/emagfake									= 4,
-		/obj/item/clothing/shoes/wheelys						= 8,
-		/obj/item/clothing/shoes/kindleKicks					= 8,
-		/obj/item/storage/belt/military/snack					= 8,
-		/obj/item/toy/plush/random								= 450
-		)//plushies have a 0.6 chance
+		/obj/item/toy/balloon = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/beach_ball = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/cattoy = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/clockwork_watch = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/dummy = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/eightball = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/eightball/haunted = ARCADE_WEIGHT_RARE,
+		/obj/item/storage/box/actionfigure = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/foamblade = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/gun = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/gun/justicar = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/gun/m41 = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/katana = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/minimeteor = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/nuke = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/plush/random = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/redbutton = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/spinningtoy = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/sword = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/sword/cx = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/sword/darksabre = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/talking/AI = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/talking/codex_gigas = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/talking/griffin = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/talking/owl = ARCADE_WEIGHT_USELESS,
+		/obj/item/toy/toy_dagger = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/toy_xeno = ARCADE_WEIGHT_TRICK,
+		/obj/item/toy/windupToolbox = ARCADE_WEIGHT_TRICK,
+
+		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
+		/mob/living/simple_animal/bot/secbot/grievous/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/clothing/mask/facehugger/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
+		/obj/item/hot_potato/harmless/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/twohanded/hypereutactic/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/twohanded/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
+
+		/obj/item/storage/box/snappops = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/under/syndicate/tacticool = ARCADE_WEIGHT_TRICK,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow = ARCADE_WEIGHT_TRICK,
+		/obj/item/storage/box/fakesyndiesuit = ARCADE_WEIGHT_TRICK,
+		/obj/item/storage/crayons = ARCADE_WEIGHT_USELESS,
+		/obj/item/coin/antagtoken = ARCADE_WEIGHT_USELESS,
+		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
+		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
+		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
+
+		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
+		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,
+		/obj/item/grenade/chem_grenade/glitter/white = ARCADE_WEIGHT_TRICK,
+
+		/obj/item/extendohand/acme = ARCADE_WEIGHT_TRICK,
+		/obj/item/card/emagfake	= ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/shoes/wheelys = ARCADE_WEIGHT_RARE,
+		/obj/item/clothing/shoes/kindleKicks = ARCADE_WEIGHT_RARE,
+		/obj/item/storage/belt/military/snack = ARCADE_WEIGHT_RARE,
+
+		/obj/item/clothing/mask/fakemoustache/italian = ARCADE_WEIGHT_RARE
+	)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -74,7 +90,8 @@
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
-	if(prob(0.0001)) //1 in a million
+
+	if(prob(1) && prob(1) && prob(1)) //Proper 1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
 
@@ -124,6 +141,8 @@
 	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
 
+	var/turn_speed = 5 //Measured in deciseconds.
+
 /obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
 	var/name_part1
@@ -172,7 +191,7 @@
 			if(turtle > 0)
 				turtle--
 
-			sleep(10)
+			sleep(turn_speed)
 			enemy_hp -= attackamt
 			arcade_action(usr)
 
@@ -185,7 +204,7 @@
 			updateUsrDialog()
 			turtle++
 
-			sleep(10)
+			sleep(turn_speed)
 			player_mp -= pointamt
 			player_hp += healamt
 			blocked = TRUE
@@ -202,7 +221,7 @@
 				turtle--
 
 			updateUsrDialog()
-			sleep(10)
+			sleep(turn_speed)
 			arcade_action(usr)
 
 	if (href_list["close"])
@@ -211,10 +230,10 @@
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "New Round"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
+		player_hp = initial(player_hp)
+		player_mp = initial(player_mp)
+		enemy_hp = initial(enemy_hp)
+		enemy_mp = initial(enemy_mp)
 		gameover = FALSE
 		turtle = 0
 
@@ -260,7 +279,7 @@
 
 		if (player_mp <= 0)
 			gameover = TRUE
-			sleep(10)
+			sleep(turn_speed)
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(obj_flags & EMAGGED)

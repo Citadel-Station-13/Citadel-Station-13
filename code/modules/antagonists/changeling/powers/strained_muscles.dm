@@ -19,7 +19,7 @@
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 	else
-		user.remove_trait(TRAIT_GOTTAGOFAST, "changeling_muscles")
+		REMOVE_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
@@ -32,12 +32,12 @@
 
 /obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
-		user.add_trait(TRAIT_GOTTAGOFAST, "changeling_muscles")
+		ADD_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.Knockdown(40)
-			user.remove_trait(TRAIT_GOTTAGOFAST, "changeling_muscles")
+			REMOVE_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
 			break
 
 		stacks++

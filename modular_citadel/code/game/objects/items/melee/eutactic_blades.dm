@@ -117,6 +117,28 @@
 	desc = "The Non-Eutactic Blade utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. This one seems to have a damaged handle and misaligned components, causing the blade to be unstable at best"
 	force_on = 15 //As strong a survival knife/bone dagger
 
+/obj/item/melee/transforming/energy/sword/cx/attackby(obj/item/W, mob/living/user, params)
+	if(istype(W, /obj/item/melee/transforming/energy/sword/cx))
+		if((W.item_flags & NODROP) || (item_flags & NODROP))
+			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You combine the two light swords, making a single supermassive blade! You're cool.</span>")
+			new /obj/item/twohanded/hypereutactic(user.drop_location())
+			qdel(W)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/melee/transforming/energy/sword/cx/chaplain
+	name = "divine lightblade"
+	force_on = 20		//haha i'll regret this
+	block_chance = 50
+
+/obj/item/melee/transforming/energy/sword/cx/chaplain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 //OBLIGATORY TOY MEMES	/////////////////////////////////////
 
 /obj/item/toy/sword/cx
@@ -235,21 +257,21 @@
 	inhand_y_dimension = 64
 	name = "hypereutactic blade"
 	desc = "A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter."
-	force = 3
+	force = 7
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
-	force_unwielded = 3
-	force_wielded = 30
+	force_unwielded = 7
+	force_wielded = 40
 	wieldsound = 'sound/weapons/nebon.ogg'
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 10
+	armour_penetration = 60
 	light_color = "#37FFF7"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
-	block_chance = 25
+	block_chance = 75
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -265,7 +287,6 @@
 		user.visible_message("<span class='notice'>[user] points the tip of [src] at [target].</span>", "<span class='notice'>You point the tip of [src] at [target].</span>")
 	return TRUE
 
-
 /obj/item/twohanded/hypereutactic/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
 	if(M.has_dna())
 		if(M.dna.check_mutation(HULK))
@@ -278,7 +299,6 @@
 		hitsound = 'sound/weapons/nebhit.ogg'
 		START_PROCESSING(SSobj, src)
 		set_light(brightness_on)
-		slowdown = 1
 
 /obj/item/twohanded/hypereutactic/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
@@ -338,11 +358,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
-
-
 ////////// stuff beneath this is all taken from the desword ////////////  wow very professional such OOP wow
-
-
 
 /obj/item/twohanded/hypereutactic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -351,7 +367,7 @@
 			unwield()
 			return
 	..()
-	if(user.has_trait(TRAIT_CLUMSY) && (wielded) && prob(40))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && (wielded) && prob(40))
 		impale(user)
 		return
 
@@ -426,7 +442,7 @@
 			It appears to have a wooden grip and a shaved down guard."
 	icon_state = "cxsword_hilt_traitor"
 	force_on = 30
-	armour_penetration = 35
+	armour_penetration = 50
 	embedding = list("embedded_pain_multiplier" = 10, "embed_chance" = 75, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 10)
 	block_chance = 50
 	hitsound_on = 'sound/weapons/blade1.ogg'

@@ -207,6 +207,16 @@
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/tobiko
+	name = "tobiko"
+	desc = "Spider eggs wrapped in a thin salted Kudzu pod"
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "sushie_egg"
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	filling_color = "#FF3333" // R225 G051 B051
+	tastes = list("seaweed" = 1, "cobwebs" = 1, "salty" = 2)
+	foodtype = MEAT | VEGETABLES
+
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible but nonflippable festive coin."
@@ -329,36 +339,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("melon" = 1)
 	foodtype = FRUIT
-
-/obj/item/reagent_containers/food/snacks/spacefreezy
-	name = "space freezy"
-	desc = "The best icecream in space."
-	icon_state = "spacefreezy"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5, "vitamin" = 4)
-	filling_color = "#87CEFA"
-	tastes = list("blue cherries" = 2, "ice cream" = 2)
-	foodtype = FRUIT | DAIRY
-
-/obj/item/reagent_containers/food/snacks/sundae
-	name = "sundae"
-	desc = "A classic dessert."
-	icon_state = "sundae"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
-	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
-
-/obj/item/reagent_containers/food/snacks/honkdae
-	name = "honkdae"
-	desc = "The clown's favorite dessert."
-	icon_state = "honkdae"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "banana" = 10, "vitamin" = 4)
-	filling_color = "#FFFACD"
-	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
-	foodtype = FRUIT | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/nachos
 	name = "nachos"
@@ -569,3 +549,12 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/riceball
+	name = "onigiri"
+	desc = "A ball of rice with some light salt and a wrap of Kudzu skin."
+	icon = 'modular_citadel/icons/obj/food/food.dmi'
+	icon_state = "riceball"
+	list_reagents = list("nutriment" = 6, "sodiumchloride" = 2)
+	tastes = list("rice" = 3, "salt" = 1)
+	foodtype = GRAIN

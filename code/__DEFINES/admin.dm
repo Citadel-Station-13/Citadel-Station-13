@@ -71,6 +71,7 @@
 #define ADMIN_PUNISHMENT_ROD "Immovable Rod"
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
+#define ADMIN_PUNISHMENT_PIE "Cream Pie"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2

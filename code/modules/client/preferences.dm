@@ -21,6 +21,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/last_ip
 	var/last_id
 
+	//Cooldowns for saving/loading. These are four are all separate due to loading code calling these one after another
+	var/saveprefcooldown
+	var/loadprefcooldown
+	var/savecharcooldown
+	var/loadcharcooldown
+
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
@@ -75,13 +81,82 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF",
-		"tail_lizard" = "Smooth", "tail_human" = "Cat",
-		"snout" = "Round", "horns" = "None", "ears" = "Cat",
-		"wings" = "None", "frills" = "None", "spines" = "None",
-		"body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
+		"tail_lizard" = "Smooth",
+		"tail_human" = "None",
+		"snout" = "Round",
+		"horns" = "None",
+		"ears" = "None",
+		"wings" = "None",
+		"frills" = "None",
+		"spines" = "None",
+		"body_markings" = "None",
+		"legs" = "Normal Legs",
+		"moth_wings" = "Plain",
+		"mcolor2" = "FFF",
+		"mcolor3" = "FFF",
+		"mam_body_markings" = "Plain",
+		"mam_ears" = "None",
+		"mam_snouts" = "None",
+		"mam_tail" = "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" = "Standard",
+		"xenohead" = "Standard",
+		"xenotail" = "Xenomorph Tail",
+		"taur" = "None",
+		"exhibitionist" = FALSE,
+		"genitals_use_skintone" = FALSE,
+		"has_cock" = FALSE,
+		"cock_shape" = "Human",
+		"cock_length" = 6,
+		"cock_girth_ratio" = COCK_GIRTH_RATIO_DEF,
+		"cock_color" = "fff",
+		"has_sheath" = FALSE,
+		"sheath_color" = "fff",
+		"has_balls" = FALSE,
+		"balls_internal" = FALSE,
+		"balls_color" = "fff",
+		"balls_amount" = 2,
+		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_shape" = "Single",
+		"balls_size" = BALLS_SIZE_DEF,
+		"balls_cum_rate" = CUM_RATE,
+		"balls_cum_mult" = CUM_RATE_MULT,
+		"balls_efficiency" = CUM_EFFICIENCY,
+		"balls_fluid" = "semen",
+		"has_ovi" = FALSE,
+		"ovi_shape" = "knotted",
+		"ovi_length" = 6,
+		"ovi_color" = "fff",
+		"has_eggsack" = FALSE,
+		"eggsack_internal" = TRUE,
+		"eggsack_color" = "fff",
+		"eggsack_size" = BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" = EGG_GIRTH_DEF,
+		"has_breasts" = FALSE,
+		"breasts_color" = "fff",
+		"breasts_size" = "C",
+		"breasts_shape" = "Pair",
+		"breasts_fluid" = "milk",
+		"has_vag" = FALSE,
+		"vag_shape" = "Human",
+		"vag_color" = "fff",
+		"vag_clits" = 1,
+		"vag_clit_diam" = 0.25,
+		"has_womb" = FALSE,
+		"womb_cum_rate" = CUM_RATE,
+		"womb_cum_mult" = CUM_RATE_MULT,
+		"womb_efficiency" = CUM_EFFICIENCY,
+		"womb_fluid" = "femcum",
+		"ipc_screen" = "Sunburst",
+		"ipc_antenna" = "None",
+		"flavor_text" = ""
+		)
 
 	var/list/custom_names = list()
+	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
+	var/custom_species = null
 
 		//Quirk list
 	var/list/positive_quirks = list()
@@ -229,10 +304,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					old_group = namedata["group"]
 					dat += "<br>"
 				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
-			dat += "<br>"
-			dat += "<b>Custom job preferences:</b><BR>"
-			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
+			dat += "<br><br>"
 
+			dat += "<b>Custom job preferences:</b><BR>"
+			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
+			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
 			dat += "</tr></table>"
 
 		//Character Appearance
@@ -269,6 +345,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>Body</h2>"
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
 			dat += "<br><b>Cycle background:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cycle_bg;task=input'>[bgstate]</a><BR>"
@@ -627,6 +704,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							dat += "<b>Testicles Color:</b>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
+						dat += "<b>Testicles showing:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=balls_shape;task=input'>[features["balls_shape"]]</a>"
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<b>Has Vagina:</b>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a>"
@@ -816,10 +894,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<tr><td colspan=4><hr></td></tr>"
 			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
 			dat += "<tr><td colspan=4><hr></td></tr>"
-			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-			dat += "<td><font size=2><b>Restrictions</b></font></td>"
-			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			dat += "<tr width=10% style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td width=10%><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td width=80%><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/donoritem
@@ -840,9 +918,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
 					if(gear.restricted_roles.len)
-						dat += "<font size=2>"
-						dat += gear.restricted_roles.Join(";")
-						dat += "</font>"
+						if(gear.restricted_desc)
+							dat += "<font size=2>"
+							dat += gear.restricted_desc
+							dat += "</font>"
+						else
+							dat += "<font size=2>"
+							dat += gear.restricted_roles.Join(";")
+							dat += "</font>"
 				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
 			dat += "</table>"
 
@@ -1379,7 +1462,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as null|message
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE)
 					if(!isnull(msg))
 						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
 						features["flavor_text"] = msg
@@ -1456,12 +1539,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/newtype = GLOB.species_list[result]
 						pref_species = new newtype()
 						//let's ensure that no weird shit happens on species swapping.
+						custom_species = null
 						if(!("body_markings" in pref_species.default_features))
 							features["body_markings"] = "None"
 						if(!("mam_body_markings" in pref_species.default_features))
 							features["mam_body_markings"] = "None"
-						if("mam_body_markings" in pref_species.default_features && features["mam_body_markings"] == "None")
-							features["mam_body_markings"] = "Plain"
+						if("mam_body_markings" in pref_species.default_features)
+							if(features["mam_body_markings"] == "None")
+								features["mam_body_markings"] = "Plain"
 						if("tail_lizard" in pref_species.default_features)
 							features["tail_lizard"] = "Smooth"
 						if(pref_species.id == "felinid")
@@ -1476,6 +1561,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = pref_species.default_color
 						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
+
+				if("custom_species")
+					var/new_species = reject_bad_name(input(user, "Choose your species subtype, if unique. This will show up on examinations and health scans. Do not abuse this:", "Character Preference", custom_species) as null|text)
+					if(new_species)
+						custom_species = new_species
+					else
+						custom_species = null
 
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
@@ -1748,7 +1840,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
 					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
@@ -1770,7 +1862,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+
+				if("balls_shape")
+					var/new_shape
+					new_shape = input(user, "Testicle Type:", "Character Preference") as null|anything in GLOB.balls_shapes_list
+					if(new_shape)
+						features["balls_shape"] = new_shape
 
 				if("egg_size")
 					var/new_size
@@ -1786,7 +1884,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("breasts_size")
 					var/new_size
@@ -1809,7 +1907,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("vag_shape")
 					var/new_shape
@@ -1826,7 +1924,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["vag_color"] = sanitize_hexcolor(new_vagcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
@@ -1843,8 +1941,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
+				if("ai_core_icon")
+					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
+					if(ai_core_icon)
+						preferred_ai_core_display = ai_core_icon
+
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
 
@@ -2115,6 +2218,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.real_name = nameless ? "[real_name] #[rand(10000, 99999)]" : real_name
 	character.name = character.real_name
 	character.nameless = nameless
+	character.custom_species = custom_species
 
 	character.gender = gender
 	character.age = age
@@ -2149,6 +2253,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
+	character.dna.custom_species = character.custom_species
 
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"

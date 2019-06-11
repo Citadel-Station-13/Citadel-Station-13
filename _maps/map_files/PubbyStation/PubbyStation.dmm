@@ -8707,7 +8707,9 @@
 /obj/machinery/computer/cryopod{
 	pixel_y = 30
 	},
-/obj/machinery/cryopod,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -44323,7 +44325,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/closet/radiation,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWF" = (
@@ -44350,7 +44354,10 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/radiation,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bWH" = (
@@ -44930,6 +44937,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYn" = (
@@ -44954,6 +44962,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYp" = (
@@ -53537,6 +53546,12 @@
 /obj/structure/chair/office/dark,
 /turf/open/floor/wood,
 /area/lawoffice)
+"epj" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "epJ" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -53769,6 +53784,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"eSB" = (
+/obj/machinery/computer/cryopod{
+	dir = 1;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "eSL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/beacon,
@@ -54140,7 +54162,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/cryopod,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "fIN" = (
@@ -55936,7 +55960,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "jXF" = (
-/obj/machinery/cryopod,
+/obj/machinery/cryopod{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "jXV" = (
@@ -82772,7 +82798,7 @@ aeU
 afo
 afG
 aeU
-aeU
+eSB
 agy
 agL
 agZ
@@ -102071,7 +102097,7 @@ apX
 apX
 avl
 fIu
-dbi
+epj
 aIh
 azA
 dbi

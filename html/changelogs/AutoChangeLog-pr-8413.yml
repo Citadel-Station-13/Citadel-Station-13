@@ -1,0 +1,5 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - bugfix: "The space hotel dorms are now properly boltable with the buttons inside."
+  - bugfix: "Makes the booze-o-mat hacked by default. Alternative to https://github.com/Citadel-Station-13/Citadel-Station-13/pull/8350."

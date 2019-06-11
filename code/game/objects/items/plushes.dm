@@ -591,9 +591,21 @@
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
-	attack_verb = list("blorbled", "slimed", "absorbed")
+	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+
+/obj/item/toy/plush/slimeplushie/annie
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "annie"
+	item_state = "annie"
+
+/obj/item/toy/plush/slimeplushie/paxton
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "paxton"
+	item_state = "paxton"
+	attack_verb = list("CQC'd", "jabroni'd", "powergamed", "robusted", "cakehatted")
+	gender = MALE
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
@@ -635,6 +647,13 @@
 	attack_verb = list("lit", "flickered", "flashed")
 	squeak_override = list('sound/weapons/magout.ogg' = 1)
 
+/obj/item/toy/plush/box
+	name = "cardboard plushie"
+	desc = "A toy box plushie, it holds cotten. Only a baddie would place a bomb through the postal system..."
+	icon_state = "box"
+	item_state = "box"
+	attack_verb = list("open", "closed", "packed", "hidden", "rigged", "bombed", "sent", "gave")
+
 /obj/item/toy/plush/borgplushie
 	name = "robot plushie"
 	desc = "An adorable stuffed toy of a robot."
@@ -658,6 +677,12 @@
 /obj/item/toy/plush/borgplushie/neeb
 	icon_state = "neeb"
 	item_state = "neeb"
+
+/obj/item/toy/plush/borgplushie/bhijn
+	desc = "An adorable stuffed toy of a IPC."
+	icon_state = "bhijn"
+	item_state = "bhijn"
+	attack_verb = list("closed", "reworked", "merged")
 
 /obj/item/toy/plush/bird
 	name = "bird plushie"
@@ -728,6 +753,10 @@
 	icon_state = "pavel"
 	item_state = "pavel"
 
+/obj/item/toy/plush/mammal/mason
+	icon_state = "mason"
+	item_state = "mason"
+
 /obj/item/toy/plush/mammal/oten
 	icon_state = "oten"
 	item_state = "oten"
@@ -736,6 +765,10 @@
 	icon_state = "ray"
 	item_state = "ray"
 
+/obj/item/toy/plush/mammal/redtail
+	icon_state = "redtail"
+	item_state = "redtail"
+
 /obj/item/toy/plush/mammal/dawud
 	icon_state = "dawud"
 	item_state = "dawud"
@@ -743,6 +776,7 @@
 /obj/item/toy/plush/mammal/edgar
 	icon_state = "edgar"
 	item_state = "edgar"
+	attack_verb = list("collared", "tricked", "headpatted")
 
 /obj/item/toy/plush/mammal/frank
 	icon_state = "frank"
@@ -776,6 +810,16 @@
 /obj/item/toy/plush/mammal/zed
 	icon_state = "zed"
 	item_state = "zed"
+
+/obj/item/toy/plush/mammal/justin
+	icon_state = "justin"
+	item_state = "justin"
+	attack_verb = list("buttslapped", "fixed")
+
+/obj/item/toy/plush/mammal/reece
+	icon_state = "reece"
+	item_state = "reece"
+	attack_verb = list("healed", "cured", "demoted")
 
 /obj/item/toy/plush/mammal/dog
 	desc = "An adorable stuffed toy that resembles a canine."
@@ -816,6 +860,13 @@
 	icon_state = "flynn"
 	item_state = "flynn"
 
+/obj/item/toy/plush/mammal/dog/fritz
+	icon_state = "fritz"
+	item_state = "fritz"
+	attack_verb = list("barked", "boofed", "shotgun'd")
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
 	desc = "An adorable stuffed toy that resembles a feline."
@@ -839,6 +890,12 @@
 /obj/item/toy/plush/catgirl/drew
 	icon_state = "drew"
 	item_state = "drew"
+
+/obj/item/toy/plush/catgirl/trilby
+	desc = "A masked stuffed toy that resembles a feline scientist."
+	icon_state = "trilby"
+	item_state = "trilby"
+	attack_verb = list("pred", "coded", "remembered")
 
 /obj/item/toy/plush/catgirl/fermis
     name = "medcat plushie"

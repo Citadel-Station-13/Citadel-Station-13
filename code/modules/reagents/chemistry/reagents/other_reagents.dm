@@ -198,10 +198,10 @@
 
 /datum/reagent/water/holywater/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_HOLY, id)
+	ADD_TRAIT(L, TRAIT_HOLY, id)
 
 /datum/reagent/water/holywater/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_HOLY, id)
+	REMOVE_TRAIT(L, TRAIT_HOLY, id)
 	..()
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1243,12 +1243,12 @@
 
 /datum/reagent/stimulum/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 
 /datum/reagent/stimulum/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
@@ -1268,10 +1268,10 @@
 
 /datum/reagent/nitryl/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
 /datum/reagent/nitryl/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1779,10 +1779,10 @@
 
 /datum/reagent/pax/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_PACIFISM, id)
+	ADD_TRAIT(L, TRAIT_PACIFISM, id)
 
 /datum/reagent/pax/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_PACIFISM, id)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, id)
 	..()
 
 /datum/reagent/bz_metabolites
@@ -1795,11 +1795,11 @@
 
 /datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(CHANGELING_HIVEMIND_MUTE, id)
+	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
 	..()
-	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
+	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
 	if(L.mind)
@@ -1863,3 +1863,20 @@
 	description = "The primary precursor for an ancient feline delicacy known as skooma. While it has no notable effects on it's own, mixing it with morphine in a chilled container may yield interesting results."
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
+
+/datum/reagent/penis_enlargement
+	name = "Penis Enlargement"
+	id = "penis_enlargement"
+	description = "A patented chemical forumula by Doctor Ronald Hyatt that is guaranteed to bring maximum GROWTH and LENGTH to your penis, today!"
+	color = "#888888"
+	taste_description = "chinese dragon powder"
+	metabolization_rate = INFINITY //So it instantly removes all of itself. Don't want to put strain on the system.
+
+/datum/reagent/penis_enlargement/on_mob_life(mob/living/carbon/C)
+	var/obj/item/organ/genital/penis/P = C.getorganslot(ORGAN_SLOT_PENIS)
+	if(P)
+		var/added_length = round(volume/30,0.01) //Every 30u gives an extra inch. Rounded to the nearest 0.01 so float fuckery doesn't occur with the division by 30.
+		if(added_length >= 0.20) //Only add the length if it's greater than or equal to 0.2. This is to prevent people from smoking the reagents and causing the penis to update constantly.
+			P.length += added_length
+			P.update()
+	..()

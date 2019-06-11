@@ -15,7 +15,7 @@
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	START_PROCESSING(SSmood, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
@@ -150,17 +150,17 @@
 		else
 			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
 
-	if(owner.has_trait(TRAIT_DEPRESSION))
+	if(HAS_TRAIT(owner, TRAIT_DEPRESSION))
 		if(prob(0.05))
 			add_event(null, "depression", /datum/mood_event/depression)
 			clear_event(null, "jolly")
-	if(owner.has_trait(TRAIT_JOLLY))
+	if(HAS_TRAIT(owner, TRAIT_JOLLY))
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
 
 	holdmyinsanityeffect = insanity_effect
-	
+
 	HandleNutrition(owner)
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)

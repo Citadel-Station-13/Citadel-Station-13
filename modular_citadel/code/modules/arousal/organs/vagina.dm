@@ -17,12 +17,11 @@
 	var/clits				= 1
 	var/clit_diam 			= 0.25
 	var/clit_len			= 0.25
-	var/list/vag_types = list("tentacle", "dentata", "hairy")
+	var/list/vag_types = list("tentacle", "dentata", "hairy", "spade", "furred")
 
 
 /obj/item/organ/genital/vagina/update_appearance()
-	var/string = "vagina" //Keeping this code here, so making multiple sprites for the different kinds is easier.
-	icon_state = sanitize_text(string)
+	var/string //Keeping this code here, so making multiple sprites for the different kinds is easier.
 	var/lowershape = lowertext(shape)
 	var/details
 
@@ -37,6 +36,10 @@
 			details = "It is taut with smooth skin, though without much hair and "
 		if("gaping")
 			details = "It is gaping slightly open, though without much hair and "
+		if("spade")
+			details = "It is a plush canine spade, it "
+		if("furred")
+			details = "It has neatly groomed fur around the outer folds, it "
 		else
 			details = "It has an exotic shape and "
 	if(aroused_state)
@@ -51,9 +54,14 @@
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
 				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
 				color = "#[skintone2hex(H.skin_tone)]"
+				string = "vagina-s"
 		else
 			color = "#[owner.dna.features["vag_color"]]"
-
+			string  = "vagina"
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			icon_state = sanitize_text(string)
+			H.update_genitals()
 
 /obj/item/organ/genital/vagina/update_link()
 	if(owner)

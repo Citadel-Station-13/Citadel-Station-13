@@ -36,17 +36,11 @@
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger"))
+			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger","Deer"))
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			/*
-			else if(H.dna.features["taur"] == "Horse" || "Cow")
-				taurmode = HOOF_TAURIC //tweak this for when the exotics get their own suits, if ever.
-				center = TRUE
-				dimension_x = 64
-			*/
 		else
 			taurmode = NOT_TAURIC
 			if(tauric == TRUE)
