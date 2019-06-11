@@ -485,3 +485,13 @@
 	item_state = "redgoldjacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/kimono
+	name = "Blue Kimono"
+	desc = "A traditional kimono, this one is blue with purple flowers."
+	icon_state = "kimono"
+	item_state = "kimono"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	slot_flags = SLOT_WEAR_SUIT
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
