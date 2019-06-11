@@ -493,5 +493,4 @@
 	item_state = "kimono"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
-	slot_flags = SLOT_WEAR_SUIT
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
