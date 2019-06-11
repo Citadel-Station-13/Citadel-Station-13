@@ -27048,9 +27048,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bmn" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -27680,12 +27677,6 @@
 "bnM" = (
 /obj/structure/cable{
 	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"bnN" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 2
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -82890,14 +82881,14 @@ bid
 aYl
 bBi
 aLY
-bnN
+aRt
 boY
 bqw
 aJq
 aJq
 aYl
 aKF
-aLX
+aRt
 aJq
 aJq
 bBi
