@@ -27680,6 +27680,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"bnN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "bnO" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
@@ -56836,6 +56843,16 @@
 	dir = 8
 	},
 /area/medical/sleeper)
+"hcu" = (
+/obj/machinery/light{
+	dir = 4;
+	step_x = 0
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hcE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -80837,7 +80854,7 @@ bwd
 bwY
 byJ
 bwe
-bAc
+aKF
 bBI
 bGn
 bGn
@@ -82881,14 +82898,14 @@ bid
 aYl
 bBi
 aLY
-aRt
+bnN
 boY
 bqw
 aJq
 aJq
 aYl
 aKF
-aRt
+hcu
 aJq
 aJq
 bBi
