@@ -112,7 +112,7 @@
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
+	if(cell && cell.charge > hitcost)
 		switch_status(!status)
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	else
@@ -120,7 +120,7 @@
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
-			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
+			to_chat(user, "<span class='warning'>[src] does not have enough charge.</span>")
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
