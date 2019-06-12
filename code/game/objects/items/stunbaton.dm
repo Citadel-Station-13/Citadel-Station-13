@@ -172,10 +172,7 @@
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	var/stunpwr = stunforce
-	var/obj/item/stock_parts/cell/our_cell = cell
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/R = loc
-		our_cell = R.cell
+	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
 		return FALSE
 	var/stuncharge = our_cell.charge
