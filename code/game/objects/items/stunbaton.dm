@@ -58,7 +58,7 @@
 	//if a stun is applied or not
 
 	copper_top.use(min(chrgdeductamt, copper_top.charge), explode)
-	if(status && (!copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
+	if(status && (!(copper_top?.charge) || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
