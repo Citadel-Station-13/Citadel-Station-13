@@ -46,14 +46,15 @@
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE)
-	if(!cell)
+/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, obj/item/stock_parts/cell/external_cell)
+	if(!cell && !external_cell)
 		switch_status(FALSE, TRUE)
 		return FALSE
+	var/obj/item/stock_parts/cell/copper_top = external_cell ? external_cell : cell
 	//Note this value returned is significant, as it will determine
 	//if a stun is applied or not
-	. = cell.use(chrgdeductamt)
-	if(status && (!. || (chargecheck && cell.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
+	. = copper_top.use(chrgdeductamt)
+	if(status && (!. || (chargecheck && copper_top.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
@@ -164,16 +165,15 @@
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	var/stunpwr = stunforce
+	var/stuncharge = cell.charge
+	var/obj/item/stock_parts/cell/external_cell
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		if(!istype(R) || !R.cell || !R.cell.use(hitcost))
+		external_cell = R.cell
+	if(!deductcharge(hitcost, FALSE, external_cell))
+		stunpwr *= round(stuncharge/hitcost, 0.1)
+		if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
 			return FALSE
-	else
-		var/stuncharge = cell.charge
-		if(!deductcharge(hitcost, FALSE))
-			stunpwr *= round(stuncharge/hitcost)
-			if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
-				return FALSE
 
 	L.Knockdown(stunpwr)
 	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
