@@ -247,7 +247,10 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	to_chat(traitor_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:<br><B>Code Phrase</B>:<span class='blue'>[phrases]</span><B><br>Code Response</B>:<spanclass='red'>[responses]</span></B><br>Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.<br><span class='alertwarning'>You memorize the codewords, allowing you to recognise them when heard.</span>")
+	var/dat = "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>\n"
+	dat += "<B>Code Phrase</B>: <span class='blue'>[phrases]</span>\n"
+	dat += "<B>Code Response</B>: <span class='red'>[responses]</span>"
+	to_chat(traitor_mob, dat)
 
 	antag_memory += "<b>Code Phrase</b>: <span class='blue'>[phrases]</span><br>"
 	antag_memory += "<b>Code Response</b>: <span class='red'>[responses]</span><br>"
