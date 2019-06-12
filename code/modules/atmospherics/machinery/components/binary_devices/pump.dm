@@ -29,9 +29,9 @@ Thus, the two variables affect pump operation are set in New():
 	pipe_state = "pump"
 
 /obj/machinery/atmospherics/components/binary/pump/examine(mob/user)
-	..()
-	to_chat(user,"<span class='notice'>You can hold CTRL and click on it to toggle it on and off.</span>")
-	to_chat(user,"<span class='notice'>You can hold ALT and click on it to maximize its pressure.</span>")
+	. = ..()
+	to_chat(user,"<span class='notice'>You can hold <b>Ctrl</b> and click on it to toggle it on and off.</span>")
+	to_chat(user,"<span class='notice'>You can hold <b>Alt</b> and click on it to maximize its pressure.</span>")
 
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
 	var/area/A = get_area(src)
