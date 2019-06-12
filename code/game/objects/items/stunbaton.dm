@@ -182,7 +182,7 @@
 		return FALSE
 	var/stuncharge = our_cell.charge
 	deductcharge(hitcost, FALSE)
-	if(QDELETED(src)) //it was rigged
+	if(QDELETED(src) || QDELETED(our_cell)) //it was rigged
 		return
 	if(stuncharge < hitcost)
 		if(stuncharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
