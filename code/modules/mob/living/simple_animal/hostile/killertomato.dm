@@ -36,4 +36,4 @@
 	maxHealth = 45 //slightly sturdier
 	health = 45
 	butcher_results = list()
-	friend_types = list(/mob/living/carbon/human)
+	friend_types = list(/mob/living/carbon/human, /mob/living/silicon)
