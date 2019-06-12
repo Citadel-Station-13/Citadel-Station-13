@@ -6,27 +6,27 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	var/gib_overlay = FALSE
-	var/body_colors = "e3ba84"	//a default color just in case.
+	var/body_colors = "#e3ba84"	//a default color just in case.
+	var/guts_colors = "#4c276d"
+	var/racial = "c"
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
+	var/list/colorlist = list()
+	colorlist.Cut()
+	colorlist += ReadRGB("[blood_DNA_to_color()]0")
+	colorlist += ReadRGB("[guts_colors]0")
+	colorlist += ReadRGB("[body_colors]0")
+	colorlist += list(0,0,0, 255)
+	for(var/index=1, index<=colorlist.len, index++)
+		colorlist[index] = colorlist[index]/255
 	cut_overlays()
-	var/list/guts = list()
-	var/mutable_appearance/blood = new(icon, "[icon_state]")
-	blood.appearance_flags |= RESET_COLOR|KEEP_APART
-	blood.color = blood_DNA_to_color()
-	guts += blood
-	var/mutable_appearance/gibz = new(icon, "[icon_state]-guts")
-	gibz.appearance_flags |= RESET_COLOR|KEEP_APART
-	guts += gibz
-	var/mutable_appearance/gibz2 = new(icon, "[icon_state]c-overlay")
-	gibz2.appearance_flags |= RESET_COLOR|KEEP_APART
-	gibz2.color = body_colors
-	guts += gibz2
-
-	add_overlay(guts)
+	if(gib_overlay)
+		var/mutable_appearance/gibs = new(icon, "[icon_state]_[racial]_[gib_overlay]")
+		gibs.color = colorlist
+		add_overlay(gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
