@@ -69,6 +69,15 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
+"x" = (
+/turf/closed/mineral/random/low_chance,
+/area/ruin/unpowered)
+"Q" = (
+/turf/closed/mineral/random/low_chance,
+/area/ruin/unpowered/no_grav)
+"T" = (
+/turf/closed/mineral/random/low_chance,
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -86,12 +95,12 @@ a
 a
 a
 b
-b
+Q
 a
 a
 "}
 (2,1,1) = {"
-b
+Q
 c
 c
 b
@@ -106,12 +115,12 @@ a
 b
 b
 b
-b
+Q
 a
 a
 "}
 (3,1,1) = {"
-b
+Q
 c
 c
 b
@@ -125,17 +134,17 @@ b
 b
 b
 b
-b
+Q
 a
 a
-b
+Q
 "}
 (4,1,1) = {"
-b
-b
-b
-b
-b
+Q
+Q
+Q
+Q
+Q
 e
 e
 a
@@ -143,19 +152,19 @@ a
 a
 a
 a
-b
-b
-b
+Q
+Q
+Q
 a
 a
 a
 "}
 (5,1,1) = {"
 a
-b
-b
-b
-b
+Q
+Q
+Q
+Q
 b
 e
 e
@@ -167,14 +176,14 @@ a
 a
 a
 a
-b
+Q
 a
 "}
 (6,1,1) = {"
 a
-b
+Q
 c
-b
+Q
 b
 b
 e
@@ -192,9 +201,9 @@ a
 "}
 (7,1,1) = {"
 a
-b
-b
-b
+Q
+Q
+Q
 b
 b
 e
@@ -213,8 +222,8 @@ a
 (8,1,1) = {"
 a
 a
-b
-b
+Q
+Q
 b
 b
 b
@@ -233,8 +242,8 @@ a
 (9,1,1) = {"
 a
 a
-b
-b
+Q
+Q
 b
 b
 a
@@ -254,7 +263,7 @@ a
 a
 a
 a
-b
+Q
 c
 c
 a
@@ -334,14 +343,14 @@ a
 a
 a
 a
+T
 a
 a
-a
-d
-d
-d
-d
-d
+x
+x
+x
+x
+x
 d
 d
 d
@@ -353,14 +362,14 @@ a
 (15,1,1) = {"
 a
 a
-a
-d
-d
-d
-d
-d
-d
-d
+T
+x
+x
+x
+x
+x
+x
+x
 a
 a
 f
@@ -373,11 +382,11 @@ a
 (16,1,1) = {"
 a
 a
-d
-d
-d
-d
-d
+x
+x
+x
+x
+x
 a
 a
 a
@@ -395,11 +404,11 @@ a
 a
 a
 a
-d
+x
 a
-a
-a
-a
+T
+T
+T
 a
 a
 a
