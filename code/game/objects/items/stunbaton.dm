@@ -46,7 +46,7 @@
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE)
+/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, explode = TRUE)
 	var/obj/item/stock_parts/cell/copper_top = cell
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -56,8 +56,9 @@
 		return FALSE
 	//Note this value returned is significant, as it will determine
 	//if a stun is applied or not
-	. = copper_top.use(chrgdeductamt)
-	if(status && (!. || (chargecheck && copper_top.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
+
+	copper_top.use(min(chrgdeductamt, copper_top.charge), explode)
+	if(status && (!copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
@@ -73,7 +74,8 @@
 	update_icon()
 
 /obj/item/melee/baton/process()
-	deductcharge(hitcost * 0.004, FALSE)
+	. = ..()
+	deductcharge(hitcost * 0.004, FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -96,7 +98,7 @@
 		if(cell)
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
-			if(C.maxcharge < hitcost * STUNBATON_CHARGE_LENIENCY)
+			if(C.maxcharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -116,15 +118,19 @@
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
-		switch_status(!status)
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-	else
+	var/obj/item/stock_parts/cell/copper_top = cell
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
+		copper_top = R.cell
+	if(!copper_top || copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))
 		switch_status(FALSE, TRUE)
-		if(!cell)
+		if(!copper_top)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
+	else
+		switch_status(!status)
+		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
@@ -176,10 +182,12 @@
 		return FALSE
 	var/stuncharge = our_cell.charge
 	deductcharge(hitcost, FALSE)
+	if(QDELETED(src)) //it was rigged
+		return
 	if(stuncharge < hitcost)
-		if(stuncharge < hitcost * STUNBATON_CHARGE_LENIENCY)
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it din't have enough charge left.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it din't have enough charge left.</span>")
+		if(stuncharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it is out of charge.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it is out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
@@ -214,7 +222,7 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
-		deductcharge(1000 / severity)
+		deductcharge(1000 / severity, TRUE, FALSE)
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod

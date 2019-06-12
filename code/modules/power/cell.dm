@@ -69,8 +69,8 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/use(amount)
-	if(rigged && amount > 0)
+/obj/item/stock_parts/cell/use(amount, can_explode = TRUE)
+	if(rigged && amount > 0 && can_explode)
 		explode()
 		return 0
 	if(charge < amount)
