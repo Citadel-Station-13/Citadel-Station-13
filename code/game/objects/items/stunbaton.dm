@@ -22,11 +22,10 @@
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 
 /obj/item/melee/baton/get_cell()
-	var/obj/item/stock_parts/cell/our_cell = cell
+	. = cell
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
-		our_cell = R.get_cell()
-	return our_cell
+		. = R.get_cell()
 
 /obj/item/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
