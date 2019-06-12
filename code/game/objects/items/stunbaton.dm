@@ -178,7 +178,7 @@
 	var/stuncharge = our_cell.charge
 	deductcharge(hitcost, FALSE)
 	if(QDELETED(src) || QDELETED(our_cell)) //it was rigged
-		return
+		return FALSE
 	if(stuncharge < hitcost)
 		if(stuncharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
 			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it is out of charge.</span>", \
