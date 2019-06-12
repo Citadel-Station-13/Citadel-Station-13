@@ -270,6 +270,7 @@
 	amount_per_transfer_from_this = 20
 	icon_state = "empty"
 	item_state = "syringe_empty"
+	var/emptrig = FALSE
 
 /obj/item/reagent_containers/syringe/dart/afterattack(atom/target, mob/user , proximity)
 
@@ -340,6 +341,10 @@
 				injoverlay = "ready"
 		add_overlay(injoverlay)
 		M.update_inv_hands()
+
+/obj/item/reagent_containers/syringe/dart/emp_act(severity)
+	emptrig = TRUE
+	..()
 
 /obj/item/reagent_containers/syringe/dart/bluespace
 	name = "bluespace smartdart"

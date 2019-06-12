@@ -45,6 +45,7 @@
 	name = "Smartdart"
 	icon_state = "dartproj"
 	damage = 0
+	var/emptrig = FALSE
 
 /obj/item/projectile/bullet/dart/syringe/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
@@ -55,7 +56,7 @@
 				for(var/datum/reagent/R in reagents.reagent_list) //OD prevention time!
 					if(istype(R, /datum/reagent/medicine)) //Is this a medicine?
 						if(M.reagents.has_reagent(R.id))
-							if(R.overdose_threshold == 0) //Is there a possible OD?
+							if(R.overdose_threshold == 0 || emptrig == TRUE) //Is there a possible OD?
 								M.reagents.add_reagent(R.id, R.volume)
 							else
 								var/transVol = CLAMP(R.volume, 0, (R.overdose_threshold - M.reagents.get_reagent_amount(R.id)) -1)
