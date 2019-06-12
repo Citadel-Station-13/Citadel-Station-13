@@ -10,18 +10,12 @@
 
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	color = BLOOD_COLOR_XENO
+	guts_colors = BLOOD_COLOR_XENO
+	racial = "alien"
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidxenogibs", 5)
-
-/obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
-	if(gib_overlay)
-		var/icon/blood = new(icon,"[icon_state]",dir)
-		var/image/gibz = new(icon, icon_state + "x-overlay")
-		blood.Blend(blood_DNA_to_color(),ICON_MULTIPLY)
-		gibz.appearance_flags = RESET_COLOR
-		add_overlay(gibz)
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/streak(list/directions)
 	set waitfor = 0

@@ -8,7 +8,7 @@
 	var/gib_overlay = FALSE
 	var/body_colors = "#e3ba84"	//a default color just in case.
 	var/guts_colors = "#4c276d"
-	var/racial = "c"
+	var/racial = "carbon"
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -24,9 +24,9 @@
 		colorlist[index] = colorlist[index]/255
 	cut_overlays()
 	if(gib_overlay)
-		var/mutable_appearance/gibs = new(icon, "[icon_state]_[racial]_[gib_overlay]")
+		var/image/gibs = image(icon, "[icon_state]_[racial]_[gib_overlay]")
 		gibs.color = colorlist
-		add_overlay(gibs)
+		icon_state = gibs
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
