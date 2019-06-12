@@ -53,7 +53,7 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
-		reagents.trans_to(H,10) //Transfers the cream pies total volume of reagents to target on it
+		reagents.trans_to(H,15) //Transfers the cream pies total volume of reagents to target on it
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
