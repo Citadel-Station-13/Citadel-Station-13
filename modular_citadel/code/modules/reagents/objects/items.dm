@@ -28,8 +28,8 @@
 			add_fingerprint(user)
 			return
     . = ..()
-    if(. & COMPONENT_NO_INTERACT)
-        return
+	if(. & COMPONENT_NO_INTERACT)
+		return
 	var/I = user.get_active_held_item()
 	if(!I)
 		user.put_in_active_hand(src)
@@ -97,7 +97,7 @@
 
 /obj/item/FermiChem/pHmeter/afterattack(atom/A, mob/user, proximity)
     . = ..()
-    if(!istype(A, obj/item/reagent_containers))
+    if(!istype(A, /obj/item/reagent_containers))
         return
     var/obj/item/reagent_containers/cont = A
     if(LAZYLEN(cont.reagents.reagent_list) == null)

@@ -3,7 +3,7 @@
 		message = trauma.on_say(message)
 	message = ..(message)
 
-	/obj/item/organ/vocal_cords/velvet/Vc = getorganslot(ORGAN_SLOT_VOICE)
+	var/obj/item/organ/vocal_cords/velvet/Vc = getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		velvetspeech(message, src)
 

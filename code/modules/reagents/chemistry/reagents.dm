@@ -34,10 +34,10 @@
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
 	//Fermichem vars:
-	var/purity = 1
-	var/addProc = FALSE
-	var/loc = null //Should be the creation location!
-	var/pH = 7
+	var/purity = 1 //How pure a chemical is from 0 - 1.
+	var/addProc = FALSE //If the chemical should force an on_new() call
+	var/turf/loc = null //Should be the creation location!
+	var/pH = 7 //pH of the specific reagent, used for calculating the sum pH of a holder.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

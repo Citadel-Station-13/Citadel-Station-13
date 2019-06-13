@@ -219,9 +219,10 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
 	mental_capacity = 500 - B.get_brain_damage()
-	if(M.ishuman)//Prefs
-		if(!M.canbearoused)
-			var/lewd = FALSE
+	var/mob/living/carbon/human/H = owner
+	if(H)//Prefs
+		if(!H.canbearoused)
+			H.lewd = FALSE
 	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='[(owner.lewd?"big love":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")

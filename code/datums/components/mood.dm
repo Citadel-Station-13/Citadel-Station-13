@@ -179,7 +179,7 @@
 		amount = sanity - 0.5
 
 	// Disturbed stops you from getting any more sane
-	if(parent.has_trait(TRAIT_UNSTABLE))
+	if(master.has_trait(TRAIT_UNSTABLE))
 		sanity = min(amount,sanity)
 	else
 		sanity = amount
