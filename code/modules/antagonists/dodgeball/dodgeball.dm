@@ -67,7 +67,6 @@
 	mine.pickup(H) //For the stun shielding
 	H.put_in_hands(mine)
 
-
 	var/obj/item/bloodcrawl/antiwelder = new(H)
 	antiwelder.name = "compulsion of honor"
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
@@ -99,7 +98,7 @@
 		H.gib()
 
 /obj/item/toy/beach_ball/doomball/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
