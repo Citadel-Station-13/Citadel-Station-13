@@ -37,16 +37,16 @@
 //TRAIT_AGEUSIA players can't taste, unless it's burning them.
 //10 sips of a strongly acidic substance will burn your tongue.
 /mob/living/carbon/taste(datum/reagents/from)
-	var/obj/item/organ/tongue/T = src.getorganslot("tongue")
+	var/obj/item/organ/tongue/T = getorganslot("tongue")
 	if (!T)
 		return
-	..()
+	.=..()
 	if ((from.pH > 12.5) || (from.pH < 1.5))
 		to_chat(src, "<span class='warning'>You taste chemical burns!</span>")
 		T.adjustTongueLoss(src, 4)
 	if(istype(T, /obj/item/organ/tongue/cybernetic))
 		to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the liquid.</span>")
-		src.say("The pH is appropriately [round(from.pH, 1)].")
+		say("The pH is appropriately [round(from.pH, 1)].")
 		return
 	if (!has_trait(TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
 		switch(from.pH)
