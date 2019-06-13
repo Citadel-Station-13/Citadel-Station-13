@@ -45,9 +45,9 @@
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/shorts/black(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/collectable/tophat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
 	for(var/obj/item/pinpointer/nuke/P in H)
@@ -61,12 +61,19 @@
 	W.item_flags |= NODROP
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
 	mine = new(H)
 //	if(!GLOB.doomballer)
 //		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 //	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(mine)
+
+
+	var/obj/item/bloodcrawl/antiwelder = new(H)
+	antiwelder.name = "compulsion of honor"
+	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
+	antiwelder.icon_state = "bloodhand_right"
+	H.put_in_hands(antiwelder)
+
 
 
 /obj/item/toy/beach_ball/doomball
@@ -90,3 +97,11 @@
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		visible_message("<span class='danger'>[H] is caught out and explodes!</span>")
 		H.gib()
+
+/obj/item/toy/beach_ball/doomball/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
+		return
+	var/mob/M = target
+	do_sparks(4, FALSE, M.loc)
+	M.gib()
+	return ..()
