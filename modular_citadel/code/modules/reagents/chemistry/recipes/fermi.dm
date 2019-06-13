@@ -131,10 +131,10 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The cells clump up into a horrifying tumour!</span>")
 
-/datum/chemical_reaction/fermi/BElarger
+/datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
-	id = "BElarger"
-	results = list("BElarger" = 0.6)
+	id = "breast_enlarger"
+	results = list("breast_enlarger" = 0.6)
 	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
@@ -154,19 +154,19 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
-/datum/chemical_reaction/fermi/BElarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+/datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")//OwO
-	var/datum/reagent/fermi/BElarger/BE = locate(/datum/reagent/fermi/BElarger) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
 	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
 	my_atom.reagents.clear_reagents()
 
-/datum/chemical_reaction/fermi/PElarger
+/datum/chemical_reaction/fermi/penis_enlarger
 	name = "Incubus draft"
-	id = "PElarger"
-	results = list("PElarger" = 0.3)
+	id = "penis_enlarger"
+	results = list("penis_enlarger" = 0.3)
 	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
@@ -186,12 +186,12 @@
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
 
-/datum/chemical_reaction/fermi/PElarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
+/datum/chemical_reaction/fermi/penis_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(get_turf(my_atom))
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")//OwO
-	var/datum/reagent/fermi/PElarger/PE = locate(/datum/reagent/fermi/PElarger) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
 

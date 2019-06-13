@@ -501,9 +501,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //Overdosing on (what is essentially space estrogen) makes you female, removes balls and shrinks your dick.
 //OD is low for a reason. I'd like fermichems to have low ODs, and dangerous ODs, and since this is a meme chem that everyone will rush to make, it'll be a lesson learnt early.
 
-/datum/reagent/fermi/BElarger
+/datum/reagent/fermi/breast_enlarger
 	name = "Sucubus milk"
-	id = "BElarger"
+	id = "breast_enlarger"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
@@ -513,7 +513,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChemVal 		= 0.3
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
-/datum/reagent/fermi/BElarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!ishuman(M)) //The monkey clause
 		if(volume >= 15) //To prevent monkey breast farms
@@ -541,7 +541,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		B.prev_size = B.size
 		B.cached_size = sizeConv[B.size]
 
-/datum/reagent/fermi/BElarger/on_mob_life(mob/living/carbon/M) //Increases breast size
+/datum/reagent/fermi/breast_enlarger/on_mob_life(mob/living/carbon/M) //Increases breast size
 	if(!ishuman(M))//Just in case
 		return..()
 
@@ -582,7 +582,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	B.update()
 	..()
 
-/datum/reagent/fermi/BElarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 
 	//Acute hepatic pharmacokinesis.
 	if(M.has_trait(TRAIT_PHARMA))
@@ -644,9 +644,9 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 //See breast explanation, it's the same but with taliwhackers
 //instead of slower movement and attacks, it slows you and increases the total blood you need in your system.
 //Since someone else made this in the time it took me to PR it, I merged them.
-/datum/reagent/fermi/PElarger // Due to popular demand...!
+/datum/reagent/fermi/penis_enlarger // Due to popular demand...!
 	name = "Incubus draft"
-	id = "PElarger"
+	id = "penis_enlarger"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
@@ -656,7 +656,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChemVal 		= 0.3
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 
-/datum/reagent/fermi/PElarger/on_mob_add(mob/living/carbon/M)
+/datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)
 	. = ..()
 	if(!ishuman(M)) //Just monkeying around.
 		if(volume >= 15) //to prevent monkey penis farms
@@ -681,7 +681,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	P.prev_length = P.length
 	P.cached_length = P.length
 
-/datum/reagent/fermi/PElarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
+/datum/reagent/fermi/penis_enlarger/on_mob_life(mob/living/carbon/M) //Increases penis size, 5u = +1 inch.
 	if(!ishuman(M))
 		return
 	var/mob/living/carbon/human/H = M
@@ -715,7 +715,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	P.update()
 	..()
 
-/datum/reagent/fermi/PElarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
+/datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	//Acute hepatic pharmacokinesis.
 	if(M.has_trait(TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot("liver")

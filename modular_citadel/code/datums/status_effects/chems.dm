@@ -30,13 +30,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/status_effect/chem/BElarger
-	id = "BElarger"
+/datum/status_effect/chem/breast_enlarger
+	id = "breast_enlarger"
 	alert_type = null
 	var/moveCalc = 1
 	var/cachedmoveCalc = 1
 
-/datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+/datum/status_effect/chem/breast_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	investigate_log("[owner]'s breasts has reached comical sizes. ID: [owner.id]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
@@ -50,7 +50,7 @@
 			to_chat(o, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
 		return ..()
 
-/datum/status_effect/chem/BElarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
+/datum/status_effect/chem/breast_enlarger/tick(mob/living/carbon/human/H)//If you try to wear clothes, you fail. Slows you down if you're comically huge
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
@@ -91,12 +91,12 @@
 			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
 		..()
 
-/datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
+/datum/status_effect/chem/breast_enlarger/on_remove(mob/living/carbon/M)
 	investigate_log("[owner]'s breasts has reduced to an acceptable size. ID: [owner.id]")
 	owner.remove_movespeed_modifier("megamilk")
 	sizeMoveMod(1)
 
-/datum/status_effect/chem/BElarger/proc/sizeMoveMod(var/value)
+/datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
 	if(cachedmoveCalc == value)
 		return
 	owner.next_move_modifier /= cachedmoveCalc
@@ -106,7 +106,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/status_effect/chem/penis_enlarger
-	id = "PElarger"
+	id = "penis_enlarger"
 	alert_type = null
 	var/bloodCalc
 	var/moveCalc

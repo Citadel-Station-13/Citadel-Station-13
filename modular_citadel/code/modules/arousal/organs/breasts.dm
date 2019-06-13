@@ -91,18 +91,18 @@
 	switch(round(cached_size))
 		if(0) //If flatchested
 			size = "flat"
-			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
-				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
+			if(owner.has_status_effect(/datum/status_effect/chem/breast_enlarger))
+				owner.remove_status_effect(/datum/status_effect/chem/breast_enlarger)
 				statuscheck = FALSE
 		if(1 to 8) //If modest size
 			size = GLOB.breasts_size_list[round(cached_size)]
-			if(owner.has_status_effect(/datum/status_effect/chem/BElarger))
-				owner.remove_status_effect(/datum/status_effect/chem/BElarger)
+			if(owner.has_status_effect(/datum/status_effect/chem/breast_enlarger))
+				owner.remove_status_effect(/datum/status_effect/chem/breast_enlarger)
 				statuscheck = FALSE
 		if(9 to 15) //If massive
 			size = GLOB.breasts_size_list[round(cached_size)]
-			if(!owner.has_status_effect(/datum/status_effect/chem/BElarger))
-				owner.apply_status_effect(/datum/status_effect/chem/BElarger)
+			if(!owner.has_status_effect(/datum/status_effect/chem/breast_enlarger))
+				owner.apply_status_effect(/datum/status_effect/chem/breast_enlarger)
 				statuscheck = TRUE
 		if(16 to INFINITY) //if Rediculous
 			size = cached_size
