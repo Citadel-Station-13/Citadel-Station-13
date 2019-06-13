@@ -325,7 +325,8 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 
-//For reviewers: If you think it's a bad idea, feel free to remove it. I won't be upset :blobcat:
+//For reviewers: If you think it's a bad idea, feel free to remove it. Removal requested, commented out until the end of review (will remove when fixing merge conflicts).
+/*
 /datum/quirk/hypno
 	name = "Hypnotherapy user"
 	desc = "You had hypnotherapy right before your shift, you're not sure it had any effects, though."
@@ -349,3 +350,4 @@
       to_chat(H, "<span class='notice'><i>[pick(seen)] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
    H.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
    qdel(src)
+ */
