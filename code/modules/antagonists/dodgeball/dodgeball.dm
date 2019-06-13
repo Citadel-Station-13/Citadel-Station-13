@@ -77,6 +77,7 @@
 
 /obj/item/toy/beach_ball/doomball
 	name = "doomball"
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dodgeball"
 	item_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
