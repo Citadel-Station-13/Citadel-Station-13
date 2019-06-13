@@ -268,3 +268,24 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("mint" = 1, "pie" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pie/baklava
+	name = "baklava"
+	desc = "A delightful healthy snake made of nut layers with thin bread."
+	icon_state = "baklava"
+	slice_path = /obj/item/reagent_containers/food/snacks/baklavaslice
+	slices_num = 6
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/baklavaslice
+	name = "baklava dish"
+	desc = "A portion delightful healthy snake made of nut layers with thin bread"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "baklavaslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#1E90FF"
+	list_reagents = list("nutriment" = 2, "vitamins" = 4)
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN
