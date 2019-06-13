@@ -1,22 +1,20 @@
-//TO TWEAK:
-
 /datum/chemical_reaction/fermi
 	mix_sound = 'sound/effects/bubbles.ogg'
 
 //Called for every reaction step
-/datum/chemical_reaction/fermi/proc/FermiCreate(holder) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/chemical_reaction/fermi/proc/FermiCreate(holder)
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder, multipler) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder, multipler)
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
-/datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE) //You can get holder by reagents.holder WHY DID I LEARN THIS NOW???
+/datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
 	if (Exploding == TRUE)
 		return
 
-	if(!pH)//Dunno how things got here without a pH.
+	if(!pH)//Dunno how things got here without a pH, but just in case
 		pH = 7
 	var/ImpureTot = 0
 	//var/pHmod = 1
@@ -66,27 +64,27 @@
 	my_atom.reagents.clear_reagents() //just in case
 	return
 
-/datum/chemical_reaction/fermi/eigenstate//done
+/datum/chemical_reaction/fermi/eigenstate
 	name = "Eigenstasium"
 	id = "eigenstate"
 	results = list("eigenstate" = 0.1)
 	required_reagents = list("bluespace" = 0.1, "stable_plasma" = 0.1, "sugar" = 0.1)
 	mix_message = "the reaction zaps suddenly!"
 	//FermiChem vars:
-	OptimalTempMin = 350 // Lower area of bell curve for determining heat based rate reactions
-	OptimalTempMax = 600 // Upper end for above
-	ExplodeTemp = 750 //Temperature at which reaction explodes
-	OptimalpHMin = 6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	OptimalpHMax = 8 // Higest value for above
-	ReactpHLim = 4 // How far out pH wil react, giving impurity place (Exponential phase)
-	CatalystFact = 0 // How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT = 0.6 // How sharp the temperature exponential curve is (to the power of value)
-	CurveSharppH = 2 // How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant = 5 //Temperature change per 1u produced
-	HIonRelease = -0.05 //pH change per 1u reaction
-	RateUpLim = 5 //Optimal/max rate possible if all conditions are perfect
-	FermiChem = TRUE//If the chemical uses the Fermichem reaction mechanics
-	FermiExplode = FALSE //If the chemical explodes in a special way
+	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
+	OptimalTempMax		= 600 // Upper end for above
+	ExplodeTemp			= 750 //Temperature at which reaction explodes
+	OptimalpHMin		= 6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax		= 8 // Higest value for above
+	ReactpHLim			= 4 // How far out pH wil react, giving impurity place (Exponential phase)
+	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
+	CurveSharpT 		= 0.6 // How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 2 // How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 5 //Temperature change per 1u produced
+	HIonRelease 		= -0.05 //pH change per 1u reaction
+	RateUpLim 			= 5 //Optimal/max rate possible if all conditions are perfect
+	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
+	FermiExplode 		= FALSE //If the chemical explodes in a special way
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
@@ -95,7 +93,7 @@
 
 
 //serum
-/datum/chemical_reaction/fermi/SDGF //DONE
+/datum/chemical_reaction/fermi/SDGF
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 0.3)
@@ -118,7 +116,7 @@
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 	PurityMin 			= 0.2
 
-/datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!! Spooky..! be careful!! TODO: Add teratoma slime subspecies
+/datum/chemical_reaction/fermi/SDGF/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)//Spawns an angery teratoma!
 	var/turf/T = get_turf(my_atom)
 	var/mob/living/simple_animal/slime/S = new(T,"grey")
 	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -158,7 +156,7 @@
 	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")//OwO
+		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a pair of breasts!</b></span>")
 	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
 	B.size = ((BE.volume * BE.purity) / 10) //half as effective.
 	my_atom.reagents.clear_reagents()
@@ -190,7 +188,7 @@
 	var/obj/item/organ/genital/penis/P = new /obj/item/organ/genital/penis(get_turf(my_atom))
 	var/list/seen = viewers(8, get_turf(my_atom))
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")//OwO
+		to_chat(M, "<span class='warning'>The reaction suddenly condenses, creating a penis!</b></span>")
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
@@ -249,7 +247,7 @@
 	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //if this appears, WHAT?!
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
 			E.purity = 0
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
@@ -272,7 +270,7 @@
 	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //if this appears, WHAT?!
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
 			E.purity = 0
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
@@ -351,10 +349,10 @@
 //There's a weird rounding error or something ugh.
 
 //Nano-b-gone
-/datum/chemical_reaction/fermi/naninte_b_gone//done test
+/datum/chemical_reaction/fermi/nanite_b_gone//done test
 	name = "Naninte bain"
-	id = "naninte_b_gone"
-	results = list("naninte_b_gone" = 4)
+	id = "nanite_b_gone"
+	results = list("nanite_b_gone" = 4)
 	required_reagents = list("synthflesh" = 1, "uranium" = 1, "iron" = 1, "salglu_solution" = 1)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
 	required_temp = 499//To force fermireactions before EMP.

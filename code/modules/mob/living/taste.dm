@@ -35,7 +35,7 @@
 //FermiChem - How to check pH of a beaker without a meter/pH paper.
 //Basically checks the pH of the holder and burns your poor tongue if it's too acidic!
 //TRAIT_AGEUSIA players can't taste, unless it's burning them.
-//10 sips of a strongly acidic substance will burn your tongue.
+//taking sips of a strongly acidic/alkaline substance will burn your tongue.
 /mob/living/carbon/taste(datum/reagents/from)
 	var/obj/item/organ/tongue/T = getorganslot("tongue")
 	if (!T)

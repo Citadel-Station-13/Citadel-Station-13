@@ -1235,31 +1235,30 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/hatmium //for hatterhat
 	name = "Hat growth serium"
 	id = "hatmium"
-	description = "A strange substance that draws in a hat from the hat dimention, "
+	description = "A strange substance that draws in a hat from the hat dimention."
 	color = "#A080H4" // rgb: , 0, 255
-	taste_description = "like jerky, whiskey and an off aftertaste of a crypt"
+	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	overdose_threshold = 25
-	var/obj/item/clothing/head/hattip/hat
 	DoNotSplit = TRUE
 	pH = 4
 
 
 /datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
 	. = ..()
-	var/items = M.get_contents()
-	for(var/obj/item/W in items)
-		if(W == M.head)
-			if(W == /obj/item/clothing/head/hattip)
-				qdel(W)
-			else
-				M.dropItemToGround(W, TRUE)
+	if(M.head)
+		var/obj/item/W = M.head
+		if(W == /obj/item/clothing/head/hattip)
+			qdel(W)
+		else
+			M.dropItemToGround(W, TRUE)
 	hat = new /obj/item/clothing/head/hattip()
 	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
 
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
-	//hat.armor = list("melee" = (1+(current_cycle/20)), "bullet" = (1+(current_cycle/20)), "laser" = (1+(current_cycle/20)), "energy" = (1+(current_cycle/20)), "bomb" = (1+(current_cycle/20)), "bio" = (1+(current_cycle/20)), "rad" = (1+(current_cycle/20)), "fire" = (1+(current_cycle/20)), "acid" = (1+(current_cycle/20)))
+	M.head
 	var/hatArmor = (1+(current_cycle/30))*purity
+	for(var/datum/armor in )
 	if(!overdosed)
 		hat.armor = list("melee" = hatArmor, "bullet" = hatArmor, "laser" = hatArmor, "energy" = hatArmor, "bomb" = hatArmor, "bio" = hatArmor, "rad" = hatArmor, "fire" = hatArmor)
 	else
@@ -1341,19 +1340,19 @@ Creating a chem with a low purity will make you permanently fall in love with so
 //Nanite removal
 //Writen by Trilby!! Embellsished a little by me.
 
-/datum/reagent/fermi/naninte_b_gone
+/datum/reagent/fermi/nanite_b_gone
 	name = "Naninte bain"
-	id = "naninte_b_gone"
+	id = "nanite_b_gone"
 	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
 	color = "#5a7267" // rgb: 90, 114, 103
 	overdose_threshold = 15
-	ImpureChem 			= "naninte_b_goneTox" //If you make an inpure chem, it stalls growth
+	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25
-	InverseChem 		= "naninte_b_goneTox" //At really impure vols, it just becomes 100% inverse
+	InverseChem 		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
 
-/datum/reagent/fermi/naninte_b_gone/on_mob_life(mob/living/carbon/C)
+/datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
@@ -1361,7 +1360,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	N.nanite_volume = -0.55//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
-/datum/reagent/fermi/naninte_b_gone/overdose_process(mob/living/carbon/C)
+/datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(prob(5))
@@ -1371,21 +1370,21 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		//empulse((get_turf(C)), 3, 2)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
-		to_chat(C, "<span class='warning'>The nanintes short circuit within your system!</b></span>")
+		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
 	N.nanite_volume = -2//12.5 seems crazy high?
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
-/datum/reagent/fermi/naninte_b_goneTox
+/datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
-	id = "naninte_b_goneTox"
+	id = "nanite_b_goneTox"
 	description = "Poorly made, and shocks you!"
 	metabolization_rate = 1
 
 //Increases shock events.
-/datum/reagent/fermi/naninte_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
+/datum/reagent/fermi/nanite_b_goneTox/on_mob_life(mob/living/carbon/C)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	if(prob(15))
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
@@ -1548,19 +1547,10 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
 	. = ..()
 	var/current_species = H.dna.species.type
-	var/datum/species/mutation = /datum/species/human/felinid
 	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1. It already requires felind too, so no new functionality there.
-		H.set_species(mutation)
-		H.gender = FEMALE
 		//exception(al) handler:
-		H.dna.features["mam_tail"] = "Cat"
-		H.dna.features["tail_human"] = "Cat"
 		H.dna.features["ears"]  = "Cat"
 		H.dna.features["mam_ears"] = "Cat"
-		H.dna.features["tail_lizard"] = "Cat"
-		H.dna.features["mam_tail"] = "Cat"
-		H.dna.features["mam_tail_animated"] = "Cat"
-		H.facial_hair_style = "Shaved"
 		H.verb_say = "mewls"
 		catshift = TRUE
 		playsound(get_turf(H), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
@@ -1583,7 +1573,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	H.forceMove(catto.loc)
 	catto.mind.transfer_to(H)
 	if(catshift == TRUE)
-		words += " ...But wait, are those ears and a tail?"
+		words += " ...But wait, are those cat ears?"
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
