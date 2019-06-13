@@ -7,8 +7,6 @@
 	item_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
-	temp_immune = TRUE //required so that things don't melt when you dispence them in the chem_master.
-	pH_immune = TRUE
 
 
 /obj/item/reagent_containers/glass/bottle/Initialize()

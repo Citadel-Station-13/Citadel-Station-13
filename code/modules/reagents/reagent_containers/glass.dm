@@ -113,7 +113,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
-	pH_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -165,7 +165,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-	pH_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
@@ -175,8 +175,8 @@
 	volume = 150
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150)
-	temp_immune = FALSE
-	pH_immune = TRUE
+	beaker_resistances &= ~FLAG_STATUS_TEMP_IMMUNE
+	beaker_resistances |= FLAG_STATUS_PH_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -191,8 +191,7 @@
 	volume = 200
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
-	temp_immune = TRUE
-	pH_immune = TRUE
+	beaker_resistances |= (1<<3)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -202,8 +201,7 @@
 	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	temp_immune = TRUE
-	pH_immune = TRUE
+	beaker_resistances |= (1<<3)
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	. = ..()
@@ -219,7 +217,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
-	pH_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -276,7 +274,7 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
-	pH_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -326,8 +324,8 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	pH_immune = FALSE
-	temp_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
+	beaker_resistances &= ~FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()
@@ -339,8 +337,8 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
-	pH_immune = FALSE
-	temp_immune = FALSE
+	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
+	beaker_resistances &= ~FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
