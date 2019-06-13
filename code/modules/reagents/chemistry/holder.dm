@@ -786,7 +786,7 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)//EDIT HERE TOO ~FERMICHEM~
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -803,7 +803,7 @@
 		if (pH <= 2)
 			var/datum/effect_system/smoke_spread/chem/s = new
 			var/turf/T = get_turf(my_atom)
-			var/datum/reagents/R = new/datum/reagents(3000)//I don't want to hold it back..!
+			var/datum/reagents/R = new/datum/reagents(3000)
 			R.add_reagent("fermiAcid", amount)
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
@@ -836,7 +836,6 @@
 	specific_heat += D.specific_heat * (amount / new_total)
 	thermal_energy += D.specific_heat * amount * reagtemp
 	chem_temp = thermal_energy / (specific_heat * new_total)
-	////
 
 	//cacluate reagent based pH shift.
 	pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
@@ -858,10 +857,8 @@
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
 			R.on_merge(data, amount, my_atom, other_purity)
-			if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
-				var/datum/reagent/fermi/Ferm = D //It is a fermichem!
-				if(Ferm.OnMobMergeCheck == TRUE) //Does this fermichem split?
-					R.on_mob_add(my_atom, amount)	//On mob add processes fermichems, splitting them into their impure and pure products. This allows them to split when merging fermichems in a mob.
+			if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
+				R.on_mob_add(my_atom, amount)
 			if(!no_react)
 				handle_reactions()
 

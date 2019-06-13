@@ -1,3 +1,8 @@
+#define FLAG_STATUS_NONE (1<<0)
+#define FLAG_STATUS_PH_IMMUNE (1<<1)
+#define FLAG_STATUS_TEMP_IMMUNE (1<<2)
+
+
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -11,8 +16,7 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/pH_immune = TRUE//true for now, just so things that shouldn't melt don't.
-	var/temp_immune = TRUE
+	var/beaker_resistances |= 1<<3
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -127,7 +131,7 @@
 //melts plastic beakers
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
-	if(!temp_immune)
+	if(!beaker_resistances = FLAG_STATUS_TEMP_IMMUNE)
 		var/list/seen = viewers(5, get_turf(src))
 		var/iconhtml = icon2html(src, seen)
 		for(var/mob/H in seen)
@@ -139,7 +143,7 @@
 //melts plastic beakers
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
-	if(!temp_immune)
+	if(!beaker_resistances = FLAG_STATUS_TEMP_IMMUNE)
 		if(reagents.chem_temp > 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(src))
 			var/iconhtml = icon2html(src, seen)
@@ -150,7 +154,7 @@
 
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
-	if(!pH_immune)
+	if(!beaker_resistances = FLAG_STATUS_PH_IMMUNE)
 		if((reagents.pH < 0.5) || (reagents.pH > 13.5))
 			var/list/seen = viewers(5, get_turf(src))
 			var/iconhtml = icon2html(src, seen)

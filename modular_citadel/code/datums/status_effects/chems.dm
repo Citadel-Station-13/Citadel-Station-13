@@ -1,10 +1,13 @@
+#define DICK_MOVEMENT_SPEED "hugedick"
+#define BREAST_MOVEMENT_SPEED "megamilk"
+
 /datum/status_effect/chem/SGDF
 	id = "SGDF"
 	var/mob/living/fermi_Clone
 	alert_type = null
 
 /datum/status_effect/chem/SGDF/on_apply()
-	investigate_log("SGDF status appied on [owner], ID: [owner.key]", INVESTIGATE_FERMICHEM)
+	log_game("FERMICHEM: SGDF status appied on [owner], ID: [owner.key]")
 	var/typepath = owner.type
 	fermi_Clone = new typepath(owner.loc)
 	var/mob/living/carbon/M = owner
@@ -20,7 +23,7 @@
 	if(owner.stat == DEAD)
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(owner.mind)
-				investigate_log("SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]", INVESTIGATE_FERMICHEM)
+				log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 				owner.mind.transfer_to(fermi_Clone)
 				to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
@@ -37,7 +40,7 @@
 	var/cachedmoveCalc = 1
 
 /datum/status_effect/chem/breast_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
-	investigate_log("[owner]'s breasts has reached comical sizes. ID: [owner.key]", INVESTIGATE_FERMICHEM)
+	log_game("FERMICHEM: [owner]'s breasts has reached comical sizes. ID: [owner.key]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -55,7 +58,7 @@
 	var/obj/item/organ/genital/breasts/B = o.getorganslot("breasts")
 	moveCalc = 1+((round(B.cached_size) - 9)/3) //Afffects how fast you move, and how often you can click.
 	if(!B)
-		o.remove_movespeed_modifier("megamilk")
+		o.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
 		sizeMoveMod(1)
 		owner.remove_status_effect(src)
 	var/items = o.get_contents()
@@ -70,14 +73,14 @@
 			var/target = o.get_bodypart(BODY_ZONE_CHEST)
 			o.apply_damage(0.1, BRUTE, target)
 		if(!B.cached_size == B.breast_values[B.prev_size])
-			o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+			o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 			sizeMoveMod(moveCalc)
 		return ..()
 	else if (B.breast_values[B.size] > B.breast_values[B.prev_size])
-		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		sizeMoveMod(moveCalc)
 	else if (B.breast_values[B.size] < B.breast_values[B.prev_size])
-		o.add_movespeed_modifier("megamilk", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+		o.add_movespeed_modifier(BREAST_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 		sizeMoveMod(moveCalc)
 	if((B.cached_size) < 16)
 		switch(round(B.cached_size))
@@ -92,8 +95,8 @@
 		..()
 
 /datum/status_effect/chem/breast_enlarger/on_remove(mob/living/carbon/M)
-	investigate_log("[owner]'s breasts has reduced to an acceptable size. ID: [owner.key]", INVESTIGATE_FERMICHEM)
-	owner.remove_movespeed_modifier("megamilk")
+	log_game("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
+	owner.remove_movespeed_modifier(BREAST_MOVEMENT_SPEED)
 	sizeMoveMod(1)
 
 /datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
@@ -112,7 +115,7 @@
 	var/moveCalc
 
 /datum/status_effect/chem/penis_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
-	investigate_log("[owner]'s dick has reached comical sizes. ID: [owner.key]", INVESTIGATE_FERMICHEM)
+	log_game("FERMICHEM: [owner]'s dick has reached comical sizes. ID: [owner.key]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
 	if(o.w_uniform || o.wear_suit)
@@ -133,7 +136,7 @@
 	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
 	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
-		o.remove_movespeed_modifier("hugedick")
+		o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 		o.ResetBloodVol()
 		owner.remove_status_effect(src)
 	var/items = o.get_contents()
@@ -145,18 +148,18 @@
 	switch(round(P.cached_length))
 		if(21)
 			to_chat(o, "<span class='notice'>Your rascally willy has become a more managable size, liberating your movements.</b></span>")
-			o.remove_movespeed_modifier("hugedick")
+			o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 			o.AdjustBloodVol(bloodCalc)
 		if(22 to INFINITY)
 			if(prob(2))
 				to_chat(o, "<span class='warning'>Your indulgent johnson is so substantial, it's taking all your blood and affecting your movements!</b></span>")
-			o.add_movespeed_modifier("hugedick", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+			o.add_movespeed_modifier(DICK_MOVEMENT_SPEED, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 			o.AdjustBloodVol(bloodCalc)
 	..()
 
 /datum/status_effect/chem/penis_enlarger/on_remove(mob/living/carbon/human/o)
-	investigate_log("[owner]'s dick has reduced to an acceptable size. ID: [owner.key]", INVESTIGATE_FERMICHEM)
-	owner.remove_movespeed_modifier("hugedick")
+	log_game("FERMICHEM: [owner]'s dick has reduced to an acceptable size. ID: [owner.key]")
+	owner.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 	owner.ResetBloodVol()
 
 
@@ -231,7 +234,7 @@
 	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='[(owner.lewd?"big love":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
-	investigate_log("MKULTRA: Status applied on [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].", INVESTIGATE_FERMICHEM)
+	log_game("FERMICHEM: MKULTRA: Status applied on [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")
 	return ..()
 
 /datum/status_effect/chem/enthrall/tick()
@@ -265,7 +268,7 @@
 		if(-1)//fully removed
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
 			owner.remove_status_effect(src)
-			investigate_log("MKULTRA: Status REMOVED from [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].", INVESTIGATE_FERMICHEM)
+			log_game("FERMICHEM: MKULTRA: Status REMOVED from [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")
 		if(0)// sleeper agent
 			if (cooldown > 0)
 				cooldown -= 1
@@ -301,7 +304,7 @@
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
 				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
-				investigate_log("MKULTRA: Status on [owner] ckey: [owner.key] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].", INVESTIGATE_FERMICHEM)
+				log_game("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].")
 			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
 				phase -= 1
@@ -540,7 +543,7 @@
 		var/cached_trigger = lowertext(trigger)
 		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
 			cTriggered = TRUE
-			investigate_log("MKULTRA: [owner] ckey: [owner.key] has been triggered with [cached_trigger] from [speaker] saying: \"[message]\". (their master being [master] ckey: [enthrallID].)", INVESTIGATE_FERMICHEM)
+			log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been triggered with [cached_trigger] from [speaker] saying: \"[message]\". (their master being [master] ckey: [enthrallID].)")
 
 			//Speak (Forces player to talk) works
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
@@ -549,7 +552,7 @@
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				to_chat(C, "<span class='notice'><i>[saytext]</i></span>")
 				(C.say(customTriggers[trigger][2]))//trigger3
-				investigate_log("MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.", INVESTIGATE_FERMICHEM)
+				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 
 			//Echo (repeats message!)
@@ -595,7 +598,7 @@
 				var/mob/living/carbon/human/o = owner
 				o.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 				tranceTime = 50
-				investigate_log("MKULTRA: [owner] ckey: [owner.key] has been tranced from previous trigger.", INVESTIGATE_FERMICHEM)
+				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been tranced from previous trigger.")
 
 
 			cTriggered = FALSE

@@ -9,11 +9,8 @@
 	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
 	var/InverseChem 		= "fermiTox" 	// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE				// If impurity is handled within the main chem itself
-	var/OnMobMergeCheck		= FALSE
-	//var/addProc 			= FALSE //When this reagent is added to a new beaker, it does something. Implemented but unused.
 
 //This should process fermichems to find out how pure they are and what effect to do.
-//TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
 	. = ..()
 	if(!M)
@@ -1251,18 +1248,19 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			qdel(W)
 		else
 			M.dropItemToGround(W, TRUE)
-	hat = new /obj/item/clothing/head/hattip()
+	var/hat = new /obj/item/clothing/head/hattip()
 	M.equip_to_slot(hat, SLOT_HEAD, 1, 1)
 
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
-	M.head
+	if(!M.head == /obj/item/clothing/head/hattip)
+		return ..()
 	var/hatArmor = (1+(current_cycle/30))*purity
-	for(var/datum/armor in )
-	if(!overdosed)
-		hat.armor = list("melee" = hatArmor, "bullet" = hatArmor, "laser" = hatArmor, "energy" = hatArmor, "bomb" = hatArmor, "bio" = hatArmor, "rad" = hatArmor, "fire" = hatArmor)
-	else
-		hat.armor = list("melee" = -hatArmor, "bullet" = -hatArmor, "laser" = -hatArmor, "energy" = -hatArmor, "bomb" = -hatArmor, "bio" = -hatArmor, "rad" = -hatArmor, "fire" = -hatArmor)
+	for(var/datum/armor/i in M.head)
+		if(!overdosed)
+			i = hatArmor
+		else
+			i = -hatArmor
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1546,8 +1544,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
 	. = ..()
-	var/current_species = H.dna.species.type
-	if((mutation != current_species) && (purity >= 0.8))//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1. It already requires felind too, so no new functionality there.
+	if(purity >= 0.8)//ONLY if purity is high, and given the stuff is random. It's very unlikely to get this to 1. It already requires felind too, so no new functionality there.
 		//exception(al) handler:
 		H.dna.features["ears"]  = "Cat"
 		H.dna.features["mam_ears"] = "Cat"

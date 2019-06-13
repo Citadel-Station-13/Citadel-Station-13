@@ -38,6 +38,7 @@
 	var/addProc = FALSE //If the chemical should force an on_new() call
 	var/turf/loc = null //Should be the creation location!
 	var/pH = 7 //pH of the specific reagent, used for calculating the sum pH of a holder.
+	var/OnMobMergeCheck = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
