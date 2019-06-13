@@ -4,7 +4,7 @@
 	alert_type = null
 
 /datum/status_effect/chem/SGDF/on_apply()
-	message_admins("SGDF status appied")
+	investigate_log("SGDF status appied on [owner], ID: [owner.id]")
 	var/typepath = owner.type
 	fermi_Clone = new typepath(owner.loc)
 	var/mob/living/carbon/M = owner
@@ -20,6 +20,7 @@
 	if(owner.stat == DEAD)
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(owner.mind)
+				investigate_log("SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.id]")
 				owner.mind.transfer_to(fermi_Clone)
 				to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
@@ -36,6 +37,7 @@
 	var/cachedmoveCalc = 1
 
 /datum/status_effect/chem/BElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+	investigate_log("[owner]'s breasts has reached comical sizes. ID: [owner.id]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
 	for(var/obj/item/W in items)
@@ -44,7 +46,6 @@
 			playsound(o.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 			to_chat(o, "<span class='warning'>Your clothes give, ripping into peices under the strain of your swelling breasts! Unless you manage to reduce the size of your breasts, there's no way you're going to be able to put anything on over these melons..!</b></span>")
 			o.visible_message("<span class='boldnotice'>[o]'s chest suddenly bursts forth, ripping their clothes off!'</span>")
-	//message_admins("BElarge started!")
 		else
 			to_chat(o, "<span class='notice'>Your bountiful bosom is so rich with mass, you seriously doubt you'll be able to fit any clothes over it.</b></span>")
 		return ..()
@@ -91,6 +92,7 @@
 		..()
 
 /datum/status_effect/chem/BElarger/on_remove(mob/living/carbon/M)
+	investigate_log("[owner]'s breasts has reduced to an acceptable size. ID: [owner.id]")
 	owner.remove_movespeed_modifier("megamilk")
 	sizeMoveMod(1)
 
@@ -110,6 +112,7 @@
 	var/moveCalc
 
 /datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+	investigate_log("[owner]'s dick has reached comical sizes. ID: [owner.id]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
 	if(o.w_uniform || o.wear_suit)
@@ -152,6 +155,7 @@
 	..()
 
 /datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
+	investigate_log("[owner]'s dick has reduced to an acceptable size. ID: [owner.id]")
 	owner.remove_movespeed_modifier("hugedick")
 	owner.ResetBloodVol()
 
@@ -210,11 +214,12 @@
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
 	if(!E)
 		message_admins("WARNING: FermiChem: No master found in thrall, did you bus in the chem? You need to set up the vars manually if it's not reacted/bussed. Someone set up the reaction incorrectly if not (Don't use donor blood). Console them with a fermiplush maybe?")
+		remove(src)
 	enthrallID = E.creatorID
 	enthrallGender = E.creatorGender
 	master = get_mob_by_key(enthrallID)
 	//if(M.ckey == enthrallID)
-	//	owner.remove_status_effect(src)//This shouldn't happen, but just in case, also it's not worth the overhead of giving someone themselves; they can't proc themselves as velvet removes them from the list.
+	//	owner.remove_status_effect(src)//At the moment, a user can enthrall themselves, toggle this back in if that should be removed.
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/owner_resist)))) //Do resistance calc if resist is pressed#
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN) //It's their brain!
@@ -226,6 +231,7 @@
 	var/message = "[(owner.lewd?"I am a good pet for [enthrallGender].":"[master] is a really inspirational person!")]"
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='[(owner.lewd?"big love":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
+	investigate_log("MKULTRA: Status applied on [owner] ckey: [owner.id] with a master of [master] ckey: [enthrallID].")
 	return ..()
 
 /datum/status_effect/chem/enthrall/tick()
@@ -259,6 +265,7 @@
 		if(-1)//fully removed
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
 			owner.remove_status_effect(src)
+			investigate_log("MKULTRA: Status REMOVED from [owner] ckey: [owner.id] with a master of [master] ckey: [enthrallID].")
 		if(0)// sleeper agent
 			if (cooldown > 0)
 				cooldown -= 1
@@ -294,13 +301,13 @@
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
 				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
+				investigate_log("MKULTRA: Status on [owner] ckey: [owner.id] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].")
 			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
 				phase -= 1
 				resistanceTally = 0
 				resistGrowth = 0
 				to_chat(owner, "<span class='notice'><i>You manage to shake some of the effects from your addled mind, however you can still feel yourself drawn towards [master].</i></span>")
-				//owner.remove_status_effect(src) //If resisted in phase 1, effect is removed. Not at the moment,
 			if(prob(10))
 				if(owner.lewd)
 					to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
@@ -533,6 +540,7 @@
 		var/cached_trigger = lowertext(trigger)
 		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
 			cTriggered = TRUE
+			investigate_log("MKULTRA: [owner] ckey: [owner.id] has been triggered with [cached_trigger] from [speaker] saying: \"[message]\". (their master being [master] ckey: [enthrallID].)")
 
 			//Speak (Forces player to talk) works
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
@@ -541,6 +549,7 @@
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				to_chat(C, "<span class='notice'><i>[saytext]</i></span>")
 				(C.say(customTriggers[trigger][2]))//trigger3
+				investigate_log("MKULTRA: [owner] ckey: [owner.id] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 
 			//Echo (repeats message!) works
@@ -586,6 +595,7 @@
 				var/mob/living/carbon/human/o = owner
 				o.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 				tranceTime = 50
+				investigate_log("MKULTRA: [owner] ckey: [owner.id] has been tranced from previous trigger.")
 
 
 			cTriggered = FALSE
@@ -594,7 +604,6 @@
 /datum/status_effect/chem/enthrall/proc/owner_resist()
 	var/mob/living/carbon/M = owner
 	to_chat(owner, "<span class='notice'><i>You attempt to fight against against [(owner.lewd?"[enthrallGender]":"[master]")]'s influence!'</i></span>")
-	message_admins("Enthrall processing for [M]: enthrallTally: [enthrallTally], resistanceTally: [resistanceTally]")
 
 	//Able to resist checks
 	if (status == "Sleeper" || phase == 0)
@@ -628,7 +637,7 @@
 		deltaResist += 0.1 //Though I commend your spamming efforts.
 		return
 	else
-		deltaResist = 1.7 + resistGrowth
+		deltaResist = 1.8 + resistGrowth
 		resistGrowth += 0.05
 
 	//distance modifer

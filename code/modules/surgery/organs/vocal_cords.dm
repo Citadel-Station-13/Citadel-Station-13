@@ -1225,102 +1225,12 @@
 					E.status = "charge"
 					E.cooldown += 10
 
-
-	/* THE MAYBE PILE
-	//MOVE
-	else if((findtext(message, move_words)))
-		var/direction
-		if(findtext(message, up_words))
-			direction = NORTH
-		else if(findtext(message, down_words))
-			direction = SOUTH
-		else if(findtext(message, left_words))
-			direction = WEST
-		else if(findtext(message, right_words))
-			direction = EAST
-		for(var/iter in 1 to 5 * power_multiplier)
-			for(var/V in listeners)
-				var/mob/living/L = V
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (iter - 1))
-
-	//HELP INTENT
-	else if((findtext(message, helpintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HELP), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//DISARM INTENT
-	else if((findtext(message, disarmintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_DISARM), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//GRAB INTENT
-	else if((findtext(message, grabintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_GRAB), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//FLIP
-	else if((findtext(message, flip_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			L.emote("flip")
-
-	//SPEAK (Check what this does)
-	else if((findtext(message, speak_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
-			i++
-
-
-	//SIT
-	else if((findtext(message, sit_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			for(var/obj/structure/chair/chair in get_turf(L))
-				chair.buckle_mob(L)
-				break
-
-	//STAND UP
-	else if((findtext(message, stand_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			if(L.buckled && istype(L.buckled, /obj/structure/chair))
-				L.buckled.unbuckle_mob(L)
-
-	//DANCE
-	else if((findtext(message, dance_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "dance"), 5 * i)
-			i++
-
-	//PLAY DEAD
-	else if((findtext(message, deathgasp_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
-			i++
-	*/
 	else
 		return
 	if(message_admins)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	investigate_log("[key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 
 	return
