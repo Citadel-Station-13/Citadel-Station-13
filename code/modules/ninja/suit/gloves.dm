@@ -37,7 +37,7 @@
 	var/mindrain = 200
 	var/maxdrain = 400
 
-	var/stunforce = 140 //same as stunbaton, adjustable
+	var/stunforce = 140 //Same as stunbaton, adjustable.
 
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
