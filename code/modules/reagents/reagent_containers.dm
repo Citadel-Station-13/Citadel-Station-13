@@ -11,7 +11,7 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/pH_immunne = TRUE//true for now, just so things that shouldn't melt don't.
+	var/pH_immune = TRUE//true for now, just so things that shouldn't melt don't.
 	var/temp_immune = TRUE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
@@ -152,7 +152,7 @@
 
 //melts glass beakers
 /obj/item/reagent_containers/proc/pH_check()
-	if(pH_immunne == TRUE)
+	if(pH_immune == TRUE)
 		return
 	else if((reagents.pH < 0.5) || (reagents.pH > 13.5))
 		var/list/seen = viewers(5, get_turf(src))
