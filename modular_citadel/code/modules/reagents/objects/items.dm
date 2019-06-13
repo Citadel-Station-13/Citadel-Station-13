@@ -28,10 +28,11 @@
 			add_fingerprint(user)
 			return
     . = ..()
+    if(. & COMPONENT_NO_INTERACT)
+        return
 	var/I = user.get_active_held_item()
 	if(!I)
 		user.put_in_active_hand(src)
-	return
 
 /obj/item/FermiChem/pHpaper
     name = "pH indicator strip"
@@ -50,7 +51,7 @@
     if(used == TRUE)
         to_chat(user, "<span class='warning'>[user] has already been used!</span>")
         return
-    if(LAZYLEN(cont.reagents.reagent_list) == null)
+    if(LAZYLEN(cont.reagents.reagent_list))
         return
     switch(round(cont.reagents.pH, 1))
         if(14 to INFINITY)
@@ -94,9 +95,11 @@
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
 
-/obj/item/FermiChem/pHmeter/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
-    if(!istype(cont))
+/obj/item/FermiChem/pHmeter/afterattack(atom/A, mob/user, proximity)
+    . = ..()
+    if(!istype(A, obj/item/reagent_containers))
         return
+    var/obj/item/reagent_containers/cont = A
     if(LAZYLEN(cont.reagents.reagent_list) == null)
         return
     to_chat(user, "<span class='notice'>The pH meter beeps and displays [round(cont.reagents.pH, 0.1)]</span>")
