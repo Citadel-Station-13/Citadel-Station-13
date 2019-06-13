@@ -62,8 +62,7 @@
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/proc/adjustLungLoss(damage_mod, mob/living/carbon/M) //damage might be too low atm.
-	message_admins("[M] lung damage: [damage_mod], damage: [damage]")
-	if (maxHealth == "plasma")
+	if (maxHealth == INFINITY)
 		return
 	if(damage+damage_mod < 0)
 		damage = 0
@@ -446,7 +445,7 @@
 	safe_oxygen_max = 0 // Like, at all.
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
-	maxHealth = "plasma"//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
+	maxHealth = INFINITY//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"

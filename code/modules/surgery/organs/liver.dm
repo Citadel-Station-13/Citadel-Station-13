@@ -1,6 +1,7 @@
 #define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
+#define LIVER_SWELLING_MOVE_MODIFY "pharma"
 
 /obj/item/organ/liver
 	name = "liver"
@@ -57,7 +58,7 @@
 
 //Just in case
 /obj/item/organ/liver/Remove(mob/living/carbon/M, special = 0)
-	M.remove_movespeed_modifier("pharma")
+	M.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
 	M.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
 	sizeMoveMod(1, M)
 
@@ -69,7 +70,7 @@
 	if(prob(5))
 		to_chat(owner, "<span class='notice'>You feel a stange ache in your side, almost like a sitch. This pain is affecting your movements and making you feel lightheaded.</span>")
 	var/mob/living/carbon/human/H = owner
-	H.add_movespeed_modifier("pharma", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+	H.add_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
 	H.AdjustBloodVol(moveCalc/3)
 	sizeMoveMod(moveCalc, H)
 
