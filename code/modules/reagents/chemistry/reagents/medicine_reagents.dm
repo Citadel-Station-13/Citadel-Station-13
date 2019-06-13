@@ -334,11 +334,6 @@
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = TRUE
-	//Fermichem
-	if (M.reagents.pH < 5.5)
-		M.reagents.pH += 0.2
-	else if (M.reagents.pH > 9.5)
-		M.reagents.pH -= 0.2
 	..()
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
