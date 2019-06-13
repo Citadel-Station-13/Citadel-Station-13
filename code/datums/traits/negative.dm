@@ -324,7 +324,6 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
-<<<<<<< HEAD
 
 //For reviewers: If you think it's a bad idea, feel free to remove it. Removal requested, commented out until the end of review (will remove when fixing merge conflicts).
 /*
@@ -352,5 +351,3 @@
    H.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
    qdel(src)
  */
-=======
->>>>>>> f3a3e4c47ae527bd576fcee254836e1c1d8bdfcb

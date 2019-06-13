@@ -55,7 +55,6 @@
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		//switch(blood_volume) Used to be a switch statement; now it uses ifs (so blood ratio can work.) Check my logic please.
 		switch(blood_volume * INVERSE(blood_ratio))
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
