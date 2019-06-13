@@ -9,17 +9,6 @@ line=$(head -n 1 Dockerfile)
 if [[ $line != *"$BYOND_MAJOR.$BYOND_MINOR"* ]]; then
   echo "Dockerfile BYOND version in FROM command does not match dependencies.sh (Or it's not on line 1)!"
   exit 1
-#!/usr/bin/env bash
-
-set -e
-
-source dependencies.sh
-
-#ensure the Dockerfile version matches the dependencies.sh version
-line=$(head -n 1 Dockerfile)
-if [[ $line != *"$BYOND_MAJOR.$BYOND_MINOR"* ]]; then
-  echo "Dockerfile BYOND version in FROM command does not match dependencies.sh (Or it's not on line 1)!"
-  exit 1
 fi
 
 if [ $BUILD_TOOLS = false ] && [ $BUILD_TESTING = false ]; then
