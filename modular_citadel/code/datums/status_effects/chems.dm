@@ -105,13 +105,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/status_effect/chem/PElarger
+/datum/status_effect/chem/penis_enlarger
 	id = "PElarger"
 	alert_type = null
 	var/bloodCalc
 	var/moveCalc
 
-/datum/status_effect/chem/PElarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
+/datum/status_effect/chem/penis_enlarger/on_apply(mob/living/carbon/human/H)//Removes clothes, they're too small to contain you. You belong to space now.
 	investigate_log("[owner]'s dick has reached comical sizes. ID: [owner.id]")
 	var/mob/living/carbon/human/o = owner
 	var/items = o.get_contents()
@@ -127,7 +127,7 @@
 	return ..()
 
 
-/datum/status_effect/chem/PElarger/tick(mob/living/carbon/M)
+/datum/status_effect/chem/penis_enlarger/tick(mob/living/carbon/M)
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
@@ -154,7 +154,7 @@
 			o.AdjustBloodVol(bloodCalc)
 	..()
 
-/datum/status_effect/chem/PElarger/on_remove(mob/living/carbon/human/o)
+/datum/status_effect/chem/penis_enlarger/on_remove(mob/living/carbon/human/o)
 	investigate_log("[owner]'s dick has reduced to an acceptable size. ID: [owner.id]")
 	owner.remove_movespeed_modifier("hugedick")
 	owner.ResetBloodVol()

@@ -36,28 +36,28 @@
 		if(0 to 4) //If modest size
 			length = cached_length
 			size = 1
-			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
-				o.remove_status_effect(/datum/status_effect/chem/PElarger)
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
 		if(5 to 10) //If modest size
 			length = cached_length
 			size = 2
-			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
-				o.remove_status_effect(/datum/status_effect/chem/PElarger)
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
 		if(11 to 20) //If massive
 			length = cached_length
 			size = 3
-			if(owner.has_status_effect(/datum/status_effect/chem/PElarger))
-				o.remove_status_effect(/datum/status_effect/chem/PElarger)
+			if(owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.remove_status_effect(/datum/status_effect/chem/penis_enlarger)
 		if(21 to 35) //If massive and due for large effects
 			length = cached_length
 			size = 3
-			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))
-				o.apply_status_effect(/datum/status_effect/chem/PElarger)
+			if(!owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.apply_status_effect(/datum/status_effect/chem/penis_enlarger)
 		if(36 to INFINITY) //If comical
 			length = cached_length
 			size = 4 //no new sprites for anything larger yet
-			if(!owner.has_status_effect(/datum/status_effect/chem/PElarger))
-				o.apply_status_effect(/datum/status_effect/chem/PElarger)
+			if(!owner.has_status_effect(/datum/status_effect/chem/penis_enlarger))
+				o.apply_status_effect(/datum/status_effect/chem/penis_enlarger)
 
 	if (round(length) > round(prev_length))
 		to_chat(o, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
