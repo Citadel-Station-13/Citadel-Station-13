@@ -109,7 +109,7 @@ It is possible to destroy the net by the occupant or someone else.
 	new /obj/effect/temp_visual/dir_setting/ninja/phase(affecting.drop_location(), affecting.dir)
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(attack_generic(user, 15, BRUTE, "melee", 0)) //Aliens normally deal 60 damage to structures. They'd one-shot nets without this.
+	if(attack_generic(user, 15, BRUTE, "melee", 0)) //Aliens normally deal 60 damage to structures. They would one-shot nets without this.
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 /obj/structure/energy_net/user_buckle_mob(mob/living/M, mob/living/user)
