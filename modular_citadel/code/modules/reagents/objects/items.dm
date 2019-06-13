@@ -7,7 +7,6 @@
     var/numberOfPages = 50
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
-    //set flammable somehow
 
 //A little janky with pockets
 /obj/item/FermiChem/pHbooklet/attack_hand(mob/user)
@@ -28,7 +27,7 @@
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			add_fingerprint(user)
 			return
-    ..()
+    . = ..()
 	var/I = user.get_active_held_item()
 	if(!I)
 		user.put_in_active_hand(src)
@@ -39,12 +38,11 @@
     desc = "A piece of paper that will change colour depending on the pH of a solution."
     icon_state = "pHpaper"
     icon = 'modular_citadel/icons/obj/FermiChem.dmi'
-    //item_flags = NOBLUDGEON
+    item_flags = NOBLUDGEON
     color = "#f5c352"
     var/used = FALSE
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
-    //set flammable somehow
 
 /obj/item/FermiChem/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
     if(!istype(cont))
