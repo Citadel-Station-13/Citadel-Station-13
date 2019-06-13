@@ -62,9 +62,9 @@
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	mine = new(H)
-//	if(!GLOB.doomballer)
-//		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
-//	sword.pickup(H) //For the stun shielding
+	if(!GLOB.doomballer)
+		mine.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
+	mine.pickup(H) //For the stun shielding
 	H.put_in_hands(mine)
 
 
@@ -105,3 +105,4 @@
 	do_sparks(4, FALSE, M.loc)
 	M.gib()
 	return ..()
+
