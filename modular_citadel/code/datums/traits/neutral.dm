@@ -34,7 +34,7 @@
 
 /datum/quirk/pharmacokinesis //Prevents unwanted organ additions.
 	name = "Acute hepatic pharmacokinesis"
-	desc = "You've a rare genetic disorder that causes certain chemicals to be absorbed by your liver instead."
+	desc = "You've a rare genetic disorder that causes Incubus draft and Sucubus milk to be absorbed by your liver instead."
 	value = 0
 	mob_trait = TRAIT_PHARMA
 	lose_text = "<span class='notice'>Your liver feels different.</span>"
