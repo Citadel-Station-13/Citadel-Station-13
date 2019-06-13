@@ -2,8 +2,8 @@
 //Fun chems for all the family
 
 /datum/reagent/fermi
-	name = "Fermi" 	//Why did I putthis here?
-	id = "fermi"	//It's meeee
+	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
+	id = "fermi"
 	taste_description	= "affection and love!"
 	var/ImpureChem 			= "fermiTox"			// What chemical is metabolised with an inpure reaction
 	var/InverseChemVal 		= 0.25					// If the impurity is below 0.5, replace ALL of the chem with InverseChem upon metabolising
@@ -23,14 +23,14 @@
 	if (purity == 1 || DoNotSplit == TRUE)
 		return
 	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(src.id, amount, FALSE)
-		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
+		M.reagents.remove_reagent(id, amount, FALSE)
+		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
 		return
 	else
 		//var/pureVol = amount * puritys
 		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-		M.reagents.remove_reagent(src.id, (impureVol), FALSE)
-		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
+		M.reagents.remove_reagent(id, (impureVol), FALSE)
+		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
 	return
 
 //When merging two fermichems, see above
@@ -39,23 +39,23 @@
 	if(!ishuman(M))
 		return
 	if (purity < 0)
-		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
-	if (purity == 1 || src.DoNotSplit == TRUE)
+		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+	if (purity == 1 || DoNotSplit == TRUE)
 		return
-	else if (src.InverseChemVal > purity)
-		M.reagents.remove_reagent(src.id, amount, FALSE)
-		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
+	else if (InverseChemVal > purity)
+		M.reagents.remove_reagent(id, amount, FALSE)
+		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
 		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
 			if(R.name == "")
-				R.name = src.name//Negative effects are hidden
+				R.name = name//Negative effects are hidden
 		return
 	else
 		var/impureVol = amount * (1 - purity)
-		M.reagents.remove_reagent(src.id, impureVol, FALSE)
-		M.reagents.add_reagent(src.ImpureChem, impureVol, FALSE, other_purity = 1)
+		M.reagents.remove_reagent(id, impureVol, FALSE)
+		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
 		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
 			if(R.name == "")
-				R.name = src.name//Negative effects are hidden
+				R.name = name//Negative effects are hidden
 	return
 
 
@@ -83,7 +83,6 @@
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
 	var/location_created
-	//var/turf/open/location_created
 	var/turf/open/location_return = null
 	var/addictCyc1 = 0
 	var/addictCyc2 = 0
@@ -91,7 +90,6 @@
 	var/addictCyc4 = 0
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
-	mob/living/carbon/purgeBody
 	pH = 3.7
 
 //Main functions
@@ -125,21 +123,21 @@
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	M.reagents.remove_reagent(src.id, 0.5)//So you're not stuck for 10 minutes teleporting
+	M.reagents.remove_reagent(id, 0.5)//So you're not stuck for 10 minutes teleporting
 	..()
 
 //Addiction
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
-	switch(src.addictCyc1)
+	switch(addictCyc1)
 		if(1)
 			to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
 			M.Jitter(10)
 	M.nutrition = M.nutrition - (M.nutrition/15)
-	src.addictCyc1++
+	addictCyc1++
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
-	switch(src.addictCyc2)
+	switch(addictCyc2)
 		if(0)
 			to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
 			M.Jitter(50)
@@ -154,13 +152,13 @@
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
 	do_sparks(5,FALSE,I)
-	src.addictCyc2++
+	addictCyc2++
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
 
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
-	switch(src.addictCyc3)
+	switch(addictCyc3)
 		if(0)
 			M.Jitter(100)
 			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
@@ -182,34 +180,33 @@
 			do_sparks(5,FALSE,C)
 			qdel(C) //Deletes CLONE, or at least I hope it is.
 			M.visible_message("[M] is snapped across to a different alternative reality!")
-			src.addictCyc3 = 0 //counter
+			addictCyc3 = 0 //counter
 			fermi_Tclone = null
-	src.addictCyc3++
+	addictCyc3++
 	do_teleport(M, get_turf(M), 2, no_effects=TRUE) //Teleports player randomly
 	do_sparks(5,FALSE,M)
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
-	switch(src.addictCyc4)
-		if(0)
-			do_sparks(5,FALSE,M)
-			do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
-			do_sparks(5,FALSE,M)
-			M.Sleeping(50, 0)
-			M.Jitter(50)
-			M.Knockdown(0)
-			to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
-			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
-			for(var/datum/mood_event/Me in M)
-				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
+	if(addictCyc4 == 0)
+		do_sparks(5,FALSE,M)
+		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
+		do_sparks(5,FALSE,M)
+		M.Sleeping(50, 0)
+		M.Jitter(50)
+		M.Knockdown(0)
+		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
+		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
+		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
+		for(var/datum/mood_event/Me in M)
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
 
 
 	if(prob(20))
 		do_sparks(5,FALSE,M)
-	src.addictCyc4++
-	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[src.id]_overdose")//holdover until above fix works
+	addictCyc4++
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_overdose")//holdover until above fix works
 	..()
 
 //eigenstate END
@@ -283,7 +280,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
 		if(20 to INFINITY)
-			if(LAZYLEN(candies) && src.playerClone == FALSE) //If there's candidates, clone the person and put them in there!
+			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Ghost candidate found! [candies] is becoming a clone of [M]! Hee~!! Exciting!!")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
@@ -321,11 +318,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
 				SM.reagents.add_reagent("SDGFheal", volume)
-				M.reagents.remove_reagent(src.id, src.volume)
+				M.reagents.remove_reagent(id, volume)
 				return
 
-			else if(src.playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
-				src.unitCheck = TRUE
+			else if(playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
+				unitCheck = TRUE
 				if(M.has_status_effect(/datum/status_effect/chem/SGDF)) // Heal the user if they went to all this trouble to make it and can't get a clone, the poor fellow.
 					switch(current_cycle)
 						if(21)
@@ -336,7 +333,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.adjustBruteLoss(-1, 0)
 							M.adjustFireLoss(-1, 0)
 							M.heal_bodypart_damage(1,1)
-							M.reagents.remove_reagent(src.id, 1)//faster rate of loss.
+							M.reagents.remove_reagent(id, 1)//faster rate of loss.
 				else //If there's no ghosts, but they've made a large amount, then proceed to make flavourful clone, where you become fat and useless until you split.
 					switch(current_cycle)
 						if(21)
@@ -363,7 +360,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 						if(87 to INFINITY)
-							M.reagents.remove_reagent(src.id, src.volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
+							M.reagents.remove_reagent(id, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 
 
 	..()
@@ -383,8 +380,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.next_move_modifier = 1
 		if (M.nutrition < 1500)
 			M.nutrition += 250
-	else if (src.unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
-		src.unitCheck = FALSE
+	else if (unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
+		unitCheck = FALSE
 		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
@@ -465,7 +462,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
 
-				M.reagents.remove_reagent(src.id, 20)
+				M.reagents.remove_reagent(id, 20)
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
 				M.nutrition = startHunger - 500
@@ -475,7 +472,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.real_name = "Living teratoma"//horrifying!!
 				S.rabid = 1//Make them an angery boi
 				//S.updateappearance(mutcolor_update=1)
-				M.reagents.remove_reagent(src.id, src.volume)
+				M.reagents.remove_reagent(id, volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 		if(87 to INFINITY)//purges chemical fast, producing a "slime"  for each one. Said slime is weak to fire. TODO: turn tumour slime into real variant.
 			M.adjustToxLoss(1, 0)
@@ -528,7 +525,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.Knockdown(50)
 			M.Stun(50)
 			B.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(src.id, src.volume)
+		M.reagents.remove_reagent(id, volume)
 		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
@@ -569,7 +566,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			nB.cached_size = 0
 			nB.prev_size = 0
 			to_chat(M, "<span class='warning'>Your chest feels warm, tingling with newfound sensitivity.</b></span>")
-			M.reagents.remove_reagent(src.id, 5)
+			M.reagents.remove_reagent(id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	B.cached_size = B.cached_size + 0.1
@@ -670,7 +667,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			M.Knockdown(50)
 			M.Stun(50)
 			P.throw_at(T2, 8, 1)
-		M.reagents.remove_reagent(src.id, src.volume)
+		M.reagents.remove_reagent(id, volume)
 		return
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
@@ -702,7 +699,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			to_chat(M, "<span class='warning'>Your groin feels warm, as you feel a newly forming bulge down below.</b></span>")
 			nP.cached_length = 1
 			nP.prev_length = 1
-			M.reagents.remove_reagent(src.id, 5)
+			M.reagents.remove_reagent(id, 5)
 			P = nP
 
 	P.cached_length = P.cached_length + 0.1
@@ -821,7 +818,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(src.id, current_cycle/2, FALSE)
+	M.reagents.remove_reagent(id, current_cycle/2, FALSE)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
@@ -1095,7 +1092,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 					seen = seen - victim
 			if(!seen)
 				return
-			M.reagents.remove_reagent(src.id, src.volume)
+			M.reagents.remove_reagent(id, volume)
 			FallInLove(M, pick(seen))
 			return
 		else // If someone else drinks it, the creator falls in love with them!
@@ -1103,7 +1100,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
 				return
 			if((C in viewers(7, get_turf(M))) && (C.client))
-				M.reagents.remove_reagent(src.id, src.volume)
+				M.reagents.remove_reagent(id, volume)
 				FallInLove(C, M)
 			return
 		if(volume < 1)//You don't get to escape that easily
@@ -1454,7 +1451,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	else
-		holder.remove_reagent("fermiTest", src.volume)//Avoiding recurrsion
+		holder.remove_reagent("fermiTest", volume)//Avoiding recurrsion
 	var/location = get_turf(holder.my_atom)
 	if(purity < 0.34 || purity == 1)
 		var/datum/effect_system/foam_spread/s = new()
@@ -1502,15 +1499,15 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/fermiABuffer/on_new(datapH)
-	src.data = datapH
+	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (src.volume*3)))/(holder.total_volume + (src.volume*3)) //Shouldn't be required
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3)) //Shouldn't be required
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(src.id, src.volume)
+	holder.remove_reagent(id, volume)
 	..()
 
 /datum/reagent/fermi/fermiBBuffer
@@ -1522,15 +1519,15 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	pH = 11
 
 /datum/reagent/fermi/fermiBBuffer/on_new(datapH)
-	src.data = datapH
+	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (src.volume*3)))/(holder.total_volume + (src.volume*3)) //Shouldn't be required Might be..?
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3)) //Shouldn't be required Might be..?
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(src.id, src.volume)
+	holder.remove_reagent(id, volume)
 	..()
 
 //ReagentVars
