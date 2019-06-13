@@ -139,6 +139,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/belt/utility/full,
+/obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "A" = (
@@ -280,6 +281,11 @@
 "U" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/fans/tiny,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 
@@ -554,7 +560,7 @@ b
 c
 d
 d
-p
+V
 u
 B
 E
