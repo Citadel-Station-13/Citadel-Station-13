@@ -167,7 +167,7 @@
 	HandleNutrition(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)//I'm sure bunging this in here will have no negative repercussions.
-	var/mob/living/owner = parent
+	var/mob/living/master = parent
 
 	if(amount == sanity)
 		return
@@ -179,12 +179,11 @@
 		amount = sanity - 0.5
 
 	// Disturbed stops you from getting any more sane
-	if(owner.has_trait(TRAIT_UNSTABLE))
+	if(parent.has_trait(TRAIT_UNSTABLE))
 		sanity = min(amount,sanity)
 	else
 		sanity = amount
 
-	var/mob/living/master = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
