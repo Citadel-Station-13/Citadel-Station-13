@@ -21,11 +21,11 @@ GLOBAL_VAR_INIT(doomball, FALSE)
 	log_admin("[key_name(usr)] used DOOMBALL.")
 	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
-/client/proc/only_one_delayed()
+/client/proc/doomball_delayed()
 	send_to_playing_players("<span class='userdanger'>You feel the power of battle Royale flowing through your veins. TIME TO DOOMBALL!</span>")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) Doomball!</span>")
 	log_admin("[key_name(usr)] used delayed Doomball.")
 	addtimer(CALLBACK(src, .proc/only_one), 420)
 
 /mob/living/carbon/human/proc/make_doomballer()
-mind.add_antag_datum(/datum/antagonist/dodgeball)
+	mind.add_antag_datum(/datum/antagonist/dodgeball)
