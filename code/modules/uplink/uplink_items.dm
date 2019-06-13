@@ -1579,7 +1579,7 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 
-//ported from tg as is along with functions, feel free to edit/remove
+//ported from tg as is along with functions, removal requested.
 //Commented out, will remove when fixing merge conflicts
 /*
 /datum/uplink_item/device_tools/hypnotic_flash
