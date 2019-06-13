@@ -182,3 +182,7 @@
 	var/mob/living/M = quirk_holder
 	M.blood_ratio = 1.2
 	M.blood_volume += 150
+
+/datum/quirk/bloodpressure/remove()
+	var/mob/living/M = quirk_holder
+	M.blood_ratio = 1
