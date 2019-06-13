@@ -47,6 +47,7 @@
 			B.throw_at(T2, 8, 1)
 		M.reagents.remove_reagent(id, volume)
 		return
+    log_game("FERMICHEM: [M] ckey: [M.key] has ingested Sucubus milk")
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")

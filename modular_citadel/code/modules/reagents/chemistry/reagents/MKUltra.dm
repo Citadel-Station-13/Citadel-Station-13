@@ -187,6 +187,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
+        log_game("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
 		/*if(M.has_status_effect(STATUS_EFFECT_INLOVE) //Not sure if I need/want this.
 			to_chat(M, "<span class='warning'><i>You are too captivated by your love to think about anything else</i></span>")
 			return*/
@@ -200,6 +201,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	else
 		message_admins("MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
+    log_game("FERMICHEM: [M] ckey: [M.key] has taken MKUltra")
 
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -273,7 +275,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side at all costs.</i></span>")
-	M.slurring = 100
+    log_game("FERMICHEM: [M] ckey: [M.key] has been mindbroken for [creatorName] ckey: [creatorID]")
+    M.slurring = 100
 	M.confused = 100
 	E.phase = 4
 	E.mental_capacity = 0
@@ -307,6 +310,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
 		to_chat(M, "<span class='big love'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
+        log_game("FERMICHEM: [M] ckey: [M.key] has temporarily fallen for [love] ckey: [love.key]")
 	else
 		if(get_dist(M, love) < 8)
 			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
@@ -328,6 +332,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 	to_chat(M, "Your feelings for [love] suddenly vanish!")
+    log_game("FERMICHEM: [M] ckey: [M.key] is no longer in temp love")
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
@@ -340,6 +345,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	Lover.faction |= "[REF(Love)]"
 	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
 	forge_valentines_objective(Lover, Love, TRUE)
+    log_game("FERMICHEM: [M] ckey: [M.key] has been chemically made to fall for [love] ckey: [love.key]")
 	return
 
 //For addiction see chem.dm

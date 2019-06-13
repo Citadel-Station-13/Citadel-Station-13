@@ -33,11 +33,13 @@
 
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
+    log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
 	switch(current_cycle)
 		if(0)
 			location_return = get_turf(M)	//sets up return point
 			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 			if(purity > 0.75) //Teleports you home if it's pure enough
+                log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
 				var/turf/open/creation = location_created
 				do_sparks(5,FALSE,M)
 				do_teleport(M, creation, 0, asoundin = 'sound/effects/phasein.ogg')
@@ -56,6 +58,7 @@
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
 	. = ..()
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
+    log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
 	M.Jitter(10)
 
 /datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly, probably one of my favourite effects. Sometimes kills you.
@@ -70,6 +73,7 @@
 	switch(addictCyc1)
 		if(1)
 			to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+            log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
 			M.Jitter(10)
 	M.nutrition = M.nutrition - (M.nutrition/15)
 	addictCyc1++
@@ -136,6 +140,7 @@
 		M.Knockdown(0)
 		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
+        log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
 		for(var/datum/mood_event/Me in M)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?

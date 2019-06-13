@@ -31,6 +31,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	M.alpha = 255
 	switch(current_cycle)
 		if(0)//Require a minimum
+            log_game("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
 			origin = M
 			if (G == null)
 				G = new(get_turf(M.loc))
@@ -77,6 +78,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='warning'>You notice your body starting to disappear, maybe you took too much Astrogen...?</b></span>")
 			M.alpha--
 			antiGenetics--
+            log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to Astrogen")
 		if(220)
 			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
 			M.alpha--
@@ -109,4 +111,5 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
 			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout their lives should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role).")
 			qdel(M) //Approx 60minutes till death from initial addiction
+            log_game("FERMICHEM: [M] ckey: [M.key] has been obliterated from Astrogen addiction")
 	..()

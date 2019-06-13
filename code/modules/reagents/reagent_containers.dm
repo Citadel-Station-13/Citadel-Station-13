@@ -16,7 +16,7 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/beaker_resistances = 0b11
+	var/beaker_resistances = 3
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()

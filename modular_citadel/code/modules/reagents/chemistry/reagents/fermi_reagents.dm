@@ -14,16 +14,19 @@
 	if(purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
 	if (purity == 1 || DoNotSplit == TRUE)
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [id]")
 		return
 	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
 		M.reagents.remove_reagent(id, amount, FALSE)
 		M.reagents.add_reagent(InverseChem, amount, FALSE, other_purity = 1)
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [InverseChem]")
 		return
 	else
-		//var/pureVol = amount * puritys
 		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
 		M.reagents.remove_reagent(id, (impureVol), FALSE)
 		M.reagents.add_reagent(ImpureChem, impureVol, FALSE, other_purity = 1)
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume - impureVol]u of [id]")
+		log_game("FERMICHEM: [M] ckey: [M.key] has ingested [volume]u of [ImpureChem]")
 	return
 
 //When merging two fermichems, see above
@@ -34,6 +37,7 @@
 	if (purity < 0)
 		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
 	if (purity == 1 || DoNotSplit == TRUE)
+		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [id] in themselves")
 		return
 	else if (InverseChemVal > purity)
 		M.reagents.remove_reagent(id, amount, FALSE)
@@ -41,6 +45,7 @@
 		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
 			if(R.name == "")
 				R.name = name//Negative effects are hidden
+		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [InverseChem]")
 		return
 	else
 		var/impureVol = amount * (1 - purity)
@@ -49,6 +54,8 @@
 		for(var/datum/reagent/fermi/R in M.reagents.reagent_list)
 			if(R.name == "")
 				R.name = name//Negative effects are hidden
+		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume - impureVol]u of [id]")
+		log_game("FERMICHEM: [M] ckey: [M.key] has merged [volume]u of [ImpureChem]")
 	return
 
 
@@ -139,7 +146,7 @@
 			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/fluffy
 			T.Remove(M)
 			nT.Insert(M)
-			T.moveToNullspace()//To the zelda room.
+			T.moveToNullspace()//To valhalla
 			to_chat(M, "<span class='notice'>Youw tongue feews... weally fwuffy!!</span>")
 		if(17 to INFINITY)
 			if(prob(10))
@@ -165,6 +172,8 @@
 		T.Insert(M)
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 		M.say("Pleh!")
+	else
+		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
@@ -390,6 +399,7 @@
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
 	H.moveToNullspace()
+	log_game("FERMICHEM: [M] ckey: [M.key] has been made into a cute catto.")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(prob(5))
@@ -406,3 +416,4 @@
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
+	log_game("FERMICHEM: [M] ckey: [M.key] has returned to normal")
