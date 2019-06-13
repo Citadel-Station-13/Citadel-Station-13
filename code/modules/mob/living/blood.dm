@@ -318,14 +318,6 @@
 	if(!B)
 		B = new(T)
 
-//I think I had a plan, but it went out the window.
-/mob/living/proc/IncreaseBloodVol(var/value)
-	blood_ratio += value
-	return
-
-/mob/living/proc/DecreaseBloodVol(var/value)
-	blood_ratio -= value
-
 //This is a terrible way of handling it.
 /mob/living/proc/ResetBloodVol()
 	if(ishuman(src))
