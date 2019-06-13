@@ -1,4 +1,4 @@
-#define TONGUE_MAX_HEALTH 560
+#define TONGUE_MAX_HEALTH 60
 
 /obj/item/organ/tongue
 	name = "tongue"
@@ -232,21 +232,20 @@
 	return ..() | SPAN_ROBOT
 
 //FermiChem
-/obj/item/organ/tongue/OwO
+/obj/item/organ/tongue/fluffy
 	name = "fluffy tongue"
 	desc = "OwO what's this?"
 	icon_state = "tonguefluffy"
 	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
 	maxHealth = 35 //Sensitive tongue!
 
-/obj/item/organ/tongue/OwO/TongueSpeech(var/message)
+/obj/item/organ/tongue/fluffy/TongueSpeech(var/message)
 	if(copytext(message, 1, 2) != "*")
 		message = replacetext(message, "ne", "nye")
 		message = replacetext(message, "nu", "nyu")
 		message = replacetext(message, "na", "nya")
 		message = replacetext(message, "no", "nyo")
 		message = replacetext(message, "ove", "uv")
-		//message = replacetext(message, "th", "ff") //too incoherent in practice
 		message = replacetext(message, "l", "w")
 		message = replacetext(message, "r", "w")
 	if(prob(20))

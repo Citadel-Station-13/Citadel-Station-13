@@ -1310,7 +1310,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(16)
 			T = M.getorganslot(ORGAN_SLOT_TONGUE)
-			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/OwO
+			var/obj/item/organ/tongue/nT = new /obj/item/organ/tongue/fluffy
 			T.Remove(M)
 			nT.Insert(M)
 			T.moveToNullspace()//To the zelda room.
