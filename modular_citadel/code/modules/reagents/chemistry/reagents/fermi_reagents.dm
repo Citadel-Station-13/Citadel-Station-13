@@ -12,21 +12,17 @@
 	var/OnMobMergeCheck		= FALSE
 	//var/addProc 			= FALSE //When this reagent is added to a new beaker, it does something. Implemented but unused.
 
-//Called when added to a beaker without any of the reagent present. #add_reagent
-/datum/reagent/fermi/proc/FermiNew(holder)
-	return
-
 //This should process fermichems to find out how pure they are and what effect to do.
 //TODO: add this to the main on_mob_add proc, and check if Fermichem = TRUE
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
 	. = ..()
 	if(!M)
 		return
-	if(src.purity < 0)
-		CRASH("Purity below 0 for chem: [src.id], Please let Fermis Know!")
-	if (src.purity == 1 || src.DoNotSplit == TRUE)
+	if(purity < 0)
+		CRASH("Purity below 0 for chem: [id], Please let Fermis Know!")
+	if (purity == 1 || DoNotSplit == TRUE)
 		return
-	else if (src.InverseChemVal > src.purity)//Turns all of a added reagent into the inverse chem
+	else if (InverseChemVal > purity)//Turns all of a added reagent into the inverse chem
 		M.reagents.remove_reagent(src.id, amount, FALSE)
 		M.reagents.add_reagent(src.InverseChem, amount, FALSE, other_purity = 1)
 		return

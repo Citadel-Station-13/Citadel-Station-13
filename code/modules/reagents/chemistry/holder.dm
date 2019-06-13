@@ -127,7 +127,6 @@
 
 		update_total()
 		handle_reactions()
-		//pH = REAGENT_NORMAL_PH //Maybe unnessicary? NO incredibly nessicary, blows the beaker up otherwise. YES 100% NOT REQUIRED, THIS IS FOR REAMOVING AN AMMOUNT, NOT ALL.
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
@@ -848,7 +847,7 @@
 	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
-		if (R.id == reagent)
+		if (R.id == reagent) //IF MERGING
 			//WIP_TAG			//check my maths for purity calculations
 			//Add amount and equalize purity
 			R.volume += amount
@@ -860,9 +859,9 @@
 				my_atom.on_reagent_change(ADD_REAGENT)
 			R.on_merge(data, amount, my_atom, other_purity)
 			if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
-				var/datum/reagent/fermi/Ferm = D //It's Fermi time!
-				if(Ferm.OnMobMergeCheck == TRUE) //// Ooooooh fermifermifermi
-					R.on_mob_add(my_atom, amount)
+				var/datum/reagent/fermi/Ferm = D //It is a fermichem!
+				if(Ferm.OnMobMergeCheck == TRUE) //Does this fermichem split?
+					R.on_mob_add(my_atom, amount)	//On mob add processes fermichems, splitting them into their impure and pure products. This allows them to split when merging fermichems in a mob.
 			if(!no_react)
 				handle_reactions()
 
@@ -879,22 +878,17 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.addProc == TRUE)
+	if(R.addProc == TRUE)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
-	if(istype(D, /datum/reagent/fermi))//Is this a fermichem?
-		var/datum/reagent/fermi/Ferm = D //It's Fermi time!
-		Ferm.FermiNew(my_atom) //Seriously what is "data" ????
-
-		//This is how I keep myself sane.
 
 
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom, amount)
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
-	if(isliving(my_atom))
-		R.on_mob_add(my_atom, amount)
 	return TRUE
 
 
