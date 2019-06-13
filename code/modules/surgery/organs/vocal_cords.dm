@@ -622,6 +622,10 @@
 	var/base_multiplier = 1
 	//spans = list("say","yell")
 
+/obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
+	owner.say(message, spans = spans, sanitize = FALSE)
+	velvetspeech(message, owner)
+
 //////////////////////////////////////
 ///////////FermiChem//////////////////
 //////////////////////////////////////

@@ -3,10 +3,6 @@
 		message = trauma.on_say(message)
 	message = ..(message)
 
-	var/obj/item/organ/vocal_cords/velvet/Vc = getorganslot(ORGAN_SLOT_VOICE)
-	if(Vc)
-		velvetspeech(message, src)
-
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")
