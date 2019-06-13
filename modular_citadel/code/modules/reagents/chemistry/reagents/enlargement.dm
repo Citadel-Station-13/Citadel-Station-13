@@ -10,7 +10,7 @@
 //I'm not a very kinky person, sorry if it's not great
 //I tried to make it interesting..!!
 
-//Normal function increases your breast size by 0.1, 5units = 1 cup.
+//Normal function increases your breast size by 0.05, 10units = 1 cup.
 //If you get stupid big, it presses against your clothes, causing brute and oxydamage. Then rips them off.
 //If you keep going, it makes you slower, in speed and action.
 //decreasing your size will return you to normal.
@@ -25,7 +25,7 @@
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
 	overdose_threshold = 12
-	metabolization_rate = 0.5
+	metabolization_rate = 0.25
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.3
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
@@ -70,7 +70,7 @@
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
 		if(M.has_trait(TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling+= 0.1
+			L.swelling+= 0.05
 			return..()
 
 		//otherwise proceed as normal
@@ -90,7 +90,7 @@
 			M.reagents.remove_reagent(id, 5)
 			B = nB
 	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
-	B.cached_size = B.cached_size + 0.1
+	B.cached_size = B.cached_size + 0.05
 	if (B.cached_size >= 8.5 && B.cached_size < 9)
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
@@ -105,7 +105,6 @@
 	//Acute hepatic pharmacokinesis.
 	if(M.has_trait(TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot("liver")
-		L.swelling+= 0.05
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
@@ -118,7 +117,7 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	if(P)
-		P.cached_length = P.cached_length - 0.1
+		P.cached_length = P.cached_length - 0.05
 		P.update()
 	if(T)
 		T.Remove(M)
@@ -138,7 +137,7 @@
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
-	metabolization_rate = 0.5
+	metabolization_rate = 0.25
 
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
@@ -146,12 +145,12 @@
 		//Acute hepatic pharmacokinesis.
 		if(M.has_trait(TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling-= 0.1
+			L.swelling-= 0.05
 			return ..()
 
 		//otherwise proceed as normal
 		return..()
-	B.cached_size = B.cached_size - 0.1
+	B.cached_size = B.cached_size - 0.05
 	B.update()
 	..()
 
@@ -169,7 +168,7 @@
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
-	metabolization_rate = 0.5
+	metabolization_rate = 0.25
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.3
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
@@ -209,7 +208,7 @@
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
 		if(M.has_trait(TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling+= 0.1
+			L.swelling+= 0.05
 			return..()
 
 		//otherwise proceed as normal
@@ -223,7 +222,7 @@
 			M.reagents.remove_reagent(id, 5)
 			P = nP
 
-	P.cached_length = P.cached_length + 0.1
+	P.cached_length = P.cached_length + 0.05
 	if (P.cached_length >= 20.5 && P.cached_length < 21)
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
@@ -250,7 +249,7 @@
 		M.visible_message("<span class='boldnotice'>[M] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 
 	if(B)
-		B.cached_size = B.cached_size - 0.1
+		B.cached_size = B.cached_size - 0.05
 		B.update()
 	if(V)
 		V.Remove(M)
@@ -277,11 +276,11 @@
 		//Acute hepatic pharmacokinesis.
 		if(M.has_trait(TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
-			L.swelling-= 0.1
+			L.swelling-= 0.05
 			return..()
 
 		//otherwise proceed as normal
 		return..()
-	P.cached_length = P.cached_length - 0.1
+	P.cached_length = P.cached_length - 0.05
 	P.update()
 	..()
