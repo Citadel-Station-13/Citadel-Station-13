@@ -103,5 +103,5 @@
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
 	M.gib()
-	return ..()
+//	return ..()
 
