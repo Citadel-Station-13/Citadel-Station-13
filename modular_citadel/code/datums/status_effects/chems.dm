@@ -256,7 +256,7 @@
 			mental_capacity += 10
 
 	//mindshield check
-	if(M.has_trait(TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ. (resisting gives a bigger bonus with a mindshield)
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ. (resisting gives a bigger bonus with a mindshield)
 		resistanceTally += 2
 		if(prob(10))
 			to_chat(owner, "<span class='notice'><i>You feel lucidity returning to your mind as the mindshield buzzes, attempting to return your brain to normal function.</i></span>")
@@ -303,7 +303,7 @@
 					to_chat(owner, "<span class='big warning'><b>You are now fully enthralled to [master], and eager to follow their commands. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [enthrallGender] in death. </i></span>")//If people start using this as an excuse to be violent I'll just make them all pacifists so it's not OP.
 				else
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
-				owner.add_trait(TRAIT_PACIFISM, "MKUltra") //IMPORTANT
+				ADD_TRAIT(owner, TRAIT_PACIFISM, "MKUltra") //IMPORTANT
 				log_game("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].")
 			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
@@ -315,18 +315,18 @@
 				if(owner.lewd)
 					to_chat(owner, "<span class='hypnophrase'><i>[pick("It feels so good to listen to [enthrallGender].", "You can't keep your eyes off [enthrallGender].", "[enthrallGender]'s voice is making you feel so sleepy.",  "You feel so comfortable with [enthrallGender]", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (3)//fully entranced
-			if ((resistanceTally >= 200 && withdrawalTick >= 150) || (M.has_trait(TRAIT_MINDSHIELD) && (resistanceTally >= 100)))
+			if ((resistanceTally >= 200 && withdrawalTick >= 150) || (HAS_TRAIT(M, TRAIT_MINDSHIELD) && (resistanceTally >= 100)))
 				enthrallTally = 0
 				phase -= 1
 				resistanceTally = 0
 				resistGrowth = 0
 				to_chat(owner, "<span class='notice'><i>The separation from [(owner.lewd?"your [enthrallGender]":"[master]")] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
-				owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
+				REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 			if(prob(2))
 				if(owner.lewd)
 					to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
-			if (mental_capacity >= 499 && (owner.getBrainLoss() >=20 || M.has_trait(TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
+			if (mental_capacity >= 499 && (owner.getBrainLoss() >=20 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
 				phase = 2
 				mental_capacity = 500
 				customTriggers = list()
@@ -471,7 +471,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if(status == "charge")
-			owner.add_trait(TRAIT_GOTTAGOFAST, "MKUltra")
+			ADD_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
 			status = "charged"
 			if(master.lewd)
 				to_chat(owner, "<span class='notice'><i>Your [enthrallGender]'s order fills you with a burst of speed!</i></span>")
@@ -481,7 +481,7 @@
 		else if (status == "charged")
 			if (statusStrength < 0)
 				status = null
-				owner.remove_trait(TRAIT_GOTTAGOFAST, "MKUltra")
+				REMOVE_TRAIT(owner, TRAIT_GOTTAGOFAST, "MKUltra")
 				owner.Knockdown(50)
 				to_chat(owner, "<span class='notice'><i>Your body gives out as the adrenaline in your system runs out.</i></span>")
 			else
@@ -489,7 +489,7 @@
 				cooldown += 1 //Cooldown doesn't process till status is done
 
 		else if (status == "pacify")
-			owner.add_trait(TRAIT_PACIFISM, "MKUltraStatus")
+			ADD_TRAIT(owner, TRAIT_PACIFISM, "MKUltraStatus")
 			status = null
 
 			//Truth serum?
@@ -530,7 +530,7 @@
 	qdel(redirect_component.resolve())
 	redirect_component = null
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	owner.remove_trait(TRAIT_PACIFISM, "MKUltra")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore!'</i></span>")
 	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
 
@@ -549,7 +549,7 @@
 			//Speak (Forces player to talk) works
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
-				if(C.has_trait(TRAIT_NYMPHO))
+				if(HAS_TRAIT(C, TRAIT_NYMPHO))
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
 				to_chat(C, "<span class='notice'><i>[saytext]</i></span>")
 				(C.say(customTriggers[trigger][2]))//trigger3
@@ -571,7 +571,7 @@
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (C.has_trait(TRAIT_NYMPHO))
+				if (HAS_TRAIT(C, TRAIT_NYMPHO))
 					if (C.getArousalLoss() > 80)
 						C.mob_climax(forced_climax=TRUE)
 						C.SetStun(10)//We got your stun effects in somewhere, Kev.
@@ -659,7 +659,7 @@
 		deltaResist *= 1.5
 	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
 	//nymphomania
-	if (M.canbearoused && M.has_trait(TRAIT_NYMPHO))//I'm okay with this being removed.
+	if (M.canbearoused && HAS_TRAIT(M, TRAIT_NYMPHO))//I'm okay with this being removed.
 		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
 
 	//chemical resistance, brain and annaphros are the key to undoing, but the subject has to to be willing to resist.
@@ -667,7 +667,7 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent("neurine"))
 		deltaResist *= 1.5
-	if (!owner.has_trait(TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
+	if (!HAS_TRAIT(owner, TRAIT_CROCRIN_IMMUNE) && M.canbearoused)
 		if (owner.reagents.has_reagent("anaphro"))
 			deltaResist *= 1.5
 		if (owner.reagents.has_reagent("anaphro+"))
@@ -711,7 +711,7 @@
 	//If you've a collar, you get a sense of pride
 	if(istype(M.wear_neck, /obj/item/clothing/neck/petcollar))
 		deltaResist *= 0.5
-	if(M.has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		deltaResist += 5//even faster!
 
 	return

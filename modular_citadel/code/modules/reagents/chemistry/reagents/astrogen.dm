@@ -64,10 +64,10 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	antiGenetics = 255
 	..()
 
-//Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 60-80 minutes to die from this.
+//Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
 	if(addiction_stage < 2)
-		antiGenetics = 255//Doesn't reset when you take more, which is weird for me, it should.
+		antiGenetics = 255
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
 	if(prob(65))
 		M.alpha--
@@ -94,7 +94,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
 			M.alpha--
 			antiGenetics--
-			M.add_trait(TRAIT_NOCLONE) //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
+			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(80)
 			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates your forthcoming oblivion.</b></span>")
 			M.alpha--

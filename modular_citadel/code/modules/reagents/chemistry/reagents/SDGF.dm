@@ -125,7 +125,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					switch(current_cycle)
 						if(21)
 							to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
-							M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+							REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 							log_game("FERMICHEM: [M] ckey: [M.key] is being healed by SDGF")
 						if(22 to INFINITY)
 							M.adjustCloneLoss(-1, 0)

@@ -46,7 +46,7 @@
 					nutrition_ratio = 0.8
 				else
 					nutrition_ratio = 1
-			if(has_trait(TRAIT_HIGH_BLOOD))
+			if(HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
 				nutrition_ratio *= 1.2
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
@@ -322,7 +322,7 @@
 /mob/living/proc/ResetBloodVol()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.has_trait(TRAIT_HIGH_BLOOD))
+		if (HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
 			blood_ratio = 1.2
 			H.handle_blood()
 			return

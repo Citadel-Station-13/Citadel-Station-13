@@ -264,7 +264,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		creatorName = chosen.real_name
 		creator = get_mob_by_key(creatorID)
 		*/
-	M.add_trait(TRAIT_PACIFISM, "MKUltra")
+	ADD_TRAIT(M, TRAIT_PACIFISM, "MKUltra")
 	var/datum/status_effect/chem/enthrall/E
 	if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
@@ -313,7 +313,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily fallen for [love] ckey: [love.key]")
 	else
 		if(get_dist(M, love) < 8)
-			if(M.has_trait(TRAIT_NYMPHO)) //Add this back when merged/updated.
+			if(HAS_TRAIT(M, TRAIT_NYMPHO)) //Add this back when merged/updated.
 				M.adjustArousalLoss(5)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")

@@ -575,7 +575,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
-			if(H.canbearoused && H.has_dna() && H.has_trait(TRAIT_NYMPHO)) // probably a redundant check but for good measure
+			if(H.canbearoused && H.has_dna() && HAS_TRAIT(H, TRAIT_NYMPHO)) // probably a redundant check but for good measure
 				H.mob_climax(forced_climax=TRUE)
 
 	//DAB
@@ -803,9 +803,9 @@
 				continue
 			if (L.lewd)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</b></span>"), 5)
-				if(L.has_trait(TRAIT_NYMPHO))
+				if(HAS_TRAIT(L, TRAIT_NYMPHO))
 					L.adjustArousalLoss(2*power_multiplier)
-				if(L.has_trait(TRAIT_MASO))
+				if(HAS_TRAIT(L, TRAIT_MASO))
 					E.enthrallTally -= power_multiplier
 					E.resistanceTally += power_multiplier
 					E.cooldown += 1
@@ -826,7 +826,7 @@
 			if(L == user)
 				continue
 			if (L.lewd)
-				if(L.has_trait(TRAIT_MASO))
+				if(HAS_TRAIT(L, TRAIT_MASO))
 					L.adjustArousalLoss(3*power_multiplier)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
@@ -848,7 +848,7 @@
 		for(var/V in listeners)
 			var/mob/living/carbon/C = V
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			C.remove_trait(TRAIT_MUTE, "enthrall")
+			REMOVE_TRAIT(C, TRAIT_MUTE, "enthrall")
 			if(C.lewd)
 				addtimer(CALLBACK(C, /atom/movable/proc/say, "[E.enthrallGender]"), 5)
 			else
@@ -878,7 +878,7 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, C)+1]
 			if (E.phase == 3) //If target is fully enthralled,
-				C.add_trait(TRAIT_MUTE, "enthrall")
+				ADD_TRAIT(C, TRAIT_MUTE, "enthrall")
 			else
 				C.silent += ((10 * power_multiplier) * E.phase)
 			E.cooldown += 3
@@ -887,7 +887,7 @@
 	else if((findtext(message, silence_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			C.remove_trait(TRAIT_MUTE, "enthrall")
+			REMOVE_TRAIT(C, TRAIT_MUTE, "enthrall")
 			E.cooldown += 3
 
 
@@ -948,7 +948,7 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
-				if(H.has_trait(TRAIT_NYMPHO) && H.canbearoused) // probably a redundant check but for good measure
+				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
 					H.SetStun(20)
@@ -1061,9 +1061,9 @@
 			if (E.phase > 2)
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-				C.add_trait(TRAIT_DEAF, "Triggers") //So you don't trigger yourself! Actually this will trigger yourself oops.
+				ADD_TRAIT(C, TRAIT_DEAF, "Triggers") //So you don't trigger yourself! Actually this will trigger yourself oops.
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
-				C.remove_trait(TRAIT_DEAF, "Triggers")
+				REMOVE_TRAIT(C, TRAIT_DEAF, "Triggers")
 
 
 	//CUSTOM TRIGGERS

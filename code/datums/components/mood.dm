@@ -179,7 +179,7 @@
 		amount = sanity - 0.5
 
 	// Disturbed stops you from getting any more sane
-	if(master.has_trait(TRAIT_UNSTABLE))
+	if(HAS_TRAIT(master, TRAIT_UNSTABLE))
 		sanity = min(amount,sanity)
 	else
 		sanity = amount
@@ -232,7 +232,7 @@
 /datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
 	// Disturbed stops you from getting any more sane - I'm just gonna bung this in here
 	var/mob/living/owner = parent
-	if(owner.has_trait(TRAIT_UNSTABLE))
+	if(HAS_TRAIT(owner, TRAIT_UNSTABLE))
 		return
 	if(sanity > maximum)
 		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.

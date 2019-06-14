@@ -1377,10 +1377,10 @@
 
 /datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FEARLESS, id)
+	ADD_TRAIT(L, TRAIT_FEARLESS, id)
 
 /datum/reagent/medicine/psicodine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FEARLESS, id)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
 	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)

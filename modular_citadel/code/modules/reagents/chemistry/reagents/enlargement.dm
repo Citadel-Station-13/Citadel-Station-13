@@ -68,7 +68,7 @@
 	if(!B) //If they don't have breasts, give them breasts.
 
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(M.has_trait(TRAIT_PHARMA))
+		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
 			L.swelling+= 0.05
 			return..()
@@ -103,7 +103,7 @@
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 
 	//Acute hepatic pharmacokinesis.
-	if(M.has_trait(TRAIT_PHARMA))
+	if(HAS_TRAIT(M, TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot("liver")
 		L.swelling+= 0.05
 		return ..()
@@ -144,7 +144,7 @@
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B)
 		//Acute hepatic pharmacokinesis.
-		if(M.has_trait(TRAIT_PHARMA))
+		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
 			L.swelling-= 0.05
 			return ..()
@@ -207,7 +207,7 @@
 	if(!P)//They do have a preponderance for escapism, or so I've heard.
 
 		//If they have Acute hepatic pharmacokinesis, then route processing though liver.
-		if(M.has_trait(TRAIT_PHARMA))
+		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
 			L.swelling+= 0.05
 			return..()
@@ -235,7 +235,7 @@
 
 /datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	//Acute hepatic pharmacokinesis.
-	if(M.has_trait(TRAIT_PHARMA))
+	if(HAS_TRAIT(M, TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot("liver")
 		L.swelling+= 0.05
 		return..()
@@ -275,7 +275,7 @@
 	var/obj/item/organ/genital/penis/P = H.getorganslot("penis")
 	if(!P)
 		//Acute hepatic pharmacokinesis.
-		if(M.has_trait(TRAIT_PHARMA))
+		if(HAS_TRAIT(M, TRAIT_PHARMA))
 			var/obj/item/organ/liver/L = M.getorganslot("liver")
 			L.swelling-= 0.05
 			return..()

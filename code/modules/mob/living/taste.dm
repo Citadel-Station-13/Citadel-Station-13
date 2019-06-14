@@ -48,7 +48,7 @@
 		to_chat(src, "<span class='notice'>Your tongue moves on it's own in response to the liquid.</span>")
 		say("The pH is appropriately [round(from.pH, 1)].")
 		return
-	if (!has_trait(TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
+	if (!HAS_TRAIT(src, TRAIT_AGEUSIA)) //I'll let you get away with not having 1 damage.
 		switch(from.pH)
 			if(11.5 to INFINITY)
 				to_chat(src, "<span class='warning'>You taste a strong alkaline flavour!</span>")

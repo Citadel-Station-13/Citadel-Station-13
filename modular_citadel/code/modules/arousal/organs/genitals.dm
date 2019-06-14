@@ -304,7 +304,7 @@
 	var/breastCheck = FALSE
 	var/willyCheck = FALSE
 	if(!canbearoused)
-		add_trait(TRAIT_PHARMA)//Prefs prevent unwanted organs.
+		ADD_TRAIT(src, TRAIT_PHARMA, "pharma")//Prefs prevent unwanted organs.
 		return
 	for(var/obj/item/organ/O in internal_organs)
 		if(istype(O, /obj/item/organ/genital))

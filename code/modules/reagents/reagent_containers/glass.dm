@@ -211,7 +211,7 @@
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
 	. = ..()
-	reagents.set_reacting(FALSE)
+	//reagents.set_reacting(FALSE) was this removed in a recent pr?
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"

@@ -401,7 +401,7 @@
 	H.moveToNullspace()
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	//Just to deal with rascally ghosts
-	catto.add_trait(TRAIT_NODEATH, "catto")
+	ADD_TRAIT(catto, TRAIT_NODEATH, "catto")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(catto.health <= 50)

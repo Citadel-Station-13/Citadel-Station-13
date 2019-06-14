@@ -389,11 +389,11 @@
 
 /datum/reagent/drug/happiness/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FEARLESS, id)
+	ADD_TRAIT(L, TRAIT_FEARLESS, id)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
 
 /datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FEARLESS, id)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, id)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
