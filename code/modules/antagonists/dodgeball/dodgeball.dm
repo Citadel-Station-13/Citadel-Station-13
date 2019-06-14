@@ -100,7 +100,7 @@
 		H.gib()
 
 /obj/item/toy/beach_ball/doomball/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //exploding after touching yourself would be bad
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying) //exploding after touching yourself would be bad
 		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
