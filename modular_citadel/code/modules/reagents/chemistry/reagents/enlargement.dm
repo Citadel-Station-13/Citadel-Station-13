@@ -47,7 +47,7 @@
 			B.throw_at(T2, 8, 1)
 		M.reagents.remove_reagent(id, volume)
 		return
-    log_game("FERMICHEM: [M] ckey: [M.key] has ingested Sucubus milk")
+	log_game("FERMICHEM: [M] ckey: [M.key] has ingested Sucubus milk")
 	var/mob/living/carbon/human/H = M
 	H.genital_override = TRUE
 	var/obj/item/organ/genital/breasts/B = H.getorganslot("breasts")
@@ -105,6 +105,7 @@
 	//Acute hepatic pharmacokinesis.
 	if(M.has_trait(TRAIT_PHARMA))
 		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		L.swelling+= 0.05
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")

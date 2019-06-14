@@ -23,27 +23,23 @@
 	addiction_stage4_end = 44 //Incase it's too long
 	var/location_created
 	var/turf/open/location_return = null
-	var/addictCyc1 = 0
-	var/addictCyc2 = 0
 	var/addictCyc3 = 0
-	var/addictCyc4 = 0
 	var/mob/living/fermi_Tclone = null
 	var/teleBool = FALSE
 	pH = 3.7
 
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
-    log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
-	switch(current_cycle)
-		if(0)
-			location_return = get_turf(M)	//sets up return point
-			to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-			if(purity > 0.75) //Teleports you home if it's pure enough
-                log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
-				var/turf/open/creation = location_created
-				do_sparks(5,FALSE,M)
-				do_teleport(M, creation, 0, asoundin = 'sound/effects/phasein.ogg')
-				do_sparks(5,FALSE,M)
+	log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
+	if(current_cycle == 0)
+		location_return = get_turf(M)	//sets up return point
+		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
+		if(purity > 0.75) //Teleports you home if it's pure enough
+			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
+			var/turf/open/creation = location_created
+			do_sparks(5,FALSE,M)
+			do_teleport(M, creation, 0, asoundin = 'sound/effects/phasein.ogg')
+			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	..()
@@ -58,7 +54,7 @@
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
 	. = ..()
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
-    log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
+	log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
 	M.Jitter(10)
 
 /datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly, probably one of my favourite effects. Sometimes kills you.
@@ -70,22 +66,19 @@
 
 //Addiction
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
-	switch(addictCyc1)
-		if(1)
-			to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
-            log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
-			M.Jitter(10)
+	if(addiction_stage == 0)
+		to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
+		log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
+		M.Jitter(10)
 	M.nutrition = M.nutrition - (M.nutrition/15)
-	addictCyc1++
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
-	switch(addictCyc2)
-		if(0)
-			to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
-			M.Jitter(50)
-			M.Knockdown(100)
-			M.Stun(40)
+	if(addiction_stage == 11)
+		to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
+		M.Jitter(50)
+		M.Knockdown(100)
+		M.Stun(40)
 
 	var/items = M.get_contents()
 	if(!LAZYLEN(items))
@@ -95,16 +88,15 @@
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
 	do_sparks(5,FALSE,I)
-	addictCyc2++
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
 
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
-	switch(addictCyc3)
+	switch(addictCyc3) //Loops 0 -> 1 -> 2 -> 0 ...ect.
 		if(0)
 			M.Jitter(100)
-			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the eigenstate event horizon.</span>")
+			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the event horizon.</span>")
 		if(1)
 			var/typepath = M.type
 			fermi_Tclone = new typepath(M.loc)
@@ -117,7 +109,7 @@
 			C.emote("spin")
 			M.emote("spin")
 			M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! O� suis-je?!", "Yee haw! This is one hell of a hootenanny!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "I've come from the future to warn you to not take eigenstasium! Oh no! I'm too late!", "You fool! You took too much eigenstasium! You've doomed us all!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Fermichem was a mistake", "This is one hell of a beepsky smash.", "Now neither of us will be virgins!")]\"")
+			C.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! Ou suis-je?!", "Yee haw! This is one hell of a hootenanny!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "I've come from the future to warn you to not take eigenstasium! Oh no! I'm too late!", "You fool! You took too much eigenstasium! You've doomed us all!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Fermichem was a mistake", "This is one hell of a beepsky smash.", "Now neither of us will be virgins!")]\"")
 		if(2)
 			var/mob/living/carbon/C = fermi_Tclone
 			do_sparks(5,FALSE,C)
@@ -131,7 +123,7 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermis' wild ride. Mild jitter and player buggery.
-	if(addictCyc4 == 0)
+	if(addiction_stage == 42)
 		do_sparks(5,FALSE,M)
 		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		do_sparks(5,FALSE,M)
@@ -140,7 +132,7 @@
 		M.Knockdown(0)
 		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-        log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
+		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
 		for(var/datum/mood_event/Me in M)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?
@@ -149,7 +141,6 @@
 
 	if(prob(20))
 		do_sparks(5,FALSE,M)
-	addictCyc4++
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_overdose")//holdover until above fix works
 	..()
 

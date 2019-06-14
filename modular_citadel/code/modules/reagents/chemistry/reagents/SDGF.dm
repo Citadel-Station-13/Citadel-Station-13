@@ -66,11 +66,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
 				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
-                log_game("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
+				log_game("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
 		if(20 to INFINITY)
 			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				message_admins("Ghost candidate found! [candies] is becoming a clone of [M]! Hee~!! Exciting!!")
-                log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [candies]")
+				log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [candies]")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
 				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
@@ -89,18 +89,18 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
 					ZI.Remove(M)
 					ZI.Insert(SM)
-                    log_game("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
+					log_game("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
 				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself, or rather, your original self.</span>")
 
-                if(prob(50))
-                    to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original</span>")
-                    log_game("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
-                else
-                    to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
-                    log_game("FERMICHEM: [SM] ckey: [SM.key]'s is bound by [M] ckey [M.key]'s objectives, and is encouraged to help them complete them.")
+				if(prob(50))
+					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original</span>")
+					log_game("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
+				else
+					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
+					log_game("FERMICHEM: [SM] ckey: [SM.key]'s is bound by [M] ckey [M.key]'s objectives, and is encouraged to help them complete them.")
 
-                to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_known_languages_from(M, FALSE)
 				playerClone =  TRUE
@@ -116,7 +116,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
 				SM.reagents.add_reagent("SDGFheal", volume)
 				M.reagents.remove_reagent(id, volume)
-                log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
+				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
 				return
 
 			else if(playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
@@ -126,7 +126,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
 							M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-                            log_game("FERMICHEM: [M] ckey: [M.key] is being healed by SDGF")
+							log_game("FERMICHEM: [M] ckey: [M.key] is being healed by SDGF")
 						if(22 to INFINITY)
 							M.adjustCloneLoss(-1, 0)
 							M.adjustBruteLoss(-1, 0)
@@ -158,7 +158,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.next_move_modifier -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
-                            log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
+							log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
 						if(87 to INFINITY)
 							M.reagents.remove_reagent(id, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 
@@ -262,7 +262,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
-                log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying zombie instead")
+				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying zombie instead")
 				M.reagents.remove_reagent(id, 20)
 
 			else//easier to deal with
@@ -275,7 +275,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.rabid = 1//Make them an angery boi
 				M.reagents.remove_reagent(id, volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
-                log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
+				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
 
 		if(87 to INFINITY)
 			M.adjustToxLoss(1, 0)

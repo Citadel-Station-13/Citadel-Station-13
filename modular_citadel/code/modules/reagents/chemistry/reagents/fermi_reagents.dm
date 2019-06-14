@@ -368,9 +368,8 @@
 	holder.remove_reagent(id, volume)
 	..()
 
-//ReagentVars
 //Turns you into a cute catto while it's in your system.
-//If you manage to gamble perfectly, makes you a catgirl after you transform back. But really, you shouldn't end up with that with how random it is.
+//If you manage to gamble perfectly, makes you have cat ears after you transform back. But really, you shouldn't end up with that with how random it is.
 /datum/reagent/fermi/secretcatchem //Should I hide this from code divers? A secret cit chem?
 	name = "secretcatchem" //an attempt at hiding it
 	id = "secretcatchem"
@@ -381,7 +380,7 @@
 	var/mob/living/simple_animal/pet/cat/custom_cat/catto = null
 
 /datum/reagent/fermi/secretcatchem/New()
-	name = "Catbalti[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"
+	name = "Catbalti[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"//rename
 
 /datum/reagent/fermi/secretcatchem/on_mob_add(mob/living/carbon/human/H)
 	. = ..()
@@ -399,7 +398,7 @@
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
 	H.moveToNullspace()
-	log_game("FERMICHEM: [M] ckey: [M.key] has been made into a cute catto.")
+	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(prob(5))
@@ -416,4 +415,4 @@
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
-	log_game("FERMICHEM: [M] ckey: [M.key] has returned to normal")
+	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")

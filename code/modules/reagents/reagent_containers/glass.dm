@@ -113,7 +113,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
-	beaker_resistances &= ~FLAG_STATUS_PH_IMMUNE
+	beaker_resistances = FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -191,7 +191,7 @@
 	volume = 200
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,200)
-	beaker_resistances |= (1<<3)
+	beaker_resistances |= FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -201,7 +201,7 @@
 	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	beaker_resistances |= (1<<3)
+	beaker_resistances |= FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	. = ..()

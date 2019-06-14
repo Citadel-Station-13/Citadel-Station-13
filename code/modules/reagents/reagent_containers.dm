@@ -1,7 +1,6 @@
-#define FLAG_STATUS_NONE (1<<0)
-#define FLAG_STATUS_PH_IMMUNE (1<<1)
-#define FLAG_STATUS_TEMP_IMMUNE (1<<2)
-
+#define FLAG_STATUS_NONE 		(1 << 0)
+#define FLAG_STATUS_PH_IMMUNE 	(1 << 1)
+#define FLAG_STATUS_TEMP_IMMUNE (1 << 2)
 
 /obj/item/reagent_containers
 	name = "Container"
@@ -16,9 +15,10 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/beaker_resistances |= (FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE)
+	var/beaker_resistances = NONE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
+	beaker_resistances |= FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
