@@ -60,7 +60,7 @@ It is possible to destroy the net by the occupant or someone else.
 			H.dropItemToGround(W)
 
 	var/datum/antagonist/antag_datum
-	for(var/datum/antagonist/ninja/AD in GLOB.antagonists) /Because only ninjas get capture objectives; They're not doable without the suit.
+	for(var/datum/antagonist/ninja/AD in GLOB.antagonists) //Because only ninjas get capture objectives; They're not doable without the suit.
 		if(AD.owner == master)
 			antag_datum = AD
 			break
