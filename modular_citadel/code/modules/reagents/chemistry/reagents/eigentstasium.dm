@@ -55,13 +55,13 @@
 	. = ..()
 	to_chat(M, "<span class='userdanger'>Oh god, you feel like your wavefunction is about to tear.</span>")
 	log_game("FERMICHEM: [M] ckey: [M.key] has overdosed on eigenstasium")
-	M.Jitter(10)
+	M.Jitter(20)
+	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 
 /datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly, probably one of my favourite effects. Sometimes kills you.
 	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
-	M.reagents.remove_reagent(id, 0.5)//So you're not stuck for 10 minutes teleporting
 	..()
 
 //Addiction
