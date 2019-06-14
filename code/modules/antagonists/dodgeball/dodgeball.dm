@@ -79,9 +79,16 @@
 /obj/item/toy/beach_ball/doomball
 	name = "doomball"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "dodgeball"
-	item_state = "dodgeball"
+	icon_state = "doomball_static"
+	item_state = "doomball"
 	desc = "Used for playing the most violent and degrading of childhood games."
+
+
+/obj/item/toy/beach_ball/doomball/throw_at(atom/target, range, speed, mob/thrower, spin=0, diagonals_first = 0, datum/callback/callback)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
 
 /obj/item/toy/beach_ball/doomball/throw_impact(atom/hit_atom)
 	.  = ..()
