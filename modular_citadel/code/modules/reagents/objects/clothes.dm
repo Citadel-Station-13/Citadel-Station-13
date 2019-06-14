@@ -19,7 +19,7 @@
 		user.emote("me",1,"admires such a spiffy hat.",TRUE)
 	return ..()
 
-/obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
+/obj/item/clothing/head/hattip/MouseDrop(atom/over_object)
 	//You sure do love tipping your hat.
 	if(usr)
 		var/mob/living/carbon/C = usr

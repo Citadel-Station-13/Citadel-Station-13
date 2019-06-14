@@ -83,7 +83,7 @@
 	. = ..()
 	if(M.head)
 		var/obj/item/W = M.head
-		if(W == /obj/item/clothing/head/hattip)
+		if(istype(W, /obj/item/clothing/head/hattip))
 			qdel(W)
 		else
 			M.dropItemToGround(W, TRUE)
@@ -92,14 +92,15 @@
 
 
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
-	if(!M.head == /obj/item/clothing/head/hattip)
+	if(!istype(M.head, /obj/item/clothing/head/hattip))
 		return ..()
+	var/hatArmor = 0
 	if(!overdosed)
-		var/hatArmor = purity
+		hatArmor = (purity/10)
 	else
-		var/hatArmor = - purity
+		hatArmor = - (purity/10)
 	var/obj/item/W = M.head
-	W.modifyAllRatings(hatArmor)
+	W.armor = W.armor.modifyAllRatings(hatArmor)
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,9 +400,14 @@
 	catto.color = "#[H.dna.features["mcolor"]]"
 	H.moveToNullspace()
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
+	//Just to deal with rascally ghosts
+	catto.add_trait(TRAIT_NODEATH, "catto")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
-	if(prob(5))
+	if(catto.health <= 50)
+		catto.icon_state = "custom_cat_dead"
+		catto.stun(1000)
+	else if(prob(5))
 		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 		catto.say("lets out a meowrowr!*")
 	..()

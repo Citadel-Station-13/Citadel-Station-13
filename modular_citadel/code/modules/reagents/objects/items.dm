@@ -34,7 +34,7 @@
 	if(!I)
 		user.put_in_active_hand(src)
 
-/obj/item/FermiChem/pHbooklet/MouseDrop(atom/over_object)
+/obj/item/FermiChem/pHbooklet/MouseDrop(atom/over_object, mob/user)
     if(user.get_held_index_of_item(src))
         user.put_in_active_hand(src)
     else

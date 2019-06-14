@@ -22,6 +22,7 @@
 	if(replaced)
 		replaced.Remove(M, special = 1)
 		if(drop_if_replaced)
+			message_admins("[get_turf(M)]")
 			replaced.forceMove(get_turf(M))
 		else
 			qdel(replaced)

@@ -21,7 +21,7 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
-	var/location_created
+	var/turf/location_created
 	var/turf/open/location_return = null
 	var/addictCyc3 = 0
 	var/mob/living/fermi_Tclone = null
@@ -36,9 +36,9 @@
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		if(purity > 0.8 && location_created) //Teleports you home if it's pure enough
 			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
-			var/turf/open/creation = location_created
+			//var/turf/open/creation = location_created
 			do_sparks(5,FALSE,M)
-			do_teleport(M, creation, 0, asoundin = 'sound/effects/phasein.ogg')
+			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)

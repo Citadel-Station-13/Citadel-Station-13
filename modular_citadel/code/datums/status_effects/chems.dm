@@ -714,5 +714,4 @@
 	if(M.has_trait(TRAIT_MINDSHIELD))
 		deltaResist += 5//even faster!
 
-	message_admins("Enthrall processing for [M]: enthrallTally: [enthrallTally], resistanceTally: [resistanceTally], delta: [deltaResist]")
 	return

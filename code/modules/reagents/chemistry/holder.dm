@@ -524,7 +524,10 @@
 		fermiIsReacting = FALSE
 		reactedVol = 0
 		targetVol = 0
-		holder.pH_check()
+		//pH check, handled at the end to reduce calls.
+		if(istype(my_atom, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/RC = my_atom
+			RC.pH_check()
 		C.FermiFinish(src, my_atom, multiplier)
 		handle_reactions()
 		update_total()
@@ -550,7 +553,10 @@
 			fermiIsReacting = FALSE
 			reactedVol = 0
 			targetVol = 0
-			holder.pH_check()
+			//pH check, handled at the end to reduce calls.
+			if(istype(my_atom, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/RC = my_atom
+				RC.pH_check()
 			C.FermiFinish(src, my_atom, multiplier)
 			handle_reactions()
 			update_total()
@@ -566,7 +572,10 @@
 		fermiIsReacting = FALSE
 		reactedVol = 0
 		targetVol = 0
-		holder.pH_check()
+		//pH check, handled at the end to reduce calls.
+		if(istype(my_atom, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/RC = my_atom
+			RC.pH_check()
 		C.FermiFinish(src, my_atom, multiplier)
 		handle_reactions()
 		update_total()
@@ -860,8 +869,9 @@
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
 			R.on_merge(data, amount, my_atom, other_purity)
-			if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
-				R.on_mob_add(my_atom, amount)
+			if(isliving(my_atom))
+				if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
+					R.on_mob_add(my_atom, amount)
 			if(!no_react)
 				handle_reactions()
 
