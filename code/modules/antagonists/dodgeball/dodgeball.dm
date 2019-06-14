@@ -88,7 +88,7 @@
 	.  = ..()
 	if(!iscarbon(hit_atom))
 		return
-	var/mob/living/carbon/H = throwing.thrower
+	var/mob/living/carbon/H = thrownthing.thrower
 	var/mob/living/carbon/M = hit_atom
 	if(H.lying)
 		H.gib()
@@ -98,7 +98,7 @@
 		visible_message("<span class='danger'>[H] is caught out and explodes!</span>")
 		H.gib()
 		return
-	if(!.)
+	else
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		visible_message("<span class='danger'>[M] explodes violently into gore!</span>")
 		M.gib()
