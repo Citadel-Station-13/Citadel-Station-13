@@ -74,7 +74,7 @@
 /datum/mood_event/goodmusic
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
-	timeout = 1 MINUTES
+	timeout = 600
 
 /datum/mood_event/chemical_euphoria
 	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
@@ -89,3 +89,27 @@
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 3 MINUTES
+
+/datum/mood_event/betterhug
+	description = "<span class='nicegreen'>Someone was very nice to me.</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/betterhug/add_effects(mob/friend)
+	description = "<span class='nicegreen'>[friend.name] was very nice to me.</span>\n"
+
+/datum/mood_event/besthug
+	description = "<span class='nicegreen'>Someone is great to be around, they make me feel so happy!</span>\n"
+	mood_change = 5
+	timeout = 3000
+
+/datum/mood_event/besthug/add_effects(mob/friend)
+	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
+
+/datum/mood_event/happy_empath
+	description = "<span class='warning'>Someone seems happy!</span>\n"
+	mood_change = 2
+	timeout = 600
+
+/datum/mood_event/happy_empath/add_effects(var/mob/happytarget)
+	description = "<span class='warning'>[happytarget.name]'s happiness is infectious!</span>\n"

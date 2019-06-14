@@ -1,8 +1,5 @@
 //LISTMOS
 //indices of values in gas lists.
-#define MOLES			1
-#define ARCHIVE			2
-#define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
 #define META_GAS_MOLES_VISIBLE	3
@@ -242,20 +239,25 @@
 
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
-
-#define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
-
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
-
+#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 
 //prefer this to gas_mixture/total_moles in performance critical areas
 #define TOTAL_MOLES(cached_gases, out_var)\
 	out_var = 0;\
 	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
+		out_var += cached_gases[total_moles_id];\
 	}
 
+//Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
+#define GAS_GARBAGE_COLLECT(GASGASGAS)\
+	var/list/CACHE_GAS = GASGASGAS;\
+	for(var/id in CACHE_GAS){\
+		if(QUANTIZE(CACHE_GAS[id]) <= 0)\
+			CACHE_GAS -= id;\
+	}
+
+#define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

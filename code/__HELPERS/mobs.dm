@@ -77,6 +77,8 @@
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
+	if(!GLOB.balls_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 	if(!GLOB.vagina_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
@@ -168,6 +170,7 @@
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
 		"balls_size"		= BALLS_SIZE_DEF,
+		"balls_shape"		= "Pair",
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
@@ -185,7 +188,7 @@
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
-		"breasts_shape"		= pick(GLOB.breasts_shapes_list),
+		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),

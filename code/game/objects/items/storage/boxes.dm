@@ -15,9 +15,10 @@
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes,
- *		Shotgun Ammo boxes,
+ *		Ammo types,
  *		Action Figure Boxes,
- *		Various paper bags.
+ *		Various paper bags,
+ *		Colored boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -74,7 +75,6 @@
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	return ..()
-
 
 //Disk boxes
 /obj/item/storage/box/disks
@@ -141,6 +141,29 @@
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/seclooking
+	icon_state = "secbox"
+	illustration = null
+
+/obj/item/storage/box/cells
+	name = "box of powercells"
+	desc = "Contains powercells."
+	illustration = "power_cell"
+
+/obj/item/storage/box/ammoshells
+	name = "box of loose ammo"
+	desc = "Contains loose ammo."
+	illustration = "loose_ammo"
+
+/obj/item/storage/box/otwo
+	name = "box of o2 supplies"
+	desc = "Contains o2 supplies."
+	illustration = "02"
+
+/obj/item/storage/box/otwo/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -463,7 +486,7 @@
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
 	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
@@ -472,7 +495,7 @@
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
@@ -768,6 +791,19 @@
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
+/obj/item/storage/box/mechfigures
+	name = "box of mech figures"
+	desc = "The latest set of collectable mech figures."
+	icon_state = "box"
+
+/obj/item/storage/box/mechfigures/PopulateContents()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/prize/))
+		new randomFigure(src)
+
+
+
+
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
@@ -1003,7 +1039,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
-
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
@@ -1062,3 +1097,32 @@
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
+
+//Colored boxes.
+/obj/item/storage/box/green
+	icon_state = "box_green"
+	illustration = null
+
+/obj/item/storage/box/blue
+	icon_state = "box_blue"
+	illustration = null
+
+/obj/item/storage/box/purple
+	icon_state = "box_purple"
+	illustration = null
+
+/obj/item/storage/box/red
+	icon_state = "box_red"
+	illustration = null
+
+/obj/item/storage/box/yellow
+	icon_state = "box_yellow"
+	illustration = null
+
+/obj/item/storage/box/brown
+	icon_state = "box_brown"
+	illustration = null
+
+/obj/item/storage/box/pink
+	icon_state = "box_pink"
+	illustration = null

@@ -90,7 +90,6 @@
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
 	 ethanol, nutriment, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
-	container_type = OPENCONTAINER
 	complexity = 4
 	inputs = list()
 	outputs = list("volume used" = IC_PINTYPE_NUMBER, "self reference" = IC_PINTYPE_SELFREF)
@@ -101,9 +100,9 @@
 	var/multi = 1
 	var/lfwb =TRUE
 
-/obj/item/integrated_circuit/passive/power/chemical_cell/New()
+/obj/item/integrated_circuit/passive/power/chemical_cell/Initialize()
 	..()
-	create_reagents(volume)
+	create_reagents(volume, OPENCONTAINER)
 	extended_desc +="But no fuel can be compared with blood of living human."
 
 

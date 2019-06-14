@@ -36,7 +36,7 @@
 				if(tauric == TRUE)
 					center = TRUE
 					dimension_x = 64
-			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger"))
+			else if(H.dna.features["taur"] in list("Fox","Wolf","Otie","Drake","Lab","Shepherd","Husky","Eevee","Panther","Horse","Cow","Tiger","Deer"))
 				taurmode = PAW_TAURIC
 				if(tauric == TRUE)
 					center = TRUE

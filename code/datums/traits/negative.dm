@@ -60,7 +60,7 @@
 		if("Scientist")
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
-			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+			heirloom_type = /obj/item/clothing/gloves/cut/family
 		if("Chaplain")
 			heirloom_type = /obj/item/camera/spooky/family
 		if("Captain")

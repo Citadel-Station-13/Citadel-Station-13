@@ -371,15 +371,14 @@ obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
 
 	for(var/filtered_gas in removed.gases)
 		//Get the name of the gas and see if it is in the list
-		if(removed.gases[filtered_gas][GAS_META][META_GAS_NAME] in wanted)
+		if(GLOB.meta_gas_names[filtered_gas] in wanted)
 			//The gas that is put in all the filtered out gases
 			filtered_out.temperature = removed.temperature
-			filtered_out.add_gas(filtered_gas)
-			filtered_out.gases[filtered_gas][MOLES] = removed.gases[filtered_gas][MOLES]
+			filtered_out.gases[filtered_gas] = removed.gases[filtered_gas]
 
 			//The filtered out gas is entirely removed from the currently filtered gases
-			removed.gases[filtered_gas][MOLES] = 0
-			removed.garbage_collect()
+			removed.gases[filtered_gas] = 0
+			GAS_GARBAGE_COLLECT(removed.gases)
 
 	//Check if the pressure is high enough to put stuff in filtered, or else just put it back in the source
 	var/datum/gas_mixture/target = (filtered_air.return_pressure() < target_pressure ? filtered_air : source_air)

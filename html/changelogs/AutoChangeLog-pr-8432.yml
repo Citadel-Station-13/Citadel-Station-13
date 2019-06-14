@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Nukes the stunprod's 3 seconds delay."
+  - bugfix: "Fixes teleprods."
