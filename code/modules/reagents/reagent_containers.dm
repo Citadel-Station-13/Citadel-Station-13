@@ -142,7 +142,7 @@
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
 	if(beaker_weakness_bitflag & TEMP_WEAK)
-		if(reagents.chem_temp > 444)//assuming polypropylene
+		if(reagents.chem_temp >= 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(src))
 			var/iconhtml = icon2html(src, seen)
 			for(var/mob/M in seen)

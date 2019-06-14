@@ -17,7 +17,7 @@
 	color = "#5020H4" // rgb: 50, 20, 255
 	overdose_threshold = 15
 	addiction_threshold = 15
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1.2 * REAGENTS_METABOLISM
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
@@ -34,11 +34,11 @@
 	if(current_cycle == 0)
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		if(purity > 0.8 && location_created) //Teleports you home if it's pure enough
+		if(purity > 0.9) //Teleports you home if it's pure enough
 			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
 			//var/turf/open/creation = location_created
 			do_sparks(5,FALSE,M)
-			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+			do_teleport(M, loc, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
 	if(prob(20))
 		do_sparks(5,FALSE,M)
@@ -59,14 +59,13 @@
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 
 /datum/reagent/fermi/eigenstate/overdose_process(mob/living/M) //Overdose, makes you teleport randomly, probably one of my favourite effects. Sometimes kills you.
-	do_sparks(5,FALSE,src)
 	do_teleport(M, get_turf(M), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5,FALSE,src)
 	..()
 
 //Addiction
 /datum/reagent/fermi/eigenstate/addiction_act_stage1(mob/living/M) //Welcome to Fermis' wild ride.
-	if(addiction_stage == 0)
+	if(addiction_stage == 1)
 		to_chat(M, "<span class='userdanger'>Your wavefunction feels like it's been ripped in half. You feel empty inside.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to eigenstasium")
 		M.Jitter(10)
@@ -76,9 +75,9 @@
 /datum/reagent/fermi/eigenstate/addiction_act_stage2(mob/living/M)
 	if(addiction_stage == 11)
 		to_chat(M, "<span class='userdanger'>You start to convlse violently as you feel your consciousness split and merge across realities as your possessions fly wildy off your body.</span>")
-		M.Jitter(50)
-		M.Knockdown(100)
-		M.Stun(40)
+		M.Jitter(200)
+		M.Knockdown(200)
+		M.Stun(80)
 
 	var/items = M.get_contents()
 	if(!LAZYLEN(items))
@@ -91,7 +90,6 @@
 	..()
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
-
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 	switch(addictCyc3) //Loops 0 -> 1 -> 2 -> 0 ...ect.
 		if(0)
@@ -127,9 +125,9 @@
 		do_sparks(5,FALSE,M)
 		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		do_sparks(5,FALSE,M)
-		M.Sleeping(50, 0)
+		M.Sleeping(100, 0)
 		M.Jitter(50)
-		M.Knockdown(0)
+		M.Knockdown(100)
 		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself. This version of you feels more [pick("affectionate", "happy", "lusty", "radical", "shy", "ambitious", "frank", "voracious", "sensible", "witty")] than your previous self, sent to god knows what universe.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")

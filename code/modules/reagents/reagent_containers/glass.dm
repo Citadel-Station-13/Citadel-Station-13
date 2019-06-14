@@ -334,6 +334,7 @@
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/empty
 	list_reagents = list()

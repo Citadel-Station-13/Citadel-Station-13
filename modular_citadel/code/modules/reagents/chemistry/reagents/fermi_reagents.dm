@@ -406,7 +406,7 @@
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
 	if(catto.health <= 50)
 		catto.icon_state = "custom_cat_dead"
-		catto.stun(1000)
+		catto.Stun(1000)
 	else if(prob(5))
 		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 		catto.say("lets out a meowrowr!*")
