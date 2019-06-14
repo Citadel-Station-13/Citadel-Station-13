@@ -493,7 +493,7 @@
 	desc = "A blue print of a early model of the Meteor defence turret."
 	id = "meteor_defence"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 100000, MAT_GLASS = 100000, MAT_SILVER = 17500, MAT_GOLD = 15000, MAT_TITANIUM = 75000, MAT_URANIUM = 18000) //Station goal
+	materials = list(MAT_METAL = 50000, MAT_GLASS = 50000, MAT_SILVER = 8500, MAT_GOLD = 8500, MAT_TITANIUM = 7500, MAT_URANIUM = 7500)
 	build_path = /obj/machinery/satellite/meteor_shield/sci
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
