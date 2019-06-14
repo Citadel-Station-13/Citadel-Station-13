@@ -212,15 +212,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
-/datum/techweb_node/adv_meteor_defense
-	id = "adv_meteor_defense"
-	display_name = "Meteor Defense Research"
-	description = "New and improved coding and lock on tech for meteor defence!"
-	prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
-	design_ids = list("meteor_disk")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	export_price = 5000
-
+//datum/techweb_node/adv_meteor_defense
+	//id = "adv_meteor_defense"
+	//display_name = "Meteor Defense Research"
+	//description = "New and improved coding and lock on tech for meteor defence!"
+	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	//design_ids = list("meteor_disk")
+	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	//export_price = 5000
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
