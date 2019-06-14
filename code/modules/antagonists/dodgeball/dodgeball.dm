@@ -84,12 +84,6 @@
 	desc = "Used for playing the most violent and degrading of childhood games."
 
 
-/obj/item/toy/beach_ball/doomball/throw_at(atom/target, range, speed, mob/thrower, spin=0, diagonals_first = 0, datum/callback/callback)
-	if(!..())
-		return
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
-
-
 /obj/item/toy/beach_ball/doomball/throw_impact(atom/hit_atom)
 	.  = ..()
 	if(!iscarbon(hit_atom))
@@ -110,11 +104,13 @@
 		M.gib()
 		return
 
+
 /obj/item/toy/beach_ball/doomball/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //exploding after touching yourself would be bad
 		return
 	if(user.lying)
 		user.gib()
+		return
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
 	M.gib()
