@@ -10,7 +10,7 @@
 
 //A little janky with pockets
 /obj/item/FermiChem/pHbooklet/attack_hand(mob/user)
-	if(user.get_held_index_of_item(src))
+	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(numberOfPages >= 1)
 			var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
 			P.add_fingerprint(user)
@@ -34,6 +34,28 @@
 	if(!I)
 		user.put_in_active_hand(src)
 
+/obj/item/FermiChem/pHbooklet/MouseDrop(atom/over_object)
+    if(user.get_held_index_of_item(src))
+        user.put_in_active_hand(src)
+    else
+        if(numberOfPages >= 1)
+            var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
+            P.add_fingerprint(user)
+            P.forceMove(user.loc)
+            user.put_in_active_hand(P)
+            to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+            numberOfPages--
+            playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+            add_fingerprint(user)
+            if(numberOfPages == 0)
+                icon_state = "pHbookletEmpty"
+            return
+        else
+            to_chat(user, "<span class='warning'>[src] is empty!</span>")
+            add_fingerprint(user)
+            return
+    ..()
+
 /obj/item/FermiChem/pHpaper
     name = "pH indicator strip"
     desc = "A piece of paper that will change colour depending on the pH of a solution."
@@ -51,7 +73,7 @@
     if(used == TRUE)
         to_chat(user, "<span class='warning'>[user] has already been used!</span>")
         return
-    if(LAZYLEN(cont.reagents.reagent_list))
+    if(!LAZYLEN(cont.reagents.reagent_list))
         return
     switch(round(cont.reagents.pH, 1))
         if(14 to INFINITY)

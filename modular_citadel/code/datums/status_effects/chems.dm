@@ -280,7 +280,7 @@
 				resistanceTally /= 2
 				enthrallTally = 0
 				if(owner.lewd)
-					to_chat(owner, "<span class='hypnophrase'><i>Your conciousness slips, as you sink deeper into trance and servitude.</i></span>")
+					to_chat(owner, "<span class='big hypnophrase'><i>Your conciousness slips, as you sink deeper into trance and servitude.</i></span>")
 				else
 
 			else if (resistanceTally > 150)
@@ -512,6 +512,7 @@
 	if (tranceTime > 0) //custom trances only last 50 ticks.
 		tranceTime -= 1
 	else if (!tranceTime == null) //remove trance after.
+		M.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
 		M.remove_status_effect(/datum/status_effect/trance)
 		tranceTime = null
 	//..()

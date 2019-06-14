@@ -178,6 +178,7 @@
 /obj/item/reagent_containers/glass/beaker/plastic/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
 	beaker_weakness_bitflag |= TEMP_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/plastic/update_icon()
 	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
@@ -195,6 +196,7 @@
 
 /obj/item/reagent_containers/glass/beaker/meta/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -279,6 +281,7 @@
 
 /obj/item/reagent_containers/glass/bucket/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
+	. = ..()
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))

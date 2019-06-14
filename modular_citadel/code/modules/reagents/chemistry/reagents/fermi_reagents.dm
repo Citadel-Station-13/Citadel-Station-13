@@ -94,12 +94,12 @@
 /datum/reagent/fermi/hatmium/on_mob_life(mob/living/carbon/human/M)
 	if(!M.head == /obj/item/clothing/head/hattip)
 		return ..()
-	var/hatArmor = (1+(current_cycle/30))*purity
-	for(var/datum/armor/i in M.head)
-		if(!overdosed)
-			i = hatArmor
-		else
-			i = -hatArmor
+	if(!overdosed)
+		var/hatArmor = purity
+	else
+		var/hatArmor = - purity
+	var/obj/item/W = M.head
+	W.modifyAllRatings(hatArmor)
 	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

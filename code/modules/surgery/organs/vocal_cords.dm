@@ -620,7 +620,15 @@
 	var/next_command = 0
 	var/cooldown_mod = 1
 	var/base_multiplier = 1
-	//spans = list("say","yell")
+
+/datum/action/item_action/organ_action/velvet/Trigger()
+	. = ..()
+	var/command = input(owner, "Speak with the Voice of God", "Command")
+	if(QDELETED(src) || QDELETED(owner))
+		return
+	if(!command)
+		return
+	owner.say(".x[command]")
 
 /obj/item/organ/vocal_cords/velvet/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)

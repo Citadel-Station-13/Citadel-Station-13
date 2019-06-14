@@ -524,6 +524,7 @@
 		fermiIsReacting = FALSE
 		reactedVol = 0
 		targetVol = 0
+		holder.pH_check()
 		C.FermiFinish(src, my_atom, multiplier)
 		handle_reactions()
 		update_total()
@@ -549,6 +550,7 @@
 			fermiIsReacting = FALSE
 			reactedVol = 0
 			targetVol = 0
+			holder.pH_check()
 			C.FermiFinish(src, my_atom, multiplier)
 			handle_reactions()
 			update_total()
@@ -564,6 +566,7 @@
 		fermiIsReacting = FALSE
 		reactedVol = 0
 		targetVol = 0
+		holder.pH_check()
 		C.FermiFinish(src, my_atom, multiplier)
 		handle_reactions()
 		update_total()

@@ -34,7 +34,7 @@
 	if(current_cycle == 0)
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		if(purity > 0.75) //Teleports you home if it's pure enough
+		if(purity > 0.8 && location_created) //Teleports you home if it's pure enough
 			log_game("FERMICHEM: [M] ckey: [M.key] returned to [location_created] using eigenstasium")
 			var/turf/open/creation = location_created
 			do_sparks(5,FALSE,M)

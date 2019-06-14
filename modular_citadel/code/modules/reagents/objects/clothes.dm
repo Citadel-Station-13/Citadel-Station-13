@@ -19,18 +19,27 @@
 		user.emote("me",1,"admires such a spiffy hat.",TRUE)
 	return ..()
 
+/obj/item/clothing/head/foilhat/MouseDrop(atom/over_object)
+	//You sure do love tipping your hat.
+	if(usr)
+		var/mob/living/carbon/C = usr
+		if(src == C.head)
+			C.emote("me",1,"tips their hat.",TRUE)
+			return
+	..()
+
 /obj/item/clothing/head/hattip/speechModification(message, /mob/living/carbon/C)
 	..()
 	var/mob/living/carbon/C = get_wearer()//user
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	if (T.name == "fluffy tongue")
 		if(prob(0.01))
-			message += "\" and tips their hat. \"swpy's sappin' my swentwy uwu!!"
+			message += "\" and tips their hat. \"swpy's sappin' my chem dispwencer uwu!!"
 			return message
 		message += "\" and tips their hat. \"[pick("weehaw!", "bwoy howdy.", "dawn tuutin'.", "weww don't that beat aww.", "whoooowee, wouwd ya wook at that!", "whoooowee! makin' bwacon!", "cweam gwavy!", "yippekeeyah-heeyapeeah-kwayoh!", "mwove 'em uut!", "gwiddy up!")]"
 		return message
 	if(prob(0.01))
-		message += "\" and tips their hat. \"Spy's sappin' my Sentry!"
+		message += "\" and tips their hat. \"Spy's sappin' my chem dispenser!"//How did I not think of this earlier
 		message_admins("I really appreciate all the hard work you put into adminning citadel, I hope you're all having a good day and I hope this hidden and rare message admins brightens up your day.")
 		return message
 	message += "\" and tips their hat. \"[pick("Yeehaw!", "Boy howdy.", "Darn tootin'.", "Well don't that beat all.", "Whoooowee, would ya look at that!", "Whoooowee! Makin' bacon!", "Cream Gravy!", "Yippekeeyah-heeyapeeah-kayoh!", "Move 'em out!", "Giddy up!")]"
