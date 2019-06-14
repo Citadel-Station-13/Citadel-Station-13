@@ -124,6 +124,18 @@
 	if(user == anchored || !isturf(user.loc))
 		return FALSE
 
+	//pacifist vore check.
+	if(user.pulling && HAS_TRAIT(user, TRAIT_PACIFISM) && user.voremode) //they can only do heals, noisy guts, absorbing (technically not harm)
+		if(ismob(user.pulling))
+			var/mob/P = user.pulling
+			if(src != user)
+				to_chat(user, "<span class='notice'>You can't risk digestion!</span>")
+				return FALSE
+			else
+				user.vore_attack(user, P, user)
+				return
+
+	//normal vore check.
 	if(user.pulling && user.grab_state == GRAB_AGGRESSIVE && user.voremode)
 		if(ismob(user.pulling))
 			var/mob/P = user.pulling
