@@ -87,21 +87,27 @@
 	.  = ..()
 	if(!iscarbon(hit_atom))
 		return
+	var/mob/living/carbon/H = throwing.thrower
 	var/mob/living/carbon/M = hit_atom
+	if(H.lying)
+		H.gib()
+		return
+	if(H && M.in_throw_mode)
+		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
+		visible_message("<span class='danger'>[H] is caught out and explodes!</span>")
+		H.gib()
+		return
 	if(!.)
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		visible_message("<span class='danger'>[M] explodes violently into gore!</span>")
 		M.gib()
 		return
-	var/mob/living/carbon/H = throwing.thrower
-	if(H)
-		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
-		visible_message("<span class='danger'>[H] is caught out and explodes!</span>")
-		H.gib()
 
 /obj/item/toy/beach_ball/doomball/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying) //exploding after touching yourself would be bad
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user)) //exploding after touching yourself would be bad
 		return
+	if(user.lying)
+		user.gib()
 	var/mob/M = target
 	do_sparks(4, FALSE, M.loc)
 	M.gib()
