@@ -15,10 +15,9 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
-	var/beaker_resistances = NONE
+	var/beaker_resistances |= FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
-	beaker_resistances |= FLAG_STATUS_PH_IMMUNE | FLAG_STATUS_TEMP_IMMUNE
 	. = ..()
 	if(isnum(vol) && vol > 0)
 		volume = vol
