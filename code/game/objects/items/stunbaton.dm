@@ -58,7 +58,9 @@
 	//if a stun is applied or not
 
 	copper_top.use(min(chrgdeductamt, copper_top.charge), explode)
-	if(status && (!(copper_top?.charge) || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
+	if(QDELETED(src))
+		return FALSE
+	if(status && (!copper_top || !copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
@@ -74,7 +76,6 @@
 	update_icon()
 
 /obj/item/melee/baton/process()
-	. = ..()
 	deductcharge(hitcost * 0.004, FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
@@ -174,6 +175,7 @@
 	var/stunpwr = stunforce
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
+		switch_status(FALSE)
 		return FALSE
 	var/stuncharge = our_cell.charge
 	deductcharge(hitcost, FALSE)
@@ -181,8 +183,8 @@
 		return FALSE
 	if(stuncharge < hitcost)
 		if(stuncharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
-			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it is out of charge.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it is out of charge.</span>")
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was out of charge.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
@@ -210,7 +212,9 @@
 /obj/item/melee/baton/proc/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 	user.Knockdown(stunforce*3)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
 /obj/item/melee/baton/emp_act(severity)

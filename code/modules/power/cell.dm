@@ -26,7 +26,8 @@
 
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	if(self_recharge)
+		START_PROCESSING(SSobj, src)
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
@@ -103,9 +104,8 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent("plasma", 5)) //has_reagent returns the reagent datum
 	..()
-
+	rigged = reagents?.has_reagent("plasma", 5) ? TRUE : FALSE //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
