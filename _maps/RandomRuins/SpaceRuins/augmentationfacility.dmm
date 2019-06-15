@@ -6,7 +6,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "c" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/high_chance,
 /area/ruin/powered)
 "d" = (
 /turf/closed/wall/r_wall/rust,
@@ -211,7 +211,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
 	},
-/turf/closed/mineral,
+/turf/closed/mineral/random/high_chance,
 /area/ruin/powered)
 "L" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{

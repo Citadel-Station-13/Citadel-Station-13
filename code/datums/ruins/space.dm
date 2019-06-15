@@ -287,3 +287,9 @@
 	suffix = "augmentationfacility.dmm"
 	name = "Roboticst Augmentation Facility"
 	description = "A mysterious lab in the depths of space containing robotics supplies and a one use autosurgeon."
+
+/datum/map_template/ruin/space/harambe
+	id = "bigape"
+	suffix = "bigape.dmm"
+	name = "Big Ape"
+	description = "A gorilla? Out here? But why."
