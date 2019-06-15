@@ -184,7 +184,7 @@
 	name = "Naninte bain"
 	id = "nanite_b_gone"
 	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
-	color = "#5a7267" // rgb: 90, 114, 103
+	color = "#5a7267"
 	overdose_threshold = 15
 	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25
@@ -197,7 +197,7 @@
 	GET_COMPONENT_FROM(N, /datum/component/nanites, C)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -0.55//0.5 seems to be the default to me, so it'll neuter them.
+	N.nanite_volume = -purity//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
@@ -213,7 +213,7 @@
 		to_chat(C, "<span class='warning'>The nanites short circuit within your system!</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume = -2//12.5 seems crazy high?
+	N.nanite_volume = -2
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
@@ -229,7 +229,6 @@
 		to_chat(C, "<span class='warning'>The residual voltage in your system causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, FALSE, FALSE, FALSE, TRUE)
 	if(prob(50))
-		//empulse((get_turf(C)), 2, 1, 1)//So the nanites randomize
 		var/atom/T = C
 		T.emp_act(EMP_HEAVY)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
@@ -398,7 +397,8 @@
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
-	H.moveToNullspace()
+	//H.moveToNullspace()
+	H.forceMove(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	//Just to deal with rascally ghosts
 	ADD_TRAIT(catto, TRAIT_NODEATH, "catto")
