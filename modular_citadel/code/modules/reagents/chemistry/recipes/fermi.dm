@@ -49,7 +49,7 @@
 		R.add_reagent("fermiAcid", (volume/3))
 	if(R.reagent_list)
 		message_admins("gas")
-		s.set_up(R, (volume/10), my_atom)
+		s.set_up(R, (volume/5), my_atom)
 		s.start()
 
 	if (pH > 10) //if alkaline, small explosion.
@@ -90,6 +90,8 @@
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	E.location_created = location
+	if(!E.data)
+		E.data.["location_created"] = location
 
 
 //serum

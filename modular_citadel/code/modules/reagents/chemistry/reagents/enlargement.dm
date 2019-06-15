@@ -95,8 +95,8 @@
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your breasts begin to strain against your clothes tightly!</b></span>")
-			M.adjustOxyLoss(10, 0)
-			M.apply_damage(2, BRUTE, target)
+			M.adjustOxyLoss(5, 0)
+			M.apply_damage(1, BRUTE, target)
 	B.update()
 	..()
 
@@ -228,7 +228,7 @@
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
 			to_chat(M, "<span class='warning'>Your cock begin to strain against your clothes tightly!</b></span>")
-			M.apply_damage(5, BRUTE, target)
+			M.apply_damage(2.5, BRUTE, target)
 
 	P.update()
 	..()

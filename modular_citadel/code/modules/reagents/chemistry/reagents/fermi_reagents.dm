@@ -404,7 +404,7 @@
 	ADD_TRAIT(catto, TRAIT_NODEATH, "catto")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
-	if(catto.health <= 50)
+	if(catto.health <= 0)
 		catto.icon_state = "custom_cat_dead"
 		catto.Stun(1000)
 	else if(prob(5))

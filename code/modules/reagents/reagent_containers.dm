@@ -142,7 +142,10 @@
 //melts plastic beakers
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
+	message_admins("Heating beaker")
+	message_admins("temperature [reagents.chem_temp]")
 	if(beaker_weakness_bitflag & TEMP_WEAK)
+		message_admins("Beaker weak to heat")
 		if(reagents.chem_temp >= 444)//assuming polypropylene
 			var/list/seen = viewers(5, get_turf(src))
 			var/iconhtml = icon2html(src, seen)

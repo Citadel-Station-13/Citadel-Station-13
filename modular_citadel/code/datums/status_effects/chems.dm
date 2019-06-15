@@ -69,7 +69,7 @@
 			to_chat(owner, "<span class='warning'>Your enormous breasts are way too large to fit anything over them!</b></span>")
 	if (B.size == "huge")
 		if(prob(1))
-			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
+			to_chat(owner, "<span class='notice'>Your back is feeling sore.</span>")
 			var/target = o.get_bodypart(BODY_ZONE_CHEST)
 			o.apply_damage(0.1, BRUTE, target)
 		if(!B.cached_size == B.breast_values[B.prev_size])
@@ -90,7 +90,7 @@
 			if(10 to INFINITY)
 				if (GLOB.breasts_size_list[B.prev_size] != GLOB.breasts_size_list[B.size])
 					to_chat(H, "<span class='warning'>Your indulgent busom is so substantial, it's affecting your movements!</b></span>")
-		if(prob(2))
+		if(prob(1))
 			to_chat(owner, "<span class='notice'>Your back is feeling a little sore.</span>")
 		..()
 
