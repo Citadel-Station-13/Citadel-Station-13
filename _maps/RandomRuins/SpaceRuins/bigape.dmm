@@ -14,13 +14,13 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "e" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/structure/fans/tiny/invisible,
+/obj/structure/closet/secure_closet/freezer,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "f" = (
@@ -38,11 +38,8 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "h" = (
-/obj/structure/showcase/machinery/tv{
-	step_x = 0;
-	step_y = 0
-	},
 /obj/structure/table/wood,
+/obj/machinery/computer/security/wooden_tv,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "i" = (
@@ -61,7 +58,6 @@
 	},
 /mob/living/simple_animal/hostile/gorilla{
 	AIStatus = null;
-	canmove = 1;
 	desc = "There is no need to be upset.";
 	dir = 4;
 	name = "Familiar Gorilla"
@@ -71,6 +67,10 @@
 "l" = (
 /obj/effect/overlay/palmtree_r,
 /obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered)
+"m" = (
+/obj/item/grown/bananapeel,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 
@@ -129,7 +129,7 @@ b
 e
 c
 c
-c
+m
 j
 d
 b
