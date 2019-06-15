@@ -4,8 +4,8 @@
 /mob/living/silicon/robot/Move(NewLoc, direct)
 	. = ..()
 	if(. && sprinting && !(movement_type & FLYING) && canmove && !resting)
-		if(istype(cell))
-			cell.charge -= 25
+		if(!(cell?.use(25)))
+			togglesprint()
 
 /mob/living/silicon/robot/movement_delay()
 	. = ..()
@@ -18,6 +18,8 @@
 		if(sprinting)
 			playsound_local(src, 'modular_citadel/sound/misc/sprintactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 		else
+			if(!(cell?.charge))
+				return FALSE
 			playsound_local(src, 'modular_citadel/sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/sprintbutton/selector in hud_used.static_inventory)
