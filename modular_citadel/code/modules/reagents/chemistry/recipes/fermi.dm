@@ -90,8 +90,7 @@
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	E.location_created = location
-	if(!E.data)
-		E.data.["location_created"] = location
+	E.data.["location_created"] = location
 
 
 //serum

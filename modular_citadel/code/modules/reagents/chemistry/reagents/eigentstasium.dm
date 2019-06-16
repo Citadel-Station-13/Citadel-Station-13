@@ -21,6 +21,7 @@
 	addiction_stage2_end = 30
 	addiction_stage3_end = 41
 	addiction_stage4_end = 44 //Incase it's too long
+	data = list("location_created" = null)
 	var/turf/location_created
 	var/turf/open/location_return = null
 	var/addictCyc3 = 0

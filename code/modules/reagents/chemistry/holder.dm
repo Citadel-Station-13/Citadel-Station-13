@@ -926,10 +926,9 @@
 		if (R.id == reagent)
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
 				pH = 7
-			/*In practice this is really confusing and players feel like it randomly melts their beakers.
+			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
 			else
 				pH = (((pH - R.pH) / total_volume) * amount) + pH
-			*/
 			if(istype(my_atom, /obj/item/reagent_containers/))
 				var/obj/item/reagent_containers/RC = my_atom
 				RC.pH_check()//checks beaker resilience)

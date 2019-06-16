@@ -183,7 +183,7 @@
 /datum/reagent/fermi/nanite_b_gone
 	name = "Naninte bain"
 	id = "nanite_b_gone"
-	description = "A rather simple toxin to small nano machines that will kill them off at a rapid rate well in system."
+	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#5a7267"
 	overdose_threshold = 15
 	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
@@ -216,7 +216,6 @@
 	N.nanite_volume = -2
 	..()
 
-//Unobtainable, used if SDGF is impure but not too impure
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
 	id = "nanite_b_goneTox"
