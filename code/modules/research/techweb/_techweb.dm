@@ -41,6 +41,14 @@
 		research_points[i] = INFINITY
 	hidden_nodes = list()
 
+/datum/techweb/syndicate
+	id = "SYNDICATE"
+	organization = "Syndicate"
+
+/datum/techweb/syndicate/New()
+	var/datum/techweb_node/syndicate_basic/Node = new()
+	research_node(Node, TRUE)
+
 /datum/techweb/science	//Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
