@@ -494,3 +494,14 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/commjacket
+	name = "TBD"
+	desc = "TBD."
+	icon_state = "commjacket"
+	item_state = "commjacket"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+

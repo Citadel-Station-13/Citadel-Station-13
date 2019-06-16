@@ -398,3 +398,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/kimono
 	ckeywhitelist = list("sfox63")
+
+/datum/gear/commjacket
+	name = "TBD Name"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/commjacket
+	ckeywhitelist = list("TBD")
