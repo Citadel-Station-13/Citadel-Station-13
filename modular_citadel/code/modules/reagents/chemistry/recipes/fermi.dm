@@ -124,7 +124,7 @@
 	S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	S.name = "Living teratoma"
 	S.real_name = "Living teratoma"
-	S.rabid = 1//Make them an angery boi, grr grr
+	S.rabid = 1//Make them an angery boi
 	S.color = "#810010"
 	my_atom.reagents.clear_reagents()
 	var/list/seen = viewers(8, get_turf(my_atom))
