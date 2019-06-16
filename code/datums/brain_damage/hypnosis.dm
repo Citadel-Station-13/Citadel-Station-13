@@ -9,16 +9,29 @@
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
-/datum/brain_trauma/hypnosis/New(phrase)
+/datum/brain_trauma/hypnosis/New(phrase, priority = TRUE)
 	if(!phrase)
 		qdel(src)
-	hypnotic_phrase = phrase
+	if(priority == TRUE)
+		hypnotic_phrase = phrase
+	else
+		phrase friendliify(phrase)
 	try
 		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	catch(var/exception/e)
 		stack_trace("[e] on [e.file]:[e.line]")
 		qdel(src)
 	..()
+
+/datum/brain_trauma/hypnosis/proc/friendliify(phrase)
+	phrase = replacetext(lowertext(phrase), "kill", "hug")
+	phrase = replacetext(lowertext(phrase), "murder", "cuddle")
+	phrase = replacetext(lowertext(phrase), "harm", "snuggle")
+	phrase = replacetext(lowertext(phrase), "decapitate", "headpat")
+	phrase = replacetext(lowertext(phrase), "strangle", "meow at")
+	phrase = replacetext(lowertext(phrase), "suicide", "self-love")
+	phrase = replacetext(lowertext(phrase), "lynch", "kiss")
+	hypnotic_phrase = phrase
 
 /datum/brain_trauma/hypnosis/on_gain()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
@@ -29,8 +42,12 @@
 												"You feel a part of your mind repeating this over and over. You need to follow these words.",\
 												"Something about this sounds... right, for some reason. You feel like you should follow these words.",\
 												"These words keep echoing in your mind. You find yourself completely fascinated by them.")]</span>")
-	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
+	if(priority == TRUE)
+		to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
+	else
+		to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
+									however this does not take precedence over your other objectives.</span>")
 	..()
 
 /datum/brain_trauma/hypnosis/on_lose()
