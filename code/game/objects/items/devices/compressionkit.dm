@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/charges = 5
-	var/damage_multiplier = 0.2 // Changing this effects how much more or less damage a resized item will do
+	// var/damage_multiplier = 0.2 Not in use yet.
 	var/mode = 0
 
 /obj/item/compressionkit/examine(mob/user)
@@ -83,7 +83,7 @@
 				sparks()
 				flash_lighting_fx(3, 3, LIGHT_COLOR_CYAN)
 				O.w_class -= 1
-				O.force_mult -= damage_multiplier
+				// O.force_mult -= damage_multiplier
 				charges -= 1
 				to_chat(user, "<span class='notice'>You successfully compress [target]! The compressor now has [charges] charges.</span>")
 		else
