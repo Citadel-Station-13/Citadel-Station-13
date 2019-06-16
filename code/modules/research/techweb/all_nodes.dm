@@ -203,13 +203,22 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
 
+/datum/techweb_node/computer_board_gaming
+	id = "computer_board_gaming"
+	display_name = "Games and Toys"
+	description = "For the slackers on the station."
+	prereq_ids = list("comptech")
+	design_ids = list("arcade_battle", "arcade_orion", "slotmachine", "autoylathe")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	export_price = 5000
+
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
 	id = "bluespace_basic"
 	display_name = "Basic Bluespace Theory"
 	description = "Basic studies into the mysterious alternate dimension known as bluespace."
 	prereq_ids = list("base", "datatheory")
-	design_ids = list("beacon", "xenobioconsole", "telesci_gps")
+	design_ids = list("beacon", "xenobioconsole", "telesci_gps", "xenobio_monkeys")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -219,7 +228,7 @@
 	description = "Deeper understanding of how the Bluespace dimension works"
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
-	"teleconsole",  "bluespace_crystal", "wormholeprojector")
+	"teleconsole",  "bluespace_crystal", "wormholeprojector", "xenobio_slimebasic")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 15000)
 	export_price = 5000
 
@@ -228,7 +237,7 @@
 	display_name = "Applied Bluespace Research"
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
-	design_ids = list("bs_rped","biobag_holding","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo")
+	design_ids = list("bs_rped","biobag_holding","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "roastingstick", "ore_silo", "xenobio_slimeadv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	export_price = 5000
 
@@ -636,7 +645,7 @@
 	display_name = "Ballistic Weaponry"
 	description = "This isn't research.. This is reverse-engineering!"
 	prereq_ids = list("weaponry")
-	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic")
+	design_ids = list("mag_oldsmg", "mag_oldsmg_ap", "mag_oldsmg_ic", "mag_oldsmg_rubber", "mag_oldsmg_tx")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
 	export_price = 5000
 
@@ -1012,6 +1021,15 @@
 		if(!UI.item)
 			continue
 		boost_item_paths |= UI.item	//allows deconning to unlock.
+
+/datum/techweb_node/advanced_illegl_ballistics
+	id = "advanced_illegal_ballistics"
+	display_name = "Advanced Illegal Ballistics"
+	description = "Advanced Ballistic for Illegal weaponds."
+	design_ids = list("10mm","10mmap","10mminc","10mmhp","pistolm9mm","m45","bolt_clip")
+	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns form traitors or space.
+	export_price = 7000
 
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()

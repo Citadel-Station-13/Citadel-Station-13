@@ -2159,6 +2159,12 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
+/datum/supply_pack/organic/critter/kiwi
+	name = "Space kiwi Crate"
+	cost = 2000
+	contains = list( /mob/living/simple_animal/kiwi)
+	crate_name = "space kiwi crate"
+
 /datum/supply_pack/critter/snake
 	name = "Snake Crate"
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
@@ -2524,6 +2530,13 @@
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
 
+/datum/supply_pack/costumes_toys/kinkmate
+	name = "Kinkmate construction kit"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
+	crate_name = "Kinkmate construction kit"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2637,6 +2650,26 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "festive wrapping paper crate"
 
+/datum/supply_pack/misc/paper_work
+	name = "Freelance Paper work"
+	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
+	cost = 700 // Net of 0 credits
+	contains = list(/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain,
+					/obj/item/pen/fountain)
+	crate_name = "Paperwork"
 
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supply crate"
@@ -2649,18 +2682,11 @@
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
 
-/datum/supply_pack/misc/religious_supplies
-	name = "Religious Supplies Crate"
-	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
-	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/reagent_containers/food/drinks/bottle/holywater,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/storage/book/bible/booze,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie
-					)
-	crate_name = "religious supplies crate"
+/datum/supply_pack/misc/jukebox
+	name = "Jukebox"
+	cost = 35000
+	contains = list(/obj/machinery/jukebox)
+	crate_name = "Jukebox"
 
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
@@ -2692,26 +2718,18 @@
 	crate_name = "deluxe keg"
 	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/misc/paper_work
-	name = "Freelance Paper work"
-	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
-	cost = 400 // Net of 0 credits
-	contains = list(/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/folder/paperwork,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain,
-					/obj/item/pen/fountain)
-	crate_name = "Paperwork"
+/datum/supply_pack/misc/religious_supplies
+	name = "Religious Supplies Crate"
+	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
+	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
+	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/reagent_containers/food/drinks/bottle/holywater,
+					/obj/item/storage/book/bible/booze,
+					/obj/item/storage/book/bible/booze,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/suit/hooded/chaplain_hoodie
+					)
+	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
