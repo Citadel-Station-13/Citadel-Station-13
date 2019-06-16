@@ -78,7 +78,7 @@
 	OptimalpHMax		= 8 // Higest value for above
 	ReactpHLim			= 4 // How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 0.6 // How sharp the temperature exponential curve is (to the power of value)
+	CurveSharpT 		= 1.6 // How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 5 //Temperature change per 1u produced
 	HIonRelease 		= -0.05 //pH change per 1u reaction

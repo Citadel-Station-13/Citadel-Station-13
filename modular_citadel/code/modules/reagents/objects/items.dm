@@ -38,7 +38,7 @@
     if(numberOfPages >= 1)
         var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
         P.add_fingerprint(user)
-        P.forceMove(user.loc)
+        P.forceMove(user)
         user.put_in_active_hand(P)
         to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
         numberOfPages--

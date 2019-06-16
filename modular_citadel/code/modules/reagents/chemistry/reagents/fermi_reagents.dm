@@ -396,15 +396,18 @@
 	catto.name = H.name
 	catto.desc = "A cute catto! They remind you of [H] somehow."
 	catto.color = "#[H.dna.features["mcolor"]]"
+	catto.health = 1000 //To simulate fake death, while preventing ghosts escaping.
 	H.forceMove(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	//Just to deal with rascally ghosts
 	ADD_TRAIT(catto, TRAIT_NODEATH, "catto")
 
 /datum/reagent/fermi/secretcatchem/on_mob_life(mob/living/carbon/H)
-	if(catto.health <= 0)
+	if(catto.health <= 950) //So the dead can't ghost
+		//catto.revive(full_heal = 1)
 		catto.icon_state = "custom_cat_dead"
 		catto.Stun(1000)
+		catto.canmove = 0
 	else if(prob(5))
 		playsound(get_turf(catto), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
 		catto.say("lets out a meowrowr!*")
