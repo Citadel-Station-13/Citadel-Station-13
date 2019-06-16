@@ -93,6 +93,11 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/schoolgirl/orange
 
+/datum/gear/stripeddress
+	name = "Striped Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/stripeddress
+
 /datum/gear/kilt
 	name = "Kilt"
 	category = SLOT_W_UNIFORM
