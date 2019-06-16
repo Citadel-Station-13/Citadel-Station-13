@@ -622,6 +622,7 @@ RLD
 	sheetmultiplier = 16
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
+	ammo_sections = 5
 
 	var/wallcost = 10
 	var/floorcost = 15
@@ -642,7 +643,7 @@ RLD
 		..()
 
 /obj/item/construction/rld/update_icon()
-	icon_state = "rld-[round(matter/35)]"
+	icon_state = "rld-[round((matter/maxmatter) * 5, 1)]"
 	..()
 
 
