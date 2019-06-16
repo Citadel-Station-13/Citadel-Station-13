@@ -924,15 +924,17 @@
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
-			//clamp the removal amount to be between current reagent amount
-			//and zero, to prevent removing more than the holder has stored
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
 				pH = 7
+			/*In practice this is really confusing and players feel like it randomly melts their beakers.
 			else
-				pH = ((pH * total_volume)-(R.pH * amount))/(total_volume - amount)
+				pH = (((pH - R.pH) / total_volume) * amount) + pH
+			*/
 			if(istype(my_atom, /obj/item/reagent_containers/))
 				var/obj/item/reagent_containers/RC = my_atom
 				RC.pH_check()//checks beaker resilience)
+			//clamp the removal amount to be between current reagent amount
+			//and zero, to prevent removing more than the holder has stored
 			amount = CLAMP(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()

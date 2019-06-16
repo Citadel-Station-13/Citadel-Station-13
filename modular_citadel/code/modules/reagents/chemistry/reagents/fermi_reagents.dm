@@ -344,7 +344,7 @@
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
-	playsound(get_turf(holder), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(id, volume)
 	..()
 

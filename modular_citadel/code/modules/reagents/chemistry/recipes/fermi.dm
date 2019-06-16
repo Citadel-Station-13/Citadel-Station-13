@@ -73,7 +73,7 @@
 	//FermiChem vars:
 	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 600 // Upper end for above
-	ExplodeTemp			= 750 //Temperature at which reaction explodes
+	ExplodeTemp			= 650 //Temperature at which reaction explodes
 	OptimalpHMin		= 6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	OptimalpHMax		= 8 // Higest value for above
 	ReactpHLim			= 4 // How far out pH wil react, giving impurity place (Exponential phase)
@@ -134,7 +134,7 @@
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
 	id = "breast_enlarger"
-	results = list("breast_enlarger" = 0.6)
+	results = list("breast_enlarger" = 0.4)
 	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
@@ -166,7 +166,7 @@
 /datum/chemical_reaction/fermi/penis_enlarger
 	name = "Incubus draft"
 	id = "penis_enlarger"
-	results = list("penis_enlarger" = 0.3)
+	results = list("penis_enlarger" = 0.4)
 	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
@@ -298,7 +298,7 @@
 	name = "Hat growth serum"
 	id = "hatmium"
 	results = list("hatmium" = 0.5)
-	required_reagents = list("whiskey" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1)
+	required_reagents = list("whiskey" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1, "gold" = 0.3)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 500
@@ -377,8 +377,8 @@
 /datum/chemical_reaction/fermi/fermiABuffer//done test
 	name = "Acetic acid buffer"
 	id = "fermiABuffer"
-	results = list("fermiABuffer" = 20) //acetic acid
-	required_reagents = list("salglu_solution" = 2, "ethanol" = 6, "oxygen" = 6, "water" = 6)
+	results = list("fermiABuffer" = 2) //acetic acid
+	required_reagents = list("salglu_solution" = 0.2, "ethanol" = 0.6, "oxygen" = 0.6, "water" = 0.6)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -387,7 +387,7 @@
 	OptimalpHMax 	= 6
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
-	CurveSharpT 	= 1
+	CurveSharpT 	= 4
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= -0.01
@@ -402,8 +402,8 @@
 /datum/chemical_reaction/fermi/fermiBBuffer//done test
 	name = "Ethyl Ethanoate buffer"
 	id = "fermiBBuffer"
-	results = list("fermiBBuffer" = 15)
-	required_reagents = list("fermiABuffer" = 5, "ethanol" = 5, "salglu_solution" = 1, "water" = 5)
+	results = list("fermiBBuffer" = 1.5)
+	required_reagents = list("fermiABuffer" = 0.5, "ethanol" = 0.5, "salglu_solution" = 0.1, "water" = 0.5)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:
 	OptimalTempMin 	= 250
@@ -413,7 +413,7 @@
 	OptimalpHMax 	= 12
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
-	CurveSharpT 	= 1
+	CurveSharpT 	= 4
 	CurveSharppH 	= 0
 	ThermicConstant = 0
 	HIonRelease 	= 0.01
