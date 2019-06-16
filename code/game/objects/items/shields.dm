@@ -173,5 +173,6 @@
 	icon_state = "metal"
 	block_chance = 75 //1/4 shots will hit*
 	force = 10
+	slowdown = 2
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
