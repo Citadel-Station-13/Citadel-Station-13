@@ -79,14 +79,14 @@
 /obj/item/toy/beach_ball/doomball
 	name = "doomball"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "doomball_static"
+	icon_state = "doomball"
 	item_state = "doomball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
-/obj/item/toy/beach_ball/doomball/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/toy/beach_ball/doomball/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback)
 	if(thrower.lying)
 		return
-. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
+	. = ..(target, range, speed, thrower, TRUE, diagonals_first, callback)
 
 
 /obj/item/toy/beach_ball/doomball/throw_impact(atom/hit_atom)
