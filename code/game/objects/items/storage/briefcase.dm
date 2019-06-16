@@ -38,9 +38,10 @@
 /obj/item/storage/briefcase/lawyer
 	folder_path = /obj/item/folder/blue
 
-/obj/item/storage/briefcase/lawyer/family 
+/obj/item/storage/briefcase/lawyer/family
 	name = "battered  briefcase"
-	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. The corners are modified with metal trim adding in weight!"
+	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. Comes with an added belt clip!"
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/briefcase/lawyer/family/PopulateContents()
 	new /obj/item/stamp/law(src)
@@ -79,3 +80,12 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
 
+/obj/item/storage/briefcase/medical
+	name = "medical briefcase"
+	icon_state = "medbriefcase"
+	desc = "A white with a blue cross brieface, this is ment to hold medical gear that would not be able to normally fit in a bag."
+
+/obj/item/storage/briefcase/medical/PopulateContents()
+	new /obj/item/clothing/neck/stethoscope(src)
+	new /obj/item/healthanalyzer(src)
+	..() //In case of paperwork

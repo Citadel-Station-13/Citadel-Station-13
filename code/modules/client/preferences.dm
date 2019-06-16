@@ -117,6 +117,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"balls_color" = "fff",
 		"balls_amount" = 2,
 		"balls_sack_size" = BALLS_SACK_SIZE_DEF,
+		"balls_shape" = "Single",
 		"balls_size" = BALLS_SIZE_DEF,
 		"balls_cum_rate" = CUM_RATE,
 		"balls_cum_mult" = CUM_RATE_MULT,
@@ -153,6 +154,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		)
 
 	var/list/custom_names = list()
+	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 	var/custom_species = null
 
@@ -302,10 +304,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					old_group = namedata["group"]
 					dat += "<br>"
 				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
-			dat += "<br>"
-			dat += "<b>Custom job preferences:</b><BR>"
-			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
+			dat += "<br><br>"
 
+			dat += "<b>Custom job preferences:</b><BR>"
+			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
+			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
 			dat += "</tr></table>"
 
 		//Character Appearance
@@ -701,6 +704,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							dat += "<b>Testicles Color:</b>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
+						dat += "<b>Testicles showing:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=balls_shape;task=input'>[features["balls_shape"]]</a>"
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<b>Has Vagina:</b>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a>"
@@ -1836,7 +1840,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("cock_length")
 					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
@@ -1858,7 +1862,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+
+				if("balls_shape")
+					var/new_shape
+					new_shape = input(user, "Testicle Type:", "Character Preference") as null|anything in GLOB.balls_shapes_list
+					if(new_shape)
+						features["balls_shape"] = new_shape
 
 				if("egg_size")
 					var/new_size
@@ -1874,7 +1884,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("breasts_size")
 					var/new_size
@@ -1897,7 +1907,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("vag_shape")
 					var/new_shape
@@ -1914,7 +1924,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["vag_color"] = sanitize_hexcolor(new_vagcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
@@ -1931,8 +1941,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
+				if("ai_core_icon")
+					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
+					if(ai_core_icon)
+						preferred_ai_core_display = ai_core_icon
+
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
 

@@ -108,20 +108,7 @@
 			to_chat(loc, "<span class='warning'>Combat injection is still recharging.</span>")
 			return
 		var/mob/living/carbon/human/M = loc
-		M.SetSleeping(0)
-		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
-		M.reagents.add_reagent("inaprovaline", 3)
-		M.reagents.add_reagent("synaptizine", 10)
-		M.reagents.add_reagent("stimulants", 10)
-		M.adjustStaminaLoss(-150)
-		M.stuttering = 0
-		M.updatehealth()
-		M.update_stamina()
-		M.resting = 0
-		M.lying = 0
-		M.update_canmove()
+		M.do_adrenaline(150, FALSE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 

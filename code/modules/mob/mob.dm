@@ -67,8 +67,8 @@
 	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
-		if(gas[MOLES])
-			t+="<span class='notice'>[gas[GAS_META][META_GAS_NAME]]: [gas[MOLES]] \n</span>"
+		if(gas)
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [gas] \n</span>"
 
 	to_chat(usr, t)
 

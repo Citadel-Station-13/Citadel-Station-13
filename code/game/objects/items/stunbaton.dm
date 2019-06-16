@@ -22,7 +22,10 @@
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 
 /obj/item/melee/baton/get_cell()
-	return cell
+	. = cell
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
+		. = R.get_cell()
 
 /obj/item/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -46,31 +49,34 @@
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE)
-	if(!cell)
+/obj/item/melee/baton/proc/deductcharge(chrgdeductamt, chargecheck = TRUE, explode = TRUE)
+	var/obj/item/stock_parts/cell/copper_top = get_cell()
+	if(!copper_top)
 		switch_status(FALSE, TRUE)
 		return FALSE
 	//Note this value returned is significant, as it will determine
 	//if a stun is applied or not
-	. = cell.use(chrgdeductamt)
-	if(status && (!. || (chargecheck && cell.charge < hitcost * STUNBATON_CHARGE_LENIENCY)))
+
+	copper_top.use(min(chrgdeductamt, copper_top.charge), explode)
+	if(QDELETED(src))
+		return FALSE
+	if(status && (!copper_top || !copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
 
 /obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
-	if(status == new_status)
-		return
-	status = new_status
+	if(status != new_status)
+		status = new_status
+		if(!silent)
+			playsound(loc, "sparks", 75, 1, -1)
+		if(status)
+			START_PROCESSING(SSobj, src)
+		else
+			STOP_PROCESSING(SSobj, src)
 	update_icon()
-	if(!silent)
-		playsound(loc, "sparks", 75, 1, -1)
-	if(status)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/melee/baton/process()
-	deductcharge(hitcost * 0.004, FALSE)
+	deductcharge(hitcost * 0.004, FALSE, FALSE)
 
 /obj/item/melee/baton/update_icon()
 	if(status)
@@ -81,9 +87,10 @@
 		icon_state = "[initial(name)]"
 
 /obj/item/melee/baton/examine(mob/user)
-	..()
-	if(cell)
-		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
+	. = ..()
+	var/obj/item/stock_parts/cell/copper_top = get_cell()
+	if(copper_top)
+		to_chat(user, "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>")
 	else
 		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
 
@@ -93,7 +100,7 @@
 		if(cell)
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
-			if(C.maxcharge < hitcost)
+			if(C.maxcharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.transferItemToLoc(W, src))
@@ -113,19 +120,20 @@
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
-	if(cell && cell.charge > hitcost * STUNBATON_CHARGE_LENIENCY)
-		switch_status(!status)
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-	else
+	var/obj/item/stock_parts/cell/copper_top = get_cell()
+	if(!copper_top || copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))
 		switch_status(FALSE, TRUE)
-		if(!cell)
+		if(!copper_top)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
+	else
+		switch_status(!status)
+		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)
 		return
 
@@ -165,16 +173,21 @@
 			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	var/stunpwr = stunforce
-	if(iscyborg(loc))
-		var/mob/living/silicon/robot/R = loc
-		if(!istype(R) || !R.cell || !R.cell.use(hitcost))
+	var/obj/item/stock_parts/cell/our_cell = get_cell()
+	if(!our_cell)
+		switch_status(FALSE)
+		return FALSE
+	var/stuncharge = our_cell.charge
+	deductcharge(hitcost, FALSE)
+	if(QDELETED(src) || QDELETED(our_cell)) //it was rigged
+		return FALSE
+	if(stuncharge < hitcost)
+		if(stuncharge < (hitcost * STUNBATON_CHARGE_LENIENCY))
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was out of charge.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
-	else
-		var/stuncharge = cell.charge
-		if(!deductcharge(hitcost, FALSE))
-			stunpwr *= round(stuncharge/hitcost)
-			if(stunpwr < stunforce * STUNBATON_CHARGE_LENIENCY)
-				return FALSE
+		stunpwr *= round(stuncharge/hitcost, 0.1)
+
 
 	L.Knockdown(stunpwr)
 	L.adjustStaminaLoss(stunpwr*0.1, affected_zone = (istype(user) ? user.zone_selected : BODY_ZONE_CHEST))//CIT CHANGE - makes stunbatons deal extra staminaloss. Todo: make this also deal pain when pain gets implemented.
@@ -199,14 +212,17 @@
 /obj/item/melee/baton/proc/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
+	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 	user.Knockdown(stunforce*3)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
-		deductcharge(1000 / severity)
+		if(!iscyborg(loc))
+			deductcharge(1000 / severity, TRUE, FALSE)
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
@@ -223,14 +239,15 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
-	var/obj/item/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()
 	sparkler = new (src)
+	sparkler.activate_cooldown = 5
 
 /obj/item/melee/baton/cattleprod/baton_stun()
-	if(sparkler.activate())
-		..()
+	sparkler?.activate()
+	. = ..()
 
 #undef STUNBATON_CHARGE_LENIENCY

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - balance: "Adds in a 7 seconds delay to the jackhammer dismantling a superheated clockwork wall."
