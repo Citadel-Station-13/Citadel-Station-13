@@ -141,8 +141,8 @@
 	item_state = "rapier"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 33
-	throwforce = 45
+	force = 25
+	throwforce = 35
 	block_chance = 0
 	armour_penetration = 100
 	flags_1 = CONDUCT_1
