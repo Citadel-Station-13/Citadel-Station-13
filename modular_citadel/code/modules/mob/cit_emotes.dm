@@ -183,7 +183,6 @@
 	key_third_person = "suddenly hits a dab"
 	message = "suddenly hits a dab!"
 	emote_type = EMOTE_AUDIBLE
-	restraint_check = TRUE
 
 
 
