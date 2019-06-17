@@ -454,3 +454,54 @@
 	icon_state = "moveralls"
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
+/obj/item/clothing/suit/hooded/cloak/zuliecloak
+	name = "Project: Zul-E"
+	desc = "A standard version of a prototype cloak given out by Nanotrasen higher ups. It's surprisingly thick and heavy for a cloak despite having most of it's tech stripped. It also comes with a bluespace trinket which calls it's accompanying hat onto the user. A worn inscription on the inside of the cloak reads 'Fleuret' ...the rest is faded away."
+	icon_state = "zuliecloak"
+	item_state = "zuliecloak"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/cloakhood/zuliecloak
+	body_parts_covered = CHEST|GROIN|ARMS
+	slot_flags = SLOT_WEAR_SUIT | ITEM_SLOT_NECK //it's a cloak. it's cosmetic. so why the hell not? what could possibly go wrong?
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/head/hooded/cloakhood/zuliecloak
+	name = "NT Special Issue"
+	desc = "This hat is unquestionably the best one, bluespaced to and from CentComm. It smells of Fish and Tea with a hint of antagonism"
+	icon_state = "zuliecap"
+	item_state = "zuliecap"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	flags_inv = HIDEEARS|HIDEHAIR
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/blackredgold
+	name = "Multicolor Coat"
+	desc = "An oddly special looking coat with black, red, and gold"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	icon_state = "redgoldjacket"
+	item_state = "redgoldjacket"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/kimono
+	name = "Blue Kimono"
+	desc = "A traditional kimono, this one is blue with purple flowers."
+	icon_state = "kimono"
+	item_state = "kimono"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/commjacket
+	name = "Dusty Commisar's Cloak"
+	desc = "An Imperial Commisar's Coat, straight from the frontline of battle, filled with dirt, bulletholes, and dozens of little pockets. Alongside a curious golden eagle sitting on it's left breast, the marking '200th Venoland' is clearly visible on the inner workings of the coat. It certainly holds an imposing flair, however."
+	icon_state = "commjacket"
+	item_state = "commjacket"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+

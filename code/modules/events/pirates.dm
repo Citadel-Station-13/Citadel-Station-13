@@ -48,8 +48,6 @@
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
-
-
 /datum/round_event/pirates/start()
 	if(!paid_off && !shuttle_spawned)
 		spawn_shuttle()
@@ -150,7 +148,6 @@
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
 	credits_stored = 0
 
-
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
 
@@ -222,8 +219,7 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/internals/oxygen
-
+	storage_type = /obj/item/tank/jetpack/void
 
 /obj/machinery/loot_locator
 	name = "Booty Locator"

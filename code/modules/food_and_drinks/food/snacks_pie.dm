@@ -53,6 +53,7 @@
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
+		reagents.trans_to(H,15) //Transfers the cream pies total volume of reagents to target on it
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
@@ -61,6 +62,28 @@
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
 	stunning = FALSE
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body/Destroy()
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/A in contents)
+		A.forceMove(T)
+		A.throw_at(T, 1, 1)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/pie/cream/body/On_Consume(mob/living/carbon/M)
+	if(!reagents.total_volume) //so that it happens on the last bite
+		if(iscarbon(M) && contents.len)
+			var/turf/T = get_turf(src)
+			for(var/atom/movable/A in contents)
+				A.forceMove(T)
+				A.throw_at(T, 1, 1)
+				M.visible_message("[src] bursts out of [M]!</span>")
+			M.emote("scream")
+			M.Knockdown(40)
+			M.adjustBruteLoss(60)
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/pie/berryclafoutis
 	name = "berry clafoutis"
@@ -246,3 +269,24 @@
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("mint" = 1, "pie" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+
+/obj/item/reagent_containers/food/snacks/pie/baklava
+	name = "baklava"
+	desc = "A delightful healthy snake made of nut layers with thin bread."
+	icon_state = "baklava"
+	slice_path = /obj/item/reagent_containers/food/snacks/baklavaslice
+	slices_num = 6
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/baklavaslice
+	name = "baklava dish"
+	desc = "A portion delightful healthy snake made of nut layers with thin bread"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "baklavaslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#1E90FF"
+	list_reagents = list("nutriment" = 2, "vitamins" = 4)
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN

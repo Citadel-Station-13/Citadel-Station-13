@@ -102,8 +102,8 @@
 
 /datum/techweb_node/adv_defibrillator_tec
 	id = "adv_defibrillator_tec"
-	display_name = "Adv Defibrillator tec"
-	description = "More ways to bring back the freshly dead."
+	display_name = "Defibrillator Upgrades"
+	description = "More ways to bring back the newly dead."
 	prereq_ids = list("adv_biotech", "exp_surgery", "adv_engi", "adv_power")
 	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -115,7 +115,7 @@
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("surgery_lobotomy", "surgery_reconstruction")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "organbox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -202,6 +202,24 @@
 	design_ids = list("smes", "super_cell", "hyper_cell", "super_capacitor", "superpacman", "mrspacman", "power_turbine", "power_turbine_console", "power_compressor", "circulator", "teg")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 	export_price = 5000
+
+/datum/techweb_node/basic_meteor_defense
+	id = "basic_meteor_defense"
+	display_name = "Meteor Defense Research"
+	description = "Unlock the potential of the mysterious of why CC decided to not build these around the station themselves."
+	prereq_ids = list("adv_engi", "high_efficiency")
+	design_ids = list("meteor_defence", "meteor_console")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
+//datum/techweb_node/adv_meteor_defense
+	//id = "adv_meteor_defense"
+	//display_name = "Meteor Defense Research"
+	//description = "New and improved coding and lock on tech for meteor defence!"
+	//prereq_ids = list("basic_meteor_defense", "adv_datatheory", "emp_adv")
+	//design_ids = list("meteor_disk")
+	//research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	//export_price = 5000
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery

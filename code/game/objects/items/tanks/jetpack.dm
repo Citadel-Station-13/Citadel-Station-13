@@ -17,8 +17,7 @@
 /obj/item/tank/jetpack/New()
 	..()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+		air_contents.gases[gas_type] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	ion_trail = new
 	ion_trail.set_up(src)
@@ -33,7 +32,6 @@
 	else
 		toggle_internals(user)
 
-
 /obj/item/tank/jetpack/proc/cycle(mob/user)
 	if(user.incapacitated())
 		return
@@ -47,7 +45,6 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
 
 /obj/item/tank/jetpack/proc/turn_on()
 	on = TRUE
@@ -91,7 +88,7 @@
 	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
 	icon_state = "jetpack-improvised"
 	item_state = "jetpack-sec"
-	volume = 20 //normal jetpacks have 70 volume
+	volume = 30 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE //moves at hardsuit jetpack speeds
 
@@ -119,8 +116,10 @@
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
+	volume = 60
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
+	full_speed = FALSE //Old pre-hardsuit tech
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -133,7 +132,7 @@
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
 	item_state = "jetpack-mini"
-	volume = 40
+	volume = 50
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -151,8 +150,7 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
-
-
+	full_speed = FALSE
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
@@ -161,7 +159,6 @@
 	item_state =  "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
-
 
 /obj/item/tank/jetpack/suit
 	name = "hardsuit jetpack upgrade"
@@ -221,7 +218,6 @@
 		return
 	..()
 
-
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
 //Used in Process_Spacemove() and wherever you want to check for/get a jetpack
@@ -240,3 +236,4 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+

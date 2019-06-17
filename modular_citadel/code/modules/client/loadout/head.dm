@@ -54,6 +54,11 @@
 	path = /obj/item/clothing/head/flakhelm
 	cost = 2
 
+/datum/gear/bunnyears
+	name = "Bunny Ears"
+	category = SLOT_HEAD
+	path = /obj/item/clothing/head/rabbitears
+
 //trek fancy Hats!
 /datum/gear/trekcap
 	name = "Federation Officer's Cap (White)"

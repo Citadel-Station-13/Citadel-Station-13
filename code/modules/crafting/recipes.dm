@@ -10,7 +10,6 @@
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 
-
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
 	result = /obj/item/gun
@@ -51,6 +50,18 @@
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
 	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/makeshiftshield
+	name = "Makeshift Metal Shield"
+	result = /obj/item/shield/makeshift
+	reqs = list(/obj/item/stack/cable_coil = 30,
+				/obj/item/stack/sheet/metal = 10,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 3)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
@@ -189,6 +200,16 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/Firebot
+	name = "Firebot"
+	result = /mob/living/simple_animal/bot/firebot
+	reqs = list(/obj/item/extinguisher = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/assembly/prox_sensor = 1,
+				/obj/item/clothing/head/hardhat/red = 1)
+	time = 40
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -302,6 +323,18 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/irifle
+	name = "Improvised Rifle(7.62mm)"
+	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+				/obj/item/pipe = 2,
+				/obj/item/weaponcrafting/stock = 1,
+				/obj/item/stack/packageWrap = 5)
+	tools = list(TOOL_SCREWDRIVER)
+	time = 100
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw
@@ -384,7 +417,6 @@
 	time = 10
 	reqs = list(/obj/item/paper = 5)
 	category = CAT_MISC
-
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
@@ -526,6 +558,14 @@
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/bonebag
+	name = "Bone Satchel"
+	result = /obj/item/storage/backpack/satchel/bone
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 3,
+				/obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/gold_horn
 	name = "Golden Bike Horn"
 	result = /obj/item/bikehorn/golden
@@ -600,7 +640,6 @@
 				  /obj/item/stack/cable_coil = 2,
 				  /obj/item/assembly/igniter = 1)
 	category = CAT_MISC
-
 
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
@@ -715,23 +754,26 @@
 
 /datum/crafting_recipe/paperwork
 	name = "Filed Paper Work"
-	result =  /obj/item/paper/fluff/jobs/cargo/manifest/paperwork_correct
-	time = 90 //Takes time for people to file and complete paper work!
+	result =  /obj/item/folder/paperwork_correct
+	time = 60 //Takes time for people to file and complete paper work!
 	reqs = list(/obj/item/pen = 1,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork = 2)
+					/obj/item/folder/paperwork = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
 	time = 30
-	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	reqs = list(/obj/item/tank/internals/oxygen = 2,
+				/obj/item/extinguisher = 1,
+				/obj/item/pipe = 3,
+				/obj/item/stack/cable_coil = 30)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/goldenbox
 	name = "Gold Plated Toolbox"
-	result = /obj/item/storage/toolbox/gold_fake 
+	result = /obj/item/storage/toolbox/gold_fake
 	reqs = list(/obj/item/stack/sheet/cardboard = 1, //so we dont null items in crafting
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/stack/sheet/mineral/gold = 1,
