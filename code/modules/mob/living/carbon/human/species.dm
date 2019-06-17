@@ -511,10 +511,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
 		if(H.socks && H.get_num_legs(FALSE) >= 2)
-      if(H.hidden_socks)
-          H.socks = "Nude"
-        else
-          H.socks = H.saved_socks
+			if(H.hidden_socks)
+				H.socks = "Nude"
+			else
+				H.socks = H.saved_socks
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
 				if(DIGITIGRADE in species_traits)
