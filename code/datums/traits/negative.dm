@@ -245,7 +245,7 @@
 /datum/quirk/prosthetic_limb/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/limb_slot
-	if(H.has_trait(TRAIT_PARA))//Prevent paraplegic legs being replaced
+	if(HAS_TRAIT(H, TRAIT_PARA))//Prevent paraplegic legs being replaced
 		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	else
 		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
