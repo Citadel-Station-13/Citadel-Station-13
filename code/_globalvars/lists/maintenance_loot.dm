@@ -111,5 +111,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/pill_bottle/penis_enlargement = 2,
 	/obj/item/clothing/shoes/wheelys = 1,
 	/obj/item/clothing/shoes/kindleKicks = 1,
+	/obj/item/autosurgeon/penis = 1,
 	"" = 3
 	))

@@ -10,15 +10,14 @@
 	. = ..()
 	if(!. || !istype(M) || M.anchored)
 		return
-	else
-		SEND_SIGNAL(M, COMSIG_LIVING_MINOR_SHOCK)
-		do_teleport(M, get_turf(M), 15)
+	do_teleport(M, get_turf(M), 15)
 
 /obj/item/melee/baton/cattleprod/teleprod/clowning_around(mob/living/user)
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 	user.Knockdown(stunforce*3)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	if(do_teleport(user, get_turf(user), 50))
 		deductcharge(hitcost)
 	else
