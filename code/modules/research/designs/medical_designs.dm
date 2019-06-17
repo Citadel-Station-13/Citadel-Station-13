@@ -172,6 +172,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/organbox
+	name = "Empty Organ Box"
+	desc = "A large cool box that can hold large amouts of medical tools or organs."
+	id = "organbox"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER= 3500, MAT_GOLD = 3500, MAT_PLASTIC = 5000)
+	build_path = /obj/item/storage/belt/organbox
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 //////////Defibrillator Tech////////////
 ////////////////////////////////////////
