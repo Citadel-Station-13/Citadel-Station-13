@@ -441,3 +441,15 @@
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
+/datum/reagent/drug/genderfluid
+	name = "Gender Fluid"
+	id = "genderfluid"
+	description = "A curious fluid that causes a patient's gender to become wildly inconsistent!"
+	reagent_state = LIQUID
+	color = "#9F60EB"
+	taste_description = "gender politics"
+	addiction_threshold = 10
+
+/datum/reagent/drug/genderfluid/on_mob_life(mob/living/M)
+	M?.gender = pick(MALE, FEMALE, PLURAL)
+	. = ..()

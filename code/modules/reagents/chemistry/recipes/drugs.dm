@@ -55,3 +55,9 @@
 	results = list("moonsugar" = 1, "morphine" = 2.5)
 	required_temp = 315 //a little above normal body temperature
 	required_reagents = list("skooma" = 1)
+
+/datum/chemical_reaction/genderfluid
+	name = "genderfluid"
+	id = "genderfluid"
+	results = list("genderfluid" = 5)
+	required_reagents = list("plasma" = 3, "lube" = 1, "phenol" = 1)
