@@ -326,7 +326,7 @@
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 
 //For reviewers: If you think it's a bad idea, feel free to remove it. Removal requested, commented out until the end of review (will remove when fixing merge conflicts).
-/*
+
 /datum/quirk/hypno
 	name = "Hypnotherapy user"
 	desc = "You had hypnotherapy right before your shift, you're not sure it had any effects, though."
@@ -337,7 +337,7 @@
 
 /datum/quirk/hypno/add()
    //You caught me, it's not actually based off a trigger, stop spoiling the effect! Code diving ruins the magic!
-   addtimer(CALLBACK(src, /datum/quirk/hypno.proc/triggered, quirk_holder), rand(12000, 36000))//increase by 100, it's lower so I can test it.
+   addtimer(CALLBACK(src, /datum/quirk/hypno.proc/triggered, quirk_holder), rand(120, 360))//increase by 100, it's lower so I can test it.
 
 //DOES NOT give any indication when someone is triggered - this is intentional so people don't abuse it, you're supposed to get a random thing said to you as a mini objective.
 /datum/quirk/hypno/proc/triggered(quirk_holder)//I figured I might as well make a trait of code I added.
@@ -350,4 +350,3 @@
       to_chat(H, "<span class='notice'><i>[pick(seen)] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
    H.apply_status_effect(/datum/status_effect/trance, 200, TRUE, FALSE)
    qdel(src)
- */

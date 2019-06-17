@@ -34,7 +34,7 @@
 	if(!I)
 		user.put_in_active_hand(src)
 
-/obj/item/FermiChem/pHbooklet/MouseDrop(atom/over_object, mob/user)
+/obj/item/FermiChem/pHbooklet/MouseDrop(atom/over_object, mob/living/user)
     if(numberOfPages >= 1)
         var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
         P.add_fingerprint(user)

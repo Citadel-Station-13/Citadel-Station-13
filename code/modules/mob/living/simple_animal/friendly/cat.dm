@@ -313,3 +313,11 @@
 	emote_hear = list("meows.", "mews.")
 	emote_see = list("looks at you eagerly for pets!", "wiggles enthusiastically.")
 	gold_core_spawnable = NO_SPAWN
+
+/mob/living/simple_animal/pet/cat/custom_cat/death(gibbed)
+	if (src.mind && !name == "White cat") //secret cat chem
+		icon_state = "custom_cat_dead"
+		Stun(1000)
+		canmove = 0
+	else
+		..()
