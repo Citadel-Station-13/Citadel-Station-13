@@ -86,7 +86,7 @@
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.has_trait(TRAIT_SKITTISH))
+		if(HAS_TRAIT(L, TRAIT_SKITTISH))
 			to_chat(user, "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
@@ -416,7 +416,7 @@
 		togglelock(user)
 
 /obj/structure/closet/CtrlShiftClick(mob/living/user)
-	if(!user.has_trait(TRAIT_SKITTISH))
+	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
 		return ..()
 	if(!user.canUseTopic(src) || !isturf(user.loc))
 		return

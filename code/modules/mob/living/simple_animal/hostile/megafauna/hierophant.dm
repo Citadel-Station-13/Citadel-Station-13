@@ -30,7 +30,7 @@ Cross Blasts and the AoE burst gain additional range as Hierophant loses health,
 When Hierophant dies, it stops trying to murder you and shrinks into a small form, which, while much weaker, is still quite effective.
 - The smaller club can place a teleport beacon, allowing the user to teleport themself and their allies to the beacon.
 
-Difficulty: Hard
+Difficulty: Normal
 
 */
 
@@ -47,11 +47,11 @@ Difficulty: Hard
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 50
+	armour_penetration = 75
 	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_upper = 20
 	speed = 1
-	move_to_delay = 10
+	move_to_delay = 11
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other

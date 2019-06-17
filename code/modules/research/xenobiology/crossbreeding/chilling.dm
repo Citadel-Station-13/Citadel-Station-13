@@ -7,12 +7,11 @@ Chilling extracts:
 	name = "chilling extract"
 	desc = "It's cold to the touch, as if frozen solid."
 	effect = "chilling"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "chilling"
 
 /obj/item/slimecross/chilling/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))
@@ -101,10 +100,9 @@ Chilling extracts:
 	for(var/turf/open/T in A)
 		var/datum/gas_mixture/G = T.air
 		if(istype(G))
-			G.assert_gas(/datum/gas/plasma)
-			G.gases[/datum/gas/plasma][MOLES] = 0
+			G.gases[/datum/gas/plasma] = 0
 			filtered = TRUE
-			G.garbage_collect()
+			GAS_GARBAGE_COLLECT(G.gases)
 			T.air_update_turf()
 	if(filtered)
 		user.visible_message("<span class='notice'>Cracks spread throughout [src], and some air is sucked in!</span>")

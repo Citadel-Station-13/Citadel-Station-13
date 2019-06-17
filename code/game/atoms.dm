@@ -6,7 +6,6 @@
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
-	var/container_type = NONE
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -203,16 +202,16 @@
 	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(allowmobs = TRUE)
-	return reagents && (container_type & (INJECTABLE | REFILLABLE))
+	return reagents && (reagents.reagents_holder_flags & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(allowmobs = TRUE)
-	return reagents && (container_type & (DRAWABLE | DRAINABLE))
+	return reagents && (reagents.reagents_holder_flags & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
-	return reagents && (container_type & REFILLABLE)
+	return reagents && (reagents.reagents_holder_flags & REFILLABLE)
 
 /atom/proc/is_drainable()
-	return reagents && (container_type & DRAINABLE)
+	return reagents && (reagents.reagents_holder_flags & DRAINABLE)
 
 
 /atom/proc/AllowDrop()
@@ -261,7 +260,7 @@
 		to_chat(user, desc)
 
 	if(reagents)
-		if(container_type & TRANSPARENT)
+		if(reagents.reagents_holder_flags & TRANSPARENT)
 			to_chat(user, "It contains:")
 			if(reagents.reagent_list.len)
 				if(user.can_see_reagents()) //Show each individual reagent
@@ -274,7 +273,7 @@
 					to_chat(user, "[total_volume] units of various reagents")
 			else
 				to_chat(user, "Nothing.")
-		else if(container_type & AMOUNT_VISIBLE)
+		else if(reagents.reagents_holder_flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
 				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
 			else
