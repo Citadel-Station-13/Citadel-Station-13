@@ -12,5 +12,5 @@
 
 //Recover from stuns.
 /obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)
-	user.do_adrenaline(100, FALSE, 70, 0, TRUE, list("epinephrine" = 3, "changelingmeth" = 10, "mannitol" = 10, "omnizine" = 10, "changelingadrenaline" = 5), "<span class='notice'>Energy rushes through us.</span>")
+	user.do_adrenaline(0, FALSE, 70, 0, TRUE, list("epinephrine" = 3, "changelingmeth" = 10, "mannitol" = 10, "regen_jelly" = 10, "changelingadrenaline" = 5), "<span class='notice'>Energy rushes through us.</span>", 0, 0.75, 0)
 	return TRUE

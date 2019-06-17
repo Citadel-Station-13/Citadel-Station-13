@@ -83,13 +83,11 @@
 			return
 	return TRUE
 
-
 /datum/gang_item/clothing/hat
 	name = "Pimp Hat"
 	id = "hat"
 	cost = 16
 	item_path = /obj/item/clothing/head/collectable/petehat/gang
-
 
 /obj/item/clothing/head/collectable/petehat/gang
 	name = "pimpin' hat"
@@ -109,7 +107,7 @@
 /datum/gang_item/clothing/shoes
 	name = "Bling Boots"
 	id = "boots"
-	cost = 22
+	cost = 20
 	item_path = /obj/item/clothing/shoes/gang
 
 /obj/item/clothing/shoes/gang
@@ -258,7 +256,6 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 /datum/gang_item/equipment
 	category = "Purchase Equipment:"
 
-
 /datum/gang_item/equipment/spraycan
 	name = "Territory Spraycan"
 	id = "spraycan"
@@ -274,7 +271,6 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	id = "whetstone"
 	cost = 3
 	item_path = /obj/item/sharpener
-
 
 /datum/gang_item/equipment/emp
 	name = "EMP Grenade"
@@ -329,6 +325,12 @@ datum/gang_item/equipment/shield
 	cost = 25
 	item_path = /obj/item/shield/riot
 
+datum/gang_item/equipment/gangsheild
+	name = "Tower Shield"
+	id = "metal"
+	cost = 45 //High block of melee and even higher for bullets
+	item_path = /obj/item/shield/riot/tower
+
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
 	id = "pen"
@@ -351,7 +353,6 @@ datum/gang_item/equipment/shield
 	if(gangtool && gangtool.free_pen)
 		return "(GET ONE FREE)"
 	return ..()
-
 
 /datum/gang_item/equipment/gangtool
 	id = "gangtool"

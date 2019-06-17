@@ -51,6 +51,7 @@
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/tank/jetpack/oxygen/security
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos

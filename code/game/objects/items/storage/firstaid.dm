@@ -1,3 +1,4 @@
+
 /* First aid storage
  * Contains:
  *		First Aid Kits
@@ -331,12 +332,12 @@
 
 /obj/item/storage/pill_bottle/penis_enlargement
 	name = "penis enlargement pills"
-	desc = "Made by Fermichem - They have a little picture of Doctor Ronald Hyatt with a giant dong on them. The warming states not to take more than 10u at a time."
+	desc = "You want penis enlargement pills?"
 
 /obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
-
+    
 /obj/item/storage/pill_bottle/breast_enlargement
 	name = "breast enlargement pills"
 	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
@@ -344,3 +345,47 @@
 /obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
+
+/////////////
+//Organ Box//
+/////////////
+
+/obj/item/storage/belt/organbox
+	name = "Organ Storge"
+	desc = "A compact box that helps hold massive amounts of implants, organs, and some tools. Has a belt clip for easy carrying"
+	w_class = WEIGHT_CLASS_BULKY
+	icon = 'icons/obj/mysterybox.dmi'
+	icon_state = "organbox_open"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	throw_speed = 1
+	throw_range = 1
+
+/obj/item/storage/belt/organbox/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 16
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 20
+	STR.can_hold = typecacheof(list(
+	/obj/item/storage/pill_bottle,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/healthanalyzer,
+	/obj/item/reagent_containers/syringe,
+	/obj/item/clothing/glasses/hud/health,
+	/obj/item/hemostat,
+	/obj/item/scalpel,
+	/obj/item/retractor,
+	/obj/item/cautery,
+	/obj/item/surgical_drapes,
+	/obj/item/autosurgeon,
+	/obj/item/organ,
+	/obj/item/implant,
+	/obj/item/implantpad,
+	/obj/item/implantcase,
+	/obj/item/implanter,
+	/obj/item/circuitboard/computer/operating,
+	/obj/item/stack/sheet/mineral/silver,
+	/obj/item/organ_storage
+	))
+
