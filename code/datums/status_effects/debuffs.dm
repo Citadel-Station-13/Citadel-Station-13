@@ -534,6 +534,7 @@ datum/status_effect/pacify
 	tick_interval = 10
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
+	var/priority = TRUE
 	alert_type = /obj/screen/alert/status_effect/trance
 
 /obj/screen/alert/status_effect/trance
@@ -558,7 +559,7 @@ datum/status_effect/pacify
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
 
-/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, priority = TRUE)//priority == FALSE makes no visible message, prevents self antag messages, and places phrase below objectives.
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)//priority == FALSE makes no visible message, prevents self antag messages, and places phrase below objectives.
 	duration = _duration
 	stun = _stun
 	return ..()

@@ -5,11 +5,12 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
+	var/priority = TRUE
 
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
-/datum/brain_trauma/hypnosis/New(phrase, var/priority = TRUE)
+/datum/brain_trauma/hypnosis/New(phrase, priority)
 	if(!phrase)
 		qdel(src)
 	if(priority == TRUE)
