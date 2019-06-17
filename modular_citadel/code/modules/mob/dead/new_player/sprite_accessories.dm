@@ -194,6 +194,8 @@
 /datum/sprite_accessory/ears/human/bigwolf
 	name = "Big Wolf"
 	icon_state = "bigwolf"
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/bigwolfinner
 	name = "Big Wolf (ALT)"
