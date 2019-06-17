@@ -361,6 +361,7 @@
 	reshape.Shift(EAST, 1)
 	reshape.Crop(7,4,26,31)
 	reshape.Crop(-5,-3,26,30)
+	return reshape
 
 /mob/living/carbon/human/get_sac_image()
 	var/datum/job/sacjob = SSjob.GetJob(mind.assigned_role)
@@ -370,6 +371,7 @@
 	reshape.Shift(EAST, 1)
 	reshape.Crop(7,4,26,31)
 	reshape.Crop(-5,-3,26,30)
+	return reshape
 
 /datum/objective/sacrifice
 	var/sacced = FALSE
