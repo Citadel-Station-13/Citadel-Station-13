@@ -268,38 +268,38 @@
 	burn_reduction = 0
 	max_damage = 20
 
-// Upgraded Surplus lims
+// Upgraded Surplus lims - Better then robotic lims
 /obj/item/bodypart/l_arm/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic left arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 6
+	burn_reduction = 5
+	max_damage = 55
 
 /obj/item/bodypart/r_arm/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic right arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 6
+	burn_reduction = 5
+	max_damage = 55
 
 /obj/item/bodypart/l_leg/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic left leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 6
+	burn_reduction = 5
+	max_damage = 55
 
 /obj/item/bodypart/r_leg/robot/surplus_upgraded
 	name = "reinforced surplus prosthetic right leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection."
+	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of stronger parts."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 1
-	burn_reduction = 1
-	max_damage = 30
+	brute_reduction = 6
+	burn_reduction = 5
+	max_damage = 55
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
