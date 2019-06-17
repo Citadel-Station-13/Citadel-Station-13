@@ -109,11 +109,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
 
-// Nuclear Operative (Special Offers)
+//All bundles and telecrystals
 /datum/uplink_item/bundles_TC
-	category = "Special Offers"
+	category = "Bundles and Telecrystals"
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
 /datum/uplink_item/bundles_TC/chemical
@@ -155,8 +154,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/modular
-	name="Modular Pistol Kit"
-	desc="A heavy briefcase containing one modular pistol (chambered in 10mm), one supressor, and spare ammunition, including a box of soporific ammo. \
+	name = "Modular Pistol Kit"
+	desc = "A heavy briefcase containing one modular pistol (chambered in 10mm), one supressor, and spare ammunition, including a box of soporific ammo. \
 		Includes a suit jacket that is padded with a robust liner."
 	item = /obj/item/storage/briefcase/modularbundle
 	cost = 12
