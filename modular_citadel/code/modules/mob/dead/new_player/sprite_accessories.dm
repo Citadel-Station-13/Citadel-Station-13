@@ -1821,7 +1821,7 @@ datum/sprite_accessory/mam_tails/insect
 	icon_state = "lunasune"
 
 /*************** VIRGO PORTED HAIRS ****************************/
-#define VHAIR(_name, new_state) /datum/sprite_accessory/hair/##new_state/icon_state=#new_state;/datum/sprite_accessory/hair/##new_state/name = "[#_name] (Virgo)"
+#define VHAIR(_name, new_state) /datum/sprite_accessory/hair/##new_state/icon_state=#new_state;/datum/sprite_accessory/hair/##new_state/name = "[_name] (Virgo)"
 //VIRGO PORTED HAIRS
 VHAIR("Short Hair Rosa", hair_rosa_s)
 VHAIR("Short Hair 80s", hair_80s_s)
@@ -1979,7 +1979,7 @@ VHAIR("Tressshoulder", hair_tressshoulder_s)
  //END
 #undef VHAIR
 
-#define VFACE(_name, new_state) /datum/sprite_accessory/facial_hair/##new_state/icon_state=#new_state;;/datum/sprite_accessory/facial_hair/##new_state/name= "[#_name] (Virgo)"
+#define VFACE(_name, new_state) /datum/sprite_accessory/facial_hair/##new_state/icon_state=#new_state;;/datum/sprite_accessory/facial_hair/##new_state/name = "[_name] (Virgo)"
 VFACE("Watson", facial_watson_s)
 VFACE("Chaplin", facial_chaplin_s)
 VFACE("Fullbeard", facial_fullbeard_s)
