@@ -2821,7 +2821,6 @@
 #include "modular_citadel\code\controllers\configuration\entries\general.dm"
 #include "modular_citadel\code\controllers\subsystem\job.dm"
 #include "modular_citadel\code\controllers\subsystem\shuttle.dm"
-#include "modular_citadel\code\datums\uplink_items_cit.dm"
 #include "modular_citadel\code\datums\components\material_container.dm"
 #include "modular_citadel\code\datums\components\phantomthief.dm"
 #include "modular_citadel\code\datums\components\souldeath.dm"
