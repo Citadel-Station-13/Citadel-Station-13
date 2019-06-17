@@ -9,13 +9,13 @@
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
-/datum/brain_trauma/hypnosis/New(phrase, priority = TRUE)
+/datum/brain_trauma/hypnosis/New(phrase, var/priority = TRUE)
 	if(!phrase)
 		qdel(src)
 	if(priority == TRUE)
 		hypnotic_phrase = phrase
 	else
-		phrase friendliify(phrase)
+		friendliify(phrase)
 	try
 		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	catch(var/exception/e)
