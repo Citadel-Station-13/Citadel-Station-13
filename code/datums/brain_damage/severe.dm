@@ -109,13 +109,13 @@
 /datum/brain_trauma/severe/paralysis/on_gain()
 	..()
 	for(var/X in paralysis_traits)
-		owner.add_trait(X, "trauma_paralysis")
+		ADD_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
-		owner.remove_trait(X, "trauma_paralysis")
+		REMOVE_TRAIT(owner, X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
 
 /datum/brain_trauma/severe/paralysis/paraplegic
