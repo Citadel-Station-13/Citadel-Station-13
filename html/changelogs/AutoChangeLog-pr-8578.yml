@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - spellcheck: "Properly rewords the extinguisher's instructions on how to empty it on the floor since it was changed to be a screwdriver action instead of Alt Click a while ago."
