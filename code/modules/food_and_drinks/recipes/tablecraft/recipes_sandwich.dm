@@ -52,7 +52,7 @@
 	result = /obj/item/reagent_containers/food/snacks/notasandwich
 	subcategory = CAT_SANDWICH
 
-/datum/crafting_recipe/food/notasandwich
+/datum/crafting_recipe/food/tunasandwich
 	name = "Tuna sandwich"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
