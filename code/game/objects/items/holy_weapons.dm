@@ -406,41 +406,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/nullrod/ratvarian_spear
-	icon_state = "ratvarian_spear"
-	icon = 'icons/obj/clockwork_objects.dmi'
-	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
-	name = "bronze spear"
-	desc = "A bronze spear with a soft glow around its shaft. Ticking and whirring can be heard emanating from its head."
-	force = 16
-	block_chance = 25
-	throwforce = 25
-	var/last_throw_special = 0
-	var/throw_special_cooldown = 100
-
-/obj/item/nullrod/ratvarian_spear/throw_impact(atom/hit, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(isliving(throwingdatum.thrower) && ((world.time - last_throw_special) >= throw_special_cooldown))
-		var/mob/living/L = throwingdatum.thrower
-		if(get_dist(src, L) < 14)
-			L.forceMove(get_turf(src))
-			L.visible_message("<span class='boldwarning'>[L] jaunts in with a shower of light!</span>")
-			L.put_in_hands(src)
-		else
-			visible_message("<span class='boldwarning'>[src] disappears with a crack!</span>")
-			forceMove(L.loc)
-			var/picked_up = L.put_in_hands(src)
-			to_chat(L, "<span class='boldwarning'>[src] materializes beneath you[picked_up? ", and you reflexively pick it up!" : ""]!</span>")
-		last_throw_special = world.time
-		to_chat(L, "<span class='boldwarning'>[src] clicks, its whirring growing softer. You probably won't be able to utilize its throw jaunt for [throw_special_cooldown/10] seconds!</span>")
-		addtimer(CALLBACK(src, .proc/inform_recharge, L), throw_special_cooldown)
-
-/obj/item/nullrod/ratvarian_spear/proc/inform_recharge(mob/living/L)
-	if(get_dist(src, L) > 7)
-		return
-	to_chat(L, "<span class='boldnotice'>You feel like [src] is ready to throw again!</span>")
-
 /obj/item/nullrod/scythe
 	icon_state = "scythe1"
 	item_state = "scythe1"
@@ -726,3 +691,38 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/ratvarian_spear
+	icon_state = "ratvarian_spear"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	name = "bronze spear"
+	desc = "A bronze spear with a soft glow around its shaft. Ticking and whirring can be heard emanating from its head."
+	force = 16
+	block_chance = 25
+	throwforce = 25
+	var/last_throw_special = 0
+	var/throw_special_cooldown = 100
+
+/obj/item/nullrod/ratvarian_spear/throw_impact(atom/hit, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(isliving(throwingdatum.thrower) && ((world.time - last_throw_special) >= throw_special_cooldown))
+		var/mob/living/L = throwingdatum.thrower
+		if(get_dist(src, L) < 14)
+			L.forceMove(get_turf(src))
+			L.visible_message("<span class='boldwarning'>[L] jaunts in with a shower of light!</span>")
+			L.put_in_hands(src)
+		else
+			visible_message("<span class='boldwarning'>[src] disappears with a crack!</span>")
+			forceMove(L.loc)
+			var/picked_up = L.put_in_hands(src)
+			to_chat(L, "<span class='boldwarning'>[src] materializes beneath you[picked_up? ", and you reflexively pick it up!" : ""]!</span>")
+		last_throw_special = world.time
+		to_chat(L, "<span class='boldwarning'>[src] clicks, its whirring growing softer. You probably won't be able to utilize its throw jaunt for [throw_special_cooldown/10] seconds!</span>")
+		addtimer(CALLBACK(src, .proc/inform_recharge, L), throw_special_cooldown)
+
+/obj/item/nullrod/ratvarian_spear/proc/inform_recharge(mob/living/L)
+	if(get_dist(src, L) > 7)
+		return
+	to_chat(L, "<span class='boldnotice'>You feel like [src] is ready to throw again!</span>")
