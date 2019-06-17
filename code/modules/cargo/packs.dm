@@ -433,7 +433,6 @@
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
 	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
-	hidden = TRUE
 	contraband = TRUE
 	cost = 5000 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/security/officer/russian,
@@ -517,14 +516,16 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers. Requires Armory access to open."
+	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, with three Shotgun Bandoliers, as well as seven buchshot and 12g shotgun slugs. Requires Armory access to open."
 	cost = 8000
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier,
-					/obj/item/storage/belt/bandolier)
+					/obj/item/storage/belt/bandolier,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalslugs)
 	crate_name = "combat shotguns crate"
 
 /datum/supply_pack/security/armory/dragnetgun
@@ -568,7 +569,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Brige access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, seven incendiary slugs, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -577,7 +578,8 @@
 					/obj/item/tank/internals/plasma,
 					/obj/item/grenade/chem_grenade/incendiary,
 					/obj/item/grenade/chem_grenade/incendiary,
-					/obj/item/grenade/chem_grenade/incendiary)
+					/obj/item/grenade/chem_grenade/incendiary,
+					/obj/item/storage/box/fireshot)
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
@@ -630,11 +632,13 @@
 
 /datum/supply_pack/security/armory/riotshotguns
 	name = "Riot Shotgun Crate"
-	desc = "For when the greytide gets really uppity. Contains three riot Shotguns. Requires Armory access to open."
+	desc = "For when the greytide gets really uppity. Contains three riot shotguns, seven rubber shot and beanbag shells. Requires Armory access to open."
 	cost = 6000
 	contains = list(/obj/item/gun/ballistic/shotgun/riot,
 					/obj/item/gun/ballistic/shotgun/riot,
-					/obj/item/gun/ballistic/shotgun/riot)
+					/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/beanbag)
 	crate_name = "riot shotgun crate"
 
 /datum/supply_pack/security/armory/swat
@@ -873,8 +877,7 @@
 /datum/supply_pack/engineering/shield_sat
 	name = "Shield Generator Satellite"
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
-	cost = 3000
-	special = TRUE
+	cost = 4000
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
 					/obj/machinery/satellite/meteor_shield,
@@ -882,15 +885,12 @@
 					)
 	crate_name= "shield sat crate"
 
-
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
-	cost = 5000
-	special = TRUE
+	cost = 4000
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
-
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
@@ -960,6 +960,15 @@
 					/obj/machinery/power/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/mason
+	name = "M.A.S.O.N RIG Crate"
+	desc = "The rare M.A.S.O.N RIG. Requires CE access to open."
+	cost = 15000
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/suit/space/hardsuit/ancient/mason)
+	crate_name = "M.A.S.O.N Rig"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engine/PA
 	name = "Particle Accelerator Crate"
@@ -1536,13 +1545,21 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
+/datum/supply_pack/science/tech_slugs
+	name = "Tech Slug Ammo Shells"
+	desc = "A new type of shell that is able to be made into a few different dangerous types. Contains two boxes of tech slugs, 14 shells in all."
+	cost = 1000
+	contains = list(/obj/item/storage/box/techsslug,
+					/obj/item/storage/box/techsslug)
+	crate_name = "tech slug crate"
+
+
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/service
 	group = "Service"
-
 
 /datum/supply_pack/service/advlighting
 	name = "Advanced Lighting crate"
@@ -1568,6 +1585,14 @@
 					/obj/item/stack/packageWrap)
 	crate_name = "cargo supplies crate"
 
+/datum/supply_pack/service/food_cart
+	name = "Food Cart Crate"
+	desc = "Want to sell food on the go? Cook lost their cart? Well we just so happen to have a few carts to spare!"
+	cost = 1000
+	contains = list(/obj/machinery/food_cart)
+	crate_name = "food cart crate"
+	crate_type = /obj/structure/closet/crate
+
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
 	desc = "Make slipping a thing of the past with sixty industrial-grade anti-slip floortiles!"
@@ -1575,6 +1600,14 @@
 	contains = list(/obj/item/stack/tile/noslip/thirty,
 					/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
+
+/datum/supply_pack/service/icecream_cart
+	name = "Ice Cream Cart Crate"
+	desc = "Plasma fire a to hot for you, want a nice treat after a hard days work? Well now we have the cart for you! This Ice Cream Vat has everthing you need to make you and your friends so ice cream treats! This cart comes stocked with some ingredients for each type of scoopable icecream."
+	cost = 2750 //Comes prestocked with basic ingredients
+	contains = list(/obj/machinery/icecream_vat)
+	crate_name = "ice cream vat crate"
+	crate_type = /obj/structure/closet/crate
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
@@ -1703,6 +1736,10 @@
 			/obj/item/clothing/mask/gas/explorer)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+//////////////////////////////////////////////////////////////////////////////
+/////////////////////////// Vending Restocks /////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
@@ -2673,16 +2710,16 @@
 	name = "Freelance Paper work"
 	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
 	cost = 400 // Net of 0 credits
-	contains = list(/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
-					/obj/item/paper/fluff/jobs/cargo/manifest/paperwork,
+	contains = list(/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
+					/obj/item/folder/paperwork,
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain,

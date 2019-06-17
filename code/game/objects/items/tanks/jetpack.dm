@@ -17,8 +17,7 @@
 /obj/item/tank/jetpack/New()
 	..()
 	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+		air_contents.gases[gas_type] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	ion_trail = new
 	ion_trail.set_up(src)
@@ -151,6 +150,7 @@
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
+	full_speed = FALSE
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
@@ -236,3 +236,4 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+

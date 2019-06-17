@@ -48,18 +48,27 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(!skip_throw_mode_check && !in_throw_mode)
+		return
+	if(get_active_held_item())
+		return
+	if(restrained())
+		return
+	return TRUE
+
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(!skipcatch)	//ugly, but easy
-		if(in_throw_mode && !get_active_held_item())	//empty active hand and we're in throw mode
-			if(canmove && !restrained())
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(isturf(I.loc))
-						I.attack_hand(src)
-						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-							throw_mode_off()
-							return 1
+		if(can_catch_item())
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if(isturf(I.loc))
+					I.attack_hand(src)
+					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+						throw_mode_off()
+						return 1
 	..()
 
 
@@ -224,7 +233,7 @@
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -261,7 +270,7 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
+	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 
 		if(lying)
 			if(buckled)
@@ -277,6 +286,12 @@
 			M.visible_message("<span class='notice'>[M] gives [H] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [H] a pat on the head to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
+			if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+				if (mood.sanity >= SANITY_GREAT)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+				else if (mood.sanity >= SANITY_DISTURBED)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 			if(H.dna.species.can_wag_tail(H))
 				if("tail_human" in pref_species.default_features)
 					if(H.dna.features["tail_human"] == "None")
@@ -306,6 +321,12 @@
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+			if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+				if (mood.sanity >= SANITY_GREAT)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+				else if (mood.sanity >= SANITY_DISTURBED)
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
@@ -350,12 +371,12 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(!has_trait(TRAIT_NEARSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.eye_damage - 25))
-					if(!has_trait(TRAIT_BLIND))
+					if(!HAS_TRAIT(src, TRAIT_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					become_blind(EYE_DAMAGE)
 

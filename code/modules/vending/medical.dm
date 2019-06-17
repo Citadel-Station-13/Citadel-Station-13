@@ -23,7 +23,8 @@
 					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
 					/obj/item/reagent_containers/glass/bottle/morphine = 4,
 					/obj/item/reagent_containers/glass/bottle/toxin = 3,
-					/obj/item/reagent_containers/syringe/antiviral = 6)
+					/obj/item/reagent_containers/syringe/antiviral = 6,
+					/obj/item/storage/briefcase/medical = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
 		              /obj/item/reagent_containers/pill/morphine = 4,
 		              /obj/item/reagent_containers/pill/charcoal = 6)
@@ -31,8 +32,10 @@
 		           /obj/item/reagent_containers/hypospray/medipen = 3,
 		           /obj/item/storage/belt/medical = 3,
 		           /obj/item/wrench/medical = 1,
-				   /obj/item/storage/belt/medolier/full = 2,
-				   /obj/item/gun/syringe/dart = 2)
+               /obj/item/storage/belt/medolier/full = 2,
+               /obj/item/gun/syringe/dart = 2,
+               /obj/item/storage/briefcase/medical = 2)
+               
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical

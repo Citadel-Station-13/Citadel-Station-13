@@ -392,10 +392,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
 /datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
