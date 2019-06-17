@@ -153,8 +153,7 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
-	amt_hardstun = 5
-	amt_knockdown = 80
+	amt_knockdown = 84
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -308,7 +307,7 @@
 	name = "Gauntlet Echo"
 	alpha = 180
 	amt_dam_brute = 30
-	amt_knockdown = 80
+	amt_knockdown = 84
 	amt_dam_stam = 30
 	sound = 'sound/weapons/punch3.ogg'
 
