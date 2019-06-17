@@ -214,6 +214,8 @@
 	name = "Dark Big Wolf (ALT)"
 	icon_state = "bigwolfinnerdark"
 	hasinner = 1
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/cow
 	name = "Cow"
