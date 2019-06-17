@@ -75,7 +75,7 @@
 	icon_state = "peanutbuttersandwich"
 	trash = /obj/item/trash/plate
 	bitesize = 3
-	bonus_reagent = list("peanut_butter" = 5, "vitamin" = 2)
+	bonus_reagents = list("peanut_butter" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 2, "peanut_butter" = 5, "vitamin" = 2)
 	foodtype  = GRAIN
 
