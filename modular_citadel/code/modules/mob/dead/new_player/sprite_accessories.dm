@@ -191,6 +191,24 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
 
+/datum/sprite_accessory/ears/human/bigwolf
+	name = "Big Wolf"
+	icon_state = "bigwolf"
+
+/datum/sprite_accessory/ears/human/bigwolfinner
+	name = "Big Wolf (ALT)"
+	icon_state = "bigwolfinner"
+	hasinner = 1
+
+/datum/sprite_accessory/ears/human/bigwolfdark
+	name = "Dark Big Wolf"
+	icon_state = "bigwolfdark"
+
+/datum/sprite_accessory/ears/human/bigwolfinnerdark
+	name = "Dark Big Wolf (ALT)"
+	icon_state = "bigwolfinnerdark"
+	hasinner = 1
+
 /datum/sprite_accessory/ears/human/cow
 	name = "Cow"
 	icon_state = "cow"
