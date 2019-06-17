@@ -400,7 +400,7 @@ datum/gear/darksabresheath
 	ckeywhitelist = list("sfox63")
 
 /datum/gear/commjacket
-	name = "TBD Name"
+	name = "Dusty Commisar's Cloak"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/commjacket
-	ckeywhitelist = list("TBD")
+	ckeywhitelist = list("sadisticbatter")
