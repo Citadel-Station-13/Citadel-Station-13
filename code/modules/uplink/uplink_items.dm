@@ -1612,6 +1612,12 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	cost = 20
 	cant_discount = TRUE
 
+/datum/uplink_item/badass/durasteel_toolbox
+	name = "Durasteel Toolbox"
+	desc = "A very high impact toolbox. Excels at destroying stationary structures."
+	item = /obj/item/storage/toolbox/durasteel
+	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
+
 /datum/uplink_item/badass/costumes
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
