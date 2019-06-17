@@ -62,8 +62,7 @@
 	if(!GLOB.chemical_reactions_list || !R)
 		return
 	for(var/rid in R.required_reagents)
-		var/datum/reagent/C = rid
-		GLOB.chemical_reactions_list[C.id] -= R
+		GLOB.chemical_reactions_list[rid] -= R
 
 //see build_chemical_reactions_list in holder.dm for explanations
 /proc/add_chemical_reaction(datum/chemical_reaction/R)
