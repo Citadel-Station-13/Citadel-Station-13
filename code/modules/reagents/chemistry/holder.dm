@@ -21,13 +21,18 @@
 	if(GLOB.chemical_reactions_list)
 		return
 
-	var/paths = subtypesof(/datum/chemical_reaction)
+
+	//Randomized need to go last since they need to check against conflicts with normal recipes
+	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
 
 	for(var/path in paths)
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
+
+		if(!D.id)
+			continue
 
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
