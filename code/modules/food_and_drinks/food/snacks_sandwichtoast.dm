@@ -52,6 +52,33 @@
 	list_reagents = list("nutriment" = 2, "cherryjelly" = 5, "vitamin" = 2)
 	foodtype = GRAIN | FRUIT
 
+/obj/item/reagent_containers/food/snacks/jellysandwich/pbj
+	name = "\improper PB & J sandwich"
+	desc = "A grand creation of peanut butter, jelly and bread! An all-american classic."
+	icon_state = "pbjsandwich"
+	tastes = list("bread" = 1, "jelly" = 1, "peanuts" = 1)
+
+/obj/item/reagent_containers/food/snacks/jellysandwich/pbj/cherry
+	bonus_reagents = list("cherryjelly" = 5, "peanut_butter" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 2, "cherryjelly" = 5, "peanut_butter" = 5, "vitamin" = 2)
+	foodtype = GRAIN | FRUIT
+
+/obj/item/reagent_containers/food/snacks/jellysandwich/pbj/slime
+	bonus_reagents = list("slimejelly" = 5, "peanut_butter" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 2, "slimejelly" = 5, "peanut_butter" = 5, "vitamin" = 2)
+	foodtype  = GRAIN | TOXIC
+
+/obj/item/reagent_containers/food/snacks/peanutbutter_sandwich
+	name = "peanut butter sandwich"
+	desc = "You wish you had some jelly to go with this..."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "peanutbuttersandwich"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	bonus_reagent = list("peanut_butter" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 2, "peanut_butter" = 5, "vitamin" = 2)
+	foodtype  = GRAIN
+
 /obj/item/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."
@@ -82,6 +109,19 @@
 	bonus_reagents = list("slimejelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 2)
 	foodtype = GRAIN | TOXIC | SUGAR
+
+/obj/item/reagent_containers/food/snacks/peanut_buttertoast
+	name = "peanut butter toast"
+	desc = "A slice of toast covered with delicious peanut butter."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "peanutbuttertoast"
+	trash = /obj/item/trash/plate
+	bitesize = 3
+	bonus_reagents = list("peanut_butter" = 5, "vitamin" = 2)
+	list_reagents = list("nutriment" = 1, "peanut_butter" = 5, "vitamin" = 2)
+	tastes = list("toast" = 1, "peanuts" = 1)
+	foodtype = GRAIN
+
 
 /obj/item/reagent_containers/food/snacks/twobread
 	name = "two bread"

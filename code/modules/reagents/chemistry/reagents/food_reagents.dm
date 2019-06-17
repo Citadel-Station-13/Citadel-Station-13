@@ -436,6 +436,14 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	id = "peanut_butter"
+	description = "A popular food paste made from ground dry-roasted peanuts."
+	color = "#C29261"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_description = "peanuts"
+
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
