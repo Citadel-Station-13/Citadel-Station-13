@@ -731,7 +731,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!screw)
 			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 			if(obj_flags & EMAGGED)
 				add_overlay("vapeopen_high")
 			else if(super)
@@ -741,7 +741,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
-			DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
