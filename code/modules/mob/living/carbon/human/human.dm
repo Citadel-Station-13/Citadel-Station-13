@@ -851,7 +851,7 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
-	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+	if(user == target && can_piggyback(target) && pulling == target && (HAS_TRAIT(src, TRAIT_PACIFISM) || grab_state >= GRAB_AGGRESSIVE) && stat == CONSCIOUS)
 		buckle_mob(target,TRUE,TRUE)
 	. = ..()
 
@@ -861,9 +861,11 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, bypass_piggybacking = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
+	if(bypass_piggybacking)
+		return ..()
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
@@ -876,7 +878,7 @@
 	if(can_piggyback(M))
 		riding_datum.ride_check_ridden_incapacitated = TRUE
 		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-		if(do_after(M, 15, target = src))
+		if(force || do_after(M, 15, target = src))
 			if(can_piggyback(M))
 				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
