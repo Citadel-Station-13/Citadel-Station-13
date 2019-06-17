@@ -643,7 +643,7 @@ RLD
 		..()
 
 /obj/item/construction/rld/update_icon()
-	icon_state = "rld-[round((matter/maxmatter) * 5, 1)]"
+	icon_state = "rld-[round((matter/max_matter) * 5, 1)]"
 	..()
 
 
