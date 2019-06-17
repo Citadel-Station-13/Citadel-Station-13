@@ -754,6 +754,8 @@
 	name = "public nudity permit"
 	desc = "This permit entitles the bearer to conduct their duties without a uniform. Normally issued to furred crewmembers or those with nothing to hide."
 	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint1"
-	item_state = "golem"  //This is dumb and hacky but was here when I got here.//No, it really isn't. Why make a new blank clothing sprite if we already have one?
+	icon_state = "permit_1"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	item_state = "card-permit"
 	body_parts_covered = CHEST|GROIN
