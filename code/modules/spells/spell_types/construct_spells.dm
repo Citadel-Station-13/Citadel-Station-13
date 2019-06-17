@@ -146,11 +146,15 @@
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
+	proj_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
 	proj_lifespan = 10
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
 
+/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/lesser
+	amt_hardstun = 5
+	amt_knockdown = 80
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
@@ -304,7 +308,8 @@
 	name = "Gauntlet Echo"
 	alpha = 180
 	amt_dam_brute = 30
-	amt_knockdown = 50
+	amt_knockdown = 80
+	amt_dam_stam = 30
 	sound = 'sound/weapons/punch3.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
