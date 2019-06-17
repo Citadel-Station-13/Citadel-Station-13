@@ -1,0 +1,10 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - tweak: "Makes the netting much less clunky. If there's only one target you can net while you press the
+button, it will just net that target instead of bringing up a list of mobs."
+  - tweak: "Energy nets now revive and fully heal capturees (even dead ones, after calculating points). If someone's got a scan and wants to get cloned, they can always kill themselves still."
+  - tweak: "Capture points are added on capture, rather than round-end, so it no longer matters whether your captures kill themselves in the holding facility or not."
+  - balance: "Makes the nets a bit more sturdy. (previously it took mere two welder hits to break one)"
+  - balance: "Makes stungloves actually stun people (currently comparably with stunbatons, adjustable). Because electrocute_act(25, H) did fuck all, stunwise, and on top of that, people in insulated gloves were completely unaffected."
+  - balance: "Reduced the stunglove electrocute_act value to 15 due to above. Could possibly be lowered further."

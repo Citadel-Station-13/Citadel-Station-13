@@ -1279,6 +1279,15 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/device_tools/compressionkit
+	name = "Bluespace Compression Kit"
+	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \
+			Does not work on storage items. \
+			Recharge using bluespace crystals. \
+			Comes with 5 charges."
+	item = /obj/item/compressionkit
+	cost = 5
+
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
 	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to twenty tiles away from the briefcase. \
@@ -1332,6 +1341,14 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
+
+/datum/uplink_item/device_tools/syndie_glue
+	name = "Glue"
+	desc = "A cheap bottle of one use syndicate brand super glue. \
+			Use on any item to make it undroppable. \
+			Be careful not to glue an item you're already holding!"
+	item = /obj/item/syndie_glue
+	cost = 2
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
@@ -1445,6 +1462,7 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
+
 
 // Implants
 /datum/uplink_item/implants
@@ -1745,6 +1763,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Broken Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
+
+/datum/uplink_item/badass/durasteel_toolbox
+	name = "Durasteel Toolbox"
+	desc = "A very high impact toolbox. Excels at destroying stationary structures."
+	item = /obj/item/storage/toolbox/durasteel
+	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/costumes
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
