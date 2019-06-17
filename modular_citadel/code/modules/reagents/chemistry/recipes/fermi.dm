@@ -467,7 +467,7 @@
 	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
 	required_reagents[pick(additions)] = rand(1, 5)//weird
 
-/datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
+/datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	SSblackbox.record_feedback("tally", "catgirlium")//log
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
@@ -476,7 +476,7 @@
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The reaction suddenly gives out a meow, condensing into a chemcat!</b></span>")//meow!
 	playsound(get_turf(my_atom), 'modular_citadel/sound/voice/merowr.ogg', 50, 1, -1)
-	catto.name = "FermiCat"
-	catto.desc = "A cute Fermichem cat, created by a lot of compicated and confusing chemistry!"
+	catto.name = "Chemcat"
+	catto.desc = "A cute chem cat, created by a lot of compicated and confusing chemistry!"
 	catto.color = "#770000"
 	my_atom.reagents.remove_any(10)

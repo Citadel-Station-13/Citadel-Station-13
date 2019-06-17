@@ -559,9 +559,10 @@ datum/status_effect/pacify
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
 
-/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)//priority == FALSE makes no visible message, prevents self antag messages, and places phrase below objectives.
+/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, _priority = priority)//priority == FALSE makes no visible message, prevents self antag messages, and places phrase below objectives.
 	duration = _duration
 	stun = _stun
+	priority = _priority
 	return ..()
 
 /datum/status_effect/trance/on_remove()

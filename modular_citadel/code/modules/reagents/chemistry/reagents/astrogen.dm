@@ -42,6 +42,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		G.health = 5
 		G.melee_damage_lower = 0
 		G.melee_damage_upper = 0
+		G.obj_damage = 0
 		G.deathmessage = "disappears as if it was never really there to begin with"
 		G.incorporeal_move = 1
 		G.alpha = 35

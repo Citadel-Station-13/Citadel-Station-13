@@ -306,18 +306,24 @@
 	icon_dead = "custom_cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
-	health = 50 //So people can't instakill it
+	health = 50 //So people can't instakill it s
 	maxHealth = 50
 	speak = list("Meowrowr!", "Mew!", "Miauen!")
 	speak_emote = list("wigglepurrs", "mewls")
 	emote_hear = list("meows.", "mews.")
 	emote_see = list("looks at you eagerly for pets!", "wiggles enthusiastically.")
 	gold_core_spawnable = NO_SPAWN
+	var/pseudo_death = FALSE
 
-/mob/living/simple_animal/pet/cat/custom_cat/death(gibbed)
-	if (src.mind && !name == "White cat") //secret cat chem
+/mob/living/simple_animal/pet/cat/custom_cat/death()
+	message_admins("dedcat")
+	if (pseudo_death == TRUE) //secret cat chem
 		icon_state = "custom_cat_dead"
 		Stun(1000)
 		canmove = 0
+		message_admins("dedcat")
+		friendly = "deads at"
+		return
 	else
+		message_admins("deddercat")
 		..()

@@ -6,7 +6,6 @@
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
 	var/priority = TRUE
-
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
