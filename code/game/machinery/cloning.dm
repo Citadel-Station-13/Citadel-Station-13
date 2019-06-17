@@ -182,11 +182,11 @@
 
 	//Get the clone body ready
 	maim_clone(H)
-	H.add_trait(TRAIT_STABLEHEART, "cloning")
-	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.add_trait(TRAIT_MUTE, "cloning")
-	H.add_trait(TRAIT_NOBREATH, "cloning")
-	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	ADD_TRAIT(H, TRAIT_STABLEHEART, "cloning")
+	ADD_TRAIT(H, TRAIT_EMOTEMUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_MUTE, "cloning")
+	ADD_TRAIT(H, TRAIT_NOBREATH, "cloning")
+	ADD_TRAIT(H, TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -361,11 +361,11 @@
 	if(!mob_occupant)
 		return
 
-	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
-	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOBREATH, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_STABLEHEART, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_EMOTEMUTE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_MUTE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOCRITDAMAGE, "cloning")
+	REMOVE_TRAIT(mob_occupant, TRAIT_NOBREATH, "cloning")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
@@ -452,7 +452,7 @@
 
 	// brain function, they also have no limbs or internal organs.
 
-	if(!H.has_trait(TRAIT_NODISMEMBER))
+	if(!HAS_TRAIT(H, TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)

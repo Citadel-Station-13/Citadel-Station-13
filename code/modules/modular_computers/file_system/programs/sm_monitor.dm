@@ -81,13 +81,13 @@
 		if(air.total_moles())
 			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
-				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
-				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
+				"name"= GLOB.meta_gas_names[gasid],
+				"amount" = round(100*air.gases[gasid]/air.total_moles(),0.01))))
 
 		else
 			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
-					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
+					"name"= GLOB.meta_gas_names[gasid],
 					"amount" = 0)))
 
 		data["gases"] = gasdata

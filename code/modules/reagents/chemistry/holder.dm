@@ -53,7 +53,7 @@
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
 
-/datum/reagents/New(maximum=100)
+/datum/reagents/New(maximum=100, new_flags)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -61,6 +61,8 @@
 		build_chemical_reagent_list()
 	if(!GLOB.chemical_reactions_list)
 		build_chemical_reactions_list()
+
+	reagents_holder_flags = new_flags
 
 /datum/reagents/Destroy()
 	. = ..()
@@ -311,13 +313,6 @@
 		C.update_stamina()
 	update_total()
 
-
-/datum/reagents/proc/set_reacting(react = TRUE)
-	if(react)
-		reagents_holder_flags &= ~(REAGENT_NOREACT)
-	else
-		reagents_holder_flags |= REAGENT_NOREACT
-
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
@@ -333,11 +328,11 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
+	if(reagents_holder_flags & NO_REACT)
+		return //Yup, no reactions here. No siree.
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(reagents_holder_flags & REAGENT_NOREACT)
-		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0
 	do
@@ -555,7 +550,7 @@
 	if(!D)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
-	
+
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
@@ -599,9 +594,9 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	
+
 	if(isliving(my_atom))
-		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete 
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
@@ -800,10 +795,10 @@
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(max_vol)
+/atom/proc/create_reagents(max_vol, flags)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/reagents(max_vol)
+	reagents = new/datum/reagents(max_vol, flags)
 	reagents.my_atom = src
 
 /proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
