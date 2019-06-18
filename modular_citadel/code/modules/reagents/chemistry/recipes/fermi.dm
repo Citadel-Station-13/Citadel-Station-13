@@ -74,17 +74,18 @@
 	OptimalTempMin 		= 350 // Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax		= 600 // Upper end for above
 	ExplodeTemp			= 650 //Temperature at which reaction explodes
-	OptimalpHMin		= 6 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	OptimalpHMax		= 8 // Higest value for above
-	ReactpHLim			= 4 // How far out pH wil react, giving impurity place (Exponential phase)
+	OptimalpHMin		= 7 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	OptimalpHMax		= 9 // Higest value for above
+	ReactpHLim			= 5 // How far out pH wil react, giving impurity place (Exponential phase)
 	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
-	CurveSharpT 		= 1.6 // How sharp the temperature exponential curve is (to the power of value)
-	CurveSharppH 		= 2 // How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= 15 //Temperature change per 1u produced
-	HIonRelease 		= -0.8 //pH change per 1u reaction
-	RateUpLim 			= 2 //Optimal/max rate possible if all conditions are perfect
+	CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
+	CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
+	ThermicConstant		= 10 //Temperature change per 1u produced
+	HIonRelease 		= -0.5 //pH change per 1u reaction
+	RateUpLim 			= 3 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE //If the chemical explodes in a special way
+	PurityMin			= 0.4
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
@@ -217,7 +218,7 @@
 	PurityMin 				= 0.25
 
 
-/datum/chemical_reaction/fermi/enthrall/
+/datum/chemical_reaction/fermi/enthrall/ //check this
 	name = "MKUltra"
 	id = "enthrall"
 	results = list("enthrall" = 0.5)
@@ -344,7 +345,7 @@
 	HIonRelease 	= -0.1
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
-	PurityMin		= 0.30
+	PurityMin		= 0.3
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
@@ -371,7 +372,6 @@
 	HIonRelease 	= 0.01
 	RateUpLim 		= 1
 	FermiChem 		= TRUE
-	PurityMin		= 0.15
 
 /datum/chemical_reaction/fermi/fermiABuffer//done test
 	name = "Acetic acid buffer"

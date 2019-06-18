@@ -116,6 +116,7 @@
 	description = "OwO whats this?"
 	color = "#H04044" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	InverseChemVal 		= 0
 	var/obj/item/organ/tongue/nT
 	DoNotSplit = TRUE
