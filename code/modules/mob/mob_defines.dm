@@ -112,3 +112,5 @@
 	var/registered_z
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
+
+	var/datum/component/virtual_reality/inception

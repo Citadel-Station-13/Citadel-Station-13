@@ -93,10 +93,7 @@
 			if(human_occupant && human_occupant.mind && usr == occupant)
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_mob && vr_mob.stat == CONSCIOUS && !vr_mob.GetComponent(/datum/component/virtual_reality))
-					SStgui.close_user_uis(occupant, src)
-					vr_mob.AddComponent(/datum/component/virtual_reality, human_occupant.mind, src, you_die_in_the_game_you_die_for_real)
-					human_occupant.audiovisual_redirect = vr_mob
-					vr_mob.ckey = human_occupant.ckey
+					vr_mob.AddComponent(/datum/component/virtual_reality, human_occupant, src, you_die_in_the_game_you_die_for_real)
 					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 				else
 					if(allow_creating_vr_mobs)
@@ -164,10 +161,7 @@
 		vr_H.updateappearance(TRUE, TRUE, TRUE)
 	if(!transfer || !H.mind)
 		return
-	vr_mob.AddComponent(/datum/component/virtual_reality, H.mind, src, you_die_in_the_game_you_die_for_real)
-	SStgui.close_user_uis(H, src)
-	H.audiovisual_redirect = vr_mob
-	vr_mob.ckey = H.ckey
+	vr_mob.AddComponent(/datum/component/virtual_reality, H, src, you_die_in_the_game_you_die_for_real)
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_mob()
 	if(vr_mob)

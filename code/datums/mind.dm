@@ -87,6 +87,7 @@
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	var/old_character = current
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -97,7 +98,7 @@
 
 	if(key)
 		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
-			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
+			new_character.ghostize(TRUE, TRUE)						//we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
 
@@ -121,7 +122,7 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
-	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character)
+	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 
 //CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.

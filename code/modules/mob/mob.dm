@@ -12,6 +12,8 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
+	if(!QDELETED(inception) && inception.parent)
+		inception.virtual_reality_in_a_virtual_reality(TRUE)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -438,7 +440,7 @@
 
 /mob/proc/transfer_key(mob/new_mob, send_signal = TRUE)
 	if(send_signal)
-		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob)
+		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
 	new_mob.key = key
 
 /mob/verb/cancel_camera()

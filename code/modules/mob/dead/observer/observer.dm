@@ -260,9 +260,9 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, send_the_signal = TRUE)
-	if(!key || cmptext(copytext(key,1,2),"@") || (send_the_signal && SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse) & COMPONENT_BLOCK_GHOSTING))
-		return //mob has no key, is an aghost or some component hijack.
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE)
+	if(!key || cmptext(copytext(key,1,2),"@") || (!special && SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special) & COMPONENT_BLOCK_GHOSTING))
+		return //mob has no key, is an aghost or some component hijacked.
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 	var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
@@ -280,7 +280,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE) & COMPONENT_BLOCK_GHOSTING)
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, (stat == DEAD) ? TRUE : FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
 
 // CITADEL EDIT
@@ -309,7 +309,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE) & COMPONENT_BLOCK_GHOSTING)
+	if(SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, FALSE, FALSE) & COMPONENT_BLOCK_GHOSTING)
 		return
 
 	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you won't be able to re-enter this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
