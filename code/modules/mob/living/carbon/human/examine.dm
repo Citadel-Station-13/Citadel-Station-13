@@ -291,10 +291,10 @@
 			if (getToxLoss() >= 10)
 				msg += "[t_He] seem[p_s()] sickly.\n"
 			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-			if(mood.sanity <= SANITY_DISTURBED)
+			if(mood.sanity >= SANITY_GREAT)
 				msg += "[t_He] seem[p_s()] distressed.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
-			if(mood.mood >= 5) //So roundstart people aren't all "happy"
+			if(mood.sanity == ) //So roundstart people aren't all "happy"
 				msg += "[t_He] seem[p_s()] to have had something nice happen to them recently.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empathH", /datum/mood_event/happy_empath, src)
 			if (HAS_TRAIT(src, TRAIT_BLIND))
