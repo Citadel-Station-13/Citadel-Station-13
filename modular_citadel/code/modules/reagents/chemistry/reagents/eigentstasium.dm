@@ -40,10 +40,9 @@
 
 		//make hologram at return point
 		Eigenstate = new(loc)
-		Eigenstate.add_overlay(image(M))
+		Eigenstate.appearance = M.appearance
 		Eigenstate.alpha = 170
 		Eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-		Eigenstate.dir = SOUTH
 		Eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Eigenstate.setAnchored(TRUE)//So space wind cannot drag it.
