@@ -14,6 +14,10 @@
 
 	var/saved_underwear = ""//saves their underwear so it can be toggled later
 	var/saved_undershirt = ""
+	var/saved_socks = ""
+	var/hidden_underwear = FALSE
+	var/hidden_undershirt = FALSE
+	var/hidden_socks = FALSE
 
 /mob/living/carbon/human/New()
 	..()
@@ -29,6 +33,33 @@
 	var/list/femcum_fluids = list("femcum")
 
 //Mob procs
+/mob/living/carbon/human/proc/underwear_toggle()
+	set name = "Toggle undergarments"
+	set category = "Object"
+	if(ishuman(src))
+		var/mob/living/carbon/human/humz = src
+		var/confirm = input(src, "Select what part of your form to alter", "Undergarment Toggling", "Cancel") in list("Top", "Bottom", "Socks", "All", "Cancel")
+		if(confirm == "Top")
+			humz.hidden_undershirt = !humz.hidden_undershirt
+
+		if(confirm == "Bottom")
+			humz.hidden_underwear = !humz.hidden_underwear
+
+		if(confirm == "Socks")
+			humz.hidden_socks = !humz.hidden_socks
+
+		if(confirm == "All")
+			humz.hidden_undershirt = !humz.hidden_undershirt
+			humz.hidden_underwear = !humz.hidden_underwear
+			humz.hidden_socks = !humz.hidden_socks
+
+		if(confirm == "Cancel")
+			return
+		src.update_body()
+
+	else
+		to_chat(src, "Humans only. How the fuck did you get this verb anyway.")
+
 /mob/living/proc/handle_arousal()
 
 
@@ -40,7 +71,7 @@
 			adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
 			if(dna.features["exhibitionist"] && client)
 				var/amt_nude = 0
-				if(is_chest_exposed() && (gender == FEMALE || getorganslot("breasts")))
+				if(is_chest_exposed() && (getorganslot("breasts")))
 					amt_nude++
 				if(is_groin_exposed())
 					if(getorganslot("penis"))
@@ -64,14 +95,14 @@
 
 /mob/living/proc/adjustArousalLoss(amount, updating_arousal=1)
 	if(status_flags & GODMODE || !canbearoused)
-		return 0
+		return FALSE
 	arousalloss = CLAMP(arousalloss + amount, min_arousal, max_arousal)
 	if(updating_arousal)
 		updatearousal()
 
 /mob/living/proc/setArousalLoss(amount, updating_arousal=1)
 	if(status_flags & GODMODE || !canbearoused)
-		return 0
+		return FALSE
 	arousalloss = CLAMP(amount, min_arousal, max_arousal)
 	if(updating_arousal)
 		updatearousal()
@@ -99,6 +130,8 @@
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = GLOB.cock_shapes_list[G.shape]
+				if(/obj/item/organ/genital/testicles)
+					S = GLOB.balls_shapes_list[G.shape]
 				if(/obj/item/organ/genital/vagina)
 					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
@@ -112,54 +145,54 @@
 			G.update_appearance()
 
 /mob/living/proc/update_arousal_hud()
-	return 0
+	return FALSE
 
 /datum/species/proc/update_arousal_hud(mob/living/carbon/human/H)
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/update_arousal_hud()
 	if(!client || !hud_used)
-		return 0
+		return FALSE
 	if(dna.species.update_arousal_hud())
-		return 0
+		return FALSE
 	if(!canbearoused)
 		hud_used.arousal.icon_state = ""
-		return 0
+		return FALSE
 	else
 		if(hud_used.arousal)
 			if(stat == DEAD)
 				hud_used.arousal.icon_state = "arousal0"
-				return 1
+				return TRUE
 			if(getArousalLoss() == max_arousal)
 				hud_used.arousal.icon_state = "arousal100"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 90)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal90"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 80)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal80"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 70)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal70"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 60)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal60"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 50)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal50"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 40)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal40"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 30)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal30"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 20)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal10"
-				return 1
+				return TRUE
 			if(getArousalLoss() >= (max_arousal / 100) * 10)//M O D U L A R ,   W O W
 				hud_used.arousal.icon_state = "arousal10"
-				return 1
+				return TRUE
 			else
 				hud_used.arousal.icon_state = "arousal0"
 
@@ -171,11 +204,11 @@
 
 /obj/screen/arousal/Click()
 	if(!isliving(usr))
-		return 0
+		return FALSE
 	var/mob/living/M = usr
 	if(M.canbearoused)
 		M.mob_climax()
-		return 1
+		return TRUE
 	else
 		to_chat(M, "<span class='warning'>Arousal is disabled. Feature is unavailable.</span>")
 
@@ -196,13 +229,6 @@
 								"<span class='userdanger'>You have relieved yourself.</span>")
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "orgasm", /datum/mood_event/orgasm)
 					setArousalLoss(min_arousal)
-					/*
-					switch(gender)
-						if(MALE)
-							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
-						if(FEMALE)
-							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
-					*/
 			else
 				to_chat(src, "<span class='notice'>You aren't aroused enough for that.</span>")
 

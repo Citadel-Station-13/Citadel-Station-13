@@ -73,6 +73,31 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/skirt/purple
 
+/datum/gear/schoolgirlblue
+	name = "Blue Schoolgirl Uniform"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/schoolgirl
+
+/datum/gear/schoolgirlred
+	name = "Red Schoolgirl Uniform"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/schoolgirl/red
+
+/datum/gear/schoolgirlgreen
+	name = "Green Schoolgirl Uniform"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/schoolgirl/green
+
+/datum/gear/schoolgirlorange
+	name = "Orange Schoolgirl Uniform"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/schoolgirl/orange
+
+/datum/gear/stripeddress
+	name = "Striped Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/stripeddress
+
 /datum/gear/kilt
 	name = "Kilt"
 	category = SLOT_W_UNIFORM
@@ -283,3 +308,9 @@
 	path = /obj/item/clothing/under/rank/trek/engsec/ent
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
+
+//memes
+/datum/gear/nudepermit
+	name = "Nudity Permit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/permit

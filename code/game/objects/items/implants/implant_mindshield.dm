@@ -20,14 +20,14 @@
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())
 		if(!target.mind)
-			target.add_trait(TRAIT_MINDSHIELD, "implant")
+			ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
 			target.sec_hud_set_implants()
 			return TRUE
 
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
-		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
+		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable || target.mind.has_antag_datum(/datum/antagonist/gang/boss))
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			var/obj/item/implanter/I = loc
@@ -38,15 +38,18 @@
 				I.update_icon()
 			return FALSE
 
+		var/datum/antagonist/gang/gang = target.mind.has_antag_datum(/datum/antagonist/gang)
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(FALSE, user)
+		if(gang)
+			target.mind.remove_antag_datum(/datum/antagonist/gang)
 		if(!silent)
 			if(target.mind in SSticker.mode.cult)
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			else
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
-		target.add_trait(TRAIT_MINDSHIELD, "implant")
+		ADD_TRAIT(target, TRAIT_MINDSHIELD, "implant")
 		target.sec_hud_set_implants()
 		return TRUE
 	return FALSE
@@ -55,7 +58,7 @@
 	if(..())
 		if(isliving(target))
 			var/mob/living/L = target
-			L.remove_trait(TRAIT_MINDSHIELD, "implant")
+			REMOVE_TRAIT(L, TRAIT_MINDSHIELD, "implant")
 			L.sec_hud_set_implants()
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")

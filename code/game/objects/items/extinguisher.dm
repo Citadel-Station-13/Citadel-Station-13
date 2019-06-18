@@ -15,7 +15,6 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
-	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/chem = "water"
@@ -56,7 +55,7 @@
 
 /obj/item/extinguisher/Initialize()
 	. = ..()
-	create_reagents(max_water)
+	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
 
@@ -111,7 +110,7 @@
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 
 	if(reagents.total_volume)
-		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
+		to_chat(user, "<span class='notice'>You can loose its <b>screws</b> to empty it.</span>")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
@@ -245,7 +244,7 @@
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
-		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] by loosing the release valve's screws.</span>")
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)

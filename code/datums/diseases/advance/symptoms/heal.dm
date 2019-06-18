@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.has_trait(TRAIT_DEATHCOMA))
+	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -364,15 +364,15 @@
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
 	var/datum/gas_mixture/environment
-	var/list/gases
+	var/plasmamount
 
 	. = 0
 
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
-		gases = environment.gases
-		if(gases["plasma"] && gases["plasma"][MOLES] > gases["plasma"][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
+		plasmamount = environment.gases[/datum/gas/plasma]
+		if(plasmamount && plasmamount > GLOB.meta_gas_visibility[/datum/gas/plasma]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent("plasma"))
 		. +=  power * 0.75
