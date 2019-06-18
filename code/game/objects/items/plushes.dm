@@ -707,7 +707,7 @@
 	item_state = "krick"
 
 /obj/item/toy/plush/bird/birddi
-desc = "I think that's a bird? But it has a rat tail and toe pads..."
+	desc = "I think that's a bird? But it has a rat tail and toe pads..."
 	icon_state = "birddi"
 	item_state = "birddi"
 	attack_verb = list("peeped", "tailslapped", "gnomed")
@@ -746,7 +746,7 @@ desc = "I think that's a bird? But it has a rat tail and toe pads..."
 	item_state = "blep"
 
 /obj/item/toy/plush/mammal/circe
-desc = "A luxuriously soft toy that resembles a nine-tailed kitsune."
+	desc = "A luxuriously soft toy that resembles a nine-tailed kitsune."
 	icon_state = "circe"
 	item_state = "circe"
 	attack_verb = list("medicated", "tailhugged", "kissed")
@@ -814,7 +814,7 @@ desc = "A luxuriously soft toy that resembles a nine-tailed kitsune."
 	item_state = "rae"
 
 /obj/item/toy/plush/mammal/zed
-desc = "A masked stuffed toy that resembles a fierce miner. He even comes with his own little crusher!"
+	desc = "A masked stuffed toy that resembles a fierce miner. He even comes with his own little crusher!"
 	icon_state = "zed"
 	item_state = "zed"
 	attack_verb = list("ENDED", "CRUSHED", "GNOMED")
