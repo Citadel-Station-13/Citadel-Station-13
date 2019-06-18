@@ -550,7 +550,7 @@
 /obj/item/storage/belt/medolier/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 16
+	STR.max_items = 15
 	STR.display_numerical_stacking = FALSE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
