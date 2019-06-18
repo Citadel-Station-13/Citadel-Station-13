@@ -303,6 +303,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/melee/powerfist
 	cost = 8
 
+/datum/uplink_item/badass/combatglovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
+			to learn the abilities of krav maga to the wearer."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
@@ -1254,6 +1262,23 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	item = /obj/item/codespeak_manual/unlimited
 	cost = 3
 
+/datum/uplink_item/device_tools/compressionkit
+	name = "Bluespace Compression Kit"
+	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \
+			Does not work on storage items. \
+			Recharge using bluespace crystals. \
+			Comes with 5 charges."
+	item = /obj/item/compressionkit
+	cost = 5
+
+/datum/uplink_item/device_tools/syndie_glue
+	name = "Glue"
+	desc = "A cheap bottle of one use syndicate brand super glue. \
+			Use on any item to make it undroppable. \
+			Be careful not to glue an item you're already holding!"
+	item = /obj/item/syndie_glue
+	cost = 2
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1586,6 +1611,12 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
+
+/datum/uplink_item/badass/durasteel_toolbox
+	name = "Durasteel Toolbox"
+	desc = "A very high impact toolbox. Excels at destroying stationary structures."
+	item = /obj/item/storage/toolbox/durasteel
+	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/costumes
 	surplus = 0

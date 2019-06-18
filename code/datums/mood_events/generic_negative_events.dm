@@ -125,3 +125,11 @@
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
+
+/datum/mood_event/sad_empath
+	description = "<span class='warning'>Someone seems upset...</span>\n"
+	mood_change = -2
+	timeout = 600
+
+/datum/mood_event/sad_empath/add_effects(mob/sadtarget)
+	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
