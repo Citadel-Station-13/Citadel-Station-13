@@ -80,9 +80,9 @@
 	CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 1.6 // How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 2 // How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= 5 //Temperature change per 1u produced
-	HIonRelease 		= -0.05 //pH change per 1u reaction
-	RateUpLim 			= 5 //Optimal/max rate possible if all conditions are perfect
+	ThermicConstant		= 15 //Temperature change per 1u produced
+	HIonRelease 		= -0.8 //pH change per 1u reaction
+	RateUpLim 			= 2 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE //If the chemical explodes in a special way
 
@@ -110,9 +110,9 @@
 	CatalystFact 		= 0 		// How much the catalyst affects the reaction (0 = no catalyst)
 	CurveSharpT 		= 4 		// How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 4 		// How sharp the pH exponential curve is (to the power of value)
-	ThermicConstant		= -5 		// Temperature change per 1u produced
-	HIonRelease 		= 0.01 		// pH change per 1u reaction (inverse for some reason)
-	RateUpLim 			= 3 		// Optimal/max rate possible if all conditions are perfect
+	ThermicConstant		= -10 		// Temperature change per 1u produced
+	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
+	RateUpLim 			= 1 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= TRUE		// If the chemical explodes in a special way
 	PurityMin 			= 0.2

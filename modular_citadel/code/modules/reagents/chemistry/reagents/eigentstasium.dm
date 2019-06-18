@@ -23,6 +23,7 @@
 	addiction_stage4_end = 44 //Incase it's too long
 	data = list("location_created" = null)
 	var/turf/location_created
+	var/obj/effect/overlay/holo_pad_hologram/Eigenstate
 	var/turf/open/location_return = null
 	var/addictCyc3 = 0
 	var/mob/living/carbon/fermi_Tclone = null
@@ -36,13 +37,19 @@
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
 	if(current_cycle == 0)
 		log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
-		var/typepath = M.type
-		fermi_Tclone = new typepath(M.loc)
-		//var/mob/living/carbon/C = fermi_Tclone
-		fermi_Tclone.appearance = M.appearance
-		fermi_Tclone.name = "[M.name]'s eigenstate"
-		fermi_Tclone.alpha = 150
-		fermi_Tclone.color = "#0000bb"
+
+		//make hologram at return point
+		Eigenstate = new(loc)
+		Eigenstate.add_overlay(image(M))
+		Eigenstate.alpha = 170
+		Eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+		Eigenstate.dir = SOUTH
+		Eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+		Eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+		Eigenstate.setAnchored(TRUE)//So space wind cannot drag it.
+		Eigenstate.name = "[M]'s' eigenstate"//If someone decides to right click.
+		Eigenstate.set_light(2)	//hologram lighting
+
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		if(purity > 0.9) //Teleports you home if it's pure enough
@@ -63,8 +70,7 @@
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
 	do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 	do_sparks(5,FALSE,M)
-	qdel(fermi_Tclone)
-	fermi_Tclone = null
+	qdel(Eigenstate)
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
