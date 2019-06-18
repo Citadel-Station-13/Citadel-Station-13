@@ -25,7 +25,7 @@
 	var/turf/location_created
 	var/turf/open/location_return = null
 	var/addictCyc3 = 0
-	var/mob/living/fermi_Tclone = null
+	var/mob/living/carbon/fermi_Tclone = null
 	var/teleBool = FALSE
 	pH = 3.7
 
@@ -34,8 +34,15 @@
 
 //Main functions
 /datum/reagent/fermi/eigenstate/on_mob_life(mob/living/M) //Teleports to chemistry!
-	log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
 	if(current_cycle == 0)
+		log_game("FERMICHEM: [M] ckey: [M.key] took eigenstasium")
+		var/typepath = M.type
+		fermi_Tclone = new typepath(M.loc)
+		//var/mob/living/carbon/C = fermi_Tclone
+		fermi_Tclone.appearance = M.appearance
+		fermi_Tclone.name = "[M.name]'s eigenstate"
+		fermi_Tclone.alpha = 150
+		fermi_Tclone.color = "#0000bb"
 		location_return = get_turf(M)	//sets up return point
 		to_chat(M, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		if(purity > 0.9) //Teleports you home if it's pure enough
@@ -45,6 +52,8 @@
 			do_sparks(5,FALSE,M)
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
+
+
 	if(prob(20))
 		do_sparks(5,FALSE,M)
 	..()
@@ -54,6 +63,8 @@
 	to_chat(M, "<span class='userdanger'>You feel your wavefunction collapse!</span>")
 	do_teleport(M, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 	do_sparks(5,FALSE,M)
+	qdel(fermi_Tclone)
+	fermi_Tclone = null
 	..()
 
 /datum/reagent/fermi/eigenstate/overdose_start(mob/living/M) //Overdose, makes you teleport randomly
@@ -97,7 +108,7 @@
 
 /datum/reagent/fermi/eigenstate/addiction_act_stage3(mob/living/M)//Pulls multiple copies of the character from alternative realities while teleporting them around!
 	//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
-	switch(addictCyc3) //Loops 0 -> 1 -> 2 -> 0 ...ect.
+	switch(addictCyc3) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 		if(0)
 			M.Jitter(100)
 			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the event horizon.</span>")

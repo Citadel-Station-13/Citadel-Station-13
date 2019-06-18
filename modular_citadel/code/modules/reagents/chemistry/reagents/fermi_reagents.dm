@@ -327,7 +327,7 @@
 	..()
 
 /datum/reagent/fermi/fermiABuffer
-	name = "Acidic buffer"//defined on setup
+	name = "Acidic buffer"
 	id = "fermiABuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
 	taste_description = "an acidy sort of taste, blech."
@@ -339,7 +339,7 @@
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3)) //Shouldn't be required
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
@@ -348,7 +348,7 @@
 	..()
 
 /datum/reagent/fermi/fermiBBuffer
-	name = "Basic buffer"//defined on setup
+	name = "Basic buffer"
 	id = "fermiBBuffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
 	taste_description = "an soapy sort of taste, blech."
@@ -359,7 +359,7 @@
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3)) //Shouldn't be required Might be..?
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
