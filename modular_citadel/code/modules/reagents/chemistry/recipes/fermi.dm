@@ -81,7 +81,7 @@
 	CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
 	CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
 	ThermicConstant		= 10 //Temperature change per 1u produced
-	HIonRelease 		= -0.5 //pH change per 1u reaction
+	HIonRelease 		= -0.01 //pH change per 1u reaction
 	RateUpLim 			= 3 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE //If the chemical explodes in a special way
@@ -90,8 +90,9 @@
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
-	E.location_created = location
-	E.data.["location_created"] = location
+	if(location)
+		E.location_created = location
+		E.data.["location_created"] = location
 
 
 //serum
