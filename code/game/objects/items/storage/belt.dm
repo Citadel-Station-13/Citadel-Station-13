@@ -550,14 +550,14 @@
 /obj/item/storage/belt/medolier/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 12
+	STR.max_items = 16
 	STR.display_numerical_stacking = FALSE
 	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/syringe/dart
 		))
 
 /obj/item/storage/belt/medolier/full/PopulateContents()
-	for(var/i in 1 to 10)
+	for(var/i in 1 to 16)
 		new /obj/item/reagent_containers/syringe/dart/(src)
 
 /obj/item/storage/belt/holster

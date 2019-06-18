@@ -97,7 +97,7 @@
 	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD."
 	id = "medicinalsmartdart"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_PLASTIC = 200, MAT_METAL = 500)
+	materials = list(MAT_GLASS = 100, MAT_PLASTIC = 100, MAT_METAL = 100)
 	build_path = /obj/item/reagent_containers/syringe/dart
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -107,7 +107,7 @@
 	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient, only medicines are administered to the patient using a smart nanofilter and capillary action with a built in safety for OD. Has an extended volume capacity thanks to bluespace foam."
 	id = "bluespacesmartdart"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_PLASTIC = 500, MAT_METAL = 500, MAT_BLUESPACE = 500)
+	materials = list(MAT_GLASS = 250, MAT_PLASTIC = 250, MAT_METAL = 250, MAT_BLUESPACE = 250)
 	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
@@ -117,7 +117,7 @@
 	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
 	id = "smartdartgun"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 1500, MAT_PLASTIC = 1000, MAT_METAL = 1500)
+	materials = list(MAT_GLASS = 500, MAT_PLASTIC = 1000, MAT_METAL = 500)
 	build_path = /obj/item/gun/syringe/dart
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
