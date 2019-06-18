@@ -804,7 +804,7 @@
 
 /datum/crafting_recipe/smartdartgun
 	name = "Smart dartgun"
-	result =  /obj/item/storage/belt/medolier
+	result =  /obj/item/gun/syringe/dart
 	reqs = list(/obj/item/stack/sheet/metal = 15,
 	/obj/item/stack/sheet/glass = 10,
 	/obj/item/tank/internals = 1,
