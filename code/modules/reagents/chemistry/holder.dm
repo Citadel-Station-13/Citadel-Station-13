@@ -47,16 +47,16 @@
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
-	var/pH = REAGENT_NORMAL_PH//This is definately 7, right?
+	var/pH = REAGENT_NORMAL_PH//Potential of hydrogen. Edited on adding new reagents, deleting reagents, and during fermi reactions.
 	var/overallPurity = 1
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
 	var/reagents_holder_flags
-	var/targetVol = 0
-	var/reactedVol = 0
-	var/fermiIsReacting = FALSE
-	var/fermiReactID = null
+	var/targetVol = 0 //the target volume, i.e. the total amount that can be created during a fermichem reaction.
+	var/reactedVol = 0 //how much of the reagent is reacted during a fermireaction
+	var/fermiIsReacting = FALSE //that prevents multiple reactions from occurring (i.e. add_reagent calls to process_reactions(), this stops any extra reactions.)
+	var/fermiReactID = null //ID of the chem being made during a fermireaction, kept here so it's cache isn't lost between loops/procs.
 
 /datum/reagents/New(maximum=100, new_flags)
 	maximum_volume = maximum
@@ -461,8 +461,11 @@
 							fermiReactID = selected_reaction
 							reaction_occurred = 1
 							SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
+
+					else //It's a little bit of a confusing nest, but esstentially we check if it's a fermireaction, then temperature, then pH. If this is true, the remainer of this handler is run.
+						return 0 //If pH is out of range
 				else
-					return 0
+					return 0 //If not hot enough
 
 		//Standard reaction mechanics:
 			else
@@ -514,77 +517,50 @@
 	var/multiplier = INFINITY
 
 	for(var/B in cached_required_reagents) //
-		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
+		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.001))
 	if (multiplier == 0)
-		STOP_PROCESSING(SSprocessing, src)
-		fermiIsReacting = FALSE
-		reactedVol = 0
-		targetVol = 0
-		//pH check, handled at the end to reduce calls.
-		if(istype(my_atom, /obj/item/reagent_containers))
-			var/obj/item/reagent_containers/RC = my_atom
-			RC.pH_check()
-		C.FermiFinish(src, my_atom, multiplier)
-		handle_reactions()
-		update_total()
-		//Reaction sounds and words
-		playsound(get_turf(my_atom), C.mix_sound, 80, 1)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		var/iconhtml = icon2html(my_atom, seen)
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+		fermiEnd(multipler)
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
 
 	if (fermiIsReacting == FALSE)
-
 		CRASH("Fermi has refused to stop reacting even though we asked her nicely.")
 
 	if (chem_temp > C.OptimalTempMin && fermiIsReacting == TRUE)//To prevent pointless reactions
-		if (reactedVol < targetVol)
-			reactedVol = FermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
-		else
-			STOP_PROCESSING(SSprocessing, src)
-			fermiIsReacting = FALSE
-			reactedVol = 0
-			targetVol = 0
-			//pH check, handled at the end to reduce calls.
-			if(istype(my_atom, /obj/item/reagent_containers))
-				var/obj/item/reagent_containers/RC = my_atom
-				RC.pH_check()
-			C.FermiFinish(src, my_atom, multiplier)
-			handle_reactions()
-			update_total()
-			//Reaction sounds and words
-			playsound(get_turf(my_atom), C.mix_sound, 80, 1)
-			var/list/seen = viewers(5, get_turf(my_atom))
-			var/iconhtml = icon2html(my_atom, seen)
-			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+		if( (pH >= (C.OptimalpHMin - C.ReactpHLim)) && (pH <= (C.OptimalpHMax + C.ReactpHLim)) )
+			if (reactedVol < targetVol)
+				reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+			else//Volume is used up
+				fermiEnd(multipler)
+				return
+		else//pH is out of range
+			fermiEnd(multipler)
 			return
-	else
-		STOP_PROCESSING(SSprocessing, src)
-		fermiIsReacting = FALSE
-		reactedVol = 0
-		targetVol = 0
-		//pH check, handled at the end to reduce calls.
-		if(istype(my_atom, /obj/item/reagent_containers))
-			var/obj/item/reagent_containers/RC = my_atom
-			RC.pH_check()
-		C.FermiFinish(src, my_atom, multiplier)
-		handle_reactions()
-		update_total()
-		//Reaction sounds and words
-		playsound(get_turf(my_atom), C.mix_sound, 80, 1)
-		var/list/seen = viewers(5, get_turf(my_atom))
-		var/iconhtml = icon2html(my_atom, seen)
-		for(var/mob/M in seen)
-			to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+	else//Temperature is too low, or reaction has stopped.
+		fermiEnd(multipler)
 		return
 
+/datum/reagents/proc/fermiEnd(multipler)
+	STOP_PROCESSING(SSprocessing, src)
+	fermiIsReacting = FALSE
+	reactedVol = 0
+	targetVol = 0
+	//pH check, handled at the end to reduce calls.
+	if(istype(my_atom, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = my_atom
+		RC.pH_check()
+	C.FermiFinish(src, my_atom, multiplier)
+	handle_reactions()
+	update_total()
+	//Reaction sounds and words
+	playsound(get_turf(my_atom), C.mix_sound, 80, 1)
+	var/list/seen = viewers(5, get_turf(my_atom))
+	var/iconhtml = icon2html(my_atom, seen)
+	for(var/mob/M in seen)
+		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
-/datum/reagents/proc/FermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
+/datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
 	var/deltaT = 0
 	var/deltapH = 0
@@ -638,7 +614,7 @@
 		//stepChemAmmount = CLAMP(((deltaT * multiplier), 0, ((targetVol - reactedVol)/cached_results[P]))  //used to have multipler, now it does
 		stepChemAmmount = (multiplier*cached_results[P])
 		if (stepChemAmmount >= C.RateUpLim)
-			stepChemAmmount = (C.RateUpLim)//something weird with this line maybe.
+			stepChemAmmount = (C.RateUpLim)
 		addChemAmmount = deltaT * stepChemAmmount
 		if (addChemAmmount >= (targetVol - reactedVol))
 			addChemAmmount = (targetVol - reactedVol)
@@ -858,19 +834,18 @@
 	for(var/A in cached_reagents)
 		var/datum/reagent/R = A
 		if (R.id == reagent) //IF MERGING
-			//WIP_TAG			//check my maths for purity calculations
 			//Add amount and equalize purity
 			R.volume += amount
 			R.purity = ((R.purity * R.volume) + (other_purity * amount)) /((R.volume + amount)) //This should add the purity to the product
 
-
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(ADD_REAGENT)
-			R.on_merge(data, amount, my_atom, other_purity)
 			if(isliving(my_atom))
 				if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
+				else
+					R.on_merge(data, amount, my_atom, other_purity)
 			if(!no_react)
 				handle_reactions()
 

@@ -85,7 +85,7 @@
 	RateUpLim 			= 3 //Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE//If the chemical uses the Fermichem reaction mechanics
 	FermiExplode 		= FALSE //If the chemical explodes in a special way
-	PurityMin			= 0.4
+	PurityMin			= 0.4 //The minimum purity something has to be above, otherwise it explodes.
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
 	var/turf/open/location = get_turf(my_atom)
