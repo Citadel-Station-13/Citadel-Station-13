@@ -88,6 +88,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
+	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
+
+	var/list/alternate_screams = list() //REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
 
@@ -828,3 +832,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (item_flags & NODROP)
 		return
 	return ..()
+
+/obj/item/attack(mob/living/M, mob/living/user)
+	. = ..()
+	if(force >= 15)
+		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
+		if(M.client)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if (!M.canmove)
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+
+/obj/item/attack_obj(obj/O, mob/living/user)
+	. = ..()
+	if(force >= 20)
+		shake_camera(user, ((force - 15) * 0.01 + 1), ((force - 15) * 0.01))
+
+/obj/item/proc/grenade_prime_react(obj/item/grenade/nade)
+	return

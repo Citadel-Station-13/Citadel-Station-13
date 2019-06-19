@@ -90,6 +90,7 @@
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+	alternate_screams = list('sound/voice/cyka1.ogg', 'sound/voice/cheekibreeki.ogg')
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 
@@ -165,6 +166,7 @@
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	alternate_screams = list('sound/voice/scream/scream_silicon.ogg')
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 

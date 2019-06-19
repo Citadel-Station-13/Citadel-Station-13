@@ -132,6 +132,30 @@
 	tastes = list("brains" = 1, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
+	icon_state = "ipcmeat"
+	desc = "Gross robot meat."
+	filling_color = "#000000"
+	tastes = list("metal" = 1)
+	foodtype = RAW | MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
+	icon_state = "insectmeat"
+	desc = "Hopefully no one will bug you to eat it."
+	filling_color = "#BF896B"
+	tastes = list("insects" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian
+	icon_state = "birdmeat"
+	desc = "Quality bird meat."
+	filling_color = "#BF896B"
+	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal
+	desc = "Furry meat. WHO DID THIS?!"
+	filling_color = "#6B8E23"
+	tastes = list("brains" = 1, "meat" = 1)
+
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 

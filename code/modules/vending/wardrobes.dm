@@ -296,6 +296,8 @@
 					/obj/item/clothing/head/nun_hood = 2,
 					/obj/item/clothing/suit/holidaypriest = 2,
 					/obj/item/storage/fancy/candle_box = 3)
+	premium = list(/obj/item/toy/plush/plushvar = 1,
+					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 
 /obj/item/vending_refill/wardrobe/chap_wardrobe

@@ -13,7 +13,7 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
-	var/min_health = -25
+	var/min_health = 30
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(

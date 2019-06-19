@@ -3,6 +3,7 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
+	no_vore = TRUE
 	var/in_use = FALSE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)

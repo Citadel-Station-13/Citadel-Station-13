@@ -14,7 +14,7 @@
 
 /obj/item/aicard/aitater
 	name = "intelliTater"
-	desc = "A stylish upgrade (?) to the intelliCard."
+	desc = "A storage device for possibly malfunctioning AIs. Go on. Get a big fat eyeful. With your big fat eyes."
 	icon_state = "aitater"
 
 /obj/item/aicard/suicide_act(mob/living/user)

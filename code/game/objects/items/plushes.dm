@@ -114,6 +114,14 @@
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
+	if(stuffed || grenade)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("plushpet", /datum/mood_event/plushpet)
+	else
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("plush_nostuffing", /datum/mood_event/plush_nostuffing)
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
 	if(I.is_sharp())
@@ -124,6 +132,9 @@
 			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
 			I.play_tool_sound(src)
 			stuffed = FALSE
+			GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+			if(mood)
+				mood.add_event("plushjack", /datum/mood_event/plushjack)
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
 			user.put_in_hands(grenade)
@@ -146,6 +157,9 @@
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("plushplay", /datum/mood_event/plushplay)
 		return
 	return ..()
 

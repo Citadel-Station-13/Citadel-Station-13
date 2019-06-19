@@ -4,6 +4,7 @@
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	casing_ejector = FALSE
+	recoil = 0.5
 
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
@@ -265,6 +266,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
+	recoil = 1
 	unique_reskin = list("Default" = "dshotgun",
 						"Dark Red Finish" = "dshotgun-d",
 						"Ash" = "dshotgun-f",

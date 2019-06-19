@@ -60,6 +60,28 @@
 /obj/structure/chair/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/structure/chair/alt_attack_hand(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		if(!item_chair || !user.can_hold_items() || !has_buckled_mobs() || buckled_mobs.len > 1 || dir != user.dir || flags_1 & NODECONSTRUCT_1)
+			return TRUE
+		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+			return TRUE
+		if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)
+			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
+			return TRUE
+		var/mob/living/poordude = buckled_mobs[1]
+		if(!istype(poordude))
+			return TRUE
+		user.visible_message("<span class='notice'>[user] pulls [src] out from under [poordude].</span>", "<span class='notice'>You pull [src] out from under [poordude].</span>")
+		var/C = new item_chair(loc)
+		user.put_in_hands(C)
+		poordude.Knockdown(20)//rip in peace
+		user.adjustStaminaLoss(5)
+		unbuckle_all_mobs(TRUE)
+		qdel(src)
+		return TRUE
+
 /obj/structure/chair/narsie_act()
 	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
 	W.setDir(dir)
@@ -429,3 +451,16 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+
+/obj/structure/chair/sofa
+	name = "old ratty sofa"
+	icon_state = "sofamiddle"
+	icon = 'icons/obj/sofa.dmi'
+	buildstackamount = 1
+
+/obj/structure/chair/sofa/left
+	icon_state = "sofaend_left"
+/obj/structure/chair/sofa/right
+	icon_state = "sofaend_right"
+/obj/structure/chair/sofa/corner
+	icon_state = "sofacorner"

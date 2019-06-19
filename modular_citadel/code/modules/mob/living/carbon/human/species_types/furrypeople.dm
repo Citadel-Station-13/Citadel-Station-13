@@ -63,6 +63,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/avian
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -156,6 +157,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -226,10 +228,6 @@
 
 //EXOTIC//
 //These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
-
-//misc
-/mob/living/carbon/human/dummy
-	no_vore = TRUE
 
 /mob/living/carbon/human/vore
 	devourable = TRUE

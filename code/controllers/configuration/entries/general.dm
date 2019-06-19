@@ -127,6 +127,9 @@
 /datum/config_entry/flag/admin_legacy_system	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/mentor_legacy_system	//Defines whether the server uses the legacy mentor system with mentors.txt or the SQL system
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/protect_legacy_admins	//Stops any admins loaded by the legacy system from having their rank edited by the permissions panel
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -146,6 +149,8 @@
 /datum/config_entry/flag/guest_jobban
 
 /datum/config_entry/flag/usewhitelist
+
+/datum/config_entry/flag/mentors_mobname_only
 
 /datum/config_entry/flag/ban_legacy_system	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system.
 	protection = CONFIG_ENTRY_LOCKED

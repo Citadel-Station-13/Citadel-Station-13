@@ -145,8 +145,14 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
-	var/cooldown = 0
+	var/cooldown = 20
 	var/on = TRUE
+	var/last_hit = 0
+	var/stun_stam_cost_coeff = 1.25
+	var/hardstun_ds = 1
+	var/softstun_ds = 0
+	var/stam_dmg = 30
+	total_mass = 3.75
 
 /obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
@@ -177,7 +183,7 @@
 		if(!iscyborg(target))
 			return
 	else
-		if(cooldown <= world.time)
+		if(last_hit + cooldown < world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
@@ -185,7 +191,7 @@
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Knockdown(60)
+			target.Knockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
 			log_combat(user, target, "stunned", src)
 			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
@@ -194,7 +200,7 @@
 				target.LAssailant = null
 			else
 				target.LAssailant = user
-			cooldown = world.time + 40
+			last_hit = world.time
 			user.adjustStaminaLossBuffered(getweight())//CIT CHANGE - makes swinging batons cost stamina
 
 /obj/item/melee/classic_baton/telescopic

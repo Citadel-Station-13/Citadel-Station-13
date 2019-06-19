@@ -11,12 +11,18 @@
 /obj/item/storage/firstaid
 	name = "first-aid kit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
+	icon = 'icons/obj/firstaid.dmi'
 	icon_state = "firstaid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
 	var/empty = FALSE
+
+/obj/item/storage/firstaid/Initialize(mapload)
+	. = ..()
+	icon_state = pick("[initial(icon_state)]","[initial(icon_state)]2","[initial(icon_state)]3","[initial(icon_state)]4")
+
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid"
@@ -55,16 +61,12 @@
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
-	icon_state = "ointment"
+	icon_state = "burn"
 	item_state = "firstaid-ointment"
 
 /obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!</span>")
 	return FIRELOSS
-
-/obj/item/storage/firstaid/fire/Initialize(mapload)
-	. = ..()
-	icon_state = pick("ointment","firefirstaid")
 
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
@@ -79,16 +81,12 @@
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
-	icon_state = "antitoxin"
+	icon_state = "toxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return TOXLOSS
-
-/obj/item/storage/firstaid/toxin/Initialize(mapload)
-	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
 
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
@@ -102,7 +100,7 @@
 /obj/item/storage/firstaid/radbgone
 	name = "radiation treatment kit"
 	desc = "Used to treat minor toxic blood content and major radiation poisoning."
-	icon_state = "antitoxin"
+	icon_state = "rad"
 	item_state = "firstaid-toxin"
 
 /obj/item/storage/firstaid/radbgone/suicide_act(mob/living/carbon/user)
@@ -127,7 +125,7 @@
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
-	icon_state = "o2"
+	icon_state = "oxy"
 	item_state = "firstaid-o2"
 
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
@@ -165,7 +163,7 @@
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
-	icon_state = "bezerk"
+	icon_state = "tactical"
 
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
@@ -182,6 +180,130 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
+
+//hijacking the minature first aids for hypospray boxes. <3
+/obj/item/storage/hypospraykit
+	name = "hypospray kit"
+	desc = "It's a kit containing a hypospray and specific treatment chemical-filled vials."
+	icon = 'icons/obj/firstaid.dmi'
+	icon_state = "firstaid-mini"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	throw_speed = 3
+	throw_range = 7
+	var/empty = FALSE
+	item_state = "firstaid"
+
+/obj/item/storage/hypospraykit/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 12
+	STR.can_hold = typecacheof(list(
+	/obj/item/hypospray/mkii,
+	/obj/item/reagent_containers/glass/bottle/vial))
+
+/obj/item/storage/hypospraykit/regular
+	icon_state = "firstaid-mini"
+	desc = "A hypospray kit with general use vials."
+
+/obj/item/storage/hypospraykit/regular/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/tricord(src)
+
+/obj/item/storage/hypospraykit/fire
+	name = "burn treatment hypospray kit"
+	desc = "A specialized hypospray kit for burn treatments. Apply with sass."
+	icon_state = "burn-mini"
+	item_state = "firstaid-ointment"
+
+/obj/item/storage/hypospraykit/fire/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/burn(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/kelotane(src)
+
+/obj/item/storage/hypospraykit/toxin
+	name = "toxin treatment hypospray kit"
+	icon_state = "toxin-mini"
+	item_state = "firstaid-toxin"
+
+/obj/item/storage/hypospraykit/toxin/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/toxin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/antitoxin(src)
+
+/obj/item/storage/hypospraykit/o2
+	name = "oxygen deprivation hypospray kit"
+	icon_state = "oxy-mini"
+	item_state = "firstaid-o2"
+
+/obj/item/storage/hypospraykit/o2/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/oxygen(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
+
+/obj/item/storage/hypospraykit/brute
+	name = "brute trauma hypospray kit"
+	icon_state = "brute-mini"
+	item_state = "firstaid-brute"
+
+/obj/item/storage/hypospraykit/brute/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/brute(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/bicaridine(src)
+
+/obj/item/storage/hypospraykit/tactical
+	name = "combat hypospray kit"
+	desc = "A hypospray kit best suited for combat situations."
+	icon_state = "tactical-mini"
+
+/obj/item/storage/hypospraykit/tactical/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/defibrillator/compact/combat/loaded(src)
+	new /obj/item/hypospray/mkii/CMO/combat(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/combat(src)
+
+/obj/item/storage/hypospraykit/cmo
+	name = "deluxe hypospray kit"
+	desc = "A kit containing a Deluxe hypospray and Vials."
+	icon_state = "tactical-mini"
+
+/obj/item/storage/hypospraykit/cmo/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(
+	/obj/item/hypospray/mkii,
+	/obj/item/reagent_containers/glass/bottle/vial))
+
+/obj/item/storage/hypospraykit/cmo/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii/CMO(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/tricord(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/charcoal(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/salglu(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/synthflesh(src)
+
+/obj/item/storage/box/vials
+	name = "box of hypovials"
+
+/obj/item/storage/box/vials/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/bottle/vial/small( src )
 
 /*
  * Pill Bottles

@@ -11,6 +11,7 @@
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
 	weapon_weight = WEAPON_MEDIUM
+	recoil = 1
 
 /obj/item/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()

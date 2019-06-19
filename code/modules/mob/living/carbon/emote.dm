@@ -97,3 +97,12 @@
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+
+/datum/emote/sound/carbon/snap
+	key = "snap"
+	key_third_person = "snaps"
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/effects/snap01.ogg'
+	mob_type_allowed_typecache = list(/mob/living/carbon/)

@@ -678,6 +678,9 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
+	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+	if(mood)
+		mood.add_event("hugbox", /datum/mood_event/hugbox)
 
 /////clown box & honkbot assembly
 /obj/item/storage/box/clown

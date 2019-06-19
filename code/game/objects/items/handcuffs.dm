@@ -365,3 +365,8 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
+
+/obj/item/restraints/handcuffs/fake/kinky
+	name = "kinky handcuffs"
+	desc = "Fake handcuffs meant for erotic roleplay."
+	icon_state = "handcuffgag"

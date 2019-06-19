@@ -33,6 +33,10 @@
 	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
 
+/obj/item/reagent_containers/food/snacks/carpmeat/aquatic
+	name = "fillet"
+	desc = "A fillet of one of the local water dwelling species."
+
 /obj/item/reagent_containers/food/snacks/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."

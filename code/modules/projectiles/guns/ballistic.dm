@@ -2,6 +2,7 @@
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	name = "projectile gun"
 	icon_state = "pistol"
+	recoil = 0.25
 	w_class = WEIGHT_CLASS_NORMAL
 	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info

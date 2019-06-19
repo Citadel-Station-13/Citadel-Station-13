@@ -148,9 +148,9 @@
 			if(10)
 				src.add_overlay("pai-null")
 			if(11)
-				src.add_overlay(mutable_appearance('modular_citadel/icons/obj/aicards.dmi', "pai-exclamation")) // CITADEL EDIT
+				src.add_overlay("pai-exclamation")
 			if(12)
-				src.add_overlay(mutable_appearance('modular_citadel/icons/obj/aicards.dmi', "pai-question")) // CITADEL EDIT
+				src.add_overlay("pai-question")
 
 /obj/item/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

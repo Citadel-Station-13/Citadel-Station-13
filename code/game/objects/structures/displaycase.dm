@@ -328,6 +328,12 @@
 		else
 			..()
 
+/obj/structure/displaycase/clown
+	desc = "In the event of clown, honk glass."
+	alert = TRUE
+	start_showpiece_type = /obj/item/bikehorn
+	req_access = list(ACCESS_CENT_GENERAL)
+
 /obj/item/key/displaycase
 	name = "display case key"
 	desc = "The key to the curator's display cases."

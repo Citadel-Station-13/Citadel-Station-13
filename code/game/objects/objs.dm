@@ -251,3 +251,22 @@
 		current_skin = choice
 		icon_state = unique_reskin[choice]
 		to_chat(M, "[src] is now skinned as '[choice].'")
+
+/obj/proc/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
+	if(!M || !M.client || duration <= 0)
+		return
+	var/client/C = M.client
+	if (C.prefs.screenshake==0)
+		return
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/clientscreenshake = (C.prefs.screenshake * 0.01)
+	var/max = (strength*clientscreenshake) * world.icon_size
+	var/min = -((strength*clientscreenshake) * world.icon_size)
+
+	for(var/i in 0 to duration-1)
+		if (i == 0)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+		else
+			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+	animate(pixel_x=oldx, pixel_y=oldy, time=1)

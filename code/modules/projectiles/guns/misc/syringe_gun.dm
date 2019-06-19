@@ -12,6 +12,7 @@
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
 	var/max_syringes = 1
+	recoil = 0.1
 
 /obj/item/gun/syringe/Initialize()
 	. = ..()

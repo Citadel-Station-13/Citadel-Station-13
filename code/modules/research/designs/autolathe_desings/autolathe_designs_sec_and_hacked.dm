@@ -184,3 +184,11 @@
 	materials = list(MAT_METAL = 5500)
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
+
+/datum/design/electropack/shockcollar
+	name = "Shockcollar"
+	id = "shockcollar"
+	build_type = AUTOLATHE
+	build_path = /obj/item/electropack/shockcollar
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	category = list("hacked", "Misc")

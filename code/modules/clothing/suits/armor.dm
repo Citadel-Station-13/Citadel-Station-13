@@ -59,6 +59,13 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/cloak
+	name = "armored trenchcloak"
+	desc = "A trenchcoat enchanced with a special lightweight kevlar. This one appears to be designed to be draped over one's shoulders rather than worn normally.."
+	icon_state = "hostrench"
+	item_state = "hostrench"
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."

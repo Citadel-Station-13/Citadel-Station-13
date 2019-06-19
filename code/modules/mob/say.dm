@@ -100,3 +100,9 @@
 	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(copytext(message, 2, 3))
 		return GLOB.department_radio_keys[key_symbol]
+
+/mob/say_mod(input, message_mode)
+	var/customsayverb = findtext(input, "*")
+	if(customsayverb)
+		return lowertext(copytext(input, 1, customsayverb))
+	. = ..()

@@ -614,6 +614,8 @@
 	force_on = 20 //force when active
 	throwforce = 20
 	throwforce_on = 20
+	total_mass = 2.75
+	total_mass_on = 5
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'

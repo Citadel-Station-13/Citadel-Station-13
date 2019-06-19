@@ -514,7 +514,7 @@
 		/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical,
 		/obj/item/robot_module/medihound,
-		/obj/item/robot_module/borgi) 
+		/obj/item/robot_module/borgi)
 
 /obj/item/borg/upgrade/advhealth/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -664,3 +664,34 @@
 	desc = "Allows you to to turn a cyborg into a clown, honk."
 	icon_state = "cyborg_upgrade3"
 	new_module = /obj/item/robot_module/clown
+
+// Citadel's Vtech Controller
+/obj/effect/proc_holder/silicon/cyborg/vtecControl
+	name = "vTec Control"
+	desc = "Allows finer-grained control of the vTec speed boost."
+	action_icon = 'icons/mob/actions.dmi'
+	action_icon_state = "Chevron_State_0"
+
+	var/currentState = 0
+	var/maxReduction = 2
+
+
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
+	var/mob/living/silicon/robot/self = usr
+
+	currentState = (currentState + 1) % 3
+
+	if(usr)
+		switch(currentState)
+			if (0)
+				self.speed = maxReduction
+			if (1)
+				self.speed -= maxReduction*0.5
+			if (2)
+				self.speed -= maxReduction*1.25
+
+	action.button_icon_state = "Chevron_State_[currentState]"
+	action.UpdateButtonIcon()
+
+	return
+

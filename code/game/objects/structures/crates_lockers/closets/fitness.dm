@@ -5,6 +5,9 @@
 
 /obj/structure/closet/athletic_mixed/PopulateContents()
 	..()
+	new /obj/item/clothing/under/polychromic/shortpants(src)
+	new /obj/item/clothing/under/polychromic/shortpants(src)
+	new /obj/item/clothing/under/polychromic/shortpants(src)
 	new /obj/item/clothing/under/shorts/purple(src)
 	new /obj/item/clothing/under/shorts/grey(src)
 	new /obj/item/clothing/under/shorts/black(src)

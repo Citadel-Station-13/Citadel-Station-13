@@ -29,6 +29,25 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/on_creation(mob/living/new_owner, set_duration, updating_canmove, override_duration, override_stam)
+	if(iscarbon(new_owner) && (isnum(set_duration) || isnum(override_duration)))
+		if(istype(new_owner.buckled, /obj/vehicle/ridden))
+			var/obj/buckl = new_owner.buckled
+			buckl.unbuckle_mob(new_owner)
+		new_owner.resting = TRUE
+		new_owner.adjustStaminaLoss(isnull(override_stam)? set_duration*0.25 : override_stam)
+		if(isnull(override_duration) && (set_duration > 80))
+			set_duration = set_duration*0.01
+			return ..()
+		else if(!isnull(override_duration))
+			set_duration = override_duration
+			return ..()
+		else if(updating_canmove)
+			new_owner.update_canmove()
+		qdel(src)
+	else
+		. = ..()
+
 /datum/status_effect/incapacitating/knockdown/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds

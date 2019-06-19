@@ -2,6 +2,7 @@
 	sharpness = IS_SHARP
 	var/active = FALSE
 	var/force_on = 30 //force when active
+	var/total_mass_on //Total mass in ounces when transformed. Primarily for balance purposes. Don't think about it too hard.
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
@@ -85,3 +86,12 @@
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)
+
+/obj/item/melee/transforming/getweight()
+	if(total_mass && total_mass_on)
+		if(active)
+			return max(total_mass_on,MIN_MELEE_STAMCOST)
+		else
+			return max(total_mass,MIN_MELEE_STAMCOST)
+	else
+		return initial(w_class)*1.25

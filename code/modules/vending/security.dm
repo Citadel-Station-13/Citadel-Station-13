@@ -14,8 +14,10 @@
 				    /obj/item/flashlight/seclite = 4,
 				    /obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
-		              /obj/item/storage/fancy/donut_box = 2)
-	premium = list(/obj/item/coin/antagtoken = 1)
+					/obj/item/storage/fancy/donut_box = 2,
+					/obj/item/ssword_kit = 1)
+	premium = list(/obj/item/coin/antagtoken = 1,
+					/obj/item/ssword_kit = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
