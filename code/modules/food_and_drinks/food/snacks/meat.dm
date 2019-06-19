@@ -133,14 +133,14 @@
 	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
-	icon_state = "ipcmeat"
+	icon_state = "IPCmeat"
 	desc = "Gross robot meat."
 	filling_color = "#000000"
 	tastes = list("metal" = 1)
 	foodtype = RAW | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
-	icon_state = "insectmeat"
+	icon_state = "mothmeat"
 	desc = "Hopefully no one will bug you to eat it."
 	filling_color = "#BF896B"
 	tastes = list("insects" = 1)

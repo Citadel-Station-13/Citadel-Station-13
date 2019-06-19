@@ -626,8 +626,6 @@
 /obj/item/clothing/suit/flakjack
 	name = "flak jacket"
 	desc = "A dilapidated jacket made of a supposedly bullet-proof material (Hint: It isn't.). Smells faintly of napalm."
-	icon = 'modular_citadel/icons/obj/clothing/space_nam.dmi'
-	alternate_worn_icon = 'modular_citadel/icons/mob/clothing/space_nam.dmi'
 	icon_state = "flakjack"
 	item_state = "redtag"
 	blood_overlay_type = "armor"

@@ -25,6 +25,15 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/rank/captain/femformal
+	name ="captain's female formal outfit"
+	desc = ""
+	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
+	icon_state = "lewdcap"
+	item_state = "lewdcap"
+	item_color = "lewdcap"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."

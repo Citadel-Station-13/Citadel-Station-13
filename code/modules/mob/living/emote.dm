@@ -296,7 +296,7 @@
 			if(user.gender == FEMALE)
 				sound = pick('sound/voice/scream/scream_f1.ogg', 'sound/voice/scream/scream_f2.ogg')
 			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth) || is_species(user, /datum/species/ipc))
-				sound = 'sound/voice/scream/cream_silicon.ogg'
+				sound = 'sound/voice/scream/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
 				sound = 'sound/voice/scream/scream_lizard.ogg'
 			if(is_species(user, /datum/species/skeleton))

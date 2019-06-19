@@ -14,7 +14,12 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
+	has_sensor = TRUE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
+
+/obj/item/clothing/under/syndicate/tacticool/cosmetic
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"

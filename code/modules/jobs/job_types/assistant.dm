@@ -14,6 +14,7 @@ Assistant
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
 	antag_rep = 7
+	dresscodecompliant = FALSE
 
 
 /datum/job/assistant/get_access()

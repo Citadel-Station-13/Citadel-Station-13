@@ -19,17 +19,17 @@
 		/obj/item/clothing/under/soviet = 20,
 		/obj/item/clothing/head/ushanka = 20,
 		/obj/item/clothing/shoes/jackboots = 20,
-		/obj/item/clothing/head/squatter_hat = 20,
+		///obj/item/clothing/head/squatter_hat = 20,
 		/obj/item/clothing/under/squatter_outfit = 20,
 		/obj/item/clothing/under/russobluecamooutfit = 20,
-		/obj/item/clothing/head/russobluecamohat = 20
+		///obj/item/clothing/head/russobluecamohat = 20
 		)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool = 4,
 		/obj/item/clothing/mask/balaclava = 4,
-		/obj/item/clothing/suit/russofurcoat = 4,
-		/obj/item/clothing/head/russofurhat = 4,
-		/obj/item/clothing/suit/space/hardsuit/soviet = 3,
+		///obj/item/clothing/suit/russofurcoat = 4,
+		///obj/item/clothing/head/russofurhat = 4,
+		///obj/item/clothing/suit/space/hardsuit/soviet = 3,
 		/obj/item/gun/energy/laser/LaserAK = 4
 		)
 	premium = list()

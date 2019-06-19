@@ -13,7 +13,7 @@ Chief Medical Officer
 	supervisors = "the captain"
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
-	minimal_player_age = 7
+	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_MEDICAL
@@ -93,6 +93,8 @@ Medical Doctor
 
 	chameleon_extras = /obj/item/gun/syringe
 
+	backpack_contents = list(/obj/item/storage/hypospraykit/regular)
+
 /*
 Chemist
 */
@@ -129,6 +131,9 @@ Chemist
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
+
+	backpack_contents = list(/obj/item/storage/hypospraykit/regular)
+
 
 /*
 Geneticist

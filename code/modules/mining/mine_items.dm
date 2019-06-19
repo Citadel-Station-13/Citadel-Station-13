@@ -72,6 +72,7 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = 1
+	req_access = list(ACCESS_MINING)
 	var/global/list/dumb_rev_heads = list()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

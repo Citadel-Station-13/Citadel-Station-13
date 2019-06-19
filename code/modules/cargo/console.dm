@@ -3,6 +3,7 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
+	req_access = list(ACCESS_CARGO)
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/safety_warning = "For safety reasons, the automated supply shuttle \
@@ -18,6 +19,7 @@
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
 	requestonly = TRUE
+	req_access = list()
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
@@ -38,6 +40,7 @@
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+	req_access = list()
 	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
 	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
@@ -109,7 +112,11 @@
 	return data
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
 		return
 	if(action != "add" && requestonly)
 		return

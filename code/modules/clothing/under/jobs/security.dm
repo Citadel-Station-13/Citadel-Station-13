@@ -35,7 +35,6 @@
 	item_state = "r_suit"
 	item_color = "secskirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE //you know now that i think of it if you adjust the skirt and the sprite disappears isn't that just like flashing everyone
 
 
 /obj/item/clothing/under/rank/warden
@@ -109,6 +108,13 @@
 	item_state = "bl_suit"
 	item_color = "hosalt"
 
+/obj/item/clothing/under/rank/head_of_security/skirt
+	name = "head of security's skirt"
+	desc = "A security skirt decorated for those few with the dedication to achieve the position of Head of Security."
+	icon_state = "hosskirt"
+	item_state = "gy_suit"
+	item_color = "hosskirt"
+	body_parts_covered = CHEST|GROIN|ARMS
 /*
  * Navy uniforms
  */

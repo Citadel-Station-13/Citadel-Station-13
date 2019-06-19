@@ -54,6 +54,9 @@
 	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
 
+	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit but placed into the player's backpack.
+	var/dresscodecompliant = TRUE
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)

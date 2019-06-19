@@ -63,32 +63,32 @@
 /datum/gear/trekcap
 	name = "Federation Officer's Cap (White)"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/caphat/formal/fedcover
+	path = /obj/item/clothing/head/trek
 	restricted_roles = list("Captain","Head of Personnel")
 
 /datum/gear/trekcapcap
 	name = "Federation Officer's Cap (Black)"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/caphat/formal/fedcover/black
+	path = /obj/item/clothing/head/trek/black
 	restricted_roles = list("Captain","Head of Personnel")
 
 /datum/gear/trekcapmedisci
 	name = "Federation Officer's Cap (Blue)"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/caphat/formal/fedcover/medsci
+	path = /obj/item/clothing/head/trek/medsci
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekcapeng
 	name = "Federation Officer's Cap (Yellow)"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/caphat/formal/fedcover/eng
+	path = /obj/item/clothing/head/trek/eng
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
 /datum/gear/trekcapsec
 	name = "Federation Officer's Cap (Red)"
 	category = SLOT_HEAD
-	path = /obj/item/clothing/head/caphat/formal/fedcover/sec
+	path = /obj/item/clothing/head/trek/sec
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")

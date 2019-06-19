@@ -148,7 +148,7 @@
 /datum/gear/turtleneck
 	name = "Tactitool Turtleneck"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/syndicate/cosmetic
+	path = /obj/item/clothing/under/syndicate/tacticool/cosmetic
 
 /datum/gear/creamsweater
 	name = "Cream Commando Sweater"
@@ -203,21 +203,21 @@
 /datum/gear/trekcmdtos
 	name = "TOS uniform, cmd"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/command
+	path = /obj/item/clothing/under/trek/command
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster")
 
 /datum/gear/trekmedscitos
 	name = "TOS uniform, med/sci"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/medsci
+	path = /obj/item/clothing/under/trek/medsci
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengtos
 	name = "TOS uniform, ops/sec"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/engsec
+	path = /obj/item/clothing/under/trek/engsec
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -225,21 +225,21 @@
 /datum/gear/trekcmdtng
 	name = "TNG uniform, cmd"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/command/next
+	path = /obj/item/clothing/under/trek/command/next
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster")
 
 /datum/gear/trekmedscitng
 	name = "TNG uniform, med/sci"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/medsci/next
+	path = /obj/item/clothing/under/trek/medsci/next
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengtng
 	name = "TNG uniform, ops/sec"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/engsec/next
+	path = /obj/item/clothing/under/trek/engsec/next
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -247,21 +247,21 @@
 /datum/gear/trekcmdvoy
 	name = "VOY uniform, cmd"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/command/voy
+	path = /obj/item/clothing/under/trek/command/voy
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster")
 
 /datum/gear/trekmedscivoy
 	name = "VOY uniform, med/sci"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/medsci/voy
+	path = /obj/item/clothing/under/trek/medsci/voy
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengvoy
 	name = "VOY uniform, ops/sec"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/engsec/voy
+	path = /obj/item/clothing/under/trek/engsec/voy
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -269,21 +269,21 @@
 /datum/gear/trekcmdds9
 	name = "DS9 uniform, cmd"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/command/ds9
+	path = /obj/item/clothing/under/trek/command/ds9
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster")
 
 /datum/gear/trekmedscids9
 	name = "DS9 uniform, med/sci"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/medsci/ds9
+	path = /obj/item/clothing/under/trek/medsci/ds9
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengds9
 	name = "DS9 uniform, ops/sec"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/engsec/ds9
+	path = /obj/item/clothing/under/trek/engsec/ds9
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -291,21 +291,21 @@
 /datum/gear/trekcmdent
 	name = "ENT uniform, cmd"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/command/ent
+	path = /obj/item/clothing/under/trek/command/ent
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security","Captain","Head of Personnel","Chief Engineer","Research Director","Chief Medical Officer","Quartermaster")
 
 /datum/gear/trekmedscient
 	name = "ENT uniform, med/sci"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/medsci/ent
+	path = /obj/item/clothing/under/trek/medsci/ent
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/trekengent
 	name = "ENT uniform, ops/sec"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/trek/engsec/ent
+	path = /obj/item/clothing/under/trek/engsec/ent
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 

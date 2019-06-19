@@ -2158,6 +2158,12 @@
 	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
 	crate_name = "goat crate"
 
+/datum/supply_pack/organic/critter/kiwi
+	name = "Space kiwi Crate"
+	cost = 2000
+	contains = list( /mob/living/simple_animal/kiwi)
+	crate_name = "space kiwi crate"
+
 /datum/supply_pack/critter/monkey
 	name = "Monkey Cube Crate"
 	desc = "Stop monkeying around! Contains seven monkey cubes. Just add water!"
@@ -2574,6 +2580,12 @@
 	crate_name = "captain pen"
 	crate_type = /obj/structure/closet/crate/secure/weapon //It is a combat pen
 
+/datum/supply_pack/misc/jukebox
+	name = "Jukebox"
+	cost = 35000
+	contains = list(/obj/machinery/jukebox)
+	crate_name = "Jukebox"
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2675,6 +2687,13 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie
 					)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/kinkmate
+	name = "Kinkmate construction kit"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
+	crate_name = "Kinkmate construction kit"
 
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
