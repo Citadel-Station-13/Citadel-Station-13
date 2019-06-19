@@ -404,3 +404,10 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/commjacket
 	ckeywhitelist = list("sadisticbatter")
+
+/datum/gear/ntcloak
+	name = "NanoTrasen Bedsheet"
+	category = SLOT_NECK
+	path = /obj/item/bedsheet/nanotrasen
+	ckeywhitelist = list("tikibomb")
+	
