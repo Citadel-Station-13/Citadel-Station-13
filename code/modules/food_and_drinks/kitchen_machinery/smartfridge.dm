@@ -111,7 +111,7 @@
 
 		if(loaded)
 			user.visible_message("[user] loads \the [src] with \the [O].", \
-							 "<span class='notice'>You [contents.len >= max_n_of_items ? "fill", "load"] \the [src] with \the [O].</span>")
+							 "<span class='notice'>You [contents.len >= max_n_of_items ? "fill" : "load"] \the [src] with \the [O].</span>")
 			if(O.contents.len > 0)
 				to_chat(user, "<span class='warning'>Some items are refused.</span>")
 			return TRUE
