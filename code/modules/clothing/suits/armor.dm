@@ -58,7 +58,6 @@
 	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
-	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Coat" = "hostrench", "Cloak" = "trenchcloak")
 	
 /obj/item/clothing/suit/armor/vest/warden
