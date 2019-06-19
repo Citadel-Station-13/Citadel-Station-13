@@ -69,6 +69,8 @@
 
 /obj/item/ammo_casing/syringegun/dart/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
+	if(!SG.syringes.len)
+		return
 	var/obj/item/gun/syringe/SG = loc
 	var/obj/item/reagent_containers/syringe/dart/S = SG.syringes[1]
 	if(S.emptrig == TRUE)
