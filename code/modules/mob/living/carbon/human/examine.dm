@@ -294,7 +294,11 @@
 			if(mood.sanity <= SANITY_DISTURBED)
 				msg += "[t_He] seem[p_s()] distressed.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empath", /datum/mood_event/sad_empath, src)
+<<<<<<< HEAD
 			if(mood.shown_mood >= 6) //So roundstart people aren't all "happy" and that antags don't show their true happiness.
+=======
+			if(mood.sanity >= SANITY_GREAT) //So roundstart people aren't all "happy"
+>>>>>>> 47f44e8f18c028cba807c5f79daa03c13284d80f
 				msg += "[t_He] seem[p_s()] to have had something nice happen to them recently.\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "empathH", /datum/mood_event/happy_empath, src)
 			if (HAS_TRAIT(src, TRAIT_BLIND))
