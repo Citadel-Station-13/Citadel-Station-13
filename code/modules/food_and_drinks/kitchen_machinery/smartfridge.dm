@@ -61,6 +61,9 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 		cut_overlays()
 		if(panel_open)
@@ -78,9 +81,6 @@
 	if(default_deconstruction_crowbar(O))
 		updateUsrDialog()
 		return
-
-	if(user.a_intent == INTENT_HARM)
-		return ..()
 
 	if(stat)
 		updateUsrDialog()
@@ -110,12 +110,8 @@
 		updateUsrDialog()
 
 		if(loaded)
-			if(contents.len >= max_n_of_items)
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-								 "<span class='notice'>You fill \the [src] with \the [O].</span>")
-			else
-				user.visible_message("[user] loads \the [src] with \the [O].", \
-									 "<span class='notice'>You load \the [src] with \the [O].</span>")
+			user.visible_message("[user] loads \the [src] with \the [O].", \
+							 "<span class='notice'>You [contents.len >= max_n_of_items ? "fill", "load"] \the [src] with \the [O].</span>")
 			if(O.contents.len > 0)
 				to_chat(user, "<span class='warning'>Some items are refused.</span>")
 			return TRUE
