@@ -597,7 +597,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/snap.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/snap.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/snap2
@@ -611,7 +611,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/snap2.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/snap2.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/snap3
@@ -625,7 +625,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/snap3.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/snap3.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/awoo
@@ -639,7 +639,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/awoo.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/awoo.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/nya
@@ -653,7 +653,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/nya.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/nya.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/weh
@@ -667,7 +667,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/weh.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/weh.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/peep
@@ -681,7 +681,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/peep.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/peep.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/dab
@@ -716,7 +716,7 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/mothsqueak.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/mothsqueak.ogg', 50, 1, -1)
 	. = ..()
 
 /datum/emote/living/merp
@@ -730,5 +730,5 @@
 		if(user.nextsoundemote >= world.time)
 			return
 		user.nextsoundemote = world.time + 7
-		playsound(user, 'modular_citadel/sound/voice/merp.ogg', 50, 1, -1)
+		playsound(user, 'sound/voice/merp.ogg', 50, 1, -1)
 	. = ..()

@@ -513,7 +513,7 @@
 /obj/item/toy/plush/lizardplushie/durgit
 	icon_state = "durgit"
 	item_state = "durgit"
-	squeak_override = list('modular_citadel/sound/voice/weh.ogg' = 1) //Durgit's the origin of the sound
+	squeak_override = list('sound/voice/weh.ogg' = 1) //Durgit's the origin of the sound
 
 /obj/item/toy/plush/lizardplushie/rio
 	icon_state = "rio"
@@ -566,7 +566,7 @@
 /obj/item/toy/plush/lizardplushie/almaz
 	icon_state = "almaz"
 	item_state = "almaz"
-	squeak_override = list('modular_citadel/sound/voice/raptor_purr.ogg' = 1)
+	squeak_override = list('sound/voice/raptor_purr.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -574,7 +574,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	squeak_override = list('modular_citadel/sound/voice/hiss.ogg' = 1)
+	squeak_override = list('sound/voice/hiss.ogg' = 1)
 
 /obj/item/toy/plush/snakeplushie/sasha
 	icon_state = "sasha"
@@ -632,7 +632,7 @@
 	desc = "An adorable stuffed toy that resembles some kind of insect"
 	icon_state = "cydia"
 	item_state = "cydia"
-	squeak_override = list('modular_citadel/sound/voice/mothsqueak.ogg' = 1)
+	squeak_override = list('sound/voice/mothsqueak.ogg' = 1)
 
 /obj/item/toy/plush/mothplushie/bumble
 	icon_state = "bumble"
@@ -704,7 +704,7 @@
 	icon_state = "sylas"
 	item_state = "sylas"
 	attack_verb = list("peeped", "beeped", "poofed")
-	squeak_override = list('modular_citadel/sound/voice/peep.ogg' = 1)
+	squeak_override = list('sound/voice/peep.ogg' = 1)
 
 /obj/item/toy/plush/bird/esela
 	icon_state = "esela"
@@ -731,7 +731,7 @@
 	desc = "An adorable stuffed plushie that resembles a sagaru."
 	icon_state = "faux"
 	item_state = "faux"
-	squeak_override = list('modular_citadel/sound/voice/merp.ogg' = 1)
+	squeak_override = list('sound/voice/merp.ogg' = 1)
 
 /obj/item/toy/plush/sergal/gladwyn
 	icon_state = "gladwyn"
@@ -841,8 +841,8 @@
 	item_state = "katlin"
 	attack_verb = list("barked", "boofed", "borked")
 	squeak_override = list(
-	'modular_citadel/sound/voice/bark1.ogg' = 1,
-	'modular_citadel/sound/voice/bark2.ogg' = 1
+	'sound/voice/bark1.ogg' = 1,
+	'sound/voice/bark2.ogg' = 1
 	)
 
 /obj/item/toy/plush/mammal/dog/frost
@@ -887,7 +887,7 @@
 	icon_state = "bailey"
 	item_state = "bailey"
 	attack_verb = list("headbutt", "scritched", "bit")
-	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
+	squeak_override = list('sound/voice/nya.ogg' = 1)
 
 /obj/item/toy/plush/catgirl/mikeel
 	desc = "An adorable stuffed toy of some tauric cat person."
@@ -917,7 +917,7 @@
     icon_state = "fermis"
     item_state = "fermis"
     attack_verb = list("cuddled", "petpatted", "wigglepurred")
-    squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
+    squeak_override = list('sound/voice/merowr.ogg' = 1)
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()

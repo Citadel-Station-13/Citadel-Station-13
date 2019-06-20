@@ -75,9 +75,9 @@
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(cell.charge < shot.e_cost)
-		playsound(M, 'modular_citadel/sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps made from highly processed knife honing noises
+		playsound(M, 'sound/weapons/laserPumpEmpty.ogg', 100, 1)	//Ends with three beeps made from highly processed knife honing noises
 	else
-		playsound(M, 'modular_citadel/sound/weapons/laserPump.ogg', 100, 1)		//Ends with high pitched charging noise
+		playsound(M, 'sound/weapons/laserPump.ogg', 100, 1)		//Ends with high pitched charging noise
 	recharge_newshot() //try to charge a new shot
 	update_icon()
 	return 1
@@ -152,14 +152,14 @@
 	e_cost = 150
 	pellets = 4
 	variance = 30
-	fire_sound = 'modular_citadel/sound/weapons/ParticleBlaster.ogg'
+	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 	select_name  = "disable"
 
 /obj/item/ammo_casing/energy/disabler/slug
 	projectile_type = /obj/item/projectile/beam/disabler/slug
 	select_name  = "overdrive"
 	e_cost = 200
-	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
+	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
 	projectile_type = /obj/item/projectile/beam/weak
@@ -167,12 +167,12 @@
 	select_name = "kill"
 	pellets = 3
 	variance = 15
-	fire_sound = 'modular_citadel/sound/weapons/ParticleBlaster.ogg'
+	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
 /obj/item/ammo_casing/energy/electrode/pump
 	projectile_type = /obj/item/projectile/energy/electrode/pump
 	select_name = "stun"
-	fire_sound = 'modular_citadel/sound/weapons/LaserSlugv3.ogg'
+	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 	e_cost = 300
 	pellets = 3
 	variance = 20

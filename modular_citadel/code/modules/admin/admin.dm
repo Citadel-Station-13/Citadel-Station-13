@@ -15,7 +15,7 @@
 		return
 
 	to_chat(M, "<span class='warning bold reallybig'>Man up, and deal with it.</span><br><span class='warning big'>Move on.</span>")
-	M.playsound_local(M, 'modular_citadel/sound/misc/manup.ogg', 50, FALSE, pressure_affected = FALSE)
+	M.playsound_local(M, 'sound/misc/manup.ogg', 50, FALSE, pressure_affected = FALSE)
 
 	log_admin("Man up: [key_name(usr)] told [key_name(M)] to man up")
 	var/message = "<span class='adminnotice'>[key_name_admin(usr)] told [key_name_admin(M)] to man up.</span>"
@@ -32,7 +32,7 @@
 
 	to_chat(world, "<span class='warning bold reallybig'>Man up, and deal with it.</span><br><span class='warning big'>Move on.</span>")
 	for(var/mob/M in GLOB.player_list)
-		M.playsound_local(M, 'modular_citadel/sound/misc/manup.ogg', 50, FALSE, pressure_affected = FALSE)
+		M.playsound_local(M, 'sound/misc/manup.ogg', 50, FALSE, pressure_affected = FALSE)
 
 	log_admin("Man up global: [key_name(usr)] told everybody to man up")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] told everybody to man up.</span>")
