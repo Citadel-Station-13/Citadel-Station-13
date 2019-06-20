@@ -1,6 +1,6 @@
 /mob/living/simple_animal/pet/redpanda
 	name = "Red panda"
-	desc = "It's a red panda."
+	desc = "Wah't a dork."
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "red_panda"
 	icon_living = "red_panda"
