@@ -532,16 +532,17 @@
 			if (reactedVol < targetVol)
 				reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 			else//Volume is used up
-				fermiEnd(multipler)
+				fermiEnd(multiplier)
 				return
 		else//pH is out of range
-			fermiEnd(multipler)
+			fermiEnd(multiplier)
 			return
 	else//Temperature is too low, or reaction has stopped.
-		fermiEnd(multipler)
+		fermiEnd(multiplier)
 		return
 
-/datum/reagents/proc/fermiEnd(multipler)
+/datum/reagents/proc/fermiEnd(multiplier)
+	var/datum/chemical_reaction/fermi/C = fermiReactID
 	STOP_PROCESSING(SSprocessing, src)
 	fermiIsReacting = FALSE
 	reactedVol = 0
