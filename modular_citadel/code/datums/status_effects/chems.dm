@@ -607,7 +607,7 @@
 
 /datum/status_effect/chem/enthrall/proc/owner_resist()
 	var/mob/living/carbon/M = owner
-	to_chat(owner, "<span class='notice'><i>You attempt to fight against against [(owner.lewd?"[enthrallGender]":"[master]")]'s influence!'</i></span>")
+	to_chat(owner, "<span class='notice'><i>You attempt to fight against [master]'s influence!</i></span>")
 
 	//Able to resist checks
 	if (status == "Sleeper" || phase == 0)
@@ -657,7 +657,6 @@
 	if(prob(5))
 		M.emote("me",1,"squints, shaking their head for a moment.")//shows that you're trying to resist sometimes
 		deltaResist *= 1.5
-	to_chat(owner, "You attempt to shake the mental cobwebs from your mind!")
 	//nymphomania
 	if (M.canbearoused && HAS_TRAIT(M, TRAIT_NYMPHO))//I'm okay with this being removed.
 		deltaResist*= 0.5-(((2/200)*M.arousalloss)/1)//more aroused you are, the weaker resistance you can give, the less you are, the more you gain. (+/- 0.5)
