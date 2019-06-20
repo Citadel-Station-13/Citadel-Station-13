@@ -4,6 +4,9 @@
 	false_report_weight = 5
 	required_players = 0
 
+	event_frequency_lower_override = 2.5 MINUTES
+	event_frequency_upper_override = 8.5 MINUTES
+
 	announce_span = "notice"
 	announce_text = "Just have fun and enjoy the game!"
 

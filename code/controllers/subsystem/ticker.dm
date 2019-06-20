@@ -259,6 +259,12 @@ SUBSYSTEM_DEF(ticker)
 	else
 		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
+	if(mode.event_frequency_lower_override)
+		SSevents.frequency_lower = mode.event_frequency_lower_override
+	if(mode.event_frequency_upper_override)
+		SSevents.frequency_upper = mode.event_frequency_lower_override
+	SSevents.reschedule()
+
 	CHECK_TICK
 	/*if(hide_mode) CIT CHANGE - comments this section out to obfuscate gamemodes. Quit self-antagging during extended just because "hurrrrr no antaggs!!!!!! i giv sec thing 2 do!!!!!!!!!" it's bullshit and everyone hates it
 		var/list/modes = new

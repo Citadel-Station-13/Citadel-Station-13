@@ -42,6 +42,9 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/event_frequency_lower_override
+	var/event_frequency_upper_override
+
 	var/list/datum/station_goal/station_goals = list()
 
 	var/allow_persistence_save = TRUE
