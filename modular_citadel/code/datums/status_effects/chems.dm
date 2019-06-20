@@ -267,8 +267,9 @@
 	switch(phase)
 		if(-1)//fully removed
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
-			owner.remove_status_effect(src)
 			log_game("FERMICHEM: MKULTRA: Status REMOVED from [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")
+			owner.remove_status_effect(src)
+			return
 		if(0)// sleeper agent
 			if (cooldown > 0)
 				cooldown -= 1
@@ -362,7 +363,7 @@
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
-			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
+			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing4")
 		if(9 to INFINITY)//If they're not nearby, enable withdrawl effects.
 			withdrawal = TRUE
 
@@ -531,8 +532,8 @@
 	redirect_component = null
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
-	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independant oncemore!'</i></span>")
-	//UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL) //Should still make custom commands work after freedom, need to check.
+	to_chat(owner, "<span class='big redtext'><i>You're now free of [master]'s influence, and fully independent!'</i></span>")
+	UnregisterSignal(owner, COMSIG_GLOB_LIVING_SAY_SPECIAL)
 
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
