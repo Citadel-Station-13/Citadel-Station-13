@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver
+	item = /obj/item/gun/ballistic/revolver/syndie
 	cost = 13
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -1318,6 +1318,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	item = /obj/item/card/emag
 	cost = 6
 
+/datum/uplink_item/device_tools/emagrecharge
+	name = "Electromagnet Charging Device"
+	desc = "A small device intended for recharging Cryptographic Sequencers. Using it will add five extra charges to the Cryptographic Sequencer."
+	item = /obj/item/emagrecharge
+	cost = 2
+
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. Don't try to give this to us to complete your objective, we know better!"
@@ -1764,12 +1770,6 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
-/datum/uplink_item/badass/durasteel_toolbox
-	name = "Durasteel Toolbox"
-	desc = "A very high impact toolbox. Excels at destroying stationary structures."
-	item = /obj/item/storage/toolbox/durasteel
-	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
-
 /datum/uplink_item/badass/costumes
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 4
@@ -1784,6 +1784,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
+
+/datum/uplink_item/badass/durasteel_toolbox
+	name = "Durasteel Toolbox"
+	desc = "A very high impact toolbox. Excels at destroying stationary structures."
+	item = /obj/item/storage/toolbox/durasteel
+	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
@@ -1800,6 +1806,12 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
+
+/datum/uplink_item/badass/phantomthief
+	name = "Syndicate Mask"
+	desc = "A cheap plastic mask fitted with an adrenaline autoinjector, which can be used by simply tensing your muscles"
+	item = /obj/item/clothing/glasses/phantomthief/syndicate
+	cost = 2
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
