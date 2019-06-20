@@ -28,7 +28,6 @@
 /obj/item/clothing/under/rank/captain/femformal
 	name ="captain's female formal outfit"
 	desc = ""
-	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
 	icon_state = "lewdcap"
 	item_state = "lewdcap"
 	item_color = "lewdcap"

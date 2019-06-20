@@ -348,3 +348,9 @@
 		if(prob(3))
 			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
 	return trim(M)
+
+/obj/item/clothing/head/hunter //TODO: Add worn icon state.
+	name = "hunter"
+	desc = "A basic hat for hunting things."
+	icon_state = "hunter"
+	item_state = "hunter_worn"

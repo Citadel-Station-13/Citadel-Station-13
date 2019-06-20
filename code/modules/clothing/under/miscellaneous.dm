@@ -801,7 +801,6 @@
 /obj/item/clothing/under/corporateuniform
 	name = "corporate uniform"
 	desc = "A comfortable, tight fitting jumpsuit made of premium materials. Not space-proof."
-	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
 	icon_state = "tssuit"
 	item_state = "r_suit"
 	can_adjust = FALSE
