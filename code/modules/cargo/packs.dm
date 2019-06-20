@@ -755,12 +755,21 @@
 
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
-	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and maks!"
+	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
 	cost = 2500
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
+
+/datum/supply_pack/engineering/atmoshardsuit
+	name = "Atmospherics Hardsuit"
+	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank."
+	cost = 3000
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
+	crate_name = "atmospherics hardsuit"
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
