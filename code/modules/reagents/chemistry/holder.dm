@@ -519,7 +519,7 @@
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.001))
 	if (multiplier == 0)
-		fermiEnd(multipler)
+		fermiEnd(multiplier)
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
