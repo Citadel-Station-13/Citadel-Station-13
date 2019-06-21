@@ -7,9 +7,9 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/obj/structure/firelock_frame/heavy,
 /obj/structure/grille,
 /obj/structure/window/shuttle,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -44,6 +44,7 @@
 "ai" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -172,12 +173,17 @@
 	dir = 4
 	},
 /obj/item/shard,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
 	})
 "ay" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/obj/item/ammo_casing/c46x30mm/rubber,
+/obj/item/ammo_casing/c46x30mm/rubber,
+/mob/living/simple_animal/hostile/nanotrasen/ranged/smg{
+	health = 0
+	},
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -186,12 +192,15 @@
 /obj/item/gps{
 	gpstag = "Distress Signal"
 	},
+/obj/item/ammo_casing/c46x30mm/rubber,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
 	})
 "aA" = (
 /obj/structure/barricade/sandbags,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -208,7 +217,10 @@
 	name = "\improper Vault Ship"
 	})
 "aD" = (
-/mob/living/simple_animal/hostile/nanotrasen,
+/obj/item/gun/ballistic/shotgun/toy/unrestricted,
+/mob/living/simple_animal/hostile/nanotrasen{
+	health = 0
+	},
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -258,6 +270,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/floor,
 /obj/item/screwdriver/power,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /mob/living/simple_animal/hostile/pirate/ranged/space{
 	desc = "The captain, she harder to kill then most...";
 	gender = "female";
@@ -273,6 +286,7 @@
 	})
 "aJ" = (
 /obj/structure/door_assembly/door_assembly_vault,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -349,6 +363,7 @@
 	})
 "aU" = (
 /obj/machinery/vending/cigarette/beach,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -366,6 +381,7 @@
 "aX" = (
 /obj/machinery/firealarm,
 /obj/structure/table/reinforced,
+/obj/item/ammo_casing/c46x30mm/rubber,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -483,6 +499,37 @@
 /area/ruin/powered{
 	name = "\improper Vault Ship"
 	})
+"cp" = (
+/obj/structure/barricade/sandbags,
+/obj/item/ammo_casing/c46x30mm/rubber,
+/obj/item/ammo_casing/c46x30mm/rubber,
+/obj/item/ammo_casing/c46x30mm/rubber,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"iV" = (
+/obj/item/ammo_casing/c45,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"vd" = (
+/obj/machinery/light/floor,
+/obj/item/ammo_casing/c45,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"xR" = (
+/obj/item/ammo_casing/c45,
+/mob/living/simple_animal/hostile/nanotrasen/ranged{
+	health = 0
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
 
 (1,1,1) = {"
 aa
@@ -523,7 +570,7 @@ ad
 aj
 az
 aI
-aA
+cp
 aY
 ad
 aa
@@ -587,8 +634,8 @@ aa
 aa
 ad
 ae
-aC
-aL
+xR
+vd
 aC
 ae
 ad
@@ -598,9 +645,9 @@ aa
 aa
 ae
 am
-aC
+iV
 aM
-aC
+iV
 aZ
 ae
 aa
@@ -609,8 +656,8 @@ aa
 aa
 ae
 an
-aD
-aL
+iV
+vd
 aC
 ba
 ae
