@@ -281,3 +281,9 @@
 	suffix = "cloning_facility.dmm"
 	name = "Ancient Cloning Lab"
 	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
+
+/datum/map_template/ruin/space/armored_raid
+	id = "armored_raid"
+	suffix = "armored_raid.dmm"
+	name = "NT Safe Trasnport."
+	description = "A high vaule ship was raided by space pirates. The ship was containing safes full of different things, from toys to space cash."

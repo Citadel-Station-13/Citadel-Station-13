@@ -1,0 +1,746 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/mob/living/simple_animal/hostile/carp/megacarp,
+/turf/template_noop,
+/area/template_noop)
+"ac" = (
+/obj/structure/grille/indestructable,
+/obj/structure/window/fulltile,
+/obj/structure/firelock_frame/heavy,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ad" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ae" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"af" = (
+/obj/machinery/firealarm,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ag" = (
+/obj/structure/emergency_shield,
+/obj/structure/fluff/broken_flooring,
+/obj/item/stack/rods,
+/turf/open/space,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ah" = (
+/turf/open/space,
+/area/template_noop)
+"ai" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aj" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ak" = (
+/obj/machinery/vending/wallmed,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"al" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered)
+"am" = (
+/obj/structure/safe,
+/obj/item/ssword_kit,
+/obj/item/ssword_kit,
+/obj/item/ssword_kit,
+/obj/item/ssword_kit,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"an" = (
+/obj/structure/safe,
+/obj/item/integrated_circuit_printer/upgraded,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ao" = (
+/obj/structure/safe,
+/obj/item/aiModule/toyAI,
+/obj/item/aiModule/toyAI,
+/obj/item/aiModule/toyAI,
+/obj/item/aiModule/toyAI,
+/obj/item/aiModule/toyAI,
+/obj/item/aiModule/toyAI,
+/obj/item/storage/belt/military/snack,
+/obj/item/storage/belt/military/snack,
+/obj/item/storage/belt/military/snack,
+/obj/item/storage/belt/military/snack,
+/obj/item/coin/antagtoken,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ap" = (
+/obj/structure/safe,
+/obj/item/assembly/igniter/cold,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aq" = (
+/obj/structure/safe,
+/obj/item/autosurgeon/gloweyes,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ar" = (
+/obj/structure/safe,
+/obj/item/storage/belt/champion/wrestling,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"as" = (
+/obj/item/stack/rods,
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	desc = "Does what she wants cause a pirate is free.";
+	gender = "female";
+	name = "Isa Dante Gunner"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"at" = (
+/obj/structure/barricade/security,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"au" = (
+/obj/structure/emergency_shield,
+/obj/structure/fluff/broken_flooring,
+/turf/open/space,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"av" = (
+/obj/structure/fluff/broken_flooring{
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aw" = (
+/obj/item/stack/rods,
+/turf/open/space,
+/area/template_noop)
+"ax" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/obj/item/shard,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ay" = (
+/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"az" = (
+/obj/item/gps{
+	gpstag = "Distress Signal"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aA" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aB" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aC" = (
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aD" = (
+/mob/living/simple_animal/hostile/nanotrasen,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aE" = (
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	name = "Marwood Bonney Gunner"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aF" = (
+/obj/item/stack/rods,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aG" = (
+/obj/item/shard,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aH" = (
+/obj/structure/safe/floor,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/gun/ballistic/automatic/speargun,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/coin/diamond,
+/obj/item/coin/diamond,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aI" = (
+/obj/structure/barricade/sandbags,
+/obj/item/clothing/neck/stethoscope,
+/obj/machinery/light/floor,
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	desc = "The captain, she harder to kill then most...";
+	gender = "female";
+	maxHealth = 400;
+	melee_damage_lower = 15;
+	melee_damage_upper = 30;
+	name = "Florida 'The Shadow' Benson Captain";
+	obj_damage = 90
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aJ" = (
+/obj/structure/door_assembly/door_assembly_vault,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aK" = (
+/mob/living/simple_animal/parrot,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aL" = (
+/obj/machinery/light/floor,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aM" = (
+/obj/structure/safe,
+/obj/item/weldingtool/hugetank,
+/obj/item/weldingtool/hugetank,
+/obj/item/weldingtool/hugetank,
+/obj/item/weldingtool/hugetank,
+/obj/item/weldingtool/hugetank,
+/obj/item/weldingtool/experimental,
+/obj/item/clothing/glasses/welding/superior,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aN" = (
+/obj/structure/displaycase{
+	start_showpiece_type = /obj/item/bikehorn/bluespacehonker;
+	start_showpieces = newlist(/obj/item/bikehorn/bluespacehonker)
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aO" = (
+/obj/machinery/blackbox_recorder,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aP" = (
+/obj/structure/displaycase{
+	start_showpiece_type = /obj/item/implanter/sad_trombone;
+	start_showpieces = newlist(/obj/item/implanter/sad_trombone)
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aQ" = (
+/mob/living/simple_animal/hostile/pirate/melee/space{
+	name = "Studs Cromwell Swashbuckler"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aR" = (
+/obj/item/shard,
+/obj/machinery/light/floor,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aS" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/space,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aU" = (
+/obj/machinery/vending/cigarette/beach,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aV" = (
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	desc = "Does what she wants cause a pirate is free.";
+	gender = "female";
+	name = "Evie Griffin Gunner"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aW" = (
+/obj/structure/emergency_shield,
+/obj/structure/fluff/broken_flooring,
+/obj/structure/fluff/broken_flooring,
+/turf/open/space,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aX" = (
+/obj/machinery/firealarm,
+/obj/structure/table/reinforced,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aY" = (
+/obj/machinery/vending/snack/random,
+/obj/machinery/light,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"aZ" = (
+/obj/structure/safe,
+/obj/item/surveillance_upgrade,
+/obj/item/clothing/glasses/night/prescription,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"ba" = (
+/obj/structure/safe,
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/stack/sheet/plasteel/fifty,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/plasmaglass/fifty,
+/obj/machinery/light,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"bb" = (
+/obj/structure/safe,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"bc" = (
+/obj/structure/safe,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"bd" = (
+/obj/structure/safe,
+/obj/item/paint/anycolor,
+/obj/item/paint/paint_remover,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"be" = (
+/obj/structure/safe,
+/obj/item/stack/sheet/mineral/diamond,
+/obj/item/stack/sheet/mineral/diamond,
+/obj/item/stack/sheet/mineral/diamond,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/item/stack/sheet/mineral/titanium,
+/obj/machinery/light,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"bf" = (
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	name = "Woodrow Stevenson Gunner"
+	},
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+"bg" = (
+/obj/item/shard,
+/obj/machinery/light,
+/turf/open/floor/oldshuttle,
+/area/ruin/powered{
+	name = "\improper Vault Ship"
+	})
+
+(1,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+ac
+ac
+ax
+ai
+ax
+ac
+ac
+aa
+"}
+(3,1,1) = {"
+aa
+ac
+ai
+ay
+aH
+ay
+aX
+ac
+aa
+"}
+(4,1,1) = {"
+aa
+ad
+aj
+az
+aI
+aA
+aY
+ad
+aa
+"}
+(5,1,1) = {"
+aa
+ae
+ak
+aA
+aA
+aU
+ae
+ae
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+al
+ae
+aJ
+ae
+ad
+aa
+aa
+"}
+(7,1,1) = {"
+ab
+aa
+aa
+af
+aK
+ae
+ab
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aB
+aL
+ae
+aa
+ab
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+ad
+ae
+aJ
+ae
+ad
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+ad
+ae
+aC
+aL
+aC
+ae
+ad
+aa
+"}
+(11,1,1) = {"
+aa
+ae
+am
+aC
+aM
+aC
+aZ
+ae
+aa
+"}
+(12,1,1) = {"
+aa
+ae
+an
+aD
+aL
+aC
+ba
+ae
+aa
+"}
+(13,1,1) = {"
+aa
+ae
+ao
+aC
+aN
+aV
+bb
+ae
+aa
+"}
+(14,1,1) = {"
+aa
+ad
+ap
+aE
+aO
+aC
+bc
+ad
+aa
+"}
+(15,1,1) = {"
+ab
+ae
+aq
+aF
+aO
+aC
+bd
+ae
+ab
+"}
+(16,1,1) = {"
+aa
+ae
+ar
+aC
+aP
+aF
+be
+ae
+aa
+"}
+(17,1,1) = {"
+aa
+af
+as
+at
+aL
+aD
+aF
+af
+aa
+"}
+(18,1,1) = {"
+aa
+ae
+at
+aG
+aQ
+aG
+bf
+ae
+aa
+"}
+(19,1,1) = {"
+aa
+ag
+au
+au
+aR
+at
+bg
+ae
+aa
+"}
+(20,1,1) = {"
+aa
+ah
+av
+ag
+au
+aW
+au
+ad
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aw
+ah
+aS
+aS
+av
+aw
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
