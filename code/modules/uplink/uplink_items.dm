@@ -1612,10 +1612,10 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	cost = 20
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/durasteel_toolbox
-	name = "Durasteel Toolbox"
+/datum/uplink_item/badass/plastitanium_toolbox
+	name = "Plastitanium Toolbox"
 	desc = "A very high impact toolbox. Excels at destroying stationary structures."
-	item = /obj/item/storage/toolbox/durasteel
+	item = /obj/item/storage/toolbox/plastitanium
 	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/costumes
