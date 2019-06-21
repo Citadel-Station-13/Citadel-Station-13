@@ -90,12 +90,12 @@
 	})
 "ao" = (
 /obj/structure/safe,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
