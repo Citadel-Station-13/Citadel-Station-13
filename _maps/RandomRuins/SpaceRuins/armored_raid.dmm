@@ -89,6 +89,15 @@
 	})
 "ao" = (
 /obj/structure/safe,
+<<<<<<< HEAD
+=======
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+>>>>>>> 028cd056049e2ca2ea48b668efd46b81874a730d
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
