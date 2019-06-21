@@ -7,9 +7,9 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/obj/structure/grille/indestructable,
-/obj/structure/window/fulltile,
 /obj/structure/firelock_frame/heavy,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -32,9 +32,8 @@
 	name = "\improper Vault Ship"
 	})
 "ag" = (
-/obj/structure/emergency_shield,
 /obj/structure/fluff/broken_flooring,
-/obj/item/stack/rods,
+/obj/structure/emergency_shield,
 /turf/open/space,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -90,17 +89,23 @@
 	})
 "ao" = (
 /obj/structure/safe,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
-/obj/item/aiModule/toyAI,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
 /obj/item/storage/belt/military/snack,
 /obj/item/coin/antagtoken,
+/obj/item/toy/crayon/mime,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/AI,
+/obj/item/toy/talking/codex_gigas,
+/obj/item/toy/xmas_cracker,
+/obj/item/toy/xmas_cracker,
+/obj/item/toy/xmas_cracker,
+/obj/item/toy/xmas_cracker,
+/obj/item/book/granter/action/drink_fling,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -108,6 +113,8 @@
 "ap" = (
 /obj/structure/safe,
 /obj/item/assembly/igniter/cold,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/disk/cargo/bluespace_pod,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -121,10 +128,10 @@
 	})
 "ar" = (
 /obj/structure/safe,
-/obj/item/storage/belt/champion/wrestling,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/katana,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
@@ -143,13 +150,6 @@
 "at" = (
 /obj/structure/barricade/security,
 /turf/open/floor/oldshuttle,
-/area/ruin/powered{
-	name = "\improper Vault Ship"
-	})
-"au" = (
-/obj/structure/emergency_shield,
-/obj/structure/fluff/broken_flooring,
-/turf/open/space,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
 	})
@@ -360,14 +360,6 @@
 	name = "Evie Griffin Gunner"
 	},
 /turf/open/floor/oldshuttle,
-/area/ruin/powered{
-	name = "\improper Vault Ship"
-	})
-"aW" = (
-/obj/structure/emergency_shield,
-/obj/structure/fluff/broken_flooring,
-/obj/structure/fluff/broken_flooring,
-/turf/open/space,
 /area/ruin/powered{
 	name = "\improper Vault Ship"
 	})
@@ -693,8 +685,8 @@ aa
 (19,1,1) = {"
 aa
 ag
-au
-au
+ag
+ag
 aR
 at
 bg
@@ -706,9 +698,9 @@ aa
 ah
 av
 ag
-au
-aW
-au
+ag
+ag
+ag
 ad
 aa
 "}
