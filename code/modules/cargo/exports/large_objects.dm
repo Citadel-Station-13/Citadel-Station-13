@@ -146,6 +146,7 @@
 	worth += gases[/datum/gas/miasma]*15
 	worth += gases[/datum/gas/tritium]*7
 	worth += gases[/datum/gas/pluoxium]*6
+	worth += gases[/datum/gas/nitryl]*30
 	return worth
 
 /datum/export/large/odysseus
