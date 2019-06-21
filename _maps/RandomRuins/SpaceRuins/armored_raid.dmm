@@ -257,6 +257,7 @@
 /obj/structure/barricade/sandbags,
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/light/floor,
+/obj/item/screwdriver/power,
 /mob/living/simple_animal/hostile/pirate/ranged/space{
 	desc = "The captain, she harder to kill then most...";
 	gender = "female";
