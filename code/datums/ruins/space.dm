@@ -287,3 +287,21 @@
 	suffix = "armored_raid.dmm"
 	name = "NT Safe Trasnport."
 	description = "A high vaule ship was raided by space pirates. The ship was containing safes full of different things, from toys to space cash."
+
+/datum/map_template/ruin/space/augmentation
+	id = "augmentationfacility"
+	suffix = "augmentationfacility.dmm"
+	name = "Roboticst Augmentation Facility"
+	description = "A mysterious lab in the depths of space containing robotics supplies and a one use autosurgeon."
+
+/datum/map_template/ruin/space/harambe
+	id = "bigape"
+	suffix = "bigape.dmm"
+	name = "Big Ape"
+	description = "A gorilla? Out here? But why."
+
+/datum/map_template/ruin/space/space_arcade
+	id = "arcade"
+	suffix = "arcade.dmm"
+	name = "Space Arcade"
+	description = "A lonely arcade in the depths of space."

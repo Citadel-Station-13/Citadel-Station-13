@@ -722,7 +722,7 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
+	name = "box of buckshot (Lethal)"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
@@ -749,7 +749,7 @@
 
 /obj/item/storage/box/lethalslugs/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/projectile/bullet/shotgun_slug(src)
+		new /obj/item/ammo_casing/shotgun(src)
 
 /obj/item/storage/box/stunslug
 	name = "box of stun slugs"
@@ -759,7 +759,7 @@
 
 /obj/item/storage/box/stunslug/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/projectile/bullet/shotgun_stunslug(src)
+		new /obj/item/ammo_casing/shotgun/stunslug(src)
 
 /obj/item/storage/box/techsslug
 	name = "box of tech shotgun shells"
@@ -773,11 +773,11 @@
 
 /obj/item/storage/box/fireshot
 	name = "box of incendiary ammo"
-	desc = "A box full of tech incendiary ammo."
+	desc = "A box full of incendiary ammo."
 	icon_state = "fireshot_box"
 	illustration = null
 
-/obj/item/storage/box/techsslug/PopulateContents()
+/obj/item/storage/box/fireshot/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/incendiary(src)
 

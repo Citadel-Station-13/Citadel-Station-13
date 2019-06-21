@@ -742,6 +742,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cc" = (
+/obj/item/book/granter/action/origami,
 /mob/living/simple_animal/hostile/boss/paper_wizard,
 /turf/open/indestructible/paper,
 /area/ruin/powered)

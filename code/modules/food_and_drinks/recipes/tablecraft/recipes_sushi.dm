@@ -7,7 +7,7 @@
 		/datum/reagent/consumable/rice = 10
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushi_rice
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/sea_weed
 	name = "Sea Weed Sheet"
@@ -17,7 +17,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/kudzupod = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sea_weed
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/tuna_can
 	name = "Can of Tuna"
@@ -27,7 +27,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/tuna
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 //////////////////////////Sushi/////////////////////////////////
 
@@ -39,7 +39,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sashimi
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/riceball
 	name = "Onigiri"
@@ -49,7 +49,7 @@
 		/obj/item/reagent_containers/food/snacks/sushi_rice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/riceball
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/sushie_egg
 	name = "Tobiko"
@@ -59,7 +59,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/tobiko
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/sushie_basic
 	name = "Funa Hosomaki"
@@ -70,7 +70,7 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 3,
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_basic
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/sushie_adv
 	name = "Funa Nigiri"
@@ -80,7 +80,7 @@
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_adv
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
 
 /datum/crafting_recipe/food/sushie_pro
 	name = "Well made Funa Nigiri"
@@ -91,4 +91,35 @@
 		/obj/item/reagent_containers/food/snacks/sea_weed = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sushie_pro
-	subcategory = CAT_SUSHI
+	subcategory = CAT_FISH
+
+///////////////Gaijin junk/////////////////////////////////////
+
+/datum/crafting_recipe/food/fishfingers
+	name = "Fish fingers"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fishfingers
+	subcategory = CAT_FISH
+
+/datum/crafting_recipe/food/cubancarp
+	name = "Cuban carp"
+	reqs = list(
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/cubancarp
+	subcategory = CAT_FISH
+
+/datum/crafting_recipe/food/fishandchips
+	name = "Fish and chips"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/reagent_containers/food/snacks/carpmeat = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/fishandchips
+	subcategory = CAT_FISH

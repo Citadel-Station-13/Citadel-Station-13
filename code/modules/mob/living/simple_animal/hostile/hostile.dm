@@ -348,7 +348,7 @@
 	if(vore_active)
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.Adjacent(src) && L.devourable) // aggressive check to ensure vore attacks can be made
+			if(!client && L.Adjacent(src) && L.devourable) // aggressive check to ensure vore attacks can be made
 				if(prob(voracious_chance))
 					vore_attack(src,L,src)
 				else
