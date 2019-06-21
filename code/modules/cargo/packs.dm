@@ -764,12 +764,14 @@
 
 /datum/supply_pack/engineering/atmoshardsuit
 	name = "Atmospherics Hardsuit"
-	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank."
-	cost = 3000
+	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank. Ask the CE to open."
+	cost = 5000
+	access = ACCESS_CE
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
 	crate_name = "atmospherics hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
