@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
-	var/heal_amt = 10
+	var/heal_amt = 5
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
 
 	if(hurt_limbs.len)
@@ -138,8 +138,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(5, 60)
+			if(!istype(C.head, /obj/item/clothing/head))	
+				C.adjustBrainLoss(25, 150)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)
