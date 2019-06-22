@@ -522,7 +522,7 @@
 		cooldown = 0
 	if (tranceTime > 0) //custom trances only last 50 ticks.
 		tranceTime -= 1
-	else if (tranceTime <= 0) //remove trance after.
+	else if (!tranceTime == null) //remove trance after.
 		M.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
 		M.remove_status_effect(/datum/status_effect/trance)
 		tranceTime = null

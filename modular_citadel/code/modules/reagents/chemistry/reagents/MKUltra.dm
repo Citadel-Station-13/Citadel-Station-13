@@ -133,7 +133,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	name = "MKUltra"
 	id = "enthrall"
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#80000c" // rgb: , 0, 255
+	color = "#660015" // rgb: , 0, 255
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses"
 	overdose_threshold = 100 //If this is too easy to get 100u of this, then double it please.
 	DoNotSplit = TRUE
@@ -150,7 +150,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	name = "MKUltraTest"
 	id = "enthrallTest"
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of joy, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#c40020" // rgb: , 0, 255
 	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
 	creatorGender = "Mistress"

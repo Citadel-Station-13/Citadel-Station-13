@@ -617,13 +617,16 @@
 	name = "Velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
 	icon_state = "velvet_chords"
-	spans = list("velvet","croon")
+	actions_types = list(/datum/action/item_action/organ_action/velvet)
+	spans = list("velvet")
 
 /datum/action/item_action/organ_action/velvet
-	name = "Velvet speech"
+	name = "Velvet chords"
 	var/obj/item/organ/vocal_cords/velvet/cords = null
-	icon_icon = 'icons/mob/screen_alert.dmi'
-	button_icon_state = "in_love"
+	//icon_icon = 'icons/mob/screen_alert.dmi'
+	//button_icon_state = "velvet_chords"
+	//icon = 'icons/mob/screen_alert.dmi'
+	//icon_state = "in_love"
 
 /datum/action/item_action/organ_action/velvet/New()
 	..()
@@ -640,6 +643,9 @@
 	if(!command)
 		return
 	owner.say(".x[command]")
+
+/obj/item/organ/vocal_cords/velvet/can_speak_with()
+	return TRUE
 
 /obj/item/organ/vocal_cords/velvet/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
@@ -814,7 +820,7 @@
 			if(L == user)
 				continue
 			if (L.lewd)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</b></span>"), 5)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='love'>[E.enthrallGender] has praised me!!</span>"), 5)
 				if(HAS_TRAIT(L, TRAIT_NYMPHO))
 					L.adjustArousalLoss(2*power_multiplier)
 				if(HAS_TRAIT(L, TRAIT_MASO))
@@ -1070,11 +1076,12 @@
 			var/speaktrigger = ""
 			var/mob/living/carbon/C = V
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			if (E.phase > 2)
+			if (E.phase == 3)
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-				ADD_TRAIT(C, TRAIT_DEAF, "Triggers") //So you don't trigger yourself! Actually this will trigger yourself oops.
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
+				ADD_TRAIT(C, TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
+				//addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
+				C.say("[speaktrigger]")
 				REMOVE_TRAIT(C, TRAIT_DEAF, "Triggers")
 
 
@@ -1088,12 +1095,12 @@
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
 					return
 				else
-					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					if (E.mental_capacity >= 10)
 						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
-						var/custom_words_words_list = list("speak", "echo", "shock", "cum", "kneel", "strip", "trance")
+						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance")
 						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
 						//var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						trigger2 = lowertext(trigger2)
@@ -1124,7 +1131,7 @@
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
 					return
 				else
-					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
@@ -1146,12 +1153,13 @@
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
 					return
 				else
-					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					user.SetStun(1000)//So you can't run away!
 					H.SetStun(1000)
 					if (E.mental_capacity >= 200)
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))
+							to_chat(user, "<span class='warning'>You can't give your pet an objective to do nothing!</b></span>")
 							return
 						//Pets don't understand harm
 						objective = replacetext(lowertext(objective), "kill", "hug")
@@ -1272,8 +1280,6 @@
 					E.status = "charge"
 					E.cooldown += 10
 
-	else
-		return
 	if(message_admins)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	if(debug == TRUE)
