@@ -528,6 +528,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
+/datum/asset/spritesheet/minesweeper
+	name = "minesweeper"
+
+/datum/asset/spritesheet/minesweeper/register()
+	InsertAll("minesweeper", 'icons/misc/minesweeper_tiles.dmi')
+
 /datum/asset/spritesheet/goonchat
 	name = "chat"
 
