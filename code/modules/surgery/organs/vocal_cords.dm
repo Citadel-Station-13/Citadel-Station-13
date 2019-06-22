@@ -617,9 +617,6 @@
 	name = "velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
 	icon_state = "in_love"
-	var/next_command = 0
-	var/cooldown_mod = 1
-	var/base_multiplier = 1
 
 /datum/action/item_action/organ_action/velvet/Trigger()
 	. = ..()
@@ -638,7 +635,7 @@
 ///////////FermiChem//////////////////
 //////////////////////////////////////
 //Removed span_list from input arguments. //mob/living/user
-/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE, debug = FALSE)
+/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = TRUE, message_admins = TRUE, debug = FALSE)
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
@@ -651,8 +648,8 @@
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L.has_status_effect(/datum/status_effect/chem/enthrall))//Check to see if they have the status
-				//if(L == user && !include_speaker) //Remove this if I decide to make OD apply to self.
-				//	continue
+				if(L == user && !include_speaker) //Remove this if I decide to make OD apply to self.
+					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -758,6 +755,7 @@
 	var/static/regex/statecustom_words = regex("state triggers|state your triggers")
 	var/static/regex/custom_words = regex("new trigger|listen to me")
 	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
+	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
@@ -1081,7 +1079,9 @@
 					H.SetStun(1000)
 					if (E.mental_capacity >= 10)
 						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
-						var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
+						var/custom_words_words_list = list("speak", "echo", "shock", "cum", "kneel", "strip", "trance")
+						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
+						//var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						trigger2 = lowertext(trigger2)
 						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
@@ -1100,6 +1100,28 @@
 					user.SetStun(0)
 					H.SetStun(0)
 
+	//CUSTOM ECHO
+	else if((findtext(message, custom_echo)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(E.phase == 3)
+				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
+					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
+					return
+				else
+					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
+					user.SetStun(1000)//Hands are handy, so you have to stay still
+					H.SetStun(1000)
+					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
+					var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love")
+					var/trigger2 = input(user, "Pick the style", "Style") in customSpan
+					trigger2 = lowertext(trigger2)
+					E.customEcho = trigger
+					E.customSpan = trigger2
+					user.SetStun(0)
+					H.SetStun(0)
+
 	//CUSTOM OBJECTIVE
 	else if((findtext(message, objective_words)))
 		for(var/V in listeners)
@@ -1113,7 +1135,7 @@
 					user.emote(user, 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					user.SetStun(1000)//So you can't run away!
 					H.SetStun(1000)
-					if (E.mental_capacity >= 250 || message == "objective")
+					if (E.mental_capacity >= 200)
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))
 							return
@@ -1128,7 +1150,6 @@
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.lewd?"Your [E.enthrallGender]":"[E.master]")] whispers you a new objective.</span>"), 5)
 						brainwash(H, objective)
 						E.mental_capacity -= 200
-					//else if (E.mental_capacity >= 150)
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
 					user.SetStun(0)
@@ -1197,7 +1218,7 @@
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
 				if(3 to INFINITY)//Tier 3 only
-					L.adjust_bodytemperature(-50 * power_multiplier)//This
+					L.adjust_bodytemperature(-50 * power_multiplier)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism slow down!</b></span>"), 5)
 
 
@@ -1241,7 +1262,8 @@
 		return
 	if(message_admins)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("FERMICHEM: [key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	if(debug == TRUE)
+		log_game("FERMICHEM: [key_name(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 
 	return

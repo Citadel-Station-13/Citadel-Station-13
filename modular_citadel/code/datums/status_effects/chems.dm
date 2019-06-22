@@ -212,6 +212,9 @@
 	var/DistApart = 1 //Distance between master and owner
 	var/tranceTime = 0 //how long trance effects apply on trance status
 
+	var/customEcho	//Custom looping text in owner
+	var/customSpan	//Custom spans for looping text
+
 /datum/status_effect/chem/enthrall/on_apply()
 	var/mob/living/carbon/M = owner
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in M.reagents.reagent_list
@@ -495,6 +498,13 @@
 
 			//Truth serum?
 			//adrenals?
+
+	//customEcho
+	if(customEcho)
+		if(prob(5))
+			if(!customSpan) //just in case!
+				customSpan = "notice"
+			to_chat(owner, "<span class='[customSpan]'><i>[customEcho].</i></span>")
 
 	//final tidying
 	resistanceTally  += deltaResist

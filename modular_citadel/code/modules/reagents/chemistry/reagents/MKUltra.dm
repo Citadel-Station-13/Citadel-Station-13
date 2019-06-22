@@ -150,7 +150,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	name = "MKUltraTest"
 	id = "enthrallTest"
 	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of joy, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
-	color = "#2C051A" // rgb: , 0, 255
+	color = "#c40020" // rgb: , 0, 255
 	data = list("creatorID" = "honkatonkbramblesnatch", "creatorGender" = "Mistress", "creatorName" = "Fermis Yakumo")
 	creatorID  = "honkatonkbramblesnatch"//ckey
 	creatorGender = "Mistress"
