@@ -227,7 +227,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			return
 		if(volume < 1)//You don't get to escape that easily
 			FallInLove(pick(GLOB.player_list), M)
-	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it does nothing.
+	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth.
+		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
+		Vc.spans = null
 		return
 	if(!M.client)
 		metabolization_rate = 0 //Stops powergamers from quitting to avoid affects. but prevents affects on players that don't exist for performance.
@@ -239,8 +241,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		return
 	else
 		E.enthrallTally += 1
-	if(prob(1))
-		M.adjustBrainLoss(1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
+	M.adjustBrainLoss(0.05)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I made it so the creator is set to gain the status for someone random.
@@ -282,7 +283,13 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	E.customTriggers = list()
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.1)//should be 15 in total
+	M.adjustBrainLoss(0.025)//should be ~40 in total
+	..()
+
+/datum/reagent/fermi/enthrall/on_mob_delete(mob/living/carbon/M)
+	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth.
+		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
+		Vc.spans = list("velvet")
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
@@ -348,3 +355,4 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	return
 
 //For addiction see chem.dm
+//For vocal commands see vocal_cords.dm

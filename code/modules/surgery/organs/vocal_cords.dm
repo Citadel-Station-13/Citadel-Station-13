@@ -1070,19 +1070,20 @@
 	//tier3
 
 	//STATE TRIGGERS
-	//Doesn't work, Maintaners, help.
 	else if((findtext(message, statecustom_words)))//doesn't work
 		for(var/V in listeners)
-			var/speaktrigger = ""
 			var/mob/living/carbon/C = V
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			if (E.phase == 3)
+				var/speaktrigger = ""
+				user.emote("me", 1, "whispers something quietly.")
+				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
+					to_chat(user, "<span class='warning'>You need to be next to your pet to hear them!</b></span>")
+					return
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-				ADD_TRAIT(C, TRAIT_DEAF, "Triggers") //So you don't trigger yourself!
-				//addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, /atom/movable/proc/say, "[speaktrigger]"), 5)
-				C.say("[speaktrigger]")
-				REMOVE_TRAIT(C, TRAIT_DEAF, "Triggers")
+				to_chat(user, "<b>C</b> whispers, <i>[speaktrigger] are my triggers.</i>")//So they don't trigger themselves!
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>You whisper your triggers to [(H.lewd?"Your [E.enthrallGender]":"[E.master]")].</span>"), 5)
 
 
 	//CUSTOM TRIGGERS
@@ -1099,14 +1100,14 @@
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					if (E.mental_capacity >= 10)
-						var/trigger = stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN)
+						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
 						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance")
 						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
 						//var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						trigger2 = lowertext(trigger2)
 						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
-								var/trigger3 = stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN)
+								var/trigger3 = html_decode(stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN))
 								E.customTriggers[trigger] = list(trigger2, trigger3)
 								message_admins("[H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
 							else
