@@ -617,6 +617,7 @@
 	name = "Velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
 	icon_state = "velvet_chords"
+	spans = list("velvet","croon")
 
 /datum/action/item_action/organ_action/velvet
 	name = "Velvet speech"
@@ -633,7 +634,7 @@
 
 /datum/action/item_action/organ_action/velvet/Trigger()
 	. = ..()
-	var/command = input(owner, "Speak with the Voice of God", "Command")
+	var/command = input(owner, "Speak in a sultry tone", "Command")
 	if(QDELETED(src) || QDELETED(owner))
 		return
 	if(!command)
@@ -1127,7 +1128,7 @@
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
 					var/trigger = stripped_input(user, "Enter the loop phrase", MAX_MESSAGE_LEN)
-					var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love")
+					var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
 					var/trigger2 = input(user, "Pick the style", "Style") in customSpan
 					trigger2 = lowertext(trigger2)
 					E.customEcho = trigger
