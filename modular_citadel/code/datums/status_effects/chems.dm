@@ -522,10 +522,11 @@
 		cooldown = 0
 	if (tranceTime > 0) //custom trances only last 50 ticks.
 		tranceTime -= 1
-	else if (!tranceTime == null) //remove trance after.
+	else if (tranceTime <= 0) //remove trance after.
 		M.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
 		M.remove_status_effect(/datum/status_effect/trance)
 		tranceTime = null
+		message_admins("test")
 	//..()
 
 //Remove all stuff
@@ -597,7 +598,7 @@
 				C.lay_down()
 
 			//strip (some) clothes
-			else if (lowertext(customTriggers[trigger]) == "strip")//This wasn't meant to just be a lewd thing oops, is this pref breaking?
+			else if (lowertext(customTriggers[trigger]) == "strip")//This wasn't meant to just be a lewd thing oops.
 				var/mob/living/carbon/human/o = owner
 				var/items = o.get_contents()
 				for(var/obj/item/W in items)

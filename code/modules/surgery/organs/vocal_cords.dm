@@ -614,9 +614,22 @@
 
 //Heavily modified voice of god code
 /obj/item/organ/vocal_cords/velvet
-	name = "velvet chords"
+	name = "Velvet chords"
 	desc = "The voice spoken from these just make you want to drift off, sleep and obey."
-	icon_state = "in_love"
+	icon_state = "velvet_chords"
+
+/datum/action/item_action/organ_action/velvet
+	name = "Velvet speech"
+	var/obj/item/organ/vocal_cords/velvet/cords = null
+	icon_icon = 'icons/mob/screen_alert.dmi'
+	button_icon_state = "in_love"
+
+/datum/action/item_action/organ_action/velvet/New()
+	..()
+	cords = target
+
+/datum/action/item_action/organ_action/velvet/IsAvailable()
+	return TRUE
 
 /datum/action/item_action/organ_action/velvet/Trigger()
 	. = ..()
