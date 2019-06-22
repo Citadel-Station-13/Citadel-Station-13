@@ -51,13 +51,15 @@
 //these become available once upgraded.
 	var/list/upgrade_reagents = list(
 		"oil",
-		"ammonia"
+		"ammonia",
+		"ash"
 	)
 
 	var/list/upgrade_reagents2 = list(
 		"acetone",
 		"phenol",
-		"diethylamine"
+		"diethylamine",
+		"saltpetre"
 	)
 
 	var/list/upgrade_reagents3 = list(
@@ -267,7 +269,7 @@
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
+					var/actual = min(max(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						if(!cell.use(actual / powerefficiency))
 							say("Not enough energy to complete operation!")
@@ -478,9 +480,16 @@
 		"tomatojuice",
 		"lemonjuice",
 		"menthol"
-	) //prevents the soda machine from obtaining chemical upgrades. .
-	upgrade_reagents = null
-	upgrade_reagents2 = null
+	)
+	upgrade_reagents = list(
+		"mushroomhallucinogen",
+		"nothing",
+		"cryoxadone"
+	)
+	upgrade_reagents2 = list(
+		"banana",
+		"berryjuice"
+	)
 	upgrade_reagents3 = null
 	emagged_reagents = list(
 		"thirteenloko",
@@ -533,18 +542,19 @@
 		"creme_de_cacao",
 		"triple_sec",
 		"sake"
-	)//prevents the booze machine from obtaining chemical upgrades.
-	upgrade_reagents = null
+	)
+	upgrade_reagents = list(
+		"ethanol",
+		"fernet"
+	)
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
-		"ethanol",
 		"iron",
 		"alexander",
 		"clownstears",
 		"minttoxin",
 		"atomicbomb",
-		"fernet",
 		"aphro",
 		"aphro+"
 	)
