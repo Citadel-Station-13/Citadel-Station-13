@@ -97,7 +97,7 @@
 /datum/chemical_reaction/pen_jelly
 	name = "Pentetic Jelly"
 	id = "pen_jelly"
-	results = list("pen_acid" = 2)
+	results = list("pen_jelly" = 2)
 	required_reagents = list("pen_acid" = 1, "slimejelly" = 1)
 
 /datum/chemical_reaction/sal_acid
