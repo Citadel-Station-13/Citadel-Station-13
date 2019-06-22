@@ -493,6 +493,23 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/pen_jelly
+	name = "Pentetic Jelly"
+	id = "pen_jelly"
+	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
+	reagent_state = LIQUID
+	color = "#E6FFF0"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/pen_jelly/on_mob_life(mob/living/carbon/M)
+	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
+	M.adjustToxLoss(-2*REM, 0, TRUE) //HEALS TOXINOVERS
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,2)
+	..()
+	. = 1
+
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"

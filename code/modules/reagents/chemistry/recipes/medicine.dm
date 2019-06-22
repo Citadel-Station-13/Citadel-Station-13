@@ -94,6 +94,12 @@
 	results = list("pen_acid" = 6)
 	required_reagents = list("welding_fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
 
+/datum/chemical_reaction/pen_jelly
+	name = "Pentetic Jelly"
+	id = "pen_jelly"
+	results = list("pen_acid" = 2)
+	required_reagents = list("pen_acid" = 1, "slimejelly" = 1)
+
 /datum/chemical_reaction/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
