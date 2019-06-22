@@ -20,6 +20,14 @@
 	build_path = /obj/item/crowbar
 	category = list("initial","Tools")
 
+/datum/design/crowbar
+	name = "Large Crowbar"
+	id = "large_crowbar"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/crowbar/large
+	category = list("initial","Tools")
+
 /datum/design/flashlight
 	name = "Flashlight"
 	id = "flashlight"
