@@ -1196,31 +1196,3 @@
 	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
 	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
 	new /obj/item/tank/internals/emergency_oxygen(src)
-
-/obj/item/reagent_containers/food/drinks/coffee/type2
-	name = "\improper Coffee, instant (type 2)"
-	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "condi_cornoil"
-
-/obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni
-	name = "\improper MRE pepperoni pizza slice"
-	desc = "A freeze dried, dehydrated slice of bread with tomato sauce, pepperoni and cheese."
-	icon_state = "meatpizzaslice"
-	filling_color = "#A52A2A"
-	tastes = list("cardboard" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT
-
-/obj/effect/spawner/lootdrop/mre
-	name = "random MRE"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "mre"
-
-/obj/effect/spawner/lootdrop/mre/Initialize()
-	for(var/A in subtypesof(/obj/item/storage/box/mre))
-		var/obj/item/storage/box/mre/M = A
-		var/our_chance = initial(M.spawner_chance)
-		if(our_chance)
-			loot += M
-			loot[M] = our_chance
-	return ..()
