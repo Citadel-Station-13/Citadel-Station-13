@@ -1219,7 +1219,8 @@
 /obj/effect/spawner/lootdrop/mre/Initialize()
 	for(var/A in subtypesof(/obj/item/storage/box/mre))
 		var/obj/item/storage/box/mre/M = A
-		if(M.spawner_chance)
+		var/our_chance = initial(M.spawner_chance)
+		if(our_chance)
 			loot += M
-			loot[M] = M.spawner_chance
+			loot[M] = our_chance
 	return ..()
