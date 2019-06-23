@@ -361,9 +361,9 @@
 			if(withdrawalTick > 0)
 				withdrawalTick -= 1
 			//calming effects
-			M.hallucination = max(0, M.hallucination - 1)
-			M.stuttering = max(0, M.stuttering - 1)
-			M.jitteriness = max(0, M.jitteriness - 1)
+			M.hallucination = max(0, M.hallucination - 5)
+			M.stuttering = max(0, M.stuttering - 5)
+			M.jitteriness = max(0, M.jitteriness - 5)
 			if(owner.getBrainLoss() >=60)
 				owner.adjustBrainLoss(-0.1)
 			if(withdrawal == TRUE)
@@ -564,19 +564,21 @@
 			cTriggered = TRUE
 			log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been triggered with [cached_trigger] from [speaker] saying: \"[message]\". (their master being [master] ckey: [enthrallID].)")
 
-			//Speak (Forces player to talk) works
+			//Speak (Forces player to talk)
 			if (lowertext(customTriggers[trigger][1]) == "speak")//trigger2
 				var/saytext = "Your mouth moves on it's own before you can even catch it."
 				if(HAS_TRAIT(C, TRAIT_NYMPHO))
 					saytext += " You find yourself fully believing in the validity of what you just said and don't think to question it."
-				to_chat(C, "<span class='notice'><i>[saytext]</i></span>")
-				(C.say(customTriggers[trigger][2]))//trigger3
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'><i>[saytext]</i></span>"), 5)
+				addtimer(CALLBACK(C, /atom/movable/proc/say, "[customTriggers[trigger][2]]"), 5)
+				//(C.say(customTriggers[trigger][2]))//trigger3
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been forced to say: \"[customTriggers[trigger][2]]\" from previous trigger.")
 
 
-			//Echo (repeats message!)
+			//Echo (repeats message!) allows customisation, but won't display var calls! Defaults to hypnophrase.
 			else if (lowertext(customTriggers[trigger][1]) == "echo")//trigger2
-				(to_chat(owner, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"))//trigger3
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"), 5)
+				//(to_chat(owner, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"))//trigger3
 
 			//Shocking truth!
 			else if (lowertext(customTriggers[trigger]) == "shock")

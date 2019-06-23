@@ -1234,7 +1234,7 @@
 					H.SetStun(1000)
 					if (E.mental_capacity >= 5)
 						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
-						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance")
+						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance", "Cancel")
 						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
 						//var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						trigger2 = lowertext(trigger2)

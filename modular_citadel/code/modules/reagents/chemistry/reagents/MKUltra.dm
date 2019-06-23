@@ -205,18 +205,28 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/enthrall/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(purity < 0.5)//DO NOT SPLIT INTO DIFFERENT CHEM: This relies on DoNotSplit - has to be done this way.
+		if(volume < 0.5)//You don't get to escape that easily
+			FallInLove(pick(GLOB.player_list), M)
+			M.reagents.remove_reagent(id, volume)
+
 		if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks it, they fall in love randomly. If someone else drinks it, the creator falls in love with them.
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))//Can't be enthralled when enthralled, so to speak.
 				return
 			var/list/seen = viewers(7, get_turf(M))
 			for(var/victim in seen)
-				if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (!M.client) || (M.stat == DEAD))
+				if(ishuman(victim))
+					var/mob/living/carbon/V = victim
+					if((V == M) || (!V.client) || (V.stat == DEAD))
+						seen = seen - victim
+				else
 					seen = seen - victim
-			if(!seen)
+
+			if(LAZYLEN(seen))
 				return
 			M.reagents.remove_reagent(id, volume)
 			FallInLove(M, pick(seen))
 			return
+
 		else // If someone else drinks it, the creator falls in love with them!
 			var/mob/living/carbon/C = get_mob_by_key(creatorID)
 			if(M.has_status_effect(STATUS_EFFECT_INLOVE))
@@ -225,11 +235,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 				M.reagents.remove_reagent(id, volume)
 				FallInLove(C, M)
 			return
-		if(volume < 1)//You don't get to escape that easily
-			FallInLove(pick(GLOB.player_list), M)
-	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth.
-		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
-		Vc.spans = list("say")
+
+	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth. NEVERMIND ADD THIS LATER I CAN'T GET IT TO WORK
 		return
 	if(!M.client)
 		metabolization_rate = 0 //Stops powergamers from quitting to avoid affects. but prevents affects on players that don't exist for performance.
@@ -285,13 +292,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
 	M.adjustBrainLoss(0.2)//should be ~40 in total
-	..()
-
-/datum/reagent/fermi/enthrall/on_mob_delete(mob/living/carbon/M)
-	message_admins("Del enthrall")
-	if (M.getorganslot(ORGAN_SLOT_VOICE))//Returns spans
-		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
-		Vc.spans = list("velvet")
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.
