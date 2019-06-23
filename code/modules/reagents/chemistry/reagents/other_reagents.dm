@@ -1814,14 +1814,14 @@
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/peaceborg/confuse
+/datum/reagent/peaceborg_confuse
 	name = "Dizzying Solution"
 	id = "dizzysolution"
 	description = "Makes the target off balance and dizzy"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "dizziness"
 
-/datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_confuse/on_mob_life(mob/living/carbon/M)
 	if(M.confused < 6)
 		M.confused = CLAMP(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
@@ -1830,14 +1830,14 @@
 		to_chat(M, "You feel confused and disorientated.")
 	..()
 
-/datum/reagent/peaceborg/tire
+/datum/reagent/peaceborg_tire
 	name = "Tiring Solution"
 	id = "tiresolution"
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "tiredness"
 
-/datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_tire/on_mob_life(mob/living/carbon/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
