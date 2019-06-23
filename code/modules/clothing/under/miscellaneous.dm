@@ -1,4 +1,3 @@
-
 /obj/item/clothing/under/pj/red
 	name = "red pj's"
 	desc = "Sleepwear."
@@ -755,5 +754,5 @@
 	name = "gear harness"
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
-	item_state = "golem"  //This allows us to have no clothing on us well also hiding the cit lewd bits unless we show them.
+	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
 	body_parts_covered = CHEST|GROIN
