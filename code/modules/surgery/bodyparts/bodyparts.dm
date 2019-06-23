@@ -564,6 +564,11 @@
 	max_stamina_damage = 200
 	var/obj/item/cavity_item
 
+/obj/item/bodypart/chest/can_dismember(obj/item/I)
+	if(!((owner.stat == DEAD) || owner.InFullCritical()))
+		return FALSE
+	return ..()
+
 /obj/item/bodypart/chest/Destroy()
 	if(cavity_item)
 		qdel(cavity_item)
