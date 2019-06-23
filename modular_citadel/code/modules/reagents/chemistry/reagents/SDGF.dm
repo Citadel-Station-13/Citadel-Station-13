@@ -41,7 +41,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	name = "synthetic-derived growth factor"
 	id = "SDGF"
 	description = "A rapidly diving mass of Embryonic stem cells. These cells are missing a nucleus and quickly replicate a host’s DNA before growing to form an almost perfect clone of the host. In some cases neural replication takes longer, though the underlying reason underneath has yet to be determined."
-	color = "#60A584" // rgb: 96, 0, 255
+	color = "#a502e0" // rgb: 96, 0, 255
 	var/playerClone = FALSE
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -221,7 +221,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	name = "synthetic-derived growth factor"
 	id = "SDZF"
 	description = "A horribly peverse mass of Embryonic stem cells made real by the hands of a failed chemist. This message should never appear, how did you manage to get a hold of this?"
-	color = "#60A584" // rgb: 96, 0, 255
+	color = "#a502e0" // rgb: 96, 0, 255
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
 

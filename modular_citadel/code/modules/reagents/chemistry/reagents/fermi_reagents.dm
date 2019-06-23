@@ -72,7 +72,7 @@
 	name = "Hat growth serium"
 	id = "hatmium"
 	description = "A strange substance that draws in a hat from the hat dimention."
-	color = "#A080H4" // rgb: , 0, 255
+	color = "#7c311a" // rgb: , 0, 255
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
 	overdose_threshold = 25
 	DoNotSplit = TRUE
@@ -114,7 +114,7 @@
 	name = "Furranium"
 	id = "furranium"
 	description = "OwO whats this?"
-	color = "#H04044" // rgb: , 0, 255
+	color = "#f9b9bc" // rgb: , 0, 255
 	taste_description = "dewicious degenyewacy"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	InverseChemVal 		= 0
@@ -185,7 +185,7 @@
 	name = "Naninte bain"
 	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
-	color = "#5a7267"
+	color = "#708f8f"
 	overdose_threshold = 15
 	ImpureChem 			= "nanite_b_goneTox" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.25

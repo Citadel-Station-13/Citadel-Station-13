@@ -223,7 +223,7 @@
 			M.reagents.remove_reagent(id, 5)
 			P = nP
 
-	P.cached_length = P.cached_length + 0.05
+	P.cached_length = P.cached_length + 0.1
 	if (P.cached_length >= 20.5 && P.cached_length < 21)
 		if(H.w_uniform || H.wear_suit)
 			var/target = M.get_bodypart(BODY_ZONE_CHEST)
@@ -282,6 +282,6 @@
 
 		//otherwise proceed as normal
 		return..()
-	P.cached_length = P.cached_length - 0.05
+	P.cached_length = P.cached_length - 0.1
 	P.update()
 	..()
