@@ -403,7 +403,7 @@
 				to_chat(owner, "<span class='warning'>You start to feel really angry about how you're not with [(owner.lewd?"your [enthrallGender]":"[master]")]!</span>")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing2", /datum/mood_event/enthrallmissing2, message)
 				owner.stuttering += 50
-				owner.jitteriness += 500
+				owner.jitteriness += 250
 			if(67 to 89) //anger
 				if(prob(10))
 					addtimer(CALLBACK(M, /mob/verb/a_intent_change, INTENT_HARM), 2)
@@ -424,7 +424,7 @@
 			if(91 to 100)//depression
 				if(prob(20))
 					owner.adjustBrainLoss(2.5)
-					owner.stuttering += 435
+					owner.stuttering += 35
 					owner.jitteriness += 35
 				else if(prob(25))
 					M.hallucination += 10
@@ -515,6 +515,8 @@
 	//final tidying
 	resistanceTally  += deltaResist
 	deltaResist = 0
+	if(cTriggered >= 0)
+		cTriggered -= 1
 	if (cooldown > 0)
 		cooldown -= (0.8 + (mental_capacity/500))
 		cooldownMsg = FALSE
@@ -554,14 +556,14 @@
 
 
 /datum/status_effect/chem/enthrall/proc/owner_hear(var/hearer, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	if (cTriggered == TRUE)
+	if (cTriggered > 0)
 		return
 	var/mob/living/carbon/C = owner
 	raw_message = lowertext(raw_message)
 	for (var/trigger in customTriggers)
 		var/cached_trigger = lowertext(trigger)
 		if (findtext(raw_message, cached_trigger))//if trigger1 is the message
-			cTriggered = TRUE
+			cTriggered = 5 //Stops triggerparties and as a result, stops servercrashes.
 			log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been triggered with [cached_trigger] from [speaker] saying: \"[message]\". (their master being [master] ckey: [enthrallID].)")
 
 			//Speak (Forces player to talk)
@@ -621,8 +623,6 @@
 				tranceTime = 50
 				log_game("FERMICHEM: MKULTRA: [owner] ckey: [owner.key] has been tranced from previous trigger.")
 
-
-			cTriggered = FALSE
 	return
 
 /datum/status_effect/chem/enthrall/proc/owner_resist()
