@@ -93,6 +93,11 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/schoolgirl/orange
 
+/datum/gear/stripeddress
+	name = "Striped Dress"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/stripeddress
+
 /datum/gear/kilt
 	name = "Kilt"
 	category = SLOT_W_UNIFORM
@@ -304,7 +309,7 @@
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-//memes
+//Memes
 /datum/gear/gear_harnesses
 	name = "Gear Harness"
 	category = SLOT_W_UNIFORM
