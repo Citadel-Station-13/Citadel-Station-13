@@ -163,7 +163,7 @@
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
 
-		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
+		var/obj/effect/mob_spawn/MS = pick(GLOB.latejoin_mob_spawners[href_list["JoinAsGhostRole"]])
 		if(istype(MS) && MS.attack_ghost(src, latejoinercalling = TRUE))
 			SSticker.queued_players -= src
 			SSticker.queue_delay = 4
@@ -443,7 +443,7 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++
-	for(var/spawner in GLOB.mob_spawners)
+	for(var/spawner in GLOB.latejoin_mob_spawners)
 		available_job_count++
 		break
 
@@ -457,14 +457,14 @@
 			"Engineering" = list(jobs = list(), titles = GLOB.engineering_positions, color = "#ffd699"),
 			"Supply" = list(jobs = list(), titles = GLOB.supply_positions, color = "#ead4ae"),
 			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
-			"Ghost Role" = list(jobs = list(), titles = GLOB.mob_spawners, color = "#ffffff"),
+			"Ghost Role" = list(jobs = list(), titles = GLOB.latejoin_mob_spawners, color = "#ffffff"),
 			"Synthetic" = list(jobs = list(), titles = GLOB.nonhuman_positions, color = "#ccffcc"),
 			"Service" = list(jobs = list(), titles = GLOB.civilian_positions, color = "#cccccc"),
 			"Medical" = list(jobs = list(), titles = GLOB.medical_positions, color = "#99ffe6", colBreak = TRUE),
 			"Science" = list(jobs = list(), titles = GLOB.science_positions, color = "#e6b3e6"),
 			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
 		)
-		for(var/spawner in GLOB.mob_spawners)
+		for(var/spawner in GLOB.latejoin_mob_spawners)
 			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
 		for(var/datum/job/job in SSjob.occupations)

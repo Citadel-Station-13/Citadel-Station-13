@@ -28,6 +28,7 @@
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
 	var/ghost_usable = TRUE
+	var/latejoin_visible = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user, latejoinercalling)
@@ -66,13 +67,22 @@
 		create()
 	else if(ghost_usable)
 		GLOB.poi_list |= src
-		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
+		var/job_or_name = job_description ? job_description : name
+		LAZYADD(GLOB.mob_spawners[job_or_name], src)
+		if(latejoin_visible)
+			LAZYADD(GLOB.latejoin_mob_spawners[job_or_name], src)
+
 
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
-	LAZYREMOVE(GLOB.mob_spawners[job_description ? job_description : name], src)
-	if(!LAZYLEN(GLOB.mob_spawners[job_description ? job_description : name]))
-		GLOB.mob_spawners -= job_description ? job_description : name
+	var/job_or_name = job_description ? job_description : name
+	LAZYREMOVE(GLOB.mob_spawners[job_or_name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[job_or_name]))
+		GLOB.mob_spawners -= job_or_name
+	LAZYREMOVE(GLOB.latejoin_mob_spawners[job_or_name], src)
+	if(!LAZYLEN(GLOB.latejoin_mob_spawners[job_or_name]))
+		GLOB.latejoin_mob_spawners -= job_or_name
+
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
