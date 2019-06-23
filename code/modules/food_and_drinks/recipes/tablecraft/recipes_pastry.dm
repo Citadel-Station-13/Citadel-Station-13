@@ -22,7 +22,7 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
-	
+
 /datum/crafting_recipe/food/donut
 	time = 15
 	name = "Semen donut"
@@ -204,16 +204,6 @@ datum/crafting_recipe/food/donut/meat
 	subcategory = CAT_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
-
-/datum/crafting_recipe/food/hotdog
-	name = "Hot dog"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/sausage = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/hotdog
-	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/meatbun
 	name = "Meat bun"

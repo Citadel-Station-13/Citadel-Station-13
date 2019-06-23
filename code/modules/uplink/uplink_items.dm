@@ -1262,6 +1262,23 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	item = /obj/item/codespeak_manual/unlimited
 	cost = 3
 
+/datum/uplink_item/device_tools/compressionkit
+	name = "Bluespace Compression Kit"
+	desc = "A modified version of a BSRPED that can be used to reduce the size of most items while retaining their original functions! \
+			Does not work on storage items. \
+			Recharge using bluespace crystals. \
+			Comes with 5 charges."
+	item = /obj/item/compressionkit
+	cost = 5
+
+/datum/uplink_item/device_tools/syndie_glue
+	name = "Glue"
+	desc = "A cheap bottle of one use syndicate brand super glue. \
+			Use on any item to make it undroppable. \
+			Be careful not to glue an item you're already holding!"
+	item = /obj/item/syndie_glue
+	cost = 2
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1594,6 +1611,12 @@ datum/uplink_item/stealthy_tools/taeclowndo_shoes
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
+
+/datum/uplink_item/badass/durasteel_toolbox
+	name = "Durasteel Toolbox"
+	desc = "A very high impact toolbox. Excels at destroying stationary structures."
+	item = /obj/item/storage/toolbox/durasteel
+	cost = 2		//18 damage on mobs, 50 on objects, 4.5 stam/hit
 
 /datum/uplink_item/badass/costumes
 	surplus = 0
