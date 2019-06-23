@@ -127,7 +127,7 @@
 		vest.flip_mode()
 
 /obj/machinery/abductor/console/proc/SelectDisguise(remote = FALSE)
-var/list/disguises2 = list()
+	var/list/disguises2 = list()
 	for(var/name in disguises)
 		var/datum/icon_snapshot/snap = disguises[name]
 		var/image/dummy = image(snap.icon, src, snap.icon_state)
