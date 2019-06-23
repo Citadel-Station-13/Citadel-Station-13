@@ -20,7 +20,6 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
 		if(cooldown < world.time - 25)
@@ -166,3 +165,14 @@
 	block_chance = 25
 	force = 5
 	throwforce = 7
+
+/obj/item/shield/riot/tower
+	name = "tower shield"
+	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
+	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
+	icon_state = "metal"
+	block_chance = 75 //1/4 shots will hit*
+	force = 10
+	slowdown = 2
+	throwforce = 15 //Massive pice of metal
+	w_class = WEIGHT_CLASS_HUGE

@@ -20,6 +20,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	throwforce = 10
+	reach = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
