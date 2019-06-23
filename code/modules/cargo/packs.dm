@@ -1949,6 +1949,17 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/mre
+	name = "MRE supply kit (emergency rations)"
+	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
+	cost = 2000
+	contains = list(/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu3)
+	crate_name = "MRE crate (emergency rations)"
+
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
@@ -1982,18 +1993,6 @@
 	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
 	considered <b>\[REDACTED\]</b> and returned at your leisure. Note that objects the anomaly produces are specifically attuned exactly to the individual opening the anomaly; regardless \
 	of species, the individual will find the object edible and it will taste great according to their personal definitions, which vary significantly based on person and species.")
-
-
-/datum/supply_pack/organic/mre
-	name = "MRE supply kit (emergency rations)"
-	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
-	cost = 2000
-	contains = list(/obj/item/storage/box/mre/menu1/safe,
-					/obj/item/storage/box/mre/menu1/safe,
-					/obj/item/storage/box/mre/menu2/safe,
-					/obj/item/storage/box/mre/menu2/safe,
-					/obj/item/storage/box/mre/menu3)
-	crate_name = "MRE crate (emergency rations)"
 
 /datum/supply_pack/organic/potted_plants
 	name = "Potted Plants Crate"
