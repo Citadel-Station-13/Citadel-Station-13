@@ -32,6 +32,8 @@
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
 				if (DRINK_FANTASTIC)
 					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+				if (FOOD_AMAZING)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 	return ..()
 
 /datum/reagent/consumable/nutriment
@@ -711,3 +713,14 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+
+/datum/reagent/consumable/secretsauce
+	name = "secret sauce"
+	id = "secret_sauce"
+	description = "What could it be."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#792300"
+	taste_description = "indescribable"
+	quality = FOOD_AMAZING
+	taste_mult = 100
+	can_synth = FALSE
