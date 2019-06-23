@@ -33,7 +33,7 @@
 /obj/item/implant/adrenalin/activate()
 	. = ..()
 	uses--
-	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "omnizine" = 10, "stimulants" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
+	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	if(!uses)
 		qdel(src)

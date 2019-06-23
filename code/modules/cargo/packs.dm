@@ -516,14 +516,16 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers. Requires Armory access to open."
+	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, with three Shotgun Bandoliers, as well as seven buchshot and 12g shotgun slugs. Requires Armory access to open."
 	cost = 8000
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/gun/ballistic/shotgun/automatic/combat,
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier,
-					/obj/item/storage/belt/bandolier)
+					/obj/item/storage/belt/bandolier,
+					/obj/item/storage/box/lethalshot,
+					/obj/item/storage/box/lethalslugs)
 	crate_name = "combat shotguns crate"
 
 /datum/supply_pack/security/armory/dragnetgun
@@ -567,7 +569,7 @@
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
-	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Brige access to open."
+	desc = "Burn, baby burn. Contains three incendiary grenades, seven incendiary slugs, three plasma canisters, and a flamethrower. Requires Brige access to open."
 	cost = 1500
 	access = ACCESS_HEADS
 	contains = list(/obj/item/flamethrower/full,
@@ -576,7 +578,8 @@
 					/obj/item/tank/internals/plasma,
 					/obj/item/grenade/chem_grenade/incendiary,
 					/obj/item/grenade/chem_grenade/incendiary,
-					/obj/item/grenade/chem_grenade/incendiary)
+					/obj/item/grenade/chem_grenade/incendiary,
+					/obj/item/storage/box/fireshot)
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
@@ -629,11 +632,13 @@
 
 /datum/supply_pack/security/armory/riotshotguns
 	name = "Riot Shotgun Crate"
-	desc = "For when the greytide gets really uppity. Contains three riot Shotguns. Requires Armory access to open."
+	desc = "For when the greytide gets really uppity. Contains three riot shotguns, seven rubber shot and beanbag shells. Requires Armory access to open."
 	cost = 6000
 	contains = list(/obj/item/gun/ballistic/shotgun/riot,
 					/obj/item/gun/ballistic/shotgun/riot,
-					/obj/item/gun/ballistic/shotgun/riot)
+					/obj/item/gun/ballistic/shotgun/riot,
+					/obj/item/storage/box/rubbershot,
+					/obj/item/storage/box/beanbag)
 	crate_name = "riot shotgun crate"
 
 /datum/supply_pack/security/armory/swat
@@ -1539,6 +1544,15 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
+
+/datum/supply_pack/science/tech_slugs
+	name = "Tech Slug Ammo Shells"
+	desc = "A new type of shell that is able to be made into a few different dangerous types. Contains two boxes of tech slugs, 14 shells in all."
+	cost = 1000
+	contains = list(/obj/item/storage/box/techsslug,
+					/obj/item/storage/box/techsslug)
+	crate_name = "tech slug crate"
+
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////

@@ -589,3 +589,16 @@
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)
 	new /obj/item/implanter/sad_trombone(src)
+
+obj/item/storage/backpack/duffelbag/syndie/shredderbundle
+	desc = "A large duffel bag containing two CX Shredders, some magazines, an elite hardsuit, and a chest rig."
+
+/obj/item/storage/backpack/duffelbag/syndie/shredderbundle/PopulateContents()
+	new /obj/item/ammo_box/magazine/flechette/shredder(src)
+	new /obj/item/ammo_box/magazine/flechette/shredder(src)
+	new /obj/item/ammo_box/magazine/flechette/shredder(src)
+	new /obj/item/ammo_box/magazine/flechette/shredder(src)
+	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
+	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
+	new /obj/item/storage/belt/military(src)
+	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)

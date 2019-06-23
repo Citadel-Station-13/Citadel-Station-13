@@ -2,7 +2,7 @@
 
 /obj/item/storage/box/syndicate/PopulateContents()
 	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
-		if("bloodyspai") // 27 tc now this is more right
+		if("bloodyspai") // 30 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
@@ -11,7 +11,7 @@
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/reagent_containers/syringe/mulligan(src) // 4 tc
-			new /obj/item/switchblade(src) //I'll count this as 2 tc
+			new /obj/item/switchblade(src) //I'll count this as 5 tc
 			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
@@ -25,13 +25,13 @@
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 
 		if("bond") // 29 tc
-			new /obj/item/gun/ballistic/automatic/pistol(src)
-			new /obj/item/suppressor(src)
+			new /obj/item/gun/ballistic/automatic/pistol/suppressed(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/syringe/stimulants(src)
+			new /obj/item/clothing/neck/tie/red(src)
 
 		if("screwed") // 29 tc
 			new /obj/item/sbeacondrop/bomb(src)
@@ -41,7 +41,7 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/encryptionkey/syndicate(src)
 
-		if("guns") // 28 tc now
+		if("guns") // 30 tc now
 			new /obj/item/gun/ballistic/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
@@ -50,39 +50,53 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
+			new /obj/item/screwdriver/power(src) //2 tc item
 
-		if("murder") // 28 tc now
+		if("murder") // 35 tc now
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
+			new /obj/item/clothing/glasses/phantomthief/syndicate(src)
+			new /obj/item/reagent_containers/syringe/stimulants(src)
 
-		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
+		if("implant") // 67+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/implanter/freedom(src)
 			new /obj/item/implanter/uplink/precharged(src)
 			new /obj/item/implanter/emp(src)
 			new /obj/item/implanter/adrenalin(src)
 			new /obj/item/implanter/explosive(src)
 			new /obj/item/implanter/storage(src)
+			new /obj/item/implanter/radio/syndicate(src)
+			new /obj/item/implanter/stealth(src)
 
-		if("hacker") // 26 tc
+		if("hacker") // 30 tc
 			new /obj/item/aiModule/syndicate(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/encryptionkey/binary(src)
 			new /obj/item/aiModule/toyAI(src)
 			new /obj/item/multitool/ai_detect(src)
+			new /obj/item/flashlight/emp(src)
+			new /obj/item/emagrecharge(src)
 
-		if("lordsingulo") // 24 tc
-			new /obj/item/sbeacondrop(src)
-			new /obj/item/clothing/suit/space/syndicate/black/red(src)
-			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-			new /obj/item/card/emag(src)
+		if("lordsingulo") // "36" tc aka 23 tc
+			new /obj/item/sbeacondrop(src) // 14 kinda useless
+			new /obj/item/clothing/suit/space/syndicate/black/red(src) //2
+			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src) //2
+			new /obj/item/card/emag(src) //6
+			new /obj/item/emagrecharge(src) //2
+			new /obj/item/storage/toolbox/syndicate(src) //1
+			new /obj/item/card/id/syndicate(src) //2
+			new /obj/item/flashlight/emp(src) //2
+			new /obj/item/jammer(src) //5
 
-		if("sabotage") // 26 tc now
+		if("sabotage") // ~28 tc now
 			new /obj/item/grenade/plastic/c4 (src)
 			new /obj/item/grenade/plastic/c4 (src)
+			new /obj/item/grenade/plastic/x4 (src)
+			new /obj/item/grenade/plastic/x4 (src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/doorCharge(src)
 			new /obj/item/camera_bug(src)
@@ -117,15 +131,15 @@
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
 
-		if("ninja") // 33 tc worth
-			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
+		if("ninja") // 40~ tc worth
+			new /obj/item/katana(src) // Unique , basicly a better esword. 10 tc? 
 			new /obj/item/implanter/adrenalin(src) // 8 tc
 			new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/throwing_star(src)
 			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
+			new /obj/item/implanter/emp(src)
+			new /obj/item/grenade/smokebomb(src)
+			new /obj/item/grenade/smokebomb(src)
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc

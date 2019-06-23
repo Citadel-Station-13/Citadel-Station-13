@@ -216,6 +216,34 @@ BLIND     // can't see anything
 
 	..()
 
+/obj/item/clothing/under/CtrlClick(mob/user)
+	. = ..()
+
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	if(has_sensor == LOCKED_SENSORS)
+		to_chat(user, "The controls are locked.")
+		return
+	if(has_sensor == BROKEN_SENSORS)
+		to_chat(user, "The sensors have shorted out!")
+		return
+	if(has_sensor <= NO_SENSORS)
+		to_chat(user, "This suit does not have any sensors.")
+		return
+
+	sensor_mode = SENSOR_COORDS
+
+	to_chat(user, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
+
 /obj/item/clothing/under/AltClick(mob/user)
 	if(..())
 		return 1

@@ -1,0 +1,7 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscadd: "New cargo crate for tech-slugs!"
+  - rscadd: "Ammo to each fitting crate"
+  - bugfix: "Cat-code"
+  - spellcheck: "fixed a few typos - Again my bad"
