@@ -267,6 +267,9 @@
 			continue
 		if(!C)
 			C = R.holder.my_atom
+		if(!R.metabolizing)
+			R.metabolizing = TRUE
+			R.on_mob_metabolize(C)
 		if(C && R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
@@ -312,6 +315,21 @@
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
+
+//Signals that metabolization has stopped, triggering the end of trait-based effects
+/datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
+	var/list/cached_reagents = reagent_list
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		if(QDELETED(R.holder))
+			continue
+		if(keep_liverless && R.self_consuming) //Will keep working without a liver
+			continue
+		if(!C)
+			C = R.holder.my_atom
+		if(R.metabolizing)
+			R.metabolizing = FALSE
+			R.on_mob_end_metabolize(C)
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -466,6 +484,9 @@
 		if(R.id == reagent)
 			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
+				if(R.metabolizing)
+					R.metabolizing = FALSE
+					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
 			qdel(R)
 			reagent_list -= R
