@@ -244,7 +244,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if!owner.reagents.has_reagent("enthrall")))
+	if(!owner.reagents.has_reagent("enthrall"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(10))
@@ -345,6 +345,10 @@
 							to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
 						else
 							to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
+				if(get_dist(master, owner) > 10)
+					if(prob(10))
+						to_chat(owner, "<span class='big velvet'><i>You NEED to return to [(owner.lewd?"your [enthrallGender]":"[master]")].</i></span>")
+						M.throw_at(get_step_towards(master,owner), 3, 1)
 				return//If you break the mind of someone, you can't use status effects on them.
 
 
@@ -355,7 +359,7 @@
 			if(phase <= 2)
 				enthrallTally += distancelist[get_dist(master, owner)+1]
 			if(withdrawalTick > 0)
-				withdrawalTick -= 2
+				withdrawalTick -= 1
 			//calming effects
 			M.hallucination = max(0, M.hallucination - 1)
 			M.stuttering = max(0, M.stuttering - 1)
@@ -375,7 +379,7 @@
 	if (withdrawal == TRUE)//Your minions are really REALLY needy.
 		switch(withdrawalTick)//denial
 			if(5)//To reduce spam
-				to_chat(owner, "<span class='big warning'><b>You are unable to complete your [master]'s orders without their presence, and any commands and objectives given to you prior are not in effect until you are back with them.</b></span>")
+				to_chat(owner, "<span class='big warning'><b>You are unable to complete [(owner.lewd?"your [enthrallGender]":"[master]")]'s orders without their presence, and any commands and objectives given to you prior are not in effect until you are back with them.</b></span>")
 			if(10 to 35)//Gives wiggle room, so you're not SUPER needy
 				if(prob(5))
 					to_chat(owner, "<span class='notice'><i>You're starting to miss [(owner.lewd?"your [enthrallGender]":"[master]")].</i></span>")
@@ -396,10 +400,11 @@
 			if(66)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
 				var/message = "[(owner.lewd?"I feel so lost in this complicated world without [enthrallGender]..":"I have to return to [master]!")]"
+				to_chat(owner, "<span class='warning'>You start to feel really angry about how you're not with [(owner.lewd?"your [enthrallGender]":"[master]")]!</span>")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing2", /datum/mood_event/enthrallmissing2, message)
-				owner.stuttering += 200
-				owner.jitteriness += 200
-			if(67 to 90) //anger
+				owner.stuttering += 50
+				owner.jitteriness += 500
+			if(67 to 89) //anger
 				if(prob(10))
 					addtimer(CALLBACK(M, /mob/verb/a_intent_change, INTENT_HARM), 2)
 					addtimer(CALLBACK(M, /mob/proc/click_random_mob), 2)
@@ -416,29 +421,29 @@
 					to_chat(owner, "<span class='warning'><i>You need to find your [enthrallGender] at all costs, you can't hold yourself back anymore!</i></span>")
 				else
 					to_chat(owner, "<span class='warning'><i>You need to find [master] at all costs, you can't hold yourself back anymore!</i></span>")
-			if(91 to 120)//depression
+			if(91 to 100)//depression
 				if(prob(20))
 					owner.adjustBrainLoss(2.5)
-					owner.stuttering += 20
-					owner.jitteriness += 20
-				if(prob(25))
-					M.hallucination += 20
-			if(121)
+					owner.stuttering += 435
+					owner.jitteriness += 35
+				else if(prob(25))
+					M.hallucination += 10
+			if(101)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing3")
 				var/message = "[(owner.lewd?"I'm all alone, It's so hard to continute without [enthrallGender]...":"I really need to find [master]!!!")]"
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing4", /datum/mood_event/enthrallmissing4, message)
-				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without your [enthrallGender].</i></span>")
-			if(120 to 140) //depression 2, revengeance
-				if(prob(15))
+				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without [(owner.lewd?"your [enthrallGender]":"[master]")].</i></span>")
+			if(102 to 140) //depression 2, revengeance
+				if(prob(20))
 					owner.Stun(50)
 					owner.emote("cry")//does this exist?
 					if(owner.lewd)
 						to_chat(owner, "<span class='warning'><i>You're unable to hold back your tears, suddenly sobbing as the desire to see your [enthrallGender] oncemore overwhelms you.</i></span>")
 					else
 						to_chat(owner, "<span class='warning'><i>You are overwheled with withdrawl from [master].</i></span>")
-					owner.adjustBrainLoss(5)
-					owner.stuttering += 20
-					owner.jitteriness += 20
+					owner.adjustBrainLoss(4)
+					owner.stuttering += 35
+					owner.jitteriness += 35
 				if(prob(5))
 					deltaResist += 5
 			if(140 to INFINITY) //acceptance
@@ -449,11 +454,11 @@
 							to_chat(owner, "<i><span class='small green'>Maybe you'll be okay without your [enthrallGender].</i></span>")
 						else
 							to_chat(owner, "<i><span class='small green'>You feel your mental functions slowly begin to return.</i></span>")
-				if(prob(10))
-					owner.adjustBrainLoss(2)
-					M.hallucination += 50
+				if(prob(5))
+					owner.adjustBrainLoss(2.5)
+					M.hallucination += 10
 
-		withdrawalTick += 0.5//Usually enough to leave you with a major brain trauma, but not kill you.
+		withdrawalTick += 0.5//Enough to leave you with a major brain trauma, but not kill you.
 
 	//Status subproc - statuses given to you from your Master
 	//currently 3 statuses; antiresist -if you press resist, increases your enthrallment instead, HEAL - which slowly heals the pet, CHARGE - which breifly increases speed, PACIFY - makes pet a pacifist, ANTIRESIST - frustrates resist presses.
@@ -501,7 +506,7 @@
 			//adrenals?
 
 	//customEcho
-	if(customEcho && withdrawl == FALSE)
+	if(customEcho && withdrawal == FALSE)
 		if(prob(5))
 			if(!customSpan) //just in case!
 				customSpan = "notice"

@@ -229,23 +229,24 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			FallInLove(pick(GLOB.player_list), M)
 	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth.
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
-		Vc.spans = null
+		Vc.spans = list("say")
 		return
 	if(!M.client)
 		metabolization_rate = 0 //Stops powergamers from quitting to avoid affects. but prevents affects on players that don't exist for performance.
 		return
 	if(metabolization_rate == 0)
-		metabolization_rate = 0.5
+		metabolization_rate = 0.1
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)//If purity is over 5, works as intended
 	if(!E)
 		return
 	else
 		E.enthrallTally += 1
-	M.adjustBrainLoss(0.05)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
+	M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I made it so the creator is set to gain the status for someone random.
 	. = ..()
+	metabolization_rate = 1//Mostly to manage brain damage and reduce server stress
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 100u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
 		to_chat(M, "<span class='love'><i>You are unable to resist your own charms anymore, and become a full blown narcissist.</i></span>")
 		/*Old way of handling, left in as an option B
@@ -283,11 +284,12 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	E.customTriggers = list()
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.025)//should be ~40 in total
+	M.adjustBrainLoss(0.2)//should be ~40 in total
 	..()
 
 /datum/reagent/fermi/enthrall/on_mob_delete(mob/living/carbon/M)
-	if (M.ckey == creatorID && creatorName == M.real_name)//If you yourself drink it, it supresses the vocal effects, for stealth.
+	message_admins("Del enthrall")
+	if (M.getorganslot(ORGAN_SLOT_VOICE))//Returns spans
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		Vc.spans = list("velvet")
 	..()
@@ -296,7 +298,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 /datum/reagent/fermi/enthrallExplo//Created in a gas cloud when it explodes
 	name = "MKUltra"
 	id = "enthrallExplo"
-	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of pleasure, intoxicating them into servitude. When taken by the creator, it will enhance the draw of their voice to those affected by it."
+	description = "A forbidden deep red mixture that overwhelms a foreign body with waves of desire, inducing a chemial love for another. Also, how the HECC did you get this?"
 	color = "#2C051A" // rgb: , 0, 255
 	metabolization_rate = 0.1
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses."

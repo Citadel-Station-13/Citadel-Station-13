@@ -655,7 +655,7 @@
 ///////////FermiChem//////////////////
 //////////////////////////////////////
 //Removed span_list from input arguments. //mob/living/user
-/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = TRUE, message_admins = TRUE, debug = FALSE)
+/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = TRUE, message_admins = FALSE, debug = FALSE)
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
@@ -749,14 +749,15 @@
 		to_chat(world, "[user]'s power is [power_multiplier].")
 
 	//Mixables
-	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara") //enthral_words works
-	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job") //reward_words works
-	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job") ////punish_words works
+	var/static/regex/enthral_words = regex("relax|obey|love|serve|docile|so easy|ara ara")
+	var/static/regex/reward_words = regex("good boy|good girl|good pet|good job")
+	var/static/regex/punish_words = regex("bad boy|bad girl|bad pet|bad job")
 	//phase 0
-	var/static/regex/saymyname_words = regex("say my name|who am i|whoami") //works I think
+	var/static/regex/saymyname_words = regex("say my name|who am i|whoami")
 	var/static/regex/wakeup_words = regex("revert|awaken|snap") //works
 	//phase1
-	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush") //works
+	var/static/regex/petstatus_words = regex("how are you|what is your status|are you okay")
+	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/antiresist_words = regex("unable to resist|give in")//useful if you think your target is resisting a lot
 	var/static/regex/resist_words = regex("resist|snap out of it|fight")//useful if two enthrallers are fighting
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
@@ -860,6 +861,8 @@
 			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "enthrallscold", /datum/mood_event/enthrallscold, descmessage)
 			E.cooldown += 1
 
+
+
 	//teir 0
 	//SAY MY NAME works
 	if((findtext(message, saymyname_words)))
@@ -890,6 +893,136 @@
 
 
 	//tier 1
+
+	//PETSTATUS i.e. how they are
+	else if((findtext(message, petstatus_words)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			REMOVE_TRAIT(H, TRAIT_MUTE, "enthrall")
+			var/speaktrigger = ""
+			//phase
+			switch(E.phase)
+				if(0)
+					continue
+				if(1)
+					addtimer(CALLBACK(H, /atom/movable/proc/say, "I feel happy being with you."), 5)
+					continue
+				if(2)
+					speaktrigger += "I think I'm in love with you... "
+				if(3)
+					speaktrigger += "I'm devoted to [(H.lewd?"being your pet":"following you")]! "
+				if(4)
+					speaktrigger += "[(H.lewd?"You are my whole world and all of my being belongs to you, ":"I cannot think of anything else but you, ")] "//Redflags!!
+
+			//mood
+			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+			switch(mood.sanity)
+				if(SANITY_GREAT to INFINITY)
+					speaktrigger += "I'm beyond elated!! "
+				if(SANITY_NEUTRAL to SANITY_GREAT)
+					speaktrigger += "I'm really happy! "
+				if(SANITY_DISTURBED to SANITY_NEUTRAL)
+					speaktrigger += "I'm a little sad, "
+				if(SANITY_UNSTABLE to SANITY_DISTURBED)
+					speaktrigger += "I'm really upset, "
+				if(SANITY_CRAZY to SANITY_UNSTABLE)
+					speaktrigger += "I'm about to fall apart without you! "
+				if(SANITY_INSANE to SANITY_CRAZY)
+					speaktrigger += "Hold me, please.. "
+
+			//Withdrawal
+			switch(E.withdrawalTick)
+				if(10 to 36)
+					speaktrigger += "I missed you, "
+				if(36 to 66)
+					speaktrigger += "I missed you, but I knew you'd come back for me! "
+				if(66 to 90)
+					speaktrigger += "I couldn't take being away from you like that, "
+				if(90 to 140)
+					speaktrigger += "I was so scared you'd never come back, "
+				if(140 to INFINITY)
+					speaktrigger += "I'm hurt that you left me like that... I felt so alone... "
+
+			//hunger
+			switch(H.nutrition)
+				if(0 to NUTRITION_LEVEL_STARVING)
+					speaktrigger += "I'm famished, please feed me..! "
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					speaktrigger += "I'm so hungry... "
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					speaktrigger += "I'm hungry, "
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					speaktrigger += "I'm sated, "
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					speaktrigger += "I've a full belly! "
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					speaktrigger += "I'm fat... "
+
+			//health
+			switch(H.health)
+				if(100)
+					speaktrigger += "I feel fit, "
+				if(80 to 99)
+					speaktrigger += "I ache a little bit, "
+				if(40 to 80)
+					speaktrigger += "I'm really hurt, "
+				if(0 to 40)
+					speaktrigger += "I'm in a lot of pain, help! "
+				if(-INFINITY to 0)
+					speaktrigger += "I'm barely concious and in so much pain, please help me! "
+			//toxin
+			switch(H.getToxLoss())
+				if(10 to 30)
+					speaktrigger += "I feel a bit queasy... "
+				if(30 to 60)
+					speaktrigger += "I feel nauseous... "
+				if(60 to INFINITY)
+					speaktrigger += "My head is pounding and I feel like I'm going to be sick... "
+			//oxygen
+			if (H.getOxyLoss() >= 25)
+				speaktrigger += "I can't breathe! "
+			//blind
+			if (HAS_TRAIT(H, TRAIT_BLIND))
+				speaktrigger += "I can't see! "
+			//deaf..?
+			if (HAS_TRAIT(H, TRAIT_DEAF))//How the heck you managed to get here I have no idea, but just in case!
+				speaktrigger += "I can barely hear you! "
+			//And the brain damage. And the brain damage. And the brain damage. And the brain damage. And the brain damage.
+			switch(H.getBrainLoss())
+				if(20 to 40)
+					speaktrigger += "I have a mild head ache, "
+				if(40 to 80)
+					speaktrigger += "I feel disorentated and confused, "
+				if(80 to 120)
+					speaktrigger += "My head feels like it's about to explode, "
+				if(120 to 160)
+					speaktrigger += "You are the only thing keeping my brain sane, "
+				if(160 to INFINITY)
+					speaktrigger += "I feel like I'm on the brink of losing my mind, "
+
+			//horny
+			if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && H.lewd)
+				switch(H.getArousalLoss())
+					if(40 to 60)
+						speaktrigger += "I'm feeling a little horny, "
+					if(60 to 80)
+						speaktrigger += "I'm feeling horny, "
+					if(80 to INFINITY)
+						speaktrigger += "I'm really, really horny, "
+
+			//collar
+			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
+				speaktrigger += "and thank you for the collar, "
+			//End
+			if(H.lewd)
+				speaktrigger += "[E.enthrallGender]!"
+			else
+				speaktrigger += "[user.first_name()]!"
+			//say it!
+			addtimer(CALLBACK(H, /atom/movable/proc/say, "[speaktrigger]"), 5)
+			E.cooldown += 1
+
 	//SILENCE
 	else if((findtext(message, silence_words)))
 		for(var/mob/living/carbon/C in listeners)
@@ -1076,14 +1209,14 @@
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			if (E.phase == 3)
 				var/speaktrigger = ""
-				user.emote("me", 1, "whispers something quietly.")
-				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
+				C.emote("me", 1, "whispers something quietly.")
+				if (get_dist(user, C) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to hear them!</b></span>")
-					return
+					continue
 				for (var/trigger in E.customTriggers)
 					speaktrigger += "[trigger], "
-				to_chat(user, "<b>C</b> whispers, <i>[speaktrigger] are my triggers.</i>")//So they don't trigger themselves!
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>You whisper your triggers to [(H.lewd?"Your [E.enthrallGender]":"[E.master]")].</span>"), 5)
+				to_chat(user, "<b>[C]</b> whispers, \"<i>[speaktrigger] are my triggers.</i>\"")//So they don't trigger themselves!
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>You whisper your triggers to [(C.lewd?"Your [E.enthrallGender]":"[E.master]")].</span>"), 5)
 
 
 	//CUSTOM TRIGGERS
@@ -1094,12 +1227,12 @@
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new trigger!</b></span>")
-					return
+					continue
 				else
 					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
 					H.SetStun(1000)
-					if (E.mental_capacity >= 10)
+					if (E.mental_capacity >= 5)
 						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
 						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance")
 						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
@@ -1113,7 +1246,7 @@
 							else
 								E.customTriggers[trigger] = trigger2
 								message_admins("[H] has been implanted by [user] with [trigger], triggering [trigger2].")
-							E.mental_capacity -= 10
+							E.mental_capacity -= 5
 							addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.lewd?"your [E.enthrallGender]":"[E.master]")] whispers you a new trigger.</span>"), 5)
 						else
 							to_chat(user, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
@@ -1130,7 +1263,7 @@
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new echophrase!</b></span>")
-					return
+					continue
 				else
 					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.")
 					user.SetStun(1000)//Hands are handy, so you have to stay still
@@ -1152,7 +1285,7 @@
 			if(E.phase == 3)
 				if (get_dist(user, H) > 1)//Requires user to be next to their pet.
 					to_chat(user, "<span class='warning'>You need to be next to your pet to give them a new objective!</b></span>")
-					return
+					continue
 				else
 					user.emote("me", 1, "puts their hands upon [H.name]'s head and looks deep into their eyes, whispering something to them.'")
 					user.SetStun(1000)//So you can't run away!
@@ -1161,7 +1294,7 @@
 						var/datum/objective/brainwashing/objective = stripped_input(user, "Add an objective to give your pet.", MAX_MESSAGE_LEN)
 						if(!LAZYLEN(objective))
 							to_chat(user, "<span class='warning'>You can't give your pet an objective to do nothing!</b></span>")
-							return
+							continue
 						//Pets don't understand harm
 						objective = replacetext(lowertext(objective), "kill", "hug")
 						objective = replacetext(lowertext(objective), "murder", "cuddle")

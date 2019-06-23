@@ -156,7 +156,9 @@ h1.alert, h2.alert		{color: #000000;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 3000ms infinite;}
 @keyframes velvet {
 	0% { color: #400020; }
-	50% { color: #FF0000; }
+	25% { color: #FF0000; }
+	50% { color: #FFAAAA; }
+	75% { color: #FF0000; }
 	100% { color: #400020; }
 }
 
