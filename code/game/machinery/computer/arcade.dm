@@ -1,7 +1,7 @@
 #define ARCADE_WEIGHT_TRICK 4
 #define ARCADE_WEIGHT_USELESS 2
 #define ARCADE_WEIGHT_RARE 1
-#define ARCADE_WEIGHT_PLUSH 3
+#define ARCADE_WEIGHT_PLUSH 65
 
 
 /obj/machinery/computer/arcade
