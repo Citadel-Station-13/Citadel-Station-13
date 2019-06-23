@@ -17,8 +17,8 @@
 	if(!pH)//Dunno how things got here without a pH, but just in case
 		pH = 7
 	var/ImpureTot = 0
-	//var/pHmod = 1
 	var/turf/T = get_turf(my_atom)
+	
 	if(temp>500)//if hot, start a fire
 		switch(temp)
 			if (500 to 750)
