@@ -248,8 +248,12 @@
 	icon_state = "bra_commie"
 
 /datum/sprite_accessory/undershirt/female_babyblue
-	name = "Bra, Baby Blue"
+	name = "Bra - Baby Blue"
 	icon_state = "bra_babyblue"
+
+/datum/sprite_accessory/undershirt/female_beekini
+	name = "Bra - Bee-kini"
+	icon_state = "bra_bee-kini"
 
 /datum/sprite_accessory/undershirt/female_black
 	name = "Bra - Black"
