@@ -385,7 +385,7 @@
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
 	..()
 
-/datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = SCREWYHUD_NONE
@@ -510,15 +510,24 @@
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	pH = -1 //One of the best buffers,
+	var/healtoxinlover = FALSE
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss(-2*REM, 0, healtoxinlover)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2)
 	..()
 	. = 1
+
+/datum/reagent/medicine/pen_acid/pen_jelly
+	name = "Pentetic Jelly"
+	id = "pen_jelly"
+	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
+	color = "#91D865"
+	healtoxinlover = TRUE
+	pH = 14//invert
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
@@ -663,11 +672,11 @@
 	addiction_threshold = 25
 	pH = 8.96
 
-/datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
 	L.ignore_slowdown(id)
 
-/datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
 	L.unignore_slowdown(id)
 	..()
 
@@ -929,11 +938,11 @@
 	overdose_threshold = 60
 	pH = 8.7
 
-/datum/reagent/medicine/stimulants/on_mob_add(mob/living/L)
+/datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/stimulants/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
@@ -1165,7 +1174,7 @@
 	M.adjustBruteLoss(-3 * REM, 0)
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0, TRUE) //Heals TOXINLOVERS
 	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
@@ -1176,7 +1185,7 @@
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(5 * REM, 0)
+	M.adjustToxLoss(8 * REM, 0, TRUE) //Hurts TOXINLOVERS
 	..()
 	. = 1
 
@@ -1253,11 +1262,11 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelinghaste/on_mob_add(mob/living/L)
+/datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
@@ -1276,11 +1285,11 @@
 	self_consuming = TRUE
 	pH = 12.5
 
-/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLEHEART, id)
 
-/datum/reagent/medicine/corazone/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, id)
 	..()
 
@@ -1289,11 +1298,11 @@
 	id = "muscle_stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/M)
 	. = ..()
 	M.ignore_slowdown(id)
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	M.unignore_slowdown(id)
 
@@ -1309,11 +1318,11 @@
 	var/overdose_progress = 0 // to track overdose progress
 	pH = 7.89
 
-/datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
+/datum/reagent/medicine/modafinil/on_mob_metabolize(mob/living/M)
 	ADD_TRAIT(M, TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/modafinil/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_SLEEPIMMUNE, id)
 	..()
 

@@ -38,13 +38,13 @@
 	var/obj/item/heirloom_type
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
-			heirloom_type = /obj/item/paint/anycolor
-			heirloom_type = /obj/item/bikehorn/golden
+			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/bikehorn/golden)
 		if("Mime")
-			heirloom_type = /obj/item/paint/anycolor
-			heirloom_type = /obj/item/toy/dummy
+			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/toy/dummy)
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife/scimitar
+		if("Botanist")
+			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Station Engineer")

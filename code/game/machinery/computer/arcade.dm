@@ -1,7 +1,7 @@
 #define ARCADE_WEIGHT_TRICK 4
 #define ARCADE_WEIGHT_USELESS 2
 #define ARCADE_WEIGHT_RARE 1
-#define ARCADE_WEIGHT_PLUSH 3
+#define ARCADE_WEIGHT_PLUSH 65
 
 
 /obj/machinery/computer/arcade
@@ -32,7 +32,6 @@
 		/obj/item/toy/spinningtoy = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/sword = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/sword/cx = ARCADE_WEIGHT_TRICK,
-		/obj/item/toy/sword/darksabre = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/talking/AI = ARCADE_WEIGHT_USELESS,
 		/obj/item/toy/talking/codex_gigas = ARCADE_WEIGHT_USELESS,
 		/obj/item/toy/talking/griffin = ARCADE_WEIGHT_USELESS,

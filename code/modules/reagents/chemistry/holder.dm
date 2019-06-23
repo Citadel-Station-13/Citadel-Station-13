@@ -20,13 +20,18 @@
 	if(GLOB.chemical_reactions_list)
 		return
 
-	var/paths = subtypesof(/datum/chemical_reaction)
+
+	//Randomized need to go last since they need to check against conflicts with normal recipes
+	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
 
 	for(var/path in paths)
 
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
+
+		if(!D.id)
+			continue
 
 		if(D.required_reagents && D.required_reagents.len)
 			for(var/reaction in D.required_reagents)
@@ -276,6 +281,9 @@
 			continue
 		if(!C)
 			C = R.holder.my_atom
+		if(!R.metabolizing)
+			R.metabolizing = TRUE
+			R.on_mob_metabolize(C)
 		if(C && R)
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
@@ -321,6 +329,21 @@
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
+
+//Signals that metabolization has stopped, triggering the end of trait-based effects
+/datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
+	var/list/cached_reagents = reagent_list
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		if(QDELETED(R.holder))
+			continue
+		if(keep_liverless && R.self_consuming) //Will keep working without a liver
+			continue
+		if(!C)
+			C = R.holder.my_atom
+		if(R.metabolizing)
+			R.metabolizing = FALSE
+			R.on_mob_end_metabolize(C)
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -697,6 +720,9 @@
 		if(R.id == reagent)
 			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
+				if(R.metabolizing)
+					R.metabolizing = FALSE
+					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
 			qdel(R)
 			reagent_list -= R

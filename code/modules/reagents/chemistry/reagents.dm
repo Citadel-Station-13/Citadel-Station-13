@@ -43,6 +43,7 @@
 	var/InverseChem 		= "fermiTox"// What chem is metabolised when purity is below InverseChemVal, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/DoNotSplit			= FALSE		// If impurity is handled within the main chem itself
 	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
+	var/metabolizing = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -76,6 +77,14 @@
 
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
+	return
+
+// Called when this reagent first starts being metabolized by a liver
+/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+	return
+
+// Called when this reagent stops being metabolized by a liver
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
 /datum/reagent/proc/on_move(mob/M)
