@@ -483,15 +483,23 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	var/healtoxinlover = FALSE
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
-	M.adjustToxLoss(-2*REM, 0)
+	M.adjustToxLoss(-2*REM, 0, healtoxinlover)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2)
 	..()
 	. = 1
+
+/datum/reagent/medicine/pen_acid/pen_jelly
+	name = "Pentetic Jelly"
+	id = "pen_jelly"
+	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
+	color = "#91D865"
+	healtoxinlover = TRUE
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
@@ -1102,7 +1110,7 @@
 	M.adjustBruteLoss(-3 * REM, 0)
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
-	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0, TRUE) //Heals TOXINLOVERS
 	M.adjustBrainLoss(2 * REM, 150) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
@@ -1113,7 +1121,7 @@
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(5 * REM, 0)
+	M.adjustToxLoss(8 * REM, 0, TRUE) //Hurts TOXINLOVERS
 	..()
 	. = 1
 
