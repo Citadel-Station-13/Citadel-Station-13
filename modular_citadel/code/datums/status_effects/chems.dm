@@ -364,7 +364,7 @@
 			M.hallucination = max(0, M.hallucination - 5)
 			M.stuttering = max(0, M.stuttering - 5)
 			M.jitteriness = max(0, M.jitteriness - 5)
-			if(owner.getBrainLoss() >=60)
+			if(owner.getBrainLoss() >=50)
 				owner.adjustBrainLoss(-0.1)
 			if(withdrawal == TRUE)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
@@ -396,7 +396,7 @@
 				if(prob(10))
 					if(owner.lewd)
 						to_chat(owner, "<i>I just need to be a good pet for [enthrallGender], they'll surely return if I'm a good pet.</i>")
-					owner.adjustBrainLoss(-1)
+					owner.adjustBrainLoss(-1.5)
 			if(66)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
 				var/message = "[(owner.lewd?"I feel so lost in this complicated world without [enthrallGender]..":"I have to return to [master]!")]"

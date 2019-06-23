@@ -919,7 +919,7 @@
 			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 			switch(mood.sanity)
 				if(SANITY_GREAT to INFINITY)
-					speaktrigger += "I'm beyond elated!! "
+					speaktrigger += "I'm beyond elated!! " //did you mean byond elated? hohoho
 				if(SANITY_NEUTRAL to SANITY_GREAT)
 					speaktrigger += "I'm really happy! "
 				if(SANITY_DISTURBED to SANITY_NEUTRAL)
@@ -933,15 +933,15 @@
 
 			//Withdrawal
 			switch(E.withdrawalTick)
-				if(10 to 36)
+				if(10 to 36) //denial
 					speaktrigger += "I missed you, "
-				if(36 to 66)
+				if(36 to 66) //barganing
 					speaktrigger += "I missed you, but I knew you'd come back for me! "
-				if(66 to 90)
+				if(66 to 90) //anger
 					speaktrigger += "I couldn't take being away from you like that, "
-				if(90 to 140)
+				if(90 to 140) //depression
 					speaktrigger += "I was so scared you'd never come back, "
-				if(140 to INFINITY)
+				if(140 to INFINITY) //acceptance
 					speaktrigger += "I'm hurt that you left me like that... I felt so alone... "
 
 			//hunger
@@ -997,7 +997,7 @@
 				if(80 to 120)
 					speaktrigger += "My head feels like it's about to explode, "
 				if(120 to 160)
-					speaktrigger += "You are the only thing keeping my brain sane, "
+					speaktrigger += "You are the only thing keeping my mind sane, "
 				if(160 to INFINITY)
 					speaktrigger += "I feel like I'm on the brink of losing my mind, "
 
@@ -1013,7 +1013,7 @@
 
 			//collar
 			if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
-				speaktrigger += "and thank you for the collar, "
+				speaktrigger += "I love the collar you gave me, "
 			//End
 			if(H.lewd)
 				speaktrigger += "[E.enthrallGender]!"
