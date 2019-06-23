@@ -904,7 +904,7 @@
 	M.adjustStaminaLoss(7.5, 0)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(3.5, 0)
-	if(prob(10))
+	if(prob(12))
 		switch(rand(1, 3))
 			if(1)
 				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
@@ -917,7 +917,7 @@
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
-	if(prob(4) && iscarbon(M)) //big oof
+	if(prob(6) && iscarbon(M)) //big oof
 		var/selected_part
 		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
 			if(1)
