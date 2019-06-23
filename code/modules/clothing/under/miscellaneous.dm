@@ -753,7 +753,6 @@
 /obj/item/clothing/under/gear_harness
 	name = "gear harness"
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
-	icon = 'modular_citadel/icons/obj/clothing/cit_clothes.dmi'
 	icon_state = "gear_harness"
 	item_state = "golem"  //This allows us to have no clothing on us well also hiding the cit lewd bits unless we show them.
 	body_parts_covered = CHEST|GROIN
