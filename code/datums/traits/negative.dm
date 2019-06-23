@@ -380,12 +380,5 @@
 
 //DOES NOT give any indication when someone is triggered - this is intentional so people don't abuse it, you're supposed to get a random thing said to you as a mini objective.
 /datum/quirk/hypno/proc/triggered(quirk_holder)//I figured I might as well make a trait of code I added.
-   var/mob/living/carbon/human/H = quirk_holder
-   var/list/seen = viewers(8, get_turf(H))
-   seen -= quirk_holder
-   if(LAZYLEN(seen) == 0)
-      to_chat(H, "<span class='notice'><i>That object accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
-   else
-      to_chat(H, "<span class='notice'><i>[pick(seen)] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
-   H.apply_status_effect(/datum/status_effect/trance, 200, TRUE, FALSE)
-   qdel(src)
+	var/mob/living/carbon/human/H = quirk_holder
+	H.apply_status_effect(/datum/status_effect/trance, 1000, TRUE, TRUE)

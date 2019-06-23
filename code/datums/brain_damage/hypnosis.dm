@@ -5,14 +5,13 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
-	var/priority = TRUE
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
-/datum/brain_trauma/hypnosis/New(phrase, priority)
+/datum/brain_trauma/hypnosis/New(phrase, quirk = FALSE)
 	if(!phrase)
 		qdel(src)
-	if(priority == TRUE)
+	if(quirk == TRUE)
 		hypnotic_phrase = phrase
 	else
 		friendliify(phrase)
@@ -42,11 +41,11 @@
 												"You feel a part of your mind repeating this over and over. You need to follow these words.",\
 												"Something about this sounds... right, for some reason. You feel like you should follow these words.",\
 												"These words keep echoing in your mind. You find yourself completely fascinated by them.")]</span>")
-	if(priority == TRUE)
+	if(!HAS_TRAIT(owner, "hypnotherapy"))
 		to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
 	else
-		to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
+		to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You feel an incredible desire to follow these words, but are able to resist it somewhat. If it isn't a clear order, you can freely interpret how to do so,\
 									however this does not take precedence over your other objectives.</span>")
 	..()
 

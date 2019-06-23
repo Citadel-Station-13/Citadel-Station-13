@@ -1236,11 +1236,10 @@
 						var/trigger = html_decode(stripped_input(user, "Enter the trigger phrase", MAX_MESSAGE_LEN))
 						var/custom_words_words_list = list("Speak", "Echo", "Shock", "Cum", "Kneel", "Strip", "Trance", "Cancel")
 						var/trigger2 = input(user, "Pick an effect", "Effects") in custom_words_words_list
-						//var/trigger2 = stripped_input(user, "Enter the effect.", MAX_MESSAGE_LEN)
 						trigger2 = lowertext(trigger2)
 						if ((findtext(trigger2, custom_words_words)))
 							if (trigger2 == "speak" || trigger2 == "echo")
-								var/trigger3 = html_decode(stripped_input(user, "Enter the phrase spoken.", MAX_MESSAGE_LEN))
+								var/trigger3 = html_decode(stripped_input(user, "Enter the phrase spoken. Abusing this to self antag is bannable.", MAX_MESSAGE_LEN))
 								E.customTriggers[trigger] = list(trigger2, trigger3)
 								message_admins("[H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
 							else
