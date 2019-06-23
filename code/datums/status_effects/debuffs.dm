@@ -544,9 +544,7 @@ datum/status_effect/pacify
 
 /datum/status_effect/trance/tick()
 	if(HAS_TRAIT(owner, "hypnotherapy"))
-		message_admins("has trait")
 		if(triggered == TRUE)
-			message_admins("triggered")
 			UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 			RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 			ADD_TRAIT(owner, TRAIT_MUTE, "trance")
@@ -554,11 +552,8 @@ datum/status_effect/pacify
 				owner.add_client_colour(/datum/client_colour/monochrome)
 			to_chat(owner, "<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 			triggered = FALSE
-			duration = 300
 		else
-			message_admins("not triggered")
 			return
-	message_admins("stunning")
 	if(stun)
 		owner.Stun(60, TRUE, TRUE)
 	owner.dizziness = 20
@@ -567,7 +562,6 @@ datum/status_effect/pacify
 	if(!iscarbon(owner))
 		return FALSE
 	if(HAS_TRAIT(owner, "hypnotherapy"))
-		message_admins("stunning")
 		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/listen)
 		return TRUE
 	alert_type = /obj/screen/alert/status_effect/trance
@@ -582,9 +576,7 @@ datum/status_effect/pacify
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE, source_quirk = FALSE)//hypnoquirk makes no visible message, prevents self antag messages, and places phrase below objectives.
 	duration = _duration
 	stun = _stun
-	var/mob/living/carbon/C = new_owner
-	if(source_quirk == FALSE && HAS_TRAIT(C, "hypnotherapy"))
-		message_admins("removing quirk")
+	if(source_quirk == FALSE && HAS_TRAIT(owner, "hypnotherapy"))
 		REMOVE_TRAIT(owner, "hypnotherapy", ROUNDSTART_TRAIT)
 	return ..()
 
@@ -597,19 +589,17 @@ datum/status_effect/pacify
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
 /datum/status_effect/trance/proc/listen(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	message_admins("Trigger start")
 	to_chat(owner, "<span class='notice'><i>[speaker] accidentally sets off your implanted trigger, sending you into a hypnotic daze!</i></span>")
 	triggered = TRUE
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	message_admins("Hypnotize")
 	if(!owner.can_hear())
 		return
 	if(speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	if(HAS_TRAIT(C, "hypnotherapy"))
+	if(source_quirk == TRUE)
 		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message, TRUE), 10)
 	else
 		addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, raw_message), 10)

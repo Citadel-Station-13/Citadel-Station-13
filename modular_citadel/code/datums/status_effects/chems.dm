@@ -534,7 +534,6 @@
 		M.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
 		M.remove_status_effect(/datum/status_effect/trance)
 		tranceTime = 51
-		message_admins("test")
 	//..()
 
 //Remove all stuff

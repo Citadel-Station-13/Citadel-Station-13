@@ -364,8 +364,8 @@
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
 
-//For reviewers: If you think it's a bad idea, feel free to remove it. Removal requested, commented out until the end of review (will remove when fixing merge conflicts).
-
+//For reviewers: Removal requested, commented out until the end of review (will remove when fixing merge conflicts). I'll probably rewrited
+/*Fixed quirk so that it's less impactful at the moment and doesn't override player autonomy (For the people in the discord who really want it.) See if that helps
 /datum/quirk/hypno
 	name = "Hypnotherapy user"
 	desc = "You had hypnotherapy right before your shift, you're not sure it had any effects, though."
@@ -382,3 +382,4 @@
 /datum/quirk/hypno/proc/triggered(quirk_holder)//I figured I might as well make a trait of code I added.
 	var/mob/living/carbon/human/H = quirk_holder
 	H.apply_status_effect(/datum/status_effect/trance, 1000, TRUE, TRUE)
+*/
