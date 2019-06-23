@@ -856,13 +856,16 @@
 		buckle_mob(target,TRUE,TRUE)
 	. = ..()
 
+/mob/living/carbon/human/proc/piggyback_instant(mob/living/M)
+	return buckle_mob(M, TRUE, TRUE, FALSE, TRUE)
+
 //Can C try to piggyback at all.
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
 	if(istype(C) && C.stat == CONSCIOUS)
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, bypass_piggybacking = FALSE)
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, bypass_piggybacking = FALSE, no_delay = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(bypass_piggybacking)
@@ -879,7 +882,7 @@
 	if(can_piggyback(M))
 		riding_datum.ride_check_ridden_incapacitated = TRUE
 		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-		if(force || do_after(M, 15, target = src))
+		if(no_delay || do_after(M, 15, target = src))
 			if(can_piggyback(M))
 				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
