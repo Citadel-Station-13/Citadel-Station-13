@@ -399,24 +399,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/flamethrower/full/tank
-	cost = 4
-	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
-
-<<<<<<< HEAD
-/datum/uplink_item/dangerous/sword
-	name = "Energy Sword"
-	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
-			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/melee/transforming/energy/sword/saber
-	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/dangerous/rapier
 	name = "Rapier"
 	desc = "A fancy rapier with a diamond tip piercing anything that it comes into contack with. \
@@ -426,6 +408,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/dangerous/flamethrower
+	name = "Flamethrower"
+	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
+			stations. Make a statement by roasting the filth in their own greed. Use with caution."
+	item = /obj/item/flamethrower/full/tank
+	cost = 4
+	surplus = 40
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/clownsword
 	name = "Bananium Energy Sword"
 	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
@@ -434,7 +425,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
-=======
+
 /datum/uplink_item/dangerous/flechettegun
 	name = "Flechette Launcher"
 	desc = "A compact bullpup that fires micro-flechettes.\
