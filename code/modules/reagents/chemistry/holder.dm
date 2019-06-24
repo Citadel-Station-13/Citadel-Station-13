@@ -129,6 +129,7 @@
 	if(total_volume > 0)
 		var/part = amount / total_volume
 		for(var/reagent in cached_reagents)
+			pH = 7
 			var/datum/reagent/R = reagent
 			remove_reagent(R.id, R.volume * part)
 

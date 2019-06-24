@@ -961,7 +961,7 @@
 
 			//health
 			switch(H.health)
-				if(100)
+				if(100 to INFINITY)
 					speaktrigger += "I feel fit, "
 				if(80 to 99)
 					speaktrigger += "I ache a little bit, "
