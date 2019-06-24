@@ -309,8 +309,8 @@
 	restricted_desc = "Engineering and Security"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
-//memes
-/datum/gear/nudepermit
-	name = "Nudity Permit"
+//Memes
+/datum/gear/gear_harnesses
+	name = "Gear Harness"
 	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/permit
+	path = /obj/item/clothing/under/gear_harness

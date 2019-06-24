@@ -282,9 +282,31 @@
 	name = "Ancient Cloning Lab"
 	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."
 
-
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+/datum/map_template/ruin/space/augmentation
+	id = "augmentationfacility"
+	suffix = "augmentationfacility.dmm"
+	name = "Roboticst Augmentation Facility"
+	description = "A mysterious lab in the depths of space containing robotics supplies and a one use autosurgeon."
+
+/datum/map_template/ruin/space/harambe
+	id = "bigape"
+	suffix = "bigape.dmm"
+	name = "Big Ape"
+	description = "A gorilla? Out here? But why."
+
+/datum/map_template/ruin/space/space_arcade
+	id = "arcade"
+	suffix = "arcade.dmm"
+	name = "Space Arcade"
+	description = "A lonely arcade in the depths of space."
+
+/datum/map_template/ruin/space/hermit
+	id = "spacehermit"
+	suffix = "spacehermit.dmm"
+	name = "Space Hermit"
+	description = "A late awakening cryo pod in a crashed escape pod wakes up to find what befell of his fellow survivors. Contains all the necessary resources to actually make it out alive. Good luck."

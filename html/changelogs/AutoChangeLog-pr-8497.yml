@@ -1,0 +1,5 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - rscadd: "Adds clockwork reflectors, a fragile anti-laser reflection shield object that can be constructed for 10 brass sheets. Upon firing on the object in the direction where it is shielded, it ricochets the bullet off of it relative to the shooting angle."
+  - tweak: "Renames some windows in the build menu for consistency."
