@@ -749,3 +749,10 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/gear_harness
+	name = "gear harness"
+	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
+	icon_state = "gear_harness"
+	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
+	body_parts_covered = CHEST|GROIN

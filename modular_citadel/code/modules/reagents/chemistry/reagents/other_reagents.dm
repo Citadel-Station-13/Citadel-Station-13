@@ -17,13 +17,13 @@
 	M.adjustStaminaLoss(-5*REM)
 	. = ..()
 
-/datum/reagent/syndicateadrenals/on_mob_add(mob/living/M)
+/datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
 		M.next_move_modifier *= 0.5
 		to_chat(M, "<span class='notice'>You feel an intense surge of energy rushing through your veins.</span>")
 
-/datum/reagent/syndicateadrenals/on_mob_delete(mob/living/M)
+/datum/reagent/syndicateadrenals/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
 		M.next_move_modifier *= 2
