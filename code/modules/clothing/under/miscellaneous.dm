@@ -750,13 +750,6 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
-/obj/item/clothing/under/permit
-	name = "public nudity permit"
-	desc = "This permit entitles the bearer to conduct their duties without a uniform. Normally issued to furred crewmembers or those with nothing to hide."
-	icon = 'icons/obj/card.dmi'
-	icon_state = "fingerprint1"
-	item_state = "golem"  //This is dumb and hacky but was here when I got here.//No, it really isn't. Why make a new blank clothing sprite if we already have one?
-	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/bb_sweater
 	name = "cream sweater"
@@ -806,3 +799,9 @@
 	can_adjust = FALSE
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
+/obj/item/clothing/under/gear_harness
+	name = "gear harness"
+	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
+	icon_state = "gear_harness"
+	item_state = "gear_harness"  //We dont use golem do to being a item, item without faces making it default to error suit sprites.
+	body_parts_covered = CHEST|GROIN

@@ -22,7 +22,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/golem_shell/Initialize()
+/obj/item/disk/design_disk/plant_disk/Initialize()
 	. = ..()
 	var/datum/design/diskplantgene/P = new
 	blueprints[1] = P

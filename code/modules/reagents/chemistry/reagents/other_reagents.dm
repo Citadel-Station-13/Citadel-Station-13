@@ -196,11 +196,11 @@
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
-/datum/reagent/water/holywater/on_mob_add(mob/living/L)
+/datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, id)
 
-/datum/reagent/water/holywater/on_mob_delete(mob/living/L)
+/datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, id)
 	..()
 
@@ -1240,12 +1240,12 @@
 	color = "E1A116"
 	taste_description = "sourness"
 
-/datum/reagent/stimulum/on_mob_add(mob/living/L)
+/datum/reagent/stimulum/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 
-/datum/reagent/stimulum/on_mob_delete(mob/living/L)
+/datum/reagent/stimulum/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	..()
@@ -1265,11 +1265,11 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/nitryl/on_mob_add(mob/living/L)
+/datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/nitryl/on_mob_delete(mob/living/L)
+/datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
@@ -1722,7 +1722,7 @@
 	H.update_transform()
 	..()
 
-/datum/reagent/growthserum/on_mob_delete(mob/living/M)
+/datum/reagent/growthserum/on_mob_end_metabolize(mob/living/M)
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
@@ -1776,11 +1776,11 @@
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-/datum/reagent/pax/on_mob_add(mob/living/L)
+/datum/reagent/pax/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_PACIFISM, id)
 
-/datum/reagent/pax/on_mob_delete(mob/living/L)
+/datum/reagent/pax/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_PACIFISM, id)
 	..()
 
@@ -1792,11 +1792,11 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
-/datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
-/datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
@@ -1813,14 +1813,14 @@
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/peaceborg/confuse
+/datum/reagent/peaceborg_confuse
 	name = "Dizzying Solution"
 	id = "dizzysolution"
 	description = "Makes the target off balance and dizzy"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "dizziness"
 
-/datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_confuse/on_mob_life(mob/living/carbon/M)
 	if(M.confused < 6)
 		M.confused = CLAMP(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
@@ -1829,14 +1829,14 @@
 		to_chat(M, "You feel confused and disorientated.")
 	..()
 
-/datum/reagent/peaceborg/tire
+/datum/reagent/peaceborg_tire
 	name = "Tiring Solution"
 	id = "tiresolution"
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "tiredness"
 
-/datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_tire/on_mob_life(mob/living/carbon/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
@@ -2128,13 +2128,13 @@
 	M.adjustStaminaLoss(-5*REM)
 	. = ..()
 
-/datum/reagent/syndicateadrenals/on_mob_add(mob/living/M)
+/datum/reagent/syndicateadrenals/on_mob_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
 		M.next_move_modifier *= 0.5
 		to_chat(M, "<span class='notice'>You feel an intense surge of energy rushing through your veins.</span>")
 
-/datum/reagent/syndicateadrenals/on_mob_delete(mob/living/M)
+/datum/reagent/syndicateadrenals/on_mob_end_metabolize(mob/living/M)
 	. = ..()
 	if(istype(M))
 		M.next_move_modifier *= 2

@@ -688,7 +688,7 @@
 	key = "dab"
 	key_third_person = "suddenly hits a dab"
 	message = "suddenly hits a dab!"
-	emote_type = EMOTE_AUDIBLE
+	restraint_check = TRUE
 
 /datum/emote/living/dab/run_emote(mob/living/user, params)
 	if (ishuman(user))

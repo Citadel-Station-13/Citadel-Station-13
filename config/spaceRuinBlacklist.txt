@@ -48,3 +48,4 @@
 #_maps/RandomRuins/SpaceRuins/augmentationfacility.dmm
 #_maps/RandomRuins/SpaceRuins/bigape.dmm
 #_maps/RandomRuins/SpaceRuins/arcade.dmm
+#_maps/RandomRuins/SpaceRuins/spacehermit.dmm

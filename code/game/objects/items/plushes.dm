@@ -627,6 +627,20 @@
 	icon_state = "plushie_awake"
 	item_state = "plushie_awake"
 
+/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/edit_complainer)
+
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('sound/voice/scream/scream_moth.ogg' = 1)
+
 /obj/item/toy/plush/mothplushie
 	name = "insect plushie"
 	desc = "An adorable stuffed toy that resembles some kind of insect"
@@ -918,7 +932,3 @@
     item_state = "fermis"
     attack_verb = list("cuddled", "petpatted", "wigglepurred")
     squeak_override = list('sound/voice/merowr.ogg' = 1)
-
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/edit_complainer)

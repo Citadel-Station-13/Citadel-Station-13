@@ -103,3 +103,23 @@
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/dart
+	name = "dart gun"
+	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
+	icon_state = "dartgun"
+	item_state = "dartgun"
+	materials = list(MAT_METAL=2000, MAT_GLASS=500)
+	suppressed = TRUE //Softer fire sound
+	can_unsuppress = FALSE
+
+/obj/item/gun/syringe/dart/Initialize()
+	..()
+	chambered = new /obj/item/ammo_casing/syringegun/dart(src)
+
+/obj/item/gun/syringe/dart/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
+	if(istype(A, /obj/item/reagent_containers/syringe/dart))
+		..()
+	else
+		to_chat(user, "<span class='notice'>You can't put the [A] into \the [src]!</span>")
+		return FALSE
