@@ -10,7 +10,8 @@
 					/obj/item/reagent_containers/medspray/styptic = 2,
 					/obj/item/reagent_containers/medspray/silver_sulf = 2,
 					/obj/item/reagent_containers/pill/charcoal = 2,
-					/obj/item/reagent_containers/medspray/sterilizine = 1)
+					/obj/item/reagent_containers/medspray/sterilizine = 1,
+					/obj/item/reagent_containers/syringe/dart = 10)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
 	                  /obj/item/reagent_containers/pill/morphine = 2)
 	premium = list(/obj/item/reagent_containers/medspray/synthflesh = 2)
