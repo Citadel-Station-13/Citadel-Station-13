@@ -1385,18 +1385,12 @@
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
 
-/*		BALLS - GLORIOUS BALLS
-//
-//	Includes:-
-//		1) Tennis balls, lines 10 - 92
-//
-//
-//
-*/
+// BALLS - GLORIOUS BALLS
 
 /obj/item/toy/tennis
 	name = "tennis ball"
 	desc = "A classical tennis ball. It appears to have faint bite marks scattered all over its surface."
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "tennis_classic"
 	lefthand_file = 'icons/mob/inhands/misc/balls_left.dmi'
 	righthand_file = 'icons/mob/inhands/misc/balls_right.dmi'

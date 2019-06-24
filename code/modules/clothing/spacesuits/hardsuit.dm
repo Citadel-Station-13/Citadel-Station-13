@@ -910,28 +910,13 @@
 
 	add_overlay(helm_overlay)
 
-	emissivelights()
 
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/equipped(mob/user, slot)
-	..()
-	if(slot == SLOT_HEAD)
-		emissivelights()
-
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/dropped(mob/user)
-	..()
-	emissivelightsoff()
-
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/proc/emissivelights(mob/user = usr)
-	var/mutable_appearance/energy_overlay = mutable_appearance('icons/mob/head.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-	energy_overlay.color = energy_color
-	energy_overlay.plane = LIGHTING_PLANE + 1
-	user.cut_overlay(energy_overlay)	//honk
-	user.add_overlay(energy_overlay)	//honk
-
-/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/proc/emissivelightsoff(mob/user = usr)
-	user.cut_overlay()
-	linkedsuit.emissivelights()	//HONK HONK HONK MAXIMUM SPAGHETTI
-	user.regenerate_icons()    //honk
+/obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+		energy_overlay.color = energy_color
+		. += energy_overlay
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight
 	icon_state = "knight_cydonia"
@@ -980,32 +965,19 @@
 
 	add_overlay(suit_overlay)
 
-/obj/item/clothing/suit/space/hardsuit/lavaknight/equipped(mob/user, slot)
-	..()
-	if(slot == SLOT_WEAR_SUIT)
-		emissivelights()
+/obj/item/clothing/suit/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/energy_overlay
+		if(taurmode == SNEK_TAURIC)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+		else if(taurmode == PAW_TAURIC)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+		else
+			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
 
-/obj/item/clothing/suit/space/hardsuit/lavaknight/dropped(mob/user)
-	..()
-	emissivelightsoff()
-
-/obj/item/clothing/suit/space/hardsuit/lavaknight/proc/emissivelights(mob/user = usr)
-	var/mutable_appearance/energy_overlay
-	if(taurmode == SNEK_TAURIC)
-		energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-	else if(taurmode == PAW_TAURIC)
-		energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-	else
-		energy_overlay = mutable_appearance('icons/mob/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-
-	energy_overlay.color = energy_color
-	energy_overlay.plane = LIGHTING_PLANE + 1
-	user.cut_overlay(energy_overlay)	//honk
-	user.add_overlay(energy_overlay)	//honk
-
-/obj/item/clothing/suit/space/hardsuit/lavaknight/proc/emissivelightsoff(mob/user = usr)
-	user.cut_overlays()
-	user.regenerate_icons()    //honk
+		energy_overlay.color = energy_color
+		. += energy_overlay
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/AltClick(mob/living/user)
 	if(user.incapacitated() || !istype(user))
@@ -1022,13 +994,12 @@
 			energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 			user.update_inv_wear_suit()
 			if(linkedhelm)
-				linkedhelm.energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+				linkedhelm.energy_color = energy_color
 				user.update_inv_head()
 				linkedhelm.update_icon()
 			update_icon()
 			user.update_inv_wear_suit()
 			light_color = energy_color
-			emissivelights()
 			update_light()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/examine(mob/user)

@@ -10,7 +10,6 @@
 /obj/item/clothing/under/trek
 	name = "\improper Section 31 uniform"
 	desc = "Oooh... right."
-	item_state = ""
 	can_adjust = FALSE	//to prevent you from "wearing it casually"
 
 //TOS
