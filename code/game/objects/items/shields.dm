@@ -170,7 +170,7 @@
 	name = "tower shield"
 	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
 	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
-	icon_state = "metal"
+	item_state = "metal"
 	block_chance = 75 //1/4 shots will hit*
 	force = 10
 	slowdown = 2

@@ -299,3 +299,9 @@
 	suffix = "arcade.dmm"
 	name = "Space Arcade"
 	description = "A lonely arcade in the depths of space."
+
+/datum/map_template/ruin/space/hermit
+	id = "spacehermit"
+	suffix = "spacehermit.dmm"
+	name = "Space Hermit"
+	description = "A late awakening cryo pod in a crashed escape pod wakes up to find what befell of his fellow survivors. Contains all the necessary resources to actually make it out alive. Good luck."

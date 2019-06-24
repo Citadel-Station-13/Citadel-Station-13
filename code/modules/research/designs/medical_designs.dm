@@ -92,6 +92,36 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medicinalsmartdart
+	name = "Medicinal Smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	id = "medicinalsmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 100, MAT_PLASTIC = 100, MAT_METAL = 100)
+	build_path = /obj/item/reagent_containers/syringe/dart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/bluespacesmartdart
+	name = "bluespace smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented. Has an extended volume capacity thanks to bluespace foam."
+	id = "bluespacesmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 250, MAT_PLASTIC = 250, MAT_METAL = 250, MAT_BLUESPACE = 250)
+	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/smartdartgun
+	name = "dart gun"
+	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
+	id = "smartdartgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_PLASTIC = 1000, MAT_METAL = 500)
+	build_path = /obj/item/gun/syringe/dart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/bluespacebodybag
 	name = "Bluespace Body Bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
