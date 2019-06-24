@@ -417,15 +417,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/clownsword
-	name = "Bananium Energy Sword"
-	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
-	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
-	item = /obj/item/melee/transforming/energy/sword/bananium
-	cost = 3
-	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/dangerous/flechettegun
 	name = "Flechette Launcher"
 	desc = "A compact bullpup that fires micro-flechettes.\
@@ -435,7 +426,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 12
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
->>>>>>> refs/remotes/Citadel-Station-13/master
 
 /datum/uplink_item/badass/rapid
 	name = "Gloves of the North Star"
