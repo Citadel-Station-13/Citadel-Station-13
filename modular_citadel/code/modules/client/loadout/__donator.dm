@@ -404,3 +404,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/commjacket
 	ckeywhitelist = list("sadisticbatter")
+
+/datum/gear/mw2_russian_para
+	name = "Russian Paratrooper Jumper"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/mw2_russian_para
+	ckeywhitelist = list("investigator77")
