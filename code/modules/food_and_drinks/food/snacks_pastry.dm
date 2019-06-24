@@ -28,7 +28,7 @@
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.mind && H.mind.assigned_role == "Security Officer" || H.mind.assigned_role == "Detective" || H.mind.assigned_role == "Warden" || H.mind.assigned_role == "Head of Security" && !H.has_trait(TRAIT_AGEUSIA))
+			if(H.mind && H.mind.assigned_role == "Security Officer" || H.mind.assigned_role == "Detective" || H.mind.assigned_role == "Warden" || H.mind.assigned_role == "Head of Security" && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>I love this taste!</span>")
 				H.adjust_disgust(-5 + -2.5 * fraction)
 				GET_COMPONENT_FROM(mood, /datum/component/mood, H)

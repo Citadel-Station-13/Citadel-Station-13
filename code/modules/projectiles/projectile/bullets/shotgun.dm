@@ -18,6 +18,7 @@
 /obj/item/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
 	damage = 5
+	stamina = 20
 	knockdown = 100
 	stutter = 5
 	jitter = 20
