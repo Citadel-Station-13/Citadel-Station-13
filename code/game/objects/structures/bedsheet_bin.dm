@@ -239,7 +239,7 @@ LINEN BINS
 
 /obj/item/bedsheet/gondola
 	name = "gondola bedsheet"
-	desc = "A bedsheet made of the skin of a rare and peculiar critter."
+	desc = "A precious bedsheet made from the hide of a rare and peculiar critter."
 	icon_state = "sheetgondola"
 	item_color = "cargo"
 	var/g_mouth
