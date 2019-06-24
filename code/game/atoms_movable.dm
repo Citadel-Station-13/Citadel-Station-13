@@ -31,6 +31,7 @@
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
+	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
 
 /atom/movable/vv_edit_var(var_name, var_value)
@@ -296,14 +297,7 @@
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
 
-	if (orbiters)
-		for (var/thing in orbiters)
-			var/datum/orbit/O = thing
-			O.Check()
-	if (orbiting)
-		orbiting.Check()
-
-	return 1
+	return TRUE
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(proximity_monitor)
@@ -324,6 +318,10 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
+
+	if(orbiting)
+		orbiting.end_orbit(src)
+		orbiting = null
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()

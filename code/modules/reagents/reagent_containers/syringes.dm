@@ -259,3 +259,92 @@
 
 /obj/item/reagent_containers/syringe/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "pouch")
+
+/obj/item/reagent_containers/syringe/dart
+	name = "medicinal smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	volume = 20
+	amount_per_transfer_from_this = 20
+	icon_state = "empty"
+	item_state = "syringe_empty"
+	var/emptrig = FALSE
+
+/obj/item/reagent_containers/syringe/dart/afterattack(atom/target, mob/user , proximity)
+
+	if(busy)
+		return
+	if(!proximity)
+		return
+	if(!target.reagents)
+		return
+
+	var/mob/living/L
+	if(isliving(target))
+		L = target
+		if(!L.can_inject(user, 1))
+			return
+
+	switch(mode)
+		if(SYRINGE_DRAW)
+
+			if(reagents.total_volume >= reagents.maximum_volume)
+				to_chat(user, "<span class='notice'>The dart is full!</span>")
+				return
+
+			if(L) //living mob
+				to_chat(user, "<span class='warning'>You can't draw blood using a dart!</span>")
+				return
+
+			else //if not mob
+				if(!target.reagents.total_volume)
+					to_chat(user, "<span class='warning'>[target] is empty!</span>")
+					return
+
+				if(!target.is_drawable())
+					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
+					return
+
+				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+
+				to_chat(user, "<span class='notice'>You soak the [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
+			if (reagents.total_volume >= reagents.maximum_volume)
+				mode=!mode
+				update_icon()
+
+		if(SYRINGE_INJECT)
+			src.visible_message("<span class='danger'>The smartdart gives a frustrated boop! It's fully saturated; You need to shoot someone with it!</span>")
+
+/obj/item/reagent_containers/syringe/dart/attack_self(mob/user)
+	return
+
+/obj/item/reagent_containers/syringe/dart/update_icon()
+	cut_overlays()
+	var/rounded_vol
+
+	rounded_vol = "empty"
+	if(reagents && reagents.total_volume)
+		if(volume/reagents.total_volume == 1)
+			rounded_vol="full"
+
+	icon_state = "[rounded_vol]"
+	item_state = "syringe_[rounded_vol]"
+	if(ismob(loc))
+		var/mob/M = loc
+		var/injoverlay
+		switch(mode)
+			if (SYRINGE_DRAW)
+				injoverlay = "draw"
+			if (SYRINGE_INJECT)
+				injoverlay = "ready"
+		add_overlay(injoverlay)
+		M.update_inv_hands()
+
+/obj/item/reagent_containers/syringe/dart/emp_act(severity)
+	emptrig = TRUE
+	..()
+
+/obj/item/reagent_containers/syringe/dart/bluespace
+	name = "bluespace smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented. Has an extended volume capacity thanks to bluespace foam."
+	amount_per_transfer_from_this = 50
+	volume = 50

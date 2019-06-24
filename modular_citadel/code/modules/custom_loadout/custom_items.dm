@@ -494,3 +494,14 @@
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/commjacket
+	name = "Dusty Commisar's Cloak"
+	desc = "An Imperial Commisar's Coat, straight from the frontline of battle, filled with dirt, bulletholes, and dozens of little pockets. Alongside a curious golden eagle sitting on it's left breast, the marking '200th Venoland' is clearly visible on the inner workings of the coat. It certainly holds an imposing flair, however."
+	icon_state = "commjacket"
+	item_state = "commjacket"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+

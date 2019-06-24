@@ -371,28 +371,6 @@
 	parts = list(/obj/item/camera = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/lizardhat
-	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
-	time = 10
-	reqs = list(/obj/item/organ/tail/lizard = 1)
-	category = CAT_MISC
-
-/datum/crafting_recipe/lizardhat_alternate
-	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
-	time = 10
-	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
-	category = CAT_MISC
-
-/datum/crafting_recipe/kittyears
-	name = "Kitty Ears"
-	result = /obj/item/clothing/head/kitty/genuine
-	time = 10
-	reqs = list(/obj/item/organ/tail/cat = 1,
-				/obj/item/organ/ears/cat = 1)
-	category = CAT_MISC
-
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/ridden/scooter/skateboard
@@ -653,6 +631,15 @@
 				  /obj/item/assembly/igniter = 1)
 	category = CAT_MISC
 
+
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/rods = 8)
+	time = 100
+	category = CAT_MISC
+
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
 	result = /obj/item/twohanded/rcl/ghetto
@@ -683,6 +670,28 @@
 		        /obj/item/stack/cable_coil = 10)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
+
+/datum/crafting_recipe/lizardhat
+	name = "Lizard Cloche Hat"
+	result = /obj/item/clothing/head/lizard
+	time = 10
+	reqs = list(/obj/item/organ/tail/lizard = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/lizardhat_alternate
+	name = "Lizard Cloche Hat"
+	result = /obj/item/clothing/head/lizard
+	time = 10
+	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/kittyears
+	name = "Kitty Ears"
+	result = /obj/item/clothing/head/kitty/genuine
+	time = 10
+	reqs = list(/obj/item/organ/tail/cat = 1,
+				/obj/item/organ/ears/cat = 1)
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
@@ -793,3 +802,36 @@
 				/datum/reagent/water  = 15)
 	time = 40
 	category = CAT_MISC
+
+/datum/crafting_recipe/smartdart
+	name = "Medical smartdart"
+	result =  /obj/item/reagent_containers/syringe/dart
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+	/obj/item/stack/sheet/glass = 1,
+	/obj/item/stack/sheet/plastic = 1)
+	time = 10
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/medolier
+	name = "Medolier"
+	result =  /obj/item/storage/belt/medolier
+	reqs = list(/obj/item/stack/sheet/metal = 2,
+	/obj/item/stack/sheet/cloth = 3,
+	/obj/item/stack/sheet/plastic = 4)
+	time = 30
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO
+
+/datum/crafting_recipe/smartdartgun
+	name = "Smart dartgun"
+	result =  /obj/item/gun/syringe/dart
+	reqs = list(/obj/item/stack/sheet/metal = 15,
+	/obj/item/stack/sheet/glass = 10,
+	/obj/item/tank/internals = 1,
+	/obj/item/reagent_containers/glass/beaker = 1,
+	/obj/item/stack/sheet/plastic = 10,
+	/obj/item/stack/cable_coil = 2)
+	time = 150 //It's a gun
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON

@@ -24,4 +24,4 @@
 	e_cost = 40
 	fire_sound = 'sound/weapons/taser2.ogg'
 	harmful = FALSE
-	click_cooldown_override = 3
+	click_cooldown_override = 3.5
