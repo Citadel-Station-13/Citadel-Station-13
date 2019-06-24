@@ -224,8 +224,7 @@
 		var/obj/item/storage/box/mre/M = A
 		var/our_chance = initial(M.spawner_chance)
 		if(our_chance)
-			loot += M
-			loot[M] = our_chance
+			LAZYSET(loot, M, our_chance)
 	return ..()
 
 
