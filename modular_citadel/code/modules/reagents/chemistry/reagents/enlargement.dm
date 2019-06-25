@@ -155,7 +155,7 @@
 	B.update()
 	..()
 
-/datum/reagent/fermi/PEsmaller/hypo
+/datum/reagent/fermi/BEsmaller/hypo
 	name = "Modesty milk"
 	id = "BEsmaller_hypo"
 	description = "A medicine used to treat organomegaly in a patient's breasts."
