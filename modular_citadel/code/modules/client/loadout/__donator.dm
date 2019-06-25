@@ -410,3 +410,9 @@ datum/gear/darksabresheath
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/mw2_russian_para
 	ckeywhitelist = list("investigator77")
+
+/datum/gear/longblackgloves
+	name = "Luna's Gauntlets"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/suit/commjacket
+	ckeywhitelist = list("bigmanclancy")
