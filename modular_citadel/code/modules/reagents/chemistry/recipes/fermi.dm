@@ -18,7 +18,7 @@
 		pH = 7
 	var/ImpureTot = 0
 	var/turf/T = get_turf(my_atom)
-	
+
 	if(temp>500)//if hot, start a fire
 		switch(temp)
 			if (500 to 750)
@@ -89,6 +89,8 @@
 	PurityMin			= 0.4 //The minimum purity something has to be above, otherwise it explodes.
 
 /datum/chemical_reaction/fermi/eigenstate/FermiFinish(datum/reagents/holder, var/atom/my_atom)//Strange how this doesn't work but the other does.
+	if(!locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list)
+		return
 	var/turf/open/location = get_turf(my_atom)
 	var/datum/reagent/fermi/eigenstate/E = locate(/datum/reagent/fermi/eigenstate) in my_atom.reagents.reagent_list
 	if(location)
@@ -397,6 +399,8 @@
 
 
 /datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	if(!locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list)
+		return
 	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
 	Fa.data = 3
 
@@ -423,6 +427,8 @@
 
 
 /datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	if(!locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list)
+		return
 	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
 	Fb.data = 11
 

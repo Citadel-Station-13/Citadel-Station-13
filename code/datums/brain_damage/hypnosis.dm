@@ -15,6 +15,9 @@
 		hypnotic_phrase = phrase
 	else
 		friendliify(phrase)
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='danger'>Hypnosis New() skipped due to try/catch incompatibility with admin proccalling.</span>")
+		qdel(src)
 	try
 		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	catch(var/exception/e)

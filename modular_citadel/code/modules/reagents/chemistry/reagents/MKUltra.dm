@@ -145,6 +145,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	var/mob/living/creator
 	pH = 10
 	OnMobMergeCheck = TRUE //Procs on_mob_add when merging into a human
+	can_synth = FALSE
+
 
 /datum/reagent/fermi/enthrall/test
 	name = "MKUltraTest"
@@ -309,7 +311,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/victim in seen)
-			if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (M.stat == DEAD))
+			if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (M.stat == DEAD) || (isliving(victim)))
 				seen = seen - victim
 		if(seen.len == 0)
 			return

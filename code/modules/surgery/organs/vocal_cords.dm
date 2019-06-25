@@ -1148,7 +1148,7 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(2 to INFINITY)//Tier 2 only
+				if(2 to INFINITY)
 					var/items = H.get_contents()
 					for(var/obj/item/W in items)
 						if(W == H.w_uniform || W == H.wear_suit)
@@ -1156,24 +1156,24 @@
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='[(H.lewd?"love":"warning")]'>Before you can even think about it, you quickly remove your clothes in response to [(H.lewd?"your [E.enthrallGender]'s command'":"[E.master]'s directive'")].</b></span>"), 5)
 					E.cooldown += 10
 
-	//WALK doesn't work? it does, randomly, work now
+	//WALK
 	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(2 to INFINITY)//Tier 2 only
+				if(2 to INFINITY)
 					if(L.m_intent != MOVE_INTENT_WALK)
 						L.toggle_move_intent()
 						E.cooldown += 1
 
-	//RUN doesn't work? Nope, it randomly works now
+	//RUN
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(2 to INFINITY)//Tier 2 only
+				if(2 to INFINITY)
 					if(L.m_intent != MOVE_INTENT_RUN)
 						L.toggle_move_intent()
 						E.cooldown += 1
@@ -1184,7 +1184,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(2 to INFINITY)//Tier 2 only
+				if(2 to INFINITY)
 					L.lay_down()
 					E.cooldown += 10
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "[(L.lewd?"<span class='love'>You eagerly lie down!":"<span class='notice'>You suddenly lie down!'")]</b></span>"), 5)
@@ -1195,7 +1195,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(2 to INFINITY)//Tier 2 only
+				if(2 to INFINITY)
 					L.Knockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!'</b></span>"), 5)
@@ -1342,7 +1342,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3 to INFINITY)
 					L.Stun(40 * power_multiplier)
 					E.cooldown += 8
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>Your muscles freeze up!</b></span>"), 5)
@@ -1353,7 +1353,7 @@
 			var/mob/living/carbon/C = V
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3 to INFINITY)
 					new /datum/hallucination/delusion(C, TRUE, null,150 * power_multiplier,0)
 
 	//HOT
@@ -1362,7 +1362,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3 to INFINITY)
 					L.adjust_bodytemperature(50 * power_multiplier)//This seems nuts, reduced it, but then it didn't do anything, so I reverted it.
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism speed up!</b></span>"), 5)
 
@@ -1372,7 +1372,7 @@
 			var/mob/living/L = V
 			var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)
 			switch(E.phase)
-				if(3 to INFINITY)//Tier 3 only
+				if(3 to INFINITY)
 					L.adjust_bodytemperature(-50 * power_multiplier)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel your metabolism slow down!</b></span>"), 5)
 

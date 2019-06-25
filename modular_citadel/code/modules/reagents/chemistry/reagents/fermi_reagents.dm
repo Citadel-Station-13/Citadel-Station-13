@@ -99,6 +99,8 @@
 		hatArmor = (purity/10)
 	else
 		hatArmor = - (purity/10)
+	if(hatArmor > 90)
+		return ..()
 	var/obj/item/W = M.head
 	W.armor = W.armor.modifyAllRatings(hatArmor)
 	..()
@@ -139,7 +141,7 @@
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					if((victim == /mob/living/simple_animal/pet/) || (victim == M))
+					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
 						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
@@ -160,7 +162,7 @@
 			if(prob(20))
 				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
 				for(var/victim in seen)
-					if((victim = /mob/living/simple_animal/pet/) || (victim == M))
+					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
 						seen = seen - victim
 				if(seen)
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
@@ -246,10 +248,15 @@
 	taste_description = "acid burns, ow"
 	color = "#FFFFFF"
 	pH = 0
+	can_synth = FALSE
 
 /datum/reagent/fermi/fermiAcid/reaction_mob(mob/living/carbon/C, method)
 	var/target = C.get_bodypart(BODY_ZONE_CHEST)
-	var/acidstr = ((5-C.reagents.pH)*2)
+	var/acidstr
+	if(!C.reagents.pH || C.reagents.pH >5)
+		acidstr = 3
+	else
+		acidstr = ((5-C.reagents.pH)*2) //runtime - null.pH ?
 	C.adjustFireLoss(acidstr/2, 0)
 	if((method==VAPOR) && (!C.wear_mask))
 		if(prob(20))
@@ -283,6 +290,7 @@
 	id = "fermiTest"
 	description = "You should be really careful with this...! Also, how did you get this?"
 	addProc = TRUE
+	can_synth = FALSE
 
 /datum/reagent/fermi/fermiTest/on_new(datum/reagents/holder)
 	..()
@@ -318,6 +326,7 @@
 	description = "You should be really careful with this...! Also, how did you get this? You shouldn't have this!"
 	data = "merge"
 	color = "FFFFFF"
+	can_synth = FALSE
 
 //I'm concerned this is too weak, but I also don't want deathmixes.
 /datum/reagent/fermi/fermiTox/on_mob_life(mob/living/carbon/C, method)

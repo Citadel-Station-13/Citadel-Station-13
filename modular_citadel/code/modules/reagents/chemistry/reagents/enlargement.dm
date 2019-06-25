@@ -19,7 +19,7 @@
 //OD is low for a reason. I'd like fermichems to have low ODs, and dangerous ODs, and since this is a meme chem that everyone will rush to make, it'll be a lesson learnt early.
 
 /datum/reagent/fermi/breast_enlarger
-	name = "Sucubus milk"
+	name = "Succubus milk"
 	id = "breast_enlarger"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
@@ -133,7 +133,7 @@
 	..()
 
 /datum/reagent/fermi/BEsmaller
-	name = "Sucubus milk"
+	name = "Succubus milk"
 	id = "BEsmaller"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255

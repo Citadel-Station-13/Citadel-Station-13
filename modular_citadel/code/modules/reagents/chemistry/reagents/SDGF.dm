@@ -195,6 +195,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	name = "synthetic-derived growth factor"
 	id = "SDGFheal"
 	metabolization_rate = 1
+	can_synth = FALSE
 
 /datum/reagent/fermi/SDGFheal/on_mob_life(mob/living/carbon/M)//Used to heal the clone after splitting, the clone spawns damaged. (i.e. insentivies players to make more than required, so their clone doesn't have to be treated)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
