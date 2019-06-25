@@ -252,7 +252,7 @@
 		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma]/breath.total_moles())*breath_pressure
 		if(miasma_partialpressure > MINIMUM_MOLES_DELTA_TO_MOVE)
 
-			if(prob(1 * miasma_partialpressure))
+			if(prob(0.05 * miasma_partialpressure))
 				var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
 				miasma_disease.name = "Unknown"
 				ForceContractDisease(miasma_disease, TRUE, TRUE)
@@ -345,7 +345,7 @@
 
 	var/list/cached_gases = miasma_turf.air.gases
 
-	cached_gases[/datum/gas/miasma] += 0.02
+	cached_gases[/datum/gas/miasma] += 0.1
 
 /mob/living/carbon/proc/handle_blood()
 	return
