@@ -417,7 +417,6 @@
 	icon_state = "flagcape"
 	item_state = "flagcape"
 
-
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
