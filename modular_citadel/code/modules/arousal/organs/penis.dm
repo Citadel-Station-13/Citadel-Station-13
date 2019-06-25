@@ -60,7 +60,7 @@
 
 	if (round(length) > round(prev_length))
 		to_chat(o, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("swells up to", "flourishes into", "expands into", "bursts forth into", "grows eagerly into", "amplifys into")] a [uppertext(round(length))] inch penis.</b></span>")
-	else if (round(length) < round(prev_length))
+	else if ((round(length) < round(prev_length)) && (length > 0.5))
 		to_chat(o, "<span class='warning'>Your [pick(GLOB.gentlemans_organ_names)] [pick("shrinks down to", "decreases into", "diminishes into", "deflates into", "shrivels regretfully into", "contracts into")] a [uppertext(round(length))] inch penis.</b></span>")
 	prev_length = length
 	icon_state = sanitize_text("penis_[shape]_[size]")

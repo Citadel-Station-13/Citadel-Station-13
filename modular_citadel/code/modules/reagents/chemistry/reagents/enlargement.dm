@@ -173,7 +173,7 @@
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
-	metabolization_rate = 0.25
+	metabolization_rate = 0.5
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.35
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.

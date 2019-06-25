@@ -143,7 +143,7 @@
 				for(var/victim in seen)
 					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
 						seen = seen - victim
-				if(seen)
+				if(LAZYLEN(seen))
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(16)
 			T = M.getorganslot(ORGAN_SLOT_TONGUE)
@@ -164,7 +164,7 @@
 				for(var/victim in seen)
 					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
 						seen = seen - victim
-				if(seen)
+				if(LAZYLEN(seen))
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 	..()
 

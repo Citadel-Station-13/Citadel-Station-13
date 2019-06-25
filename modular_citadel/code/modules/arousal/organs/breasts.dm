@@ -123,7 +123,7 @@
 			to_chat(owner, "<span class='warning'>Your breasts [pick("swell up to", "flourish into", "expand into", "burst forth into", "grow eagerly into", "amplify into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner
 			H.Force_update_genitals()
-		else if (breast_values[size] < breast_values[prev_size])
+		else if ((breast_values[size] < breast_values[prev_size]) && (breast_values[size] > 0.5))
 			to_chat(owner, "<span class='warning'>Your breasts [pick("shrink down to", "decrease into", "diminish into", "deflate into", "shrivel regretfully into", "contracts into")] a [uppertext(size)]-cup.</b></span>")
 			var/mob/living/carbon/human/H = owner
 			H.Force_update_genitals()
