@@ -131,6 +131,24 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
+/datum/export/large/gas_canister
+	cost = 10 //Base cost of canister. You get more for nice gases inside.
+	unit_name = "Gas Canister"
+	export_types = list(/obj/machinery/portable_atmospherics/canister)
+/datum/export/large/gas_canister/get_cost(obj/O)
+	var/obj/machinery/portable_atmospherics/canister/C = O
+	var/worth = 10
+	var/gases = C.air_contents.gases
+
+	worth += gases[/datum/gas/bz]*4	
+	worth += gases[/datum/gas/stimulum]*25
+	worth += gases[/datum/gas/hypernoblium]*1000
+	worth += gases[/datum/gas/miasma]*15
+	worth += gases[/datum/gas/tritium]*7
+	worth += gases[/datum/gas/pluoxium]*6
+	worth += gases[/datum/gas/nitryl]*30
+	return worth
+
 /datum/export/large/odysseus
 	cost = 5500
 	unit_name = "working odysseus"
