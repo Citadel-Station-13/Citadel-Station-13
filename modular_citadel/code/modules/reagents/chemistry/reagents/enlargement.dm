@@ -157,6 +157,7 @@
 
 /datum/reagent/fermi/PEsmaller/hypo
 	name = "Modesty milk"
+	id = "BEsmaller_hypo"
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,4 +292,5 @@
 
 /datum/reagent/fermi/PEsmaller/hypo
 	name = "Chastity draft"
+	id = "PEsmaller_hypo"
 	description = "A medicine used to treat organomegaly in a patient's penis."
