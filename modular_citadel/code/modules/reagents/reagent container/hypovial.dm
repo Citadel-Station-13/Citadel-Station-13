@@ -14,7 +14,8 @@
 						"green hypovial" = "hypovial-a",
 						"orange hypovial" = "hypovial-k",
 						"purple hypovial" = "hypovial-p",
-						"black hypovial" = "hypovial-t"
+						"black hypovial" = "hypovial-t",
+						"pink hypovial" = "hypovial-pink"
 						)
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
