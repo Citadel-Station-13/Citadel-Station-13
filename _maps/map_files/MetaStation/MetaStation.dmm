@@ -3130,7 +3130,6 @@
 /obj/item/storage/secure/briefcase{
 	pixel_x = -2
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/cartridge/detective,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -7894,10 +7893,6 @@
 "aoH" = (
 /obj/structure/table,
 /obj/item/folder/red,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/item/clothing/mask/gas/sechailer,
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -9770,10 +9765,6 @@
 /obj/item/folder/red,
 /obj/item/folder/red,
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ast" = (
@@ -15436,7 +15427,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/camera/detective,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -18192,8 +18182,6 @@
 /area/lawoffice)
 "aIV" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/pen/red,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching Prison Wing holding areas.";
@@ -18630,7 +18618,6 @@
 /area/security/courtroom)
 "aKb" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -23832,21 +23819,9 @@
 /area/security/courtroom)
 "aUJ" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
-	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
 	},
 /obj/machinery/airalarm{
 	dir = 8;
@@ -25149,7 +25124,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aXp" = (
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
@@ -27748,7 +27722,6 @@
 /area/security/checkpoint/engineering)
 "bbD" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -28464,10 +28437,6 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/machinery/light_switch{
 	pixel_y = 26
 	},
@@ -33879,10 +33848,6 @@
 /area/engine/break_room)
 "bnh" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/item/taperecorder{
 	pixel_x = -4
 	},
@@ -35857,7 +35822,6 @@
 /area/bridge)
 "bqV" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Captain's Quarters APC";
@@ -38744,9 +38708,6 @@
 /area/bridge)
 "bwt" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_y = 3
-	},
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 28
@@ -44361,10 +44322,6 @@
 	},
 /area/maintenance/port)
 "bHK" = (
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -49172,10 +49129,6 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bRG" = (
-/obj/item/book/manual/wiki/security_space_law{
-	name = "space law";
-	pixel_y = 2
-	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -52969,10 +52922,6 @@
 	pixel_x = 30
 	},
 /obj/item/folder/red,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = 3;
-	pixel_y = 4
-	},
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
@@ -54754,7 +54703,6 @@
 /obj/machinery/computer/secure_data{
 	dir = 8
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons from the safety of his office.";
 	dir = 8;
@@ -75347,10 +75295,6 @@
 /obj/machinery/camera{
 	c_tag = "Departure Lounge - Security Post";
 	dir = 1
-	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -4;
-	pixel_y = 4
 	},
 /obj/item/taperecorder{
 	pixel_x = 4

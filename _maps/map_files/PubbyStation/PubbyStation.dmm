@@ -4683,7 +4683,6 @@
 /area/crew_quarters/heads/hos)
 "amx" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "amy" = (
@@ -5719,7 +5718,6 @@
 /turf/open/floor/plating,
 /area/security/warden)
 "aoR" = (
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/reinforced,
@@ -16549,7 +16547,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -27161,7 +27158,6 @@
 /area/security/checkpoint/medical)
 "bmv" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -34896,7 +34892,6 @@
 	dir = 4;
 	network = list("ss13","rd")
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -43103,7 +43098,6 @@
 /area/storage/tech)
 "bUi" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/camera{
 	c_tag = "Engineering Security Post";
 	dir = 4
@@ -60523,7 +60517,6 @@
 /area/maintenance/department/engine)
 "uVf" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/pen/fountain,
 /obj/item/stamp/law,
 /turf/open/floor/carpet,

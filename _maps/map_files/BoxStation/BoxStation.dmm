@@ -1245,7 +1245,6 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acS" = (
-/obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -3251,8 +3250,6 @@
 /area/security/main)
 "ahd" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -3846,7 +3843,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aif" = (
@@ -4735,7 +4731,6 @@
 /area/security/courtroom)
 "ajQ" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6809,10 +6804,6 @@
 /area/security/courtroom)
 "aoH" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aoI" = (
@@ -7645,8 +7636,6 @@
 /area/lawoffice)
 "arb" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/pen/red,
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -22690,7 +22679,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/locker)
 "bbM" = (
-/obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
@@ -24680,7 +24668,6 @@
 /area/crew_quarters/heads/captain)
 "bgV" = (
 /obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/item/coin/plasma,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
@@ -24815,7 +24802,6 @@
 	pixel_y = 26;
 	req_access_txt = "5"
 	},
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -32078,7 +32064,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bxD" = (
-/obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -33492,7 +33477,6 @@
 /area/security/checkpoint/science)
 "bAH" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -41595,7 +41579,6 @@
 /area/security/checkpoint/engineering)
 "bTH" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
