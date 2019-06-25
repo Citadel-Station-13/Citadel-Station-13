@@ -467,6 +467,24 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
+/datum/asset/spritesheet/simple/minesweeper
+	name = "minesweeper"
+	assets = list(
+		"1" = 'icons/misc/minesweeper_tiles/one.png',
+		"2" = 'icons/misc/minesweeper_tiles/two.png',
+		"3" = 'icons/misc/minesweeper_tiles/three.png',
+		"4" = 'icons/misc/minesweeper_tiles/four.png',
+		"5" = 'icons/misc/minesweeper_tiles/five.png',
+		"6" = 'icons/misc/minesweeper_tiles/six.png',
+		"7" = 'icons/misc/minesweeper_tiles/seven.png',
+		"8" = 'icons/misc/minesweeper_tiles/eight.png',
+		"empty" = 'icons/misc/minesweeper_tiles/empty.png',
+		"flag" = 'icons/misc/minesweeper_tiles/flag.png',
+		"hidden" = 'icons/misc/minesweeper_tiles/hidden.png',
+		"mine" = 'icons/misc/minesweeper_tiles/mine.png',
+		"minehit" = 'icons/misc/minesweeper_tiles/minehit.png'
+	)
+
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
@@ -527,12 +545,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
-
-/datum/asset/spritesheet/minesweeper
-	name = "minesweeper"
-
-/datum/asset/spritesheet/minesweeper/register()
-	InsertAll("minesweeper", 'icons/misc/minesweeper_tiles.dmi')
 
 /datum/asset/spritesheet/goonchat
 	name = "chat"

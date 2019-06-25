@@ -41,7 +41,6 @@
 		/obj/item/toy/toy_xeno = ARCADE_WEIGHT_TRICK,
 		/obj/item/toy/windupToolbox = ARCADE_WEIGHT_TRICK,
 
-		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
 		/mob/living/simple_animal/bot/secbot/grievous/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/clothing/mask/facehugger/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
@@ -93,7 +92,7 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user)
+/obj/machinery/computer/arcade/proc/prizevend(mob/user, list/rarity_classes)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 
 	if(prob(1) && prob(1) && prob(1)) //Proper 1 in a million
@@ -101,7 +100,14 @@
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
 
 	if(!contents.len)
-		var/prizeselect = pickweight(prizes)
+		var/list/toy_raffle
+		if(rarity_classes)
+			for(var/A in prizes)
+				if(prizes[A] in rarity_classes)
+					LAZYSET(toy_raffle, A, prizes[A])
+		if(!toy_raffle)
+			toy_raffle = prizes
+		var/prizeselect = pickweight(toy_raffle)
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)
