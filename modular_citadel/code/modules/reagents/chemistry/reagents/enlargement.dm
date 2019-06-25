@@ -27,7 +27,7 @@
 	overdose_threshold = 12
 	metabolization_rate = 0.25
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.3
+	InverseChemVal 		= 0.35
 	InverseChem 		= "BEsmaller" //At really impure vols, it just becomes 100% inverse
 
 /datum/reagent/fermi/breast_enlarger/on_mob_add(mob/living/carbon/M)
@@ -155,6 +155,9 @@
 	B.update()
 	..()
 
+/datum/reagent/fermi/PEsmaller/hypo
+	name = "Modesty milk"
+	description = "A medicine used to treat organomegaly in a patient's breasts."
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
@@ -171,7 +174,7 @@
 	overdose_threshold = 12 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.25
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
-	InverseChemVal 		= 0.3
+	InverseChemVal 		= 0.35
 	InverseChem 		= "PEsmaller" //At really impure vols, it just becomes 100% inverse and shrinks instead.
 
 /datum/reagent/fermi/penis_enlarger/on_mob_add(mob/living/carbon/M)
@@ -265,7 +268,7 @@
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
 	name = "Incubus draft"
 	id = "PEsmaller"
-	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
+	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace."
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	metabolization_rate = 0.5
@@ -285,3 +288,7 @@
 	P.cached_length = P.cached_length - 0.1
 	P.update()
 	..()
+
+/datum/reagent/fermi/PEsmaller/hypo
+	name = "Chastity draft"
+	description = "A medicine used to treat organomegaly in a patient's penis."

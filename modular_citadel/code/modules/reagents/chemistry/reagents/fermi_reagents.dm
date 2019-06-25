@@ -184,7 +184,7 @@
 //Writen by Trilby!! Embellsished a little by me.
 
 /datum/reagent/fermi/nanite_b_gone
-	name = "Naninte bain"
+	name = "Naninte bane"
 	id = "nanite_b_gone"
 	description = "A stablised EMP that is highly volatile, shocking small nano machines that will kill them off at a rapid rate in a patient's system."
 	color = "#708f8f"

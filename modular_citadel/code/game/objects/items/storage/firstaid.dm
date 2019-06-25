@@ -103,6 +103,22 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/dexalin(src)
 
+/obj/item/storage/hypospraykit/enlarge
+	name = "organomegaly trauma hypospray kit"
+	icon_state = "enlarge-mini"
+	item_state = "firstaid-brute"
+
+/obj/item/storage/hypospraykit/enlarge/PopulateContents()
+	if(empty)
+		return
+	new /obj/item/hypospray/mkii(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction(src)
+
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"
 	icon_state = "brute-mini"

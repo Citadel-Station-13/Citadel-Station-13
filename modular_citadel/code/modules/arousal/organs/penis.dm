@@ -12,7 +12,7 @@
 	size 					= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 				= 6	//inches
 	var/cached_length			//used to detect a change in length
-	var/girth  				= 0
+	var/girth  				= 4.38
 	var/girth_ratio 		= COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags 		= list()

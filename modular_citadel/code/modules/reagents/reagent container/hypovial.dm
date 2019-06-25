@@ -146,6 +146,16 @@
 	icon_state = "hypovial"
 	comes_with = list("tricordrazine" = 30)
 
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
+	name = "pink hypovial (breast reduction)"
+	icon_state = "hypovial-p"
+	comes_with = list("BEsmaller" = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
+	name = "pink hypovial (penis reduction)"
+	icon_state = "hypovial-p"
+	comes_with = list("PEsmaller" = 30)
+
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	name = "deluxe hypovial"
 	icon_state = "hypoviallarge-cmos"

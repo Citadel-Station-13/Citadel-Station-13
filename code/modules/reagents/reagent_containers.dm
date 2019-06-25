@@ -16,6 +16,7 @@
 	var/disease_amount = 20
 	var/spillable = FALSE
 	var/beaker_weakness_bitflag = NONE//Bitflag!
+	var/container_HP = 2
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -160,7 +161,13 @@
 		if((reagents.pH < 0.5) || (reagents.pH > 13.5))
 			var/list/seen = viewers(5, get_turf(src))
 			var/iconhtml = icon2html(src, seen)
-			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the extreme pH!</span>")
-				playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
-			qdel(src)
+			container_HP--
+			if(container_HP <= 0)
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the extreme pH!</span>")
+					playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+				qdel(src)
+			else
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by the extreme pH and begins to deform!</span>")
+					playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)

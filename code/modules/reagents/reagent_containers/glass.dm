@@ -6,6 +6,7 @@
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
+	container_HP = 2
 
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
@@ -114,6 +115,7 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 	beaker_weakness_bitflag = PH_WEAK
+	container_HP = 3
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -165,6 +167,7 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	container_HP = 4
 
 /obj/item/reagent_containers/glass/beaker/plastic
 	name = "x-large beaker"
@@ -207,6 +210,7 @@
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_HP = 10//shouldn't be needed
 
 /obj/item/reagent_containers/glass/beaker/noreact/Initialize()
 	beaker_weakness_bitflag &= ~PH_WEAK
@@ -223,6 +227,7 @@
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
+	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)
@@ -279,6 +284,7 @@
 		SLOT_L_STORE, SLOT_R_STORE,\
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
+	container_HP = 2
 
 /obj/item/reagent_containers/glass/bucket/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
@@ -332,6 +338,7 @@
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
 	beaker_weakness_bitflag |= TEMP_WEAK
@@ -347,6 +354,7 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
