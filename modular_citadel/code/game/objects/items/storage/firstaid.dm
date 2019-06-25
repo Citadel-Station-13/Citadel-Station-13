@@ -111,7 +111,7 @@
 /obj/item/storage/hypospraykit/enlarge/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/hypospray/mkii(src)
+	new /obj/item/hypospray/mkii/enlarge(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction(src)
