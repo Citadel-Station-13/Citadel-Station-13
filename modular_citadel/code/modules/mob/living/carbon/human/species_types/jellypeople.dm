@@ -69,7 +69,7 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Cancel")
 	if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
@@ -114,7 +114,7 @@
 					O.Remove(H)
 				organ.forceMove(get_turf(H))
 				qdel(organ)
-				H.update_body()
+				H.update_genitals()
 
 	else if (select_alteration == "Ears")
 		var/list/snowflake_ears_list = list("Normal" = null)
@@ -194,5 +194,29 @@
 			if(new_taur != "None")
 				H.dna.features["mam_tail"] = "None"
 		H.update_body()
+
+	else if (select_alteration == "Penis")
+		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
+			qdel(X)
+		var/new_shape
+		new_shape = input(owner, "Choose your character's dong", "Genital Alteration") as null|anything in GLOB.cock_shapes_list
+		if(new_shape)
+			H.dna.features["cock_shape"] = new_shape
+		H.update_genitals()
+		H.give_penis()
+		H.apply_overlay()
+
+
+	else if (select_alteration == "Vagina")
+		for(var/obj/item/organ/genital/vagina/X in H.internal_organs)
+			qdel(X)
+		var/new_shape
+		new_shape = input(owner, "Choose your character's pussy", "Genital Alteration") as null|anything in GLOB.vagina_shapes_list
+		if(new_shape)
+			H.dna.features["vag_shape"] = new_shape
+		H.update_genitals()
+		H.give_vagina()
+		H.apply_overlay()
+
 	else
 		return
