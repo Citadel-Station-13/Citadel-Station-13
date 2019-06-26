@@ -101,7 +101,7 @@ Contents:
 		to_chat(H, "<span class='danger'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 		H.gib()
 		return FALSE
-	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) || !istype(H.head, /obj/item/clothing/head/hattip))//Fermichem edit, so ninjas can still use their suit with a fancy hat.
+	if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))
 		to_chat(H, "<span class='userdanger'>ERROR</span>: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
 		return FALSE
 	if(!istype(H.shoes, /obj/item/clothing/shoes/space_ninja))
