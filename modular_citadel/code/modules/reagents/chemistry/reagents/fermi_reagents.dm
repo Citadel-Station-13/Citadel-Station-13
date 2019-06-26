@@ -336,16 +336,16 @@
 		C.adjustToxLoss(2)
 	..()
 
-/datum/reagent/fermi/fermiABuffer
+/datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"
-	id = "fermiABuffer"
+	id = "acidic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
 	taste_description = "an acidy sort of taste, blech."
 	color = "#fbc314"
 	pH = 3
 
 //Consumes self on addition and shifts pH
-/datum/reagent/fermi/fermiABuffer/on_new(datapH)
+/datum/reagent/fermi/acidic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
@@ -357,15 +357,15 @@
 	holder.remove_reagent(id, volume)
 	..()
 
-/datum/reagent/fermi/fermiBBuffer
+/datum/reagent/fermi/basic_buffer
 	name = "Basic buffer"
-	id = "fermiBBuffer"
+	id = "basic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
 	taste_description = "an soapy sort of taste, blech."
 	color = "#3853a4"
 	pH = 11
 
-/datum/reagent/fermi/fermiBBuffer/on_new(datapH)
+/datum/reagent/fermi/basic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return

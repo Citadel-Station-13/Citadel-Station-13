@@ -376,10 +376,10 @@
 	RateUpLim 		= 1
 	FermiChem 		= TRUE
 
-/datum/chemical_reaction/fermi/fermiABuffer//done test
+/datum/chemical_reaction/fermi/acidic_buffer//done test
 	name = "Acetic acid buffer"
-	id = "fermiABuffer"
-	results = list("fermiABuffer" = 2) //acetic acid
+	id = "acidic_buffer"
+	results = list("acidic_buffer" = 2) //acetic acid
 	required_reagents = list("salglu_solution" = 0.2, "ethanol" = 0.6, "oxygen" = 0.6, "water" = 0.6)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
@@ -397,17 +397,17 @@
 	FermiChem 		= TRUE
 
 
-/datum/chemical_reaction/fermi/fermiABuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list)
+/datum/chemical_reaction/fermi/acidic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
 		return
-	var/datum/reagent/fermi/fermiABuffer/Fa = locate(/datum/reagent/fermi/fermiABuffer) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
 	Fa.data = 3
 
-/datum/chemical_reaction/fermi/fermiBBuffer//done test
+/datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
-	id = "fermiBBuffer"
-	results = list("fermiBBuffer" = 1.5)
-	required_reagents = list("fermiABuffer" = 0.5, "ethanol" = 0.5, "salglu_solution" = 0.1, "water" = 0.5)
+	id = "basic_buffer"
+	results = list("basic_buffer" = 1.5)
+	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "salglu_solution" = 0.1, "water" = 0.5)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:
 	OptimalTempMin 	= 250
@@ -425,10 +425,10 @@
 	FermiChem 		= TRUE
 
 
-/datum/chemical_reaction/fermi/fermiBBuffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
-	if(!locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list)
+/datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, var/atom/my_atom) //might need this
+	if(!locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list)
 		return
-	var/datum/reagent/fermi/fermiBBuffer/Fb = locate(/datum/reagent/fermi/fermiBBuffer) in my_atom.reagents.reagent_list
+	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
 	Fb.data = 11
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
