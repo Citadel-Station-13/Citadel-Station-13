@@ -69,7 +69,7 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Cancel")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Cancel")
 	if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
@@ -217,6 +217,28 @@
 		H.update_genitals()
 		H.give_vagina()
 		H.apply_overlay()
+
+	else if (select_alteration == "Penis Length")
+		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
+			qdel(X)
+		var/new_length
+		new_length = input(owner, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
+		if(new_length)
+			H.dna.features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+		H.update_genitals()
+		H.apply_overlay()
+		H.give_penis()
+
+	else if (select_alteration == "Breast Size")
+		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
+			qdel(X)
+		var/new_size
+		new_size = input(owner, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
+		if(new_size)
+			H.dna.features["breasts_size"] = new_size
+		H.update_genitals()
+		H.apply_overlay()
+		H.give_breasts()
 
 	else
 		return
