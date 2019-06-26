@@ -10,11 +10,12 @@
 	//item_flags = NODROP //Tips their hat!
 
 /obj/item/clothing/head/hattip/attack_hand(mob/user)
-	if(is_ninja(user))
-		to_chat(user, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")
-		return ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
+		if(is_ninja(C))
+			to_chat(C, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")
+			return ..()
+
 		if(src == C.head)
 			C.emote("me",1,"tips their hat.",TRUE)
 			return
@@ -23,12 +24,13 @@
 	return ..()
 
 /obj/item/clothing/head/hattip/MouseDrop(atom/over_object)
-	if(is_ninja(user))
-		to_chat(user, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")
-		return ..()
 	//You sure do love tipping your hat.
 	if(usr)
 		var/mob/living/carbon/C = usr
+		if(is_ninja(C))
+			to_chat(C, "<span class='notice'>Using your superior ninja reflexes, you take the hat off before tipping.</span>")
+			return ..()
+
 		if(src == C.head)
 			C.emote("me",1,"tips their hat.",TRUE)
 			return
