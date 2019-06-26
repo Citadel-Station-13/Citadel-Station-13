@@ -685,48 +685,48 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				if(pref_species.use_skintones)
 					dat += "<b>Genitals use skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Yes" : "No"]</a>"
-				dat += "<b>Has Penis:</b>"
+				dat += "<h3>Penis</h3>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a>"
-				if(features["has_cock"] == TRUE)
+				if(features["has_cock"])
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-						dat += "<b>Penis Color:</b>"
-						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
+						dat += "<b>Penis Color:</b></a><BR>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)</a><br>"
 					else
-						dat += "<b>Penis Color:</b>"
+						dat += "<b>Penis Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><br>"
 					dat += "<b>Penis Shape:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a>"
 					dat += "<b>Penis Length:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a>"
 					dat += "<b>Has Testicles:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a>"
-					if(features["has_balls"] == TRUE)
+					if(features["has_balls"])
 						if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-							dat += "<b>Testicles Color:</b>"
+							dat += "<b>Testicles Color:</b></a><BR>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 						else
-							dat += "<b>Testicles Color:</b>"
+							dat += "<b>Testicles Color:</b></a><BR>"
 							dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><br>"
 						dat += "<b>Testicles showing:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=balls_shape;task=input'>[features["balls_shape"]]</a>"
 				dat += APPEARANCE_CATEGORY_COLUMN
-				dat += "<b>Has Vagina:</b>"
+				dat += "<h3>Vagina</h3>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a>"
 				if(features["has_vag"])
 					dat += "<b>Vagina Type:</b> <a style='display:block;width:100px' href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a>"
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-						dat += "<b>Vagina Color:</b>"
+						dat += "<b>Vagina Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 					else
-						dat += "<b>Vagina Color:</b>"
+						dat += "<b>Vagina Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><br>"
 					dat += "<b>Has Womb:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a>"
 				dat += "</td>"
 				dat += APPEARANCE_CATEGORY_COLUMN
-				dat += "<b>Has Breasts:</b>"
+				dat += "<h3>Breasts</h3>"
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a>"
 				if(features["has_breasts"])
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-						dat += "<b>Color:</b>"
+						dat += "<b>Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
 					else
-						dat += "<b>Color:</b>"
+						dat += "<b>Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><br>"
 					dat += "<b>Cup Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a>"
 					dat += "<b>Breast Shape:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a>"
@@ -1996,6 +1996,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					arousable = !arousable
 				if("has_cock")
 					features["has_cock"] = !features["has_cock"]
+					if(features["has_cock"] == FALSE)
+						features["has_balls"] = FALSE
 				if("has_balls")
 					features["has_balls"] = !features["has_balls"]
 				if("has_ovi")
@@ -2010,6 +2012,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					features["has_breasts"] = !features["has_breasts"]
 				if("has_vag")
 					features["has_vag"] = !features["has_vag"]
+					if(features["has_vag"] == FALSE)
+						features["has_womb"] = FALSE
 				if("has_womb")
 					features["has_womb"] = !features["has_womb"]
 				if("exhibitionist")

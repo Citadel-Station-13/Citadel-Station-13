@@ -170,7 +170,7 @@
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
 		"balls_size"		= BALLS_SIZE_DEF,
-		"balls_shape"		= "Pair",
+		"balls_shape"		= "Single",
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
