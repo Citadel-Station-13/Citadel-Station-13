@@ -160,10 +160,11 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	item_state = "makeshift_shield"
+	icon_state = "makeshift_shield"
 	materials = list(MAT_METAL = 18000)
 	slot_flags = null
-	block_chance = 25
-	force = 5
+	block_chance = 35
+	force = 10
 	throwforce = 7
 
 /obj/item/shield/riot/tower
@@ -171,8 +172,9 @@
 	desc = "A massive shield that can block a lot of attacks, can take a lot of abuse before braking."
 	armor = list("melee" = 95, "bullet" = 95, "laser" = 75, "energy" = 60, "bomb" = 90, "bio" = 90, "rad" = 0, "fire" = 90, "acid" = 10) //Armor for the item, dosnt transfer to user
 	item_state = "metal"
+	icon_state = "metal"
 	block_chance = 75 //1/4 shots will hit*
-	force = 10
+	force = 16
 	slowdown = 2
 	throwforce = 15 //Massive pice of metal
 	w_class = WEIGHT_CLASS_HUGE
