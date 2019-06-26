@@ -11691,7 +11691,7 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11815,7 +11815,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -56882,12 +56882,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"ium" = (
-/mob/living/simple_animal/bot/cleanbot{
-	name = "C.L.E.A.N."
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "izv" = (
 /obj/machinery/vending/clothing,
 /obj/machinery/light/small{
@@ -57215,6 +57209,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nKs" = (
+/mob/living/simple_animal/bot/cleanbot{
+	name = "C.L.E.A.N."
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "nRG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -94188,7 +94188,7 @@ blm
 bmL
 boi
 bpw
-ium
+nKs
 bsx
 btX
 bvj
