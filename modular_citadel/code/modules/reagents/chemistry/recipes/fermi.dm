@@ -48,7 +48,6 @@
 	if(pH < 4) //if acidic, make acid spray
 		R.add_reagent("fermiAcid", (volume/3))
 	if(R.reagent_list)
-		message_admins("gas")
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
 

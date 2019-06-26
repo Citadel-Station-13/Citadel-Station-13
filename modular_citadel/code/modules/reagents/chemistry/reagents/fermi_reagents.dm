@@ -387,6 +387,7 @@
 	color = "#ffc224"
 	var/catshift = FALSE
 	var/mob/living/simple_animal/pet/cat/custom_cat/catto = null
+	can_synth = FALSE
 
 /datum/reagent/fermi/secretcatchem/New()
 	name = "Catbalti[pick("a","u","e","y")]m [pick("apex", "prime", "meow")]"//rename

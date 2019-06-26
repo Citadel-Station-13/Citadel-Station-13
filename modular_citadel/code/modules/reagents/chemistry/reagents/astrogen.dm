@@ -26,6 +26,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/antiGenetics = 255
 	var/sleepytime = 0
 	InverseChemVal = 0.25
+	can_synth = FALSE
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
