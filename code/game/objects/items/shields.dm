@@ -160,7 +160,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	icon = 'icons/obj/items_and_weapons.dmi'
-	item_state = "makeshift_shield"
+	item_state = "metal"
 	icon_state = "makeshift_shield"
 	materials = list(MAT_METAL = 18000)
 	slot_flags = null
