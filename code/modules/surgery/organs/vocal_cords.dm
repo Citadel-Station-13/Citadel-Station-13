@@ -1187,7 +1187,7 @@
 				if(2 to INFINITY)
 					L.lay_down()
 					E.cooldown += 10
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "[(L.lewd?"<span class='love'>You eagerly lie down!":"<span class='notice'>You suddenly lie down!'")]</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "[(L.lewd?"<span class='love'>You eagerly lie down!":"<span class='notice'>You suddenly lie down!")]</b></span>"), 5)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
@@ -1198,7 +1198,7 @@
 				if(2 to INFINITY)
 					L.Knockdown(30 * power_multiplier * E.phase)
 					E.cooldown += 8
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!'</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You suddenly drop to the ground!</b></span>"), 5)
 
 	//tier3
 

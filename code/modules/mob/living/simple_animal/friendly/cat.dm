@@ -316,14 +316,11 @@
 	var/pseudo_death = FALSE
 
 /mob/living/simple_animal/pet/cat/custom_cat/death()
-	message_admins("dedcat")
 	if (pseudo_death == TRUE) //secret cat chem
 		icon_state = "custom_cat_dead"
 		Stun(1000)
 		canmove = 0
-		message_admins("dedcat")
 		friendly = "deads at"
 		return
 	else
-		message_admins("deddercat")
 		..()
