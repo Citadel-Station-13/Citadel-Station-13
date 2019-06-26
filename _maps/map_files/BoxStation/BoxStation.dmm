@@ -1689,7 +1689,6 @@
 	id = "hos";
 	name = "HoS Office Shutters";
 	pixel_y = -25;
-	step_y = 0
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
