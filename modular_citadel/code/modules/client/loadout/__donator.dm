@@ -408,5 +408,5 @@ datum/gear/darksabresheath
 /datum/gear/longblackgloves
 	name = "Luna's Gauntlets"
 	category = SLOT_GLOVES
-	path = /obj/item/clothing/suit/commjacket
+	path = /obj/item/clothing/gloves/longblackgloves
 	ckeywhitelist = list("bigmanclancy")
