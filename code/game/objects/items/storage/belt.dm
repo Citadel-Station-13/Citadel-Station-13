@@ -576,7 +576,7 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
-		/obj/item/gun/energy/laser/captain,
+		/obj/item/toy/gun,
 		/obj/item/gun/energy/e_gun/mini
 		))
 
