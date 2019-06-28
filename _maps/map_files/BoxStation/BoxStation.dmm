@@ -1689,6 +1689,7 @@
 	id = "hos";
 	name = "HoS Office Shutters";
 	pixel_y = -25;
+	
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -11710,7 +11711,7 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11834,7 +11835,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -56880,6 +56881,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"hTL" = (
+/mob/living/simple_animal/bot/cleanbot{
+	name = "C.L.E.A.N."
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "iiW" = (
 /turf/open/floor/wood,
 /area/maintenance/bar)
@@ -57135,12 +57142,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"lKX" = (
-/mob/living/simple_animal/bot/cleanbot{
-	name = "C.L.E.A.N."
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -94207,7 +94208,7 @@ blm
 bmL
 boi
 bpw
-lKX
+hTL
 bsx
 btX
 bvj
