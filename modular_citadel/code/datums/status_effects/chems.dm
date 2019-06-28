@@ -238,6 +238,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "enthrall", /datum/mood_event/enthrall, message)
 	to_chat(owner, "<span class='[(owner.lewd?"big velvet":"big warning")]'><b>You feel inexplicably drawn towards [master], their words having a demonstrable effect on you. It seems the closer you are to them, the stronger the effect is. However you aren't fully swayed yet and can resist their effects by repeatedly resisting as much as you can!</b></span>")
 	log_game("FERMICHEM: MKULTRA: Status applied on [owner] ckey: [owner.key] with a master of [master] ckey: [enthrallID].")
+	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Enthrall attempts")
 	return ..()
 
 /datum/status_effect/chem/enthrall/tick()
@@ -282,6 +283,7 @@
 				enthrallTally = 0
 				if(owner.lewd)
 					to_chat(owner, "<span class='big velvet'><i>Your conciousness slips, as you sink deeper into trance and servitude.</i></span>")
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Enthralled to state 2")
 				else
 
 			else if (resistanceTally > 150)
@@ -289,6 +291,7 @@
 				to_chat(owner, "<span class='warning'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
 				if(DistApart < 10)
 					to_chat(master, "<span class='warning'>[(master.lewd?"Your pet":"Your thrall")] seems to have broken free of your enthrallment!</i></span>")
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Thralls broken free")
 				owner.remove_status_effect(src) //If resisted in phase 1, effect is removed.
 			if(prob(10))
 				if(owner.lewd)
@@ -306,6 +309,7 @@
 					to_chat(owner, "<span class='big nicegreen'><i>You are unable to put up a resistance any longer, and now are under the control of [master]. However you find that in your intoxicated state you are unable to resort to violence. Equally you are unable to commit suicide, even if ordered to, as you cannot serve your [master] in death. </i></span>")
 				ADD_TRAIT(owner, TRAIT_PACIFISM, "MKUltra") //IMPORTANT
 				log_game("FERMICHEM: MKULTRA: Status on [owner] ckey: [owner.key] has been fully entrhalled (state 3) with a master of [master] ckey: [enthrallID].")
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "thralls fully enthralled.")
 			else if (resistanceTally > 200)
 				enthrallTally *= 0.5
 				phase -= 1

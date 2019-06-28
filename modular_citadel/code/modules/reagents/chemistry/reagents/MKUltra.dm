@@ -291,6 +291,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	E.phase = 4
 	E.mental_capacity = 0
 	E.customTriggers = list()
+	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Thralls mindbroken")
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
 	M.adjustBrainLoss(0.2)//should be ~40 in total
@@ -321,6 +322,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
 		to_chat(M, "<span class='big love'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily fallen for [love] ckey: [love.key]")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have fallen in love")
 	else
 		if(get_dist(M, love) < 8)
 			if(HAS_TRAIT(M, TRAIT_NYMPHO)) //Add this back when merged/updated.
@@ -355,6 +357,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	Lover.faction |= "[REF(Love)]"
 	Lover.apply_status_effect(STATUS_EFFECT_INLOVE, Love)
 	forge_valentines_objective(Lover, Love, TRUE)
+	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have become infatuated.")
 	log_game("FERMICHEM: [Lover] ckey: [Lover.key] has been chemically made to fall for [Love] ckey: [Love.key]")
 	return
 

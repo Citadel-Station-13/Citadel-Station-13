@@ -49,6 +49,7 @@
 	damage += damage_mod
 	if ((damage / maxHealth) > 1)
 		to_chat(M, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
 	else if ((damage / maxHealth) > 0.85)
 		to_chat(M, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")

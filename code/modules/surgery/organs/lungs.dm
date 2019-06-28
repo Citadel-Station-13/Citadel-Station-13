@@ -72,6 +72,7 @@
 	if ((damage / maxHealth) > 1)
 		to_chat(M, "<span class='userdanger'>You feel your lungs collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
 		M.emote("gasp")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Lungs lost")
 		qdel(src)
 	else if ((damage / maxHealth) > 0.75)
 		to_chat(M, "<span class='warning'>It's getting really hard to breathe!!</span>")

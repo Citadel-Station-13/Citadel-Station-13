@@ -465,6 +465,7 @@
 				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
 					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 					fermiIsReacting = FALSE
+					SSblackbox.record_feedback("tally", "fermi_chem", 1, (Ferm+" explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
 
@@ -484,7 +485,6 @@
 							fermiIsReacting = TRUE
 							fermiReactID = selected_reaction
 							reaction_occurred = 1
-							SSblackbox.record_feedback("tally", "Fermi_chemical_reaction", reactedVol, C.id)//log
 
 					else //It's a little bit of a confusing nest, but esstentially we check if it's a fermireaction, then temperature, then pH. If this is true, the remainer of this handler is run.
 						return 0 //If pH is out of range
@@ -656,7 +656,8 @@
 	//add product
 	var/TotalStep = 0
 	for(var/P in cached_results)
-		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*stepChemAmmount, P)//log
+		SSblackbox.record_feedback("tally", "chemical_reaction", addChemAmmount, P)//log
+		SSblackbox.record_feedback("tally", "fermi_chem", addChemAmmount, P)
 		add_reagent(P, (addChemAmmount), null, cached_temp, purity)//add reagent function!! I THINK I can do this:
 		TotalStep += addChemAmmount//for multiple products
 		//Above should reduce yeild based on holder purity.
@@ -665,6 +666,7 @@
 			if(P == R.id)
 				if (R.purity < C.PurityMin)//If purity is below the min, blow it up.
 					fermiIsReacting = FALSE
+					SSblackbox.record_feedback("tally", "fermi_chem", 1, (P+" explosion"))
 					C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
 					STOP_PROCESSING(SSprocessing, src)
 					return 0
@@ -681,7 +683,8 @@
 	if (chem_temp > C.ExplodeTemp)
 		//go to explode proc
 		fermiIsReacting = FALSE
-		C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, (P+" explosion"))
+		C.FermiExplode(src, my_atom, (reactedVol+targetVol), chem_temp, pH)
 		STOP_PROCESSING(SSprocessing, src)
 		return
 
@@ -816,6 +819,7 @@
 
 	if (D.id == "water") //Do like an otter, add acid to water.
 		if (pH <= 2)
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
 			var/turf/T = get_turf(my_atom)
 			var/datum/reagents/R = new/datum/reagents(3000)

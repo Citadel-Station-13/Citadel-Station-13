@@ -410,6 +410,7 @@
 	catto.pseudo_death = TRUE
 	H.forceMove(catto)
 	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
+	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
 	//Just to deal with rascally ghosts
 	//ADD_TRAIT(catto, TRAIT_NODEATH, "catto")//doesn't work
 	//catto.health = 1000 //To simulate fake death, while preventing ghosts escaping.

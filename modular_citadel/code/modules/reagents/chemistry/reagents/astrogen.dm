@@ -50,6 +50,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		G.name = "[M]'s astral projection"
 		M.mind.transfer_to(G)
 		sleepytime = 15*volume
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
 	if(overdosed)
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
@@ -111,6 +112,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			deadchat_broadcast("<span class='warning'>[M] has become one with the universe, meaning that their IC conciousness is continuous in a new life. If they find a way back to life, they are allowed to remember their previous life. Be careful what you say. If they abuse this, bwoink the FUCK outta them.</span>")
 			M.visible_message("[M] suddenly disappears, their body evaporating from existence, freeing [M] from their mortal coil.")
 			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout their lives should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role).")
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral obliterations")
 			qdel(M) //Approx 60minutes till death from initial addiction
 			log_game("FERMICHEM: [M] ckey: [M.key] has been obliterated from Astrogen addiction")
 	..()

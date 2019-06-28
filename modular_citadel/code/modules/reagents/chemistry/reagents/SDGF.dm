@@ -117,6 +117,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				SM.reagents.add_reagent("SDGFheal", volume)
 				M.reagents.remove_reagent(id, volume)
 				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Sentient clones made")
 				return
 
 			else if(playerClone == FALSE) //No candidates leads to two outcomes; if there's already a braincless clone, it heals the user, as well as being a rare souce of clone healing (thematic!).
@@ -159,6 +160,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 							M.apply_status_effect(/datum/status_effect/chem/SGDF)
 							log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
+							SSblackbox.record_feedback("tally", "fermi_chem", 1, "Braindead clones made")
 						if(87 to INFINITY)
 							M.reagents.remove_reagent(id, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
 
@@ -277,6 +279,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				M.reagents.remove_reagent(id, volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
 				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Zombie clones made!")
 
 		if(87 to INFINITY)
 			M.adjustToxLoss(1, 0)

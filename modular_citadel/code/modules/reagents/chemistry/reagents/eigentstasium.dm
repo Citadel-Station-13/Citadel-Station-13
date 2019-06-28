@@ -58,6 +58,7 @@
 			do_sparks(5,FALSE,M)
 			do_teleport(M, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,M)
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Pure eigentstate jumps")
 
 
 	if(prob(20))
@@ -159,7 +160,7 @@
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, Me) //Why does this not work?
 		*/
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Alternative dimension", /datum/mood_event/eigenstate)
-
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Wild rides ridden")
 
 	if(prob(20))
 		do_sparks(5,FALSE,M)
