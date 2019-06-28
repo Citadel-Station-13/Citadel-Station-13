@@ -197,7 +197,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/list/myriad_targets = list()
 	var/turf/T = get_turf(src)
-	for(var/mob/living/carbon/human/M in T)
+	for(var/mob/living/M in T)
 		if(!iscultist(M))
 			myriad_targets |= M
 	if(!myriad_targets.len)
