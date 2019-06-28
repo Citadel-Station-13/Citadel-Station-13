@@ -19,6 +19,7 @@ Chaplain
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
+	. = ..()
 	if(H.mind)
 		H.mind.isholy = TRUE
 

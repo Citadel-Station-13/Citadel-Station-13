@@ -134,3 +134,71 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
+	can_gain = FALSE
+
+/datum/brain_trauma/special/beepsky
+	name = "Criminal"
+	desc = "Patient seems to be a criminal."
+	scan_desc = "criminal mind"
+	gain_text = "<span class='warning'>Justice is coming for you.</span>"
+	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
+	can_gain = FALSE
+	var/obj/effect/hallucination/simple/securitron/beepsky
+
+/datum/brain_trauma/special/beepsky/on_gain()
+	create_securitron()
+	..()
+
+/datum/brain_trauma/special/beepsky/proc/create_securitron()
+	var/turf/where = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z)
+	beepsky = new(where, owner)
+	beepsky.victim = owner
+
+/datum/brain_trauma/special/beepsky/on_lose()
+	QDEL_NULL(beepsky)
+	..()
+
+/datum/brain_trauma/special/beepsky/on_life()
+	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
+		QDEL_NULL(beepsky)
+		if(prob(30))
+			create_securitron()
+		else
+			return
+	if(get_dist(owner, beepsky) >= 10 && prob(20))
+		QDEL_NULL(beepsky)
+		create_securitron()
+	if(owner.stat != CONSCIOUS)
+		if(prob(20))
+			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+		return
+	if(get_dist(owner, beepsky) <= 1)
+		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
+		owner.take_bodypart_damage(0,0,rand(40, 70))
+		QDEL_NULL(beepsky)
+	if(prob(20) && get_dist(owner, beepsky) <= 8)
+		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
+	..()
+
+/obj/effect/hallucination/simple/securitron
+	name = "Securitron"
+	desc = "The LAW is coming."
+	image_icon = 'icons/mob/aibots.dmi'
+	image_state = "secbot-c"
+	var/victim
+
+/obj/effect/hallucination/simple/securitron/New()
+	name = pick ( "officer Beepsky", "officer Johnson", "officer Pingsky")
+	START_PROCESSING(SSfastprocess,src)
+	..()
+
+/obj/effect/hallucination/simple/securitron/process()
+	if(prob(60))
+		forceMove(get_step_towards(src, victim))
+		if(prob(5))
+			to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\"</span>")
+
+/obj/effect/hallucination/simple/securitron/Destroy()
+	STOP_PROCESSING(SSfastprocess,src)
+	return ..()
