@@ -183,9 +183,9 @@
 	slab_type = /obj/item/clockwork/slab/debug
 	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
 
-/obj/item/storage/toolbox/durasteel
-	name = "durasteel toolbox"
-	desc = "A toolbox made out of durasteel. Probably packs a massive punch."
+/obj/item/storage/toolbox/plastitanium
+	name = "plastitanium toolbox"
+	desc = "A toolbox made out of plastitanium. Probably packs a massive punch."
 	total_mass = 5
 	icon_state = "blue"
 	item_state = "toolbox_blue"
