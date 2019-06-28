@@ -70,14 +70,13 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
-			problems = TRUE
+			return ..()
 	if(host_mob.getBrainLoss())
-		problems = TRUE
-	return problems ? ..() : FALSE
+		return ..()
+	return FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
 	host_mob.adjustBrainLoss(-1, TRUE)
@@ -192,14 +191,13 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
-	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		if(length(C.get_traumas()))
-			problems = TRUE
+			return ..()
 	if(host_mob.getBrainLoss())
-		problems = TRUE
-	return problems ? ..() : FALSE
+		return ..()
+	return FALSE
 	
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustBrainLoss(-2, TRUE)
