@@ -59,7 +59,6 @@
 		"acetone",
 		"phenol",
 		"diethylamine",
-		"saltpetre"
 	)
 
 	var/list/upgrade_reagents3 = list(
