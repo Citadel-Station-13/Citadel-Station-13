@@ -122,4 +122,4 @@
 
 /datum/brain_trauma/mild/phobia/security
 	phobia_type = "security"
-	can_gain = FALSE
+	random_gain = FALSE
