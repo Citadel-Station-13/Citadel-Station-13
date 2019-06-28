@@ -115,7 +115,7 @@
 	display_name = "Advanced Surgery"
 	description = "When simple medicine doesn't cut it."
 	prereq_ids = list("adv_biotech")
-	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "surgery_toxinhealing", "organbox", "surgery_exp_dissection")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction", "surgery_toxinhealing", "organbox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
