@@ -281,10 +281,11 @@
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				resistanceTally /= 2
 				enthrallTally = 0
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Enthralled to state 2")
 				if(owner.lewd)
 					to_chat(owner, "<span class='big velvet'><i>Your conciousness slips, as you sink deeper into trance and servitude.</i></span>")
-				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Enthralled to state 2")
 				else
+					to_chat(owner, "<span class='big velvet'><i>Your conciousness slips, as you feel more drawn to following [master].</i></span>")
 
 			else if (resistanceTally > 150)
 				phase = -1

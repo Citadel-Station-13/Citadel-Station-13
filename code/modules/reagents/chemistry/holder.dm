@@ -683,7 +683,7 @@
 	if (chem_temp > C.ExplodeTemp)
 		//go to explode proc
 		fermiIsReacting = FALSE
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, (P+" explosion"))
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, (C+" explosions"))
 		C.FermiExplode(src, my_atom, (reactedVol+targetVol), chem_temp, pH)
 		STOP_PROCESSING(SSprocessing, src)
 		return
