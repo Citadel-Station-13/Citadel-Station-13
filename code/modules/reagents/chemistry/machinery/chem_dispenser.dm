@@ -248,13 +248,8 @@
 				work_animation()
 				. = TRUE
 		if("eject")
-			if(beaker)
-				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
-				beaker = null
-				update_icon()
-				. = TRUE
+			replace_beaker(usr)
+			. = TRUE //no afterattack
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
@@ -320,14 +315,12 @@
 		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
-		. = 1 //no afterattack
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
+		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
-		beaker = B
+		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
@@ -379,7 +372,17 @@
 			dispensable_reagents |= upgrade_reagents3
 	powerefficiency = round(newpowereff, 0.01)
 
-
+/obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -414,6 +417,12 @@
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
+
+/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()
