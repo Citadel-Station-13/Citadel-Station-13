@@ -58,7 +58,7 @@
 	var/list/upgrade_reagents2 = list(
 		"acetone",
 		"phenol",
-		"diethylamine",
+		"diethylamine"
 	)
 
 	var/list/upgrade_reagents3 = list(
