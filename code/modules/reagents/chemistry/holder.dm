@@ -498,7 +498,7 @@
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
 
 				for(var/B in cached_required_reagents)
-					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+					remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
 
 				for(var/P in selected_reaction.results)
 					multiplier = max(multiplier, 1) //this shouldnt happen ...
@@ -651,7 +651,7 @@
 
 	//remove reactants
 	for(var/B in cached_required_reagents)
-		remove_reagent(B, (removeChemAmmount * cached_required_reagents[B]), safety = 1)
+		remove_reagent(B, (removeChemAmmount * cached_required_reagents[B]), safety = 1, ignore_pH = TRUE)
 
 	//add product
 	var/TotalStep = 0
@@ -913,7 +913,7 @@
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
 
 	if(isnull(amount))
 		amount = 0
@@ -934,7 +934,7 @@
 			if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
 				pH = 7
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
-			else
+			else if (ignore_pH == FALSE)
 				if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
 					pH = (((pH - R.pH) / total_volume) * amount) + pH
 			if(istype(my_atom, /obj/item/reagent_containers/))
