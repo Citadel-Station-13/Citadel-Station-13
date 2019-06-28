@@ -66,8 +66,7 @@
 		create()
 	else if(ghost_usable)
 		GLOB.poi_list |= src
-		var/job_or_name = job_description ? job_description : name
-		LAZYADD(GLOB.mob_spawners[job_or_name], src)
+		LAZYADD(GLOB.mob_spawners[job_description ? job_description : name], src)
 
 
 /obj/effect/mob_spawn/Destroy()
