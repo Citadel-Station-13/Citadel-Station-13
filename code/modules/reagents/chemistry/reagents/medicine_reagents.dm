@@ -509,7 +509,7 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	pH = -1 //One of the best buffers,
+	pH = 1 //One of the best buffers, NEVERMIND!
 	var/healtoxinlover = FALSE
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)

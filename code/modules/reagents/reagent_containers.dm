@@ -153,7 +153,8 @@
 			for(var/mob/M in seen)
 				to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the temperature!</span>")
 				playsound(get_turf(src), 'sound/FermiChem/heatmelt.ogg', 80, 1)
-			to_chat(M, "<span class='warning'><i>[iconhtml] Have you tried using glass or meta beakers for high temperature reactions? These are immune to temperature effects.</i></span>")
+				to_chat(M, "<span class='warning'><i>[iconhtml] Have you tried using glass or meta beakers for high temperature reactions? These are immune to temperature effects.</i></span>")
+			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted from temperature")
 			qdel(src)
 
 //melts glass beakers
@@ -167,9 +168,10 @@
 				for(var/mob/M in seen)
 					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s melts from the extreme pH!</span>")
 					playsound(get_turf(src), 'sound/FermiChem/acidmelt.ogg', 80, 1)
+				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times beakers have melted from pH")
 				qdel(src)
 			else
 				for(var/mob/M in seen)
 					to_chat(M, "<span class='notice'>[iconhtml] \The [src]'s is damaged by the extreme pH and begins to deform!</span>")
 					playsound(get_turf(src), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-			to_chat(M, "<span class='warning'><i>[iconhtml] Have you tried using plastic beakers (XL) or metabeakers for high pH reactions? These beakers are immune to pH effects.</i></span>")
+					to_chat(M, "<span class='warning'><i>[iconhtml] Have you tried using plastic beakers (XL) or metabeakers for high pH reactions? These beakers are immune to pH effects.</i></span>")

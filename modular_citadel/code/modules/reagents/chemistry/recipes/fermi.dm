@@ -232,15 +232,15 @@
 	mix_message = "the reaction gives off a burgundy plume of smoke!"
 	//FermiChem vars:
 	OptimalTempMin 			= 780
-	OptimalTempMax			= 800
-	ExplodeTemp 			= 830
+	OptimalTempMax			= 820
+	ExplodeTemp 			= 840
 	OptimalpHMin 			= 12
 	OptimalpHMax 			= 13
 	ReactpHLim 				= 2
 	//CatalystFact 			= 0
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
-	ThermicConstant 		= 20
+	ThermicConstant 		= 15
 	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE

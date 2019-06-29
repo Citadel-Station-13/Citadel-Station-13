@@ -320,9 +320,9 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "<span class='big love'>You develop overwhelmingly deep feelings for [love], your heart beginning to race as you look upon them with new eyes. You are determined to keep them safe above all other priorities.</span>")
-		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily fallen for [love] ckey: [love.key]")
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have fallen in love")
+		to_chat(M, "<span class='big love'>You develop a sudden bond with [love][(M.lewd?",  your heart beginning to race as you look upon them with new eyes.":".")] You are determined to keep them safe and feel drawn towards them.</span>")
+		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
 		if(get_dist(M, love) < 8)
 			if(HAS_TRAIT(M, TRAIT_NYMPHO)) //Add this back when merged/updated.
@@ -344,7 +344,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 	to_chat(M, "Your feelings for [love] suddenly vanish!")
-	log_game("FERMICHEM: [M] ckey: [M.key] is no longer in temp love")
+	log_game("FERMICHEM: [M] ckey: [M.key] is no longer in temp bond")
 	..()
 
 /datum/reagent/fermi/proc/FallInLove(mob/living/carbon/Lover, mob/living/carbon/Love)
