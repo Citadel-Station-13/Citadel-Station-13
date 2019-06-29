@@ -532,7 +532,8 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"applejack"
 	)//prevents the booze machine from obtaining chemical upgrades.
 	upgrade_reagents = null
 	upgrade_reagents2 = null

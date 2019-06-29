@@ -481,3 +481,6 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define AREASELECT_CORNERB "corner B"
 
 #define PREF_SAVELOAD_COOLDOWN 5
+
+#define VOMIT_TOXIC 1
+#define VOMIT_PURPLE 2
