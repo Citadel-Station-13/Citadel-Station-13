@@ -44,6 +44,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/flashlight = 4,
 	/obj/item/flashlight/pen = 1,
 	/obj/item/flashlight/glowstick/random = 4,
+	/obj/effect/spawner/lootdrop/mre = 3,
 	/obj/item/multitool = 2,
 	/obj/item/radio/off = 2,
 	/obj/item/t_scanner = 5,
