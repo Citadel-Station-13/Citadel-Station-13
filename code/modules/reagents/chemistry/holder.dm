@@ -131,7 +131,7 @@
 		for(var/reagent in cached_reagents)
 			pH = 7
 			var/datum/reagent/R = reagent
-			remove_reagent(R.id, R.volume * part)
+			remove_reagent(R.id, R.volume * part, ignore_pH = TRUE)
 
 		update_total()
 		handle_reactions()
@@ -199,7 +199,7 @@
 
 		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 
-		remove_reagent(T.id, transfer_amount)
+		remove_reagent(T.id, transfer_amount, ignore_pH = TRUE)
 
 	update_total()
 	R.update_total()
