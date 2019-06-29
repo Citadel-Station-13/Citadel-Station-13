@@ -465,7 +465,7 @@
 				if (chem_temp > C.ExplodeTemp) //This is first to ensure explosions.
 					var/datum/chemical_reaction/fermi/Ferm = selected_reaction
 					fermiIsReacting = FALSE
-					SSblackbox.record_feedback("tally", "fermi_chem", 1, (Ferm+" explosion"))
+					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
 					return 0
 
@@ -666,7 +666,7 @@
 			if(P == R.id)
 				if (R.purity < C.PurityMin)//If purity is below the min, blow it up.
 					fermiIsReacting = FALSE
-					SSblackbox.record_feedback("tally", "fermi_chem", 1, (P+" explosion"))
+					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[P] explosion"))
 					C.FermiExplode(src, my_atom, (reactedVol+targetVol), cached_temp, pH)
 					STOP_PROCESSING(SSprocessing, src)
 					return 0
@@ -683,7 +683,7 @@
 	if (chem_temp > C.ExplodeTemp)
 		//go to explode proc
 		fermiIsReacting = FALSE
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, (C+" explosions"))
+		SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[C] explosions"))
 		C.FermiExplode(src, my_atom, (reactedVol+targetVol), chem_temp, pH)
 		STOP_PROCESSING(SSprocessing, src)
 		return

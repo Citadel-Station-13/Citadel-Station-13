@@ -11,6 +11,8 @@ There's afairly major catch regarding the death though. I'm not gonna say here, 
 I'd like to point out from my calculations it'll take about 60-80 minutes to die this way too. Plenty of time to visit me and ask for some pills to quench your addiction.
 */
 
+
+
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
 	id = "astral"
@@ -27,6 +29,15 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	var/sleepytime = 0
 	InverseChemVal = 0.25
 	can_synth = FALSE
+
+/datum/action/chem/astral
+	name = "Return to body"
+	var/mob/living/carbon/origin = null
+	var/mob/living/simple_animal/hostile/retaliate/ghost = null
+
+/datum/action/chem/astral/Trigger()
+	ghost.mind.transfer_to(origin)
+	qdel(src)
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
@@ -48,6 +59,9 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		G.incorporeal_move = 1
 		G.alpha = 35
 		G.name = "[M]'s astral projection"
+		var/datum/action/chem/astral/AS = new(G)
+		AS.origin = M
+		AS.ghost = G
 		M.mind.transfer_to(G)
 		sleepytime = 15*volume
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")

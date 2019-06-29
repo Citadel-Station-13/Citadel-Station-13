@@ -157,10 +157,25 @@
 	B.update()
 	..()
 
-/datum/reagent/fermi/BEsmaller/hypo
+/datum/reagent/fermi/BEsmaller_hypo
 	name = "Modesty milk"
 	id = "BEsmaller_hypo"
+	color = "#E60584"
+	taste_description = "a milky ice cream like flavour."
 	description = "A medicine used to treat organomegaly in a patient's breasts."
+	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
+
+/datum/reagent/fermi/BEsmaller_hypo/on_mob_life(mob/living/carbon/M)
+	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
+	if(!B)
+		return..()
+	if(B.cached_size > (sizeConv[M.dna.features["breasts_size"]]+0.1))
+		B.cached_size = B.cached_size - 0.05
+		B.update()
+	else if(B.cached_size < (sizeConv[M.dna.features["breasts_size"]])+0.1)
+		B.cached_size = B.cached_size + 0.05
+		B.update()
+	..()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //										PENIS ENLARGE
@@ -294,7 +309,21 @@
 	P.update()
 	..()
 
-/datum/reagent/fermi/PEsmaller/hypo
+/datum/reagent/fermi/PEsmaller_hypo
 	name = "Chastity draft"
 	id = "PEsmaller_hypo"
+	color = "#888888" // This is greyish..?
+	taste_description = "chinese dragon powder"
 	description = "A medicine used to treat organomegaly in a patient's penis."
+
+/datum/reagent/fermi/PEsmaller_hypo/on_mob_life(mob/living/carbon/M)
+	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
+	if(!P)
+		return ..()
+	if(P.cached_length > (M.dna.features["cock_length"]+0.1))
+		P.cached_length = P.cached_length - 0.1
+		P.update()
+	else if(P.cached_length < (M.dna.features["cock_length"]+0.1))
+		P.cached_length = P.cached_length + 0.1
+		P.update()
+	..()

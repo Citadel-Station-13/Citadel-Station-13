@@ -194,6 +194,7 @@
 	InverseChem 		= "nanite_b_goneTox" //At really impure vols, it just becomes 100% inverse
 	taste_description = "what can only be described as licking a battery."
 	pH = 9
+	can_synth = FALSE
 
 /datum/reagent/fermi/nanite_b_gone/on_mob_life(mob/living/carbon/C)
 	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
