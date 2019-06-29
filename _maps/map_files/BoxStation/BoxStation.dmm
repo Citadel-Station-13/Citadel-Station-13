@@ -1688,7 +1688,7 @@
 /obj/machinery/button/door{
 	id = "hos";
 	name = "HoS Office Shutters";
-	pixel_y = -25;
+	pixel_y = -25
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -57487,6 +57487,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"tdp" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "tkU" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -81612,7 +81618,7 @@ cNG
 cNJ
 bLF
 aZK
-bbR
+tdp
 bbR
 bqt
 cBq

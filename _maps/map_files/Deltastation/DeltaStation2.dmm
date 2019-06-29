@@ -23662,6 +23662,11 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 3;
+	pixel_x = 0;
+	pixel_y = 25
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aTQ" = (
@@ -23718,6 +23723,9 @@
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -27341,6 +27349,9 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = 23
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aYR" = (
@@ -28439,20 +28450,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "baH" = (
-/obj/machinery/autolathe,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -33
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/light_switch{
-	pixel_x = -23
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -28461,6 +28461,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "baI" = (
@@ -28497,6 +28498,9 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 3
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -127258,6 +127262,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"qab" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "qhc" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_electronics/analyzer,
@@ -167020,7 +167030,7 @@ aTO
 aVx
 aXf
 aYJ
-aTO
+qab
 aTO
 bdN
 bfk
