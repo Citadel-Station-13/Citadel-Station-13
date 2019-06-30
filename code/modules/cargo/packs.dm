@@ -1157,7 +1157,7 @@
 /datum/supply_pack/materials/bz
 	name = "BZ Canister Crate"
 	desc = "Contains a canister of BZ. Requires Toxins access to open."
-	cost = 7500 // Costs 3 credits more than what you can get for selling it. 
+	cost = 7500 // Costs 3 credits more than what you can get for selling it.
 	access = ACCESS_TOX_STORAGE
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "BZ canister crate"
@@ -2716,6 +2716,7 @@
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/clothing/head/kitty/genuine, // Why its illegal
 					/obj/item/clothing/head/kitty/genuine,
+					/obj/item/storage/pill_bottle/penis_enlargement,
 					/obj/structure/reagent_dispensers/keg/aphro)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
@@ -2749,6 +2750,19 @@
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain)
 	crate_name = "Paperwork"
+
+/datum/supply_pack/misc/randomised/promiscuous
+	name = "Promiscuous Organs"
+	desc = "Do YOU want to have more genital? Well we have just the thing for you~. This crate has two autosurgeon, that will let you have a new sex, organ to impress that hot stud and or chick."
+	cost = 4000 //Only get 2!
+	contraband = TRUE
+	var/num_contained = 2
+	contains = list(/obj/item/autosurgeon/penis,
+					/obj/item/autosurgeon/testicles,
+					/obj/item/autosurgeon/vagina,
+					/obj/item/autosurgeon/breasts,
+					/obj/item/autosurgeon/womb)
+	crate_name = "promiscuous organs"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
