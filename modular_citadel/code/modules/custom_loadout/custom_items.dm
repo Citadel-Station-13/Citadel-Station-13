@@ -519,3 +519,12 @@
 	item_state = "longblackgloves"
 	icon = 'icons/obj/custom.dmi'
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/under/trendy_fit
+	name = "Trendy Fitting Clothing"
+	desc = "An outfit straight from the boredom of space, its the type of thing only someone trying to entertain themselves on the way to their next destination would wear."
+	icon_state = "trendy_fit"
+	item_state = "trendy_fit"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION

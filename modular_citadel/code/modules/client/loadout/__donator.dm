@@ -416,3 +416,9 @@ datum/gear/darksabresheath
 	category = SLOT_GLOVES
 	path = /obj/item/clothing/gloves/longblackgloves
 	ckeywhitelist = list("bigmanclancy")
+
+/datum/gear/trendy_fit
+	name = "Trendy Fit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/trendy_fit
+	ckeywhitelist = list("midgetdragon")
