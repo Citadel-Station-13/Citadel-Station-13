@@ -22,3 +22,4 @@
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 	knockdown = 79
+	radiation_increase = 0
