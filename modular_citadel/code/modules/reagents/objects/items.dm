@@ -1,4 +1,4 @@
-/obj/item/FermiChem/pHbooklet
+/obj/item/fermichem/pHbooklet
     name = "pH indicator booklet"
     desc = "A booklet containing paper soaked in universal indicator."
     icon_state = "pHbooklet"
@@ -9,10 +9,10 @@
     w_class = WEIGHT_CLASS_TINY
 
 //A little janky with pockets
-/obj/item/FermiChem/pHbooklet/attack_hand(mob/user)
+/obj/item/fermichem/pHbooklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(numberOfPages >= 1)
-			var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
+			var/obj/item/fermichem/pHpaper/P = new /obj/item/fermichem/pHpaper
 			P.add_fingerprint(user)
 			P.forceMove(user.loc)
 			user.put_in_active_hand(P)
@@ -34,10 +34,10 @@
 	if(!I)
 		user.put_in_active_hand(src)
 
-/obj/item/FermiChem/pHbooklet/MouseDrop()
+/obj/item/fermichem/pHbooklet/MouseDrop()
     var/mob/living/user = usr
     if(numberOfPages >= 1)
-        var/obj/item/FermiChem/pHpaper/P = new /obj/item/FermiChem/pHpaper
+        var/obj/item/fermichem/pHpaper/P = new /obj/item/fermichem/pHpaper
         P.add_fingerprint(user)
         P.forceMove(user)
         user.put_in_active_hand(P)
@@ -54,7 +54,7 @@
         return
     ..()
 
-/obj/item/FermiChem/pHpaper
+/obj/item/fermichem/pHpaper
     name = "pH indicator strip"
     desc = "A piece of paper that will change colour depending on the pH of a solution."
     icon_state = "pHpaper"
@@ -65,7 +65,7 @@
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
 
-/obj/item/FermiChem/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
+/obj/item/fermichem/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
     if(!istype(cont))
         return
     if(used == TRUE)
@@ -107,20 +107,39 @@
     desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
     used = TRUE
 
-/obj/item/FermiChem/pHmeter
-    name = "pH meter"
+/obj/item/fermichem/pHmeter
+    name = "Chemistry Analyser"
     desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
     icon_state = "pHmeter"
     icon = 'modular_citadel/icons/obj/FermiChem.dmi'
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
+    var/scanmode = 1
 
-/obj/item/FermiChem/pHmeter/afterattack(atom/A, mob/user, proximity)
+/obj/item/fermichem/pHmeter/attack_self(mob/user)
+	if(!scanmode)
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
+		scanmode = 1
+	else
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
+		scanmode = 0
+
+/obj/item/fermichem/pHmeter/afterattack(atom/A, mob/user, proximity)
     . = ..()
     if(!istype(A, /obj/item/reagent_containers))
         return
     var/obj/item/reagent_containers/cont = A
     if(LAZYLEN(cont.reagents.reagent_list) == null)
         return
-    to_chat(user, "<span class='notice'>The pH meter beeps and displays [round(cont.reagents.pH, 0.1)]</span>")
-    desc = "An electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays [round(cont.reagents.pH, 0.1)]."
+    var/out_message
+    to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
+    out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.1)]\n"
+    if(cont.reagents.fermiIsReacting)
+        out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
+    out_message += "Chemicals found in the beaker:</b>\n"
+    for(var/datum/reagent/R in cont.reagents.reagent_list)
+        out_message += "<b>[R.name]</b>, Purity: [R.purity] [(scanmode?"Overdose: [R.overdose_threshold], Addiction: [R.addiction_threshold], Base pH [R.pH]":"")]\n"
+        if(scanmode)
+            out_message += "Analysis: [R.description]\n"
+    to_chat(user, "[out_message]</span>")
+    desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays [round(cont.reagents.pH, 0.1)]."

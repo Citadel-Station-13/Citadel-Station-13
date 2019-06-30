@@ -134,7 +134,7 @@
 	..()
 
 /datum/reagent/fermi/BEsmaller
-	name = "Succubus milk"
+	name = "Modesty milk"
 	id = "BEsmaller"
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
@@ -158,18 +158,31 @@
 	..()
 
 /datum/reagent/fermi/BEsmaller_hypo
-	name = "Modesty milk"
+	name = "Rectify milk" //Rectify
 	id = "BEsmaller_hypo"
 	color = "#E60584"
 	taste_description = "a milky ice cream like flavour."
+	metabolization_rate = 0.25
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
+
+/datum/reagent/fermi/BEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+	. = ..()
+	if(M.dna.features["has_vag"])
+		var/obj/item/organ/genital/vagina/nV = new
+		nV.Insert(M)
+	if(M.dna.features["has_womb"])
+		var/obj/item/organ/genital/womb/nW = new
+		nW.Insert(M)
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot("breasts")
 	if(!B)
 		return..()
-	if(B.cached_size > (sizeConv[M.dna.features["breasts_size"]]+0.1))
+	if(!M.dna.features["has_breasts"])//Fast fix for those who don't want it.
+		B.cached_size = B.cached_size - 0.1
+		B.update()
+	else if(B.cached_size > (sizeConv[M.dna.features["breasts_size"]]+0.1))
 		B.cached_size = B.cached_size - 0.05
 		B.update()
 	else if(B.cached_size < (sizeConv[M.dna.features["breasts_size"]])+0.1)
@@ -285,7 +298,7 @@
 	..()
 
 /datum/reagent/fermi/PEsmaller // Due to cozmo's request...!
-	name = "Incubus draft"
+	name = "Chastity draft"
 	id = "PEsmaller"
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace."
 	color = "#888888" // This is greyish..?
@@ -310,17 +323,27 @@
 	..()
 
 /datum/reagent/fermi/PEsmaller_hypo
-	name = "Chastity draft"
+	name = "Rectify draft"
 	id = "PEsmaller_hypo"
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
 	description = "A medicine used to treat organomegaly in a patient's penis."
+	metabolization_rate = 0.5
+
+/datum/reagent/fermi/PEsmaller_hypo/on_mob_add(mob/living/carbon/M)
+	. = ..()
+	if(M.dna.features["has_balls"])
+		var/obj/item/organ/genital/testicles/nT = new
+		nT.Insert(M)
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/penis/P = M.getorganslot("penis")
 	if(!P)
 		return ..()
-	if(P.cached_length > (M.dna.features["cock_length"]+0.1))
+	if(!M.dna.features["has_penis"])//Fast fix for those who don't want it.
+		P.cached_length = P.cached_length - 0.2
+		P.update()
+	else if(P.cached_length > (M.dna.features["cock_length"]+0.1))
 		P.cached_length = P.cached_length - 0.1
 		P.update()
 	else if(P.cached_length < (M.dna.features["cock_length"]+0.1))

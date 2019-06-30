@@ -468,16 +468,16 @@
 	build_path = /obj/item/anomaly_neutralizer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-  
+
 /datum/design/pHmeter
 	name = "pH meter"
 	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution."
 	id   = "pHmeter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_SILVER = 100, MAT_DIAMOND = 100)
-	build_path = /obj/item/FermiChem/pHmeter
+	build_path = /obj/item/fermichem/pHmeter
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 ////////////Armour///////////////////////

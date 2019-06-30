@@ -198,7 +198,7 @@
 			trans_data = copy_data(T)
 
 
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
 
 		remove_reagent(T.id, transfer_amount, ignore_pH = TRUE)
 
@@ -805,7 +805,7 @@
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, other_purity = 1, other_pH, no_react = 0, ignore_pH = FALSE)
 
 	if(!isnum(amount) || !amount)
 		return FALSE
@@ -818,7 +818,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
-	if (D.id == "water") //Do like an otter, add acid to water.
+	if (D.id == "water" && no_react == FALSE) //Do like an otter, add acid to water.
 		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -858,10 +858,13 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 
 	//cacluate reagent based pH shift.
-	pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
-	if(istype(my_atom, /obj/item/reagent_containers/))
-		var/obj/item/reagent_containers/RC = my_atom
-		RC.pH_check()//checks beaker resilience
+	if(ignore_pH == FALSE)
+		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
+		if(istype(my_atom, /obj/item/reagent_containers/))
+			var/obj/item/reagent_containers/RC = my_atom
+			RC.pH_check()//checks beaker resilience
+	else
+		pH = other_pH
 
 	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)

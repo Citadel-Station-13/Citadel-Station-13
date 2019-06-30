@@ -139,8 +139,8 @@
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
 	id = "breast_enlarger"
-	results = list("breast_enlarger" = 0.4)
-	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.5, "synthflesh" = 0.2, "silicon" = 0.2, "aphro" = 0.2)
+	results = list("breast_enlarger" = 0.8)
+	required_reagents = list("salglu_solution" = 0.1, "milk" = 0.1, "synthflesh" = 0.2, "silicon" = 0.3, "aphro" = 0.3)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -151,13 +151,21 @@
 	ReactpHLim 				= 3
 	CatalystFact 			= 0
 	CurveSharpT 			= 2
-	CurveSharppH 			= 2
+	CurveSharppH 			= 1
 	ThermicConstant 		= 1
 	HIonRelease 			= -0.1
 	RateUpLim 				= 5
 	FermiChem				= TRUE
 	FermiExplode 			= TRUE
 	PurityMin 				= 0.1
+
+/datum/chemical_reaction/fermi/breast_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	var/datum/reagent/fermi/breast_enlarger/BE = locate(/datum/reagent/fermi/breast_enlarger) in my_atom.reagents.reagent_list
+	var/cached_volume = BE.volume
+	if(BE.purity < 0.35)
+		holder.remove_reagent(src.id, cached_volume)
+		holder.add_reagent("BEsmaller", cached_volume)
+
 
 /datum/chemical_reaction/fermi/breast_enlarger/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH)
 	var/obj/item/organ/genital/breasts/B = new /obj/item/organ/genital/breasts(get_turf(my_atom))
@@ -171,7 +179,7 @@
 /datum/chemical_reaction/fermi/penis_enlarger
 	name = "Incubus draft"
 	id = "penis_enlarger"
-	results = list("penis_enlarger" = 0.4)
+	results = list("penis_enlarger" = 0.8)
 	required_reagents = list("blood" = 0.5, "synthflesh" = 0.2, "carbon" = 0.2, "aphro" = 0.2, "salglu_solution" = 0.1,)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
@@ -183,7 +191,7 @@
 	ReactpHLim 				= 3
 	CatalystFact 			= 0
 	CurveSharpT 			= 2
-	CurveSharppH 			= 2
+	CurveSharppH 			= 1
 	ThermicConstant 		= 1
 	HIonRelease 			= 0.1
 	RateUpLim 				= 5
@@ -199,6 +207,13 @@
 	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
 	P.length = ((PE.volume * PE.purity) / 10)//half as effective.
 	my_atom.reagents.clear_reagents()
+
+/datum/chemical_reaction/fermi/penis_enlarger/FermiFinish(datum/reagents/holder, var/atom/my_atom)
+	var/datum/reagent/fermi/penis_enlarger/PE = locate(/datum/reagent/fermi/penis_enlarger) in my_atom.reagents.reagent_list
+	var/cached_volume = PE.volume
+	if(PE.purity < 0.35)
+		holder.remove_reagent(src.id, cached_volume)
+		holder.add_reagent("PEsmaller", cached_volume)
 
 /datum/chemical_reaction/fermi/astral
 	name = "Astrogen"

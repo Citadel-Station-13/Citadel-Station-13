@@ -310,10 +310,10 @@
 		if(istype(O, /obj/item/organ/genital))
 			organCheck = TRUE
 			if(/obj/item/organ/genital/penis)
-				dna.features["has_cock"] = TRUE
+				//dna.features["has_cock"] = TRUE
 				willyCheck = TRUE
 			if(/obj/item/organ/genital/breasts)
-				dna.features["has_breasts"] = TRUE//Goddamnit get in there.
+				//dna.features["has_breasts"] = TRUE//Goddamnit get in there.
 				breastCheck = TRUE
 	if(organCheck == FALSE)
 		if(ishuman(src) && dna.species.id == "human")
