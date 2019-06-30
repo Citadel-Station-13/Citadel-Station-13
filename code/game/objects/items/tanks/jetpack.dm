@@ -161,7 +161,7 @@
 	gas_type = /datum/gas/carbon_dioxide
 
 /obj/item/tank/jetpack/carbondioxide/eva
-	name "surplus jetpack (carbon dioxide)"
+	name = "surplus jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals. Rated for less than stellar EVA speeds!"
 	full_speed = FALSE
 
