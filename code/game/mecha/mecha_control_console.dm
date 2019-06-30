@@ -21,8 +21,8 @@
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
-						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
-						  <a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP pulse)</a><br>"}
+						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
+						[TR.recharging?"Recharging EMP Pulse...<br>":"<a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"]"}
 
 	if(screen==1)
 		dat += "<h3>Log contents</h3>"
@@ -65,6 +65,7 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
+	var/recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -102,10 +103,16 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
+	if(recharging)
+		return
 	var/obj/mecha/M = in_mecha()
 	if(M)
-		M.emp_act(EMP_LIGHT)
-	qdel(src)
+		M.emp_act(EMP_HEAVY)
+		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		recharging = 1
+
+/obj/item/mecha_parts/mecha_tracking/proc/recharge()
+	recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
 	if(!ismecha(loc))
