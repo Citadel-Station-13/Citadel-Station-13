@@ -633,7 +633,8 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
-	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Stechkin and C-20r, but not revolvers or energy guns."
+	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. \
+			It is compatible with many small ballistic guns including the Stechkin and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
 	cost = 1
 	surplus = 10
@@ -1768,7 +1769,8 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 
 /datum/uplink_item/role_restricted/kitchen_gun
 	name = "Kitchen Gun (TM)"
-	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
+	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! \
+	Just five shots from Kitchen Gun (TM), and it'll sparkle like new! Includes two extra ammunition clips!"
 	cost = 10
 	surplus = 40
 	restricted_roles = list("Cook", "Janitor")
