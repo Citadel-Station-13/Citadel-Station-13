@@ -1,12 +1,19 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 8
+	damage = 15
 	damage_type = TOX
 	nodamage = 0
 	knockdown = 100
 	stutter = 5
-	drowsy = 50
+	var/radiation_max = 900
+	var/radiation_increase = 300
+
+/obj/item/projectile/energy/bolt/on_hit(atom/A, blocked)
+	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		M.radiation = min(M.radiation + radiation_increase, radiation_max)
 
 /obj/item/projectile/energy/bolt/halloween
 	name = "candy corn"
@@ -14,3 +21,4 @@
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
+	knockdown = 79
