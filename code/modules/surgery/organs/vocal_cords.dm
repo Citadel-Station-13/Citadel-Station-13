@@ -1315,7 +1315,7 @@
 					H.SetStun(0)
 
 	//INSTILL
-	else if((findtext(message, objective_words)))
+	else if((findtext(message, instill_words)))
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
@@ -1323,7 +1323,7 @@
 				var/instill = stripped_input(user, "Instill an emotion in your [(user.lewd?"Your pet":"listener")].", MAX_MESSAGE_LEN)
 				var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
 				to_chat(H, "<span class='[customSpan]'><i>[instill]</i></span>")
-				
+
 	//RECOGNISE
 	else if((findtext(message, recognise_words)))
 		for(var/V in listeners)
