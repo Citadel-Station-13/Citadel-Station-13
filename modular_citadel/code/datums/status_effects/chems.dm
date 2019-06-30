@@ -332,7 +332,7 @@
 				if(owner.lewd)
 					to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
-			if (mental_capacity >= 499 && (owner.getBrainLoss() <=20 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
+			if (mental_capacity >= 499 && (owner.getBrainLoss() <=0 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
 				phase = 2
 				mental_capacity = 500
 				customTriggers = list()
@@ -369,8 +369,8 @@
 			M.hallucination = max(0, M.hallucination - 5)
 			M.stuttering = max(0, M.stuttering - 5)
 			M.jitteriness = max(0, M.jitteriness - 5)
-			if(owner.getBrainLoss() >=50)
-				owner.adjustBrainLoss(-0.1)
+			if(owner.getBrainLoss() >=20)
+				owner.adjustBrainLoss(-0.2)
 			if(withdrawal == TRUE)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing1")
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")

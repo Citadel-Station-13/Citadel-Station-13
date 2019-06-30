@@ -777,6 +777,7 @@
 	var/static/regex/custom_words = regex("new trigger|listen to me")
 	var/static/regex/custom_words_words = regex("speak|echo|shock|cum|kneel|strip|trance")//What a descriptive name!
 	var/static/regex/custom_echo = regex("obsess|fills your mind|loop")
+	var/static/regex/instill_words = regex("feel|entice|overwhel")
 	var/static/regex/recognise_words = regex("recognise me|did you miss me?")
 	var/static/regex/objective_words = regex("new objective|obey this command|unable to resist|compulsed")
 	var/static/regex/heal_words = regex("live|heal|survive|mend|life|pets never die")
@@ -1313,7 +1314,16 @@
 					user.SetStun(0)
 					H.SetStun(0)
 
-
+	//INSTILL
+	else if((findtext(message, objective_words)))
+		for(var/V in listeners)
+			var/mob/living/carbon/human/H = V
+			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(E.phase == 3)
+				var/instill = stripped_input(user, "Instill an emotion in your [(user.lewd?"Your pet":"listener")].", MAX_MESSAGE_LEN)
+				var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
+				to_chat(H, "<span class='[customSpan]'><i>[instill]</i></span>")
+				
 	//RECOGNISE
 	else if((findtext(message, recognise_words)))
 		for(var/V in listeners)

@@ -126,10 +126,11 @@
 
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list
+	if((total_volume - amount) <= 0)//Because this can result in 0, I don't want it to crash.
+		pH = 7
 	if(total_volume > 0)
 		var/part = amount / total_volume
 		for(var/reagent in cached_reagents)
-			pH = 7
 			var/datum/reagent/R = reagent
 			remove_reagent(R.id, R.volume * part, ignore_pH = TRUE)
 

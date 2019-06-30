@@ -97,6 +97,7 @@
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
 	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
+	data["currentpH"] =  beaker ? beaker.reagents.pH : null
 	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 

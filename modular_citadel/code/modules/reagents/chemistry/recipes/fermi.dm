@@ -103,8 +103,9 @@
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 0.3)
-	required_reagents = list("stable_plasma" = 0.5, "slimejelly" = 0.5, "uranium" = 0.5, "synthflesh" = 0.5, "blood" = 0.5)
+	required_reagents = list("stable_plasma" = 0.15, "slimejelly" = 0.15, "uranium" = 0.15, "synthflesh" = 0.15, "blood" = 0.15)
 	mix_message = "the reaction gives off a blorble!"
+	required_temp = 1
 	//FermiChem vars:
 	OptimalTempMin 		= 600 		// Lower area of bell curve for determining heat based rate reactions
 	OptimalTempMax 		= 630 		// Upper end for above
@@ -361,7 +362,7 @@
 	results = list("nanite_b_gone" = 4)
 	required_reagents = list("synthflesh" = 1, "uranium" = 1, "iron" = 1, "salglu_solution" = 1)
 	mix_message = "the reaction gurgles, encapsulating the reagents in flesh before the emp can be set off."
-	required_temp = 499//To force fermireactions before EMP.
+	required_temp = 450//To force fermireactions before EMP.
 	//FermiChem vars:
 	OptimalTempMin 	= 500
 	OptimalTempMax 	= 600

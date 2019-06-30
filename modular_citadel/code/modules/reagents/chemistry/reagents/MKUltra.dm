@@ -250,7 +250,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		return
 	else
 		E.enthrallTally += 1
-	M.adjustBrainLoss(0.1)//Honestly this could be removed, in testing it made everyone brain damaged, but on the other hand, we were chugging tons of it.
 	..()
 
 /datum/reagent/fermi/enthrall/overdose_start(mob/living/carbon/M)//I made it so the creator is set to gain the status for someone random.
