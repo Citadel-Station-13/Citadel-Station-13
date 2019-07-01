@@ -68,6 +68,9 @@
 #define MUT_EXTRA 2
 #define MUT_OTHER 3
 
+#define DNA_DEFAULT_STABILITY 100
+#define DNA_MELTDOWN_POINT 0
+
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 

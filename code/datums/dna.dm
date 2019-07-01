@@ -15,7 +15,7 @@
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
-	var/stability = 100
+	var/stability = DNA_DEFAULT_STABILITY
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 
 /datum/dna/New(mob/living/new_holder)
@@ -266,7 +266,7 @@
 
 
 /datum/dna/proc/update_instability(alert=TRUE)
-	stability = 100
+	stability = DNA_DEFAULT_STABILITY
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
 			stability -= M.instability * GET_MUTATION_STABILIZER(M)
@@ -274,20 +274,20 @@
 	if(holder)
 		var/message
 		if(alert)
-			switch(stability)
+			switch(PERCENT((stability - DNA_MELTDOWN_POINT)/(DNA_DEFAULT_STABILITY - DNA_MELTDOWN_POINT)))
 				if(70 to 90)
 					message = "<span class='warning'>You shiver.</span>"
-				if(60 to 69)
+				if(60 to 69.9)
 					message = "<span class='warning'>You feel cold.</span>"
-				if(40 to 59)
+				if(40 to 59.9)
 					message = "<span class='warning'>You feel sick.</span>"
-				if(20 to 39)
+				if(20 to 39.9)
 					message = "<span class='warning'>It feels like your skin is moving.</span>"
-				if(1 to 19)
+				if(0.1 to 19.9)
 					message = "<span class='warning'>You can feel your cells burning.</span>"
 				if(-INFINITY to 0)
 					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
-		if(stability <= 0)
+		if(stability <= DNA_MELTDOWN_POINT)
 			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
 		if(message)
 			to_chat(holder, message)
@@ -606,11 +606,11 @@
 /mob/living/carbon/human/proc/something_horrible(ignore_stability)
 	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
 		return
-	if(!ignore_stability && (dna.stability > 0))
+	if(!ignore_stability && (dna.stability > DNA_MELTDOWN_POINT))
 		return
 	var/instability = -dna.stability
 	dna.remove_all_mutations()
-	dna.stability = 100
+	dna.stability = DNA_DEFAULT_STABILITY
 	if(prob(max(70-instability,0)))
 		switch(rand(0,7)) //not complete and utter death
 			if(0)
