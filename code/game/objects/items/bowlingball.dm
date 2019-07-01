@@ -21,8 +21,8 @@
 /obj/item/weapon/clowningball/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
 	if(istype(thrower, /mob/living/carbon/human))
 		var/mob/living/carbon/human/user = thrower
-		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/rank/clown))
-			unlimitedthrow = TRUE
+		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/rank/clown)) //If they have the clown uniform on.
+			unlimitedthrow = TRUE //Then its time to party.
 			clown_item = TRUE
 			icon_state = "bowling_ball_spin"
 			playsound(src, 'sound/effects/bowl.ogg', 50, 1)
@@ -30,7 +30,7 @@
 
 /obj/item/weapon/clowningball/throw_impact(atom/hit_atom)
 	if(!iscarbon(hit_atom))//if the ball hits something that's not carbon
-		unspin()
+		unspin() //Then we do unspin. Which makes unlimitedthrow false.
 		return ..()
 	var/mob/living/carbon/H = hit_atom
 	if(clown_item) //Only the clown can actually bowl people.
@@ -45,7 +45,7 @@
 		return ..()
 
 /obj/item/weapon/clowningball/proc/unspin()
-	icon_state = "bowling_ball"
+	icon_state = "bowling_ball" //icon state changes back to the regular obj, from the spinning one.
 	unlimitedthrow = FALSE //This variable is located in atoms_movable, thanks to it using throwing-subsystem.
 	clown_item = FALSE //This sets it back to 0, so people that aren't the clown don't touch it.
 

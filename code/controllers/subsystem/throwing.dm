@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(throwing)
 	//calculate how many tiles to move, making up for any missed ticks.
 	var/tilestomove = CEILING(min(((((world.time+world.tick_lag) - start_time + delayed_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed*MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait), 1)
 	while (tilestomove-- > 0)
-		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc) && !AM.unlimitedthrow)
+		if ((dist_travelled >= maxrange || AM.loc == target_turf) && AM.has_gravity(AM.loc) && !AM.unlimitedthrow) //If unlimitedthrow = true we continue on our journey.
 			finalize()
 			return
 
@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(throwing)
 		finalize(hit=TRUE, target=A) //We continue down the line on the hit atom.
 	else
 		thrownthing.throw_impact(A, src) //Else we make impact and it continues on its journey.
-								//There are a lot of checks on throwing, it stops on a distance check.
+								//There are a lot of checks on throwing, but don't forget your own.
 /datum/thrownthing/proc/hitcheck()
 	for (var/thing in get_turf(thrownthing))
 		var/atom/movable/AM = thing
