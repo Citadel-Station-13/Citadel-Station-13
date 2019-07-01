@@ -890,7 +890,7 @@
 					if(L.lewd)
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of your [E.enthrallGender]'s fingers brings you back to your enthralled state, obedient and ready to serve.</b></span>"), 5)
 					else
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their command.</b></span>"), 5)
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='big warning'>The snapping of [E.master]'s fingers brings you back to being under their influence.</b></span>"), 5)
 
 
 	//tier 1
@@ -910,11 +910,11 @@
 					addtimer(CALLBACK(H, /atom/movable/proc/say, "I feel happy being with you."), 5)
 					continue
 				if(2)
-					speaktrigger += "I think I'm in love with you... "
+					speaktrigger += "[(H.lewd?"I think I'm in love with you... ":"I find you really inspirational, ")]" //'
 				if(3)
-					speaktrigger += "I'm devoted to [(H.lewd?"being your pet":"following you")]! "
+					speaktrigger += "[(H.lewd?"I'm devoted to being your pet":"I'm commited to following your cause!")]! "
 				if(4)
-					speaktrigger += "[(H.lewd?"You are my whole world and all of my being belongs to you, ":"I cannot think of anything else but you, ")] "//Redflags!!
+					speaktrigger += "[(H.lewd?"You are my whole world and all of my being belongs to you, ":"I cannot think of anything else but aiding your cause, ")] "//Redflags!!
 
 			//mood
 			GET_COMPONENT_FROM(mood, /datum/component/mood, H)
@@ -1029,10 +1029,11 @@
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
 			power_multiplier *= distancelist[get_dist(user, C)+1]
-			if (E.phase == 3) //If target is fully enthralled,
+			if (E.phase >= 3) //If target is fully enthralled,
 				ADD_TRAIT(C, TRAIT_MUTE, "enthrall")
 			else
 				C.silent += ((10 * power_multiplier) * E.phase)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>You are unable to speak!</b></span>"), 5)
 			E.cooldown += 3
 
 	//SPEAK
@@ -1100,7 +1101,7 @@
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase > 1)
-				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused) // probably a redundant check but for good measure
+				if(HAS_TRAIT(H, TRAIT_NYMPHO) && H.canbearoused && H.lewd) // probably a redundant check but for good measure
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
 					H.mob_climax(forced_climax=TRUE)
 					H.SetStun(20)
@@ -1142,6 +1143,7 @@
 				if(2 to INFINITY)
 					C.Sleeping(45 * power_multiplier)
 					E.cooldown += 10
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>Drowsiness suddenly overwhelms you as you fall asleep!</b></span>"), 5)
 
 	//STRIP
 	else if((findtext(message, strip_words)))
@@ -1167,6 +1169,7 @@
 					if(L.m_intent != MOVE_INTENT_WALK)
 						L.toggle_move_intent()
 						E.cooldown += 1
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You slow down to a walk.</b></span>"), 5)
 
 	//RUN
 	else if((findtext(message, run_words)))
@@ -1178,6 +1181,7 @@
 					if(L.m_intent != MOVE_INTENT_RUN)
 						L.toggle_move_intent()
 						E.cooldown += 1
+						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You speed up into a jog!</b></span>"), 5)
 
 	//LIE DOWN
 	else if(findtext(message, liedown_words))
@@ -1415,6 +1419,7 @@
 				if(3)//Tier 3 only
 					E.status = "pacify"
 					E.cooldown += 10
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You feel like never hurting anyone ever again.</b></span>"), 5)
 
 	//CHARGE
 	else if(findtext(message, charge_words))
