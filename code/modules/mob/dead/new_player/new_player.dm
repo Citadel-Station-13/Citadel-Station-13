@@ -443,10 +443,12 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++
-	for(var/obj/effect/mob_spawn/spawner in GLOB.mob_spawners)
-		if(spawner.can_latejoin())
-			available_job_count++
-			break
+	for(var/spawner in GLOB.mob_spawners)
+		var/obj/effect/mob_spawn/S = GLOB.mob_spawners[spawner]
+		if(!istype(S) || !S.can_latejoin())
+			continue
+		available_job_count++
+		break
 
 	if(!available_job_count)
 		dat += "<div class='notice red'>There are currently no open positions!</div>"
@@ -465,9 +467,11 @@
 			"Science" = list(jobs = list(), titles = GLOB.science_positions, color = "#e6b3e6"),
 			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
 		)
-		for(var/obj/effect/mob_spawn/spawner in GLOB.mob_spawners)
-			if(spawner.can_latejoin())
-				categorizedJobs["Ghost Role"]["jobs"] += spawner
+		for(var/spawner in GLOB.mob_spawners)
+			var/obj/effect/mob_spawn/S = GLOB.mob_spawners[spawner]
+			if(!istype(S) || !S.can_latejoin())
+				continue
+			categorizedJobs["Ghost Role"]["jobs"] += S
 
 		for(var/datum/job/job in SSjob.occupations)
 			if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
