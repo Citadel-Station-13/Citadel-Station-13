@@ -26227,9 +26227,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkx" = (
-/obj/machinery/status_display/supply{
-	pixel_y = 0
-	},
+/obj/machinery/status_display/supply,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},

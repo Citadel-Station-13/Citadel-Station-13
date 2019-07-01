@@ -21623,9 +21623,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
-/area/quartermaster/qm{
-	pixel_x = 32
-	})
+/area/quartermaster/qm)
 "aQu" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
