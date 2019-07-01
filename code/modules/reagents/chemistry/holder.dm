@@ -191,6 +191,7 @@
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
+	message_admins("transferring pH: [pH]")
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
 		var/transfer_amount = T.volume * part
@@ -844,7 +845,10 @@
 	var/new_total = cached_total + amount
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
+
 	var/cached_pH = pH
+
+
 
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/specific_heat = 0
@@ -858,13 +862,14 @@
 	chem_temp = thermal_energy / (specific_heat * new_total)
 
 	//cacluate reagent based pH shift.
-	if(ignore_pH == FALSE)
-		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
-		if(istype(my_atom, /obj/item/reagent_containers/))
-			var/obj/item/reagent_containers/RC = my_atom
-			RC.pH_check()//checks beaker resilience
+	if(ignore_pH == TRUE)
+		message_admins("ignoring pH old pH: [pH], added pH [D.pH]")
+		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
 	else
-		pH = other_pH
+		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
+	if(istype(my_atom, /obj/item/reagent_containers/))
+		var/obj/item/reagent_containers/RC = my_atom
+		RC.pH_check()//checks beaker resilience
 
 	//add the reagent to the existing if it exists
 	for(var/A in cached_reagents)
