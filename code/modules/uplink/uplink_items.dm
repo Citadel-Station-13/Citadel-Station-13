@@ -561,7 +561,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Odd-job Bowler"
 	desc = "This innocuous looking bowler hat has a razor sharp plasteel brim. \
 			Open the fight by dismembering your enemy, and anyone else in the way!"
-	item = /obj/item/clothing/head/bowlersharp
+	item = /obj/item/clothing/head/bowler/bowlersharp
 	cost = 5
 
 /datum/uplink_item/stealthy_weapons/edagger

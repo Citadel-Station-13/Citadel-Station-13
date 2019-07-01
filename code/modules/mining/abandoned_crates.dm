@@ -126,6 +126,7 @@
 			new /obj/item/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
 			new /obj/item/reagent_containers/spray/waterflower(src)
+			new /obj/item/weapon/clowningball
 		if(95)
 			new /obj/item/clothing/under/rank/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)

@@ -10,7 +10,7 @@
 	throwforce = 3
 	throw_range = 2
 	throw_speed = 1
-	var/clown_wielded = 0
+	var/clown_item = FALSE
 
 /obj/item/weapon/clowningball/Initialize()
 	. = ..()
@@ -21,18 +21,18 @@
 	if(istype(thrower, /mob/living/carbon/human))
 		var/mob/living/carbon/human/user = thrower
 		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/rank/clown))
-			unlimitedthrow = 1
-			clown_wielded = 1
+			unlimitedthrow = TRUE
+			clown_item = TRUE
 			icon_state = "bowling_ball_spin"
 			playsound(src, 'sound/effects/bowl.ogg', 50, 1)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
 /obj/item/weapon/clowningball/throw_impact(atom/hit_atom)
-	if(!ishuman(hit_atom))//if the ball hits a nonhuman
+	if(!iscarbon(hit_atom))//if the ball hits something that's not carbon
 		unspin()
 		return ..()
-	var/mob/living/carbon/human/H = hit_atom
-	if(clown_wielded) //Only the clown can actually bowl people.
+	var/mob/living/carbon/H = hit_atom
+	if(clown_item) //Only the clown can actually bowl people.
 		visible_message("<span class='danger'>\The expertly-bowled [src] knocks over [H] like a bowling pin!</span>")
 		H.adjust_blurriness(6)
 		H.Knockdown(8)
@@ -45,6 +45,6 @@
 
 /obj/item/weapon/clowningball/proc/unspin()
 	icon_state = "bowling_ball"
-	unlimitedthrow = 0 //This variable is located in atoms_movable, thanks to it using throwing-subsystem.
-	clown_wielded = 0 //This sets it back to 0, so people that aren't the clown don't touch it.
+	unlimitedthrow = FALSE //This variable is located in atoms_movable, thanks to it using throwing-subsystem.
+	clown_item = FALSE //This sets it back to 0, so people that aren't the clown don't touch it.
 
