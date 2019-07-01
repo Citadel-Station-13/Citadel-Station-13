@@ -880,8 +880,9 @@
 			if(isliving(my_atom))
 				if(R.OnMobMergeCheck == TRUE)//Forces on_mob_add proc when a chem is merged
 					R.on_mob_add(my_atom, amount)
-				else
-					R.on_merge(data, amount, my_atom, other_purity)
+				//else
+				//	R.on_merge(data, amount, my_atom, other_purity)
+			R.on_merge(data, amount, my_atom, other_purity)
 			if(!no_react)
 				handle_reactions()
 

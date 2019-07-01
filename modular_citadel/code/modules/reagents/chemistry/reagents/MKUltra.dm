@@ -200,7 +200,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
 	else
-		message_admins("MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
+		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 	log_game("FERMICHEM: [M] ckey: [M.key] has taken MKUltra")
 
