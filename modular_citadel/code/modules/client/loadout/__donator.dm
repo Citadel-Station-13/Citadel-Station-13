@@ -422,3 +422,9 @@ datum/gear/darksabresheath
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/trendy_fit
 	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/under/singery
+	ckeywhitelist = list("maxlynchy")
