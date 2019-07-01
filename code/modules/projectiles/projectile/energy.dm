@@ -2,6 +2,7 @@
 	name = "energy"
 	icon_state = "spark"
 	damage = 0
+	speed = 0.4
 	damage_type = BURN
 	flag = "energy"
 	is_reflectable = TRUE
@@ -13,6 +14,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
+	speed = 0.8
 	nodamage = 1
 	knockdown = 100
 	stutter = 5

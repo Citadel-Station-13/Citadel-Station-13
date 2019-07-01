@@ -189,7 +189,6 @@
 	name = "positron blast"
 	damage = 80
 	range = 14
-	speed = 0.6
 	icon_state = "disablerslug"
 	icon = 'modular_citadel/icons/obj/projectiles.dmi'
 

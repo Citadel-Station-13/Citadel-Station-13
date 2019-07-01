@@ -60,7 +60,7 @@
 	stamina = 25
 	armour_penetration = -10
 	light_range = 2
-	speed = 0.7
+	speed = 0.4
 	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
@@ -203,7 +203,7 @@
 	damage = 20
 	armour_penetration = 25
 	light_range = 3
-	speed = 0.7
+	speed = 0.6
 	range = 35
 	light_color = LIGHT_COLOR_RED
 
@@ -215,7 +215,7 @@
 	stamina = 25
 	armour_penetration = -10
 	light_range = 3
-	speed = 0.65
+	speed = 0.4
 	range = 35
 	light_color = LIGHT_COLOR_BLUE
 

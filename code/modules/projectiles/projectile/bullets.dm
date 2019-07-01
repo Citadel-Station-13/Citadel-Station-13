@@ -2,6 +2,7 @@
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
+	speed = 0.6
 	damage_type = BRUTE
 	nodamage = FALSE
 	candink = TRUE

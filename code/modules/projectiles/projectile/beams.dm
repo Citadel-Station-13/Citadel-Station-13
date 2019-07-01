@@ -4,6 +4,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
 	light_range = 2
+	speed = 0.4
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -74,7 +75,6 @@
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
-	speed = 0.7
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler
