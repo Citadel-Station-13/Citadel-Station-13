@@ -11,7 +11,7 @@
 	. = ..()
 
 /obj/item/clothing/head/bowler/bowlersharp/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
-	unlimitedthrow = 1
+	unlimitedthrow = TRUE
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
 /obj/item/clothing/head/bowler/bowlersharp/throw_impact(atom/hit_atom)

@@ -33,7 +33,7 @@
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
-	var/unlimitedthrow = FALSE
+	var/unlimitedthrow = FALSE //Makes thrown objects continue and perform conditions, do not use this without checks. See: bowlingball.dm, sharpbowlerhat.dm
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
