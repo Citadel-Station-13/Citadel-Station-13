@@ -557,6 +557,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/bowlersharp
+	name = "Odd-job Bowler"
+	desc = "This innocuous looking bowler hat has a razor sharp plasteel brim. \
+			Open the fight by dismembering your enemy, and anyone else in the way!"
+	item = /obj/item/clothing/head/bowlersharp
+	cost = 5
+
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
