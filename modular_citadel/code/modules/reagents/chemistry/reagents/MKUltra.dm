@@ -286,7 +286,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(M.lewd)
 		to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	else
-		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what they've been saying. Your highest priority is now to stay by their side and protect them at all costs.
+		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what they've been saying. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	log_game("FERMICHEM: [M] ckey: [M.key] has been mindbroken for [creatorName] ckey: [creatorID]")
 	M.slurring = 100
 	M.confused = 100
