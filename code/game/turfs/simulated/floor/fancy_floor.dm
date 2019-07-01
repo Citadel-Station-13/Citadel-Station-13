@@ -119,6 +119,10 @@
 /turf/open/floor/grass/snow/crowbar_act(mob/living/user, obj/item/I)
 	return
 
+/turf/open/floor/grass/snow/safe
+	slowdown = 1.5
+	planetary_atmos = FALSE
+
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
 	gender = NEUTER
 	name = "volcanic floor"

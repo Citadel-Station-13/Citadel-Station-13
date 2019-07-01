@@ -81,6 +81,8 @@
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
+	var/list/mutations = list()
+	var/max_mutations = 6
 
 //Disk stuff.
 /obj/item/disk/data/Initialize()
@@ -127,7 +129,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -161,17 +163,18 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
 
-	if(efficiency > 2)
-		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
-		H.randmutvg()
-	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
-		if(ismob(M))
-			H = M
+	if(!HAS_TRAIT(H, TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
+		if(efficiency > 2)
+			var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
+			H.dna.remove_mutation_group(unclean_mutations)
+		if(efficiency > 5 && prob(20))
+			H.easy_randmut(POSITIVE)
+		if(efficiency < 3 && prob(50))
+			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			if(ismob(M))
+				H = M
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H

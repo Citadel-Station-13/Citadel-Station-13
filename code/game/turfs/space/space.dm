@@ -87,7 +87,7 @@
 	return TRUE
 
 /turf/open/space/handle_slip()
-	return
+	return FALSE
 
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()

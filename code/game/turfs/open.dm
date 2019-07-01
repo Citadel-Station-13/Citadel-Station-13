@@ -258,23 +258,23 @@
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
-		return 0
+		return FALSE
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return 0
+				return FALSE
 		else
 			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
-				return 0
+				return FALSE
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
-				return 0
+				return FALSE
 			if(ishuman(C) && (lube&NO_SLIP_WHEN_WALKING))
 				var/mob/living/carbon/human/H = C
 				if(!H.sprinting && H.getStaminaLoss() >= 20)
-					return 0
-		if(!(lube&SLIDE_ICE))
+					return FALSE
+		if(!(lube&(SLIDE_ICE|SILENT_SLIP)))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
@@ -297,7 +297,7 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 		else if(lube&SLIDE_ICE)
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
-		return 1
+		return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

@@ -2,32 +2,54 @@
 
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 
-//Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
-#define HULK		"Hulk"
-#define XRAY		"X Ray Vision"
-#define COLDRES		"Cold Resistance"
-#define TK			"Telekinesis"
-#define NERVOUS		"Nervousness"
-#define EPILEPSY	"Epilepsy"
-#define MUTATE		"Unstable DNA"
-#define COUGH		"Cough"
-#define DWARFISM	"Dwarfism"
-#define CLOWNMUT	"Clumsiness"
-#define TOURETTES	"Tourettes Syndrome"
-#define DEAFMUT		"Deafness"
-#define BLINDMUT	"Blindness"
-#define RACEMUT		"Monkified"
-#define BADSIGHT	"Near Sightness"
-#define LASEREYES	"Laser Eyes"
-#define CHAMELEON	"Chameleon"
-#define WACKY		"Wacky"
-#define MUT_MUTE	"Mute"
-#define SMILE		"Smile"
-#define STONER		"Stoner"
-#define UNINTELLIGIBLE		"Unintelligible"
-#define SWEDISH		"Swedish"
-#define CHAV		"Chav"
-#define ELVIS		"Elvis"
+//Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
+#define HULK		/datum/mutation/human/hulk
+#define XRAY		/datum/mutation/human/thermal/x_ray
+#define COLDMUT		/datum/mutation/human/cold_resistance
+#define SPACEMUT	/datum/mutation/human/space_adaptation
+#define TK			/datum/mutation/human/telekinesis
+#define NERVOUS		/datum/mutation/human/nervousness
+#define EPILEPSY	/datum/mutation/human/epilepsy
+#define MUTATE		/datum/mutation/human/bad_dna
+#define COUGH		/datum/mutation/human/cough
+#define DWARFISM	/datum/mutation/human/dwarfism
+#define GIGANTISM	/datum/mutation/human/gigantism
+#define CLOWNMUT	/datum/mutation/human/clumsy
+#define TOURETTES	/datum/mutation/human/tourettes
+#define DEAFMUT		/datum/mutation/human/deaf
+#define BLINDMUT	/datum/mutation/human/blind
+#define RACEMUT		/datum/mutation/human/race
+#define BADSIGHT	/datum/mutation/human/nearsight
+#define LASEREYES	/datum/mutation/human/laser_eyes
+#define CHAMELEON	/datum/mutation/human/chameleon
+#define WACKY		/datum/mutation/human/wacky
+#define MUT_MUTE	/datum/mutation/human/mute
+#define SMILE		/datum/mutation/human/smile
+#define STONER		/datum/mutation/human/stoner
+#define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
+#define SWEDISH		/datum/mutation/human/swedish
+#define CHAV		/datum/mutation/human/chav
+#define ELVIS		/datum/mutation/human/elvis
+#define RADIOACTIVE	/datum/mutation/human/radioactive
+#define GLOWY		/datum/mutation/human/glow
+#define TELEPATHY	/datum/mutation/human/telepath
+#define FIREBREATH	/datum/mutation/human/firebreath
+#define VOID		/datum/mutation/human/void
+#define STRONG    	/datum/mutation/human/strong
+#define FIRESWEAT	/datum/mutation/human/fire
+#define THERMAL		/datum/mutation/human/thermal
+#define ANTENNA		/datum/mutation/human/antenna
+#define PARANOIA	/datum/mutation/human/paranoia
+#define MINDREAD	/datum/mutation/human/mindreader
+#define INSULATED	/datum/mutation/human/insulated
+#define SHOCKTOUCH	/datum/mutation/human/shock
+#define OLFACTION	/datum/mutation/human/olfaction
+#define ACIDFLESH	/datum/mutation/human/acidflesh
+#define BADBLINK	/datum/mutation/human/badblink
+#define SPASTIC		/datum/mutation/human/spastic
+#define EXTRASTUN	/datum/mutation/human/extrastun
+#define GELADIKINESIS		/datum/mutation/human/geladikinesis
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -39,10 +61,12 @@
 //Types of usual mutations
 #define	POSITIVE 			1
 #define	NEGATIVE			2
-#define	MINOR_NEGATIVE		3
+#define	MINOR_NEGATIVE		4
 
-//Mutations that cant be taken from genetics and are not in SE
-#define	NON_SCANNABLE		-1
+//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
+#define MUT_NORMAL 1
+#define MUT_EXTRA 2
+#define MUT_OTHER 3
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
@@ -63,7 +87,8 @@
 #define DNA_MUTANTMARKING_BLOCK		13
 #define DNA_TAUR_BLOCK 				14
 
-#define DNA_STRUC_ENZYMES_BLOCKS	18
+#define DNA_SEQUENCE_LENGTH			4
+#define DNA_MUTATION_BLOCKS			8
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -122,3 +147,21 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PENIS "penis"
+
+
+//used for the can_chromosome var on mutations
+#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NONE 1
+#define CHROMOSOME_USED 2
+
+//A bunch of helpers to make genetics less of a headache
+
+#define GET_INITIALIZED_MUTATION(A) GLOB.all_mutations[A]
+#define GET_GENE_STRING(A, B) (B.mutation_index[A])
+#define GET_SEQUENCE(A) (GLOB.full_sequences[A])
+#define GET_MUTATION_TYPE_FROM_ALIAS(A) (GLOB.alias_mutations[A])
+
+#define GET_MUTATION_STABILIZER(A) ((A.stabilizer_coeff < 0) ? 1 : A.stabilizer_coeff)
+#define GET_MUTATION_SYNCHRONIZER(A) ((A.synchronizer_coeff < 0) ? 1 : A.synchronizer_coeff)
+#define GET_MUTATION_POWER(A) ((A.power_coeff < 0) ? 1 : A.power_coeff)
+#define GET_MUTATION_ENERGY(A) ((A.energy_coeff < 0) ? 1 : A.energy_coeff)
