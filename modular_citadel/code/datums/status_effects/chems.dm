@@ -597,12 +597,13 @@
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (HAS_TRAIT(C, TRAIT_NYMPHO))
+				if (HAS_TRAIT(C, TRAIT_NYMPHO) && C.lewd)
 					if (C.getArousalLoss() > 80)
 						C.mob_climax(forced_climax=TRUE)
 						C.SetStun(10)//We got your stun effects in somewhere, Kev.
 					else
 						C.adjustArousalLoss(10)
+						to_chat(C, "<span class='love'><i>You feel a surge of arousal!</i></span>")
 				else
 					C.throw_at(get_step_towards(speaker,C), 3, 1) //cut this if it's too hard to get working
 
