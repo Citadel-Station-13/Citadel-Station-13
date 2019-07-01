@@ -444,7 +444,7 @@
 		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++
 	for(var/spawner in GLOB.mob_spawners)
-		var/obj/effect/mob_spawn/S = GLOB.mob_spawners[spawner]
+		var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
 		if(!istype(S) || !S.can_latejoin())
 			continue
 		available_job_count++
@@ -468,7 +468,7 @@
 			"Security" = list(jobs = list(), titles = GLOB.security_positions, color = "#ff9999"),
 		)
 		for(var/spawner in GLOB.mob_spawners)
-			var/obj/effect/mob_spawn/S = GLOB.mob_spawners[spawner]
+			var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
 			if(!istype(S) || !S.can_latejoin())
 				continue
 			categorizedJobs["Ghost Role"]["jobs"] += S
