@@ -191,7 +191,6 @@
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
-	message_admins("transferring pH: [pH]")
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
 		var/transfer_amount = T.volume * part
@@ -819,7 +818,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
-	if (D.id == "water" && no_react == FALSE) //Do like an otter, add acid to water.
+	if (D.id == "water" && no_react == FALSE && !istype(my_atom, /obj/item/reagent_containers/food)) //Do like an otter, add acid to water, but also don't blow up botany.
 		if (pH <= 2)
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "water-acid explosions")
 			var/datum/effect_system/smoke_spread/chem/s = new
@@ -863,7 +862,6 @@
 
 	//cacluate reagent based pH shift.
 	if(ignore_pH == TRUE)
-		message_admins("ignoring pH old pH: [pH], added pH [D.pH]")
 		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)//should be right
 	else
 		pH = ((cached_pH * cached_total)+(D.pH * amount))/(cached_total + amount)//should be right
