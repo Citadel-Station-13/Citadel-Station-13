@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(ic_blocked)
 		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
+		message_admins("[ADMIN_LOOKUP(src)] attempted to use words banned by the IC filter (Message: <span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span>)")
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
