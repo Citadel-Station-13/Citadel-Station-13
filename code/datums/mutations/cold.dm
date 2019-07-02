@@ -36,9 +36,16 @@
 	instability = 10
 	difficulty = 10
 	synchronizer_coeff = 1
-	power = /obj/effect/proc_holder/spell/targeted/conjure_item/snow
+	power_coeff = 1
+	power = /obj/effect/proc_holder/spell/targeted/conjure_item/stack/snow
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/snow
+/datum/mutation/human/geladikinesis/modify(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		var/obj/effect/proc_holder/spell/targeted/conjure_item/stack/snow/S = power
+		S.stack_amount = CEILING(GET_MUTATION_POWER(src), 1)
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/stack/snow
 	name = "Create Snow"
 	desc = "Concentrates cryokinetic forces to create snow, useful for snow-like construction."
 	item_type = /obj/item/stack/sheet/mineral/snow
@@ -54,8 +61,15 @@
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 20
 	difficulty = 12
-	synchronizer_coeff = 1
+	energy_coeff = 1
+	power_coeff = 1
 	power = /obj/effect/proc_holder/spell/aimed/cryo
+
+/datum/mutation/human/cryokinesis/modify()
+	. = ..()
+	if(.)
+		var/obj/effect/proc_holder/spell/aimed/cryo/S = power
+		S.range = CEILING(GET_MUTATION_POWER(src) * 3, 1)
 
 /obj/effect/proc_holder/spell/aimed/cryo
 	name = "Cryobeam"
@@ -71,3 +85,9 @@
 	active_msg = "You focus your cryokinesis!"
 	deactive_msg = "You relax."
 	active = FALSE
+
+/obj/effect/proc_holder/spell/aimed/cryo/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
+	if(!istype(P, projectile_type))
+		return
+	var/obj/item/projectile/temp/cryo/C = P
+	C.range = range

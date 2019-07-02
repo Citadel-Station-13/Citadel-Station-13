@@ -120,6 +120,9 @@
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 
+//mutation traits
+#define TRAIT_MUTADONE_PROOF	"mutadone_proof" //immune to mutadone
+
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -150,6 +153,7 @@
 #define TRAIT_GENERIC "generic"
 #define EYE_DAMAGE "eye_damage"
 #define GENETIC_MUTATION "genetic"
+#define GENETIC_CHROMOSOME "chromosome"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"

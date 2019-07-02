@@ -10,7 +10,8 @@
 	instability = 25
 
 /datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -27,7 +28,8 @@
 		return
 
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.alpha = 255
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)

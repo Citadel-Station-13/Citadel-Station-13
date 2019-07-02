@@ -8,6 +8,7 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 	synchronizer_coeff = 1
 	power_coeff = 1
+	instability = -10
 
 /datum/mutation/human/epilepsy/on_life()
 	if(prob(1 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
@@ -56,6 +57,7 @@
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 	synchronizer_coeff = 1
 	power_coeff = 1
+	instability = -5
 
 /datum/mutation/human/cough/on_life()
 	if(prob(5 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
@@ -72,6 +74,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+	instability = -5
 
 /datum/mutation/human/paranoia/on_life()
 	if(prob(5) && owner.stat == CONSCIOUS)
@@ -112,6 +115,7 @@
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
+	instability = -5
 
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -131,6 +135,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
+	instability = -10
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
@@ -154,6 +159,7 @@
 	desc = "The holder of this genome is completely deaf."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
+	instability = -10
 
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -194,8 +200,10 @@
 	power_coeff = 1
 
 /datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
+	. = ..()
 	if(glowth)
 		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
+		return TRUE
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -204,7 +212,8 @@
 	glowth.set_light(glow, glow, dna.features["mcolor"])
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	qdel(glowth)
 
@@ -212,8 +221,44 @@
 	name = "Strength"
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	text_gain_indication = "<span class='notice'>You feel stronger.</span>"
+	text_lose_indication = "<span class='notice'>You feel weaker.</span>"
 	difficulty = 16
+	instability = 15
+	var/saved_strength = 0
+
+/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	RegisterSignal(owner, COMSIG_SPECIES_GAIN, .proc/transfer_strength)
+
+/datum/mutation/human/strong/modify(mob/living/carbon/human/owner)
+	. = ..()
+	if(. || !owner.dna.species)
+		return
+	var/datum/species/S = owner.dna.species
+	var/new_strength = round(3 * GET_MUTATION_POWER(src))
+	var/strength_diff = saved_strength - new_strength
+	saved_strength = new_strength
+	S.punchdamagehigh -= strength_diff
+	S.punchdamagelow -= strength_diff
+	S.punchstunthreshold -= strength_diff * 0.5
+
+/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(. || !owner.dna.species)
+		return
+	var/datum/species/S = owner.dna.species
+	S.punchdamagehigh -= saved_strength
+	S.punchdamagelow -= saved_strength
+	S.punchstunthreshold -= saved_strength * 0.5
+	UnregisterSignal(owner, COMSIG_SPECIES_GAIN)
+
+/datum/mutation/human/strong/proc/transfer_strength(datum/species/S)
+	S.punchdamagehigh += saved_strength
+	S.punchdamagelow += saved_strength
+	S.punchstunthreshold += saved_strength * 0.5
 
 /datum/mutation/human/insulated
 	name = "Insulated"
@@ -225,12 +270,14 @@
 	instability = 25
 
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
 
@@ -243,19 +290,22 @@
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
+	instability = -10
 
 /datum/mutation/human/fire/on_life()
-	if(prob((1+(100-dna.stability)/10)) * GET_MUTATION_SYNCHRONIZER(src))
+	if(prob((1+ GET_DNA_INSTABILITY(dna) *0.1)) * GET_MUTATION_SYNCHRONIZER(src))
 		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.IgniteMob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.physiology.burn_mod *= 0.5
 
 /datum/mutation/human/fire/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.physiology.burn_mod *= 2
 
@@ -297,9 +347,11 @@
 	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
+	instability = -15
+	synchronizer_coeff = 1
 
 /datum/mutation/human/acidflesh/on_life()
-	if(prob(25))
+	if(prob(25) * GET_MUTATION_SYNCHRONIZER(src))
 		if(world.time > msgcooldown)
 			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
 			msgcooldown = world.time + 200
@@ -314,6 +366,7 @@
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(DWARFISM)
+	stabilizer_coeff = -1
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -336,6 +389,7 @@
 	text_gain_indication = "<span class='warning'>You flinch.</span>"
 	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
 	difficulty = 16
+	instability = -10
 
 /datum/mutation/human/spastic/on_acquiring()
 	if(..())
@@ -350,11 +404,16 @@
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
 	desc = "A mutation that replaces the right foot with another left foot. It makes keeping balance while moving more difficult."
-	quality = NEGATIVE
+	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
 	difficulty = 16
+	instability = -5
+	synchronizer_coeff = 1
+	power_coeff = 1
 	var/tripchance = 0
+	var/trip_per_step = 0.3
+	var/trip_recovery = 0.15
 
 /datum/mutation/human/extrastun/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
@@ -367,7 +426,7 @@
 
 /datum/mutation/human/extrastun/proc/on_move()
 	if(!prob(tripchance))
-		tripchance += 0.4
+		tripchance += trip_per_step
 		return
 	if(owner.slip(30, null, GALOSHES_DONT_HELP|SILENT_SLIP, TRUE))
 		owner.visible_message("<span class='danger'>[owner] tries to move, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
@@ -375,4 +434,11 @@
 
 /datum/mutation/human/extrastun/on_life()
 	if(tripchance)
-		tripchance = max(tripchance - 0.2, 0)
+		tripchance = max(tripchance - trip_recovery, 0)
+
+/datum/mutation/human/extrastun/modify(mob/living/carbon/human/owner)
+	. = ..()
+	if(!modified)
+		trip_per_step = 0.3 * GET_MUTATION_POWER(src)
+		trip_recovery = 0.15 / GET_MUTATION_SYNCHRONIZER(src)
+		return TRUE

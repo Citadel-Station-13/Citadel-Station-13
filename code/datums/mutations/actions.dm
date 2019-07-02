@@ -9,7 +9,6 @@
 	instability = 10
 	energy_coeff = 1
 
-
 /datum/mutation/human/olfaction
 	name = "Transcendent Olfaction"
 	desc = "Your sense of smell is comparable to that of a canine."
@@ -80,7 +79,6 @@
 	if(direction_text)
 		to_chat(user,"<span class='notice'>You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b></span>")
 
-
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
 	desc = "An ancient mutation that gives lizards breath of fire."
@@ -93,11 +91,6 @@
 	instability = 30
 	energy_coeff = 1
 	power_coeff = 1
-
-/datum/mutation/human/firebreath/modify()
-	if(power)
-		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
-		S.strength = GET_MUTATION_POWER(src)
 
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
@@ -112,22 +105,29 @@
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	active_msg = "You built up heat in your mouth."
 	deactive_msg = "You swallow the flame."
-	var/strength = 1
 
 /obj/effect/proc_holder/spell/aimed/firebreath/before_cast(list/targets)
 	. = ..()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
+		if(IS_GENETIC_MUTATION(associated_mutation) && prob(GET_DNA_INSTABILITY(C.dna) * 0.7))
+			C.emote("sneeze")
+			to_chat(C,"<span class='warning'>You sneeze as you try to breathe fire and end covering yourself in flames instead!</span>")
+			return fire_fluke(C)
 		if(C.is_mouth_covered())
-			C.adjust_fire_stacks(2)
-			C.IgniteMob()
 			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
-			return FALSE
+			return fire_fluke(C)
+
+/obj/effect/proc_holder/spell/aimed/firebreath/proc/fire_fluke(mob/living/carbon/C)
+	C.adjust_fire_stacks(2 * GET_MUTATION_POWER(associated_mutation))
+	C.IgniteMob()
+	return FALSE
 
 /obj/effect/proc_holder/spell/aimed/firebreath/ready_projectile(obj/item/projectile/P, atom/target, mob/user, iteration)
 	if(!istype(P, /obj/item/projectile/magic/aoe/fireball))
 		return
 	var/obj/item/projectile/magic/aoe/fireball/F = P
+	var/strength = GET_MUTATION_POWER(associated_mutation)
 	switch(strength)
 		if(1 to 3)
 			F.exp_light = strength-1
@@ -155,7 +155,7 @@
 /datum/mutation/human/void/on_life()
 	if(!isturf(owner.loc))
 		return
-	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
+	if(prob((0.5+(GET_DNA_INSTABILITY(dna) * 0.05))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
 		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
 
 /obj/effect/proc_holder/spell/self/void

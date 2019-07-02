@@ -107,8 +107,10 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	return 0
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE, no_immunity = FALSE)
+	if(no_immunity)
+		return ..()
+	return FALSE
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

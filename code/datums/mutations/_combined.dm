@@ -22,7 +22,7 @@
 	result = XRAY
 
 /datum/generecipe/space_adaptation
-	required = "/datum/mutation/human/cold_resistance; /datum/mutation/human/radioactive"
+	required = "/datum/mutation/human/cold_resistance; /datum/mutation/human/fire"
 	result = SPACEMUT
 
 /datum/generecipe/mindread

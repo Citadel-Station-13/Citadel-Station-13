@@ -98,3 +98,13 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
 	item = new item_type
 	return item
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/stack
+	name = "Generic summon stacks"
+	item_type = /obj/item/stack/sheet/metal
+	delete_old = FALSE
+	var/stack_amount = 1
+
+/obj/effect/proc_holder/spell/targeted/conjure_item/stack/make_item()
+	item = new item_type(null, stack_amount)
+	return item

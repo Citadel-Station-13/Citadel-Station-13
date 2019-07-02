@@ -40,14 +40,16 @@
 
 /datum/mutation/human/mindreader
 	name = "Mind Reader"
-	desc = "The affected person can look into the recent memories of others."
+	desc = "The affected person can look into the recent memories of others. Can cause headaches at high dna instability."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You hear distant voices at the corners of your mind.</span>"
 	text_lose_indication = "<span class='notice'>The distant voices fade.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/mindread
-	instability = 40
+	instability = 35
 	difficulty = 8
 	locked = TRUE
+	power_coeff = 1
+	synchronizer_coeff = 1
 
 /obj/effect/proc_holder/spell/targeted/mindread
 	name = "Mindread"
@@ -67,8 +69,8 @@
 			to_chat(user, "<span class='boldnotice'>[M] is dead!</span>")
 			return
 		if(M.mind)
-			to_chat(user, "<span class='boldnotice'>You plunge into [M]'s mind...</span>")
-			if(prob(20))
+			var/dat = "<span class='boldnotice'>You plunge into [M]'s mind...</span>"
+			if(prob(20 * GET_MUTATION_SYNCHRONIZER(associated_mutation)))
 				to_chat(M, "<span class='danger'>You feel something foreign enter your mind.</span>")//chance to alert the read-ee
 			var/list/recent_speech = list()
 			var/list/say_log = list()
@@ -87,15 +89,21 @@
 					if(prob(50))
 						recent_speech[spoken_memory] = say_log[spoken_memory]
 			if(recent_speech.len)
-				to_chat(user, "<span class='boldnotice'>You catch some drifting memories of their past conversations...</span>")
+				dat += "\nYou catch some drifting memories of their past conversations..."
 				for(var/spoken_memory in recent_speech)
-					to_chat(user, "<span class='notice'>[recent_speech[spoken_memory]]</span>")
+					dat += "\n[recent_speech[spoken_memory]]"
 			if(iscarbon(M))
-				var/mob/living/carbon/human/H = M
-				to_chat(user, "<span class='boldnotice'>You find that their intent is to [H.a_intent]...</span>")
-				var/datum/dna/the_dna = H.has_dna()
-				if(the_dna)
-					to_chat(user, "<span class='boldnotice'>You uncover that their true identity is [the_dna.real_name].</span>")
+				var/mob/living/carbon/C = M
+				dat += "\nYou find that their intent is to [C.a_intent]..."
+				var/datum/dna/the_dna = C.has_dna()
+				if(the_dna && (!IS_GENETIC_MUTATION(associated_mutation) || IS_MUT_EMPOWERED(associated_mutation)))
+					dat += "You uncover that their true identity is [the_dna.real_name]."
+			dat += "</span>"
+			to_chat(user, dat)
+			if(IS_GENETIC_MUTATION(associated_mutation) && prob(GET_DNA_INSTABILITY(user.dna) * GET_MUTATION_SYNCHRONIZER(associated_mutation) * 0.3))
+				user.confused += 3
+				user.Dizzy(5)
+				user.adjustBrainLoss(rand(5,10))
 		else
 			to_chat(user, "<span class='boldnotice'>You can't find a mind to read inside of [M].</span>")
 

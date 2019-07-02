@@ -93,7 +93,7 @@
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
+		if((HM.class in classes) && !(HAS_TRAIT(HM, TRAIT_MUTADONE_PROOF) && mutadone))
 			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
@@ -274,7 +274,7 @@
 	if(holder)
 		var/message
 		if(alert)
-			switch(PERCENT((stability - DNA_MELTDOWN_POINT)/(DNA_DEFAULT_STABILITY - DNA_MELTDOWN_POINT)))
+			switch(GET_DNA_STABILITY(src))
 				if(70 to 90)
 					message = "<span class='warning'>You shiver.</span>"
 				if(60 to 69.9)

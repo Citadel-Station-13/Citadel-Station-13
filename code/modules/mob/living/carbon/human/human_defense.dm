@@ -444,7 +444,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE, no_immunity = FALSE)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -473,7 +473,7 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
+	. = ..()
 	if(.)
 		electrocution_animation(40)
 

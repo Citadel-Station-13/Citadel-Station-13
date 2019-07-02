@@ -7,8 +7,6 @@
 	var/desc = "A mutation."
 	var/locked
 	var/quality
-	var/get_chance = 100
-	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/static/list/mutable_appearance/visual_indicators = list()
@@ -30,20 +28,19 @@
 	var/list/conflicts //any mutations that might conflict. put mutation typepath defines in here. make sure to enter it both ways (so that A conflicts with B, and B with A)
 	var/allow_transfer //Do we transfer upon cloning?
 	//MUT_NORMAL - A mutation that can be activated and deactived by completing a sequence
-	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
+	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before its name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
 
 	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
-	var/mutadone_proof = FALSE
 
 	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
 	var/stabilizer_coeff = 1 //genetic stability coeff
-	var/synchronizer_coeff = -1 //makes the mutation hurt the user less
-	var/power_coeff = -1 //boosts mutation strength
-	var/energy_coeff = -1 //lowers mutation cooldown
+	var/synchronizer_coeff = MUT_COEFF_NO_MODIFY //makes the mutation hurt the user less
+	var/power_coeff = MUT_COEFF_NO_MODIFY //boosts mutation strength
+	var/energy_coeff = MUT_COEFF_NO_MODIFY //lowers mutation cooldown
 
 /datum/mutation/human/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -148,10 +145,11 @@
 
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
-		return
-	power.charge_max *= GET_MUTATION_ENERGY(src)
-	power.charge_counter *= GET_MUTATION_ENERGY(src)
+		return FALSE
+	power.charge_max = initial(power.charge_max) * GET_MUTATION_ENERGY(src)
+	power.charge_counter = initial(power.charge_counter) * GET_MUTATION_ENERGY(src)
 	modified = TRUE
+	return TRUE
 
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM)
 	if(!HM)
@@ -161,7 +159,8 @@
 	synchronizer_coeff = HM.synchronizer_coeff
 	power_coeff = HM.power_coeff
 	energy_coeff = HM.energy_coeff
-	mutadone_proof = HM.mutadone_proof
+	if(HAS_TRAIT_FROM(HM, TRAIT_MUTADONE_PROOF, GENETIC_CHROMOSOME))
+		ADD_TRAIT(src, TRAIT_MUTADONE_PROOF, GENETIC_CHROMOSOME)
 	can_chromosome = HM.can_chromosome
 
 /datum/mutation/human/proc/remove_chromosome()
@@ -169,7 +168,7 @@
 	synchronizer_coeff = initial(synchronizer_coeff)
 	power_coeff = initial(power_coeff)
 	energy_coeff = initial(energy_coeff)
-	mutadone_proof = initial(mutadone_proof)
+	REMOVE_TRAIT(src, TRAIT_MUTADONE_PROOF, GENETIC_CHROMOSOME)
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
 
@@ -184,6 +183,7 @@
 		return FALSE
 
 	power = new power()
+	power.associated_mutation = src
 	power.action_background_icon_state = "bg_tech_blue_on"
 	power.panel = "Genetic"
 	owner.AddSpell(power)

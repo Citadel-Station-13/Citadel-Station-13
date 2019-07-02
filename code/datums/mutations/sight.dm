@@ -74,9 +74,12 @@
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
+	instability = 40
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
+	power_coeff = 1
+	synchronizer_coeff = 1
 
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -88,4 +91,6 @@
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(atom/target, mouseparams)
 	if(owner.a_intent == INTENT_HARM)
-		owner.LaserEyes(target, mouseparams)
+		owner.LaserEyes(target, mouseparams, GET_MUTATION_POWER(src))
+		if(IS_GENETIC_MUTATION(src) && prob(GET_DNA_INSTABILITY(dna) * GET_MUTATION_SYNCHRONIZER(src)))
+			owner.flash_act(1, TRUE)

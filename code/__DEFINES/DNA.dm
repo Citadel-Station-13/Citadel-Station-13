@@ -71,6 +71,8 @@
 #define DNA_DEFAULT_STABILITY 100
 #define DNA_MELTDOWN_POINT 0
 
+#define MUT_COEFF_NO_MODIFY -1
+
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
@@ -159,12 +161,22 @@
 
 //A bunch of helpers to make genetics less of a headache
 
+#define GET_DNA_STABILITY(A) PERCENT((A.stability - DNA_MELTDOWN_POINT)/(DNA_DEFAULT_STABILITY - DNA_MELTDOWN_POINT))
+#define GET_DNA_INSTABILITY(A) (100 - GET_DNA_STABILITY(A))
+
+#define IS_GENETIC_MUTATION(A) (A && A.class != MUT_OTHER) //when special mutations (such as magic) shouldn't be affected.
+
 #define GET_INITIALIZED_MUTATION(A) GLOB.all_mutations[A]
 #define GET_GENE_STRING(A, B) (B.mutation_index[A])
 #define GET_SEQUENCE(A) (GLOB.full_sequences[A])
 #define GET_MUTATION_TYPE_FROM_ALIAS(A) (GLOB.alias_mutations[A])
 
-#define GET_MUTATION_STABILIZER(A) ((A.stabilizer_coeff < 0) ? 1 : A.stabilizer_coeff)
-#define GET_MUTATION_SYNCHRONIZER(A) ((A.synchronizer_coeff < 0) ? 1 : A.synchronizer_coeff)
-#define GET_MUTATION_POWER(A) ((A.power_coeff < 0) ? 1 : A.power_coeff)
-#define GET_MUTATION_ENERGY(A) ((A.energy_coeff < 0) ? 1 : A.energy_coeff)
+#define GET_MUTATION_STABILIZER(A) ((A && A.stabilizer_coeff < 0) ? 1 : A.stabilizer_coeff)
+#define GET_MUTATION_SYNCHRONIZER(A) ((A && A.synchronizer_coeff < 0) ? 1 : A.synchronizer_coeff)
+#define GET_MUTATION_POWER(A) ((A && A.power_coeff < 0) ? 1 : A.power_coeff)
+#define GET_MUTATION_ENERGY(A) ((A && A.energy_coeff < 0) ? 1 : A.energy_coeff)
+
+#define IS_MUT_STABILIZED(A) (A && GET_MUTATION_STABILIZER(A) <= 0.8)
+#define IS_MUT_SYNCHRONIZED(A) (A && GET_MUTATION_SYNCHRONIZER(A) <= 0.5)
+#define IS_MUT_EMPOWERED(A) (A && GET_MUTATION_POWER(A) >= 1.5)
+#define IS_MUT_ENERGIZED(A) (A && GET_MUTATION_ENERGY(A) <= 0.5)

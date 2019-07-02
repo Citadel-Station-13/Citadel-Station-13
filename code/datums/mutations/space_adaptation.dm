@@ -7,7 +7,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
-	instability = 25
+	instability = 30
 
 /datum/mutation/human/space_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()

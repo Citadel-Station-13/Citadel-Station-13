@@ -7,3 +7,5 @@ GLOBAL_LIST_EMPTY(not_good_mutations) //neutral initialized mutations
 GLOBAL_LIST_EMPTY(alias_mutations) //alias = type
 
 GLOBAL_LIST_EMPTY(mutation_recipes)
+
+GLOBAL_LIST_EMPTY(all_chromosomes)

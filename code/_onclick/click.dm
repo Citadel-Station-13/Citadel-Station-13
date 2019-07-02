@@ -400,12 +400,13 @@
 /mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/LaserEyes(atom/A, params)
+/mob/living/LaserEyes(atom/A, params, damage_mod = 1)
 	changeNext_move(CLICK_CD_RANGE)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
+	LE.damage = round(LE.damage * damage_mod)
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 
 	LE.firer = src

@@ -6,9 +6,11 @@
 	desc = "Causes the holder to stutter."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
+	instability = -2
+	synchronizer_coeff = 1
 
 /datum/mutation/human/nervousness/on_life()
-	if(prob(10))
+	if(prob(10) * GET_MUTATION_SYNCHRONIZER(src))
 		owner.stuttering = max(10, owner.stuttering)
 
 
@@ -29,6 +31,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
 	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
+	instability = -10
 
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -104,6 +107,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
+	instability = -5
 
 /datum/mutation/human/unintelligible/say_mod(message)
 	if(message)
@@ -225,6 +229,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"
 	text_lose_indication = "<span class='notice'>You feel like you have a better sense of time.</span>"
+	instability = -5
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
