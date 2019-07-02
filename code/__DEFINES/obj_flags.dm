@@ -26,6 +26,7 @@
 #define NODROP					(1<<8)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff
 #define IMMUTABLE_SLOW          (1<<10) //When players should not be able to change the slowdown of the item (Speed potions, ect)
+#define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
