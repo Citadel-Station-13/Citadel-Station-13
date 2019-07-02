@@ -352,8 +352,8 @@
 							to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
 				if(get_dist(master, owner) > 10)
 					if(prob(10))
-						to_chat(owner, "<span class='big velvet'><i>You feel a deep NEED to return to [(owner.lewd?"your [enthrallGender]":"[master]")].</i></span>")
-						M.throw_at(get_step_towards(master,owner), 3, 1)
+						to_chat(owner, "<span class='velvet'><i>You feel [(owner.lewd?"a deep NEED to return to your [enthrallGender]":"like you have to return to [master]")].</i></span>")
+						M.throw_at(get_step_towards(master,owner), 5, 1)
 				return//If you break the mind of someone, you can't use status effects on them.
 
 

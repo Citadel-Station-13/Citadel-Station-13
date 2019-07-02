@@ -296,6 +296,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
+	C.lewd = C.client.prefs.lewdchem
+
 //CITADEL EDIT
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE

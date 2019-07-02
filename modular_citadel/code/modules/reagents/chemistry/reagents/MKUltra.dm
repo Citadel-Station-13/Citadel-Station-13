@@ -308,9 +308,12 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	metabolization_rate = 0.1
 	taste_description = "synthetic chocolate, a base tone of alcohol, and high notes of roses."
 	DoNotSplit = TRUE
+	can_synth = FALSE
 	var/mob/living/carbon/love
 
 /datum/reagent/fermi/enthrallExplo/on_mob_life(mob/living/carbon/M)//Love gas, only affects while it's in your system,Gives a positive moodlet if close, gives brain damagea and a negative moodlet if not close enough.
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
+		return ..()
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/victim in seen)
@@ -322,7 +325,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")]You develop a sudden bond with [love][(M.lewd?", your heart beginning to race as you look upon them with new eyes.":".")] You are determined to keep them safe and feel drawn towards them.</span>")
+		to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")][(M.lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You are determined to make friends with them and feel drawn towards them.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
@@ -335,13 +338,15 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 			if(prob(10))
-				M.Stun(10)
+				M.Stun(5)
 				M.emote("whimper")//does this exist?
 				to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
-				M.adjustBrainLoss(1)//I found out why everyone was so damaged!
+				M.adjustBrainLoss(0.5)//I found out why everyone was so damaged!
 	..()
 
 /datum/reagent/fermi/enthrallExplo/on_mob_delete(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
+		return ..()
 	M.remove_status_effect(STATUS_EFFECT_INLOVE)
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
