@@ -496,3 +496,11 @@
 		return ..()
 	else
 		return FALSE
+
+	/datum/chemical_reaction/reagent_explosion/dimethylmercury
+		name = "Dimethylmercury explosion"
+		id = "dimethylmercury_explosion"
+		mix_message = "<span class='userdanger'>The chemicals vaporize instantly in a rush of heat!</span>"
+		required_reagents = list("dimethylmercury" = 1)
+		required_temp = 278
+		strengthdiv = 1.5 //this IS rocket fuel
