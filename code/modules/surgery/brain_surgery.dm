@@ -21,13 +21,11 @@
 	return TRUE
 
 /datum/surgery_step/fix_brain/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to fix [target]'s brain.", "<span class='notice'>You begin to fix [target]'s brain...</span>")
 	display_results(user, target, "<span class='notice'>You begin to fix [target]'s brain...</span>",
 		"[user] begins to fix [target]'s brain.",
 		"[user] begins to perform surgery on [target]'s brain.")
 
 /datum/surgery_step/fix_brain/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully fixes [target]'s brain!", "<span class='notice'>You succeed in fixing [target]'s brain.</span>")
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s brain.</span>",
 		"[user] successfully fixes [target]'s brain!",
 		"[user] completes the surgery on [target]'s brain.")
@@ -39,7 +37,6 @@
 
 /datum/surgery_step/fix_brain/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorganslot(ORGAN_SLOT_BRAIN))
-		user.visible_message("<span class='warning'>[user] screws up, causing more damage!</span>", "<span class='warning'>You screw up, causing more damage!</span>")
 		display_results(user, target, "<span class='warning'>You screw up, causing more damage!</span>",
 			"<span class='warning'>[user] screws up, causing brain damage!</span>",
 			"[user] completes the surgery on [target]'s brain.")

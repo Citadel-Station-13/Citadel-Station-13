@@ -85,9 +85,6 @@
 		if(target_zone != I.zone || target.getorganslot(I.slot))
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
-
-		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
 			"[user] begins to insert something into [target]'s [parse_zone(target_zone)].")
@@ -108,8 +105,6 @@
 				I = organs[I]
 				if(!I)
 					return -1
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
 				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
 					"[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
 					"[user] begins to extract something from [target]'s [parse_zone(target_zone)].")
@@ -131,16 +126,12 @@
 			I = tool
 		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
 		display_results(user, target, "<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
 			"[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"[user] inserts something into [target]'s [parse_zone(target_zone)]!")
 
 	else if(current_type == "extract")
 		if(I && I.owner == target)
-			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
 			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 				"[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!")
@@ -148,8 +139,6 @@
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else
-			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
 			display_results(user, target, "<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!")

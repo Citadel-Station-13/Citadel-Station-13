@@ -10,7 +10,6 @@
 /datum/surgery_step/remove_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.operated_bodypart
 	if(L)
-		user.visible_message("[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].", "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>")
 		display_results(user, target, "<span class='notice'>You look for objects embedded in [target]'s [parse_zone(user.zone_selected)]...</span>",
 			"[user] looks for objects embedded in [target]'s [parse_zone(user.zone_selected)].",
 			"[user] looks for something in [target]'s [parse_zone(user.zone_selected)].")
@@ -31,7 +30,6 @@
 				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 			if(objects > 0)
-				user.visible_message("[user] successfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
 					"[user] successfully removes [objects] objects from [H]'s [L]!",
 					"[user] successfully removes [objects] objects from [H]'s [L]!")

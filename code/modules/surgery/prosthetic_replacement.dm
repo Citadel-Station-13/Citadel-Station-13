@@ -43,7 +43,6 @@
 					organ_rejection_dam = 30
 
 		if(target_zone == BP.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
-			user.visible_message("[user] begins to replace [target]'s [parse_zone(target_zone)].", "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)]...</span>")
 			display_results(user, target, "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)] with [tool]...</span>",
 				"[user] begins to replace [target]'s [parse_zone(target_zone)] with [tool].",
 				"[user] begins to replace [target]'s [parse_zone(target_zone)].")
@@ -51,7 +50,6 @@
 			to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 			return -1
 	else if(target_zone == BODY_ZONE_L_ARM || target_zone == BODY_ZONE_R_ARM)
-		user.visible_message("[user] begins to attach [tool] onto [target].", "<span class='notice'>You begin to attach [tool] onto [target]...</span>")
 		display_results(user, target, "<span class='notice'>You begin to attach [tool] onto [target]...</span>",
 			"[user] begins to attach [tool] onto [target]'s [parse_zone(target_zone)].",
 			"[user] begins to attach something onto [target]'s [parse_zone(target_zone)].")
@@ -69,7 +67,6 @@
 		L.attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
-		user.visible_message("[user] successfully replaces [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>")
 		display_results(user, target, "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>",
 			"[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!",
 			"[user] successfully replaces [target]'s [parse_zone(target_zone)]!")
@@ -78,7 +75,6 @@
 		var/obj/item/bodypart/L = target.newBodyPart(target_zone, FALSE, FALSE)
 		L.is_pseudopart = TRUE
 		L.attach_limb(target)
-		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		display_results(user, target, "<span class='notice'>You attach [tool].</span>",
 			"[user] finishes attaching [tool]!",
 			"[user] finishes the attachment procedure!")

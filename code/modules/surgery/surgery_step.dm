@@ -75,21 +75,17 @@
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to perform surgery on [target].", "<span class='notice'>You begin to perform surgery on [target]...</span>")
-
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
 		"[user] begins to perform surgery on [target].",
 		"[user] begins to perform surgery on [target].")
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
 	display_results(user, target, "<span class='notice'>You succeed.</span>",
 		"[user] succeeds!",
 		"[user] finishes.")
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
 	display_results(user, target, "<span class='warning'>You screw up!</span>",
 		"<span class='warning'>[user] screws up!</span>",
 		"[user] finishes.", TRUE) //By default the patient will notice if the wrong thing has been cut

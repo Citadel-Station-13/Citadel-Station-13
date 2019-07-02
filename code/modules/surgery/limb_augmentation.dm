@@ -8,8 +8,6 @@
 
 
 /datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>")
-
 	display_results(user, target, "<span class ='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>",
 		"[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].",
 		"[user] begins an incision on [target]'s [parse_zone(user.zone_selected)].")
@@ -31,7 +29,6 @@
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
-		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
 		display_results(user, target, "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
 			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
@@ -55,7 +52,6 @@
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
 			tool.replace_limb(target, TRUE)
-		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
 		display_results(user, target, "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>",
 			"[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!",
 			"[user] successfully augments [target]'s [parse_zone(target_zone)]!")

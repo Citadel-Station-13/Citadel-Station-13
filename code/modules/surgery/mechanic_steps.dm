@@ -9,8 +9,6 @@
 	time = 24
 
 /datum/surgery_step/mechanic_open/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to unscrew the shell of [target]'s [parse_zone(target_zone)]...</span>")
 	display_results(user, target, "<span class='notice'>You begin to unscrew the shell of [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].",
 			"[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].")
@@ -30,8 +28,6 @@
 	time = 24
 
 /datum/surgery_step/mechanic_close/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to screw the shell of [target]'s [parse_zone(target_zone)]...</span>")
 	display_results(user, target, "<span class='notice'>You begin to screw the shell of [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].",
 			"[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].")
@@ -49,8 +45,6 @@
 	time = 24
 
 /datum/surgery_step/prepare_electronics/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to prepare electronics in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to prepare electronics in [target]'s [parse_zone(target_zone)]...</span>")
 	display_results(user, target, "<span class='notice'>You begin to prepare electronics in [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to prepare electronics in [target]'s [parse_zone(target_zone)].",
 			"[user] begins to prepare electronics in [target]'s [parse_zone(target_zone)].")
@@ -64,8 +58,6 @@
 	time = 24
 
 /datum/surgery_step/mechanic_unwrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to unwrench some bolts in [target]'s [parse_zone(target_zone)]...</span>")
 	display_results(user, target, "<span class='notice'>You begin to unwrench some bolts in [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)].",
 			"[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)].")
@@ -79,8 +71,6 @@
 	time = 24
 
 /datum/surgery_step/mechanic_wrench/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to wrench some bolts in [target]'s [parse_zone(target_zone)]...</span>")
 	display_results(user, target, "<span class='notice'>You begin to wrench some bolts in [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)].",
 			"[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)].")
@@ -92,8 +82,6 @@
 	time = 10
 
 /datum/surgery_step/open_hatch/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].",
-		"<span class='notice'>You begin to open the hatch holders in [target]'s [parse_zone(target_zone)]...</span>") 
 	display_results(user, target, "<span class='notice'>You begin to open the hatch holders in [target]'s [parse_zone(target_zone)]...</span>",
 		"[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].",
 		"[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)].") 

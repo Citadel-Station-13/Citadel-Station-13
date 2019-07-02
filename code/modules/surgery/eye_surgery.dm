@@ -17,13 +17,11 @@
 	return TRUE
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to fix [target]'s eyes.", "<span class='notice'>You begin to fix [target]'s eyes...</span>")
 	display_results(user, target, "<span class='notice'>You begin to fix [target]'s eyes...</span>",
 		"[user] begins to fix [target]'s eyes.",
 		"[user] begins to perform surgery on [target]'s eyes.")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully fixes [target]'s eyes!", "<span class='notice'>You succeed in fixing [target]'s eyes.</span>")
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s eyes.</span>",
 		"[user] successfully fixes [target]'s eyes!",
 		"[user] completes the surgery on [target]'s eyes.")
@@ -36,13 +34,11 @@
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target.getorgan(/obj/item/organ/brain))
-		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>", "<span class='warning'>You accidentally stab [target] right in the brain!</span>")
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
 		target.adjustBrainLoss(70)
 	else
-		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>", "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>")
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain! Or would have, if [target] had a brain.</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain! Or would have, if [target] had a brain.</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")
