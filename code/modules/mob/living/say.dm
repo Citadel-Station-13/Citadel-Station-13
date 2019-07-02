@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
 	if(succumbed)
-		succumb(1)
+		succumb()
 		to_chat(src, compose_message(src, language, message, , spans, message_mode))
 
 	return 1
