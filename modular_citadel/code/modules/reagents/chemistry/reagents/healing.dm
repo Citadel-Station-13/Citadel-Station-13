@@ -6,9 +6,9 @@
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	ImpureChem 			= "yamerol_tox" //If you make an inpure chem, it stalls growth
+	ImpureChem 			= "yamerol_tox"
 	InverseChemVal 		= 0.3
-	InverseChem 		= "yamerol_tox" //At really impure vols, it just becomes 100% inverse
+	InverseChem 		= "yamerol_tox"
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
@@ -16,13 +16,10 @@
 
 	if(T)
 		T.adjustTongueLoss(C, -2)
-
 	if(L)
-
 		L.adjustLungLoss(-5, C)
 		C.adjustOxyLoss(-2)
 	else
-
 		C.adjustOxyLoss(-10)
 	..()
 
@@ -32,7 +29,6 @@
 	if(current_cycle > 10)
 		if(!C.getorganslot(ORGAN_SLOT_TONGUE))
 			var/obj/item/organ/tongue/T
-
 			if(C.dna && C.dna.species && C.dna.species.mutanttongue)
 				T = new C.dna.species.mutanttongue()
 			else
@@ -76,10 +72,8 @@
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(T)
-
 		T.adjustTongueLoss(C, 1)
 	if(L)
-
 		L.adjustLungLoss(2.5, C)
 		C.adjustOxyLoss(2)
 	else
