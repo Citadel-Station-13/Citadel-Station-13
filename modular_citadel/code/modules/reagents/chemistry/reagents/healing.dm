@@ -13,16 +13,16 @@
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-	message_admins("Yamero!")
+
 	if(T)
 		T.adjustTongueLoss(C, -2)
-		message_admins("Yamero tongue!")
+
 	if(L)
-		message_admins("Yamero lungs!")
+
 		L.adjustLungLoss(-5, C)
 		C.adjustOxyLoss(-2)
 	else
-		message_admins("Yamero no lungs!")
+
 		C.adjustOxyLoss(-10)
 	..()
 
@@ -38,7 +38,7 @@
 			else
 				T = new()
 			T.Insert(C)
-			to_chat(M, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
+			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
 			holder.remove_reagent(src.id, "10")
 		else
 			if((oT.name == "fluffy tongue") && (purity == 1))
@@ -51,13 +51,13 @@
 				oT.Remove(C)
 				qdel(oT)
 				T.Insert(C)
-				to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
+				to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 				holder.remove_reagent(src.id, "10")
 
 		if(!C.getorganslot(ORGAN_SLOT_LUNGS))
 			var/obj/item/organ/lungs/L = new()
 			L.Insert(C)
-			to_chat(M, "<span class='notice'>You feel your lungs reform in your chest.</span>")
+			to_chat(C, "<span class='notice'>You feel your lungs reform in your chest.</span>")
 			holder.remove_reagent(src.id, "10")
 
 
@@ -74,15 +74,15 @@
 /datum/reagent/fermi/yamerol_tox/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
-	message_admins("Yameroe!")
+
 	if(T)
-		message_admins("Yamero tongue!")
+
 		T.adjustTongueLoss(C, 2)
 	if(L)
-		message_admins("Yameroe lungs!")
+
 		L.adjustLungLoss(5, C)
 		C.adjustOxyLoss(2)
 	else
-		message_admins("Yameroe no lungs!")
+
 		C.adjustOxyLoss(10)
 	..()

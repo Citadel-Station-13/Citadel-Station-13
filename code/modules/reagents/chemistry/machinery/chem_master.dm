@@ -361,7 +361,7 @@
 
 
 /obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
-	if(beaker.reagents.fermiIsReacting == 1)
+	if(beaker.reagents.fermiIsReacting)
 		beaker.reagents.fermiEnd()
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)

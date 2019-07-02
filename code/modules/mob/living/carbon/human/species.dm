@@ -295,8 +295,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			A.cure(FALSE)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
-	if(C.client)
-		C.lewd = C.client.prefs.lewdchem
 
 //CITADEL EDIT
 	if(NOAROUSAL in species_traits)

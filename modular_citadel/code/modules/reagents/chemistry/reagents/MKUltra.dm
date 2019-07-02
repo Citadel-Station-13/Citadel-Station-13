@@ -183,7 +183,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			E.enthrallID = creatorID
 			E.enthrallGender = creatorGender
 			E.master = get_mob_by_key(creatorID)
-			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(M.lewd?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
+			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(M.client?.prefs.lewdchem?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
 		return
 	if(purity < 0.5)//Impure chems don't function as you expect
 		return
@@ -283,7 +283,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		E.master = creator
 	else
 		E = M.has_status_effect(/datum/status_effect/chem/enthrall)
-	if(M.lewd)
+	if(M.client?.prefs.lewdchem)
 		to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	else
 		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what they've been saying. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
@@ -325,7 +325,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")][(M.lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")
+		to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")][(M.client?.prefs.lewdchem?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
@@ -340,7 +340,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 			if(prob(10))
 				M.Stun(5)
 				M.emote("whimper")//does this exist?
-				to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
+				to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
 				M.adjustBrainLoss(0.5)//I found out why everyone was so damaged!
 	..()
 
@@ -350,7 +350,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	M.remove_status_effect(STATUS_EFFECT_INLOVE)
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
-	to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")]Your feelings for [love] suddenly vanish!")
+	to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")]Your feelings for [love] suddenly vanish!")
 	log_game("FERMICHEM: [M] ckey: [M.key] is no longer in temp bond")
 	..()
 
@@ -358,7 +358,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(Lover.has_status_effect(STATUS_EFFECT_INLOVE))
 		to_chat(Lover, "<span class='warning'>You are already fully devoted to someone else!</span>")
 		return
-	to_chat(Lover, "[(Lover.lewd?"<span class='love'>":"<span class='warning'>")]You develop a deep and sudden bond with [Love][(Lover.lewd?", your heart beginning to race as your mind filles with thoughts about them.":".")] You are determined to keep them safe and happy, and feel drawn towards them.</span>")
+	to_chat(Lover, "[(Lover.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")]You develop a deep and sudden bond with [Love][(Lover.client?.prefs.lewdchem?", your heart beginning to race as your mind filles with thoughts about them.":".")] You are determined to keep them safe and happy, and feel drawn towards them.</span>")
 	if(Lover.mind)
 		Lover.mind.store_memory("You are in love with [Love].")
 	Lover.faction |= "[REF(Love)]"

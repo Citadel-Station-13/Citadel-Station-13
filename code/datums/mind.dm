@@ -128,7 +128,6 @@
 		if(L.client && L.client.prefs)
 			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
 			L.update_arousal_hud() //Removes the old icon
-			L.lewd = L.client.prefs.lewdchem
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
