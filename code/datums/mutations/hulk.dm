@@ -7,6 +7,7 @@
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("fly")
+	tick_life = TRUE
 	health_req = 25
 	synchronizer_coeff = 1
 	instability = 40

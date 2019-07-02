@@ -1,6 +1,11 @@
 /datum/mutation
 
 	var/name
+	var/tick_life = FALSE
+
+/datum/mutation/proc/on_life()
+	stack_trace("on_life called on a mutation with no effect.")
+	tick_life = FALSE
 
 /datum/mutation/human
 	name = "mutation"
@@ -92,9 +97,6 @@
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(atom/target)
-	return
-
-/datum/mutation/human/proc/on_life()
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)

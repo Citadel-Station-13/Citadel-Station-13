@@ -6,6 +6,7 @@
 	desc = "Causes the holder to stutter."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
+	tick_life = TRUE
 	instability = -2
 	synchronizer_coeff = 1
 
@@ -195,6 +196,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
+	tick_life = TRUE
 
 /datum/mutation/human/elvis/on_life()
 	switch(pick(1,2))

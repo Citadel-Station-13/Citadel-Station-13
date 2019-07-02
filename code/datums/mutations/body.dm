@@ -6,6 +6,7 @@
 	desc = "A genetic defect that sporadically causes seizures."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
+	tick_life = TRUE
 	synchronizer_coeff = 1
 	power_coeff = 1
 	instability = -10
@@ -55,6 +56,7 @@
 	desc = "A chronic cough."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
+	tick_life = TRUE
 	synchronizer_coeff = 1
 	power_coeff = 1
 	instability = -5
@@ -74,6 +76,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+	tick_life = TRUE
 	instability = -5
 
 /datum/mutation/human/paranoia/on_life()
@@ -134,6 +137,7 @@
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
+	tick_life = TRUE
 	synchronizer_coeff = 1
 	instability = -10
 
@@ -287,6 +291,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
+	tick_life = TRUE
 	difficulty = 14
 	synchronizer_coeff = 1
 	power_coeff = 1
@@ -315,6 +320,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
 	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
+	tick_life = TRUE
 	difficulty = 18//high so it's hard to unlock and abuse
 	instability = 10
 	synchronizer_coeff = 1
@@ -345,6 +351,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
+	tick_life = TRUE
 	difficulty = 18//high so it's hard to unlock and use on others
 	var/msgcooldown = 0
 	instability = -15
@@ -407,6 +414,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
+	tick_life = TRUE
 	difficulty = 16
 	instability = -5
 	synchronizer_coeff = 1

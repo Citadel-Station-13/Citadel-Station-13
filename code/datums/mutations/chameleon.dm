@@ -6,6 +6,7 @@
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>You feel one with your surroundings.</span>"
 	text_lose_indication = "<span class='notice'>You feel oddly exposed.</span>"
+	tick_life = TRUE
 	time_coeff = 5
 	instability = 25
 
