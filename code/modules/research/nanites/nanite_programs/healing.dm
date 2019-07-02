@@ -89,7 +89,7 @@
 /datum/nanite_program/blood_restoring/check_conditions()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(C.blood_volume >= BLOOD_VOLUME_SAFE)
+		if(C.blood_volume >= (BLOOD_VOLUME_SAFE*C.blood_ratio))
 			return FALSE
 	else
 		return FALSE
@@ -248,4 +248,3 @@
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, 0)
-

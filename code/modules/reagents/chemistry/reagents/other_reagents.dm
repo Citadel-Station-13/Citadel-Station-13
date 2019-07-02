@@ -10,6 +10,7 @@
 	glass_name = "glass of tomato juice"
 	glass_desc = "Are you sure this is tomato juice?"
 	shot_glass_icon_state = "shotglassred"
+	pH = 7.4
 
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
@@ -95,6 +96,7 @@
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
+	pH = 7.45
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -195,6 +197,7 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	pH = 7.5 //God is alkaline
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
@@ -266,6 +269,7 @@
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
+	pH = 6.5
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -284,7 +288,7 @@
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+		if(ishuman(M) && M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
 			M.blood_volume += 3
 	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustBrainLoss(3, 150)
@@ -308,6 +312,7 @@
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5, 150)
 	holder.remove_reagent(id, 1)
+	pH = 0.1
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
@@ -336,6 +341,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
 	taste_description = "sour oranges"
+	pH = 5
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M))
@@ -660,6 +666,7 @@
 	color = "#202040" // rgb: 20, 20, 40
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	pH = 10
 
 /datum/reagent/serotrotium/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
@@ -674,6 +681,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0 // oderless and tasteless
+	pH = 9.2//It's acutally a huge range and very dependant on the chemistry but pH is basically a made up var in it's implementation anyways
 
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -694,6 +702,7 @@
 	reagent_state = SOLID
 	color = "#6E3B08" // rgb: 110, 59, 8
 	taste_description = "metal"
+	pH = 5.5
 
 /datum/reagent/copper/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/stack/sheet/metal))
@@ -709,6 +718,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
+
 
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -729,6 +739,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_mult = 0
+	pH = 0.1//Now I'm stuck in a trap of my own design. Maybe I should make -ve pHes? (not 0 so I don't get div/0 errors)
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -760,6 +771,7 @@
 	reagent_state = SOLID
 	color = "#BF8C00" // rgb: 191, 140, 0
 	taste_description = "rotten eggs"
+	pH = 4.5
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -768,6 +780,7 @@
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
 	taste_description = "sour chalk"
+	pH = 5
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
@@ -782,6 +795,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "chlorine"
+	pH = 7.4
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
@@ -795,6 +809,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "acid"
+	pH = 2
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1*REM, 0)
@@ -808,6 +823,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "salty metal"
+	pH = 11.6
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -816,6 +832,7 @@
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 	taste_description = "vinegar"
+	pH = 6.5
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -824,6 +841,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "metal"
+	pH = 11.3
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
 	if(M.canmove && !isspaceturf(M.loc))
@@ -838,6 +856,7 @@
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "sweetness"
+	pH = 9
 
 /datum/reagent/radium
 	name = "Radium"
@@ -846,6 +865,7 @@
 	reagent_state = SOLID
 	color = "#C7C7C7" // rgb: 199,199,199
 	taste_description = "the colour blue and regret"
+	pH = 10
 
 /datum/reagent/radium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -865,6 +885,7 @@
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_description = "bitterness"
+	pH = 10.5
 
 /datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(method in list(TOUCH, VAPOR, PATCH))
@@ -880,11 +901,12 @@
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	taste_description = "iron"
+	pH = 6
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
-	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
 		C.blood_volume += 0.5
 	..()
 
@@ -922,6 +944,7 @@
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	pH = 4
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -942,6 +965,7 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	pH = 12
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -974,6 +998,7 @@
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_mult = 0
+	pH = 10
 
 /datum/reagent/fuel
 	name = "Welding fuel"
@@ -984,6 +1009,8 @@
 	glass_icon_state = "dr_gibb_glass"
 	glass_name = "glass of welder fuel"
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
+	pH = 4
+
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(method == TOUCH || method == VAPOR)
@@ -1002,6 +1029,7 @@
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
+	pH = 5.5
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/cleanable))
@@ -1059,6 +1087,7 @@
 	description = "A powerful, acidic cleaner sold by Waffle Co. Affects organic matter while leaving other objects unaffected."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "acid"
+	pH = 2
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(3.33)
@@ -1079,6 +1108,7 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
+	pH = 11.9
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M)
 	M.Dizzy(1)
@@ -1093,6 +1123,7 @@
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	color = "#C8A5DC" // rgb: 200, 165, 220A
 	taste_description = "numbness"
+	pH = 9.1
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(M.jitteriness-5,0)
@@ -1135,6 +1166,7 @@
 	color = "#92D17D" // rgb: 146, 209, 125
 	can_synth = FALSE
 	taste_description = "slime"
+	pH = 11
 
 /datum/reagent/fungalspores/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
@@ -1146,6 +1178,7 @@
 	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 	color = "#9E6B38" // rgb: 158, 107, 56
 	taste_description = "metal"
+	pH = 13
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
@@ -1154,6 +1187,7 @@
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
+	pH = 12.5
 
 /datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
 	name = "Smart foaming agent"
@@ -1162,6 +1196,7 @@
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
+	pH = 11.8
 
 /datum/reagent/ammonia
 	name = "Ammonia"
@@ -1170,6 +1205,7 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_description = "mordant"
+	pH = 11.6
 
 /datum/reagent/diethylamine
 	name = "Diethylamine"
@@ -1177,6 +1213,7 @@
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
 	taste_description = "iron"
+	pH = 12
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1185,6 +1222,7 @@
 	description = "A gas commonly produced by burning carbon fuels. You're constantly producing this in your lungs."
 	color = "#B0B0B0" // rgb : 192, 192, 192
 	taste_description = "something unknowable"
+	pH = 6
 
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1206,6 +1244,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#808080"
 	taste_description = "sweetness"
+	pH = 5.8
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1265,6 +1304,7 @@
 	metabolization_rate = REAGENTS_METABOLISM
 	color = "90560B"
 	taste_description = "burning"
+	pH = 2
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
@@ -1298,6 +1338,7 @@
 	colorname = "red"
 	color = "#DA0000" // red
 	random_color_list = list("#DA0000")
+	pH = 0.5
 
 /datum/reagent/colorful_reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
@@ -1305,6 +1346,7 @@
 	colorname = "orange"
 	color = "#FF9300" // orange
 	random_color_list = list("#FF9300")
+	pH = 2
 
 /datum/reagent/colorful_reagent/crayonpowder/yellow
 	name = "Yellow Crayon Powder"
@@ -1312,6 +1354,7 @@
 	colorname = "yellow"
 	color = "#FFF200" // yellow
 	random_color_list = list("#FFF200")
+	pH = 5
 
 /datum/reagent/colorful_reagent/crayonpowder/green
 	name = "Green Crayon Powder"
@@ -1320,12 +1363,14 @@
 	color = "#A8E61D" // green
 	random_color_list = list("#A8E61D")
 
+
 /datum/reagent/colorful_reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
 	id = "bluecrayonpowder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
 	random_color_list = list("#00B7EF")
+	pH = 10
 
 /datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
@@ -1333,6 +1378,7 @@
 	colorname = "purple"
 	color = "#DA00FF" // purple
 	random_color_list = list("#DA00FF")
+	pH = 13
 
 /datum/reagent/colorful_reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
@@ -1367,6 +1413,7 @@
 	color = "#000000" // RBG: 0, 0, 0
 	var/tox_prob = 0
 	taste_description = "plant food"
+	pH = 3
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(tox_prob))
@@ -1380,6 +1427,7 @@
 	description = "Cheap and extremely common type of plant nutriment."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 10
+	pH = 2
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1387,6 +1435,7 @@
 	description = "Unstable nutriment that makes plants mutate more often than usual."
 	color = "#1A1E4D" // RBG: 26, 30, 77
 	tox_prob = 25
+	pH = 1.5
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1394,6 +1443,7 @@
 	description = "Very potent nutriment that prevents plants from mutating."
 	color = "#9D9D00" // RBG: 157, 157, 0
 	tox_prob = 15
+	pH = 1
 
 
 
@@ -1421,6 +1471,7 @@
 	color = "#C8A5DC"
 	taste_description = "bitterness"
 	taste_mult = 1.5
+	pH = 1.5
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/C)
 	C.adjustPlasma(10)
@@ -1433,6 +1484,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "metal"
+	pH = 4.5
 
 /datum/reagent/carpet
 	name = "Carpet"
@@ -1440,7 +1492,7 @@
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "carpet" // Your tounge feels furry.
+	taste_description = "carpet" // Your tounge feels furry. Ick
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
@@ -1455,6 +1507,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "chemicals"
+	pH = 7.8
 
 /datum/reagent/phenol
 	name = "Phenol"
@@ -1462,7 +1515,8 @@
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "acid"
+	taste_description = "sweet and tarry" //Again, not a strong acid.
+	pH = 5.5
 
 /datum/reagent/ash
 	name = "Ash"
@@ -1471,6 +1525,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "ash"
+	pH = 6.5
 
 /datum/reagent/acetone
 	name = "Acetone"
@@ -1478,7 +1533,7 @@
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	taste_description = "acid"
+	taste_description = "solvent"//It's neutral though..?
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
@@ -1568,6 +1623,7 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "cool salt"
+	pH = 11.2
 
 /datum/reagent/lye
 	name = "Lye"
@@ -1575,7 +1631,8 @@
 	description = "Also known as sodium hydroxide. As a profession making this is somewhat underwhelming."
 	reagent_state = LIQUID
 	color = "#FFFFD6" // very very light yellow
-	taste_description = "acid"
+	taste_description = "alkali" //who put ACID for NaOH ????
+	pH = 13
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
@@ -1584,6 +1641,7 @@
 	reagent_state = LIQUID
 	color = "#A70FFF"
 	taste_description = "dryness"
+	pH = 10.7
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
@@ -1655,6 +1713,7 @@
 	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
 	color = "#00ff80"
 	taste_description = "strange honey"
+	pH = 3
 
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/carbon/M)
 	if(prob(2))
@@ -1676,6 +1735,7 @@
 	metabolization_rate = INFINITY
 	can_synth = FALSE
 	taste_description = "brains"
+	pH = 0.5
 
 /datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
@@ -1734,6 +1794,7 @@
 	description = "the petroleum based components of plastic."
 	color = "#f7eded"
 	taste_description = "plastic"
+	pH = 6
 
 /datum/reagent/glitter
 	name = "generic glitter"
@@ -1776,6 +1837,7 @@
 	color = "#AAAAAA55"
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	pH = 15
 
 /datum/reagent/pax/on_mob_metabolize(mob/living/L)
 	..()
@@ -1864,6 +1926,13 @@
 	color = "#FAEAFF"
 	taste_description = "synthetic catnip"
 
+/datum/reagent/moonsugar/on_mob_life(mob/living/carbon/M)
+	if(prob(20))
+		to_chat(M, "You find yourself unable to supress the desire to meow!")
+		M.emote("*nya")
+	..()
+
+//Kept for legacy, I think it will break everything if you enable it.
 /datum/reagent/penis_enlargement
 	name = "Penis Enlargement"
 	id = "penis_enlargement"

@@ -296,3 +296,31 @@
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
+
+//Cat made
+/mob/living/simple_animal/pet/cat/custom_cat
+	name = "White cat" //Incase it somehow gets spawned without an ID
+	desc = "A cute white catto!"
+	icon_state = "custom_cat"
+	icon_living = "custom_cat"
+	icon_dead = "custom_cat_dead"
+	gender = FEMALE
+	gold_core_spawnable = NO_SPAWN
+	health = 50 //So people can't instakill it s
+	maxHealth = 50
+	speak = list("Meowrowr!", "Mew!", "Miauen!")
+	speak_emote = list("wigglepurrs", "mewls")
+	emote_hear = list("meows.", "mews.")
+	emote_see = list("looks at you eagerly for pets!", "wiggles enthusiastically.")
+	gold_core_spawnable = NO_SPAWN
+	var/pseudo_death = FALSE
+
+/mob/living/simple_animal/pet/cat/custom_cat/death()
+	if (pseudo_death == TRUE) //secret cat chem
+		icon_state = "custom_cat_dead"
+		Stun(1000)
+		canmove = 0
+		friendly = "deads at"
+		return
+	else
+		..()

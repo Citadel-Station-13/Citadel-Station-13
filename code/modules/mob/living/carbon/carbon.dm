@@ -6,6 +6,7 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -477,11 +478,13 @@
 		if(message)
 			visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
-
+			if(!isflyperson(src))
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
 	if(stun)
 		Stun(80)
 
@@ -913,3 +916,17 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+
+/mob/living/carbon/proc/hypnosis_vulnerable()//unused atm, but added in case
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+		return FALSE
+	if(hallucinating())
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_DUMB))
+		return TRUE
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE

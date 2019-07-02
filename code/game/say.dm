@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
-	
+
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()

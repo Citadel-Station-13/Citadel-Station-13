@@ -2,6 +2,7 @@
 	for(var/datum/brain_trauma/trauma in get_traumas())
 		message = trauma.on_say(message)
 	message = ..(message)
+
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(!T) //hoooooouaah!
 		var/regex/tongueless_lower = new("\[gdntke]+", "g")

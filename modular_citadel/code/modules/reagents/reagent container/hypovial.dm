@@ -14,7 +14,8 @@
 						"green hypovial" = "hypovial-a",
 						"orange hypovial" = "hypovial-k",
 						"purple hypovial" = "hypovial-p",
-						"black hypovial" = "hypovial-t"
+						"black hypovial" = "hypovial-t",
+						"pink hypovial" = "hypovial-pink"
 						)
 	always_reskinnable = TRUE
 
@@ -135,6 +136,16 @@
 	name = "hypovial (tricordrazine)"
 	icon_state = "hypovial"
 	comes_with = list("tricordrazine" = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
+	name = "pink hypovial (breast reduction)"
+	icon_state = "hypovial-pink"
+	comes_with = list("BEsmaller_hypo" = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
+	name = "pink hypovial (penis reduction)"
+	icon_state = "hypovial-pink"
+	comes_with = list("PEsmaller_hypo" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	name = "deluxe hypovial"

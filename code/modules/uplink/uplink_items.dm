@@ -1770,6 +1770,16 @@ datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
+//ported from tg as is along with functions, removal requested.
+//Commented out, will remove when fixing merge conflicts
+/*
+/datum/uplink_item/device_tools/hypnotic_flash
+	name = "Hypnotic Flash"
+	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
+	item = /obj/item/assembly/flash/hypnotic
+	cost = 7
+*/
+
 /datum/uplink_item/badass/costumes
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 4

@@ -137,6 +137,15 @@ SLIME SCANNER
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
+		var/obj/item/organ/liver/L = M.getorganslot("liver")
+		if(L.swelling > 20)
+			to_chat(user, "<span class='danger'>Subject is suffering from an enlarged liver.</span>") //i.e. shrink their liver or give them a transplant.
+		var/obj/item/organ/tongue/T = M.getorganslot("tongue")
+		if(!T || T.damage > 40)
+			to_chat(user, "<span class='danger'>Subject is suffering from necrotic tissue on their tongue./span>") //i.e. their tongue is shot
+		var/obj/item/organ/lungs/Lung = M.getorganslot("lungs")
+		if(Lung.damage > 150)
+			to_chat(user, "<span class='danger'>Subject is suffering from acute emphysema leading to trouble breathing.</span>") //i.e. Their lungs are shot
 
 	var/msg = "<span class='info'>*---------*\nAnalyzing results for [M]:\n\tOverall status: [mob_status]\n"
 
@@ -310,7 +319,7 @@ SLIME SCANNER
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
 					msg += "<span class='danger'>Subject is bleeding!</span>\n"
-			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_percent =  round((C.blood_volume / (BLOOD_VOLUME_NORMAL * C.blood_ratio))*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
@@ -318,9 +327,9 @@ SLIME SCANNER
 					blood_type = R.name
 				else
 					blood_type = blood_id
-			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+			if(C.blood_volume <= (BLOOD_VOLUME_SAFE*C.blood_ratio) && C.blood_volume > (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
-			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
+			else if(C.blood_volume <= (BLOOD_VOLUME_OKAY*C.blood_ratio))
 				msg += "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>\n"
 			else
 				msg += "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>\n"

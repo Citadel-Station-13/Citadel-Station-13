@@ -354,3 +354,32 @@
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
 		qdel(src)
+
+/datum/quirk/unstable
+	name = "Unstable"
+	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
+	value = -2
+	mob_trait = TRAIT_UNSTABLE
+	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
+	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
+	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+
+//For reviewers: Removal requested, commented out until the end of review (will remove when fixing merge conflicts). I'll probably rewrited
+/*Fixed quirk so that it's less impactful at the moment and doesn't override player autonomy (For the people in the discord who really want it.) See if that helps
+/datum/quirk/hypno
+	name = "Hypnotherapy user"
+	desc = "You had hypnotherapy right before your shift, you're not sure it had any effects, though."
+	mob_trait = "hypnotherapy"
+	value = -1 //I mean, it can be a really bad trait to have, but on the other hand, some people want it?
+	gain_text = "<span class='notice'>You really think the hypnotherapy helped you out.</span>"
+	//lose_text = "<span class='notice'>You forget about the hypnotherapy you had, or did you even have it?</span>"
+
+/datum/quirk/hypno/add()
+   //You caught me, it's not actually based off a trigger, stop spoiling the effect! Code diving ruins the magic!
+   addtimer(CALLBACK(src, /datum/quirk/hypno.proc/triggered, quirk_holder), rand(120, 360))//increase by 100, it's lower so I can test it.
+
+//DOES NOT give any indication when someone is triggered - this is intentional so people don't abuse it, you're supposed to get a random thing said to you as a mini objective.
+/datum/quirk/hypno/proc/triggered(quirk_holder)//I figured I might as well make a trait of code I added.
+	var/mob/living/carbon/human/H = quirk_holder
+	H.apply_status_effect(/datum/status_effect/trance, 1000, TRUE, TRUE)
+*/
