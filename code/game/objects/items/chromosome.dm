@@ -80,7 +80,7 @@
 /obj/item/chromosome/reinforcer/can_apply(datum/mutation/human/HM)
 	if(!HM || !(HM.can_chromosome == CHROMOSOME_NONE))
 		return FALSE
-	return HAS_TRAIT(HM, TRAIT_MUTADONE_PROOF)
+	return !HAS_TRAIT(HM, TRAIT_MUTADONE_PROOF)
 
 
 /obj/item/chromosome/reinforcer/apply(datum/mutation/human/HM)
