@@ -74,7 +74,7 @@
 	id = "zombiepowder"
 	results = list("zombiepowder" = 2)
 	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
-	
+
 /datum/chemical_reaction/ghoulpowder
 	name = "Ghoul Powder"
 	id = "ghoulpowder"
@@ -126,3 +126,25 @@
 	results = list("bonehurtingjuice" = 5)
 	required_reagents = list("mutagen" = 1, "itching_powder" = 3, "milk" = 1)
 	mix_message = "<span class='danger'>The mixture suddenly becomes clear and looks a lot like water. You feel a strong urge to drink it.</span>"
+
+/datum/chemical_reaction/iodomethane
+	name = "Methyl Iodide"  //rocket fuel precursor time
+	id = "iodomethane"
+	results = list("iodomethane" = 1)
+	required_reagents = list("methanol" = 1, "phosphorus" = 1, "iodine" = 3)
+	mix_message = "<span class='danger'>The mixture suddenly becomes clear, emitting a strong, sickly sweet odour.</span>"
+
+/datum/chemical_reaction/methanol
+	name = "Methanol"  //Iodomenthane fuel precursor time
+	id = "methanol"
+	results = list("methanol" = 1)
+	required_reagents = list("co2" = 1, "hydrogen" = 4)
+	required_catalysts = list("copper" = 5)
+	mix_message = "<span class='danger'>The mixture slowly becomes clear. </span>"
+
+/datum/chemical_reaction/dimethylmercury
+	name = "Dimethylmercury"  //Rocket fuel time
+	id = "dimethylmercury"
+	results = list("dimethylmercury" = 1)
+	required_reagents = list("iodomethane" = 10, "mercury" = 5, "sodium" = 10)
+	mix_message = "<span class='danger'>The mixture suddenly becomes clear, emitting a strong, sickly sweet odour.</span>"
