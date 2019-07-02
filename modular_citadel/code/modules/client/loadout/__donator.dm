@@ -422,3 +422,9 @@ datum/gear/darksabresheath
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/trendy_fit
 	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/csheet
+	name = "NT Bedsheet"
+	category = SLOT_NECK
+	path = /obj/item/bedsheet/captain
+	ckeywhitelist = list("tikibomb")
