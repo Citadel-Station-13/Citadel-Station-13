@@ -29,16 +29,16 @@
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
 /obj/item/weapon/clowningball/throw_impact(atom/hit_atom)
-	if(!iscarbon(hit_atom))//if the ball hits something that's not carbon
-		unspin() //Then we do unspin. Which makes unlimitedthrow false.
+	if(!isliving(hit_atom))//if the ball hits something that is not living.
+		unspin() //Then we do unspin. Which makes unlimitedthrow false, so it stops.
 		return ..()
-	var/mob/living/carbon/H = hit_atom
+	var/mob/living/H = hit_atom
 	if(clown_item) //Only the clown can actually bowl people.
 		visible_message("<span class='danger'>\The expertly-bowled [src] knocks over [H] like a bowling pin!</span>")
 		H.adjust_blurriness(6)
 		H.Knockdown(knockdown_time) // Variable included above, this controls the amount of time they are down in deciseconds.
-		H.throw_at(get_edge_target_turf(H,pick(GLOB.alldirs)),rand(1, 3),rand(1, 10))
-		playsound(src,'sound/effects/bowling2.ogg',50,0)
+		H.throw_at(get_edge_target_turf(H,pick(GLOB.alldirs)),rand(1, 3),rand(1, 10)) //This is actually required thanks to working at the living level.
+		playsound(src,'sound/effects/bowling2.ogg',50,0) //The above will throw the hit atom randomly until its free if they are stuck together.
 		return
 	else //Caught and not spinning or something else weird.
 		unspin()
