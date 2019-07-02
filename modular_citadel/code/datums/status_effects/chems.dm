@@ -134,7 +134,7 @@
 	var/mob/living/carbon/human/o = owner
 	var/obj/item/organ/genital/penis/P = o.getorganslot("penis")
 	moveCalc = 1+((round(P.length) - 21)/3) //effects how fast you can move
-	bloodCalc = 1+((round(P.length) - 21)/10) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
+	bloodCalc = 1+((round(P.length) - 21)/15) //effects how much blood you need (I didn' bother adding an arousal check because I'm spending too much time on this organ already.)
 	if(!P)
 		o.remove_movespeed_modifier(DICK_MOVEMENT_SPEED)
 		o.ResetBloodVol()

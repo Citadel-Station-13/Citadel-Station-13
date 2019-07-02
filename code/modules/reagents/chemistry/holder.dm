@@ -544,7 +544,7 @@
 	for(var/B in cached_required_reagents) //
 		multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.001))
 	if (multiplier == 0)
-		fermiEnd(multiplier)
+		fermiEnd()
 		return
 	for(var/P in cached_results)
 		targetVol = cached_results[P]*multiplier
@@ -557,16 +557,16 @@
 			if (reactedVol < targetVol)
 				reactedVol = fermiReact(fermiReactID, chem_temp, pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 			else//Volume is used up
-				fermiEnd(multiplier)
+				fermiEnd()
 				return
 		else//pH is out of range
-			fermiEnd(multiplier)
+			fermiEnd()
 			return
 	else//Temperature is too low, or reaction has stopped.
-		fermiEnd(multiplier)
+		fermiEnd()
 		return
 
-/datum/reagents/proc/fermiEnd(multiplier)
+/datum/reagents/proc/fermiEnd()
 	var/datum/chemical_reaction/fermi/C = fermiReactID
 	STOP_PROCESSING(SSprocessing, src)
 	fermiIsReacting = FALSE
@@ -576,7 +576,7 @@
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()
-	C.FermiFinish(src, my_atom, multiplier)
+	C.FermiFinish(src, my_atom)
 	handle_reactions()
 	update_total()
 	//Reaction sounds and words

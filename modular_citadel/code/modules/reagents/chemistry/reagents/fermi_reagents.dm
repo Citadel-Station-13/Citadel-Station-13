@@ -340,10 +340,10 @@
 /datum/reagent/fermi/acidic_buffer
 	name = "Acidic buffer"
 	id = "acidic_buffer"
-	description = "This reagent will consume itself and move the pH of a beaker towards 3 when added to another."
+	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	taste_description = "an acidy sort of taste, blech."
 	color = "#fbc314"
-	pH = 3
+	pH = 0
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
@@ -361,10 +361,10 @@
 /datum/reagent/fermi/basic_buffer
 	name = "Basic buffer"
 	id = "basic_buffer"
-	description = "This reagent will consume itself and move the pH of a beaker towards 11 when added to another."
+	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	taste_description = "an soapy sort of taste, blech."
 	color = "#3853a4"
-	pH = 11
+	pH = 14
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
 	data = datapH

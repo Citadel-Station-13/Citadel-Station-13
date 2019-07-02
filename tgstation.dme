@@ -3034,6 +3034,7 @@
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\eigentstasium.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\enlargement.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\fermi_reagents.dm"
+#include "modular_citadel\code\modules\reagents\chemistry\reagents\healing.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\MKUltra.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "modular_citadel\code\modules\reagents\chemistry\reagents\SDGF.dm"

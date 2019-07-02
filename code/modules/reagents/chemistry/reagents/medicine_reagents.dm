@@ -172,7 +172,7 @@
 	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
 	color = "#f7832a"
 	taste_description = "spicy jelly"
-	pH = 14
+	pH = 12
 
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -527,7 +527,7 @@
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Slimepeople friendly!"
 	color = "#91D865"
 	healtoxinlover = TRUE
-	pH = 14//invert
+	pH = 12//invert
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
@@ -537,7 +537,7 @@
 	color = "#D2D2D2"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
-	pH = 1
+	pH = 2.1
 
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
@@ -652,7 +652,7 @@
 	reagent_state = LIQUID
 	color = "#64FFE6"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	pH = 13
+	pH = 11.5
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -771,7 +771,7 @@
 	color = "#000000"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
-	pH = 14
+	pH = 12
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
 	if(M.health < 0)
@@ -1145,7 +1145,7 @@
 	color = "#91D865"
 	overdose_threshold = 30
 	taste_description = "jelly"
-	pH = 13
+	pH = 11.8
 
 /datum/reagent/medicine/neo_jelly/on_mob_life(mob/living/carbon/M)
     M.adjustBruteLoss(-1.5*REM, 0)

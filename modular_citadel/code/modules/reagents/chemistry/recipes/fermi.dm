@@ -6,7 +6,7 @@
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder, multipler)
+/datum/chemical_reaction/fermi/proc/FermiFinish(datum/reagents/holder)
 	return
 
 //Called when temperature is above a certain threshold, or if purity is too low.
@@ -418,19 +418,19 @@
 	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
 		return
 	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
-	Fa.data = 3
+	Fa.data = 0
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
 	id = "basic_buffer"
 	results = list("basic_buffer" = 1.5)
-	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, "salglu_solution" = 0.1, "water" = 0.5)
+	required_reagents = list("acidic_buffer" = 0.5, "ethanol" = 0.5, , "water" = 0.5)
 	required_catalysts = list("sacid" = 1) //vagely acetic
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
 	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 8
+	OptimalpHMin 	= 6
 	OptimalpHMax 	= 12
 	ReactpHLim 		= 0
 	//CatalystFact 	= 0 //To do 1
@@ -446,7 +446,7 @@
 	if(!locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list)
 		return
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
-	Fb.data = 11
+	Fb.data = 14
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
 //I'm not trying to be sneaky, I'm trying to keep it a secret!
@@ -504,3 +504,23 @@
 	catto.desc = "A cute chem cat, created by a lot of compicated and confusing chemistry!"
 	catto.color = "#770000"
 	my_atom.reagents.remove_any(10)
+
+/datum/chemical_reaction/fermi/yamerol//done test
+	name = "Yamerol"
+	id = "yamerol"
+	results = list("yamerol" = 1.5)
+	required_reagents = list("perfluorodecalin" = 0.5, "furranium" = 0.5, "water" = 0.5)
+	//FermiChem vars:
+	OptimalTempMin 	= 300
+	OptimalTempMax 	= 500
+	ExplodeTemp 	= 800 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 6.8
+	OptimalpHMax 	= 7.2
+	ReactpHLim 		= 4
+	//CatalystFact 	= 0 //To do 1
+	CurveSharpT 	= 5
+	CurveSharppH 	= 0.5
+	ThermicConstant = -15
+	HIonRelease 	= 0.1
+	RateUpLim 		= 2
+	FermiChem 		= TRUE

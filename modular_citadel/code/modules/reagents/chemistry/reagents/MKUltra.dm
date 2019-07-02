@@ -325,7 +325,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(!love)
 			return
 		M.apply_status_effect(STATUS_EFFECT_INLOVE, love)
-		to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")][(M.lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You are determined to make friends with them and feel drawn towards them.</span>")
+		to_chat(M, "[(M.lewd?"<span class='love'>":"<span class='warning'>")][(M.lewd?"You develop a sudden crush on [love], your heart beginning to race as you look upon them with new eyes.":"You suddenly feel like making friends with [love].")] You feel strangely drawn towards them.</span>")
 		log_game("FERMICHEM: [M] ckey: [M.key] has temporarily bonded with [love] ckey: [love.key]")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have bonded")
 	else
