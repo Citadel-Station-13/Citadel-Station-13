@@ -341,7 +341,6 @@
 	name = "Acidic buffer"
 	id = "acidic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
-	taste_description = "an acidy sort of taste, blech."
 	color = "#fbc314"
 	pH = 0
 
@@ -362,7 +361,6 @@
 	name = "Basic buffer"
 	id = "basic_buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
-	taste_description = "an soapy sort of taste, blech."
 	color = "#3853a4"
 	pH = 14
 
