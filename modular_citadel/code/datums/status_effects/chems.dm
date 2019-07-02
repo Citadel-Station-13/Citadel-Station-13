@@ -178,8 +178,8 @@
 	set category = "IC"
 	set name = "Toggle Lewdchem"
 	set desc = "Allows you to toggle if you'd like lewd flavour messages."
-	client?.prefs.lewdchem = !(client?.prefs.lewdchem)
-	to_chat(usr, "You [(client?.prefs.lewdchem?"will":"no longer")] receive lewdchem messages.")
+	client.prefs.lewdchem = !(client.prefs.lewdchem)
+	to_chat(usr, "You [(client.prefs.lewdchem?"will":"no longer")] receive lewdchem messages.")
 
 /datum/status_effect/chem/enthrall
 	id = "enthrall"

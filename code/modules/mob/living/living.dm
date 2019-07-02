@@ -318,16 +318,14 @@
 	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
-/mob/living/verb/succumb(whispered as num)
+/mob/living/verb/succumb(whispered as null)
 	set name = "Succumb"
 	set category = "IC"
-	message_admins("succumb pressed")
 	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
-		message_admins("status found")
 		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
 		if(E.phase < 3)
-			message_admins("increasing phase")
-			E.phase += 1
+			E.enthrallTally += 50
+			to_chat(src, "<span class='notice'>You give into [E.master]'s influence'.</span>")
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
