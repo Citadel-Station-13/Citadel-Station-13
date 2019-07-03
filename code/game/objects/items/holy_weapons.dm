@@ -58,7 +58,7 @@
 	item_state = "radio"
 
 /obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
+	if(user.mind && (user.mind.isholy) && !GLOB.holy_armor_type)
 		beacon_armor(user)
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
@@ -71,13 +71,13 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || GLOB.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
-	SSreligion.holy_armor_type = A
+	GLOB.holy_armor_type = A
 	var/holy_armor_box = new A
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
@@ -245,7 +245,7 @@
 		reskin_holy_weapon(user)
 
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_weapon
 	var/list/holy_weapons_list = typesof(/obj/item/nullrod) + list(
@@ -264,7 +264,7 @@
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
-	SSreligion.holy_weapon_type = holy_weapon.type
+	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 

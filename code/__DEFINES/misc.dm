@@ -266,6 +266,15 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 
+//pda icon reskins
+#define PDA_SKIN_CLASSIC "Classic"
+#define PDA_SKIN_ALT "Holographic"
+#define PDA_SKIN_RUGGED "Rugged"
+#define PDA_SKIN_MODERN "Modern"
+
+GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_SKIN_ALT = 'icons/obj/pda_alt.dmi',
+								PDA_SKIN_RUGGED = 'icons/obj/pda_rugged.dmi', PDA_SKIN_MODERN = 'icons/obj/pda_modern.dmi'))
+
 //Color Defines
 #define OOC_COLOR  "#002eb8"
 #define AOOC_COLOR "#b8002e"

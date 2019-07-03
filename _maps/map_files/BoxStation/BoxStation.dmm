@@ -1689,6 +1689,7 @@
 	id = "hos";
 	name = "HoS Office Shutters";
 	pixel_y = -25;
+	
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -11710,7 +11711,7 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11834,7 +11835,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
