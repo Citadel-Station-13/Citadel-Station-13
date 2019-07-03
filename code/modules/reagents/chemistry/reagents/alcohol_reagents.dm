@@ -633,18 +633,41 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 90 //THE FIST OF THE LAW IS STRONG AND HARD
 	quality = DRINK_GOOD
-	metabolization_rate = 0.8
+	metabolization_rate = 0.5
 	taste_description = "JUSTICE"
 	glass_icon_state = "beepskysmashglass"
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
+	overdose_threshold = 40
+	var/datum/brain_trauma/special/beepsky/B
+
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/M)
+	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+		metabolization_rate = 0.8
+	if(!HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		B = new()
+		M.gain_trauma(B, TRAUMA_RESILIENCE_ABSOLUTE)
+	..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(30, 0) //this realistically does nothing to prevent chainstunning but will cause them to recover faster once it's out of their system
-	else
-		M.Stun(40, 0)
+	M.Jitter(2)
+	if(HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.adjustStaminaLoss(-10, 0)
+		if(prob(20))
+			new /datum/hallucination/items_other(M)
+		if(prob(10))
+			new /datum/hallucination/stray_bullet(M)
+	..()
+	. = TRUE
+
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/M)
+	if(B)
+		QDEL_NULL(B)
 	return ..()
+
+/datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
+	if(!HAS_TRAIT(M, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1319,32 +1342,49 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
-	id = "neurotoxin"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
-	boozepwr = 0 //custom drunk effect
+	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = "a numbing sensation"
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
+/datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
+	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
+
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Knockdown(60, 1, 0)
+	M.set_drugginess(50)
 	M.dizziness +=2
-	switch(current_cycle)
-		if(15 to 45)
-			M.slurring = max(M.slurring,50)
-			M.slurring += 3
-		if(45 to 55)
-			if(prob(50))
-				M.confused = max(M.confused+3,0)
-		if(55 to 200)
-			M.set_drugginess(55)
-		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
+	M.adjustBrainLoss(1*REM, 150)
+	if(prob(20))
+		M.adjustStaminaLoss(10)
+		M.drop_all_held_items()
+		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
+	if(current_cycle > 5)
+		if(prob(20))
+			var/t = pickt()
+			ADD_TRAIT(M, t, type)
+			M.adjustStaminaLoss(10)
+		if(current_cycle > 30)
+			M.adjustBrainLoss(2*REM)
+			if(current_cycle > 50 && prob(15))
+				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
+					M.set_heartattack(TRUE)
+					if(M.stat == CONSCIOUS)
+						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
+	. = TRUE
 	..()
-	. = 1
+
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_end_metabolize(mob/living/carbon/M)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_ARM, type)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_ARM, type)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, type)
+	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, type)
+	M.adjustStaminaLoss(10)
+	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
 	name = "Hippie's Delight"
@@ -1468,7 +1508,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes.
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM)) //Securidrink in line with the screwderiver for engineers or nothing for mimes.
 		M.heal_bodypart_damage(1, 1)
 		M.adjustBruteLoss(-2,0)
 		. = 1
@@ -1487,7 +1527,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Now you are become law, destroyer of clowns."
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes but STRONG..
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM)) //Securidrink in line with the screwderiver for engineers or nothing for mimes but STRONG..
 		M.heal_bodypart_damage(2,2,2)
 		M.adjustBruteLoss(-5,0)
 		M.adjustOxyLoss(-5,0)
