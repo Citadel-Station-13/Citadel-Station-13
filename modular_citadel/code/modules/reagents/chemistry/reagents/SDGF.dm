@@ -56,6 +56,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	ImpureChem 			= "SDGFtox"
 	InverseChemVal 		= 0.5
 	InverseChem 		= "SDZF"
+	can_synth = TRUE
 
 //Main SDGF chemical
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.
@@ -213,6 +214,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	id = "SDGFtox"
 	description = "A chem that makes a certain chemcat angry at you if you're reading this, how did you get this???"//i.e. tell me please, figure it's a good way to get pinged for bugfixes.
 	metabolization_rate = 1
+	can_synth = FALSE
 
 /datum/reagent/fermi/SDGFtox/on_mob_life(mob/living/carbon/M)//Damages the taker if their purity is low. Extended use of impure chemicals will make the original die. (thus can't be spammed unless you've very good)
 	M.blood_volume -= 10
@@ -227,6 +229,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	color = "#a502e0" // rgb: 96, 0, 255
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	var/startHunger
+	can_synth = TRUE
 
 /datum/reagent/fermi/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal

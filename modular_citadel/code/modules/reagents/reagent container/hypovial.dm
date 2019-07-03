@@ -138,12 +138,12 @@
 	comes_with = list("tricordrazine" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/breastreduction
-	name = "pink hypovial (breast reduction)"
+	name = "pink hypovial (breast treatment)"
 	icon_state = "hypovial-pink"
 	comes_with = list("BEsmaller_hypo" = 30)
 
 /obj/item/reagent_containers/glass/bottle/vial/small/preloaded/penisreduction
-	name = "pink hypovial (penis reduction)"
+	name = "pink hypovial (penis treatment)"
 	icon_state = "hypovial-pink"
 	comes_with = list("PEsmaller_hypo" = 30)
 

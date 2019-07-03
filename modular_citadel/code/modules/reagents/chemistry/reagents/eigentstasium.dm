@@ -29,6 +29,7 @@
 	var/mob/living/carbon/fermi_Tclone = null
 	var/teleBool = FALSE
 	pH = 3.7
+	can_synth = TRUE
 
 /datum/reagent/fermi/eigenstate/on_new(list/data)
 	location_created = data.["location_created"]

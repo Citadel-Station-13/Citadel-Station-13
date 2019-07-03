@@ -24,7 +24,7 @@
 	description = "A volatile collodial mixture derived from milk that encourages mammary production via a potent estrogen mix."
 	color = "#E60584" // rgb: 96, 0, 255
 	taste_description = "a milky ice cream like flavour."
-	overdose_threshold = 12
+	overdose_threshold = 17
 	metabolization_rate = 0.25
 	ImpureChem 			= "BEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.35
@@ -165,6 +165,7 @@
 	metabolization_rate = 0.25
 	description = "A medicine used to treat organomegaly in a patient's breasts."
 	var/sizeConv =  list("a" =  1, "b" = 2, "c" = 3, "d" = 4, "e" = 5)
+	can_synth = TRUE
 
 /datum/reagent/fermi/BEsmaller_hypo/on_mob_add(mob/living/carbon/M)
 	. = ..()
@@ -202,7 +203,7 @@
 	description = "A volatile collodial mixture derived from various masculine solutions that encourages a larger gentleman's package via a potent testosterone mix, formula derived from a collaboration from Fermichem  and Doctor Ronald Hyatt, who is well known for his phallus palace." //The toxic masculinity thing is a joke because I thought it would be funny to include it in the reagents, but I don't think many would find it funny? dumb
 	color = "#888888" // This is greyish..?
 	taste_description = "chinese dragon powder"
-	overdose_threshold = 12 //ODing makes you male and removes female genitals
+	overdose_threshold = 17 //ODing makes you male and removes female genitals
 	metabolization_rate = 0.5
 	ImpureChem 			= "PEsmaller" //If you make an inpure chem, it stalls growth
 	InverseChemVal 		= 0.35
@@ -329,6 +330,7 @@
 	taste_description = "chinese dragon powder"
 	description = "A medicine used to treat organomegaly in a patient's penis."
 	metabolization_rate = 0.5
+	can_synth = TRUE
 
 /datum/reagent/fermi/PEsmaller_hypo/on_mob_add(mob/living/carbon/M)
 	. = ..()

@@ -5,6 +5,7 @@
 	name = "Fermi" //This should never exist, but it does so that it can exist in the case of errors..
 	id = "fermi"
 	taste_description	= "affection and love!"
+	can_synth = FALSE
 
 //This should process fermichems to find out how pure they are and what effect to do.
 /datum/reagent/fermi/on_mob_add(mob/living/carbon/M, amount)
@@ -77,6 +78,7 @@
 	overdose_threshold = 25
 	DoNotSplit = TRUE
 	pH = 4
+	can_synth = TRUE
 
 
 /datum/reagent/fermi/hatmium/on_mob_add(mob/living/carbon/human/M)
@@ -124,6 +126,7 @@
 	DoNotSplit = TRUE
 	pH = 5
 	var/obj/item/organ/tongue/T
+	can_synth = TRUE
 
 /datum/reagent/fermi/furranium/on_mob_life(mob/living/carbon/M)
 
@@ -343,6 +346,7 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
+	can_synth = TRUE
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
@@ -363,6 +367,7 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
+	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
 	data = datapH

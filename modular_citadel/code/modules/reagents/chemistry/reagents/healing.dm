@@ -9,6 +9,7 @@
 	ImpureChem 			= "yamerol_tox"
 	InverseChemVal 		= 0.3
 	InverseChem 		= "yamerol_tox"
+	can_synth = TRUE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
