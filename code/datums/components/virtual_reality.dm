@@ -9,7 +9,7 @@
 /datum/component/virtual_reality/Initialize(mob/M, obj/machinery/vr_sleeper/gaming_pod, yolo = FALSE, new_char = TRUE)
 	if(!ismob(parent) || !istype(M))
 		return COMPONENT_INCOMPATIBLE
-	var/mob/vr_M
+	var/mob/vr_M = parent
 	mastermind = M.mind
 	RegisterSignal(mastermind, COMSIG_MIND_TRANSFER, .proc/switch_player)
 	RegisterSignal(mastermind, COMSIG_MOB_KEY_CHANGE, .proc/switch_player)
