@@ -15,7 +15,6 @@
 	RegisterSignal(mastermind, COMSIG_MOB_KEY_CHANGE, .proc/switch_player)
 	you_die_in_the_game_you_die_for_real = yolo
 	quit_action = new()
-	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, .proc/revert_to_reality)
 	if(gaming_pod)
 		vr_sleeper = gaming_pod
 		RegisterSignal(vr_sleeper, COMSIG_ATOM_EMAG_ACT, .proc/you_only_live_once)
@@ -28,16 +27,18 @@
 	var/mob/M = parent
 	current_mind = M.mind
 	quit_action.Grant(M)
+	RegisterSignal(quit_action, COMSIG_ACTION_TRIGGER, .proc/revert_to_reality)
 	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED), .proc/game_over)
-	RegisterSignal(M, list(COMSIG_MOB_KEY_CHANGE, COMSIG_MIND_TRANSFER), .proc/pass_me_the_remote)
 	RegisterSignal(M, COMSIG_MOB_GHOSTIZE, .proc/be_a_quitter)
+	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/pass_me_the_remote)
+	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/pass_me_the_remote)
 	mastermind.current.audiovisual_redirect = M
 
 /datum/component/virtual_reality/UnregisterFromParent()
 	quit_action.Remove(parent)
 	UnregisterSignal(parent, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED, COMSIG_MOB_KEY_CHANGE, COMSIG_MOB_GHOSTIZE))
-	UnregisterSignal(quit_action, COMSIG_ACTION_TRIGGER)
 	UnregisterSignal(current_mind, COMSIG_MIND_TRANSFER)
+	UnregisterSignal(quit_action, COMSIG_ACTION_TRIGGER)
 	current_mind = null
 	mastermind.current.audiovisual_redirect = null
 
@@ -65,6 +66,7 @@
 /datum/component/virtual_reality/proc/pass_me_the_remote(datum/source, mob/new_mob)
 	if(new_mob == mastermind.current)
 		revert_to_reality(source)
+		return TRUE
 	new_mob.TakeComponent(src)
 	return TRUE
 
@@ -82,10 +84,13 @@
 	quit_it()
 	return COMPONENT_BLOCK_GHOSTING
 
-/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(datum/source, mob/occupant, killme = FALSE, ckey_transfer = TRUE)
+/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(datum/source, mob/occupant, killme = FALSE)
 	var/mob/M = parent
+	var/ckey_transfer = FALSE
 	if(!QDELETED(M.inception) && M.inception.parent)
-		M.inception.virtual_reality_in_a_virtual_reality(source, null, killme, FALSE)
+		M.inception.virtual_reality_in_a_virtual_reality(source, occupant, killme)
+	else
+		ckey_transfer = TRUE
 	quit_it(FALSE, killme, ckey_transfer, occupant)
 	if(killme)
 		M.death(FALSE)
