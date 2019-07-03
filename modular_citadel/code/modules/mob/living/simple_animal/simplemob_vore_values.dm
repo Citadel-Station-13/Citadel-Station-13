@@ -87,41 +87,49 @@
 /mob/living/simple_animal/hostile/lizard
 	devourable = TRUE
 	digestable = TRUE
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/alien
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/bear
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/poison/giant_spider
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/gorilla
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/asteroid/goliath
+	feeding = TRUE //for pet Goliaths I guess or something.
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/carp
+	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
