@@ -113,4 +113,4 @@
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 
-	var/datum/component/virtual_reality/inception
+	var/datum/component/virtual_reality/inception //The component works on a very fragile link betwixt mind, ckey and death. Apologises for this snowflake mind game.

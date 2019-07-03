@@ -21,6 +21,7 @@
 		RegisterSignal(vr_sleeper, COMSIG_ATOM_EMAG_ACT, .proc/you_only_live_once)
 		RegisterSignal(vr_sleeper, COMSIG_MACHINE_EJECT_OCCUPANT, .proc/virtual_reality_in_a_virtual_reality)
 	vr_M.ckey = M.ckey
+	M.inception = src
 	SStgui.close_user_uis(M, src)
 
 /datum/component/virtual_reality/RegisterWithParent()
@@ -42,8 +43,8 @@
 
 /datum/component/virtual_reality/proc/switch_player(datum/source, mob/new_mob, mob/old_mob)
 	if(vr_sleeper || !new_mob.mind)
-		// Machineries currently don't deal up with the occupant being polymorphed or the such. Or the admin dared to use outdated transformation procs.
-		virtual_reality_in_a_virtual_reality(FALSE, new_mob)
+		// Machineries currently don't deal up with the occupant being polymorphed or the such. Or something (An admin, I hope) dared to use fuck this up.
+		virtual_reality_in_a_virtual_reality(source, new_mob, FALSE, TRUE)
 		return
 	old_mob.audiovisual_redirect = null
 	old_mob.inception = null
@@ -81,35 +82,35 @@
 	quit_it()
 	return COMPONENT_BLOCK_GHOSTING
 
-/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(killme = FALSE, mob_override)
+/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(datum/source, mob/occupant, killme = FALSE, ckey_transfer = TRUE)
 	var/mob/M = parent
-	if(!QDELETED(M.inception)  && M.inception.parent)
-		M.inception.virtual_reality_in_a_virtual_reality()
-	quit_it(FALSE, killme, mob_override)
+	if(!QDELETED(M.inception) && M.inception.parent)
+		M.inception.virtual_reality_in_a_virtual_reality(source, null, killme, FALSE)
+	quit_it(FALSE, killme, ckey_transfer, occupant)
 	if(killme)
 		M.death(FALSE)
 
-/datum/component/virtual_reality/proc/quit_it(deathcheck = FALSE, cleanup = FALSE, mob_override)
+/datum/component/virtual_reality/proc/quit_it(deathcheck = FALSE, cleanup = FALSE, ckey_transfer = TRUE, mob/override)
 	var/mob/M = parent
-	var/mob/dreamer = mob_override ? mob_override : mastermind.current
+	var/mob/dreamer = override ? override : mastermind.current
 	if(!mastermind)
 		to_chat(M, "<span class='warning'>You feel like something terrible happened. You try to wake up from this dream, but you can't...</span>")
 	else
-		dreamer.ckey = M.ckey
+		if(ckey_transfer)
+			M.transfer_key(dreamer, FALSE)
 		dreamer.stop_sound_channel(CHANNEL_HEARTBEAT)
 		dreamer.inception = null
 		dreamer.audiovisual_redirect = null
-		if(deathcheck)
-			if(you_die_in_the_game_you_die_for_real)
-				to_chat(mastermind, "<span class='warning'>You feel everything fading away...</span>")
-				dreamer.death(FALSE)
+		if(deathcheck && you_die_in_the_game_you_die_for_real)
+			to_chat(mastermind, "<span class='warning'>You feel everything fading away...</span>")
+			dreamer.death(FALSE)
 		if(cleanup)
 			var/obj/effect/vr_clean_master/cleanbot = locate() in get_area(M)
 			if(cleanbot)
 				LAZYADD(cleanbot.corpse_party, M)
-		if(vr_sleeper)
-			vr_sleeper.vr_mob = null
-			vr_sleeper = null
+			if(vr_sleeper)
+				vr_sleeper.vr_mob = null
+				vr_sleeper = null
 	qdel(src)
 
 /datum/component/virtual_reality/Destroy()

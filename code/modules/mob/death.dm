@@ -12,5 +12,5 @@
 /mob/proc/death(gibbed)
 	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	if(!QDELETED(inception) && inception.parent)
-		inception.virtual_reality_in_a_virtual_reality(TRUE)
+		inception.virtual_reality_in_a_virtual_reality(null, src, TRUE)
 	return
