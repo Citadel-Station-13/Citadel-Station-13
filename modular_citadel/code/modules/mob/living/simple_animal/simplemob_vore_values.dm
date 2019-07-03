@@ -41,6 +41,10 @@
 	devourable = TRUE
 	digestable = TRUE
 
+/mob/living/simple_animal/kiwi
+	devourable = TRUE
+	digestable = TRUE
+
 //STATION PETS
 /mob/living/simple_animal/pet
 	devourable = TRUE
@@ -65,7 +69,6 @@
 /mob/living/simple_animal/sloth
 	devourable = TRUE
 	digestable = TRUE
-	feeding = TRUE
 
 /mob/living/simple_animal/parrot
 	devourable = TRUE
@@ -84,58 +87,41 @@
 /mob/living/simple_animal/hostile/lizard
 	devourable = TRUE
 	digestable = TRUE
+	vore_active = TRUE
+	isPredator = TRUE
+	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/alien
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/bear
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/poison/giant_spider
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
+	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/gorilla
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/asteroid/goliath
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
 
 /mob/living/simple_animal/hostile/carp
-	devourable = TRUE
-	digestable = TRUE
-	feeding = TRUE
 	vore_active = TRUE
 	isPredator = TRUE
 	vore_default_mode = DM_DIGEST
