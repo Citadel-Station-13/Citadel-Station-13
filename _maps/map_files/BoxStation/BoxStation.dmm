@@ -1688,8 +1688,7 @@
 /obj/machinery/button/door{
 	id = "hos";
 	name = "HoS Office Shutters";
-	pixel_y = -25;
-	
+	pixel_y = -25
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -56667,6 +56666,12 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"eef" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "evR" = (
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -81613,7 +81618,7 @@ cNG
 cNJ
 bLF
 aZK
-bbR
+eef
 bbR
 bqt
 cBq
