@@ -11710,7 +11710,7 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11834,7 +11834,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -57278,6 +57278,12 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"plS" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "poc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -57487,12 +57493,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
-"tdp" = (
-/obj/machinery/autolathe{
-	name = "public autolathe"
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "tkU" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
@@ -81618,7 +81618,7 @@ cNG
 cNJ
 bLF
 aZK
-tdp
+plS
 bbR
 bqt
 cBq
