@@ -47699,12 +47699,12 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide{
+/obj/item/tank/jetpack/carbondioxide/eva{
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/item/tank/jetpack/carbondioxide,
-/obj/item/tank/jetpack/carbondioxide{
+/obj/item/tank/jetpack/carbondioxide/eva,
+/obj/item/tank/jetpack/carbondioxide/eva{
 	pixel_x = -4;
 	pixel_y = 1
 	},

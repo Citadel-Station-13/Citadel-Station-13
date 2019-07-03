@@ -79373,12 +79373,12 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide{
+/obj/item/tank/jetpack/carbondioxide/eva{
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/item/tank/jetpack/carbondioxide,
-/obj/item/tank/jetpack/carbondioxide{
+/obj/item/tank/jetpack/carbondioxide/eva,
+/obj/item/tank/jetpack/carbondioxide/eva{
 	pixel_x = -4;
 	pixel_y = 1
 	},
@@ -80186,11 +80186,11 @@
 /area/engine/storage)
 "cEi" = (
 /obj/structure/table/reinforced,
-/obj/item/tank/jetpack/carbondioxide{
+/obj/item/tank/jetpack/carbondioxide/eva{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering Storage APC";
