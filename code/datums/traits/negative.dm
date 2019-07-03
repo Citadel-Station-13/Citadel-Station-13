@@ -38,13 +38,13 @@
 	var/obj/item/heirloom_type
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
-			heirloom_type = /obj/item/paint/anycolor
-			heirloom_type = /obj/item/bikehorn/golden
+			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/bikehorn/golden)
 		if("Mime")
-			heirloom_type = /obj/item/paint/anycolor
-			heirloom_type = /obj/item/toy/dummy
+			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/toy/dummy)
 		if("Cook")
 			heirloom_type = /obj/item/kitchen/knife/scimitar
+		if("Botanist")
+			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
 		if("Medical Doctor")
 			heirloom_type = /obj/item/healthanalyzer/advanced
 		if("Station Engineer")
@@ -60,7 +60,7 @@
 		if("Scientist")
 			heirloom_type = /obj/item/toy/plush/slimeplushie
 		if("Assistant")
-			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+			heirloom_type = /obj/item/clothing/gloves/cut/family
 		if("Chaplain")
 			heirloom_type = /obj/item/camera/spooky/family
 		if("Captain")
@@ -187,6 +187,41 @@
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		qdel(src)
 
+/datum/quirk/paraplegic
+	name = "Paraplegic"
+	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
+	value = -3
+	mob_trait = TRAIT_PARA
+	human_only = TRUE
+	gain_text = null // Handled by trauma.
+	lose_text = null
+	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
+
+/datum/quirk/paraplegic/add()
+	var/datum/brain_trauma/severe/paralysis/paraplegic/T = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/paraplegic/on_spawn()
+	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
+		quirk_holder.buckled.unbuckle_mob(quirk_holder)
+
+	var/turf/T = get_turf(quirk_holder)
+	var/obj/structure/chair/spawn_chair = locate() in T
+
+	var/obj/vehicle/ridden/wheelchair/wheels = new(T)
+	if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
+		wheels.setDir(spawn_chair.dir)
+
+	wheels.buckle_mob(quirk_holder)
+
+	// During the spawning process, they may have dropped what they were holding, due to the paralysis
+	// So put the things back in their hands.
+
+	for(var/obj/item/I in T)
+		if(I.fingerprintslast == quirk_holder.ckey)
+			quirk_holder.put_in_hands(I)
+
 /datum/quirk/poor_aim
 	name = "Poor Aim"
 	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
@@ -208,8 +243,12 @@
 	var/slot_string = "limb"
 
 /datum/quirk/prosthetic_limb/on_spawn()
-	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/H = quirk_holder
+	var/limb_slot
+	if(HAS_TRAIT(H, TRAIT_PARA))//Prevent paraplegic legs being replaced
+		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	else
+		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)

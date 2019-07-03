@@ -102,7 +102,8 @@
 #define CAT_SANDWICH	"Sandwiches"
 #define CAT_SOUP	"Soups"
 #define CAT_SPAGHETTI	"Spaghettis"
-#define CAT_SUSHI	"Fish"
+#define CAT_FISH	"Fish"
+#define CAT_ICE	"Frozen"
 
 #define RCD_FLOORWALL 1
 #define RCD_AIRLOCK 2

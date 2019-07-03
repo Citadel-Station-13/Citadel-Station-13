@@ -417,7 +417,6 @@
 	icon_state = "flagcape"
 	item_state = "flagcape"
 
-
 /obj/item/clothing/shoes/lucky
 	name = "Lucky Jackboots"
 	icon = 'icons/obj/custom.dmi'
@@ -484,4 +483,48 @@
 	icon_state = "redgoldjacket"
 	item_state = "redgoldjacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/kimono
+	name = "Blue Kimono"
+	desc = "A traditional kimono, this one is blue with purple flowers."
+	icon_state = "kimono"
+	item_state = "kimono"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/commjacket
+	name = "Dusty Commisar's Cloak"
+	desc = "An Imperial Commisar's Coat, straight from the frontline of battle, filled with dirt, bulletholes, and dozens of little pockets. Alongside a curious golden eagle sitting on it's left breast, the marking '200th Venoland' is clearly visible on the inner workings of the coat. It certainly holds an imposing flair, however."
+	icon_state = "commjacket"
+	item_state = "commjacket"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/suit/mw2_russian_para
+	name = "Russian Paratrooper Jumper"
+	desc = "A Russian made old paratrooper jumpsuit, has many pockets for easy storage of gear from a by gone era. As bulky as it looks, its shockingly light!"
+	icon_state = "mw2_russian_para"
+	item_state = "mw2_russian_para"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+	mutantrace_variation = NO_MUTANTRACE_VARIATION
+
+/obj/item/clothing/gloves/longblackgloves
+	name = "Luna's Gauntlets"
+	desc = "These gloves seem to have a coating of slime fluid on them, you should possibly return them to their rightful owner."
+	icon_state = "longblackgloves"
+	item_state = "longblackgloves"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
+
+/obj/item/clothing/under/trendy_fit
+	name = "Trendy Fitting Clothing"
+	desc = "An outfit straight from the boredom of space, its the type of thing only someone trying to entertain themselves on the way to their next destination would wear."
+	icon_state = "trendy_fit"
+	item_state = "trendy_fit"
+	icon = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION

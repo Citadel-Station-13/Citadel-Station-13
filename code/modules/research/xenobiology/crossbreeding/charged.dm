@@ -8,12 +8,11 @@ Charged extracts:
 	name = "charged extract"
 	desc = "It sparks with electric power."
 	effect = "charged"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))
@@ -427,7 +426,7 @@ Charged extracts:
 	else
 		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
 	if(isanimal(M))
-		M.add_trait(TRAIT_PACIFISM, MAGIC_TRAIT)
+		ADD_TRAIT(M, TRAIT_PACIFISM, MAGIC_TRAIT)
 	else if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)

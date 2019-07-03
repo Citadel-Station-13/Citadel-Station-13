@@ -114,8 +114,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
-#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+#define BE_CLOSE TRUE		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY TRUE	//if other mobs (monkeys, aliens, etc) can use this
+#define NO_TK TRUE
 //used by canUseTopic()
 
 //singularity defines
@@ -218,6 +219,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 
+//Same as above except gets the area instead
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -261,6 +265,15 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHARE		"Share Tech Mono"
 
 GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
+
+//pda icon reskins
+#define PDA_SKIN_CLASSIC "Classic"
+#define PDA_SKIN_ALT "Holographic"
+#define PDA_SKIN_RUGGED "Rugged"
+#define PDA_SKIN_MODERN "Modern"
+
+GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_SKIN_ALT = 'icons/obj/pda_alt.dmi',
+								PDA_SKIN_RUGGED = 'icons/obj/pda_rugged.dmi', PDA_SKIN_MODERN = 'icons/obj/pda_modern.dmi'))
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"

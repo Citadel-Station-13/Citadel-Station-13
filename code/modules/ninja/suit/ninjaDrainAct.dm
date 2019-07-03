@@ -261,4 +261,19 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, 1)
 		visible_message("<span class='danger'>[H] electrocutes [src] with [H.p_their()] touch!</span>", "<span class='userdanger'>[H] electrocutes you with [H.p_their()] touch!</span>")
-		electrocute_act(25, H)
+		electrocute_act(15, H)
+
+		Knockdown(G.stunforce)
+		adjustStaminaLoss(G.stunforce*0.1, affected_zone = (istype(H) ? H.zone_selected : BODY_ZONE_CHEST))
+		apply_effect(EFFECT_STUTTER, G.stunforce)
+		SEND_SIGNAL(src, COMSIG_LIVING_MINOR_SHOCK)
+
+		lastattacker = H.real_name
+		lastattackerckey = H.ckey
+		log_combat(H, src, "stunned")
+
+		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+
+		if(ishuman(src))
+			var/mob/living/carbon/human/Hsrc = src
+			Hsrc.forcesay(GLOB.hit_appends)

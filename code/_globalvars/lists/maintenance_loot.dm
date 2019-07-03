@@ -44,6 +44,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/flashlight = 4,
 	/obj/item/flashlight/pen = 1,
 	/obj/item/flashlight/glowstick/random = 4,
+	/obj/effect/spawner/lootdrop/mre = 3,
 	/obj/item/multitool = 2,
 	/obj/item/radio/off = 2,
 	/obj/item/t_scanner = 5,
@@ -109,5 +110,8 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/reagent_containers/pill/floorpill = 1,
 	/obj/item/storage/daki = 3, //VERY IMPORTANT CIT CHANGE - adds bodypillows to maint
 	/obj/item/storage/pill_bottle/penis_enlargement = 2,
+	/obj/item/clothing/shoes/wheelys = 1,
+	/obj/item/clothing/shoes/kindleKicks = 1,
+	/obj/item/autosurgeon/penis = 1,
 	"" = 3
 	))

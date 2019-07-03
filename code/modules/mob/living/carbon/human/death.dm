@@ -42,13 +42,13 @@
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	set_species(/datum/species/skeleton)
 	return 1
 
 
 /mob/living/carbon/proc/Drain()
 	become_husk(CHANGELING_DRAIN)
-	add_trait(TRAIT_NOCLONE, CHANGELING_DRAIN)
+	ADD_TRAIT(src, TRAIT_NOCLONE, CHANGELING_DRAIN)
 	blood_volume = 0
 	return 1

@@ -123,7 +123,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.has_trait(TRAIT_MUTE)) || H.silent)
+					if((HAS_TRAIT(H, TRAIT_MUTE)) || H.silent)
 						continue
 				if(L.stat)
 					continue
@@ -250,14 +250,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	currentconversionman = convertee
 	conversiontimeout = world.time + (10 SECONDS)
 	convertee.Stun(100)
-	convertee.add_trait(TRAIT_MUTE, "conversionrune")
+	ADD_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
 	conversionresult = FALSE
 	while(world.time < conversiontimeout && convertee && !conversionresult)
 		stoplag(1)
 	currentconversionman = null
 	if(!convertee)
 		return FALSE
-	convertee.remove_trait(TRAIT_MUTE, "conversionrune")
+	REMOVE_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
 	if(get_turf(convertee) != get_turf(src))
 		return FALSE
 	if(!conversionresult)
