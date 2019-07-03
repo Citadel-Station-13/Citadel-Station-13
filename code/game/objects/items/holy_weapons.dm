@@ -717,7 +717,7 @@
 			visible_message("<span class='boldwarning'>[src] disappears with a crack!</span>")
 			forceMove(L.loc)
 			var/picked_up = L.put_in_hands(src)
-			to_chat(L, "<span class='boldwarning'>[src] materializes beneath you[picked_up? ", and you reflexively pick it up!" : ""]!</span>")
+			to_chat(L, "<span class='boldwarning'>[src] materializes beneath you[picked_up? ", and you reflexively pick it up" : ""]!</span>")
 		last_throw_special = world.time
 		to_chat(L, "<span class='boldwarning'>[src] clicks, its whirring growing softer. You probably won't be able to utilize its throw jaunt for [throw_special_cooldown/10] seconds!</span>")
 		addtimer(CALLBACK(src, .proc/inform_recharge, L), throw_special_cooldown)
