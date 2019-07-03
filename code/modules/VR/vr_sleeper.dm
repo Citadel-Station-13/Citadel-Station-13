@@ -11,6 +11,7 @@
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/vr_mob
+	var/virtual_mob_type = /mob/living/carbon/human
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_mobs = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
@@ -91,8 +92,9 @@
 		if("vr_connect")
 			var/mob/living/carbon/human/human_occupant = occupant
 			if(human_occupant && human_occupant.mind && usr == occupant)
+
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
-				if(vr_mob && vr_mob.stat == CONSCIOUS && !vr_mob.GetComponent(/datum/component/virtual_reality))
+				if(vr_mob && (!istype(vr_mob) || !vr_mob.InCritical()) && !vr_mob.GetComponent(/datum/component/virtual_reality))
 					vr_mob.AddComponent(/datum/component/virtual_reality, human_occupant, src, you_die_in_the_game_you_die_for_real)
 					to_chat(vr_mob, "<span class='notice'>Transfer successful! You are now playing as [vr_mob] in VR!</span>")
 				else
@@ -127,17 +129,20 @@
 	var/list/data = list()
 	if(vr_mob && !QDELETED(vr_mob))
 		data["can_delete_avatar"] = TRUE
-		var/status
-		switch(vr_mob.stat)
-			if(CONSCIOUS)
-				status = "Conscious"
-			if(DEAD)
-				status = "Dead"
-			if(UNCONSCIOUS)
-				status = "Unconscious"
-			if(SOFT_CRIT)
-				status = "Barely Conscious"
-		data["vr_avatar"] = list("name" = vr_mob.name, "status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
+		data["vr_avatar"] = list("name" = vr_mob.name)
+		data["isliving"] = istype(vr_mob)
+		if(data["isliving"])
+			var/status
+			switch(vr_mob.stat)
+				if(CONSCIOUS)
+					status = "Conscious"
+				if(DEAD)
+					status = "Dead"
+				if(UNCONSCIOUS)
+					status = "Unconscious"
+				if(SOFT_CRIT)
+					status = "Barely Conscious"
+			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
 	data["toggle_open"] = state_open
 	data["emagged"] = you_die_in_the_game_you_die_for_real
 	data["isoccupant"] = (user == occupant)
@@ -155,7 +160,7 @@
 	if(!H)
 		return
 	cleanup_vr_mob()
-	vr_mob = new /mob/living/carbon/human(location)
+	vr_mob = new virtual_mob_type(location)
 	if(vr_mob.build_virtual_character(H, outfit))
 		var/mob/living/carbon/human/vr_H = vr_mob
 		vr_H.updateappearance(TRUE, TRUE, TRUE)

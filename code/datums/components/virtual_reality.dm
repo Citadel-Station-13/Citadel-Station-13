@@ -33,6 +33,8 @@
 	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/pass_me_the_remote)
 	RegisterSignal(current_mind, COMSIG_MIND_TRANSFER, .proc/pass_me_the_remote)
 	mastermind.current.audiovisual_redirect = M
+	if(vr_sleeper)
+		vr_sleeper.vr_mob = M
 
 /datum/component/virtual_reality/UnregisterFromParent()
 	quit_action.Remove(parent)
