@@ -5,7 +5,7 @@
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
 
-/datum/reagent/drug/on_mob_delete(mob/living/M)
+/datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
@@ -168,11 +168,11 @@
 	var/jitter = TRUE
 	var/confusion = TRUE
 
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
+/datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
 	L.ignore_slowdown(id)
 
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
+/datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	L.unignore_slowdown(id)
 	..()
 
@@ -262,7 +262,7 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
+/datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
@@ -271,7 +271,7 @@
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
+/datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	if(rage)
@@ -381,7 +381,7 @@
 	addiction_stage3_end = 40
 	addiction_stage4_end = 240
 
-/datum/reagent/drug/skooma/on_mob_add(mob/living/L)
+/datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
 	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 2
@@ -392,7 +392,7 @@
 		if(H.dna && H.dna.species)
 			H.dna.species.punchdamagehigh *= 5
 
-/datum/reagent/drug/skooma/on_mob_delete(mob/living/L)
+/datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 0.5

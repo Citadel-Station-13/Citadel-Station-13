@@ -288,8 +288,17 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
+	var/turf/ai = get_turf(src)
+	var/turf/target = get_turf(A)
 	if (.)
 		return
+
+	if(!target)
+		return
+
+	if ((ai.z != target.z) && !is_station_level(ai.z))
+		return FALSE
+
 	if (istype(loc, /obj/item/aicard))
 		var/turf/T0 = get_turf(src)
 		var/turf/T1 = get_turf(A)
@@ -779,7 +788,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(control_disabled || incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE

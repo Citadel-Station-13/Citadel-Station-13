@@ -445,7 +445,7 @@
 	flash_protect = 0
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	scan_reagents = 1
+	scan_reagents = TRUE
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
@@ -467,7 +467,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	var/obj/machinery/doppler_array/integrated/bomb_radar
-	scan_reagents = 1
+	scan_reagents = TRUE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize()
@@ -626,7 +626,7 @@
 	item_state = "anc_hardsuit"
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
 	slowdown = 6 //Slow
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage, /obj/item/construction/rcd, /obj/item/pipe_dispenser) 
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient/mason
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -639,7 +639,7 @@
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5, "energy" = 500, "bomb" = 500, "bio" = 500, "rad" = 500, "fire" = 500, "acid" = 500)
 	item_color = "ancient"
 	brightness_on = 16
-	scan_reagents = 1
+	scan_reagents = TRUE
 	flash_protect = 5 //We will not be flash by bombs
 	tint = 1
 	var/obj/machinery/doppler_array/integrated/bomb_radar

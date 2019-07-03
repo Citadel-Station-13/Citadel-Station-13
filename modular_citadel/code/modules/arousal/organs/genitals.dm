@@ -73,7 +73,7 @@
 				owner.exposed_genitals += src
 		if("Hidden by clothes")
 			through_clothes = FALSE
-			hidden = FALSE
+			hidden = TRUE
 			if(src in owner.exposed_genitals)
 				owner.exposed_genitals -= src
 		if("Always hidden")
@@ -303,6 +303,8 @@
 	for(var/obj/item/organ/O in H.internal_organs)
 		if(isgenital(O))
 			var/obj/item/organ/genital/G = O
+			if(G.hidden)
+				return	//we're gunna just hijack this for updates.
 			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
 				genitals_to_add += H.getorganslot(G.slot)
 	//Now we added all genitals that aren't internal and should be rendered

@@ -57,6 +57,7 @@
 			deactivate()
 		if(passive_enabled)
 			disable_passive_effect()
+		on_mob_remove()
 	if(nanites)
 		nanites.programs -= src
 	return ..()
@@ -107,6 +108,9 @@
 	if(activated) //apply activation effects if it starts active
 		activate()
 
+datum/nanite_program/proc/on_mob_remove()
+	return
+
 /datum/nanite_program/proc/toggle()
 	if(!activated)
 		activate()
@@ -115,6 +119,7 @@
 
 /datum/nanite_program/proc/activate()
 	activated = TRUE
+	timer_counter = activation_delay
 
 /datum/nanite_program/proc/deactivate()
 	if(passive_enabled)
@@ -135,8 +140,10 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
+			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
+			return
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay
@@ -251,4 +258,3 @@
 			return "Trigger"
 		if(NANITE_TIMER_RESET)
 			return "Reset Activation Timer"
-

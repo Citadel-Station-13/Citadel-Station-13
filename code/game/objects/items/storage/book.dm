@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if(!istype(H))
 		return
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
+	if(!GLOB.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/storage/book/bible/Topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		return
-	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
+	if(href_list["seticon"] && GLOB && !GLOB.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
 		var/obj/item/storage/book/bible/B = locate(href_list["src"])
@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = B.icon_state
-		SSreligion.bible_item_state = B.item_state
+		GLOB.bible_icon_state = B.icon_state
+		GLOB.bible_item_state = B.item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
-	var/heal_amt = 10
+	var/heal_amt = 5
 	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
 
 	if(hurt_limbs.len)
@@ -138,8 +138,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(!istype(C.head, /obj/item/clothing/head/helmet))
-				C.adjustBrainLoss(5, 60)
+			if(!istype(C.head, /obj/item/clothing/head))	
+				C.adjustBrainLoss(10, 80)
 				to_chat(C, "<span class='danger'>You feel dumber.</span>")
 
 		if(smack)

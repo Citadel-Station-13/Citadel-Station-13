@@ -213,15 +213,15 @@
 	glass_desc = "White and nutritious goodness!"
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
-	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
+		M.heal_bodypart_damage(1.5,0, 0)
 		. = 1
+	else
+		if(M.getBruteLoss() && prob(20))
+			M.heal_bodypart_damage(1,0, 0)
+			. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
-	var/datum/dna/Mdna = M.has_dna()
-	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
-		M.heal_bodypart_damage(1,0, 0)
-		. = 1
 	..()
 
 /datum/reagent/consumable/soymilk
@@ -390,11 +390,11 @@
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 
-/datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
+/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
+/datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 

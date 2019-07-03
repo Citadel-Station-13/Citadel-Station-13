@@ -95,7 +95,7 @@
 		cached_gases[/datum/gas/oxygen] -= cached_gases[/datum/gas/tritium]
 
 	if(burned_fuel)
-		energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
@@ -285,6 +285,7 @@
 			if(do_explosion)
 				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
 			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, 30000)//The science is cool though.
 			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
 		else
 			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
@@ -350,12 +351,20 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma]/cached_gases[/datum/gas/nitrous_oxide],1))),cached_gases[/datum/gas/nitrous_oxide],cached_gases[/datum/gas/plasma]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
+	if(cached_gases[/datum/gas/miasma] && cached_gases[/datum/gas/miasma] > 0)
+		energy_released /= cached_gases[/datum/gas/miasma]*0.1
+	if(cached_gases[/datum/gas/bz] && cached_gases[/datum/gas/bz] > 0)
+		energy_released *= cached_gases[/datum/gas/bz]*0.1
 	if ((cached_gases[/datum/gas/nitrous_oxide] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/bz] += reaction_efficency
+	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide])
+		cached_gases[/datum/gas/bz] -= min(pressure,1)
+		cached_gases[/datum/gas/oxygen] += min(pressure,1)
 	cached_gases[/datum/gas/nitrous_oxide] -= reaction_efficency
 	cached_gases[/datum/gas/plasma]  -= 2*reaction_efficency
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, (reaction_efficency**0.5)*BZ_RESEARCH_AMOUNT)	
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -390,6 +399,7 @@
 	cached_gases[/datum/gas/plasma] -= heat_scale
 	cached_gases[/datum/gas/nitryl] -= heat_scale
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -418,6 +428,7 @@
 	cached_gases[/datum/gas/nitrogen] -= 20*nob_formed
 	cached_gases[/datum/gas/hypernoblium]+= nob_formed
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, nob_formed*NOBLIUM_RESEARCH_AMOUNT)
 
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()
@@ -449,3 +460,4 @@
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air * 0.002
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, cleaned_air*MIASMA_RESEARCH_AMOUNT)//Turns out the burning of miasma is kinda interesting to scientists

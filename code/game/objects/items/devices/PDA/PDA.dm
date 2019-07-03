@@ -10,11 +10,20 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_HALOGEN		4
 #define PDA_SCANNER_GAS			5
 #define PDA_SPAM_DELAY		    2 MINUTES
+#define PDA_STANDARD_OVERLAYS list("pda-r", "blank", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay")
+
+//pda icon overlays list defines
+#define PDA_OVERLAY_ALERT		1
+#define PDA_OVERLAY_SCREEN		2
+#define PDA_OVERLAY_ID			3
+#define PDA_OVERLAY_ITEM		4
+#define PDA_OVERLAY_LIGHT		5
+#define PDA_OVERLAY_PAI			6
 
 /obj/item/pda
 	name = "\improper PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/pda_alt.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -31,7 +40,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
-	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/list/overlays_icons = list('icons/obj/pda_alt.dmi' = list("pda-r", "screen_default", "id_overlay", "insert_overlay", "light_overlay", "pai_overlay"))
+	var/current_overlays = PDA_STANDARD_OVERLAYS
 	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
@@ -78,7 +88,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0	//x offset to use for certain overlays
+	var/list/overlays_offsets // offsets to use for certain overlays
+	var/overlays_x_offset = 0
+	var/overlays_y_offset = 0
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -91,15 +103,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return BRUTELOSS
 
 /obj/item/pda/examine(mob/user)
-	..()
-	if(!id && !inserted_item)
-		return
-
-	if(id)
-		to_chat(user, "<span class='notice'>Alt-click to remove the id.</span>")
-
+	. = ..()
+	var/dat = id ? "<span class='notice'>Alt-click to remove the id.</span>" : ""
 	if(inserted_item && (!isturf(loc)))
-		to_chat(user, "<span class='notice'>Ctrl-click to remove [inserted_item].</span>")
+		dat += "\n<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
+	if(LAZYLEN(GLOB.pda_reskins))
+		dat += "\n<span class='notice'>Ctrl-shift-click it to reskin it.</span>"
+	to_chat(user, dat)
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -115,28 +125,71 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item =	new /obj/item/pen(src)
 	update_icon()
 
+/obj/item/pda/CtrlShiftClick(mob/living/user)
+	. = ..()
+	if(GLOB.pda_reskins && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		reskin_obj(user)
+
+/obj/item/pda/reskin_obj(mob/M)
+	if(!LAZYLEN(GLOB.pda_reskins))
+		return
+	var/dat = "<b>Reskin options for [name]:</b>"
+	for(var/V in GLOB.pda_reskins)
+		var/output = icon2html(GLOB.pda_reskins[V], M, icon_state)
+		dat += "\n[V]: <span class='reallybig'>[output]</span>"
+	to_chat(M, dat)
+
+	var/choice = input(M, "Choose the a reskin for [src]","Reskin Object") as null|anything in GLOB.pda_reskins
+	var/new_icon = GLOB.pda_reskins[choice]
+	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
+		return
+	icon = new_icon
+	set_new_overlays()
+	update_icon()
+	to_chat(M, "[src] is now skinned as '[choice]'.")
+
+/obj/item/pda/proc/set_new_overlays()
+	if(!overlays_offsets || !(icon in overlays_offsets))
+		overlays_x_offset = 0
+		overlays_y_offset = 0
+	else
+		var/list/new_offsets = overlays_offsets[icon]
+		if(new_offsets)
+			overlays_x_offset = new_offsets[1]
+			overlays_y_offset = new_offsets[2]
+	if(!(icon in overlays_icons))
+		current_overlays = PDA_STANDARD_OVERLAYS
+		return
+	current_overlays = overlays_icons[icon]
+
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
-	if(!equipped)
-		if(user.client)
-			background_color = user.client.prefs.pda_color
-			switch(user.client.prefs.pda_style)
-				if(MONO)
-					font_index = MODE_MONO
-					font_mode = FONT_MONO
-				if(SHARE)
-					font_index = MODE_SHARE
-					font_mode = FONT_SHARE
-				if(ORBITRON)
-					font_index = MODE_ORBITRON
-					font_mode = FONT_ORBITRON
-				if(VT)
-					font_index = MODE_VT
-					font_mode = FONT_VT
-				else
-					font_index = MODE_MONO
-					font_mode = FONT_MONO
-			equipped = TRUE
+	if(equipped)
+		return
+	if(user.client)
+		background_color = user.client.prefs.pda_color
+		switch(user.client.prefs.pda_style)
+			if(MONO)
+				font_index = MODE_MONO
+				font_mode = FONT_MONO
+			if(SHARE)
+				font_index = MODE_SHARE
+				font_mode = FONT_SHARE
+			if(ORBITRON)
+				font_index = MODE_ORBITRON
+				font_mode = FONT_ORBITRON
+			if(VT)
+				font_index = MODE_VT
+				font_mode = FONT_VT
+			else
+				font_index = MODE_MONO
+				font_mode = FONT_MONO
+		var/pref_skin = GLOB.pda_reskins[user.client.prefs.pda_skin]
+		if(icon != pref_skin)
+			icon = pref_skin
+			set_new_overlays()
+			update_icon()
+		equipped = TRUE
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -150,32 +203,33 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/GetID()
 	return id
 
-/obj/item/pda/update_icon()
+/obj/item/pda/update_icon(alert = FALSE)
 	cut_overlays()
+	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
 	var/mutable_appearance/overlay = new()
 	overlay.pixel_x = overlays_x_offset
 	if(id)
-		overlay.icon_state = "id_overlay"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_ID]
 		add_overlay(new /mutable_appearance(overlay))
 	if(inserted_item)
-		overlay.icon_state = "insert_overlay"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_ITEM]
 		add_overlay(new /mutable_appearance(overlay))
 	if(fon)
-		overlay.icon_state = "light_overlay"
+		overlay.icon_state = current_overlays[PDA_OVERLAY_LIGHT]
 		add_overlay(new /mutable_appearance(overlay))
 	if(pai)
-		if(pai.pai)
-			overlay.icon_state = "pai_overlay"
-			add_overlay(new /mutable_appearance(overlay))
-		else
-			overlay.icon_state = "pai_off_overlay"
-			add_overlay(new /mutable_appearance(overlay))
+		overlay.icon_state = "[current_overlays[PDA_OVERLAY_PAI]][pai.pai ? "" : "_off"]"
+		add_overlay(new /mutable_appearance(overlay))
 
-/obj/item/pda/MouseDrop(obj/over_object, src_location, over_location)
+/obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+	if((M == over) && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return attack_self(M)
 	return ..()
+
+/obj/item/pda/attack_self_tk(mob/user)
+	to_chat(user, "<span class='warning'>The PDA's capacitive touch screen doesn't seem to respond!</span>")
+	return
 
 /obj/item/pda/interact(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -382,7 +436,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src) && !href_list["close"])
+	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -636,7 +690,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_id()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if (id)
@@ -736,8 +790,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
 
-	update_icon()
-	add_overlay(icon_alert)
+	update_icon(TRUE)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
 	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
@@ -802,7 +855,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_pen()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if(inserted_item)
@@ -1076,4 +1129,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY
+#undef PDA_STANDARD_OVERLAYS
 
+#undef PDA_OVERLAY_ALERT
+#undef PDA_OVERLAY_SCREEN
+#undef PDA_OVERLAY_ID
+#undef PDA_OVERLAY_ITEM
+#undef PDA_OVERLAY_LIGHT
+#undef PDA_OVERLAY_PAI
