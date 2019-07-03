@@ -108,7 +108,15 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_PARALYSIS_L_ARM	"para-l-arm" //These are used for brain-based paralysis, where replacing the limb won't fix it
+#define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
+#define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
+#define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define	TRAIT_STRONG_GRABBER	"strong_grabber"
+#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
 
+ //non-mob traits
+#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
@@ -130,6 +138,7 @@
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
 #define TRAIT_MASO              "masochism"
+#define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
 #define TRAIT_ASSBLASTUSA       "assblastusa"

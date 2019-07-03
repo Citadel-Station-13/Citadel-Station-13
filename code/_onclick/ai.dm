@@ -23,6 +23,9 @@
 		return
 	next_click = world.time + 1
 
+	if(!can_interact_with(A))
+		return
+
 	if(multicam_on)
 		var/turf/T = get_turf(A)
 		if(T)
@@ -60,7 +63,6 @@
 			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
 		return
 
-		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return

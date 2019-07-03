@@ -31,6 +31,8 @@
 
 	var/list/filter_data //For handling persistent filters
 
+	var/datum/component/orbiter/orbiters
+
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 

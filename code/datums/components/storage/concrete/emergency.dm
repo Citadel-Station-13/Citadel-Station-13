@@ -20,3 +20,4 @@
 /datum/component/storage/concrete/emergency/proc/unlock_me(datum/source)
 	if(locked)
 		set_locked(source, FALSE)
+		return TRUE

@@ -46,7 +46,7 @@
 /obj/machinery/modular_computer/emag_act(mob/user)
 	. = ..()
 	if(cpu)
-		return cpu.emag_act(user)
+		. |= cpu.emag_act(user)
 
 /obj/machinery/modular_computer/update_icon()
 	cut_overlays()

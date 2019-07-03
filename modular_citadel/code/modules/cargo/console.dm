@@ -4,11 +4,6 @@
 /obj/machinery/computer/cargo/request
 	req_access = list()
 
-/obj/machinery/computer/cargo/emag_act(mob/user)
-	. = ..()
-	if(.)
-		req_access = list()
-
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(!allowed(usr))
 		to_chat(usr, "<span class='notice'>Access denied.</span>")

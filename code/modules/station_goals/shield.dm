@@ -204,3 +204,4 @@
 	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
 		change_meteor_chance(4)
+	return TRUE
