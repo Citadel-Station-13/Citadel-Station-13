@@ -172,6 +172,7 @@
 	on = !on
 	update_icon()
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
+	message_admins("[src.name], was turned [on ? "on" : "off"] [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
