@@ -11,8 +11,8 @@
 
 /obj/item/projectile/energy/bolt/on_hit(atom/A, blocked)
 	. = ..()
-	if(ismob(A))
-		var/mob/M = A
+	if(isliving(A))
+		var/mob/living/M = A
 		M.radiation = min(M.radiation + radiation_increase, radiation_max)
 
 /obj/item/projectile/energy/bolt/halloween
