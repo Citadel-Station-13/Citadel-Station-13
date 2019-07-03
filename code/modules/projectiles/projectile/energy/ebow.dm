@@ -13,7 +13,8 @@
 	. = ..()
 	if(isliving(A))
 		var/mob/living/M = A
-		M.radiation = min(M.radiation + radiation_increase, radiation_max)
+		if(M.radiation < radiation_max)
+			M.radiation = min(M.radiation + radiation_increase, radiation_max)
 
 /obj/item/projectile/energy/bolt/halloween
 	name = "candy corn"
