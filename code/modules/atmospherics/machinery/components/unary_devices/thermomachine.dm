@@ -171,6 +171,7 @@
 		return
 	on = !on
 	update_icon()
+	investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
@@ -208,7 +209,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	target_temperature = min_temperature
+	target_temperature = min_temperature				
+	investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
@@ -235,3 +237,4 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	target_temperature = max_temperature
+	investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
