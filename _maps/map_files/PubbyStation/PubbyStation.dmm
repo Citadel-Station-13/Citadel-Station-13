@@ -36060,7 +36060,9 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/item/stamp/rd,
-/obj/machinery/status_display/ai,
+/obj/machinery/status_display/ai{
+	pixel_y = -32
+	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
 	dir = 1;
