@@ -192,7 +192,7 @@
 	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
 	force = 18		//spear damage
 
-/obj/item/storage/toolbox/durasteel/afterattack(atom/A, mob/user, proximity)
+/obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(proximity && isobj(A) && !isitem(A))
 		var/obj/O = A
