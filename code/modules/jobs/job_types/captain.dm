@@ -20,6 +20,7 @@
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()
 
+	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 //	mind_traits = list(TRAIT_DISK_VERIFIER)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
