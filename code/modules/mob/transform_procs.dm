@@ -382,7 +382,7 @@
 			mind.active = FALSE
 		mind.transfer_to(R)
 	else if(transfer_after)
-		transfer_key(R)
+		transfer_ckey(R)
 
 	R.apply_pref_name("cyborg")
 
@@ -428,7 +428,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_xeno)
 	else
-		transfer_key(new_xeno)
+		transfer_ckey(new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -463,7 +463,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_slime)
 	else
-		transfer_key(new_slime)
+		transfer_ckey(new_slime)
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
 	. = new_slime
@@ -474,7 +474,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(B)
 	else
-		transfer_key(B)
+		transfer_ckey(B)
 	. = B
 	qdel(src)
 
@@ -497,7 +497,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_corgi)
 	else
-		transfer_key(new_corgi)
+		transfer_ckey(new_corgi)
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	. = new_corgi
@@ -524,7 +524,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_gorilla)
 	else
-		transfer_key(new_gorilla)
+		transfer_ckey(new_gorilla)
 	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
 	. = new_gorilla
 	qdel(src)
@@ -556,7 +556,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_mob)
 	else
-		transfer_key(new_mob)
+		transfer_ckey(new_mob)
 	new_mob.a_intent = INTENT_HARM
 
 
@@ -578,7 +578,7 @@
 	if(mind && mind_transfer)
 		mind.transfer_to(new_mob)
 	else
-		transfer_key(new_mob)
+		transfer_ckey(new_mob)
 	new_mob.a_intent = INTENT_HARM
 	to_chat(new_mob, "You feel more... animalistic")
 

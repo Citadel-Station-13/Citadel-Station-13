@@ -98,7 +98,7 @@
 	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
 		return
 	sentience_act()
-	user.transfer_key(src, FALSE)
+	user.transfer_ckey(src, FALSE)
 	density = TRUE
 
 /mob/living/simple_animal/banana_spider/ComponentInitialize()

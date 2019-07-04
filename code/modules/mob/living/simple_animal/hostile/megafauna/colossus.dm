@@ -585,7 +585,7 @@ Difficulty: Very Hard
 		var/be_helper = alert("Become a Lightgeist? (Warning, You can no longer be cloned!)",,"Yes","No")
 		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
 			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			user.transfer_key(W, FALSE)
+			user.transfer_ckey(W, FALSE)
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)

@@ -21,7 +21,7 @@
 	-	When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
 		a ghost to become a xeno during an event), use this mob proc.
 
-			mob.transfer_key(new_mob)
+			mob.transfer_ckey(new_mob)
 
 		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that

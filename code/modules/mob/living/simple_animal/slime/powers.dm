@@ -174,7 +174,7 @@
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else
-				transfer_key(new_slime)
+				transfer_ckey(new_slime)
 			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")

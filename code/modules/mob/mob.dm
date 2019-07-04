@@ -12,8 +12,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	if(!QDELETED(inception) && inception.parent)
-		inception.virtual_reality_in_a_virtual_reality(null, src, TRUE)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -438,10 +436,13 @@
 //	M.Login()	//wat
 	return
 
-/mob/proc/transfer_key(mob/new_mob, send_signal = TRUE)
+/mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
+	if(!ckey)
+		return FALSE
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
-	new_mob.key = key
+	new_mob.ckey = ckey
+	return TRUE
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"

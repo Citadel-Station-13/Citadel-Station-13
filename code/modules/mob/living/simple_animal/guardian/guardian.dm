@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(G)])")
 				G.ghostize(FALSE)
 				G.setthemename(G.namedatum.theme) //give it a new color, to show it's a new person
-				C.transfer_key(G)
+				C.transfer_ckey(G)
 				G.reset = 1
 				switch(G.namedatum.theme)
 					if("tech")

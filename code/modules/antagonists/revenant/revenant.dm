@@ -384,7 +384,7 @@
 	if(old_key)
 		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client && M.client.key == old_key) //Only recreates the mob if the mob the client is in is dead
-				M.transfer_key(revenant.key, FALSE)
+				M.transfer_ckey(revenant.key, FALSE)
 				key_of_revenant = TRUE
 				break
 	if(!key_of_revenant)
@@ -397,7 +397,7 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 		var/mob/dead/observer/C = pick(candidates)
-		C.transfer_key(revenant.key, FALSE)
+		C.transfer_ckey(revenant.key, FALSE)
 		if(!revenant.key)
 			qdel(revenant)
 			message_admins("No ckey was found for the new revenant. Oh well!")

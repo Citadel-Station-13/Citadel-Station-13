@@ -268,7 +268,7 @@ Works together with spawning an observer, noted above.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
 	ghost.can_reenter_round = (can_reenter_corpse && !suiciding)
-	transfer_key(ghost, FALSE)
+	transfer_ckey(ghost, FALSE)
 	return ghost
 
 /*
@@ -354,7 +354,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	transfer_key(mind.current, FALSE)
+	transfer_ckey(mind.current, FALSE)
 	return 1
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -634,7 +634,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
 		return 0
 
-	transfer_key(target, FALSE)
+	transfer_ckey(target, FALSE)
 	target.faction = list("neutral")
 	return 1
 

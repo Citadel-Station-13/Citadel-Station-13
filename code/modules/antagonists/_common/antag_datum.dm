@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
-		C.transfer_key(owner.current, FALSE)
+		C.transfer_ckey(owner.current, FALSE)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()

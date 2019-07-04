@@ -34,7 +34,7 @@
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(C)
 		else
-			brainmob.transfer_key(C)
+			brainmob.transfer_ckey(C)
 
 		QDEL_NULL(brainmob)
 

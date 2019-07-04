@@ -473,7 +473,7 @@
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
-	G_found.transfer_key(new_character, FALSE)
+	G_found.transfer_ckey(new_character, FALSE)
 
 	return new_character
 

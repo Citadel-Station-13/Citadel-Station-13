@@ -5,22 +5,26 @@
 	var/obj/machinery/vr_sleeper/vr_sleeper
 	var/datum/action/quit_vr/quit_action
 	var/you_die_in_the_game_you_die_for_real = FALSE
+	var/datum/component/virtual_reality/inception //The component works on a very fragile link betwixt mind, ckey and death.
 
 /datum/component/virtual_reality/Initialize(mob/M, obj/machinery/vr_sleeper/gaming_pod, yolo = FALSE, new_char = TRUE)
 	if(!ismob(parent) || !istype(M))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/vr_M = parent
 	mastermind = M.mind
+	RegisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETED), .proc/game_over)
+	RegisterSignal(M, COMSIG_MOB_KEY_CHANGE, .proc/switch_player)
 	RegisterSignal(mastermind, COMSIG_MIND_TRANSFER, .proc/switch_player)
-	RegisterSignal(mastermind, COMSIG_MOB_KEY_CHANGE, .proc/switch_player)
 	you_die_in_the_game_you_die_for_real = yolo
 	quit_action = new()
 	if(gaming_pod)
 		vr_sleeper = gaming_pod
 		RegisterSignal(vr_sleeper, COMSIG_ATOM_EMAG_ACT, .proc/you_only_live_once)
-		RegisterSignal(vr_sleeper, COMSIG_MACHINE_EJECT_OCCUPANT, .proc/virtual_reality_in_a_virtual_reality)
+		RegisterSignal(vr_sleeper, COMSIG_MACHINE_EJECT_OCCUPANT, .proc/revert_to_reality)
 	vr_M.ckey = M.ckey
-	M.inception = src
+	var/datum/component/virtual_reality/clusterfk = M.GetComponent(/datum/component/virtual_reality)
+	if(clusterfk && !clusterfk.inception)
+		clusterfk.inception = src
 	SStgui.close_user_uis(M, src)
 
 /datum/component/virtual_reality/RegisterWithParent()
@@ -46,13 +50,11 @@
 
 /datum/component/virtual_reality/proc/switch_player(datum/source, mob/new_mob, mob/old_mob)
 	if(vr_sleeper || !new_mob.mind)
-		// Machineries currently don't deal up with the occupant being polymorphed or the such. Or something (An admin, I hope) dared to use fuck this up.
-		virtual_reality_in_a_virtual_reality(source, new_mob, FALSE, TRUE)
+		// Machineries currently don't deal up with the occupant being polymorphed et similar... Or did something fuck up?
+		revert_to_reality()
 		return
 	old_mob.audiovisual_redirect = null
-	old_mob.inception = null
 	new_mob.audiovisual_redirect = parent
-	new_mob.inception = src
 
 /datum/component/virtual_reality/proc/action_trigger(datum/signal_source, datum/action/source)
 	if(source != quit_action)
@@ -86,27 +88,27 @@
 	quit_it()
 	return COMPONENT_BLOCK_GHOSTING
 
-/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(datum/source, mob/occupant, killme = FALSE)
+/datum/component/virtual_reality/proc/virtual_reality_in_a_virtual_reality(mob/player, killme = FALSE, datum/component/virtual_reality/yo_dawg)
 	var/mob/M = parent
-	var/ckey_transfer = FALSE
-	if(!QDELETED(M.inception) && M.inception.parent)
-		M.inception.virtual_reality_in_a_virtual_reality(source, occupant, killme)
-	else
-		ckey_transfer = TRUE
-	quit_it(FALSE, killme, ckey_transfer, occupant)
+	quit_it(FALSE, killme, player, yo_dawg)
+	yo_dawg.inception = null
 	if(killme)
 		M.death(FALSE)
 
-/datum/component/virtual_reality/proc/quit_it(deathcheck = FALSE, cleanup = FALSE, ckey_transfer = TRUE, mob/override)
+/datum/component/virtual_reality/proc/quit_it(deathcheck = FALSE, cleanup = FALSE, mob/override)
 	var/mob/M = parent
 	var/mob/dreamer = override ? override : mastermind.current
 	if(!mastermind)
-		to_chat(M, "<span class='warning'>You feel like something terrible happened. You try to wake up from this dream, but you can't...</span>")
+		to_chat(M, "<span class='warning'>You feel a dreadful sensation, something terrible happened. You try to wake up, but you find yourself unable to...</span>")
 	else
-		if(ckey_transfer)
-			M.transfer_key(dreamer, FALSE)
+		var/key_transfer = FALSE
+		if(inception?.parent)
+			inception.virtual_reality_in_a_virtual_reality(dreamer, cleanup, src)
+		else
+			key_transfer = TRUE
+		if(key_transfer)
+			M.transfer_ckey(dreamer, FALSE)
 		dreamer.stop_sound_channel(CHANNEL_HEARTBEAT)
-		dreamer.inception = null
 		dreamer.audiovisual_redirect = null
 		if(deathcheck && you_die_in_the_game_you_die_for_real)
 			to_chat(mastermind, "<span class='warning'>You feel everything fading away...</span>")

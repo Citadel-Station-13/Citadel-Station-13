@@ -744,7 +744,7 @@
 			var/mob/chosen = players[1]
 			if (chosen.client)
 				chosen.client.prefs.copy_to(spawnedMob)
-				chosen.transfer_key(spawnedMob)
+				chosen.transfer_ckey(spawnedMob)
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
 			var/mob/living/carbon/human/H = spawnedMob

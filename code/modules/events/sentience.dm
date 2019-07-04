@@ -48,7 +48,7 @@
 
 		spawned_animals++
 
-		SG.transfer_key(SA, FALSE)
+		SG.transfer_ckey(SA, FALSE)
 
 		SA.grant_all_languages(TRUE)
 

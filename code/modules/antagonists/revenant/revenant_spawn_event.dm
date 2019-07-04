@@ -52,7 +52,7 @@
 		return MAP_ERROR
 
 	var/mob/living/simple_animal/revenant/revvie = new(pick(spawn_locs))
-	selected.transfer_key(revvie, FALSE)
+	selected.transfer_ckey(revvie, FALSE)
 	message_admins("[ADMIN_LOOKUPFLW(revvie)] has been made into a revenant by an event.")
 	log_game("[key_name(revvie)] was spawned as a revenant by an event.")
 	spawned_mobs += revvie

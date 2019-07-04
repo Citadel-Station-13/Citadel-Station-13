@@ -54,7 +54,7 @@
 	pre_spawn()
 	visible_message(creation_message)
 	var/mob/living/construct = new construct_type(get_turf(src))
-	user.transfer_key(construct, FALSE)
+	user.transfer_ckey(construct, FALSE)
 	post_spawn(construct)
 	qdel(user)
 	qdel(src)

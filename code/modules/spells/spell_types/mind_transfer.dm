@@ -75,7 +75,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
-		ghost.transfer_key(caster)	//have to transfer the key since the mind was not active
+		ghost.transfer_ckey(caster)	//have to transfer the key since the mind was not active
 	qdel(ghost)
 
 	//MIND TRANSFER END
