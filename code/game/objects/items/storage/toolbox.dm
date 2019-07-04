@@ -183,6 +183,22 @@
 	slab_type = /obj/item/clockwork/slab/debug
 	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
 
+/obj/item/storage/toolbox/plastitanium
+	name = "plastitanium toolbox"
+	desc = "A toolbox made out of plastitanium. Probably packs a massive punch."
+	total_mass = 5
+	icon_state = "blue"
+	item_state = "toolbox_blue"
+	w_class = WEIGHT_CLASS_HUGE		//heyo no bohing this!
+	force = 18		//spear damage
+
+/obj/item/storage/toolbox/plastitanium/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(proximity && isobj(A) && !isitem(A))
+		var/obj/O = A
+		//50 total object damage but split up for stuff like damage deflection.
+		O.take_damage(22)
+		O.take_damage(10)
 
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"

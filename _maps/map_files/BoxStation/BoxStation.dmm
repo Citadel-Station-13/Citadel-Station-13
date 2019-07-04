@@ -515,10 +515,13 @@
 /turf/closed/wall,
 /area/security/main)
 "abq" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hos)
 "abr" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "hos"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "abs" = (
@@ -846,8 +849,13 @@
 	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -5
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abX" = (
@@ -1449,6 +1457,9 @@
 "adm" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "hos"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "adn" = (
@@ -1673,6 +1684,12 @@
 "adM" = (
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/button/door{
+	id = "hos";
+	name = "HoS Office Shutters";
+	pixel_y = -25;
+	
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -2053,6 +2070,9 @@
 "aex" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "hos"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aey" = (
@@ -11691,7 +11711,7 @@
 /area/maintenance/port/fore)
 "aAW" = (
 /obj/structure/rack,
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11815,7 +11835,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide/eva,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -56882,12 +56902,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"ium" = (
-/mob/living/simple_animal/bot/cleanbot{
-	name = "C.L.E.A.N."
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "izv" = (
 /obj/machinery/vending/clothing,
 /obj/machinery/light/small{
@@ -57122,6 +57136,12 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"lKX" = (
+/mob/living/simple_animal/bot/cleanbot{
+	name = "C.L.E.A.N."
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -88468,7 +88488,7 @@ aaa
 aaf
 aaf
 aaa
-abp
+adR
 abP
 aco
 acO
@@ -88982,7 +89002,7 @@ aaa
 aaa
 aaf
 aaa
-abp
+adR
 abO
 acq
 acq
@@ -89496,15 +89516,15 @@ aaa
 aaa
 aaa
 aaf
-abp
+adR
 abR
 abP
 abP
 abP
 abP
-abp
-abp
-abp
+adR
+adR
+adR
 agA
 afU
 ahF
@@ -94188,7 +94208,7 @@ blm
 bmL
 boi
 bpw
-ium
+lKX
 bsx
 btX
 bvj
