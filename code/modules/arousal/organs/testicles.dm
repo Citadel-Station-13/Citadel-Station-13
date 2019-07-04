@@ -11,7 +11,7 @@
 	var/sack_size			= BALLS_SACK_SIZE_DEF
 	fluid_id 				= "semen"
 	producing				= TRUE
-	can_masturbate_with		= TRUE
+	can_masturbate_with		= FALSE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
 	var/sent_full_message	= TRUE //defaults to 1 since they're full to start

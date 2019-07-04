@@ -57,10 +57,15 @@
 	//If a job complies with dresscodes, loadout items will not be equipped instead of the job's outfit but placed into the player's backpack.
 	var/dresscodecompliant = TRUE
 
+	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
+	if(mind_traits)
+		for(var/t in mind_traits)
+			ADD_TRAIT(H.mind, t, JOB_TRAIT)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)

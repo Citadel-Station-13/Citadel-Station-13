@@ -204,6 +204,14 @@
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 
+//Used by MREs
+/obj/item/reagent_containers/food/drinks/coffee/type2
+	name = "\improper Coffee, instant (type 2)"
+	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "condi_cornoil"
+
+
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
@@ -505,6 +513,13 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
+	name = "Grey Bull"
+	desc = "Grey Bull, it gives you gloves!"
+	icon_state = "energy_drink"
+	list_reagents = list("grey_bull" = 20)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air

@@ -214,6 +214,20 @@
 				/obj/item/aiModule/core/full/damaged
 				)
 
+/obj/effect/spawner/lootdrop/mre
+	name = "random MRE"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "mre"
+
+/obj/effect/spawner/lootdrop/mre/Initialize()
+	for(var/A in subtypesof(/obj/item/storage/box/mre))
+		var/obj/item/storage/box/mre/M = A
+		var/our_chance = initial(M.spawner_chance)
+		if(our_chance)
+			LAZYSET(loot, M, our_chance)
+	return ..()
+
+
 // Tech storage circuit board spawners
 // For these, make sure that lootcount equals the number of list items
 

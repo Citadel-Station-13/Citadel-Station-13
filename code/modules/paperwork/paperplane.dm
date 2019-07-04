@@ -1,4 +1,4 @@
-    
+
 /obj/item/paperplane
 	name = "paper plane"
 	desc = "Paper, folded in the shape of a plane."
@@ -122,7 +122,7 @@
 	to_chat(user, "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>")
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user), NO_TK))
 		return
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 	user.temporarilyRemoveItemFromInventory(src)
