@@ -38,7 +38,7 @@
 /obj/item/storage/briefcase/lawyer
 	folder_path = /obj/item/folder/blue
 
-/obj/item/storage/briefcase/lawyer/family 
+/obj/item/storage/briefcase/lawyer/family
 	name = "battered  briefcase"
 	desc = "An old briefcase, this one has seen better days in its time. It's clear they don't make them nowadays as good as they used to. Comes with an added belt clip!"
 	slot_flags = ITEM_SLOT_BELT
@@ -79,4 +79,29 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
+
+
+/obj/item/storage/briefcase/modularbundle
+	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding."
+	force = 10
+
+/obj/item/storage/briefcase/modularbundle/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol/modular(src)
+	new /obj/item/suppressor(src)
+	new /obj/item/ammo_box/magazine/m10mm(src)
+	new /obj/item/ammo_box/magazine/m10mm/soporific(src)
+	new /obj/item/ammo_box/c10mm/soporific(src)
+	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/suit/toggle/lawyer/black/syndie(src)
+
+/obj/item/storage/briefcase/medical
+	name = "medical briefcase"
+	icon_state = "medbriefcase"
+	desc = "A white with a blue cross brieface, this is ment to hold medical gear that would not be able to normally fit in a bag."
+
+/obj/item/storage/briefcase/medical/PopulateContents()
+	new /obj/item/clothing/neck/stethoscope(src)
+	new /obj/item/healthanalyzer(src)
+	..() //In case of paperwork
 

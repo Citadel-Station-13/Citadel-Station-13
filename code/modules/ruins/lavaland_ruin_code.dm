@@ -22,7 +22,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/golem_shell/Initialize()
+/obj/item/disk/design_disk/plant_disk/Initialize()
 	. = ..()
 	var/datum/design/diskplantgene/P = new
 	blueprints[1] = P
@@ -81,7 +81,11 @@
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
-		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork)
+		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
+		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
+		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
+		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
+		/obj/item/stack/sheet/bone					= /datum/species/golem/bone)
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I

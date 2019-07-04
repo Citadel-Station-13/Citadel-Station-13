@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes being able to teleport papers to your location with TK."

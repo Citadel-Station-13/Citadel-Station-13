@@ -1,3 +1,9 @@
+/datum/gear/greytidestationwide
+	name = "Grey jumpsuit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/color/grey
+	restricted_roles = list("Assistant")
+
 /datum/gear/plushvar
 	name = "Ratvar Plushie"
 	category = SLOT_IN_BACKPACK

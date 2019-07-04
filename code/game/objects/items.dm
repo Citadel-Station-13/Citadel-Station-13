@@ -109,6 +109,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+
 /obj/item/Initialize()
 
 	materials =	typelist("materials", materials)
@@ -685,7 +686,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)

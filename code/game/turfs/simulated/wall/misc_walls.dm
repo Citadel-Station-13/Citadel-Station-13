@@ -77,6 +77,14 @@
 
 	return ..()
 
+/turf/closed/wall/clockwork/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(heated && the_rcd.canRturf)
+		return ..()
+
+/turf/closed/wall/clockwork/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	if(heated && the_rcd.canRturf)
+		return ..()
+
 /turf/closed/wall/clockwork/try_destroy(obj/item/I, mob/user, turf/T)
 	if(!heated)
 		return ..()

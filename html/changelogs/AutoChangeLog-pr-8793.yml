@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The PDA skin preference will now properly save up."
+  - tweak: "Changed the default PDA icon var to match the default PDA skin preference."

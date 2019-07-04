@@ -44,6 +44,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/list/special_step_sounds //Sounds to override barefeet walkng
+	var/grab_sound //Special sound for grabbing
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -490,11 +492,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
 		if(H.underwear)
+			if(H.hidden_underwear)
+				H.underwear = "Nude"
+			else
+				H.underwear = H.saved_underwear
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 			if(underwear)
 				standing += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 
 		if(H.undershirt)
+			if(H.hidden_undershirt)
+				H.undershirt = "Nude"
+			else
+				H.undershirt = H.saved_undershirt
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 			if(undershirt)
 				if(H.dna.species.sexes && H.gender == FEMALE)
@@ -502,10 +512,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(H.socks && H.get_num_legs(FALSE) >= 2 && !(DIGITIGRADE in species_traits))
+		if(H.socks && H.get_num_legs(FALSE) >= 2)
+			if(H.hidden_socks)
+				H.socks = "Nude"
+			else
+				H.socks = H.saved_socks
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
-				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				if(DIGITIGRADE in species_traits)
+					standing += mutable_appearance(socks.icon, socks.icon_state + "_d", -BODY_LAYER)
+				else
+					standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
@@ -1285,7 +1302,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. += H.physiology.speed_mod
 
 	if (H.m_intent == MOVE_INTENT_WALK && HAS_TRAIT(H, TRAIT_SPEEDY_STEP))
-		. -= 1
+		. -= 1.5
 
 	if(HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
