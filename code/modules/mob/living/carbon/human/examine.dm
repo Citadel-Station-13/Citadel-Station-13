@@ -304,11 +304,11 @@
 
 	msg += "</span>"
 
-	var/obj/item/organ/vocal_cords/Vc = getorganslot(ORGAN_SLOT_VOICE)
+	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
-		if (Vc.name == "Velvet chords")
-			if(user.client?.prefs.lewdchem)
-				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>"
+		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
+			if(client?.prefs.lewdchem)
+				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
 
 
 	if(!appears_dead)
