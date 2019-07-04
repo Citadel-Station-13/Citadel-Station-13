@@ -125,3 +125,7 @@
 			owner.confused += 10
 			owner.Jitter(10)
 			owner.stuttering += 10
+
+/datum/brain_trauma/mild/phobia/security
+	phobia_type = "security"
+	random_gain = FALSE
