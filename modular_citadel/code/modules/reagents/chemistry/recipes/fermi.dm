@@ -103,7 +103,7 @@
 	name = "Synthetic-derived growth factor"
 	id = "SDGF"
 	results = list("SDGF" = 0.3)
-	required_reagents = list("stable_plasma" = 0.15, "slimejelly" = 0.15, "uranium" = 0.15, "synthflesh" = 0.15, "blood" = 0.15)
+	required_reagents = list("stable_plasma" = 0.15, "clonexadone" = 0.15, "uranium" = 0.15, "synthflesh" = 0.15)
 	mix_message = "the reaction gives off a blorble!"
 	required_temp = 1
 	//FermiChem vars:
@@ -318,7 +318,7 @@
 	name = "Hat growth serum"
 	id = "hatmium"
 	results = list("hatmium" = 0.5)
-	required_reagents = list("whiskey" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1, "gold" = 0.3)
+	required_reagents = list("ethanol" = 0.1, "nutriment" = 0.3, "cooking_oil" = 0.2, "iron" = 0.1, "gold" = 0.3)
 	//mix_message = ""
 	//FermiChem vars:
 	OptimalTempMin 	= 500
@@ -456,8 +456,8 @@
 	name = "secretcatchem"
 	id = "secretcatchem"
 	results = list("secretcatchem" = 0.5)
-	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "blood" = 0.1, "slimejelly" = 0.1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
-	required_catalysts = list("felinidmutationtoxin" = 1)
+	required_reagents = list("stable_plasma" = 0.1, "sugar" = 0.1, "cream" = 0.1, "clonexadone" = 0.1)//Yes this will make a plushie if you don't lucky guess. It'll eat all your reagents too.
+	required_catalysts = list("SDGF" = 1)
 	required_temp = 600
 	mix_message = "the reaction gives off a meow!"
 	mix_sound = "modular_citadel/sound/voice/merowr.ogg"

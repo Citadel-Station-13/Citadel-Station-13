@@ -304,6 +304,13 @@
 
 	msg += "</span>"
 
+	var/obj/item/organ/vocal_cords/Vc = getorganslot(ORGAN_SLOT_VOICE)
+	if(Vc)
+		if (Vc.name == "Velvet chords")
+			if(user.client?.prefs.lewdchem)
+				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>"
+
+
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"

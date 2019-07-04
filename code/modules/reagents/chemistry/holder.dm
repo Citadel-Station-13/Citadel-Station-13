@@ -494,6 +494,8 @@
 
 		//Standard reaction mechanics:
 			else
+				if (C.FermiChem == TRUE)//Just to make sure
+					return 0
 
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
@@ -810,7 +812,7 @@
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount <= 0)
+	if(amount <= 0.00)
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
