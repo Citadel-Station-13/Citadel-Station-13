@@ -258,8 +258,8 @@
 
 					if(headset_to_add.translate_binary)
 						available_channels.Add(":b")
-		else
-			return ..()
+	else
+		return ..()
 
 
 /*
