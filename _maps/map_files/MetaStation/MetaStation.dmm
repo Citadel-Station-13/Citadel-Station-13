@@ -17692,7 +17692,9 @@
 	pixel_x = -28;
 	pixel_y = 23
 	},
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /obj/machinery/conveyor{
 	dir = 5;
 	id = "QMLoad2"
@@ -21617,7 +21619,9 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/stamp/qm,
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aQu" = (
@@ -27037,7 +27041,9 @@
 /area/hallway/primary/port)
 "baA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /obj/structure/table,
 /obj/item/folder/yellow,
 /obj/effect/turf_decal/tile/brown{
@@ -27920,7 +27926,9 @@
 /area/quartermaster/office)
 "bbS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
