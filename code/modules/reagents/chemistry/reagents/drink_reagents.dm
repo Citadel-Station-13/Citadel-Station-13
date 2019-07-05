@@ -305,6 +305,16 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/lemonade
+	name = "Lemonade"
+	id = "lemonade"
+	description = "Sweet, tangy lemonade. Good for the soul."
+	quality = DRINK_NICE
+	taste_description = "sunshine and summertime"
+	glass_icon_state = "lemonpitcher"
+	glass_name = "pitcher of lemonade"
+	glass_desc = "This drink leaves you feeling nostalgic for some reason."
+
 /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"
 	id = "arnold_palmer"
@@ -498,6 +508,34 @@
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
+
+/datum/reagent/consumable/grey_bull
+	name = "Grey Bull"
+	id = "grey_bull"
+	description = "Grey Bull, it gives you gloves!"
+	color = "#EEFF00" // rgb: 238, 255, 0
+	quality = DRINK_VERYGOOD
+	taste_description = "carbonated oil"
+	glass_icon_state = "grey_bull_glass"
+	glass_name = "glass of Grey Bull"
+	glass_desc = "Surprisingly it isnt grey."
+
+/datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, id)
+
+/datum/reagent/consumable/grey_bull/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, id)
+	..()
+
+/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
 /datum/reagent/consumable/sodawater
 	name = "Soda Water"
 	id = "sodawater"
@@ -719,6 +757,11 @@
 	glass_name = "glass of grape juice"
 	glass_desc = "It's grape (soda)!"
 
+/datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+
 /datum/reagent/consumable/milk/chocolate_milk
 	name = "Chocolate Milk"
 	id = "chocolate_milk"
@@ -745,6 +788,65 @@
 	taste_description = "sweet pomegranates"
 	glass_name = "glass of grenadine"
 	glass_desc = "Delicious flavored syrup."
+
+/datum/reagent/consumable/parsnipjuice
+	name = "Parsnip Juice"
+	id = "parsnipjuice"
+	description = "Why..."
+	color = "#FFA500"
+	taste_description = "parsnip"
+	glass_name = "glass of parsnip juice"
+
+/datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
+	name = "Peach Juice"
+	id = "peachjuice"
+	description = "Just peachy."
+	color = "#E78108"
+	taste_description = "peaches"
+	glass_name = "glass of peach juice"
+
+/datum/reagent/consumable/cream_soda
+	name = "Cream Soda"
+	id = "cream_soda"
+	description = "A classic space-American vanilla flavored soft drink."
+	color = "#dcb137"
+	quality = DRINK_VERYGOOD
+	taste_description = "fizzy vanilla"
+	glass_icon_state = "cream_soda"
+	glass_name = "Cream Soda"
+	glass_desc = "A classic space-American vanilla flavored soft drink."
+
+/datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/red_queen
+	name = "Red Queen"
+	id = "red_queen"
+	description = "DRINK ME."
+	color = "#e6ddc3"
+	quality = DRINK_GOOD
+	taste_description = "wonder"
+	glass_icon_state = "red_queen"
+	glass_name = "Red Queen"
+	glass_desc = "DRINK ME."
+	var/current_size = 1
+
+/datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H)
+	if(prob(75))
+		return ..()
+	var/newsize = pick(0.5, 0.75, 1, 1.50, 2)
+	H.resize = newsize/current_size
+	current_size = newsize
+	H.update_transform()
+	if(prob(40))
+		H.emote("sneeze")
+	..()
+
+/datum/reagent/consumable/red_queen/on_mob_end_metabolize(mob/living/M)
+	M.resize = 1/current_size
+	M.update_transform()
+	..()
 
 /datum/reagent/consumable/pinkmilk
 	name = "Strawberry Milk"
