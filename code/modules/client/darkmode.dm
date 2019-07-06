@@ -23,7 +23,7 @@ Thanks to spacemaniac and mcdonald for help with the JS side of this.
 	winset(src, "outputwindow", "background-color = [COLOR_DARKMODE_BACKGROUND];background-color = [COLOR_WHITEMODE_DARKBACKGROUND]")
 	winset(src, "outputwindow", "text-color = [COLOR_DARKMODE_TEXT];text-color = [COLOR_WHITEMODE_TEXT]")
 	winset(src, "mainwindow", "background-color = [COLOR_DARKMODE_DARKBACKGROUND];background-color = [COLOR_WHITEMODE_DARKBACKGROUND]")
-	winset(src, "split", "background-color = [COLOR_MODE_DARKBACKGROUND];background-color = [COLOR_WHITEMODE_BACKGROUND]")
+	winset(src, "split", "background-color = [COLOR_DARKMODE_DARKBACKGROUND];background-color = [COLOR_WHITEMODE_BACKGROUND]")
 	//Buttons
 	winset(src, "changelog", "background-color = [COLOR_DARKMODE_INFO_BUTTONS_BG];background-color = [COLOR_WHITEMODE_INFO_BUTTONS_BG]")
 	winset(src, "changelog", "text-color = [COLOR_DARKMODE_TEXT];text-color = [COLOR_WHITEMODE_TEXT]")
