@@ -54,6 +54,7 @@ window "mainwindow"
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
+		background-color = #eeeeee
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		icon = 'icons\\ss13_64.png'
@@ -65,6 +66,7 @@ window "mainwindow"
 		size = 637x440
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #eeeeee
 		saved-params = "splitter"
 		left = "mapwindow"
 		right = "infowindow"
@@ -76,6 +78,7 @@ window "mainwindow"
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
+		background-color = #ffffff
 		is-visible = false
 		saved-params = ""
 	elem "tooltip"
@@ -84,6 +87,7 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
+		background-color = #ffffff
 		is-visible = false
 		saved-params = ""
 
@@ -115,6 +119,8 @@ window "infowindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = #eeeeee
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "info"
@@ -123,6 +129,7 @@ window "infowindow"
 		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
@@ -133,6 +140,7 @@ window "infowindow"
 		size = 104x20
 		anchor1 = 3,0
 		anchor2 = 19,0
+		background-color = #90b3dd
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
@@ -142,6 +150,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 19,0
 		anchor2 = 34,0
+		background-color = #90b3dd
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -151,6 +160,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
+		background-color = #90b3dd
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -160,6 +170,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
+		background-color = #90b3dd
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -169,6 +180,7 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
+		background-color = #90b3dd
 		saved-params = "is-checked"
 		text = "GitHub"
 		command = "github"
@@ -179,6 +191,7 @@ window "infowindow"
 		anchor1 = 81,0
 		anchor2 = 97,0
 		font-size = 8
+		background-color = #ef7f7f
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -190,8 +203,6 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		text-color = #99aab5
-		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false
@@ -207,6 +218,7 @@ window "outputwindow"
 		anchor2 = 100,100
 		background-color = #d3b5b5
 		is-default = true
+		border = sunken
 		saved-params = "command"
 	elem "say"
 		type = BUTTON
@@ -214,6 +226,7 @@ window "outputwindow"
 		size = 37x20
 		anchor1 = 100,100
 		anchor2 = none
+		background-color = #eeeeee
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
@@ -236,6 +249,7 @@ window "outputwindow"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #eeeeee
 		is-default = true
 		saved-params = ""
 
@@ -254,8 +268,10 @@ window "statwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #eeeeee
 		is-default = true
 		saved-params = ""
+		tab-background-color = #eeeeee
 
 window "preferences_window"
 	elem "preferences_window"
