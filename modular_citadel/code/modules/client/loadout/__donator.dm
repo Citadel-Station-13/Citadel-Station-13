@@ -423,8 +423,15 @@ datum/gear/darksabresheath
 	path = /obj/item/clothing/under/trendy_fit
 	ckeywhitelist = list("midgetdragon")
 
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/singery
+	ckeywhitelist = list("maxlynchy")
+
 /datum/gear/csheet
 	name = "NT Bedsheet"
 	category = SLOT_NECK
 	path = /obj/item/bedsheet/captain
 	ckeywhitelist = list("tikibomb")
+
