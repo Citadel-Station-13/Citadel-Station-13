@@ -24,7 +24,8 @@
 	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
-	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."))
+	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."),
+	 "peanut_butter" = list("peanutbutter", "peanut butter jar", "A deliciously and sticky spread made from peanuts."))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)

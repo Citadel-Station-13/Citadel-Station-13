@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/badass/rapid
+/datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
 	item = /obj/item/clothing/gloves/rapid
