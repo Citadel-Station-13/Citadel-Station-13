@@ -10,7 +10,7 @@ html, body {
 	color: #000000;
 }
 body {
-	background: #EEEEEE
+	background: #fff;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
     line-height: 1.2;
@@ -101,7 +101,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 80px;
+	right: 115px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
