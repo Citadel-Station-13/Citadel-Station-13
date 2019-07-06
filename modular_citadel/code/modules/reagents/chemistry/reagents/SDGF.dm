@@ -45,6 +45,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/playerClone = FALSE
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	taste_description = "a weird chemical fleshy flavour"
 	//var/datum/status_effect/chem/SDGF/candidates/candies
 	var/list/candies = list()
 	//var/polling = FALSE
@@ -57,6 +58,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	InverseChemVal 		= 0.5
 	InverseChem 		= "SDZF"
 	can_synth = TRUE
+
 
 //Main SDGF chemical
 /datum/reagent/fermi/SDGF/on_mob_life(mob/living/carbon/M) //Clones user, then puts a ghost in them! If that fails, makes a braindead clone.

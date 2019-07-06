@@ -489,7 +489,7 @@
 	RateUpLim 			+= (rand(1, 1000)/100)
 	PurityMin 			+= (rand(-1, 1)/10)
 	var/additions = list("aluminium", "silver", "gold", "plasma", "silicon", "bluespace", "uranium", "milk")
-	required_reagents[pick(additions)] = rand(1, 5)//weird
+	required_reagents[pick(additions)] = rand(0.1, 0.5)//weird
 
 /datum/chemical_reaction/fermi/secretcatchem/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	SSblackbox.record_feedback("tally", "catgirlium")//log

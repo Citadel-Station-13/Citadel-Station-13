@@ -223,6 +223,9 @@
 	N.nanite_volume = -2
 	..()
 
+/datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+	O.emp_act(EMP_HEAVY)
+
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Naninte bain"
 	id = "nanite_b_goneTox"
