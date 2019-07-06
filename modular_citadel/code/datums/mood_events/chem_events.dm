@@ -48,8 +48,12 @@
 
 /datum/mood_event/InLove
    mood_change = 10
-   description = "<span class='nicegreen'>I'm in love!!</span>\n"
+
+/datum/mood_event/InLove/add_effects(message)
+    description = "<span class='nicegreen'>[message]</span>\n"
 
 /datum/mood_event/MissingLove
-   mood_change = -20
-   description = "<span class='warning'>I can't keep my crush off my mind, I need to see them again!</span>\n"
+   mood_change = -10
+
+/datum/mood_event/MissingLove/add_effects(message)
+    description = "<span class='warning'>[message]</span>\n"

@@ -317,7 +317,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(!M.has_status_effect(STATUS_EFFECT_INLOVE))
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/victim in seen)
-			if((victim == /mob/living/simple_animal/pet/) || (victim == M) || (M.stat == DEAD) || (!isliving(victim)))
+			if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (M.stat == DEAD) || (!isliving(victim)))
 				seen = seen - victim
 		if(seen.len == 0)
 			return
@@ -332,13 +332,15 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		if(get_dist(M, love) < 8)
 			if(HAS_TRAIT(M, TRAIT_NYMPHO)) //Add this back when merged/updated.
 				M.adjustArousalLoss(5)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove)
+			var/message = "[(M.client?.prefs.lewdchem?"I'm next to my crush..! Eee!":"I'm making friends with [love]!")]"
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "InLove", /datum/mood_event/InLove, message)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "MissingLove")
 		else
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove)
+			var/message = "[(M.client?.prefs.lewdchem?"I can't keep my crush off my mind, I need to see them again!":"I really want to make friends with [love]!")]"
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "MissingLove", /datum/mood_event/MissingLove, message)
 			SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "InLove")
-			if(prob(10))
-				M.Stun(5)
+			if(prob(5))
+				M.Stun(10)
 				M.emote("whimper")//does this exist?
 				to_chat(M, "[(M.client?.prefs.lewdchem?"<span class='love'>":"<span class='warning'>")] You're overcome with a desire to see [love].</span>")
 				M.adjustBrainLoss(0.5)//I found out why everyone was so damaged!
