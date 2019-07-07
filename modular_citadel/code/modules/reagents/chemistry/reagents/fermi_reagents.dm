@@ -353,7 +353,6 @@
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
-	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
@@ -373,7 +372,6 @@
 	can_synth = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
-	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))

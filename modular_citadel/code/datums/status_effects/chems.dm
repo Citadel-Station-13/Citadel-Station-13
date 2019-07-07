@@ -20,15 +20,10 @@
 	if(original.stat == DEAD || original == null || !original)
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(originalmind)
-				owner.remove_status_effect(src)
-				/*
-				log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
-				owner.mind.transfer_to(fermi_Clone)
-				to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
-				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
-				fermi_Clone = null
-				owner.remove_status_effect(src)
-				*/
+				if(!originalmind.current)
+					owner.remove_status_effect(src)
+				else
+					original = originalmind.current //TEST THIS
 	..()
 
 /datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)

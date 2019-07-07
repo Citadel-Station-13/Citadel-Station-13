@@ -419,6 +419,7 @@
 		return
 	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
 	Fa.data = 0
+	Fa.addProc = TRUE
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
@@ -447,6 +448,7 @@
 		return
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
 	Fb.data = 14
+	Fb.addProc = TRUE
 
 //secretcatchemcode, shh!! Of couse I hide it amongst cats. Though, I moved it with your requests.
 //I'm not trying to be sneaky, I'm trying to keep it a secret!
