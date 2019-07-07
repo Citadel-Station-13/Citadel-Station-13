@@ -20,10 +20,7 @@
 	if(original.stat == DEAD || original == null || !original)
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
 			if(originalmind)
-				if(!originalmind.current)
-					owner.remove_status_effect(src)
-				else
-					original = originalmind.current //TEST THIS
+				owner.remove_status_effect(src)
 	..()
 
 /datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
