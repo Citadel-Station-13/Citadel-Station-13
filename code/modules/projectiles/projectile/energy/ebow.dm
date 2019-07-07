@@ -15,3 +15,4 @@
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 	knockdown = 79
+	drowsy = 0
