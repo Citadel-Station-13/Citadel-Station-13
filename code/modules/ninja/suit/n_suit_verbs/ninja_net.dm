@@ -7,28 +7,30 @@
 	//If there's only one valid target, let's actually try to capture it, rather than forcing
 	//the user to fiddle with the dialog displaying a list of one
 	//Also, let's make this smarter and not list mobs you can't currently net.
-	var/Candidates[]
-	for(var/mob/mob in oview(H))
-		if(!mob.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
-			//to_chat(H, "<span class='warning'>[C.p_they(TRUE)] will bring no honor to your Clan!</span>")
+	var/list/candidates = list()
+	for(var/mob/M in oview(H))
+		if(!M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 			continue
-		if(locate(/obj/structure/energy_net) in get_turf(mob))//Check if they are already being affected by an energy net.
-			//to_chat(H, "<span class='warning'>[C.p_they(TRUE)] are already trapped inside an energy net!</span>")
-			continue
-		for(var/turf/T in getline(get_turf(H), get_turf(mob)))
-			if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
-				//to_chat(H, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
+		for(var/obj/structure/energy_net/E in get_turf(M))//Check if they are already being affected by an energy net.
+			if(E.affecting == M)
 				continue
-		Candidates+=mob
+		for(var/A in getline(get_turf(H), get_turf(M)))
+			var/turf/T = A
+			if(is_blocked_turf(T, TRUE)) //Don't want them shooting nets through walls. It's kind of cheesy.
+				continue
+		LAZYADD(candidates, M)
 
-	if(Candidates.len == 1)
-		C = Candidates[1]
+	if(!LAZYLEN(candidates))
+		return FALSE
+
+	if(candidates.len == 1)
+		C = candidates[1]
 	else
-		C = input("Select who to capture:","Capture who?",null) as null|mob in Candidates
+		C = input("Select who to capture:","Capture who?",null) as null|mob in candidates
 
 
 	if(QDELETED(C)||!(C in oview(H)))
-		return 0
+		return FALSE
 
 	if(!ninjacost(200,N_STEALTH_CANCEL))
 		H.Beam(C,"n_beam",time=15)
