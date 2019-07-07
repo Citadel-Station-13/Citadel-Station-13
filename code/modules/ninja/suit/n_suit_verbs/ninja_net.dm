@@ -14,10 +14,6 @@
 		for(var/obj/structure/energy_net/E in get_turf(M))//Check if they are already being affected by an energy net.
 			if(E.affecting == M)
 				continue
-		for(var/A in getline(get_turf(H), get_turf(M)))
-			var/turf/T = A
-			if(is_blocked_turf(T, TRUE)) //Don't want them shooting nets through walls. It's kind of cheesy.
-				continue
 		LAZYADD(candidates, M)
 
 	if(!LAZYLEN(candidates))
