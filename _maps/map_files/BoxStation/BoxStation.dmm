@@ -56668,6 +56668,12 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"eef" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "evR" = (
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -81614,7 +81620,7 @@ cNG
 cNJ
 bLF
 aZK
-bbR
+eef
 bbR
 bqt
 cBq
