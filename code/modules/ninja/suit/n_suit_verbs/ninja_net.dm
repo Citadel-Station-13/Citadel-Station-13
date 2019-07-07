@@ -7,7 +7,7 @@
 	//If there's only one valid target, let's actually try to capture it, rather than forcing
 	//the user to fiddle with the dialog displaying a list of one
 	//Also, let's make this smarter and not list mobs you can't currently net.
-	var/list/candidates = list()
+	var/list/candidates
 	for(var/mob/M in oview(H))
 		if(!M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 			continue
