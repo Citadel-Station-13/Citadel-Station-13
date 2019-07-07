@@ -161,7 +161,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
 							M.next_move_modifier -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
-							M.apply_status_effect(/datum/status_effect/chem/SGDF)
+
+							//clone
+							var/typepath = M.type
+							var/mob/living/fermi_Clone = new typepath(M.loc)
+							var/mob/living/carbon/C = fermi_Clone
+
+							if(istype(C) && istype(M))
+								C.real_name = M.real_name
+								M.dna.transfer_identity(C, transfer_SE=1)
+								C.updateappearance(mutcolor_update=1)
+							C.apply_status_effect(/datum/status_effect/chem/SGDF)
+							var/datum/status_effect/chem/SGDF/S = C.has_status_effect(/datum/status_effect/chem/SGDF)
+							S.original = M
+							S.originalmind = M.mind
+							S.status_set = TRUE
+
 							log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
 							SSblackbox.record_feedback("tally", "fermi_chem", 1, "Braindead clones made")
 						if(87 to INFINITY)

@@ -350,18 +350,19 @@
 	color = "#fbc314"
 	pH = 0
 	can_synth = TRUE
+	addProc = TRUE
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3))
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume)
+	holder.remove_reagent(id, volume, ignore_pH = TRUE)
 	..()
 
 /datum/reagent/fermi/basic_buffer
@@ -371,17 +372,18 @@
 	color = "#3853a4"
 	pH = 14
 	can_synth = TRUE
+	addProc = TRUE
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume*3)))/(holder.total_volume + (volume*3))
+	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
 	var/list/seen = viewers(5, get_turf(holder))
 	for(var/mob/M in seen)
 		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
-	holder.remove_reagent(id, volume)
+	holder.remove_reagent(id, volume, ignore_pH = TRUE)
 	..()
 
 //Turns you into a cute catto while it's in your system.

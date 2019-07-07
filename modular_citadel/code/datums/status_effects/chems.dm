@@ -4,32 +4,39 @@
 /datum/status_effect/chem/SGDF
 	id = "SGDF"
 	var/mob/living/fermi_Clone
+	var/mob/living/original
+	var/datum/mind/originalmind
+	var/status_set = FALSE
 	alert_type = null
 
 /datum/status_effect/chem/SGDF/on_apply()
 	log_game("FERMICHEM: SGDF status appied on [owner], ID: [owner.key]")
-	var/typepath = owner.type
-	fermi_Clone = new typepath(owner.loc)
-	var/mob/living/carbon/M = owner
-	var/mob/living/carbon/C = fermi_Clone
-
-	if(istype(C) && istype(M))
-		C.real_name = M.real_name
-		M.dna.transfer_identity(C, transfer_SE=1)
-		C.updateappearance(mutcolor_update=1)
+	fermi_Clone = owner
 	return ..()
 
 /datum/status_effect/chem/SGDF/tick()
-	if(owner.stat == DEAD)
+	if(!status_set)
+		return ..()
+	if(original.stat == DEAD || original == null || !original)
 		if((fermi_Clone && fermi_Clone.stat != DEAD) || (fermi_Clone == null))
-			if(owner.mind)
+			if(originalmind)
+				owner.remove_status_effect(src)
+				/*
 				log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
 				owner.mind.transfer_to(fermi_Clone)
 				to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				to_chat(fermi_Clone, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
 				fermi_Clone = null
 				owner.remove_status_effect(src)
+				*/
 	..()
+
+/datum/status_effect/chem/SGDF/on_remove(mob/living/carbon/M)
+	log_game("FERMICHEM: SGDF mind shift applied. [owner] is now playing as their clone and should not have memories after their clone split (look up SGDF status applied). ID: [owner.key]")
+	originalmind.transfer_to(fermi_Clone)
+	to_chat(owner, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+	to_chat(M, "<span class='warning'>Lucidity shoots to your previously blank mind as your mind suddenly finishes the cloning process. You marvel for a moment at yourself, as your mind subconciously recollects all your memories up until the point when you cloned yourself. curiously, you find that you memories are blank after you ingested the sythetic serum, leaving you to wonder where the other you is.</span>")
+	fermi_Clone = null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -247,7 +254,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent("enthrall"))
+	if(!owner.reagents.has_reagent("enthrall") || !owner.reagents.has_reagent("enthrallTest"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(10))

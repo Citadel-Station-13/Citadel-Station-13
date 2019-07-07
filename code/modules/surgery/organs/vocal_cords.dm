@@ -1068,6 +1068,9 @@
 	else if((findtext(message, forget_words)))
 		for(var/mob/living/carbon/C in listeners)
 			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
+			if(E.phase == 4)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='warning'>You're unable to forget about [(C.client?.prefs.lewdchem?"the dominating presence of [E.enthrallGender]":"[E.master]")]!</b></span>"), 5)
+				continue
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='warning'>You wake up, forgetting everything that just happened. You must've dozed off..? How embarassing!</b></span>"), 5)
 			C.Sleeping(50)
 			switch(E.phase)
@@ -1408,7 +1411,7 @@
 					L.SetKnockdown(0)
 					L.SetUnconscious(0) //i said get up i don't care if you're being tased
 					E.cooldown += 10 //This could be really strong
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You jump to your feel from sheer willpower!</b></span>"), 5)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You jump to your feet from sheer willpower!</b></span>"), 5)
 
 	//PACIFY
 	else if(findtext(message, pacify_words))
