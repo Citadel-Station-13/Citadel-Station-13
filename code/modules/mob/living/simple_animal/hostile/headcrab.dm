@@ -50,6 +50,62 @@
 			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
 			addtimer(CALLBACK(src, .proc/death), 100)
 
+/mob/living/simple_animal/hostile/headcrab/attack_hand(mob/user)
+	(..())
+	if(stat == DEAD)
+		if (user.a_intent == INTENT_HELP)
+			var/obj/item/headcrab/H = new(get_turf(user))
+			src.forceMove(H)
+			user.put_in_hands(H)
+			H.slug = src
+
+/obj/item/headcrab //Edible headslug obj so lings who last resort can still be absorbed
+	name = "dead headslug"
+	desc = "The deceased remains of a changeling headslug. Looks strangely edible, like it might be nutritious. But only one of its own kind could possibly enjoy such a meal... "
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "headcrab_dead"
+	item_flags = DROPDEL
+	var/mob/living/slug = null
+
+/obj/item/headcrab/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(!proximity || !target)
+		return
+	if(target == user)
+		feed(user)
+	else
+		if(istype(target, /mob/living/carbon))
+			var/mob/living/carbon/victim = target
+			user.visible_message("<span class='warning'>[user] is trying to force [victim] to eat [src]!</span>")
+			if(do_mob(user, victim, 100))
+				feed(target)
+
+/obj/item/headcrab/proc/feed(var/mob/living/carbon/M)
+	M.visible_message("<span class='warning'>[M] devours the [src]!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 20, 1)
+	M.reagents.add_reagent("changelingmeth", 15)
+	var/datum/antagonist/changeling/changeling = M.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(changeling)
+		if(slug.mind)
+			var/datum/antagonist/changeling/target_ling = slug.mind.has_antag_datum(/datum/antagonist/changeling)
+			if(target_ling)
+				changeling.absorb_mind(slug)
+		else
+			to_chat(M, "<span class='warning'>We sense the mind inhabiting this vessel has vacated</span>")
+
+	else
+		M.visible_message("<span class='warning'>[M] starts heaving uncontrollably!</span>")
+		M.vomit()
+	qdel(slug) //You ate it
+	qdel(src)
+
+
+/obj/item/headcrab/Destroy()
+	for(var/mob/M in src)
+		M.forceMove(drop_location())
+	return ..()
+
+
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
@@ -82,5 +138,7 @@
 		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
 	owner.gib()
+
+
 
 #undef EGG_INCUBATION_TIME
