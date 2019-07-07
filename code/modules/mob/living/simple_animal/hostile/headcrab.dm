@@ -77,7 +77,7 @@
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/victim = target
 			user.visible_message("<span class='warning'>[user] is trying to force [victim] to eat [src]!</span>")
-			if(do_mob(user, victim, 100))
+			if(do_mob(user, victim, 40))
 				feed(target)
 
 /obj/item/headcrab/proc/feed(var/mob/living/carbon/M)
