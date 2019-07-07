@@ -64,8 +64,8 @@
 	desc = "The deceased remains of a changeling headslug. Looks strangely edible, like it might be nutritious. But only one of its own kind could possibly enjoy such a meal... "
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "headcrab_dead"
-	item_flags = DROPDEL
 	var/mob/living/slug = null
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/headcrab/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -104,6 +104,10 @@
 	for(var/mob/M in src)
 		M.forceMove(drop_location())
 	return ..()
+
+/obj/item/headcrab/dropped()
+	if(istype(loc, /turf))
+		qdel(src)
 
 
 /obj/item/organ/body_egg/changeling_egg

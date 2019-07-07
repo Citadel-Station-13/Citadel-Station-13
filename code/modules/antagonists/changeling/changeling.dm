@@ -533,7 +533,7 @@
 		target_ling.stored_profiles.len = 1
 		target_ling.absorbedcount = 0
 
-	changeling.canrespec = 1
+	canrespec = 1
 
 
 // Profile
