@@ -73,39 +73,21 @@
 	if(I.loc == src)
 		return TRUE
 
-	if(I.anchored)
+	if(I.anchored || !put_in_hands(I))
 		blacklistItems[I] ++
 		return FALSE
 
-	// WEAPONS
-	if(istype(I, /obj/item))
-		var/obj/item/W = I
-		if(W.force >= best_force)
-			put_in_hands(W)
-			best_force = W.force
-			return TRUE
-
-	// CLOTHING
-	else if(istype(I, /obj/item/clothing))
-		var/obj/item/clothing/C = I
-		monkeyDrop(C)
-		addtimer(CALLBACK(src, .proc/pickup_and_wear, C), 5)
-		return TRUE
-
-	// EVERYTHING ELSE
+	if(I.force >= best_force)
+		best_force = I.force
 	else
-		if(!get_item_for_held_index(1) || !get_item_for_held_index(2))
-			put_in_hands(I)
-			return TRUE
+		addtimer(CALLBACK(src, .proc/pickup_and_wear, I), 5)
 
-	blacklistItems[I] ++
-	return FALSE
+	return TRUE
 
-/mob/living/carbon/monkey/proc/pickup_and_wear(var/obj/item/clothing/C)
-	if(!equip_to_appropriate_slot(C))
-		monkeyDrop(get_item_by_slot(C)) // remove the existing item if worn
-		sleep(5)
-		equip_to_appropriate_slot(C)
+/mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/I)
+	if(QDELETED(I) || I.loc != src)
+		return
+	equip_to_appropriate_slot(I)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null
@@ -119,7 +101,7 @@
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
-	if(has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(src, TRAIT_PACIFISM))
 		return FALSE
 
 	if(enemies[L])
@@ -143,7 +125,7 @@
 				pickupTimer = 0
 			else
 				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
-				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target				
+				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target
 					drop_all_held_items() // who cares about these items, i want that one!
 					if(isturf(pickupTarget.loc)) // on floor
 						equip_item(pickupTarget)
@@ -167,7 +149,7 @@
 							battle_screech()
 							retaliate(L)
 							return TRUE
-						else 
+						else
 							bodyDisposal = locate(/obj/machinery/disposal/) in around
 							if(bodyDisposal)
 								target = L
@@ -311,7 +293,8 @@
 			if(I == pickupTarget)
 				M.visible_message("<span class='danger'>[src] snatches [pickupTarget] from [M].</span>", "<span class='userdanger'>[src] snatched [pickupTarget]!</span>")
 				if(M.temporarilyRemoveItemFromInventory(pickupTarget) && !QDELETED(pickupTarget))
-					equip_item(pickupTarget)
+					if(!equip_item(pickupTarget))
+						dropItemToGround(pickupTarget)
 				else
 					M.visible_message("<span class='danger'>[src] tried to snatch [pickupTarget] from [M], but failed!</span>", "<span class='userdanger'>[src] tried to grab [pickupTarget]!</span>")
 	pickpocketing = FALSE

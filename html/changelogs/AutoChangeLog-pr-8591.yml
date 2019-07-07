@@ -1,0 +1,4 @@
+author: "Ghommie (Original PR by Vile Beggar)"
+delete-after: True
+changes: 
+  - rscadd: "Warden now has an added drill hat in his locker. You can change the loudness setting of it by using a screwdriver on it. Use wirecutters on it for a surprise."

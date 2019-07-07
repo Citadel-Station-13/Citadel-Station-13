@@ -28,7 +28,7 @@
 	return 0
 
 /mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))  || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration = max(world.time + amount, U.duration)
@@ -37,7 +37,7 @@
 		return U
 
 /mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Sets remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(amount <= 0)
 			if(U)
@@ -49,7 +49,7 @@
 		return U
 
 /mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Adds to remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
+	if(((status_flags & CANUNCONSCIOUS) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canunconscious)
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(U)
 			U.duration += amount
@@ -72,7 +72,7 @@
 	return 0
 
 /mob/living/proc/Sleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Can't go below remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration = max(world.time + amount, S.duration)
@@ -81,7 +81,7 @@
 		return S
 
 /mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Sets remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(amount <= 0)
 			if(S)
@@ -93,7 +93,7 @@
 		return S
 
 /mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Adds to remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
+	if((!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
 		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 		if(S)
 			S.duration += amount
@@ -170,7 +170,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
@@ -191,7 +191,7 @@
 			blind_minimum = 1
 		if(isliving(src))
 			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
+			if(HAS_TRAIT(L, TRAIT_BLIND))
 				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)

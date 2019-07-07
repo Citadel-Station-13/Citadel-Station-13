@@ -90,6 +90,9 @@
 	name = "Boxer Briefs - Yellow"
 	icon_state = "boxer_briefs_yellow"
 
+/datum/sprite_accessory/underwear/female_beekini
+	name = "Panties - Bee-kini"
+	icon_state = "panties_bee-kini"
 
 /datum/sprite_accessory/underwear/female_black
 	name = "Panties - Black"

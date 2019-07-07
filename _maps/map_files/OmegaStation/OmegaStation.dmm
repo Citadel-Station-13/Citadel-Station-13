@@ -2833,7 +2833,9 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "aeP" = (
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_x = -32
+	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)

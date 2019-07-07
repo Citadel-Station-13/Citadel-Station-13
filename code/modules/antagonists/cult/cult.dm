@@ -131,7 +131,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 		H.cut_overlays()
 		H.regenerate_icons()
@@ -225,7 +225,7 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.cut_overlays()
 		H.regenerate_icons()
 
@@ -301,7 +301,7 @@
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.add_trait(CULT_EYES)
+		ADD_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 
 /datum/team/cult/proc/ascend(cultist)
@@ -361,6 +361,7 @@
 	reshape.Shift(EAST, 1)
 	reshape.Crop(7,4,26,31)
 	reshape.Crop(-5,-3,26,30)
+	return reshape
 
 /mob/living/carbon/human/get_sac_image()
 	var/datum/job/sacjob = SSjob.GetJob(mind.assigned_role)
@@ -370,6 +371,7 @@
 	reshape.Shift(EAST, 1)
 	reshape.Crop(7,4,26,31)
 	reshape.Crop(-5,-3,26,30)
+	return reshape
 
 /datum/objective/sacrifice
 	var/sacced = FALSE

@@ -591,15 +591,41 @@
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
-	attack_verb = list("blorbled", "slimed", "absorbed")
+	attack_verb = list("blorbled", "slimed", "absorbed", "glomped")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+
+/obj/item/toy/plush/slimeplushie/annie
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "annie"
+	item_state = "annie"
+
+/obj/item/toy/plush/slimeplushie/paxton
+	desc = "An adorable stuffed toy that resembles a slimey crewmember."
+	icon_state = "paxton"
+	item_state = "paxton"
+	attack_verb = list("CQC'd", "jabroni'd", "powergamed", "robusted", "cakehatted")
+	gender = MALE
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
 	item_state = "plushie_awake"
+
+/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/edit_complainer)
+
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('modular_citadel/sound/voice/scream_moth.ogg' = 1)
 
 /obj/item/toy/plush/mothplushie
 	name = "insect plushie"
@@ -741,6 +767,10 @@
 	icon_state = "pavel"
 	item_state = "pavel"
 
+/obj/item/toy/plush/mammal/mason
+	icon_state = "mason"
+	item_state = "mason"
+
 /obj/item/toy/plush/mammal/oten
 	icon_state = "oten"
 	item_state = "oten"
@@ -748,6 +778,10 @@
 /obj/item/toy/plush/mammal/ray
 	icon_state = "ray"
 	item_state = "ray"
+
+/obj/item/toy/plush/mammal/redtail
+	icon_state = "redtail"
+	item_state = "redtail"
 
 /obj/item/toy/plush/mammal/dawud
 	icon_state = "dawud"
@@ -840,6 +874,13 @@
 	icon_state = "flynn"
 	item_state = "flynn"
 
+/obj/item/toy/plush/mammal/dog/fritz
+	icon_state = "fritz"
+	item_state = "fritz"
+	attack_verb = list("barked", "boofed", "shotgun'd")
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
+
 /obj/item/toy/plush/catgirl
 	name = "feline plushie"
 	desc = "An adorable stuffed toy that resembles a feline."
@@ -877,7 +918,3 @@
     item_state = "fermis"
     attack_verb = list("cuddled", "petpatted", "wigglepurred")
     squeak_override = list('modular_citadel/sound/voice/merowr.ogg' = 1)
-
-/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/edit_complainer)

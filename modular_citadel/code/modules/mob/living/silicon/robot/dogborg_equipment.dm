@@ -89,12 +89,11 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(GLOB.hardcoded_gases))
-		var/o2_concentration = env_gases[/datum/gas/oxygen][MOLES]/total_moles
-		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
-		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
-		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
-		environment.garbage_collect()
+		var/o2_concentration = env_gases[/datum/gas/oxygen]/total_moles
+		var/n2_concentration = env_gases[/datum/gas/nitrogen]/total_moles
+		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide]/total_moles
+		var/plasma_concentration = env_gases[/datum/gas/plasma]/total_moles
+		GAS_GARBAGE_COLLECT(environment.gases)
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
@@ -120,8 +119,8 @@ SLEEPER CODE IS IN game/objects/items/devices/dogborg_sleeper.dm !
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)
 				continue
-			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
+			var/gas_concentration = env_gases[id]/total_moles
+			to_chat(user, "<span class='alert'>[GLOB.meta_gas_names[id]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
 /obj/item/analyzer/nose/AltClick(mob/user) //Barometer output for measuring when the next storm happens

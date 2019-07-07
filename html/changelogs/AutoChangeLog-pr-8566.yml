@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "A milder combat stance message will show up if the user switch combat mode on while on help intent."

@@ -70,3 +70,6 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(hour)
 		hourT = " and [hour] hour[(hour != 1)? "s":""]"
 	return "[day] day[(day != 1)? "s":""][hourT][minuteT][secondT]"
+
+/proc/daysSince(realtimev)
+	return round((world.realtime - realtimev) / (24 HOURS))

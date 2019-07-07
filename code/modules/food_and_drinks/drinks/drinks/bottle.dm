@@ -57,7 +57,7 @@
 	if(user.a_intent != INTENT_HARM || !isGlass)
 		return ..()
 
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
 
@@ -329,6 +329,33 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list("fernet" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/applejack
+	name = "Buckin' Bronco's Applejack"
+	desc = "Kicks like a horse, tastes like an apple!"
+	icon_state = "applejack_bottle"
+	list_reagents = list("applejack" = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/champagne
+	name = "Eau d' Dandy Brut Champagne"
+	desc = "Finely sourced from only the most pretentious French vineyards."
+	icon_state = "champagne_bottle"
+	list_reagents = list("champagne" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/blazaam
+	name = "Ginbad's Blazaam"
+	desc = "You feel like you should give the bottle a good rub before opening."
+	icon_state = "blazaambottle"
+	list_reagents = list("blazaam" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/trappist
+	name = "Mont de Requin Trappistes Bleu"
+	desc = "Brewed in space-Belgium. Fancy!"
+	icon_state = "trappistbottle"
+	volume = 50
+	list_reagents = list("trappist" = 50)
+
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 

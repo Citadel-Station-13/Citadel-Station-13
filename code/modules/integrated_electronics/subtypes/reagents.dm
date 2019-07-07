@@ -51,7 +51,6 @@
 	extended_desc = "This autoinjector can push up to 30 units of reagents into another container or someone else outside of the machine. The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amounts makes the injector suck out reagents instead."
 
-	container_type = OPENCONTAINER
 	volume = 30
 
 	complexity = 20
@@ -79,6 +78,10 @@
 	var/direction_mode = SYRINGE_INJECT
 	var/transfer_amount = 10
 	var/busy = FALSE
+
+/obj/item/integrated_circuit/reagent/injector/Initialize()
+	. = ..()
+	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 
 /obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	push_vol()
@@ -260,7 +263,6 @@
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
-	container_type = OPENCONTAINER
 	volume = 60
 
 	complexity = 4
@@ -272,7 +274,9 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-
+/obj/item/integrated_circuit/reagent/storage/Initialize()
+	. = ..()
+	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -302,7 +306,7 @@
 
 /obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
 	. = ..()
-	reagents.set_reacting(FALSE)
+	ENABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
@@ -501,7 +505,6 @@
 	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. It will heat or cool the reagents \
 	to the target temperature when turned on."
 	icon_state = "heater"
-	container_type = OPENCONTAINER
 	complexity = 8
 	inputs = list(
 		"target temperature" = IC_PINTYPE_NUMBER,
@@ -552,7 +555,6 @@
 	ext_cooldown = 1
 
 	volume = 100
-	container_type = OPENCONTAINER
 
 	complexity = 20
 	cooldown_per_use = 1 SECONDS
@@ -570,6 +572,10 @@
 	power_draw_per_use = 20
 	var/smoke_radius = 5
 	var/notified = FALSE
+
+/obj/item/integrated_circuit/reagent/smoke/Initialize()
+	. = ..()
+	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 
 /obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
 	//reset warning only if we have reagents now
@@ -605,7 +611,6 @@
 	extended_desc = "This circuit can hold up to 30 units of any given chemicals. On each use, it sprays these reagents like a fire extinguisher. Requires at least 10 units of reagents to work."
 
 	volume = 30
-	container_type = OPENCONTAINER
 
 	complexity = 20
 	cooldown_per_use = 6 SECONDS
@@ -628,6 +633,7 @@
 
 /obj/item/integrated_circuit/reagent/extinguisher/Initialize()
 	.=..()
+	ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	set_pin_data(IC_OUTPUT,2, src)
 
 /obj/item/integrated_circuit/reagent/extinguisher/on_reagent_change(changetype)

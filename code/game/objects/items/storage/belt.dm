@@ -541,6 +541,25 @@
 		/obj/item/ammo_casing/shotgun
 		))
 
+/obj/item/storage/belt/medolier
+	name = "medolier"
+	desc = "A medical bandolier for holding smartdarts."
+	icon_state = "medolier"
+	item_state = "medolier"
+
+/obj/item/storage/belt/medolier/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 15
+	STR.display_numerical_stacking = FALSE
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/syringe/dart
+		))
+
+/obj/item/storage/belt/medolier/full/PopulateContents()
+	for(var/i in 1 to 16)
+		new /obj/item/reagent_containers/syringe/dart/(src)
+
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
 	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
@@ -557,6 +576,8 @@
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
+		/obj/item/toy/gun,
+		/obj/item/gun/energy/e_gun/mini
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()

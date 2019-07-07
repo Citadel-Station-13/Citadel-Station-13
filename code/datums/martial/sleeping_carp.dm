@@ -7,6 +7,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
+	reroute_deflection = TRUE
 	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
@@ -179,7 +180,7 @@
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
-	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
 		user.Knockdown(60)
 		if(ishuman(user))
