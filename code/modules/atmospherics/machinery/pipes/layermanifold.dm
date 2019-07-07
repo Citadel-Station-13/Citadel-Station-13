@@ -14,6 +14,13 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "layer_manifold"
 
+/obj/machinery/atmospherics/pipe/layer_manifold/hidden
+	level = PIPE_HIDDEN_LEVEL
+
+/obj/machinery/atmospherics/pipe/layer_manifold/visible
+	level = PIPE_VISIBLE_LEVEL
+	layer = GAS_PIPE_VISIBLE_LAYER
+
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
 	front_nodes = list()
 	back_nodes = list()

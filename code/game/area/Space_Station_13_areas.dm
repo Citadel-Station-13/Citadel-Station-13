@@ -567,6 +567,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
 
+/area/engine/atmospherics_engine/aux
+	name = "Aux Atmospherics Engine"
+	icon_state = "atmos_engine"
+
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
