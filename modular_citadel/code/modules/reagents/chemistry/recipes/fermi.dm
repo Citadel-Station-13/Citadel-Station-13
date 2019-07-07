@@ -418,7 +418,7 @@
 	if(!locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list)
 		return
 	var/datum/reagent/fermi/acidic_buffer/Fa = locate(/datum/reagent/fermi/acidic_buffer) in my_atom.reagents.reagent_list
-	Fa.data = 0
+	Fa.data = 0.1//setting it to 0 means byond thinks it's not there.
 
 /datum/chemical_reaction/fermi/basic_buffer//done test
 	name = "Ethyl Ethanoate buffer"
