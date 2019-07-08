@@ -250,11 +250,11 @@
 						itemname = "a syndicate bomb beacon"
 						new /obj/item/sbeacondrop/bomb(loc)
 					if(2)
-						itemname = "a rocket launcher"
-						new /obj/item/gun/ballistic/rocketlauncher/unrestricted(loc)
-						new /obj/item/ammo_casing/caseless/rocket(loc)
-						new /obj/item/ammo_casing/caseless/rocket(loc)
-						new /obj/item/ammo_casing/caseless/rocket(loc)
+						itemname = "a grenade launcher"
+						new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(loc)
+						new /obj/item/ammo_casing/a40mm(loc)
+						new /obj/item/ammo_casing/a40mm(loc)
+						new /obj/item/ammo_casing/a40mm(loc)
 					if(3)
 						itemname = "two bags of c4"
 						new /obj/item/storage/backpack/duffelbag/syndie/c4(loc)

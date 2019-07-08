@@ -86,7 +86,6 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
-	inaccuracy_modifier = 0.7
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	magazine_wording = "rocket"
@@ -109,33 +108,33 @@
 /obj/item/gun/ballistic/rocketlauncher/can_shoot()
 	return chambered?.BB
 
+/obj/item/gun/ballistic/rocketlauncher/process_chamber()
+	if(chambered)
+		chambered = null
+	if(magazine)
+		QDEL_NULL(magazine)
+	update_icon()
+
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self(mob/living/user)
 	if(magazine)
-		var/obj/item/ammo_casing/AC = chambered
-		if(AC)
-			if(!user.put_in_hands(AC))
-				AC.bounce_away(FALSE, NONE)
-			to_chat(user, "<span class='notice'>You remove \the [AC] from \the [src]!</span>")
-			playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, TRUE)
+		if(chambered)
+			chambered.forceMove(magazine)
+			magazine.stored_ammo.Insert(1, chambered)
 			chambered = null
 		else
-			to_chat(user, "<span class='notice'>There's no [magazine_wording] in [src].</span>")
+			stack_trace("Removed [magazine] from [src] without a chambered round")
+		magazine.forceMove(drop_location())
+		if(user.is_holding(src))
+			user.put_in_hands(magazine)
+		playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, TRUE)
+		to_chat(user, "<span class='notice'>You work the [magazine] out from [src].</span>")
+		magazine = null
+	else
+		to_chat(user, "<span class='notice'>There's no rocket in [src].</span>")
 	update_icon()
-
-/obj/item/gun/ballistic/rocketlauncher/attackby(obj/item/A, mob/user, params)
-	if(magazine && istype(A, /obj/item/ammo_casing))
-		if(user.temporarilyRemoveItemFromInventory(A))
-			if(!chambered)
-				to_chat(user, "<span class='notice'>You load a new [A] into \the [src].</span>")
-				playsound(src, "gun_insert_full_magazine", 70, 1)
-				chamber_round()
-				update_icon()
-				return TRUE
-		else
-			to_chat(user, "<span class='warning'>You cannot seem to get \the [A] out of your hands!</span>")
 
 /obj/item/gun/ballistic/rocketlauncher/update_icon()
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
