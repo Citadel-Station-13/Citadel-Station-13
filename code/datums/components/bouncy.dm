@@ -6,15 +6,19 @@
 /datum/component/bouncy/Initialize(_bouncy_mod, list/_bounce_signals)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	bouncy_mod = _bouncy_mod
-	bounce_signals = _bounce_signals
+	if(_bouncy_mod)
+		bouncy_mod = _bouncy_mod
+	if(_bounce_signals)
+		bounce_signals = _bounce_signals
 
 /datum/component/bouncy/InheritComponent(datum/component/bouncy/B, original, _bouncy_mod, list/_bounce_signals)
-	bouncy_mod = max(bouncy_mod, _bouncy_mod)
-	var/list/diff_bounces = difflist(bounce_signals, _bounce_signals, TRUE)
-	for(var/bounce in diff_bounces)
-		bounce_signals += bounce
-		RegisterSignal(parent, bounce, .proc/bounce_up)
+	if(_bouncy_mod)
+		bouncy_mod = max(bouncy_mod, _bouncy_mod)
+	if(_bounce_signals)
+		var/list/diff_bounces = difflist(bounce_signals, _bounce_signals, TRUE)
+		for(var/bounce in diff_bounces)
+			bounce_signals += bounce
+			RegisterSignal(parent, bounce, .proc/bounce_up)
 
 /datum/component/bouncy/RegisterWithParent()
 	RegisterSignal(parent, bounce_signals, .proc/bounce_up)
