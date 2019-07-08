@@ -249,7 +249,7 @@
 	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
-			if(prob(10))
+			if(prob(5))
 				to_chat(owner, "<span class='notice'><i>Your mind starts to restore some of it's clarity as you feel the effects of the drug wain.</i></span>")
 	if (mental_capacity <= 500 || phase == 4)
 		if (owner.reagents.has_reagent("mannitol"))
@@ -350,8 +350,10 @@
 					if(DistApart < 10)
 						if(master.client?.prefs.lewdchem)
 							to_chat(master, "<span class='notice'><i>Your pet [owner] appears to have finished internalising your last command.</i></span>")
+							cooldownMsg = TRUE
 						else
 							to_chat(master, "<span class='notice'><i>Your thrall [owner] appears to have finished internalising your last command.</i></span>")
+							cooldownMsg = TRUE
 				if(get_dist(master, owner) > 10)
 					if(prob(10))
 						to_chat(owner, "<span class='velvet'><i>You feel [(owner.client?.prefs.lewdchem?"a deep NEED to return to your [enthrallGender]":"like you have to return to [master]")].</i></span>")
