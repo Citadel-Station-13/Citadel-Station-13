@@ -654,7 +654,7 @@
 //////////////////////////////////////
 ///////////FermiChem//////////////////
 //////////////////////////////////////
-//Removed span_list from input arguments. //mob/living/user
+//Removed span_list from input arguments.
 /proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = TRUE, message_admins = FALSE, debug = FALSE)
 
 	if(!user || !user.can_speak() || user.stat)
@@ -706,8 +706,8 @@
 	else if (is_devil(user))//The devil is supposed to be seductive, right?
 		power_multiplier *= 1.2
 
-	//range = 0.5 - 4.2~
-	//most cases = 1-2
+	//range = 0.5 - 1.4~
+	//most cases = 1
 
 	//Try to check if the speaker specified a name or a job to focus on
 	var/list/specific_listeners = list()
@@ -790,8 +790,6 @@
 	var/static/regex/charge_words = regex("charge|oorah|attack")
 
 	var/distancelist = list(2,2,1.5,1.3,1.15,1,0.8,0.6,0.5,0.25)
-
-	//enthral_words, reward_words, silence_words attract_words punish_words desire_words resist_words forget_words
 
 	//CALLBACKS ARE USED FOR MESSAGES BECAUSE SAY IS HANDLED AFTER THE PROCESSING.
 
@@ -1326,7 +1324,7 @@
 		for(var/V in listeners)
 			var/mob/living/carbon/human/H = V
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase == 3)
+			if(E.phase == 3 && H.client?.prefs.lewdchem)
 				var/instill = stripped_input(user, "Instill an emotion in your [(user.client?.prefs.lewdchem?"Your pet":"listener")].", MAX_MESSAGE_LEN)
 				var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
 				to_chat(H, "<span class='[customSpan]'><i>[instill]</i></span>")

@@ -246,7 +246,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent("enthrall") || !owner.reagents.has_reagent("enthrallTest"))
+	if(!owner.reagents.has_reagent("enthrall") && !owner.reagents.has_reagent("enthrallTest"))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(10))
@@ -258,7 +258,7 @@
 			mental_capacity += 10
 
 	//mindshield check
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ. (resisting gives a bigger bonus with a mindshield)
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD))//If you manage to enrapture a head, wow, GJ. (resisting gives a bigger bonus with a mindshield) From what I can tell, this isn't possible.
 		resistanceTally += 2
 		if(prob(10))
 			to_chat(owner, "<span class='notice'><i>You feel lucidity returning to your mind as the mindshield buzzes, attempting to return your brain to normal function.</i></span>")
@@ -513,7 +513,7 @@
 			//adrenals?
 
 	//customEcho
-	if(customEcho && withdrawal == FALSE)
+	if(customEcho && withdrawal == FALSE && owner.client?.prefs.lewdchem)
 		if(prob(5))
 			if(!customSpan) //just in case!
 				customSpan = "notice"
@@ -590,12 +590,13 @@
 
 			//Shocking truth!
 			else if (lowertext(customTriggers[trigger]) == "shock")
-				if (C.canbearoused)
-					C.electrocute_act(10, src, 1, FALSE, FALSE, FALSE, TRUE)//I've no idea how strong this is
+				if (C.canbearoused && C.client?.prefs.lewdchem)
 					C.adjustArousalLoss(5)
-					to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
-				else
-					C.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, TRUE)//To make up for the lack of effect
+				C.jitteriness += 100
+				C.stuttering += 25
+				C.Knockdown(60)
+				C.Stun(60)
+				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 
 			//wah intensifies wah-rks
 			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
