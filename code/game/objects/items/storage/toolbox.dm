@@ -278,9 +278,10 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	DISABLE_BITFIELD(flags_1, CONDUCT_1)
 	materials = null
 	damtype = STAMINA
-	force += 5 //to compensate the higher stamina K.O. threshold compared to actual health.
-	throwforce += 5
+	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
+	throwforce += 3
 	attack_verb += "bounced"
+	hitsound = 'sound/effects/clownstep1.ogg'
 	if(!GLOB.rubber_toolbox_icons[icon_state])
 		generate_rubber_toolbox_icon()
 	icon = GLOB.rubber_toolbox_icons[icon_state]
