@@ -1327,7 +1327,8 @@
 			if(E.phase == 3 && H.client?.prefs.lewdchem)
 				var/instill = stripped_input(user, "Instill an emotion in your [(user.client?.prefs.lewdchem?"Your pet":"listener")].", MAX_MESSAGE_LEN)
 				var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
-				to_chat(H, "<span class='[customSpan]'><i>[instill]</i></span>")
+				var/instillSpan = input(user, "Pick the style", "Style") in customSpan
+				to_chat(H, "<span class='[instillSpan]'><i>[instill]</i></span>")
 				E.cooldown += 1
 
 	//RECOGNISE
