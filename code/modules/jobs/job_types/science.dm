@@ -31,6 +31,8 @@ Research Director
 			            ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM,
 			            ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
 
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems)
+
 /datum/outfit/job/rd
 	name = "Research Director"
 	jobtype = /datum/job/rd
