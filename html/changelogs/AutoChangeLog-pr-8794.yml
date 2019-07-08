@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing the `(pointless) badassary` category appearing between the `dangerous and conspicious` and `stealthy and inconspicious` categories."
+  - bugfix: "Combat gloves plus now properly use the combat gloves sprite."

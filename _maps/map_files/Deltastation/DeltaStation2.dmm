@@ -35021,11 +35021,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "blM" = (
-/obj/structure/table,
-/obj/item/storage/box/lights/mixed,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/machinery/autolathe{
+	name = "public autolathe"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -35043,6 +35044,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "blO" = (

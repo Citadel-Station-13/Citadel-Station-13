@@ -1688,8 +1688,7 @@
 /obj/machinery/button/door{
 	id = "hos";
 	name = "HoS Office Shutters";
-	pixel_y = -25;
-	
+	pixel_y = -25
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -26228,9 +26227,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkx" = (
-/obj/machinery/status_display/supply{
-	pixel_y = 2
-	},
+/obj/machinery/status_display/supply,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -31345,7 +31342,9 @@
 	id = "QMLoad"
 	},
 /obj/machinery/light,
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_y = -32
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -33612,7 +33611,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_x = -32
+	},
 /obj/machinery/computer/security/qm{
 	dir = 4
 	},
@@ -56667,6 +56668,12 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"eef" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "evR" = (
 /turf/open/floor/plating,
 /area/maintenance/bar)
@@ -81613,7 +81620,7 @@ cNG
 cNJ
 bLF
 aZK
-bbR
+eef
 bbR
 bqt
 cBq
