@@ -62,6 +62,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		for(var/i in blacklisted)
 			quirks -= i
 			cut += i
+
+	/*	//Code to automatically reduce positive quirks until balance is even.
 	var/points_used = total_points(quirks)
 	if(points_used > 0)
 		//they owe us points, let's collect.
@@ -73,6 +75,15 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 				points_used -= points
 			if(points_used <= 0)
 				break
+	*/
+
+	//Nah, let's null all non-neutrals out.
+	if(cut.len)
+		for(var/i in quirks)
+			if(quirk_points_by_name(i) != 0)
+				cut += i
+				quirks -= i
+
 	return cut
 
 /datum/controller/subsystem/processing/quirks/proc/GenerateQuirks(client/user)

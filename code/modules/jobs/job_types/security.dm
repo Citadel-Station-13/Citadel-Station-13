@@ -37,7 +37,7 @@ Head of Security
 
 	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
-	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent)
+	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/nonviolent, /datum/quirk/paraplegic)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
