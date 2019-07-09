@@ -170,7 +170,7 @@
 				return
 
 	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
+		to_chat(user, "<span class='userdanger'>You need both hands free to fire \the [src]!</span>")
 		return
 
 	//DUAL (or more!) WIELDING
@@ -422,7 +422,7 @@
 	if(alight)
 		alight.Remove(user)
 
-/obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
+/obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
 		return
 
@@ -438,7 +438,7 @@
 
 	semicd = TRUE
 
-	if(!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")

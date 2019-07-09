@@ -1,0 +1,4 @@
+author: "Ghommie (original PR by variableundefined)"
+delete-after: True
+changes: 
+  - bugfix: "Cancel button to assault pod destination selector."
