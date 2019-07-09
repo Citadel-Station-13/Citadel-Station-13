@@ -78,14 +78,13 @@
 			break
 	return message
 
-/datum/brain_trauma/mild/phobia/on_say(message)
+/datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
 	for(var/word in trigger_words)
 		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
 
-		if(findtext(message, reg))
+		if(findtext(speech_args[SPEECH_MESSAGE], reg))
 			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"[word]\"!</span>")
-			return ""
-	return message
+			speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
