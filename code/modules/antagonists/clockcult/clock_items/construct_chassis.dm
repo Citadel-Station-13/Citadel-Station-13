@@ -21,8 +21,9 @@
 
 /obj/item/clockwork/construct_chassis/Destroy()
 	GLOB.poi_list -= src
-	var/list/spawners = GLOB.mob_spawners[name]
-	LAZYREMOVE(spawners, src)
+	LAZYREMOVE(GLOB.mob_spawners[name], src)
+	if(!LAZYLEN(GLOB.mob_spawners[name]))
+		GLOB.mob_spawners -= name
 	. = ..()
 
 /obj/item/clockwork/construct_chassis/examine(mob/user)

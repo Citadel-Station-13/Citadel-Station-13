@@ -47,6 +47,7 @@
 	name = "captain's beret"
 	desc = "A beret fit for a leader."
 	icon_state = "capberet"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = null
 
@@ -62,6 +63,7 @@
 	name = "head of personnel's beret"
 	desc = "The symbol of true bureaucratic micromanagement, although in a fancy form."
 	icon_state = "hopberet"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = null
 
