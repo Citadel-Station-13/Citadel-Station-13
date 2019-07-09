@@ -102,12 +102,15 @@
 		M.Jitter(200)
 		M.Knockdown(200)
 		M.Stun(80)
-
 	var/items = M.get_contents()
 	if(!LAZYLEN(items))
 		return ..()
 	var/obj/item/I = pick(items)
-	M.dropItemToGround(I, TRUE)
+	if(istype(I, /obj/item/implant))
+		qdel(I)
+		to_chat(M, "<span class='userdanger'>You feel your implant rip itself out of you, sent flying off to another dimention!</span>")
+	else
+		M.dropItemToGround(I, TRUE)
 	do_sparks(5,FALSE,I)
 	do_teleport(I, get_turf(I), 5, no_effects=TRUE);
 	do_sparks(5,FALSE,I)

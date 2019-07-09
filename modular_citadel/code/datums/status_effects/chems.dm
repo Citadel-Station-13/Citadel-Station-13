@@ -548,6 +548,7 @@
 //Remove all stuff
 /datum/status_effect/chem/enthrall/on_remove()
 	var/mob/living/carbon/M = owner
+	M.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrall")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrallpraise")
 	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "enthrallscold")
