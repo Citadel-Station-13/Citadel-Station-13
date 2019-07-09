@@ -578,10 +578,6 @@
 	icon_state = "vulken"
 	item_state = "vulken"
 
-/obj/item/toy/plush/snakeplushie/jecca
-	icon_state = "jecca"
-	item_state = "jecca"
-
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
