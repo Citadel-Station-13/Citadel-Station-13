@@ -631,13 +631,6 @@
 	gender = FEMALE
 	squeak_override = list('modular_citadel/sound/voice/scream_moth.ogg' = 1)
 
-/obj/item/toy/plush/mothplushie
-	name = "insect plushie"
-	desc = "An adorable stuffed toy that resembles some kind of insect"
-	icon_state = "cydia"
-	item_state = "cydia"
-	squeak_override = list('modular_citadel/sound/voice/mothsqueak.ogg' = 1)
-
 /obj/item/toy/plush/mothplushie/bumble
 	icon_state = "bumble"
 	item_state = "bumble"
