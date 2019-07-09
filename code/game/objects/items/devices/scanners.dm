@@ -200,7 +200,7 @@ SLIME SCANNER
 	if(advanced && M.hallucinating())
 		msg += "\t<span class='info'>Subject is hallucinating.</span>\n"
 
-	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
+	if(M.has_status_effect(/datum/status_effect/chem/enthrall))
 		msg += "\t<span class='info'>Subject has abnormal brain fuctions.</span>\n"
 
 	//Eyes and ears
