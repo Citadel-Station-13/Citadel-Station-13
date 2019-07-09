@@ -1105,7 +1105,7 @@
 
 	//teir 2
 
-
+	/* removed for now
 	//ORGASM
 	else if((findtext(message, orgasm_words)))
 		for(var/V in listeners)
@@ -1122,7 +1122,7 @@
 					E.cooldown += 6
 				else
 					H.throw_at(get_step_towards(user,H), 3 * power_multiplier, 1 * power_multiplier)
-
+	*/
 
 
 	//awoo
@@ -1166,7 +1166,7 @@
 				if(2 to INFINITY)
 					var/items = H.get_contents()
 					for(var/obj/item/W in items)
-						if(W == H.w_uniform || W == H.wear_suit)
+						if(W == H.wear_suit)
 							H.dropItemToGround(W, TRUE)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='[(H.client?.prefs.lewdchem?"love":"warning")]'>Before you can even think about it, you quickly remove your clothes in response to [(H.client?.prefs.lewdchem?"your [E.enthrallGender]'s command'":"[E.master]'s directive'")].</b></span>"), 5)
 					E.cooldown += 10

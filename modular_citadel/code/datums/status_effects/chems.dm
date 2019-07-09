@@ -299,7 +299,7 @@
 				if(owner.client?.prefs.lewdchem)
 					to_chat(owner, "<span class='small velvet'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</b></span>")
 		if (2) //partially enthralled
-			if (enthrallTally > 200)
+			if(enthrallTally > 200) 
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
