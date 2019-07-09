@@ -500,12 +500,28 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
+	var/impact_throw_distance_lower = 1
+	var/impact_throw_distance_upper = 2
 	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
 	desc = "This thing looks dangerous... Dangerously good at baseball, that is."
 	homerun_able = 1
+
+
+/obj/item/melee/baseball_bat/riot
+	name = "riot control bat"
+	desc = "A new addition to DonkCo's classic \"riot control\" line of non-lethal deterrants. Completely nonlethal, but hurts like a bitch. <span class='bold'>Quite hefty, though. Manage your stamina.</span>"
+	damtype = STAMINA
+	icon_state = "riot_bat"
+	item_state = "riot_bat"
+	force = 22
+	total_mass = 6.5 //no infinite stunlock/batonning please!
+	w_class = WEIGHT_CLASS_NORMAL
+	impact_throw_distance_lower = 0
+	impact_throw_distance_upper = 0
+
 
 /obj/item/melee/baseball_bat/attack_self(mob/user)
 	if(!homerun_able)
@@ -533,7 +549,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		homerun_ready = 0
 		return
 	else if(!target.anchored)
-		target.throw_at(throw_target, rand(1,2), 7, user)
+		var/throw_dist = rand(impact_throw_distance_lower, impact_throw_distance_upper)
+		if(throw_dist)
+			target.throw_at(throw_target, throw_dist, 7, user)
 
 /obj/item/melee/baseball_bat/ablative
 	name = "metal baseball bat"
