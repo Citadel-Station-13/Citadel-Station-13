@@ -262,7 +262,7 @@
 	if(isobj(AM))
 		if(prob(50) && anchored && !broken)
 			var/obj/O = AM
-			if(O.throwforce != 0)//don't want to let people spam tesla bolts, this way it will break after time
+			if(O.throwforce != 0 && O.damtype != STAMINA)//don't want to let people spam tesla bolts, this way it will break after time
 				var/turf/T = get_turf(src)
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
