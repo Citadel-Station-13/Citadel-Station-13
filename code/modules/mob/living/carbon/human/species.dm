@@ -496,33 +496,41 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.underwear = "Nude"
 			else
 				H.underwear = H.saved_underwear
-			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
-			if(underwear)
-				standing += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
+				if(B)
+					var/mutable_appearance/MA = mutable_appearance(B.icon, B.icon_state, -BODY_LAYER)
+					if(B.has_color)
+						MA.color = H.undie_color
+					standing += MA
 
 		if(H.undershirt)
 			if(H.hidden_undershirt)
 				H.undershirt = "Nude"
 			else
 				H.undershirt = H.saved_undershirt
-			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
-			if(undershirt)
-				if(H.dna.species.sexes && H.gender == FEMALE)
-					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
-				else
-					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
+				if(T)
+					var/mutable_appearance/MA
+					if(H.dna.species.sexes && H.gender == FEMALE)
+						MA = wear_female_version(T.icon_state, T.icon, BODY_LAYER)
+					else
+						MA = mutable_appearance(T.icon, T.icon_state, -BODY_LAYER)
+					if(T.has_color)
+						MA.color = H.shirt_color
+					standing += MA
 
 		if(H.socks && H.get_num_legs(FALSE) >= 2)
 			if(H.hidden_socks)
 				H.socks = "Nude"
 			else
 				H.socks = H.saved_socks
-			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
-			if(socks)
-				if(DIGITIGRADE in species_traits)
-					standing += mutable_appearance(socks.icon, socks.icon_state + "_d", -BODY_LAYER)
-				else
-					standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
+				if(S)
+					var/digilegs = (DIGITIGRADE in species_traits) ? "_d" : ""
+					var/mutable_appearance/MA = mutable_appearance(S.icon, "[S][digilegs]", -BODY_LAYER)
+					if(S.has_color)
+						MA.color = H.socks_color
+					standing += MA
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing

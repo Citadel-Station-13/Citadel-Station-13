@@ -22,7 +22,7 @@
 
 /proc/random_underwear(gender)//Cit change - makes random underwear always return nude
 	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
 	return "Nude"
 	/*switch(gender)
 		if(MALE)
@@ -34,7 +34,7 @@
 
 /proc/random_undershirt(gender)//Cit change - makes random undershirts always return nude
 	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/top, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	return "Nude"
 	/*switch(gender)
 		if(MALE)
@@ -46,7 +46,7 @@
 
 /proc/random_socks()//Cit change - makes random socks always return nude
 	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
 	return "Nude"
 	//return pick(GLOB.socks_list)
 

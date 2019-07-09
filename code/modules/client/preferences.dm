@@ -71,8 +71,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/underwear = "Nude"				//underwear type
+	var/undie_color = "#FFFFFF"
 	var/undershirt = "Nude"				//undershirt type
+	var/shirt_color = "#FFFFFF"
 	var/socks = "Nude"					//socks type
+	var/socks_color = "#FFFFFF"
 	var/backbag = DBACKPACK				//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
@@ -674,8 +677,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Clothing & Equipment</h2>"
 			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
+			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[underwear]
+			if(B?.has_color)
+				dat += "<b>Underwear Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undie_color;task=input'>[undie_color]</a>"
 			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
+			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[undershirt]
+			if(T?.has_color)
+				dat += "<b>Undershirt Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=shirt_color;task=input'>[shirt_color]</a>"
 			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
+			var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[socks]
+			if(S?.has_color)
+				dat += "<b>Socks Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks_color;task=input'>[socks_color]</a>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"
 			dat += "</td>"
@@ -1507,28 +1519,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					bgstate = next_list_item(bgstate, bgstate_options)
 
 				if("underwear")
-					var/new_underwear
-					if(gender == MALE)
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_m
-					else
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_f
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
 					if(new_underwear)
 						underwear = new_underwear
 
+				if("undie_color")
+					var/n_undie_color = input(user, "Choose your underwear's color.", "Character Preference", undie_color) as color|null
+					if(n_undie_color)
+						undie_color = n_undie_color
+
 				if("undershirt")
-					var/new_undershirt
-					if(gender == MALE)
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_m
-					else
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_f
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
 					if(new_undershirt)
 						undershirt = new_undershirt
 
+				if("shirt_color")
+					var/n_shirt_color = input(user, "Choose your undershirt's color.", "Character Preference", shirt_color) as color|null
+					if(n_shirt_color)
+						shirt_color = n_shirt_color
+
 				if("socks")
-					var/new_socks
-					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
 					if(new_socks)
 						socks = new_socks
+
+				if("socks_color")
+					var/n_socks_color = input(user, "Choose your socks' color.", "Character Preference", socks_color) as color|null
+					if(n_socks_color)
+						socks_color = n_socks_color
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
@@ -2246,11 +2264,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.hair_style = hair_style
 	character.facial_hair_style = facial_hair_style
 	character.underwear = underwear
+
 	character.saved_underwear = underwear
 	character.undershirt = undershirt
 	character.saved_undershirt = undershirt
 	character.socks = socks
 	character.saved_socks = socks
+	character.undie_color = undie_color
+	character.shirt_color = shirt_color
+	character.socks_color = socks_color
+
 
 	character.backbag = backbag
 
