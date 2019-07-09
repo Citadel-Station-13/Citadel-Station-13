@@ -243,7 +243,6 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throwforce = 14
 	throw_speed = 5
 	throw_range = 10
-	can_rubberify = FALSE
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -262,7 +261,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/gold_fake // used in crafting
 	name = "golden toolbox"
-	desc = "A gold plated toolbox, fancy and harmless do to the gold plating being on cardboard!"
+	desc = "A gold plated toolbox, fancy and harmless due to the gold plating being on cardboard!"
 	icon_state = "gold"
 	item_state = "gold"
 	has_latches = FALSE
