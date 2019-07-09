@@ -75,6 +75,7 @@
 	description = "A strange substance that draws in a hat from the hat dimention."
 	color = "#7c311a" // rgb: , 0, 255
 	taste_description = "like jerky, whiskey and an off aftertaste of a crypt."
+	metabolization_rate = 0.2
 	overdose_threshold = 25
 	DoNotSplit = TRUE
 	pH = 4

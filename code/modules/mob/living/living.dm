@@ -324,6 +324,8 @@
 	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
 		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
 		if(E.phase < 3)
+			if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
+				to_chat(src, "<span class='notice'>Your mindshield prevents your mind from giving in!</span>")
 			E.enthrallTally += 50
 			to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
 	if (InCritical())

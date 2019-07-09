@@ -288,7 +288,7 @@
 				else
 					to_chat(owner, "<span class='big velvet'><i>Your conciousness slips, as you feel more drawn to following [master].</i></span>")
 
-			else if (resistanceTally > 150)
+			else if (resistanceTally > 125)
 				phase = -1
 				to_chat(owner, "<span class='warning'><i>You break free of the influence in your mind, your thoughts suddenly turning lucid!</i></span>")
 				if(DistApart < 10)
