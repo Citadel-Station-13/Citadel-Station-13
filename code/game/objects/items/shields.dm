@@ -175,4 +175,5 @@
 	force = 10
 	slowdown = 2
 	throwforce = 15 //Massive pice of metal
+	item_flags = SLOWS_WHILE_IN_HAND
 	w_class = WEIGHT_CLASS_HUGE
