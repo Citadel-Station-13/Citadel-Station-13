@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - rscadd: "Traitor codewords are now highlighted for traitors."

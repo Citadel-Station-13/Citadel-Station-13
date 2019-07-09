@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by ShizCalev, MrDoombringer, AnturK, bgobandit, 81Denton and actioninja)"
+delete-after: True
+changes: 
+  - rscadd: "Failsafe codes for uplinks are now available for purchase."
+  - rscadd: "Nuke Ops now have the ability to purchase a usable RPG, the PML-9, as well as a couple different types of rockets for it. you can also suicide rocket jump with them!"
+  - spellcheck: "Improved Uplink item descriptions and formatting."

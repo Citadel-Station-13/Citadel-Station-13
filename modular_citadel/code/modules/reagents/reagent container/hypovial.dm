@@ -16,6 +16,7 @@
 						"purple hypovial" = "hypovial-p",
 						"black hypovial" = "hypovial-t"
 						)
+	always_reskinnable = TRUE
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -28,17 +29,6 @@
 
 /obj/item/reagent_containers/glass/bottle/vial/on_reagent_change()
 	update_icon()
-
-/obj/item/reagent_containers/glass/bottle/vial/reskin_obj(mob/M) //Makes the vials completely reskinnable, and renames them - overrides /obj/proc/reskin_obj
-	if(!LAZYLEN(unique_reskin))
-		return
-	var/choice = input(M,"Do you wish to recolour your [src]?","Vial Recolour") as null|anything in unique_reskin
-	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(!unique_reskin[choice])
-			return
-		icon_state = unique_reskin[choice]
-		name = choice
-		to_chat(M, "[src] is now skinned as '[choice].'")
 
 /obj/item/reagent_containers/glass/bottle/vial/update_icon()
 	cut_overlays()

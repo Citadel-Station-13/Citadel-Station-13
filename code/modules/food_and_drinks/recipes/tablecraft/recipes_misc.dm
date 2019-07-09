@@ -116,13 +116,22 @@
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/slime
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/jelliedyoast
+/datum/crafting_recipe/food/jelliedtoast
 	name = "Jellied toast"
 	reqs = list(
 		/datum/reagent/consumable/cherryjelly = 5,
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/jelliedtoast/cherry
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/peanutbuttertoast
+	name = "Peanut butter toast"
+	reqs = list(
+		/datum/reagent/consumable/peanut_butter = 5,
+		/obj/item/reagent_containers/food/snacks/breadslice/plain = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/peanut_buttertoast
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
