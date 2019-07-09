@@ -225,7 +225,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/magrifle
-	click_cd_override = 3
+	click_cooldown_override = 3
 	delay = 3
 
 /obj/item/ammo_casing/caseless/anlmagm
@@ -234,7 +234,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "mag-casing-live"
 	projectile_type = /obj/item/projectile/bullet/nlmagrifle
-	click_cd_override = 3
+	click_cooldown_override = 3
 	delay = 3
 
 ///magazines///

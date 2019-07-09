@@ -58,12 +58,10 @@
 	var/mob/living/carbon/human/user = usr
 	select = !select
 	if(!select)
-		burst_size = 1
-		fire_delay = 0
+		disable_burst()
 		to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
 	else
-		burst_size = initial(burst_size)
-		fire_delay = initial(fire_delay)
+		enable_burst()
 		to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
@@ -71,6 +69,14 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/gun/ballistic/automatic/proc/enable_burst()
+	burst_size = initial(burst_size)
+	fire_delay = initial(fire_delay)
+
+/obj/item/gun/ballistic/automatic/proc/disable_burst()
+	burst_size = 1
+	fire_delay = 0
 
 /obj/item/gun/ballistic/automatic/can_shoot()
 	return get_ammo()
@@ -118,13 +124,20 @@
 	icon_state = "wt550"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 2
+	fire_delay = 4
 	can_suppress = FALSE
-	burst_size = 0
-	actions_types = list()
+	burst_size = 2
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
+
+/obj/item/gun/ballistic/automatic/wt550/enable_burst()
+	. = ..()
+	spread = 5
+
+/obj/item/gun/ballistic/automatic/wt550/disable_burst()
+	. = ..()
+	spread = 0
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
