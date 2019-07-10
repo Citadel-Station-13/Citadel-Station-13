@@ -251,6 +251,12 @@
 	jitter = FALSE
 	brain_damage = FALSE
 
+/datum/reagent/drug/methamphetamine/nanite
+	id = "nanitemeth"
+	name = "Stimulant Nanites"
+	brain_damage = FALSE
+	jitter = TRUE
+
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
