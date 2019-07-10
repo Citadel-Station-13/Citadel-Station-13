@@ -2248,6 +2248,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"fR" = (
+/obj/item/paicard,
+/obj/structure/table/wood,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2935,6 +2940,22 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
+"hH" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/seclite,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/paicard,
+/turf/open/floor/plasteel/dark,
+/area/centcom/ferry)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -11369,21 +11390,6 @@
 /obj/item/stamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/grimy,
-/area/centcom/ferry)
-"AL" = (
-/obj/structure/table/reinforced,
-/obj/item/flashlight/seclite,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "AM" = (
 /obj/machinery/shuttle_manipulator,
@@ -25222,7 +25228,7 @@ lI
 lI
 lI
 Ax
-qZ
+EW
 qZ
 qZ
 Ax
@@ -25480,7 +25486,7 @@ lI
 lI
 Ax
 ra
-qZ
+Bf
 qZ
 tX
 qZ
@@ -25736,7 +25742,7 @@ lI
 lI
 lI
 Ax
-qZ
+fR
 qZ
 qZ
 Ax
@@ -56332,7 +56338,7 @@ yr
 sw
 sw
 Ad
-AL
+hH
 Bx
 sw
 Cv

@@ -167,7 +167,7 @@
 				return
 
 		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
-		if(MS?.attack_ghost(src, latejoinercalling = TRUE))
+		if(MS.attack_ghost(src, latejoinercalling = TRUE))
 			SSticker.queued_players -= src
 			SSticker.queue_delay = 4
 			qdel(src)
@@ -477,6 +477,11 @@
 
 	var/available_ghosts = 0
 	for(var/spawner in GLOB.mob_spawners)
+    if(!LAZYLEN(spawner))
+			continue
+		var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
+		if(!istype(S) || !S.can_latejoin())
+			continue
 		available_ghosts++
 		break
 
@@ -486,10 +491,12 @@
 		dat += "<div class='clearBoth'>Currently open Ghost roles:</div><br>"
 		var/list/categorizedJobs = list("Ghost Role" = list(jobs = list(), titles = GLOB.mob_spawners, color = "#ffffff"))
 		for(var/spawner in GLOB.mob_spawners)
+			if(!LAZYLEN(spawner))
+				continue
 			var/obj/effect/mob_spawn/S = pick(GLOB.mob_spawners[spawner])
 			if(!istype(S) || !S.can_latejoin())
 				continue
-			categorizedJobs["Ghost Role"]["jobs"] += S
+			categorizedJobs["Ghost Role"]["jobs"] += spawner
 
 		dat += "<table><tr><td valign='top'>"
 		for(var/jobcat in categorizedJobs)

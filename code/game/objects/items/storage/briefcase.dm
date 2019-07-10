@@ -68,9 +68,8 @@
 	..()
 
 /obj/item/storage/briefcase/sniperbundle
-	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
+	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
-
 /obj/item/storage/briefcase/sniperbundle/PopulateContents()
 	..() // in case you need any paperwork done after your rampage
 	new /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate(src)
@@ -82,7 +81,7 @@
 
 
 /obj/item/storage/briefcase/modularbundle
-	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding."
+	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding."
 	force = 10
 
 /obj/item/storage/briefcase/modularbundle/PopulateContents()
