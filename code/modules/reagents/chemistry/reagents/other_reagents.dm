@@ -266,7 +266,6 @@
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
-	var/healtoxinlover = TRUE
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -281,7 +280,7 @@
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
 		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0, healtoxinlover)
+		M.adjustToxLoss(-2, 0, TRUE)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
