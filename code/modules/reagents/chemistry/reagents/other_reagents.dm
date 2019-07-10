@@ -336,10 +336,10 @@
 		M.AdjustStun(10, 0)
 		M.AdjustKnockdown(20, 0)
 		M.adjustStaminaLoss(15, 0)
-		else	//Were not mean
-			M.adjustToxLoss(3, 0)
-			M.adjustOxyLoss(2, 0)
-			M.adjustStaminaLoss(10, 0)
+	else	//Were not mean
+		M.adjustToxLoss(3, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustStaminaLoss(10, 0)
 	holder.remove_reagent(id, 1)
 	return TRUE
 
