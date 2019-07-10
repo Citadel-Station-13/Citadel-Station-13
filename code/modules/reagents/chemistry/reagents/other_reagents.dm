@@ -211,7 +211,7 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A bright light cleans your mind of the darkness of corruption!</span>")
+		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connect to the viel and purging your mind of Nar-sen's influence</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
