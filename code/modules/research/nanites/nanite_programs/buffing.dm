@@ -29,13 +29,7 @@
 	if(!..())
 		return
 	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	host_mob.SetStun(0)
-	host_mob.SetKnockdown(0)
-	host_mob.SetUnconscious(0)
-	host_mob.adjustStaminaLoss(-10) //stimulants give stamina heal now
-	host_mob.lying = 0
-	host_mob.update_canmove()
-	host_mob.reagents.add_reagent("stimulants", 1.5)
+	host_mob.do_adrenaline(150, FALSE, 0, 0, TRUE, list("nanitemeth" = 5), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
