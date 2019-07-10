@@ -317,7 +317,7 @@
 /datum/reagent/fuel/holyoil		//Its oil
 	name = "Zelus Oil"
 	id = "holyoil"
-	description = "Oil blessed by a grater being."
+	description = "Oil blessed by a greater being."
 	taste_description = "metallic oil"
 
 /datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
@@ -336,16 +336,17 @@
 		M.AdjustStun(10, 0)
 		M.AdjustKnockdown(20, 0)
 		M.adjustStaminaLoss(15, 0)
-	else	//Were not mean
-		M.adjustToxLoss(3, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustStaminaLoss(10, 0)
+		else	//Were not mean
+			M.adjustToxLoss(3, 0)
+			M.adjustOxyLoss(2, 0)
+			M.adjustStaminaLoss(10, 0)
 	holder.remove_reagent(id, 1)
 	return TRUE
 
 //We only get 30u to start with...
 
 /datum/reagent/fuel/holyoil/reaction_obj(obj/O, reac_volume)
+	. = ..() 
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)
