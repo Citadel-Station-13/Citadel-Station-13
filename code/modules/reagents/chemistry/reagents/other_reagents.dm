@@ -195,6 +195,7 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	healtoxinlover = TRUE
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
