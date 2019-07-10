@@ -204,7 +204,7 @@
 
 /obj/item/reagent_containers/food/drinks/holyoil
 	name = "flask of zelus oil"
-	desc = "A brass flask of the zelus oil."
+	desc = "A brass flask of Zelus oil, a viscous fluid with a scenting of brass - this flask may be sipped or thrown."
 	icon_state = "zelusflask"
 	list_reagents = list("holyoil" = 30) //Powerfull
 	volume = 30

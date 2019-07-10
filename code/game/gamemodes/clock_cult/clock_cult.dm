@@ -338,10 +338,10 @@ Credit where due:
 	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
-	<li><b>Brass Flasks:</b> These contain 30u of Zelus oil, this oil can be used to help stun people, and more son on Blood Cult\
-	It can also be used to splash onto metal to make brass. Grinding bass will give you some oil back as well.\
-	You can make more brass flasks to be used as throwing weaponds if you so wish, these will not have any oil in them. They have one throw before braking making them rather useless.\
-	Lastly the oil can be drank for a bost in combat, gives you stamina as well as heals quickly!\
+	<li><b>Zelus oil:</b> A new reagent. It can be used to heal the faithful to Ratvar, or kill heretics and moreso stun blood cultists,\
+	or splashed onto metal sheets to make brass. This chemical can be found in minimal quantities by grinding brass sheets.\
+	<li><b>Brass Flasks:</b>Intended to store Zelus Oil in, but can also be used as fragile single use throwing weapons in a pinch! \
+	These are crafted with a single sheet of brass and fit in the Clockwork Cuirass' suit storage.\
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()

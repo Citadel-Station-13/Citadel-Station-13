@@ -211,7 +211,7 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connect to the viel and purging your mind of Nar-sen's influence</span>")
+		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
@@ -318,7 +318,7 @@
 	name = "Zelus Oil"
 	id = "holyoil"
 	description = "Oil blessed by a grater being."
-	taste_description = "oils"
+	taste_description = "metallic oil"
 
 /datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
 	if(is_servant_of_ratvar(M))
@@ -327,7 +327,7 @@
 		M.AdjustStun(-30, 0)
 		M.AdjustKnockdown(-70, 0)
 		M.adjustStaminaLoss(-15, 0)
-		M.adjustToxLoss(-5, 0)
+		M.adjustToxLoss(-5, 0, TRUE)
 		M.adjustOxyLoss(-3, 0)
 		M.adjustBruteLoss(-3, 0)
 		M.adjustFireLoss(-5, 0)
