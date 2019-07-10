@@ -46,11 +46,11 @@
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
 	desc = "Nanites will consume organic matter to improve their replication rate, damaging the host. The efficiency increases with the volume of nanites, requiring 200 to break even."
-	use_rate = 1
+	use_rate = 0
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/aggressive_replication/active_effect()
-	var/extra_regen = round(nanites.nanite_volume / 200, 0.1)
+	var/extra_regen = round(nanites.nanite_volume / 50, 0.1)
 	nanites.adjust_nanites(extra_regen)
 	host_mob.adjustBruteLoss(extra_regen / 2, TRUE)
 
