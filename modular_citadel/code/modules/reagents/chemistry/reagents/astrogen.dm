@@ -18,13 +18,14 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
-	taste_description = "velvety brambles"
+	taste_description = "your mind"
 	metabolization_rate = 0//Removal is exponential, see code
 	overdose_threshold = 20
 	addiction_threshold = 24.5
 	addiction_stage1_end = 9999//Should never end. There is no escape make your time
 	var/mob/living/carbon/origin
-	var/mob/living/simple_animal/hostile/retaliate/ghost/G = null
+	var/mob/living/simple_animal/astral/G = null
+	var/datum/mind/originalmind
 	var/antiGenetics = 255
 	var/sleepytime = 0
 	InverseChemVal = 0.25
@@ -41,39 +42,34 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 
 /datum/reagent/fermi/astral/on_mob_life(mob/living/M) // Gives you the ability to astral project for a moment!
 	M.alpha = 255
+	originalmind = M.mind
 	if(current_cycle == 0)
 		log_game("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
 		origin = M
 		if (G == null)
 			G = new(get_turf(M.loc))
-		G.attacktext = "raises the hairs on the neck of"
-		G.response_harm = "disrupts the concentration of"
-		G.response_disarm = "wafts"
-		G.loot = null
-		G.maxHealth = 5
-		G.health = 5
-		G.melee_damage_lower = 0
-		G.melee_damage_upper = 0
-		G.obj_damage = 0
-		G.deathmessage = "disappears as if it was never really there to begin with"
-		G.incorporeal_move = 1
-		G.alpha = 35
 		G.name = "[M]'s astral projection"
 		var/datum/action/chem/astral/AS = new(G)
 		AS.origin = M
 		AS.ghost = G
 		M.mind.transfer_to(G)
-		sleepytime = 15*volume
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral projections")
 	if(overdosed)
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
 	M.reagents.remove_reagent(id, current_cycle/2, FALSE)//exponent
+	sleepytime+=5
+	if(G.stat == DEAD || !G || G.pseudo_death == TRUE)
+		originalmind.transfer_to(M)
+		M.Sleeping(10, 0)
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
-	G.mind.transfer_to(origin)
+	if(!G)
+		originalmind.transfer_to(M)
+	else
+		G.mind.transfer_to(origin)
 	qdel(G)
 	if(overdosed)
 		to_chat(M, "<span class='warning'>The high volume of Astrogren you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
@@ -86,7 +82,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(addiction_stage < 2)
 		antiGenetics = 255
 		M.alpha = 255 //Antigenetics is to do with stopping geneticists from turning people invisible to kill them.
-	if(prob(65))
+	if(prob(70))
 		M.alpha--
 		antiGenetics--
 	switch(antiGenetics)
@@ -99,6 +95,11 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
 			M.alpha--
 			antiGenetics--
+		if(200)
+			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
+			M.alpha--
+			antiGenetics--
+			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(180)
 			to_chat(M, "<span class='notice'>You feel fear build up in yourself as more and more of your body and consciousness begins to fade.</b></span>")
 			M.alpha--
@@ -107,11 +108,6 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='notice'>As you lose more and more of yourself, you start to think that maybe shedding your mortality isn't too bad.</b></span>")
 			M.alpha--
 			antiGenetics--
-		if(100)
-			to_chat(M, "<span class='notice'>You feel a substantial part of your soul flake off into the ethereal world, rendering yourself unclonable.</b></span>")
-			M.alpha--
-			antiGenetics--
-			ADD_TRAIT(M, TRAIT_NOCLONE, "astral") //So you can't scan yourself, then die, to metacomm. You can only use your memories if you come back as something else.
 		if(80)
 			to_chat(M, "<span class='notice'>You feel a thrill shoot through your body as what's left of your mind contemplates your forthcoming oblivion.</b></span>")
 			M.alpha--

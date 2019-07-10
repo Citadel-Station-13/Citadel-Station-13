@@ -1929,7 +1929,7 @@
 /datum/reagent/moonsugar/on_mob_life(mob/living/carbon/M)
 	if(prob(20))
 		to_chat(M, "You find yourself unable to supress the desire to meow!")
-		M.emote("*nya")
+		M.emote("nya")
 	..()
 
 //Kept for legacy, I think it will break everything if you enable it.
