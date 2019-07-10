@@ -275,7 +275,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
+	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1, /obj/item/reagent_containers/food/drinks/holyoil = 1)
 	id = /obj/item/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -338,6 +338,10 @@ Credit where due:
 	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
+	<li><b>Brass Flasks:</b> These contain 30u of Zelus oil, this oil can be used to help stun people, and more son on Blood Cult\
+	It can also be used to splash onto metal to make brass. Grinding bass will give you some oil back as well.\
+	You can make more brass flasks to be used as throwing weaponds if you so wish, these will not have any oil in them. They have one throw before braking making them rather useless.\
+	Lastly the oil can be drank for a bost in combat, gives you stamina as well as heals quickly!\
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()

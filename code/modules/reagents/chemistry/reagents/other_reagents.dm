@@ -206,7 +206,12 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
-		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
+		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
+	..()
+
+/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscultist(M))
+		to_chat(M, "<span class='userdanger'>A bright light cleans your mind of the darkness of corruption!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
@@ -308,6 +313,44 @@
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5, 150)
 	holder.remove_reagent(id, 1)
+
+/datum/reagent/fuel/holyoil		//Its oil
+	name = "Zelus Oil"
+	id = "holyoil"
+	description = "Oil blessed by a grater being."
+	taste_description = "oils"
+
+/datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
+	if(is_servant_of_ratvar(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustUnconscious(-60, 0)
+		M.AdjustStun(-30, 0)
+		M.AdjustKnockdown(-70, 0)
+		M.adjustStaminaLoss(-15, 0)
+		M.adjustToxLoss(-5, 0)
+		M.adjustOxyLoss(-3, 0)
+		M.adjustBruteLoss(-3, 0)
+		M.adjustFireLoss(-5, 0)
+	if(iscultist(M))// We REALLY hate blood cult
+		M.AdjustUnconscious(1, 0)
+		M.AdjustStun(10, 0)
+		M.AdjustKnockdown(20, 0)
+		M.adjustStaminaLoss(15, 0)
+	else	//Were not mean
+		M.adjustToxLoss(3, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustStaminaLoss(10, 0)
+	holder.remove_reagent(id, 1)
+	return TRUE
+
+//We only get 30u to start with...
+
+/datum/reagent/fuel/holyoil/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
+		reac_volume = min(reac_volume, M.amount)
+		new/obj/item/stack/tile/brass(get_turf(M), reac_volume)
+		M.use(reac_volume)
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
