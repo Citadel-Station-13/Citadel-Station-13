@@ -280,7 +280,7 @@
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
 		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0)
+		M.adjustToxLoss(-2, 0, healtoxinlover)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
