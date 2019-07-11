@@ -755,12 +755,23 @@
 
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
-	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and maks!"
+	desc = "Poly 'Who stole all the hardsuits!' Well now you can get more hardsuits if needed! NOTE ONE HARDSUIT IS IN THIS CRATE, as well as one air tank and mask!"
 	cost = 2500
 	contains = list(/obj/item/tank/internals/air,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
+
+/datum/supply_pack/engineering/atmoshardsuit
+	name = "Atmospherics Hardsuit"
+	desc = "Too many techs and not enough hardsuits? Time to buy some more! Comes with gas mask and air tank. Ask the CE to open."
+	cost = 5000
+	access = ACCESS_CE
+	contains = list(/obj/item/tank/internals/air,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/suit/space/hardsuit/engine/atmos)
+	crate_name = "atmospherics hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/industrialrcd
 	name = "Industrial RCD"
@@ -1146,7 +1157,7 @@
 /datum/supply_pack/materials/bz
 	name = "BZ Canister Crate"
 	desc = "Contains a canister of BZ. Requires Toxins access to open."
-	cost = 5000
+	cost = 7500 // Costs 3 credits more than what you can get for selling it.
 	access = ACCESS_TOX_STORAGE
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "BZ canister crate"
@@ -1949,6 +1960,17 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/mre
+	name = "MRE supply kit (emergency rations)"
+	desc = "The lights are out. Oxygen's running low. You've run out of food except space weevils. Don't let this be you! Order our NT branded MRE kits today! This pack contains 5 MRE packs with a randomized menu and an oxygen tank."
+	cost = 2000
+	contains = list(/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu1/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu2/safe,
+					/obj/item/storage/box/mre/menu3)
+	crate_name = "MRE crate (emergency rations)"
+
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
@@ -2241,7 +2263,8 @@
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft)
+					/obj/item/vending_refill/donksoft,
+					/obj/item/circuitboard/computer/arcade/amputation)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce
@@ -2693,6 +2716,7 @@
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/clothing/head/kitty/genuine, // Why its illegal
 					/obj/item/clothing/head/kitty/genuine,
+					/obj/item/storage/pill_bottle/penis_enlargement,
 					/obj/structure/reagent_dispensers/keg/aphro)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
@@ -2726,6 +2750,19 @@
 					/obj/item/pen/fountain,
 					/obj/item/pen/fountain)
 	crate_name = "Paperwork"
+
+/datum/supply_pack/misc/randomised/promiscuous
+	name = "Promiscuous Organs"
+	desc = "Do YOU want to have more genital? Well we have just the thing for you~. This crate has two autosurgeon, that will let you have a new sex, organ to impress that hot stud and or chick."
+	cost = 4000 //Only get 2!
+	contraband = TRUE
+	var/num_contained = 2
+	contains = list(/obj/item/autosurgeon/penis,
+					/obj/item/autosurgeon/testicles,
+					/obj/item/autosurgeon/vagina,
+					/obj/item/autosurgeon/breasts,
+					/obj/item/autosurgeon/womb)
+	crate_name = "promiscuous organs"
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

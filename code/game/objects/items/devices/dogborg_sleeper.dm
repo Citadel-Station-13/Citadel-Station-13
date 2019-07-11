@@ -17,7 +17,7 @@
 	var/eject_port = "ingestion"
 	var/escape_in_progress = FALSE
 	var/message_cooldown
-	var/breakout_time = 300
+	var/breakout_time = 150
 	var/tmp/last_hearcheck = 0
 	var/tmp/list/hearing_mobs
 	var/list/items_preserved = list()
@@ -77,7 +77,7 @@
 		to_chat(user, "<span class='warning'>Your [src] is already occupied.</span>")
 		return
 	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
-	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 50, target = target))
+	if(!patient && iscarbon(target) && !target.buckled && do_after (user, 100, target = target))
 
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 			return //If they moved away, you can't eat them.
@@ -420,6 +420,7 @@
 	desc = "Equipment for medical hound. A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "sleeper"
+	breakout_time = 30 //Medical sleepers should be designed to be as easy as possible to get out of.
 
 /obj/item/dogborg/sleeper/K9 //The K9 portabrig
 	name = "Mobile Brig"
@@ -429,6 +430,7 @@
 	inject_amount = 0
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
+	breakout_time = 300
 
 /obj/item/storage/attackby(obj/item/dogborg/sleeper/K9, mob/user, proximity)
 	if(istype(K9))

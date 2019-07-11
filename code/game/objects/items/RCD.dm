@@ -414,10 +414,12 @@ RLD
 		return FALSE
 	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 		if(checkResource(rcd_results["cost"], user))
+			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
 				useResource(rcd_results["cost"], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				investigate_log("[user] used [src] on [cached] (now [A]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
+				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
 
 /obj/item/construction/rcd/Initialize()
@@ -622,6 +624,7 @@ RLD
 	sheetmultiplier = 16
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
+	ammo_sections = 5
 
 	var/wallcost = 10
 	var/floorcost = 15
@@ -642,7 +645,7 @@ RLD
 		..()
 
 /obj/item/construction/rld/update_icon()
-	icon_state = "rld-[round(matter/35)]"
+	icon_state = "rld-[round((matter/max_matter) * 5, 1)]"
 	..()
 
 

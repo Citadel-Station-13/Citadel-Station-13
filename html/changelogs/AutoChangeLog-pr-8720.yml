@@ -1,0 +1,4 @@
+author: "Ghommie (Credits to Kmc2000 for the original PR)"
+delete-after: True
+changes: 
+  - rscadd: "Porting in MRE boxes from Yogstation. But be careful, eating possibly expired MREs found in maintenance comes with an unrealistically large (actually small) chance of food poisoning. Otherwise just bail out and order actually safe-to-eat MREs from cargo for 2000 credits."

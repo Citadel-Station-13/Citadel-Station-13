@@ -596,6 +596,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
+/obj/item/guardiancreator/tech/choose/traitor/check_uplink_validity()
+	return !used
+
 /obj/item/guardiancreator/tech/choose
 	random = FALSE
 
