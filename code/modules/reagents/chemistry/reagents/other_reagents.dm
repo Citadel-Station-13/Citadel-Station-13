@@ -331,16 +331,16 @@
 		M.adjustOxyLoss(-3, 0)
 		M.adjustBruteLoss(-3, 0)
 		M.adjustFireLoss(-5, 0)
-	else if(iscultist(M))
-			M.AdjustUnconscious(1, 0)
-			M.AdjustStun(10, 0)
-			M.AdjustKnockdown(20, 0)
-			M.adjustStaminaLoss(15, 0)
+	if(iscultist(M))
+		M.AdjustUnconscious(1, 0)
+		M.AdjustStun(10, 0)
+		M.AdjustKnockdown(20, 0)
+		M.adjustStaminaLoss(15, 0)
 	else
 		M.adjustToxLoss(3, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustStaminaLoss(10, 0)
-	holder.remove_reagent(id, 1)
+		holder.remove_reagent(id, 1)
 	return TRUE
 
 //We only get 30u to start with...
