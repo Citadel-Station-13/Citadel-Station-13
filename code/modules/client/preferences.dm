@@ -677,16 +677,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Clothing & Equipment</h2>"
 			dat += "<b>Underwear:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a>"
-			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[underwear]
-			if(B?.has_color)
+			if(UNDIE_COLORABLE(GLOB.underwear_list[underwear]))
 				dat += "<b>Underwear Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undie_color;task=input'>[undie_color]</a>"
 			dat += "<b>Undershirt:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a>"
-			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[undershirt]
-			if(T?.has_color)
+			if(UNDIE_COLORABLE(GLOB.undershirt_list[undershirt]))
 				dat += "<b>Undershirt Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=shirt_color;task=input'>[shirt_color]</a>"
 			dat += "<b>Socks:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks;task=input'>[socks]</a>"
-			var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[socks]
-			if(S?.has_color)
+			if(UNDIE_COLORABLE(GLOB.socks_list[socks]))
 				dat += "<b>Socks Color:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=socks_color;task=input'>[socks_color]</a>"
 			dat += "<b>Backpack:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a>"
 			dat += "<b>Uplink Location:</b><a style='display:block;width:100px' href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a>"

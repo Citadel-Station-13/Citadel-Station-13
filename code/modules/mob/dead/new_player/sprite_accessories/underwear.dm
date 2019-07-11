@@ -131,18 +131,14 @@
 	name = "Swimsuit, One Piece - Striped Blue"
 	icon_state = "swimming_blue"
 
-/datum/sprite_accessory/underwear/bottom/swimsuit_green
-	name = "Swimsuit, Bottom - Green"
-	icon_state = "panties_swimming_green"
-
 /datum/sprite_accessory/underwear/bottom/thong
 	name = "Thong"
 	icon_state = "thong"
 	has_color = TRUE
 
 /datum/sprite_accessory/underwear/bottom/thong_babydoll
-	name = "Thong - Babydoll"
-	icon_state = "babydoll"
+	name = "Thong - Alt"
+	icon_state = "thong_babydoll"
 	has_color = TRUE
 
 

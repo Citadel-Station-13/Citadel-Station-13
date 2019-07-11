@@ -186,6 +186,11 @@
 	name = "Tank top - Sun"
 	icon_state = "tank_sun"
 
+/datum/sprite_accessory/underwear/top/babydoll
+	name = "Baby-Doll"
+	icon_state = "babydoll"
+	has_color = TRUE
+
 /datum/sprite_accessory/underwear/top/bra
 	name = "Bra"
 	icon_state = "bra"
