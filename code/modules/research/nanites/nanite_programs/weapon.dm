@@ -50,9 +50,9 @@
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/aggressive_replication/active_effect()
-	var/extra_regen = round(nanites.nanite_volume / 25, 0.1)
+	var/extra_regen = round(nanites.nanite_volume / 50, 0.1)
 	nanites.adjust_nanites(src, extra_regen)
-	host_mob.adjustBruteLoss(extra_regen / 4, TRUE)
+	host_mob.adjustBruteLoss(extra_regen / 3, TRUE)
 
 /datum/nanite_program/meltdown
 	name = "Meltdown"
