@@ -170,8 +170,6 @@
 
 /datum/component/nanites/proc/on_emp(datum/source, severity)
 	adjust_nanites(null, -(nanite_volume * 0.3 + 50))		//Lose 30% variable and 50 flat nanite volume.
-	if(prob(40/severity))
-		cloud_id = 0
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_emp(severity)
@@ -183,7 +181,7 @@
 		NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
-	adjust_nanites(null, -15)
+	adjust_nanites(null, -25)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
