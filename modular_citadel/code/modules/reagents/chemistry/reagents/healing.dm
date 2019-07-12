@@ -75,7 +75,7 @@
 	if(T)
 		T.adjustTongueLoss(C, 1)
 	if(L)
-		L.adjustLungLoss(2.5, C)
+		L.adjustLungLoss(4, C)
 		C.adjustOxyLoss(2)
 	else
 		C.adjustOxyLoss(10)

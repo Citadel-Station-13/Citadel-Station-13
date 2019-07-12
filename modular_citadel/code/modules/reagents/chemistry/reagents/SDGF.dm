@@ -68,11 +68,10 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
-				candies = pollGhostCandidates("Do you want to play as a clone and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you.")
+				candies = pollGhostCandidates("Do you want to play as a clone of [M], and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you and it will likely earn you a bwoink.")
 				log_game("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
 		if(20 to INFINITY)
 			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
-				message_admins("Ghost candidate found! [candies] is becoming a clone of [M]! Hee~!! Exciting!!")
 				log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [candies]")
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
@@ -83,6 +82,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					M.dna.transfer_identity(SM)
 					SM.updateappearance(mutcolor_update=1)
 				var/mob/dead/observer/C = pick(candies)
+				message_admins("Ghost candidate found! [C] is becoming a clone of [M] (They agreed to respect the character they're becoming. If they don't, then they agreed to a a bwoinking.) (Hee~!! Exciting!!)")
 				SM.key = C.key
 				SM.mind.enslave_mind_to_creator(M)
 
