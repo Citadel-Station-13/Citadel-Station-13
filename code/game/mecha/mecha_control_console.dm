@@ -22,6 +22,7 @@
 			if(answer)
 				dat += {"<hr>[answer]<br/>
 						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
+						<a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a><br/>
 						[TR.recharging?"Recharging EMP Pulse...<br>":"<a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"]"}
 
 	if(screen==1)
