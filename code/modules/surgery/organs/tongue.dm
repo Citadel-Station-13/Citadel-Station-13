@@ -256,7 +256,7 @@
 	if(prob(20))
 		message +=  pick(" OwO", " uwu")
 	message = lowertext(message)
-	return message
+	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/cybernetic
 	name = "cybernetic tongue"

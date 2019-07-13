@@ -83,8 +83,8 @@
 	return message
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
-  if(HAS_TRAIT(owner, TRAIT_FEARLESS))
-		return message
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
 	for(var/word in trigger_words)
 		var/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
 
