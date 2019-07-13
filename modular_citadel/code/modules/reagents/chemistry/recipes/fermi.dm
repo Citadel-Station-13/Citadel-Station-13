@@ -266,10 +266,12 @@
 /datum/chemical_reaction/fermi/enthrall/FermiFinish(datum/reagents/holder, var/atom/my_atom)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in my_atom.reagents.reagent_list
 	var/datum/reagent/fermi/enthrall/E = locate(/datum/reagent/fermi/enthrall) in my_atom.reagents.reagent_list
+	if(!B)
+		return
 	if(!B.data)
 		var/list/seen = viewers(5, get_turf(my_atom))
 		for(var/mob/M in seen)
-			to_chat(M, "<span class='warning'>The reaction splutters and fails to react.</span>") //Just in case
+			to_chat(M, "<span class='warning'>The reaction splutters and fails to react properly.</span>") //Just in case
 			E.purity = 0
 	if (B.data.["gender"] == "female")
 		E.data.["creatorGender"] = "Mistress"
