@@ -25,7 +25,6 @@
 
 /datum/gear/plushrng
 	name = "Random plushie"
-	desc = "A Random Plushie."
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/toy/plush/random
 
