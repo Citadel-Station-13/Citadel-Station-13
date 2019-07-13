@@ -241,8 +241,10 @@
 	icon_state = "tonguefluffy"
 	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
 	maxHealth = 35 //Sensitive tongue!
+	modifies_speech = TRUE
 
-/obj/item/organ/tongue/fluffy/TongueSpeech(var/message)
+/obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(copytext(message, 1, 2) != "*")
 		message = replacetext(message, "ne", "nye")
 		message = replacetext(message, "nu", "nyu")
