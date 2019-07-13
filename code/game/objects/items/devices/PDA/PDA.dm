@@ -68,7 +68,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
-	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant! To help with navigation, we have provided the following definitions. North: Fore. South: Aft. West: Port. East: Starboard. Quarter is either side of aft." //Current note in the notepad function
@@ -123,7 +122,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		inserted_item = new inserted_item(src)
 	else
 		inserted_item =	new /obj/item/pen(src)
-	update_icon()
+	update_icon(FALSE, TRUE)
 
 /obj/item/pda/CtrlShiftClick(mob/living/user)
 	. = ..()
@@ -144,8 +143,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(QDELETED(src) || isnull(new_icon) || new_icon == icon || M.incapacitated() || !in_range(M,src))
 		return
 	icon = new_icon
-	set_new_overlays()
-	update_icon()
+	update_icon(FALSE, TRUE)
 	to_chat(M, "[src] is now skinned as '[choice]'.")
 
 /obj/item/pda/proc/set_new_overlays()
@@ -187,8 +185,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/pref_skin = GLOB.pda_reskins[user.client.prefs.pda_skin]
 		if(icon != pref_skin)
 			icon = pref_skin
-			set_new_overlays()
-			update_icon()
+			update_icon(FALSE, TRUE)
 		equipped = TRUE
 
 /obj/item/pda/proc/update_label()
@@ -203,7 +200,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/GetID()
 	return id
 
-/obj/item/pda/update_icon(alert = FALSE)
+/obj/item/pda/update_icon(alert = FALSE, new_overlays = FALSE)
+	if(new_overlays)
+		set_new_overlays()
 	cut_overlays()
 	add_overlay(alert ? current_overlays[PDA_OVERLAY_ALERT] : current_overlays[PDA_OVERLAY_SCREEN])
 	var/mutable_appearance/overlay = new()

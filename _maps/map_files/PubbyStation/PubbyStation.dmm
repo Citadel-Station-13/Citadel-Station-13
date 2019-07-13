@@ -2,12 +2,44 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm3Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/wood,
+/area/crew_quarters/dorms)
+"aac" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm2Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/science)
+"aae" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Dorm1Shutters";
+	name = "Privacy Shutters Control";
+	pixel_y = 26;
+	req_access_txt = "0"
+	},
+/obj/effect/spawner/lootdrop/bedsheet,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/dorms)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -8605,16 +8637,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
-"ave" = (
-/obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
-/obj/machinery/button/door{
-	id = "Dorm3Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "avf" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -10057,17 +10079,6 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"ayj" = (
-/obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
-/obj/machinery/button/door{
-	id = "Dorm2Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayk" = (
 /obj/machinery/light/small{
@@ -11515,17 +11526,6 @@
 	name = "Dorm Shutters"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"aBM" = (
-/obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
-/obj/machinery/button/door{
-	id = "Dorm1Shutters";
-	name = "Privacy Shutters Control";
-	pixel_y = 26;
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aBN" = (
 /obj/machinery/light/small{
@@ -17294,7 +17294,7 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/obj/item/clothing/gloves/color/random,
+/obj/effect/spawner/lootdrop/gloves,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "aPD" = (
@@ -21743,7 +21743,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZj" = (
-/obj/machinery/status_display/supply,
+/obj/machinery/status_display/supply{
+	pixel_x = -32
+	},
 /obj/machinery/computer/bounty{
 	dir = 4
 	},
@@ -36058,7 +36060,9 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/item/stamp/rd,
-/obj/machinery/status_display/ai,
+/obj/machinery/status_display/ai{
+	pixel_y = -32
+	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
 	dir = 1;
@@ -99268,13 +99272,13 @@ ale
 asb
 coe
 apX
-ave
+aab
 awn
 apX
-ayj
+aac
 azr
 apX
-aBM
+aae
 aDb
 apX
 oFo

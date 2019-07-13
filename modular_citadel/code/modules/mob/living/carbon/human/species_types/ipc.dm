@@ -11,6 +11,7 @@
 	mutant_bodyparts = list("ipc_screen", "ipc_antenna")
 	default_features = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
+	mutanttongue = /obj/item/organ/tongue/robot/ipc
 
 	exotic_blood = "oil"
 
@@ -26,9 +27,6 @@
 	if(screen)
 		screen.Remove(C)
 	..()
-
-/datum/species/ipc/get_spans()
-	return SPAN_ROBOT
 
 /datum/action/innate/monitor_change
 	name = "Screen Change"
