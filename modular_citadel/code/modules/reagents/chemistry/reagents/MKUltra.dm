@@ -177,21 +177,19 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(!creatorID)
 		//This happens when the reaction explodes.
 		return
+	if(purity < 0.5)//Impure chems don't function as you expect
+		return
 	var/datum/status_effect/chem/enthrall/E = M.has_status_effect(/datum/status_effect/chem/enthrall)
 	if(E)
-		if(E.enthrallID == M.ckey && creatorName != M.real_name)//If you're enthralled to yourself (from OD) and someone else tries to enthrall you, you become thralled to them instantly.
+		if(E.enthrallID == M.ckey && creatorID != M.ckey)//If you're enthralled to yourself (from OD) and someone else tries to enthrall you, you become thralled to them instantly.
 			E.enthrallID = creatorID
 			E.enthrallGender = creatorGender
 			E.master = get_mob_by_key(creatorID)
 			to_chat(M, to_chat(M, "<span class='big love'><i>Your aldled, plastic, mind bends under the chemical influence of a new [(M.client?.prefs.lewdchem?"master":"leader")]. Your highest priority is now to stay by [creatorName]'s side, following and aiding them at all costs.</i></span>")) //THIS SHOULD ONLY EVER APPEAR IF YOU MINDBREAK YOURSELF AND THEN GET INJECTED FROM SOMEONE ELSE.
-		return
-	if(purity < 0.5)//Impure chems don't function as you expect
-		return
+			log_game("FERMICHEM: Narcissist [M] ckey: [M.key] been rebound to [creatorName], ID: [creatorID]")
+			return
 	if((M.ckey == creatorID) && (creatorName == M.real_name)) //same name AND same player - same instance of the player. (should work for clones?)
 		log_game("FERMICHEM: [M] ckey: [M.key] has been given velvetspeech")
-		/*if(M.has_status_effect(STATUS_EFFECT_INLOVE) //Not sure if I need/want this.
-			to_chat(M, "<span class='warning'><i>You are too captivated by your love to think about anything else</i></span>")
-			return*/
 		var/obj/item/organ/vocal_cords/Vc = M.getorganslot(ORGAN_SLOT_VOICE)
 		var/obj/item/organ/vocal_cords/nVc = new /obj/item/organ/vocal_cords/velvet
 		if(Vc)
@@ -200,8 +198,6 @@ Creating a chem with a low purity will make you permanently fall in love with so
 		qdel(Vc)
 		to_chat(M, "<span class='notice'><i>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
 	else
-		if(M.mind.assigned_role == "Captain")
-			return
 		log_game("FERMICHEM: MKUltra: [creatorName], [creatorID], is enthralling [M.name], [M.ckey]")
 		M.apply_status_effect(/datum/status_effect/chem/enthrall)
 	log_game("FERMICHEM: [M] ckey: [M.key] has taken MKUltra")
@@ -258,7 +254,8 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	. = ..()
 	metabolization_rate = 1//Mostly to manage brain damage and reduce server stress
 	if (M.ckey == creatorID && creatorName == M.real_name)//If the creator drinks 100u, then you get the status for someone random (They don't have the vocal chords though, so it's limited.)
-		to_chat(M, "<span class='love'><i>You are unable to resist your own charms anymore, and become a full blown narcissist.</i></span>")
+		if (!M.has_status_effect(/datum/status_effect/chem/enthrall))
+			to_chat(M, "<span class='love'><i>You are unable to resist your own charms anymore, and become a full blown narcissist.</i></span>")
 		/*Old way of handling, left in as an option B
 		var/list/seen = viewers(7, get_turf(M))//Sound and sight checkers
 		for(var/mob/living/carbon/victim in seen)
@@ -288,7 +285,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	if(M.client?.prefs.lewdchem)
 		to_chat(M, "<span class='big love'><i>Your mind shatters under the volume of the mild altering chem inside of you, breaking all will and thought completely. Instead the only force driving you now is the instinctual desire to obey and follow [creatorName]. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	else
-		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what they've been saying. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
+		to_chat(M, "<span class='big warning'><i>The might volume of chemicals in your system overwhelms your mind, and you suddenly agree with what [creatorName] has been saying. Your highest priority is now to stay by their side and protect them at all costs.</i></span>")
 	log_game("FERMICHEM: [M] ckey: [M.key] has been mindbroken for [creatorName] ckey: [creatorID]")
 	M.slurring = 100
 	M.confused = 100
@@ -298,7 +295,7 @@ Creating a chem with a low purity will make you permanently fall in love with so
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Thralls mindbroken")
 
 /datum/reagent/fermi/enthrall/overdose_process(mob/living/carbon/M)
-	M.adjustBrainLoss(0.2)//should be ~40 in total
+	M.adjustBrainLoss(0.2)//should be ~30 in total
 	..()
 
 //Creates a gas cloud when the reaction blows up, causing everyone in it to fall in love with someone/something while it's in their system.

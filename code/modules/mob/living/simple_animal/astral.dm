@@ -8,7 +8,7 @@
 	attacktext = "raises the hairs on the neck of"
 	response_harm = "disrupts the concentration of"
 	response_disarm = "wafts"
-	friendly = "touches"
+	friendly = "communes with"
 	loot = null
 	maxHealth = 5
 	health = 5
@@ -37,5 +37,5 @@
 	if(pseudo_death == FALSE)
 		if(isliving(A))
 			var/message = html_decode(stripped_input(src, "Enter a message to send to [A]", MAX_MESSAGE_LEN))
-			to_chat(A, "<b>[src] speaks into your mind,</b><i> \"[message]\"</i>")
+			to_chat(A, "[src] projects into your mind, <b><i> \"[message].\"</b></i>")
 			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")

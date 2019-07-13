@@ -183,6 +183,7 @@
 /datum/status_effect/chem/enthrall
 	id = "enthrall"
 	alert_type = null
+	//examine_text TODO
 	var/enthrallTally = 1 //Keeps track of the enthralling process
 	var/resistanceTally = 0 //Keeps track of the resistance
 	var/deltaResist //The total resistance added per resist click
@@ -299,7 +300,7 @@
 				if(owner.client?.prefs.lewdchem)
 					to_chat(owner, "<span class='small velvet'><i>[pick("It feels so good to listen to [master].", "You can't keep your eyes off [master].", "[master]'s voice is making you feel so sleepy.",  "You feel so comfortable with [master]", "[master] is so dominant, it feels right to obey them.")].</b></span>")
 		if (2) //partially enthralled
-			if(enthrallTally > 200) 
+			if(enthrallTally > 200)
 				phase += 1
 				mental_capacity -= resistanceTally//leftover resistance per step is taken away from mental_capacity.
 				enthrallTally = 0
@@ -330,7 +331,7 @@
 				resistGrowth = 0
 				to_chat(owner, "<span class='notice'><i>The separation from [(owner.client?.prefs.lewdchem?"your [enthrallGender]":"[master]")] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 				REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
-			if(prob(2))
+			if(prob(1))
 				if(owner.client?.prefs.lewdchem)
 					to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
@@ -393,7 +394,7 @@
 				if(prob(5))
 					to_chat(owner, "<span class='notice'><i>You're starting to miss [(owner.client?.prefs.lewdchem?"your [enthrallGender]":"[master]")].</i></span>")
 				if(prob(5))
-					owner.adjustBrainLoss(0.5)
+					owner.adjustBrainLoss(0.1)
 					to_chat(owner, "<i>[(owner.client?.prefs.lewdchem?"[enthrallGender]":"[master]")] will surely be back soon</i>") //denial
 			if(36)
 				var/message = "[(owner.client?.prefs.lewdchem?"I feel empty when [enthrallGender]'s not around..":"I miss [master]'s presence")]"
@@ -401,7 +402,7 @@
 			if(37 to 65)//barganing
 				if(prob(10))
 					to_chat(owner, "<i>They are coming back, right...?</i>")
-					owner.adjustBrainLoss(1)
+					owner.adjustBrainLoss(0.5)
 				if(prob(10))
 					if(owner.client?.prefs.lewdchem)
 						to_chat(owner, "<i>I just need to be a good pet for [enthrallGender], they'll surely return if I'm a good pet.</i>")
@@ -421,7 +422,6 @@
 						to_chat(owner, "<span class='warning'>You are overwhelmed with anger at the lack of [enthrallGender]'s presence and suddenly lash out!</span>")
 					else
 						to_chat(owner, "<span class='warning'>You are overwhelmed with anger and suddenly lash out!</span>")
-					owner.adjustBrainLoss(1)
 			if(90)
 				SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "EnthMissing2")
 				var/message = "[(owner.client?.prefs.lewdchem?"Where are you [enthrallGender]??!":"I need to find [master]!")]"
@@ -431,8 +431,8 @@
 				else
 					to_chat(owner, "<span class='warning'><i>You need to find [master] at all costs, you can't hold yourself back anymore!</i></span>")
 			if(91 to 100)//depression
-				if(prob(20))
-					owner.adjustBrainLoss(2.5)
+				if(prob(10))
+					M.gain_trauma_type(BRAIN_TRAUMA_MILD)
 					owner.stuttering += 35
 					owner.jitteriness += 35
 				else if(prob(25))
@@ -442,6 +442,7 @@
 				var/message = "[(owner.client?.prefs.lewdchem?"I'm all alone, It's so hard to continute without [enthrallGender]...":"I really need to find [master]!!!")]"
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "EnthMissing4", /datum/mood_event/enthrallmissing4, message)
 				to_chat(owner, "<span class='warning'><i>You can hardly find the strength to continue without [(owner.client?.prefs.lewdchem?"your [enthrallGender]":"[master]")].</i></span>")
+				M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 			if(102 to 140) //depression 2, revengeance
 				if(prob(20))
 					owner.Stun(50)
@@ -450,22 +451,31 @@
 						to_chat(owner, "<span class='warning'><i>You're unable to hold back your tears, suddenly sobbing as the desire to see your [enthrallGender] oncemore overwhelms you.</i></span>")
 					else
 						to_chat(owner, "<span class='warning'><i>You are overwheled with withdrawl from [master].</i></span>")
-					owner.adjustBrainLoss(4)
+					owner.adjustBrainLoss(1)
 					owner.stuttering += 35
 					owner.jitteriness += 35
+					if(prob(10))//2% chance
+						switch(rand(1,5))//Now let's see what hopefully-not-important part of the brain we cut off
+							if(1 to 3)
+								M.gain_trauma_type(BRAIN_TRAUMA_MILD)
+							if(4)
+								M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+							if(5)//0.4% chance
+								M.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 				if(prob(5))
 					deltaResist += 5
 			if(140 to INFINITY) //acceptance
 				if(prob(15))
 					deltaResist += 5
+					owner.adjustBrainLoss(-1)
 					if(prob(20))
 						if(owner.client?.prefs.lewdchem)
 							to_chat(owner, "<i><span class='small green'>Maybe you'll be okay without your [enthrallGender].</i></span>")
 						else
 							to_chat(owner, "<i><span class='small green'>You feel your mental functions slowly begin to return.</i></span>")
 				if(prob(5))
-					owner.adjustBrainLoss(2.5)
-					M.hallucination += 10
+					owner.adjustBrainLoss(1)
+					M.hallucination += 30
 
 		withdrawalTick += 0.5//Enough to leave you with a major brain trauma, but not kill you.
 
@@ -516,7 +526,7 @@
 
 	//customEcho
 	if(customEcho && withdrawal == FALSE && owner.client?.prefs.lewdchem)
-		if(prob(5))
+		if(prob(2))
 			if(!customSpan) //just in case!
 				customSpan = "notice"
 			to_chat(owner, "<span class='[customSpan]'><i>[customEcho].</i></span>")

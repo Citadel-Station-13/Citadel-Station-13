@@ -649,13 +649,13 @@
 
 /obj/item/organ/vocal_cords/velvet/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
-	velvetspeech(message, owner)
+	velvetspeech(message, owner, 1)
 
 //////////////////////////////////////
 ///////////FermiChem//////////////////
 //////////////////////////////////////
 //Removed span_list from input arguments.
-/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, include_speaker = TRUE, message_admins = FALSE, debug = FALSE)
+/proc/velvetspeech(message, mob/living/user, base_multiplier = 1, message_admins = FALSE, debug = FALSE)
 
 	if(!user || !user.can_speak() || user.stat)
 		return 0 //no cooldown
@@ -668,13 +668,14 @@
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L.has_status_effect(/datum/status_effect/chem/enthrall))//Check to see if they have the status
-				if(L == user && !include_speaker) //Remove this if I decide to make OD apply to self.
+				var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//Check to see if pet is on cooldown from last command and if the master is right
+				if(E.master != user)
 					continue
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 						continue
-				var/datum/status_effect/chem/enthrall/E = L.has_status_effect(/datum/status_effect/chem/enthrall)//Check to see if pet is on cooldown from last command
+
 				if (E.cooldown > 0)//If they're on cooldown you can't give them more commands.
 					continue
 				listeners += L
@@ -1270,6 +1271,7 @@
 								log_game("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2].")
 							E.mental_capacity -= 5
 							addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.client?.prefs.lewdchem?"your [E.enthrallGender]":"[E.master]")] whispers you a new trigger.</span>"), 5)
+							to_chat(user, "<span class='notice'><i>You sucessfully set the trigger word [trigger] in [H]</i></span>")
 						else
 							to_chat(user, "<span class='warning'>Your pet looks at you confused, it seems they don't understand that effect!</b></span>")
 					else
@@ -1298,6 +1300,7 @@
 					E.customSpan = trigger2
 					user.SetStun(0)
 					H.SetStun(0)
+					to_chat(user, "<span class='notice'><i>You sucessfully set an echoing phrase in [H]</i></span>")
 
 	//CUSTOM OBJECTIVE
 	else if((findtext(message, objective_words)))
@@ -1329,6 +1332,7 @@
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(H.client?.prefs.lewdchem?"Your [E.enthrallGender]":"[E.master]")] whispers you a new objective.</span>"), 5)
 						brainwash(H, objective)
 						E.mental_capacity -= 200
+						to_chat(user, "<span class='notice'><i>You sucessfully give an objective to [H]</i></span>")
 					else
 						to_chat(user, "<span class='warning'>Your pet looks at you with a vacant blasé expression, you don't think you can program anything else into them</b></span>")
 					user.SetStun(0)
@@ -1341,9 +1345,7 @@
 			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
 			if(E.phase == 3 && H.client?.prefs.lewdchem)
 				var/instill = stripped_input(user, "Instill an emotion in your [(user.client?.prefs.lewdchem?"Your pet":"listener")].", MAX_MESSAGE_LEN)
-				var/customSpan = list("Notice", "Warning", "Hypnophrase", "Love", "Velvet")
-				var/instillSpan = input(user, "Pick the style", "Style") in customSpan
-				to_chat(H, "<span class='[instillSpan]'><i>[instill]</i></span>")
+				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
 				log_game("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")
 				E.cooldown += 1
