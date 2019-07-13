@@ -156,7 +156,6 @@
 			var/mob/living/carbon/human/H = M
 			if(prob(50)) //Less spam
 				to_chat(H, "<span class='love'>Your libido is going haywire!</span>")
-				H.mob_climax(forced_climax=TRUE)
 		if(M.min_arousal < 50)
 			M.min_arousal += 1
 		if(M.min_arousal < M.max_arousal)
