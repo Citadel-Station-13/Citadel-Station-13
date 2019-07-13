@@ -1158,13 +1158,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 1
 	return FALSE
 
-/datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
-	return message
-
-//return a list of spans or an empty list
-/datum/species/proc/get_spans()
-	return list()
-
 /datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return FALSE
 
