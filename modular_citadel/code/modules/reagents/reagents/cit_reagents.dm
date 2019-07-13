@@ -152,10 +152,9 @@
 
 /datum/reagent/drug/aphrodisiacplus/overdose_process(mob/living/M)
 	if(M && M.canbearoused && !HAS_TRAIT(M, TRAIT_CROCRIN_IMMUNE) && prob(33))
-		if(M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
-			var/mob/living/carbon/human/H = M
-			if(prob(50)) //Less spam
-				to_chat(H, "<span class='love'>Your libido is going haywire!</span>")
+		if(prob(5) && M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
+			if(prob(5)) //Less spam
+				to_chat(M, "<span class='love'>Your libido is going haywire!</span>")
 		if(M.min_arousal < 50)
 			M.min_arousal += 1
 		if(M.min_arousal < M.max_arousal)
