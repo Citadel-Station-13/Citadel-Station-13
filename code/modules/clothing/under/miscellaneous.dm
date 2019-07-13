@@ -388,7 +388,10 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	item_flags = NODROP
+
+/obj/item/clothing/under/kilt/highlander/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
