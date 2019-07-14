@@ -1264,7 +1264,7 @@
 					if("augment")
 						if(ishuman(C))
 							if(BP)
-								BP.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ROBOTIC, TRUE, TRUE)
+								BP.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC, TRUE, TRUE)
 							else
 								to_chat(usr, "[C] doesn't have such bodypart.")
 						else
