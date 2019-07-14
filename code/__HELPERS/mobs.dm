@@ -20,35 +20,34 @@
 		else
 			return "000"
 
-/proc/random_underwear(gender)//Cit change - makes random underwear always return nude
+#define UNDIE_COLORABLE(U) (U?.has_color)
+
+/proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.underwear_m)
 		if(FEMALE)
 			return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)*/
+			return pick(GLOB.underwear_list)
 
-/proc/random_undershirt(gender)//Cit change - makes random undershirts always return nude
+/proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/top, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.undershirt_m)
 		if(FEMALE)
 			return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)*/
+			return pick(GLOB.undershirt_list)
 
-/proc/random_socks()//Cit change - makes random socks always return nude
+/proc/random_socks()
 	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return "Nude"
-	//return pick(GLOB.socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
+	return pick(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)

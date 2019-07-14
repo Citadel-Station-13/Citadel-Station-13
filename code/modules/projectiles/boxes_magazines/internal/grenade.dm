@@ -11,7 +11,7 @@
 	max_ammo = 1
 
 /obj/item/ammo_box/magazine/internal/rocketlauncher
-	name = "rocket launcher internal magazine"
+	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "84mm"
 	max_ammo = 1

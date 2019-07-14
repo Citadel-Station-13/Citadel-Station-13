@@ -1,3 +1,6 @@
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -13,12 +16,24 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
+	var/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	var/list/pillStyles
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
+
+	//Calculate the span tags and ids fo all the available pill icons
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		SL["htmltag"] = assets.icon_tag("pill[x]")
+		pillStyles += list(SL)
+
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -128,9 +143,15 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+		assets.send(user)
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
+//Insert our custom spritesheet css link into the html
+/obj/machinery/chem_master/ui_base_html(html)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()
@@ -141,7 +162,7 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
-
+	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
 		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
@@ -159,6 +180,9 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
+
+	//Calculated at init time as it never changes
+	data["pillStyles"] = pillStyles
 
 	return data
 
@@ -236,6 +260,12 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
+					if(chosenPillStyle == RANDOM_PILL_STYLE)
+						P.icon_state ="pill[rand(1,21)]"
+					else
+						P.icon_state = "pill[chosenPillStyle]"
+					if(P.icon_state == "pill4")
+						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
@@ -249,6 +279,10 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10)
 			. = TRUE
+
+		if("pillStyle")
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
 
 		if("createPatch")
 			var/many = params["many"]
@@ -401,3 +435,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef PILL_STYLE_COUNT
+#undef RANDOM_PILL_STYLE
