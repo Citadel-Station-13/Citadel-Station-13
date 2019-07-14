@@ -58,7 +58,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/2, FALSE)//exponent
+	M.reagents.remove_reagent(id, current_cycle/6, FALSE)//exponent
 	sleepytime+=5
 	if(G.stat == DEAD || !G || G.pseudo_death == TRUE)
 		originalmind.transfer_to(M)
