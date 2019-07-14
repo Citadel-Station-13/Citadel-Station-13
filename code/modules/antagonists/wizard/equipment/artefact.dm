@@ -394,6 +394,8 @@
 	sleep(20)
 	if(interrupted(user))
 		return
+	user.invisibility = INVISIBILITY_MAXIMUM
+	user.status_flags |= GODMODE
 	sleep(20)
 	if(interrupted(user))
 		end_effect(user)
