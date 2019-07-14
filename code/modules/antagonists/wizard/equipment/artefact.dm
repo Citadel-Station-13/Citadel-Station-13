@@ -378,6 +378,8 @@
 	return FALSE
 
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
+	user.invisibility = initial(user.invisibility)
+	user.status_flags &= ~GODMODE
 	user.canmove = TRUE
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
