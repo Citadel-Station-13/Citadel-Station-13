@@ -78,6 +78,15 @@
 
 	random_color = FALSE
 
+/obj/item/wirecutters/advanced
+	name = "advanced wirecutters"
+	desc = "A reproduction of an abductor's wirecutters, they are sharper than a razorblade."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "cutters"
+	toolspeed = 0.2
+
+	random_color = FALSE
+
 /obj/item/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."

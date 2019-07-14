@@ -101,9 +101,19 @@
 	toolspeed = 0.1
 	random_color = FALSE
 
+/obj/item/screwdriver/advanced
+	name = "advanced screwdriver"
+	desc = "A reproduction of the abductor's screwdriver."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "screwdriver_a"
+	item_state = "screwdriver_nuke"
+	usesound = 'sound/items/pshoom.ogg'
+	toolspeed = 0.2
+	random_color = FALSE
+
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
-	
+
 /obj/item/screwdriver/power
 	name = "hand drill"
 	desc = "A simple powered hand drill. It's fitted with a screw bit."

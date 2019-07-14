@@ -42,6 +42,13 @@
 	icon_state = "crowbar"
 	toolspeed = 0.1
 
+/obj/item/crowbar/advanced
+	name = "advanced crowbar"
+	desc = "A reproduction of the abductor's crowbar, it has almost the same capabilities of the original."
+	icon = 'icons/obj/advancedtools.dmi'
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	icon_state = "crowbar"
+	toolspeed = 0.2
 
 /obj/item/crowbar/large
 	name = "crowbar"

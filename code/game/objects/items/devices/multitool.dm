@@ -237,3 +237,10 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/advanced
+	name = "advanced multitool"
+	desc = "The reproduction of an abductor's multitool."
+	icon = 'icons/obj/advancedtools.dmi' //make new icon for it (done)
+	icon_state = "multitool"
+	toolspeed = 0.2

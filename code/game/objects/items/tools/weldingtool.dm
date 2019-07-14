@@ -333,6 +333,19 @@
 	if(get_fuel() <= max_fuel)
 		reagents.add_reagent("welding_fuel", 1)
 	..()
+/obj/item/weldingtool/advanced
+	name = "advanced welding tool"
+	desc = "A reproduction of an abductor's welding tool. It never runs out of fuel."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "welder"
+	toolspeed = 0.2
+	light_intensity = 0
+	change_icons = 0
+
+/obj/item/weldingtool/fakeabductor/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent("welding_fuel", 1)
+	..()
 
 /obj/item/weldingtool/hugetank
 	name = "upgraded industrial welding tool"

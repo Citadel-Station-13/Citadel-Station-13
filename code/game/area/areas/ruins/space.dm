@@ -467,3 +467,10 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
+
+
+//ADVANCED LAB
+
+/area/ruin/space/has_grav/powered/advancedlab
+	name = "Abductor Replication Lab"
+	icon_state = "yellow"

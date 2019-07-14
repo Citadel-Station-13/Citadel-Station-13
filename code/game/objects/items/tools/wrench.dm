@@ -43,6 +43,13 @@
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 
+/obj/item/wrench/advanced
+	name = "advanced wrench"
+	desc = "A reproduction of an abductor's wrench. It uses magnets to turn anything inside."
+	icon = 'icons/obj/advancedtools.dmi'
+	icon_state = "wrench"
+	usesound = 'sound/effects/empulse.ogg'
+	toolspeed = 0.2
 
 /obj/item/wrench/power
 	name = "hand drill"
