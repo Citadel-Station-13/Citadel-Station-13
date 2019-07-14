@@ -156,7 +156,7 @@
 		var/mob/living/carbon/C = holder
 		for(var/A in C.bodyparts)
 			var/obj/item/bodypart/B = A
-			if(CHECK_BITFIELD(B.status, BODYPART_ORGANIC) B.is_original_owner(holder))
+			if(CHECK_BITFIELD(B.status, BODYPART_ORGANIC) && B.is_original_owner(holder))
 				B.original_unique_enzymes = new_ue
 	unique_enzymes = new_ue
 
