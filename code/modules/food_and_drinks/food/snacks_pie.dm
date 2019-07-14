@@ -288,6 +288,6 @@
 	icon_state = "baklavaslice"
 	trash = /obj/item/trash/plate
 	filling_color = "#1E90FF"
-	list_reagents = list("nutriment" = 2, "vitamins" = 4)
+	list_reagents = list("nutriment" = 2, "vitamin" = 4)
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtype = GRAIN
