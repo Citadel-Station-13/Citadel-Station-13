@@ -52,7 +52,7 @@
 #define SUPERMATTER_DELAM_PERCENT 5
 #define SUPERMATTER_EMERGENCY_PERCENT 25
 #define SUPERMATTER_DANGER_PERCENT 50
-#define SUPERMATTER_WARNING_PERCENT 100
+#define SUPERMATTER_WARNING_PERCENT 75	//down from 100, makes sabotoge have a chance to ramp up if no-one checks the engine after meteors or something.
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
 
