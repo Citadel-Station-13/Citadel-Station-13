@@ -198,7 +198,7 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 17.5
+	damage = 20
 	armour_penetration = 20
 	light_range = 3
 	speed = 0.6
