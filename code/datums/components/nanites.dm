@@ -12,6 +12,7 @@
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
 	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
+	var/visible_examine = TRUE
 
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
@@ -245,6 +246,10 @@
 
 /datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
 	nanite_programs |= programs
+
+/datum/component/nanites/proc/on_examine(datum/source, mob/user)
+	if(!stealth && visible_examine)
+		to_chat(user, "<span class='notice'>Their eyes shine with an electric fluid.</span>")
 
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
