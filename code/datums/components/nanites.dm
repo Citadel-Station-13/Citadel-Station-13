@@ -57,6 +57,7 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/on_hear)
 		RegisterSignal(parent, COMSIG_SPECIES_GAIN, .proc/check_viable_biotype)
 		RegisterSignal(parent, COMSIG_NANITE_SIGNAL, .proc/receive_signal)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMPLE, .proc/on_examine)
 
 /datum/component/nanites/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
