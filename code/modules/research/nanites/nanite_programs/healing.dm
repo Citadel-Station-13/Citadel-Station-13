@@ -132,7 +132,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len, only_robotic = TRUE, only_organic = FALSE))
+			if(L.heal_damage(1/parts.len, 1/parts.len, 0, BODYPART_ROBOTIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -198,7 +198,7 @@
 	if(host_mob.getBrainLoss())
 		return ..()
 	return FALSE
-	
+
 /datum/nanite_program/brain_heal_advanced/active_effect()
 	host_mob.adjustBrainLoss(-2, TRUE)
 	if(iscarbon(host_mob) && prob(10))

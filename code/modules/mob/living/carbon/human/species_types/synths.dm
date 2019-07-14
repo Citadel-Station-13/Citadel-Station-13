@@ -89,7 +89,7 @@
 
 	for(var/X in H.bodyparts) //propagates the damage_overlay changes
 		var/obj/item/bodypart/BP = X
-		BP.update_limb()
+		BP.update_limb(FALSE, H)
 	H.update_body_parts() //to update limb icon cache with the new damage overlays
 
 //Proc redirects:

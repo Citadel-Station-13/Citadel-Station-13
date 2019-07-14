@@ -122,7 +122,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM)
+		M.heal_bodypart_damage(5*REM, 0, 0, FALSE)
 		. = 1
 	..()
 

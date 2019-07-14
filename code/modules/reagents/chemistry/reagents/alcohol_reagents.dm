@@ -240,7 +240,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_bodypart_damage(1)
+		M.heal_bodypart_damage(1, 0, 0, FALSE)
 		. = 1
 	return ..() || .
 
@@ -381,7 +381,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
 	if(M.mind && M.mind.assigned_role == "Assistant")
-		M.heal_bodypart_damage(1,1)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = TRUE
 	return ..() || .
 
@@ -1171,7 +1171,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/M)
 	if((ishuman(M) && M.job == "Clown") || ismonkey(M))
-		M.heal_bodypart_damage(1,1)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	return ..() || .
 
@@ -1190,7 +1190,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
-		M.heal_bodypart_damage(1,1)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	return ..() || .
 
@@ -1514,8 +1514,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM)) //Securidrink in line with the screwderiver for engineers or nothing for mimes.
-		M.heal_bodypart_damage(1, 1)
-		M.adjustBruteLoss(-2,0)
+		M.heal_bodypart_damage(3, 1, 0, FALSE)
 		. = 1
 	return ..()
 
@@ -1533,10 +1532,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM)) //Securidrink in line with the screwderiver for engineers or nothing for mimes but STRONG..
-		M.heal_bodypart_damage(2,2,2)
-		M.adjustBruteLoss(-5,0)
+		M.heal_bodypart_damage(7, 7, 2, FALSE)
 		M.adjustOxyLoss(-5,0)
-		M.adjustFireLoss(-5,0)
 		M.adjustToxLoss(-5,0)
 		. = 1
 	return ..()
@@ -1886,7 +1883,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
-		M.heal_bodypart_damage(1,1)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	return ..()
 
@@ -1916,7 +1913,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		M.heal_bodypart_damage(1,1,1)
+		M.heal_bodypart_damage(1, 1, 1, FALSE)
 		M.adjustOxyLoss(-1,0)
 		M.adjustToxLoss(-1,0)
 	return ..()

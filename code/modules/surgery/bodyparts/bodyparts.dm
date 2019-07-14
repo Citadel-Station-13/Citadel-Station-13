@@ -7,8 +7,8 @@
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
-	var/mob/living/carbon/owner = null
-	var/mob/living/carbon/original_owner = null
+	var/mob/living/carbon/owner
+	var/original_unique_enzymes //basically the original owner's dna identity text string, capable of persisting even after their deletion.
 	var/status = BODYPART_ORGANIC
 	var/needs_processing = FALSE
 
@@ -117,7 +117,7 @@
 
 /obj/item/bodypart/throw_impact(atom/hit_atom)
 	..()
-	if(status != BODYPART_ROBOTIC)
+	if(!CHECK_BITFIELD(status, BODYPART_ROBOTIC))
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
@@ -125,7 +125,7 @@
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
-	if(status != BODYPART_ROBOTIC)
+	if(!CHECK_BITFIELD(status, BODYPART_ROBOTIC))
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
@@ -141,7 +141,7 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life()
 	if(stam_heal_tick && stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
-		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
+		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, ALL, FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
@@ -195,12 +195,9 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, accepted_statuses = BODYPART_ORGANIC, updating_health = TRUE)
 
-	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
-		return
-
-	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
+	if(!CHECK_BITFIELD(status, accepted_statuses)) //This makes so certain limbs can't be healed in certain ways (such as chemicals for robotic limbs)
 		return
 
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
@@ -219,7 +216,19 @@
 		total += stamina_dam
 	return total
 
-//Checks disabled status thresholds
+//Compares the original owner and the current owner's dna.
+/obj/item/bodypart/proc/is_original_owner(mob/living/carbon/C)
+	if(CHECK_BITFIELD(status, BODYPART_ROBOTIC)) //robo limbs icons are handled differently.
+		return TRUE
+	var/datum/dna/D = C?.dna
+	if(original_unique_enzymes)
+		if(!D || D.unique_enzymes != original_unique_enzymes)
+			return FALSE
+	else //we are the new original owner now
+		original_unique_enzymes = D?.unique_enzymes
+	if(!animal_origin && species_id && (!(D?.species) || D.species.limbs_id != species_id))
+		return FALSE
+	return TRUE
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
@@ -266,8 +275,11 @@
 	return FALSE
 
 //Change organ status
-/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default)
-	status = new_limb_status
+/obj/item/bodypart/proc/change_bodypart_status(add_status, remove_status, heal_limb, change_icon_to_default)
+	if(add_status)
+		ENABLE_BITFIELD(status, add_status)
+	if(remove_status)
+		DISABLE_BITFIELD(status, remove_status)
 	if(heal_limb)
 		burn_dam = 0
 		brute_dam = 0
@@ -275,10 +287,7 @@
 		burnstate = 0
 
 	if(change_icon_to_default)
-		if(status == BODYPART_ORGANIC)
-			icon = DEFAULT_BODYPART_ICON_ORGANIC
-		else if(status == BODYPART_ROBOTIC)
-			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+		icon = CHECK_BITFIELD(status, BODYPART_ROBOTIC) ? DEFAULT_BODYPART_ICON_ROBOTIC : DEFAULT_BODYPART_ICON_ORGANIC
 
 	if(owner)
 		owner.updatehealth()
@@ -286,23 +295,13 @@
 		owner.update_hair()
 		owner.update_damage_overlays()
 
-/obj/item/bodypart/proc/is_organic_limb()
-	return (status == BODYPART_ORGANIC)
-
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
-	var/mob/living/carbon/C
-	if(source)
-		C = source
-		if(!original_owner)
-			original_owner = source
-	else if(original_owner && owner != original_owner) //Foreign limb
-		no_update = TRUE
-	else
-		C = owner
-		no_update = FALSE
+	var/mob/living/carbon/C = source ? source : owner
+	no_update = !is_original_owner(C)  //Wheter the limb is foreign or not
+	var/organic_limb = CHECK_BITFIELD(status, BODYPART_ORGANIC)
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
+	if(HAS_TRAIT(C, TRAIT_HUSK) && organic_limb)
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -330,7 +329,7 @@
 		colorlist += ReadRGB("[H.dna.features["mcolor2"]]0")
 		colorlist += ReadRGB("[H.dna.features["mcolor3"]]0")
 		colorlist += list(0,0,0, S.hair_alpha)
-		for(var/index=1, index<=colorlist.len, index++)
+		for(var/index in 1 to colorlist.len)
 			colorlist[index] = colorlist[index]/255
 
 		if(S.use_skintones)
@@ -351,7 +350,7 @@
 		else
 			species_color = ""
 
-		if("mam_body_markings" in S.default_features)
+		if(organic_limb && "mam_body_markings" in S.default_features)
 			var/datum/sprite_accessory/Smark
 			Smark = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 			body_markings_icon = Smark.icon
@@ -372,15 +371,10 @@
 		else
 			mutation_color = ""
 
-		dmg_overlay_type = S.damage_overlay_type
+		dmg_overlay_type = organic_limb ? S.damage_overlay_type : "robotic"
 
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
 		dmg_overlay_type = animal_origin
-
-	if(status == BODYPART_ROBOTIC)
-		dmg_overlay_type = "robotic"
-		body_markings = null
-		auxmarking = null
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
@@ -404,6 +398,7 @@
 
 	. = list()
 
+	var/organic_limb = CHECK_BITFIELD(status, BODYPART_ORGANIC)
 	var/image_dir = 0
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
@@ -415,7 +410,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
-		if(!isnull(body_markings) && status == BODYPART_ORGANIC)
+		if(!isnull(body_markings) && organic_limb)
 			if(!use_digitigrade)
 				if(BODY_ZONE_CHEST)
 					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
@@ -432,7 +427,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(is_organic_limb())
+		if(organic_limb)
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -446,7 +441,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb())
+	if(organic_limb)
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)

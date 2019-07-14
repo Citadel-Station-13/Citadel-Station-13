@@ -40,7 +40,7 @@
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
-	M.heal_bodypart_damage(5,5)
+	M.heal_bodypart_damage(5, 5, 5, FALSE, ALL)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
@@ -197,7 +197,7 @@
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/carbon/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
-	M.heal_bodypart_damage(1,1)
+	M.heal_bodypart_damage(1, 1, 0, FALSE)
 	REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
 	. = 1
@@ -1156,7 +1156,7 @@
 	can_synth = FALSE
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
-	M.heal_bodypart_damage(5,5)
+	M.heal_bodypart_damage(5, 5, 0, FALSE)
 	..()
 	return TRUE
 

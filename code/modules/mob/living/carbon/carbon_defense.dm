@@ -95,7 +95,7 @@
 			totitemdamage *= 1.5
 	//CIT CHANGES END HERE
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
+		if(I.damtype == BRUTE && CHECK_BITFIELD(affecting.status, BODYPART_ORGANIC))
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)

@@ -80,7 +80,7 @@
 		return
 	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
-	update_limb(1)
+	update_limb(TRUE, owner)
 	C.bodyparts -= src
 
 	if(held_index)

@@ -281,7 +281,7 @@
 				var/datum/disease/D = thing
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
-					
+
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
@@ -480,7 +480,7 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	heal_overall_damage(INFINITY, INFINITY, INFINITY, ALL, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0

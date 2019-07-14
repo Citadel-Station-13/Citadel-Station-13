@@ -40,7 +40,7 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
-	if(status != BODYPART_ROBOTIC)
+	if(!CHECK_BITFIELD(status, BODYPART_ROBOTIC))
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
@@ -61,11 +61,9 @@
 			I.forceMove(T)
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
-	var/mob/living/carbon/C
-	if(source)
-		C = source
-	else
-		C = owner
+	var/mob/living/carbon/C = source ? source : owner
+	if(!is_original_owner())
+		return ..()
 
 	real_name = C.real_name
 	if(HAS_TRAIT(C, TRAIT_HUSK))
@@ -74,48 +72,49 @@
 		facial_hair_style = "Shaved"
 		lip_style = null
 
-	else if(!animal_origin)
-		var/mob/living/carbon/human/H = C
-		var/datum/species/S = H.dna.species
+	else if(animal_origin)
+		return ..()
+	var/mob/living/carbon/human/H = C
+	var/datum/species/S = H.dna.species
 
-		//Facial hair
-		if(H.facial_hair_style && (FACEHAIR in S.species_traits))
-			facial_hair_style = H.facial_hair_style
-			if(S.hair_color)
-				if(S.hair_color == "mutcolor")
-					facial_hair_color = H.dna.features["mcolor"]
-				else
-					facial_hair_color = S.hair_color
+	//Facial hair
+	if(H.facial_hair_style && (FACEHAIR in S.species_traits))
+		facial_hair_style = H.facial_hair_style
+		if(S.hair_color)
+			if(S.hair_color == "mutcolor")
+				facial_hair_color = H.dna.features["mcolor"]
 			else
-				facial_hair_color = H.facial_hair_color
-			hair_alpha = S.hair_alpha
+				facial_hair_color = S.hair_color
 		else
-			facial_hair_style = "Shaved"
-			facial_hair_color = "000"
-			hair_alpha = 255
-		//Hair
-		if(H.hair_style && (HAIR in S.species_traits))
-			hair_style = H.hair_style
-			if(S.hair_color)
-				if(S.hair_color == "mutcolor")
-					hair_color = H.dna.features["mcolor"]
-				else
-					hair_color = S.hair_color
+			facial_hair_color = H.facial_hair_color
+		hair_alpha = S.hair_alpha
+	else
+		facial_hair_style = "Shaved"
+		facial_hair_color = "000"
+		hair_alpha = 255
+	//Hair
+	if(H.hair_style && (HAIR in S.species_traits))
+		hair_style = H.hair_style
+		if(S.hair_color)
+			if(S.hair_color == "mutcolor")
+				hair_color = H.dna.features["mcolor"]
 			else
-				hair_color = H.hair_color
-			hair_alpha = S.hair_alpha
+				hair_color = S.hair_color
 		else
-			hair_style = "Bald"
-			hair_color = "000"
-			hair_alpha = initial(hair_alpha)
-		// lipstick
-		if(H.lip_style && (LIPS in S.species_traits))
-			lip_style = H.lip_style
-			lip_color = H.lip_color
-		else
-			lip_style = null
-			lip_color = "white"
-	..()
+			hair_color = H.hair_color
+		hair_alpha = S.hair_alpha
+	else
+		hair_style = "Bald"
+		hair_color = "000"
+		hair_alpha = initial(hair_alpha)
+	// lipstick
+	if(H.lip_style && (LIPS in S.species_traits))
+		lip_style = H.lip_style
+		lip_color = H.lip_color
+	else
+		lip_style = null
+		lip_color = "white"
+	return ..()
 
 /obj/item/bodypart/head/update_icon_dropped()
 	var/list/standing = get_limb_icon(1)
@@ -132,7 +131,7 @@
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
-		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
+		if(!CHECK_BITFIELD(status, BODYPART_ROBOTIC)) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
 				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]

@@ -39,7 +39,7 @@
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))
 		return
-	destination.dna.unique_enzymes = unique_enzymes
+	destination.dna.modify_unique_enzymes(unique_enzymes)
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
 	destination.set_species(species.type, icon_update=0)
@@ -56,7 +56,7 @@
 		destination.dna.struc_enzymes = struc_enzymes
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
-	new_dna.unique_enzymes = unique_enzymes
+	new_dna.modify_unique_enzymes(unique_enzymes)
 	new_dna.struc_enzymes = struc_enzymes
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
@@ -151,6 +151,15 @@
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
+/datum/dna/proc/modify_unique_enzymes(new_ue)
+	if(iscarbon(holder))
+		var/mob/living/carbon/C = holder
+		for(var/A in C.bodyparts)
+			var/obj/item/bodypart/B = A
+			if(CHECK_BITFIELD(B.status, BODYPART_ORGANIC) B.is_original_owner(holder))
+				B.original_unique_enzymes = new_ue
+	unique_enzymes = new_ue
+
 /datum/dna/proc/update_ui_block(blocknumber)
 	if(!blocknumber || !ishuman(holder))
 		return
@@ -194,12 +203,12 @@
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
 	uni_identity = generate_uni_identity()
-	unique_enzymes = generate_unique_enzymes()
+	modify_unique_enzymes(generate_unique_enzymes())
 
 /datum/dna/proc/initialize_dna(newblood_type)
 	if(newblood_type)
 		blood_type = newblood_type
-	unique_enzymes = generate_unique_enzymes()
+	modify_unique_enzymes(generate_unique_enzymes())
 	uni_identity = generate_uni_identity()
 	struc_enzymes = generate_struc_enzymes()
 	features = random_features()

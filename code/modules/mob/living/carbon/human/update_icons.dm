@@ -650,7 +650,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 		. += "-[BP.body_zone]"
-		if(BP.status == BODYPART_ORGANIC)
+		if(CHECK_BITFIELD(BP.status, BODYPART_ORGANIC))
 			. += "-organic"
 		else
 			. += "-robotic"
@@ -700,7 +700,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if (!istype(HD))
 		return
 
-	HD.update_limb()
+	HD.update_limb(FALSE, src)
 
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()

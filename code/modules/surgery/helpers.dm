@@ -29,7 +29,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+				if(S.requires_bodypart_type && !CHECK_BITFIELD(affecting.status, S.requires_bodypart_type))
 					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
@@ -56,7 +56,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+				if(S.requires_bodypart_type && !CHECK_BITFIELD(affecting.status, S.requires_bodypart_type))
 					return
 			else if(C && S.requires_bodypart)
 				return
@@ -87,7 +87,7 @@
 	else if(S.can_cancel)
 		var/close_tool_type = /obj/item/cautery
 		var/obj/item/close_tool = user.get_inactive_held_item()
-		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
+		var/is_robotic = CHECK_BITFIELD(S.requires_bodypart_type, BODYPART_ROBOTIC)
 		if(is_robotic)
 			close_tool_type = /obj/item/screwdriver
 		if(istype(close_tool, close_tool_type) || iscyborg(user))

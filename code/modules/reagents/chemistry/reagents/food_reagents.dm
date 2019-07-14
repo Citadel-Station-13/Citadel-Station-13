@@ -49,7 +49,7 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+		M.heal_bodypart_damage(brute_heal, burn_heal, 0, FALSE)
 		. = 1
 	..()
 
@@ -434,7 +434,7 @@
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	..()
 

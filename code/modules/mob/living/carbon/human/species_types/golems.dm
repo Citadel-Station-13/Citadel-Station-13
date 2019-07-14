@@ -255,7 +255,7 @@
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
-	H.heal_overall_damage(2,2)
+	H.heal_overall_damage(2, 2, 0, BODYPART_ORGANIC|BODYPART_ROBOTIC)
 	H.adjustToxLoss(-2)
 	H.adjustOxyLoss(-2)
 

@@ -175,10 +175,9 @@
 		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest()
 	if(L)
-		L.update_limb(fixed_icon, src)
 		if(robotic)
-			L.change_bodypart_status(BODYPART_ROBOTIC)
-			L.body_markings = null
+			L.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC)
+		L.update_limb(fixed_icon, src)
 	. = L
 
 /mob/living/carbon/monkey/newBodyPart(zone, robotic, fixed_icon)
@@ -197,9 +196,9 @@
 		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/monkey()
 	if(L)
-		L.update_limb(fixed_icon, src)
 		if(robotic)
-			L.change_bodypart_status(BODYPART_ROBOTIC)
+			L.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC)
+		L.update_limb(fixed_icon, src)
 	. = L
 
 /mob/living/carbon/alien/larva/newBodyPart(zone, robotic, fixed_icon)
@@ -210,9 +209,9 @@
 		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/larva()
 	if(L)
-		L.update_limb(fixed_icon, src)
 		if(robotic)
-			L.change_bodypart_status(BODYPART_ROBOTIC)
+			L.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC)
+		L.update_limb(fixed_icon, src)
 	. = L
 
 /mob/living/carbon/alien/humanoid/newBodyPart(zone, robotic, fixed_icon)
@@ -231,9 +230,9 @@
 		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/alien()
 	if(L)
-		L.update_limb(fixed_icon, src)
 		if(robotic)
-			L.change_bodypart_status(BODYPART_ROBOTIC)
+			L.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC)
+		L.update_limb(fixed_icon, src)
 	. = L
 
 

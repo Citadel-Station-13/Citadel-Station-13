@@ -44,7 +44,7 @@
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
-				M.dna.unique_enzymes = fields["UE"]
+				M.dna.modify_unique_enzymes(fields["UE"])
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"])	//UI+UE
@@ -343,7 +343,7 @@
 				if(!M.dna.previous["blood_type"])
 					M.dna.previous["blood_type"] = M.dna.blood_type
 				M.real_name = fields["name"]
-				M.dna.unique_enzymes = fields["UE"]
+				M.dna.modify_unique_enzymes(fields["UE"])
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 				M.dna.temporary_mutations[UE_CHANGED] = endtime

@@ -188,7 +188,7 @@
 		M.Jitter(2)
 	if(brain_damage)
 		M.adjustBrainLoss(rand(1,4))
-	M.heal_overall_damage(2, 2)
+	M.heal_overall_damage(2, 2, updating_health = FALSE)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()

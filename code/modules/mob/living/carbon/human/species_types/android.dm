@@ -14,10 +14,12 @@
 	. = ..()
 	for(var/X in C.bodyparts)
 		var/obj/item/bodypart/O = X
-		O.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
+		if(O.is_original_owner(C))
+			O.change_bodypart_status(BODYPART_ROBOTIC, BODYPART_ORGANIC, FALSE, TRUE)
 
 /datum/species/android/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	for(var/X in C.bodyparts)
 		var/obj/item/bodypart/O = X
-		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)
+		if(O.is_original_owner(C))
+			O.change_bodypart_status(BODYPART_ORGANIC, BODYPART_ROBOTIC, FALSE, TRUE)

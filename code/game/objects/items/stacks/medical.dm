@@ -19,12 +19,7 @@
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 
 	if(M.stat == DEAD)
-		var/t_him = "it"
-		if(M.gender == MALE)
-			t_him = "him"
-		else if(M.gender == FEMALE)
-			t_him = "her"
-		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>")
+		to_chat(user, "<span class='danger'>\The [M] is dead, you cannot help [M.p_them()]!</span>")
 		return
 
 	if(!iscarbon(M) && !isanimal(M))
@@ -90,7 +85,7 @@
 			if(stop_bleeding)
 				if(!H.bleedsuppress) //so you can't stack bleed suppression
 					H.suppress_bloodloss(stop_bleeding)
-		if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+		if(CHECK_BITFIELD(affecting.status,BODYPART_ORGANIC)) //Limb must be organic to be healed - RR
 			if(affecting.heal_damage(heal_brute, heal_burn))
 				C.update_damage_overlays()
 		else

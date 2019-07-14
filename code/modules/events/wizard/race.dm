@@ -43,7 +43,7 @@
 		stored_dna[H] = H.dna.unique_enzymes
 		H.set_species(new_species)
 		H.real_name = H.dna.species.random_name(H.gender,1)
-		H.dna.unique_enzymes = H.dna.generate_unique_enzymes()
+		H.dna.modify_unique_enzymes(H.dna.generate_unique_enzymes())
 		to_chat(H, "<span class='notice'>You feel somehow... different?</span>")
 		if(!all_the_same)
 			new_species = pick(all_species)
@@ -54,5 +54,5 @@
 			continue
 		H.set_species(stored_species[H])
 		H.real_name = stored_name[H]
-		H.dna.unique_enzymes = stored_dna[H]
+		H.dna.modify_unique_enzymes(stored_dna[H])
 		to_chat(H, "<span class='notice'>You feel back to your normal self again.</span>")

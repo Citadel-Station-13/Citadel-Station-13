@@ -229,7 +229,7 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		BP.update_limb()
+		BP.update_limb(FALSE, src)
 
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
@@ -274,7 +274,7 @@
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.animal_origin)
 			. += "-[BP.animal_origin]"
-		if(BP.status == BODYPART_ORGANIC)
+		if(CHECK_BITFIELD(BP.status, BODYPART_ORGANIC))
 			. += "-organic"
 		else
 			. += "-robotic"

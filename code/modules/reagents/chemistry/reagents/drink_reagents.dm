@@ -32,7 +32,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() && prob(20))
-		M.heal_bodypart_damage(0,1, 0)
+		M.heal_bodypart_damage(0, 1, 0, FALSE)
 		. = 1
 	..()
 
@@ -138,7 +138,7 @@
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M)
 	if((ishuman(M) && M.job == "Clown") || ismonkey(M))
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	..()
 
@@ -154,7 +154,7 @@
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1, 1, 0, FALSE)
 		. = 1
 	..()
 
@@ -214,11 +214,11 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
-		M.heal_bodypart_damage(1.5,0, 0)
+		M.heal_bodypart_damage(1.5, 0, 0, FALSE)
 		. = 1
 	else
 		if(M.getBruteLoss() && prob(20))
-			M.heal_bodypart_damage(1,0, 0)
+			M.heal_bodypart_damage(1, 0, 0, FALSE)
 			. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
@@ -236,7 +236,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1, 0, 0, FALSE)
 		. = 1
 	..()
 
@@ -252,7 +252,7 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1, 0, 0, FALSE)
 		. = 1
 	..()
 
@@ -603,7 +603,7 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1, 0, 0, FALSE)
 	..()
 	. = 1
 
@@ -625,7 +625,7 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1, 0, 0, FALSE)
 	..()
 	. = 1
 

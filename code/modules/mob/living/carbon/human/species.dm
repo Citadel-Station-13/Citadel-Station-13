@@ -316,6 +316,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+	for(var/A in C.bodyparts)
+		var/obj/item/bodypart/B = A
+		if(!B.animal_origin && CHECK_BITFIELD(B.status, BODYPART_ORGANIC) && B.is_original_owner(C))
+			B.species_id = "" //otherwise unreplaceable with our new limbs_id.
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1662,7 +1666,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
-		if(affecting.status == BODYPART_ORGANIC)
+		if(CHECK_BITFIELD(affecting.status, BODYPART_ORGANIC))
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
@@ -1775,7 +1779,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod), only_robotic = FALSE, only_organic = FALSE))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod) : BP.heal_damage(0, 0, abs(damage * hit_percent * H.physiology.stamina_mod), BODYPART_ROBOTIC|BODYPART_ORGANIC))
 					H.update_stamina()
 			else
 				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)

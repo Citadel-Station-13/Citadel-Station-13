@@ -549,7 +549,7 @@
 				if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 					viable_occupant.real_name = buffer_slot["name"]
 					viable_occupant.name = buffer_slot["name"]
-					viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
+					viable_occupant.dna.modify_unique_enzymes(buffer_slot["UE"])
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 			if(SCANNER_ACTION_MIXED)
 				if(buffer_slot["UI"])
@@ -558,7 +558,7 @@
 				if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 					viable_occupant.real_name = buffer_slot["name"]
 					viable_occupant.name = buffer_slot["name"]
-					viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
+					viable_occupant.dna.modify_unique_enzymes(buffer_slot["UE"])
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()

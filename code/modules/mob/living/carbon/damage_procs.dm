@@ -70,7 +70,7 @@
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health)
 	else
-		heal_overall_damage(abs(amount), 0, 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(abs(amount), 0, 0, BODYPART_ORGANIC, updating_health)
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -79,7 +79,7 @@
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health)
 	else
-		heal_overall_damage(0, abs(amount), 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(0, abs(amount), 0, BODYPART_ORGANIC, updating_health)
 	return amount
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -103,7 +103,7 @@
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
 	else
-		heal_overall_damage(0, 0, abs(amount), FALSE, FALSE, updating_health)
+		heal_overall_damage(0, 0, abs(amount), ALL, updating_health)
 	return amount
 
 /mob/living/carbon/setStaminaLoss(amount, updating = TRUE, forced = FALSE)
@@ -120,7 +120,7 @@
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && BP.status != status)
+		if(status && !CHECK_BITFIELD(BP.status, status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
@@ -138,12 +138,12 @@
 //Heals ONE bodypart randomly selected from damaged ones.
 //It automatically updates damage overlays if necessary
 //It automatically updates health status
-/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, only_robotic = FALSE, only_organic = TRUE)
+/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, accepted_statuses = BODYPART_ORGANIC)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.heal_damage(brute, burn, stamina, only_robotic, only_organic))
+	if(picked.heal_damage(brute, burn, stamina, accepted_statuses, updating_health))
 		update_damage_overlays()
 
 //Damages ONE bodypart randomly selected from damagable ones.
@@ -158,7 +158,7 @@
 		update_damage_overlays()
 
 //Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, accepted_statuses = BODYPART_ORGANIC, updating_health = TRUE)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina)
 
 	var/update = NONE
@@ -169,7 +169,7 @@
 		var/burn_was = picked.burn_dam
 		var/stamina_was = picked.stamina_dam
 
-		update |= picked.heal_damage(brute, burn, stamina, only_robotic, only_organic, FALSE)
+		update |= picked.heal_damage(brute, burn, stamina, accepted_statuses, FALSE)
 
 		brute = round(brute - (brute_was - picked.brute_dam), DAMAGE_PRECISION)
 		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
@@ -178,9 +178,9 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 	if(update)
 		update_damage_overlays()
-	update_stamina() //CIT CHANGE - makes sure update_stamina() always gets called after a health update
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)

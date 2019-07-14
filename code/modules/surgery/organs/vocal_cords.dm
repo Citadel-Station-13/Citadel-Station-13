@@ -309,7 +309,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, ALL)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
