@@ -25,7 +25,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirk_points[initial(T.name)] = initial(T.value)
 		quirk_names_by_path[T] = initial(T.name)
 
-/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects, roundstart = FALSE, datum/job/job, silent = FALSE)
+/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects, roundstart = FALSE, datum/job/job, silent = FALSE, mob/to_chat_target)
 	GenerateQuirks(cli)
 	var/list/quirks = cli.prefs.character_quirks.Copy()
 	var/list/cut
@@ -34,7 +34,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	for(var/V in quirks)
 		user.add_quirk(V, spawn_effects)
 	if(!silent)
-		to_chat(user, "<span class='boldwarning'>The following quirks were cut during assignment either due to a job restriction or another reason: [english_list(cut)].</span>")
+		to_chat(to_chat_target || user, "<span class='boldwarning'>The following quirks were cut during assignment either due to a job restriction or another reason: [english_list(cut)].</span>")
 
 /datum/controller/subsystem/processing/quirks/proc/quirk_path_by_name(name)
 	return quirks[name]
