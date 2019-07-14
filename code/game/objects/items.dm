@@ -230,9 +230,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	research_msg += "."
 	to_chat(user, research_msg.Join())
 
-/obj/item/proc/speechModification(message)			//for message modding by mask slot.
-	return message
-
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
 	ui_interact(user)
@@ -647,11 +644,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		. = ""
 
-
-//when an item modify our speech spans when in our active hand. Override this to modify speech spans.
-/obj/item/proc/get_held_item_speechspans(mob/living/carbon/user)
-	return
-
 /obj/item/hitby(atom/movable/AM)
 	return
 
@@ -825,6 +817,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (item_flags & NODROP)
+	if (HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()

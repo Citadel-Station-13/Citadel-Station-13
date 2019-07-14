@@ -269,8 +269,11 @@
 	prof.protected = protect
 
 	prof.underwear = H.underwear
+	prof.undie_color = H.undie_color
 	prof.undershirt = H.undershirt
+	prof.shirt_color = H.shirt_color
 	prof.socks = H.socks
+	prof.socks_color = H.socks_color
 
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -503,8 +506,11 @@
 	var/list/item_state_list = list()
 
 	var/underwear
+	var/undie_color
 	var/undershirt
+	var/shirt_color
 	var/socks
+	var/socks_color
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
