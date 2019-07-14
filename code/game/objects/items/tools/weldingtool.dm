@@ -363,6 +363,13 @@
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
+/obj/item/weldingtool/bronze
+	name = "bronze plated welding tool"
+	desc = "A bronze plated welder."
+	max_fuel = 21
+	toolspeed = 0.95
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
 
 /obj/item/weldingtool/experimental/process()
 	..()
