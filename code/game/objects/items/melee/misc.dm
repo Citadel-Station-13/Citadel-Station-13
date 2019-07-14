@@ -42,7 +42,7 @@
 	force = 20
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "impaled", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
@@ -131,6 +131,28 @@
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+
+/obj/item/melee/rapier
+	name = "plastitanium rapier"
+	desc = "A impossibly thin blade made of plastitanium with a tip made of diamond. It looks to be able to cut through any armor."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "rapier"
+	item_state = "rapier"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 25
+	throwforce = 35
+	block_chance = 0
+	armour_penetration = 100
+	flags_1 = CONDUCT_1
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_- 
+	attack_verb = list("slashed", "cut", "pierces", "pokes")
+
+/obj/item/melee/rapier/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 65, 0)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
