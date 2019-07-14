@@ -171,6 +171,7 @@
 				if(++mobs_stored >= mob_storage_capacity)
 					return FALSE
 		L.stop_pulling()
+
 	else if(istype(AM, /obj/structure/closet))
 		return FALSE
 
@@ -179,13 +180,15 @@
 
 	else if(isobj(AM))
 		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs())
-			return TRUE
-		if(isitem(AM) && HAS_TRAIT(AM, TRAIT_NODROP))
+			return FALSE
+		if(isitem(AM) && !HAS_TRAIT(AM, TRAIT_NODROP))
 			return TRUE
 		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return FALSE
 	else
 		return FALSE
+
+	return TRUE
 
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
