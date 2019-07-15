@@ -78,13 +78,13 @@ GLOBAL_LIST(round_end_notifiees)
 /datum/tgs_chat_command/notify
 	name = "notify"
 	help_text = "Pings the invoker when the round ends"
-	admin_only = TRUE
+	admin_only = FALSE
 
 /datum/tgs_chat_command/notify/Run(datum/tgs_chat_user/sender, params)
 	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
 		return "[sender.mention], the round has already ended!"
 	LAZYINITLIST(GLOB.round_end_notifiees)
-	GLOB.round_end_notifiees[sender.mention] = TRUE
+	GLOB.round_end_notifiees["<@[sender.mention]>"] = TRUE
 	return "I will notify [sender.mention] when the round ends."
 
 /datum/tgs_chat_command/sdql

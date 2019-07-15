@@ -30,6 +30,18 @@
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/spawner/lootdrop/bedsheet
+	icon = 'icons/obj/bedsheets.dmi'
+	icon_state = "random_bedsheet"
+	name = "random dorms bedsheet"
+	loot = list(/obj/item/bedsheet = 8, /obj/item/bedsheet/blue = 8, /obj/item/bedsheet/green = 8,
+				/obj/item/bedsheet/grey = 8, /obj/item/bedsheet/orange = 8, /obj/item/bedsheet/purple = 8,
+				/obj/item/bedsheet/red = 8, /obj/item/bedsheet/yellow = 8, /obj/item/bedsheet/brown = 8,
+				/obj/item/bedsheet/black = 8, /obj/item/bedsheet/patriot = 3, /obj/item/bedsheet/rainbow = 3,
+				/obj/item/bedsheet/ian = 3, /obj/item/bedsheet/runtime = 3, /obj/item/bedsheet/nanotrasen = 3,
+				/obj/item/bedsheet/pirate = 1, /obj/item/bedsheet/cosmos = 1, /obj/item/bedsheet/gondola = 1
+				)
+
 /obj/effect/spawner/lootdrop/armory_contraband
 	name = "armory contraband gun spawner"
 	lootdoubles = FALSE
@@ -213,6 +225,20 @@
 				/obj/item/aiModule/core/full/thermurderdynamic,
 				/obj/item/aiModule/core/full/damaged
 				)
+
+/obj/effect/spawner/lootdrop/mre
+	name = "random MRE"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "mre"
+
+/obj/effect/spawner/lootdrop/mre/Initialize()
+	for(var/A in subtypesof(/obj/item/storage/box/mre))
+		var/obj/item/storage/box/mre/M = A
+		var/our_chance = initial(M.spawner_chance)
+		if(our_chance)
+			LAZYSET(loot, M, our_chance)
+	return ..()
+
 
 // Tech storage circuit board spawners
 // For these, make sure that lootcount equals the number of list items

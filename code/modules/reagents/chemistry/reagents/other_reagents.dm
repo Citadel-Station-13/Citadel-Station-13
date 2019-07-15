@@ -261,7 +261,7 @@
 			qdel(R)
 	T.Bless()
 
-/datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+/datum/reagent/fuel/unholywater	//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
@@ -280,7 +280,7 @@
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
 		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0)
+		M.adjustToxLoss(-2, 0, TRUE)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)

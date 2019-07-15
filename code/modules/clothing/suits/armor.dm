@@ -58,7 +58,8 @@
 	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
-
+	unique_reskin = list("Coat" = "hostrench", "Cloak" = "trenchcloak")
+	
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
