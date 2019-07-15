@@ -120,6 +120,26 @@
 	name = "Pyromancer REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "ONI SOMA!")
 
+/datum/dog_fashion/head/black_wizard
+	name = "Necromancer REAL_NAME"
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "NECREM IMORTIUM!")
+
+/datum/dog_fashion/head/yellow_wizard
+	name = "Warlock REAL_NAME"
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "UN'LTD P'WAH!")
+
+/datum/dog_fashion/head/violet_wizard
+	name = "Magician REAL_NAME"
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "CAVERE INSIDIAS!")
+
+/datum/dog_fashion/head/witch_hat
+	name = "Grandwitch REAL_NAME"
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "ZE!")
+
+/datum/dog_fashion/head/straw_wizard
+	name = "Black Mage REAL_NAME"
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "BORK!", "BORKARA!", "BORKAGA!", "BORKAJA!")
+
 /datum/dog_fashion/head/cardborg
 	name = "Borgi"
 	speak = list("Ping!","Beep!","Woof!")

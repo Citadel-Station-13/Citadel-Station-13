@@ -20,6 +20,16 @@
 		examine_text = _examine_text
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
+/datum/component/spellcasting/InheritComponent(datum/component/spellcasting/S, original, _magical_flags, _allowed_slots, _examine_text)
+	ENABLE_BITFIELD(magical_flags, _magical_flags)
+	ENABLE_BITFIELD(allowed_slots, _allowed_slots)
+
+	if(_examine_text)
+		var/newline = examine_text ? "\n" : ""
+		if(!newline)
+			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		examine_text = "[examine_text][newline][_examine_text]"
+
 /datum/component/spellcasting/proc/on_examine(datum/source, mob/user)
 	to_chat(user, examine_text)
 

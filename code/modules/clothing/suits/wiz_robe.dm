@@ -25,19 +25,19 @@
 	name = "violet wizard hat"
 	desc = "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
 	icon_state = "violetwizard"
-	dog_fashion = null
+	dog_fashion = /datum/dog_fashion/head/violet_wizard
 
 /obj/item/clothing/head/wizard/yellow
 	name = "yellow wizard hat"
 	desc = "Strange-looking yellow hat-wear that most certainly belongs to a powerful magic user."
 	icon_state = "yellowwizard"
-	dog_fashion = null
+	dog_fashion = /datum/dog_fashion/head/yellow_wizard
 
 /obj/item/clothing/head/wizard/black
 	name = "black wizard hat"
 	desc = "Strange-looking black hat-wear that most certainly belongs to a real skeleton. Spooky."
 	icon_state = "blackwizard"
-	dog_fashion = null
+	dog_fashion = /datum/dog_fashion/head/black_wizard
 
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
@@ -47,7 +47,6 @@
 	permeability_coefficient = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
-	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
 /obj/item/clothing/head/wizard/marisa
 	name = "witch hat"
@@ -77,7 +76,7 @@
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	worn_x_dimension = 64
 	worn_y_dimension = 64
-	dog_fashion = null
+	dog_fashion = /datum/dog_fashion/head/straw_wizard
 
 /obj/item/clothing/head/hooded/whitemage
 	name = "white mage hood"
