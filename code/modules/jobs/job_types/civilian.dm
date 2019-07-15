@@ -61,6 +61,7 @@ Clown
 		return
 
 	H.dna.add_mutation(CLOWNMUT)
+	H.dna.add_mutation(SMILE)
 
 /*
 Mime

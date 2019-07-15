@@ -567,14 +567,14 @@
 	name = "Corn Starch"
 	id = "corn_starch"
 	description = "A slippery solution."
-	color = "#C8A5DC"
+	color = "#f7f6e4"
 	taste_description = "slime"
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
 	description = "Decays into sugar."
-	color = "#C8A5DC"
+	color = "#fff882"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 
