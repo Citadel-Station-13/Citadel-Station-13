@@ -81,12 +81,6 @@
 		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
 		return
 
-	var/mob/living/L
-	if(isliving(target))
-		L = target
-		if(!L.can_inject(usr, 1))
-			return
-
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")

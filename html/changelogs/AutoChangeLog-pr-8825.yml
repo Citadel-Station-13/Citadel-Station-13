@@ -1,0 +1,6 @@
+author: "Ghommie (original PR by MrDoomBringer, AnturK and YPOQ)"
+delete-after: True
+changes: 
+  - bugfix: "Explosions will no longer damage wizards in rod form, the supermatter monitoring radio and megafauna GPS."
+  - bugfix: "Supplypods no longer detonate their contents."
+  - bugfix: "Fixed silicon items (e.g. cyborg modules) being destroyed by explosion epicenters."

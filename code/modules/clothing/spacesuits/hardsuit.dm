@@ -766,11 +766,14 @@
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	item_color = "ert_medical"
-	item_flags = NODROP //Dont want people changing into the other teams gear
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
 	slowdown = 0
 	max_charges = 5
+
+/obj/item/clothing/suit/space/hardsuit/shielded/ctf/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	name = "red shielded hardsuit"
@@ -899,12 +902,10 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/helm_overlay = mutable_appearance(icon, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/helm_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
 
 	if(energy_color)
 		helm_overlay.color = energy_color
-
-	helm_overlay.plane = LIGHTING_PLANE + 1	//Magic number is used here because we have no ABOVE_LIGHTING_PLANE plane defined. Lighting plane is 15, HUD is 18
 
 	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
 
@@ -914,7 +915,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/worn_overlays(isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+		var/mutable_appearance/energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
+		energy_overlay.plane = ABOVE_LIGHTING_LAYER
 		energy_overlay.color = energy_color
 		. += energy_overlay
 
@@ -947,19 +949,10 @@
 	update_icon()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/suit_overlay
-
-	if(taurmode == SNEK_TAURIC)
-		suit_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-	else if(taurmode == PAW_TAURIC)
-		suit_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
-	else
-		suit_overlay = mutable_appearance(icon, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/suit_overlay = mutable_appearance(icon, "knight_cydonia_overlay")
 
 	if(energy_color)
 		suit_overlay.color = energy_color
-
-	suit_overlay.plane = LIGHTING_PLANE + 1		//Magic number is used here because we have no ABOVE_LIGHTING_PLANE plane defined. Lighting plane is 15.
 
 	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
 
@@ -970,12 +963,13 @@
 	if(!isinhands)
 		var/mutable_appearance/energy_overlay
 		if(taurmode == SNEK_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_naga.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
 		else if(taurmode == PAW_TAURIC)
-			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+			energy_overlay = mutable_appearance('modular_citadel/icons/mob/taur_canine.dmi', "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
 		else
-			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+			energy_overlay = mutable_appearance(icon_file, "knight_cydonia_overlay", ABOVE_LIGHTING_LAYER)
 
+		energy_overlay.plane = ABOVE_LIGHTING_LAYER
 		energy_overlay.color = energy_color
 		. += energy_overlay
 

@@ -37,6 +37,8 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
+	name = "large armor vest"
+	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 
@@ -59,7 +61,7 @@
 	flags_inv = 0
 	strip_delay = 80
 	unique_reskin = list("Coat" = "hostrench", "Cloak" = "trenchcloak")
-	
+
 /obj/item/clothing/suit/armor/hos/trenchcoat/cloak
 	name = "armored trenchcloak"
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. This one appears to be designed to be draped over one's shoulders rather than worn normally.."

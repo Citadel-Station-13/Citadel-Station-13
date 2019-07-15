@@ -48,7 +48,12 @@
 
 /obj/hitby(atom/movable/AM)
 	..()
-	take_damage(AM.throwforce, BRUTE, "melee", 1, get_dir(src, AM))
+	var/throwdamage = AM.throwforce
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.damtype == STAMINA)
+			throwdamage = 0
+	take_damage(throwdamage, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)

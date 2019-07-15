@@ -438,6 +438,14 @@
 		. = 1
 	..()
 
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	id = "peanut_butter"
+	description = "A popular food paste made from ground dry-roasted peanuts."
+	color = "#C29261"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_description = "peanuts"
+
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
@@ -556,14 +564,14 @@
 	name = "Corn Starch"
 	id = "corn_starch"
 	description = "A slippery solution."
-	color = "#C8A5DC"
+	color = "#f7f6e4"
 	taste_description = "slime"
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
 	description = "Decays into sugar."
-	color = "#C8A5DC"
+	color = "#fff882"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 

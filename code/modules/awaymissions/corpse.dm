@@ -72,9 +72,9 @@
 /obj/effect/mob_spawn/Destroy()
 	GLOB.poi_list -= src
 	var/job_name = job_description ? job_description : name
-	GLOB.mob_spawners -= job_name
+	LAZYREMOVE(GLOB.mob_spawners[job_name], src)
 	if(!LAZYLEN(GLOB.mob_spawners[job_name]))
-		LAZYREMOVE(GLOB.mob_spawners[job_name], src)
+		GLOB.mob_spawners -= job_name
 	return ..()
 
 /obj/effect/mob_spawn/proc/can_latejoin() //If it can be taken from the lobby.
