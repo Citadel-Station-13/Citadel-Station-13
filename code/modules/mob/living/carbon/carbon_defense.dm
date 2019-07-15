@@ -271,7 +271,8 @@
 		return
 
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-
+		if(check_shields(M, 0, "[src]"))
+			return
 		if(lying)
 			if(buckled)
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
