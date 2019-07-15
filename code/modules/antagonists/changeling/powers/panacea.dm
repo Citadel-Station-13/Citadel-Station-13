@@ -29,7 +29,7 @@
 		O.forceMove(get_turf(user))
 
 	user.reagents.add_reagent("mutadone", 10)
-	user.reagents.add_reagent("pen_acid", 20)
+	user.reagents.add_reagent("pen_jelly", 20)
 	user.reagents.add_reagent("antihol", 10)
 	user.reagents.add_reagent("mannitol", 25)
 

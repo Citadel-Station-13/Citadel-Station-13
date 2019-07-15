@@ -465,13 +465,13 @@
 
 /datum/status_effect/hippocraticOath/on_apply()
 	//Makes the user passive, it's in their oath not to harm!
-	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
 /datum/status_effect/hippocraticOath/on_remove()
-	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 

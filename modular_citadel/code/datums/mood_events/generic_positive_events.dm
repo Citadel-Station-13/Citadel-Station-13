@@ -21,10 +21,10 @@
 	timeout = 3000
 
 /datum/mood_event/orgasm
-	description = "<font color = #780A53><i><b>I came!</font></i></b>" //funny meme haha
+	description = "<span class='userlove'>I came!</span>\n" //funny meme haha
 	mood_change = 3
 	timeout = 1000
-	
+
 /datum/mood_event/fedpred
 	description = "<span class='nicegreen'>I've devoured someone!</span>\n"
 	mood_change = 3

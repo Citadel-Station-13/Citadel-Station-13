@@ -89,7 +89,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(HAS_TRAIT(W, TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		user.dropItemToGround(W)
@@ -604,7 +604,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || user.has_trait(TRAIT_RESISTHEAT) || user.has_trait(TRAIT_RESISTHEATHANDS))
+		if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 			to_chat(user, "<span class='notice'>You remove the light [fitting].</span>")
 		else if(istype(user) && user.dna.check_mutation(TK))
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")

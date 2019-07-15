@@ -53,7 +53,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-
 /datum/design/security_hud_night
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
@@ -94,39 +93,15 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/////////////////////////////////////////
-//////////////////Misc///////////////////
-/////////////////////////////////////////
-
-/datum/design/welding_mask
-	name = "Welding Gas Mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
-	id = "weldingmask"
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
+	id = "scigoggles"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/mask/gas/welding
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/portaseeder
-	name = "Portable Seed Extractor"
-	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
-	id = "portaseeder"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 400)
-	build_path = /obj/item/storage/bag/plants/portaseeder
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/air_horn
-	name = "Air Horn"
-	desc = "Damn son, where'd you find this?"
-	id = "air_horn"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
-	build_path = /obj/item/bikehorn/airhorn
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL			//HONK!
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -218,6 +193,40 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_ENGINEERING
 
+/////////////////////////////////////////
+//////////////////Misc///////////////////
+/////////////////////////////////////////
+
+/datum/design/welding_mask
+	name = "Welding Gas Mask"
+	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	id = "weldingmask"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	build_path = /obj/item/clothing/mask/gas/welding
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/portaseeder
+	name = "Portable Seed Extractor"
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	id = "portaseeder"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 400)
+	build_path = /obj/item/storage/bag/plants/portaseeder
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
+	build_path = /obj/item/bikehorn/airhorn
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL	//HONK!
+
 /datum/design/magboots
 	name = "Magnetic Boots"
 	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
@@ -225,16 +234,6 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/forcefield_projector
-	name = "Forcefield Projector"
-	desc = "A device which can project temporary forcefields to seal off an area."
-	id = "forcefield_projector"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
-	build_path = /obj/item/forcefield_projector
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -312,6 +311,10 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/////////////////////////////////////////
+////////////Holosign Designs//////////////
+/////////////////////////////////////////
+
 /datum/design/holosign
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
@@ -352,9 +355,20 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/////////////////////////////////////////
+/datum/design/forcefield_projector
+	name = "Forcefield Projector"
+	desc = "A device which can project temporary forcefields to seal off an area."
+	id = "forcefield_projector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 1000)
+	build_path = /obj/item/forcefield_projector
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+
+///////////////////////////////
 ////////////Tools//////////////
-/////////////////////////////////////////
+///////////////////////////////
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
@@ -457,7 +471,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
-////////////Armour//////////////
+////////////Armour///////////////////////
 /////////////////////////////////////////
 
 /datum/design/reactive_armour
@@ -469,3 +483,35 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+////////////Meteor///////////////////////
+/////////////////////////////////////////
+
+/datum/design/meteor_defence
+	name = "Meteor Defence"
+	desc = "A blue print of a early model of the Meteor defence turret."
+	id = "meteor_defence"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50000, MAT_GLASS = 50000, MAT_SILVER = 8500, MAT_GOLD = 8500, MAT_TITANIUM = 7500, MAT_URANIUM = 7500)
+	build_path = /obj/machinery/satellite/meteor_shield/sci
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/meteor_disk
+	name = "Meteor Defence Upgrade Disk"
+	desc = "A disk containing debugging programming to solve and monitor meteors more effectively."
+	id = "meteor_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 1500, MAT_SILVER = 2500, MAT_GOLD = 1000)
+	build_path = /obj/item/disk/meteor
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/meteor_console
+	name = "Computer Design (Meteor Satellite Console)"
+	desc = "Allows for the construction of circuit boards used to build a new Meteor Satellite monitor console."
+	id = "meteor_console"
+	build_path = /obj/item/circuitboard/computer/sat_control
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING

@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "Toned down many species' female chest sprites to fit the smaller cups."
+  - bugfix: "Fixed some body parts sprites inconsistencies, such as the W/E female and male chest sprites being the same in some species, and jellypeople's legs being one tile off on W/E"

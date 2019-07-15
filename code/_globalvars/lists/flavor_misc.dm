@@ -7,15 +7,15 @@ GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/faci
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
+GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear/bottom indexed by name
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
 GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
+GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/underwear/top indexed by name
 GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
 GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
+GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/underwear/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
@@ -39,6 +39,54 @@ GLOBAL_LIST_EMPTY(caps_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
+
+GLOBAL_LIST_INIT(ai_core_display_screens, list(
+	":thinking:",
+	"Alien",
+	"Angel",
+	"Banned",
+	"Bliss",
+	"Blue",
+	"Clown",
+	"Database",
+	"Dorf",
+	"Firewall",
+	"Fuzzy",
+	"Gentoo",
+	"Glitchman",
+	"Gondola",
+	"Goon",
+	"Hades",
+	"Heartline",
+	"Helios",
+	"House",
+	"Inverted",
+	"Matrix",
+	"Monochrome",
+	"Murica",
+	"Nanotrasen",
+	"Not Malf",
+	"President",
+	"Random",
+	"Rainbow",
+	"Red",
+	"Red October",
+	"Static",
+	"Syndicat Meow",
+	"TechDemon",
+	"Text",
+	"Too Deep",
+	"Triumvirate",
+	"Triumvirate-M",
+	"Weird"))
+
+/proc/resolve_ai_icon(input)
+	if(!input || !(input in GLOB.ai_core_display_screens))
+		return "ai"
+	else
+		if(input == "Random")
+			input = pick(GLOB.ai_core_display_screens - "Random")
+		return "ai-[lowertext(input)]"
 
 GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -117,7 +165,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Circuitry", "Toxins", "Dormitories", "Virology", 
+	"Circuitry", "Toxins", "Dormitories", "Virology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")

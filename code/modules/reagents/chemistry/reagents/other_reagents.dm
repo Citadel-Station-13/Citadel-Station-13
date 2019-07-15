@@ -196,17 +196,22 @@
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
-/datum/reagent/water/holywater/on_mob_add(mob/living/L)
+/datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_HOLY, id)
+	ADD_TRAIT(L, TRAIT_HOLY, id)
 
-/datum/reagent/water/holywater/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_HOLY, id)
+/datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HOLY, id)
 	..()
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
-		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
+		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, purging the Justiciar's influence!</span>")
+	..()
+
+/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscultist(M))
+		to_chat(M, "<span class='userdanger'>A fog spreads through your mind, weakening your connection to the veil and purging Nar-sie's influence</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
@@ -261,7 +266,7 @@
 			qdel(R)
 	T.Bless()
 
-/datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+/datum/reagent/fuel/unholywater	//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "Something that shouldn't exist on this plane of existence."
@@ -280,7 +285,7 @@
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
 		M.adjustStaminaLoss(-10, 0)
-		M.adjustToxLoss(-2, 0)
+		M.adjustToxLoss(-2, 0, TRUE)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
@@ -308,6 +313,45 @@
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5, 150)
 	holder.remove_reagent(id, 1)
+
+/datum/reagent/fuel/holyoil		//Its oil
+	name = "Zelus Oil"
+	id = "holyoil"
+	description = "Oil blessed by a greater being."
+	taste_description = "metallic oil"
+
+/datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
+	if(is_servant_of_ratvar(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustUnconscious(-60, 0)
+		M.AdjustStun(-30, 0)
+		M.AdjustKnockdown(-70, 0)
+		M.adjustStaminaLoss(-15, 0)
+		M.adjustToxLoss(-5, 0, TRUE)
+		M.adjustOxyLoss(-3, 0)
+		M.adjustBruteLoss(-3, 0)
+		M.adjustFireLoss(-5, 0)
+	if(iscultist(M))
+		M.AdjustUnconscious(1, 0)
+		M.AdjustStun(10, 0)
+		M.AdjustKnockdown(20, 0)
+		M.adjustStaminaLoss(15, 0)
+	else
+		M.adjustToxLoss(3, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustStaminaLoss(10, 0)
+		holder.remove_reagent(id, 1)
+	return TRUE
+
+//We only get 30u to start with...
+
+/datum/reagent/fuel/holyoil/reaction_obj(obj/O, reac_volume)
+	. = ..() 
+	if(istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
+		reac_volume = min(reac_volume, M.amount)
+		new/obj/item/stack/tile/brass(get_turf(M), reac_volume)
+		M.use(reac_volume)
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"
@@ -863,7 +907,7 @@
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#e6f1f5" // rgb: 200, 165, 220
 	taste_description = "bitterness"
 
 /datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -881,7 +925,7 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -1076,7 +1120,7 @@
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizziness."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#7529b3" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
 
@@ -1091,7 +1135,7 @@
 	name = "Impedrezene"
 	id = "impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
-	color = "#C8A5DC" // rgb: 200, 165, 220A
+	color = "#587a31" // rgb: 200, 165, 220A
 	taste_description = "numbness"
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M)
@@ -1241,14 +1285,14 @@
 	color = "E1A116"
 	taste_description = "sourness"
 
-/datum/reagent/stimulum/on_mob_add(mob/living/L)
+/datum/reagent/stimulum/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 
-/datum/reagent/stimulum/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+/datum/reagent/stimulum/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
@@ -1266,12 +1310,12 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/nitryl/on_mob_add(mob/living/L)
+/datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/nitryl/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+/datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1410,7 +1454,7 @@
 	id = "oil"
 	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#292929"
 	taste_description = "oil"
 
 /datum/reagent/stable_plasma
@@ -1418,7 +1462,7 @@
 	id = "stable_plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6b008f"
 	taste_description = "bitterness"
 	taste_mult = 1.5
 
@@ -1431,7 +1475,7 @@
 	id = "iodine"
 	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#694600"
 	taste_description = "metal"
 
 /datum/reagent/carpet
@@ -1439,7 +1483,7 @@
 	id = "carpet"
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#b51d05"
 	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
@@ -1453,7 +1497,7 @@
 	id = "bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#b37740"
 	taste_description = "chemicals"
 
 /datum/reagent/phenol
@@ -1461,7 +1505,7 @@
 	id = "phenol"
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#e6e8ff"
 	taste_description = "acid"
 
 /datum/reagent/ash
@@ -1469,7 +1513,7 @@
 	id = "ash"
 	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#665c56"
 	taste_description = "ash"
 
 /datum/reagent/acetone
@@ -1477,7 +1521,7 @@
 	id = "acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#e6e6e6"
 	taste_description = "acid"
 
 /datum/reagent/colorful_reagent
@@ -1485,7 +1529,7 @@
 	id = "colorful_reagent"
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FFFF00"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
 	var/no_mob_color = FALSE
@@ -1515,7 +1559,7 @@
 	id = "hair_dye"
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ff00dd"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
 
@@ -1532,7 +1576,7 @@
 	id = "barbers_aid"
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#fac34b"
 	taste_description = "sourness"
 
 /datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1550,7 +1594,7 @@
 	id = "concentrated_barbers_aid"
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ffaf00"
 	taste_description = "sourness"
 
 /datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1723,7 +1767,7 @@
 	H.update_transform()
 	..()
 
-/datum/reagent/growthserum/on_mob_delete(mob/living/M)
+/datum/reagent/growthserum/on_mob_end_metabolize(mob/living/M)
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
@@ -1777,12 +1821,12 @@
 	taste_description = "water"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-/datum/reagent/pax/on_mob_add(mob/living/L)
+/datum/reagent/pax/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_PACIFISM, id)
+	ADD_TRAIT(L, TRAIT_PACIFISM, id)
 
-/datum/reagent/pax/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_PACIFISM, id)
+/datum/reagent/pax/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_PACIFISM, id)
 	..()
 
 /datum/reagent/bz_metabolites
@@ -1793,13 +1837,13 @@
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 
-/datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(CHANGELING_HIVEMIND_MUTE, id)
+	ADD_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
-/datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/L)
 	..()
-	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
+	REMOVE_TRAIT(L, CHANGELING_HIVEMIND_MUTE, id)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
 	if(L.mind)
@@ -1814,14 +1858,14 @@
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/peaceborg/confuse
+/datum/reagent/peaceborg_confuse
 	name = "Dizzying Solution"
 	id = "dizzysolution"
 	description = "Makes the target off balance and dizzy"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "dizziness"
 
-/datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_confuse/on_mob_life(mob/living/carbon/M)
 	if(M.confused < 6)
 		M.confused = CLAMP(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
@@ -1830,14 +1874,14 @@
 		to_chat(M, "You feel confused and disorientated.")
 	..()
 
-/datum/reagent/peaceborg/tire
+/datum/reagent/peaceborg_tire
 	name = "Tiring Solution"
 	id = "tiresolution"
 	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "tiredness"
 
-/datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M)
+/datum/reagent/peaceborg_tire/on_mob_life(mob/living/carbon/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)

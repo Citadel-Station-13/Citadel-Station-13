@@ -156,8 +156,7 @@
 		next += slave.parent
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
-	if(locked)
-		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+	if(check_locked(source, M, TRUE))
 		return FALSE
 	if((M.get_active_held_item() == parent) && allow_quick_empty)
 		quick_empty(M)
@@ -166,8 +165,7 @@
 	if(!isitem(O) || !click_gather || SEND_SIGNAL(O, COMSIG_CONTAINS_STORAGE))
 		return FALSE
 	. = COMPONENT_NO_ATTACK
-	if(locked)
-		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+	if(check_locked(source, M, TRUE))
 		return FALSE
 	var/atom/A = parent
 	var/obj/item/I = O
@@ -238,8 +236,7 @@
 	var/atom/A = parent
 	if((!ishuman(M) && (A.loc != M)) || (M.stat != CONSCIOUS) || M.restrained() || !M.canmove)
 		return
-	if(locked)
-		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+	if(check_locked(null, M, TRUE))
 		return FALSE
 	A.add_fingerprint(M)
 	to_chat(M, "<span class='notice'>You start dumping out [parent].</span>")
@@ -281,7 +278,7 @@
 
 /datum/component/storage/proc/set_locked(datum/source, new_state)
 	locked = new_state
-	if(locked)
+	if(check_locked())
 		close_all()
 
 /datum/component/storage/proc/_process_numerical_display()
@@ -456,8 +453,7 @@
 	var/atom/A = parent
 	var/atom/dump_destination = dest_object.get_dumping_location()
 	if(A.Adjacent(M) && dump_destination && M.Adjacent(dump_destination))
-		if(locked)
-			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+		if(check_locked(null, M, TRUE))
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
 			playsound(A, "rustle", 50, 1, -5)
@@ -535,11 +531,9 @@
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
-	if(locked && !force)
-		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+	if(!force && (check_locked(null, M) || !M.CanReach(parent, view_only = TRUE)))
 		return FALSE
-	if(force || M.CanReach(parent, view_only = TRUE))
-		show_to(M)
+	show_to(M)
 
 /datum/component/storage/proc/mousedrop_receive(datum/source, atom/movable/O, mob/M)
 	if(isitem(O))
@@ -563,10 +557,9 @@
 	var/atom/host = parent
 	if(real_location == I.loc)
 		return FALSE //Means the item is already in the storage item
-	if(locked)
+	if(check_locked(null, M, !stop_messages))
 		if(M && !stop_messages)
 			host.add_fingerprint(M)
-			to_chat(M, "<span class='warning'>[host] seems to be locked!</span>")
 		return FALSE
 	if(real_location.contents.len >= max_items)
 		if(!stop_messages)
@@ -599,7 +592,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
-	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(HAS_TRAIT(I, TRAIT_NODROP)) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
@@ -659,8 +652,10 @@
 /datum/component/storage/proc/on_check()
 	return TRUE
 
-/datum/component/storage/proc/check_locked()
-	return locked
+/datum/component/storage/proc/check_locked(datum/source, mob/user, message = FALSE)
+	. = locked
+	if(message && . && user)
+		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 
 /datum/component/storage/proc/signal_take_type(datum/source, type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force)
@@ -720,9 +715,7 @@
 
 	if(A.loc == user)
 		. = COMPONENT_NO_ATTACK_HAND
-		if(locked)
-			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
-		else
+		if(!check_locked(source, user, TRUE))
 			show_to(user)
 			A.do_jiggle()
 
@@ -747,15 +740,15 @@
 /datum/component/storage/proc/on_alt_click(datum/source, mob/user)
 	if(!isliving(user) || !user.CanReach(parent))
 		return
-	if(locked)
-		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
+	if(check_locked(source, user, TRUE))
 		return
 
 	var/atom/A = parent
 	if(!quickdraw)
 		A.add_fingerprint(user)
 		user_show_to_mob(user)
-		playsound(A, "rustle", 50, 1, -5)
+		if(rustle_sound)
+			playsound(A, "rustle", 50, 1, -5)
 		return
 
 	if(!user.incapacitated())

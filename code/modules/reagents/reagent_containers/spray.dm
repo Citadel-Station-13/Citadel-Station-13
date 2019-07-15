@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -18,6 +18,7 @@
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
+	var/spray_delay = 3 //The amount of sleep() delay between each chempuff step.
 	var/can_fill_from_container = TRUE
 	amount_per_transfer_from_this = 5
 	volume = 250
@@ -64,7 +65,7 @@
 
 
 /obj/item/reagent_containers/spray/proc/spray(atom/A)
-	var/range = max(min(current_range, get_dist(src, A)), 1)
+	var/range = CLAMP(get_dist(src, A), 1, current_range)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
@@ -74,7 +75,7 @@
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
-	var/wait_step = max(round(2+3/range), 2)
+	var/wait_step = max(round(2+ spray_delay * INVERSE(range)), 2)
 	do_spray(A, wait_step, D, range, puff_reagent_left)
 
 /obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
@@ -166,7 +167,7 @@
 		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
 		return
 
-//Drying Agent 
+//Drying Agent
 /obj/item/reagent_containers/spray/drying_agent
 	name = "drying agent spray"
 	desc = "A spray bottle for drying agent."
@@ -194,6 +195,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	volume = 40
 	stream_range = 4
+	spray_delay = 1
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
@@ -222,7 +224,7 @@
 	return
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
-	container_type = NONE
+	reagent_flags = NONE
 	volume = 100
 	list_reagents = list("water" = 100)
 	var/generate_amount = 5

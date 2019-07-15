@@ -73,6 +73,9 @@
 /datum/species/pod/pseudo_weak
 	id = "podweak"
 	limbs_id = "pod"
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "mam_snouts", "taur", "legs")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	light_nutrition_gain_factor = 7.5
 	light_bruteheal = 0.2
 	light_burnheal = 0.2

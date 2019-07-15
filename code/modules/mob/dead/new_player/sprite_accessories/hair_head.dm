@@ -439,6 +439,10 @@
 	name = "Tress Shoulder"
 	icon_state = "hair_tressshoulder"
 
+/datum/sprite_accessory/hair/longtwintails
+	name = "Twintails (Long)"
+	icon_state = "hair_longstraighttwintails"
+
 /datum/sprite_accessory/hair/updo
 	name = "Updo"
 	icon_state = "hair_updo"

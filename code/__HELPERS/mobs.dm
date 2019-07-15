@@ -20,35 +20,34 @@
 		else
 			return "000"
 
-/proc/random_underwear(gender)//Cit change - makes random underwear always return nude
+#define UNDIE_COLORABLE(U) (U?.has_color)
+
+/proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/bottom, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.underwear_m)
 		if(FEMALE)
 			return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)*/
+			return pick(GLOB.underwear_list)
 
-/proc/random_undershirt(gender)//Cit change - makes random undershirts always return nude
+/proc/random_undershirt(gender)
 	if(!GLOB.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	return "Nude"
-	/*switch(gender)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/top, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	switch(gender)
 		if(MALE)
 			return pick(GLOB.undershirt_m)
 		if(FEMALE)
 			return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)*/
+			return pick(GLOB.undershirt_list)
 
-/proc/random_socks()//Cit change - makes random socks always return nude
+/proc/random_socks()
 	if(!GLOB.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return "Nude"
-	//return pick(GLOB.socks_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear/socks, GLOB.socks_list)
+	return pick(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
@@ -77,6 +76,8 @@
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
+	if(!GLOB.balls_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
 	if(!GLOB.vagina_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
@@ -168,6 +169,7 @@
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
 		"balls_size"		= BALLS_SIZE_DEF,
+		"balls_shape"		= "Single",
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
@@ -185,7 +187,7 @@
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"breasts_size" 		= pick(GLOB.breasts_size_list),
-		"breasts_shape"		= pick(GLOB.breasts_shapes_list),
+		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
 		"vag_shape"			= pick(GLOB.vagina_shapes_list),
@@ -294,7 +296,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, ignorehelditem = 0)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -327,7 +329,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)

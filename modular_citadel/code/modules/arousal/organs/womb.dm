@@ -5,11 +5,9 @@
 	icon_state 		= "womb"
 	zone 			= "groin"
 	slot 			= "womb"
-	w_class 		= 3
 	internal 		= TRUE
 	fluid_id 		= "femcum"
 	producing		= TRUE
-
 
 /obj/item/organ/genital/womb/Initialize()
 	. = ..()

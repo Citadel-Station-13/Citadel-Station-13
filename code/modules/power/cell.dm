@@ -20,15 +20,15 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
-	container_type = INJECTABLE|DRAINABLE
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
 
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
 	. = ..()
-	START_PROCESSING(SSobj, src)
-	create_reagents(5)
+	if(self_recharge)
+		START_PROCESSING(SSobj, src)
+	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
@@ -70,8 +70,8 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/use(amount)
-	if(rigged && amount > 0)
+/obj/item/stock_parts/cell/use(amount, can_explode = TRUE)
+	if(rigged && amount > 0 && can_explode)
 		explode()
 		return 0
 	if(charge < amount)
@@ -104,9 +104,8 @@
 	return (FIRELOSS)
 
 /obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = !isnull(reagents.has_reagent("plasma", 5)) //has_reagent returns the reagent datum
 	..()
-
+	rigged = reagents?.has_reagent("plasma", 5) ? TRUE : FALSE //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)

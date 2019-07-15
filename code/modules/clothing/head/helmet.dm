@@ -54,6 +54,8 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 

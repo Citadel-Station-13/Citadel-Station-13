@@ -133,7 +133,7 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.has_trait(TRAIT_EMOTEMUTE))
+		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
 			return FALSE
 
 /datum/emote/sound

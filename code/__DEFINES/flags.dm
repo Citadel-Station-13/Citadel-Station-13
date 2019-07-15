@@ -8,6 +8,7 @@
 #define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
 #define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
 #define CHECK_BITFIELD(variable, flag) (variable & flag)
+#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
@@ -55,9 +56,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define GROUND (1<<0)
 #define FLYING (1<<1)
 #define VENTCRAWLING (1<<2)
-
-// Flags for reagents
-#define REAGENT_NOREACT (1<<0)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)

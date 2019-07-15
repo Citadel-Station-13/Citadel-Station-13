@@ -64,7 +64,7 @@ Credit where due:
 		return FALSE
 	if(isliving(M))
 		var/mob/living/L = M
-		if(L.has_trait(TRAIT_MINDSHIELD))
+		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
 			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
@@ -131,7 +131,7 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
-	required_players = 30
+	required_players = 35
 	required_enemies = 3
 	recommended_enemies = 5
 	enemy_minimum_age = 7
@@ -275,7 +275,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1)
+	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1, /obj/item/reagent_containers/food/drinks/holyoil = 1)
 	id = /obj/item/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -338,6 +338,10 @@ Credit where due:
 	CLOCKCULTCHANGELOG\
 	</ul>\
 	<hr>\
+	<li><b>Zelus oil:</b> A new reagent. It can be used to heal the faithful to Ratvar, or kill heretics and moreso stun blood cultists,\
+	or splashed onto metal sheets to make brass. This chemical can be found in minimal quantities by grinding brass sheets.\
+	<li><b>Brass Flasks:</b>Intended to store Zelus Oil in, but can also be used as fragile single use throwing weapons in a pinch! \
+	These are crafted with a single sheet of brass and fit in the Clockwork Cuirass' suit storage.\
 	<b>Good luck!</b>"
 
 /obj/item/paper/servant_primer/Initialize()

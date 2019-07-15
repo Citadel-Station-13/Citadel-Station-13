@@ -225,3 +225,12 @@
 	filling_color = "#FFFFFF"
 	foodtype = GRAIN | VEGETABLES
 
+
+// Used by MREs
+/obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni
+	name = "\improper MRE pepperoni pizza slice"
+	desc = "A freeze dried, dehydrated slice of bread with tomato sauce, pepperoni and cheese."
+	icon_state = "meatpizzaslice"
+	filling_color = "#A52A2A"
+	tastes = list("cardboard" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2)
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT

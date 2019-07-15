@@ -6,8 +6,11 @@
 	else
 		gender = pick(MALE,FEMALE)
 	underwear = random_underwear(gender)
+	undie_color = random_color()
 	undershirt = random_undershirt(gender)
+	shirt_color = random_color()
 	socks = random_socks()
+	socks_color = random_color()
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
@@ -28,7 +31,7 @@
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = "AI", dir = SOUTH))
+				parent.show_character_previews(image('icons/mob/ai.dmi', resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
 				return
 			if(CYBORG)
 				parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))

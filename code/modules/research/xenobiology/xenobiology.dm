@@ -10,7 +10,6 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	container_type = INJECTABLE | DRAWABLE
 	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
@@ -39,7 +38,7 @@
 
 /obj/item/slime_extract/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, INJECTABLE | DRAWABLE)
 
 /obj/item/slime_extract/on_grind()
 	if(Uses)
@@ -634,6 +633,12 @@
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
 
+	if(M.rabid) //Stops being rabid, but doesn't become truly docile.
+		to_chat(M, "<span class='warning'>You absorb the potion, and your rabid hunger finally settles to a normal desire to feed.</span>")
+		to_chat(user, "<span class='notice'>You feed the slime the potion, calming its rabid rage.</span>")
+		M.rabid = FALSE
+		qdel(src)
+		return
 	M.docile = 1
 	M.nutrition = 700
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
@@ -703,7 +708,7 @@
 	imp.implant(SM, user)
 
 	SM.access_card = new /obj/item/card/id/syndicate(SM)
-	SM.access_card.item_flags |= NODROP
+	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"

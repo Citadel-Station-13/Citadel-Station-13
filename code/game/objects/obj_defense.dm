@@ -48,7 +48,12 @@
 
 /obj/hitby(atom/movable/AM)
 	..()
-	take_damage(AM.throwforce, BRUTE, "melee", 1, get_dir(src, AM))
+	var/throwdamage = AM.throwforce
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.damtype == STAMINA)
+			throwdamage = 0
+	take_damage(throwdamage, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -241,6 +246,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 //what happens when the obj's health is below integrity_failure level.
 /obj/proc/obj_break(damage_flag)
+	SEND_SIGNAL(src, COMSIG_OBJ_BREAK, damage_flag)
 	return
 
 //what happens when the obj's integrity reaches zero.

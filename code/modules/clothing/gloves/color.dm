@@ -7,6 +7,7 @@
 	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
+	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -17,6 +18,7 @@
 	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
+	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/fyellow/New()
 	..()
@@ -29,6 +31,38 @@
 /obj/item/clothing/gloves/color/fyellow/old/Initialize()
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+
+/obj/item/clothing/gloves/cut
+	desc = "These gloves would protect the wearer from electric shock.. if the fingers were covered."
+	name = "fingerless insulated gloves"
+	icon_state = "yellowcut"
+	item_state = "yglovescut"
+	siemens_coefficient = 1
+	permeability_coefficient = 1
+	resistance_flags = NONE
+	transfer_prints = TRUE
+
+/obj/item/clothing/gloves/cut/family
+	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
+	name = "fingerless insulated gloves"
+
+/obj/item/clothing/gloves/color/yellow/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wirecutters))
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			I.play_tool_sound(src)
+			new /obj/item/clothing/gloves/cut(drop_location())
+			qdel(src)
+	..()
+
+/obj/item/clothing/gloves/color/fyellow/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wirecutters))
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			I.play_tool_sound(src)
+			new /obj/item/clothing/gloves/cut(drop_location())
+			qdel(src)
+	..()
 
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
@@ -184,32 +218,3 @@
 
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
-
-/obj/item/clothing/gloves/color/random
-	name = "random gloves"
-	desc = "These gloves are supposed to be a random color..."
-	icon_state = "random_gloves"
-	item_state = "wgloves"
-	item_color = "mime"
-
-/obj/item/clothing/gloves/color/random/Initialize()
-	..()
-	var/list/gloves = list(
-		/obj/item/clothing/gloves/color/orange = 1,
-		/obj/item/clothing/gloves/color/red = 1,
-		/obj/item/clothing/gloves/color/blue = 1,
-		/obj/item/clothing/gloves/color/purple = 1,
-		/obj/item/clothing/gloves/color/green = 1,
-		/obj/item/clothing/gloves/color/grey = 1,
-		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1,
-		/obj/item/clothing/gloves/color/white = 1,
-		/obj/item/clothing/gloves/color/rainbow = 1)
-
-	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new selected(H), SLOT_GLOVES)
-	else
-		new selected(loc)
-	return INITIALIZE_HINT_QDEL

@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing stamina damage melee weaponry being unusable by pacifists, and still damaging objects and triggering electrified grilles when thrown."

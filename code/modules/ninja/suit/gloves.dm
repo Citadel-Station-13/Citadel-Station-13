@@ -37,6 +37,8 @@
 	var/mindrain = 200
 	var/maxdrain = 400
 
+	var/stunforce = 140 //Same as stunbaton, adjustable.
+
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
@@ -77,5 +79,5 @@
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()
-	if(item_flags & NODROP)
+	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
 		to_chat(user, "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>.")

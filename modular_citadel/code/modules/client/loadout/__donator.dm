@@ -374,3 +374,63 @@ datum/gear/darksabresheath
 	category = SLOT_HEAD
 	path = /obj/item/clothing/head/frenchberet
 	ckeywhitelist = list("notazoltan")
+
+/datum/gear/zuliecloak
+	name = "Project: Zul-E"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/cloak/zuliecloak
+	ckeywhitelist = list("asky")
+
+/datum/gear/blackredgold
+	name = "Black, Red, and Gold Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/blackredgold
+	ckeywhitelist = list("ttbnc")
+
+/datum/gear/fritzplush
+	name = "Fritz Plushie"
+	category = SLOT_IN_BACKPACK
+	path = /obj/item/toy/plush/mammal/dog/fritz
+	ckeywhitelist = list("analwerewolf")
+
+/datum/gear/kimono
+	name = "Kimono"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/kimono
+	ckeywhitelist = list("sfox63")
+
+/datum/gear/commjacket
+	name = "Dusty Commisar's Cloak"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/commjacket
+	ckeywhitelist = list("sadisticbatter")
+
+/datum/gear/mw2_russian_para
+	name = "Russian Paratrooper Jumper"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mw2_russian_para
+	ckeywhitelist = list("investigator77")
+
+/datum/gear/longblackgloves
+	name = "Luna's Gauntlets"
+	category = SLOT_GLOVES
+	path = /obj/item/clothing/gloves/longblackgloves
+	ckeywhitelist = list("bigmanclancy")
+
+/datum/gear/trendy_fit
+	name = "Trendy Fit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/trendy_fit
+	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/singery
+	ckeywhitelist = list("maxlynchy")
+
+/datum/gear/csheet
+	name = "NT Bedsheet"
+	category = SLOT_NECK
+	path = /obj/item/bedsheet/captain
+	ckeywhitelist = list("tikibomb")

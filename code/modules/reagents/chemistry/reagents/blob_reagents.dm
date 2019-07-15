@@ -187,7 +187,7 @@
 	description = "will do toxin damage and cause targets to believe they are fully healed."
 	analyzerdescdamage = "Does toxin damage and injects a toxin that causes the target to believe they are fully healed."
 	taste_description = "heaven"
-	color = "#C8A5DC"
+	color = "#5e7842"
 	complementary_color = "#CD7794"
 	message_living = ", and you feel <i>alive</i>"
 
@@ -204,7 +204,7 @@
 	C.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
 	..()
 
-/datum/reagent/blob/regenerative_materia/on_mob_delete(mob/living/M)
+/datum/reagent/blob/regenerative_materia/on_mob_end_metabolize(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = 0

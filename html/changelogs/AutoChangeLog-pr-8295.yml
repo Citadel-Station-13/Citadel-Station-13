@@ -1,0 +1,5 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - rscdel: "Many engi flags on non-engi things"
+  - code_imp: "changed some code to be organized at a glance"

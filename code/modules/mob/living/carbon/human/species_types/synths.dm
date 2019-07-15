@@ -3,7 +3,7 @@
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	species_traits = list(NOTRANSSTING,NOGENITALS) //all of these + whatever we inherit from the real species
+	species_traits = list(NOTRANSSTING,NOGENITALS,NOAROUSAL) //all of these + whatever we inherit from the real species
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
 	dangerous_existence = 1
@@ -28,6 +28,11 @@
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	assume_disguise(old_species, H)
+	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/species/synth/on_species_loss(mob/living/carbon/human/H)
+	. = ..()
+	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "synthflesh")
@@ -110,18 +115,12 @@
 	else
 		return ..()
 
-
-/datum/species/synth/get_spans()
-	if(fake_species)
-		return fake_species.get_spans()
-	return list()
-
-
-/datum/species/synth/handle_speech(message, mob/living/carbon/human/H)
-	if(H.health > disguise_fail_health)
-		if(fake_species)
-			return fake_species.handle_speech(message,H)
-		else
-			return ..()
-	else
-		return ..()
+/datum/species/synth/proc/handle_speech(datum/source, list/speech_args)
+	if (isliving(source)) // yeah it's gonna be living but just to be clean
+		var/mob/living/L = source
+		if(fake_species && L.health > disguise_fail_health)
+			switch (fake_species.type)
+				if (/datum/species/golem/bananium)
+					speech_args[SPEECH_SPANS] |= SPAN_CLOWN
+				if (/datum/species/golem/clockwork)
+					speech_args[SPEECH_SPANS] |= SPAN_ROBOT

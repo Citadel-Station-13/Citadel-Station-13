@@ -249,8 +249,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.item_flags & NODROP) || (item_flags & NODROP))
-			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [HAS_TRAIT(src, TRAIT_NODROP)  ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -294,7 +294,7 @@
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
-	item_state = "artistic_toolbox"
+	item_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
@@ -636,10 +636,13 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/New()
-	..()
+/obj/item/toy/cards/deck/Initialize()
+	. = ..()
+	populate_deck()
+
+/obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
-	for(var/i = 2; i <= 10; i++)
+	for(var/i in 2 to 10)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
 		cards += "[i] of Clubs"
@@ -664,6 +667,9 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
+	draw_card(user)
+
+/obj/item/toy/cards/deck/proc/draw_card(mob/user)
 	if(user.lying)
 		return
 	var/choice = null
@@ -778,7 +784,7 @@
 /obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	var/O = src
@@ -940,7 +946,6 @@
 	newobj.throw_range = newobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
 	newobj.attack_verb = newobj.card_attack_verb
-
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||

@@ -266,10 +266,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		container_type = NONE
+		DISABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		container_type = OPENCONTAINER
+		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)
@@ -363,6 +363,13 @@
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
+/obj/item/weldingtool/bronze
+	name = "bronze plated welding tool"
+	desc = "A bronze plated welder."
+	max_fuel = 21
+	toolspeed = 0.95
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
 
 /obj/item/weldingtool/experimental/process()
 	..()
