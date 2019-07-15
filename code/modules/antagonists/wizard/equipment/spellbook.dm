@@ -99,7 +99,7 @@
 		dat += " Cooldown:[S.charge_max/10]"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
+	dat += "[CHECK_BITFIELD(S.clothes_req, SPELL_WIZARD_GARB) ? "Needs wizard garb" : "Can be cast without wizard garb"]<br>"
 	return dat
 
 /datum/spellbook_entry/fireball
@@ -427,11 +427,24 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/item/archmage
+	name = "Archmage Robe"
+	desc = "A prestigious adorned robe usually worn by the more powerful practioneers of magic. Sturdier than your average wizard robe, it enables the wearer to cast magic without hat or while muted."
+	category = "Defensive"
+	cost = 2
+
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."
 	item_path = /obj/item/warpwhistle
 	category = "Mobility"
+	cost = 1
+
+/datum/spellbook_entry/item/mana_dye_bottle
+	name = "Bottle of magic dye"
+	desc = "A small vial of liquid magical essence used to inbue suits, uniforms, headwear and mask with the magic, essentially making them suitable as wizard robes and hats. "
+	item_path = /obj/item/magic_dye
+	category = "Support"
 	cost = 1
 
 /datum/spellbook_entry/summon

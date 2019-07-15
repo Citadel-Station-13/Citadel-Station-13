@@ -23,7 +23,7 @@
 		remove_hand(TRUE)
 		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
 		return
-	
+
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(ChargeHand(C))
@@ -54,7 +54,6 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -66,7 +65,6 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"

@@ -197,6 +197,20 @@
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
+// /obj/effect/proc_holder/spell signals
+#define COMSIG_SPELL_CAST_CHECK "spell_clothes_check"			//called from base of /obj/effect/proc_holder/spell/cast_check()
+	#define SPELL_SKIP_ALL_REQS (1<<0)
+	#define SPELL_SKIP_CENTCOM (1<<1)
+	#define SPELL_SKIP_STAT (1<<2)
+	#define SPELL_SKIP_CLOTHES (1<<3)
+	#define SPELL_SKIP_VOCAL (1<<4)
+	#define SPELL_SKIP_MOBTYPE (1<<5)
+	#define SPELL_WIZARD_HAT (1<<6)
+	#define SPELL_WIZARD_ROBE (1<<7)
+	#define SPELL_WIZARD_GARB (SPELL_WIZARD_HAT|SPELL_WIZARD_ROBE)
+	#define SPELL_CULT_HELMET (1<<8)
+	#define SPELL_CULT_ARMOR (1<<9)
+	#define SPELL_CULT_GARB (SPELL_CULT_HELMET|SPELL_CULT_ARMOR)
 
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)

@@ -109,10 +109,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
-	var/clothes_req = 1 //see if it requires clothes
-	var/cult_req = 0 //SPECIAL SNOWFLAKE clothes required for cult only spells
-	var/human_req = 0 //spell can only be cast by humans
-	var/nonabstract_req = 0 //spell can only be cast by mobs that are physical entities
+	var/clothes_req = SPELL_WIZARD_GARB //see if it requires clothes
+	var/list/mobs_whitelist //spell can only be casted by certain types of users.
+	var/list/mobs_blacklist //spell can't be casted by certain types of users.
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/phase_allowed = 0 // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
@@ -143,69 +142,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_background_icon_state = "bg_spell"
 	base_action = /datum/action/spell_action/spell
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(player_lock)
-		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
-			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
-			return 0
-	else
-		if(!(src in user.mob_spell_list))
-			return 0
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
-	var/turf/T = get_turf(user)
-	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
-		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
-		return 0
-
-	if(!skipcharge)
-		if(!charge_check(user))
-			return 0
-
-	if(user.stat && !stat_allowed)
-		to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
-		return 0
-
-	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
-		to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
-		return 0
-
-	if(ishuman(user))
-
-		var/mob/living/carbon/human/H = user
-
-		if((invocation_type == "whisper" || invocation_type == "shout") && !H.can_speak_vocal())
-			to_chat(user, "<span class='notice'>You can't get the words out!</span>")
-			return 0
-
-		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
-		/obj/item/clothing/suit/space/hardsuit/wizard,
-		/obj/item/clothing/head/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
-		/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard))
-
-		if(clothes_req) //clothes check
-			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my robe.</span>")
-				return 0
-			if(!is_type_in_typecache(H.head, casting_clothes))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my hat.</span>")
-				return 0
-		if(cult_req) //CULT_REQ CLOTHES CHECK
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")
-				return 0
-			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my helmet.</span>")
-				return 0
-	else
-		if(clothes_req || human_req)
-			to_chat(user, "<span class='notice'>This spell can only be cast by humans!</span>")
-			return 0
-		if(nonabstract_req && (isbrain(user) || ispAI(user)))
-			to_chat(user, "<span class='notice'>This spell can only be cast by physical beings!</span>")
-			return 0
-
+	if(!can_cast(user, skipcharge))
+		return FALSE
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -472,11 +412,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/updateButtonIcon(status_only, force)
 	action.UpdateButtonIcon(status_only, force)
 
-/obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
-	if((human_req || clothes_req) && !ishuman(caster))
-		return 0
-	return 1
-
 /obj/effect/proc_holder/spell/targeted/proc/los_check(mob/A,mob/B)
 	//Checks for obstacles from A to B
 	var/obj/dummy = new(A.loc)
@@ -489,21 +424,54 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	qdel(dummy)
 	return 1
 
-/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
-	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
-		return FALSE
 
-	if(!charge_check(user,TRUE))
-		return FALSE
+/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr, skipcharge = FALSE, silent = FALSE)
+	var/magic_gear = SEND_SIGNAL(user, COMSIG_SPELL_CAST_CHECK)
+	if(CHECK_BITFIELD(magic_gear, SPELL_SKIP_ALL_REQS))
+		return TRUE
 
-	if(user.stat && !stat_allowed)
-		return FALSE
-
-	if(!ishuman(user))
-		if(clothes_req || human_req)
+	if(player_lock)
+		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
+			to_chat(user, "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>")
 			return FALSE
-		if(nonabstract_req && (isbrain(user) || ispAI(user)))
+	else
+		if(!(src in user.mob_spell_list))
 			return FALSE
+
+	if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_CENTCOM))
+		var/turf/T = get_turf(user)
+		if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+			to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
+			return FALSE
+
+	if(!skipcharge)
+		if(!charge_check(user))
+			return FALSE
+
+	if(user.stat && !stat_allowed && !CHECK_BITFIELD(magic_gear, SPELL_SKIP_STAT))
+		to_chat(user, "<span class='notice'>Not when you're incapacitated.</span>")
+		return FALSE
+
+	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
+		to_chat(user, "<span class='notice'>[name] cannot be cast unless you are completely manifested in the material plane.</span>")
+		return FALSE
+
+	if(clothes_req && !CHECK_MULTIPLE_BITFIELDS(magic_gear, clothes_req) && !CHECK_BITFIELD(magic_gear, SPELL_SKIP_CLOTHES))
+		var/the_many_hats = CHECK_BITFIELD(clothes_req, SPELL_WIZARD_HAT|SPELL_CULT_HELMET)
+		var/the_many_suits = CHECK_BITFIELD(clothes_req, SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR)
+		var/without_hat_robe = CHECK_BITFIELD(magic_gear, the_many_suits) ? "without a proper headwear" : CHECK_BITFIELD(magic_gear, the_many_hats) ? "without a proper suit" : "to cast this spell yet"
+		to_chat(user, "<span class='notice'>I don't feel strong enough [without_hat_robe].</span>")
+		return FALSE
+
+	if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_VOCAL) && (invocation_type in list("whisper", "shout")) && isliving(user))
+		var/mob/living/L = user
+		if(!L.can_speak_vocal())
+			to_chat(L, "<span class='notice'>You can't get the words out!</span>")
+			return FALSE
+
+	else if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_MOBTYPE) && ((mobs_whitelist && !is_type_in_list(user.type, mobs_whitelist)) || (mobs_blacklist && is_type_in_list(user, mobs_blacklist))))
+		to_chat(user, "<span class='notice'>This spell can't be casted in this current form!</span>")
+		return FALSE
 	return TRUE
 
 /obj/effect/proc_holder/spell/self //Targets only the caster. Good for buffs and heals, but probably not wise for fireballs (although they usually fireball themselves anyway, honke)
@@ -518,8 +486,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/self/basic_heal //This spell exists mainly for debugging purposes, and also to show how casting works
 	name = "Lesser Heal"
 	desc = "Heals a small amount of brute and burn damage."
-	human_req = 1
-	clothes_req = 0
+	mobs_whitelist = list(/mob/living/carbon/human)
+	clothes_req = NONE
 	charge_max = 100
 	cooldown_min = 50
 	invocation = "Victus sano!"

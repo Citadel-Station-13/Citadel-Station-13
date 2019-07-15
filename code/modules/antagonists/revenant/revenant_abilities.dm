@@ -109,7 +109,7 @@
 	desc = "Telepathically transmits a message to the target."
 	panel = "Revenant Abilities"
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	range = 7
 	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -136,7 +136,7 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -154,12 +154,15 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
-	if(charge_counter < charge_max)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge, silent = FALSE)
+	var/magic_gear = SEND_SIGNAL(user, COMSIG_SPELL_CAST_CHECK)
+	if(CHECK_BITFIELD(magic_gear, SPELL_SKIP_ALL_REQS))
+		return TRUE
+	if(!skipcharge && charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
 		return TRUE
-	if(user.inhibited)
+	if(!CHECK_BITFIELD(magic_gear, SPELL_SKIP_STAT) && user.inhibited)
 		return FALSE
 	if(locked)
 		if(user.essence <= unlock_amount)

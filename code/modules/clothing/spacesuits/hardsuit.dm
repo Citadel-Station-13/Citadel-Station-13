@@ -418,6 +418,10 @@
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
+/obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
 	name = "gem-encrusted hardsuit"
@@ -434,6 +438,7 @@
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
 
 	//Medical hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/medical

@@ -8,7 +8,7 @@
 	becoming a lich destroys all internal organs except the brain."
 	school = "necromancy"
 	charge_max = 10
-	clothes_req = 0
+	clothes_req = NONE
 	centcom_cancast = 0
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = "shout"

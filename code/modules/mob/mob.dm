@@ -602,7 +602,7 @@
 
 /mob/proc/add_spells_to_statpanel(list/spells)
 	for(var/obj/effect/proc_holder/spell/S in spells)
-		if(S.can_be_cast_by(src))
+		if((!S.mobs_blacklist || !is_type_in_list(src, S.mobs_blacklist)) && (!S.mobs_whitelist || is_type_in_list(src, S.mobs_whitelist)))
 			switch(S.charge_type)
 				if("recharge")
 					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)

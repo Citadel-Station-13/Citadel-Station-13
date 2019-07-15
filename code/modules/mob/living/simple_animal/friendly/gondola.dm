@@ -32,6 +32,7 @@
 	. = ..()
 	if (!(istype(src, /mob/living/simple_animal/pet/gondola/gondolapod)))
 		CreateGondola()
+	AddComponent(/datum/component/spellcasting, SPELL_SKIP_VOCAL) // while they are supposed to be silent, this is so they can (meme)wizzing around more easily.
 
 /mob/living/simple_animal/pet/gondola/proc/CreateGondola()
 	icon_state = null

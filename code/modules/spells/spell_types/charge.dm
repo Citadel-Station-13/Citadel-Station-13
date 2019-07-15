@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "DIRI CEL"
 	invocation_type = "whisper"
 	range = -1

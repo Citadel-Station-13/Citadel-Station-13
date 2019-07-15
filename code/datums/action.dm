@@ -559,7 +559,7 @@
 		return FALSE
 	var/obj/effect/proc_holder/spell/S = target
 	if(owner)
-		return S.can_cast(owner)
+		return S.can_cast(owner, FALSE, TRUE)
 	return FALSE
 
 /datum/action/spell_action/alien

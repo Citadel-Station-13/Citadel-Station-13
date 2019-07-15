@@ -2,7 +2,7 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	phase_allowed = 1
 	selection_type = "range"
 	range = -1

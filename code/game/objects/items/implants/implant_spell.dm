@@ -21,7 +21,7 @@
 		if (!spell)
 			return FALSE
 		if (autorobeless && spell.clothes_req)
-			spell.clothes_req = FALSE
+			spell.clothes_req = NONE
 		target.AddSpell(spell)
 		return TRUE
 

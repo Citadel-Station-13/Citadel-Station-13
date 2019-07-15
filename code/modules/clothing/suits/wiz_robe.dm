@@ -9,12 +9,23 @@
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	var/magic_flags = SPELL_WIZARD_HAT
+
+/obj/item/clothing/head/wizard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, magic_flags, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
 	desc = "Strange-looking red hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
 	dog_fashion = /datum/dog_fashion/head/red_wizard
+
+/obj/item/clothing/head/wizard/violet
+	name = "violet wizard hat"
+	desc = "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
+	icon_state = "violetwizard"
+	dog_fashion = null
 
 /obj/item/clothing/head/wizard/yellow
 	name = "yellow wizard hat"
@@ -50,6 +61,7 @@
 	icon_state = "magus"
 	item_state = "magus"
 	dog_fashion = null
+	magic_flags = SPELL_WIZARD_HAT|SPELL_CULT_HELMET
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
@@ -57,6 +69,30 @@
 	icon_state = "santahat"
 	flags_inv = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
+
+/obj/item/clothing/head/wizard/straw
+	name = "straw wizard hat"
+	desc = "Strange-looking straw hat that most certainly belongs to a black mage."
+	icon_state = "straw_wizard_hat"
+	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dog_fashion = null
+
+/obj/item/clothing/head/hooded/whitemage
+	name = "white mage hood"
+	desc = "Strange-looking hood. Makes you want to cast healing."
+	icon_state = "white_mage_hood"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
+	strip_delay = 50
+	equip_delay_other = 50
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/hooded/whitemage/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -72,12 +108,23 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/magic_flags = SPELL_WIZARD_ROBE
+
+/obj/item/clothing/suit/wizrobe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, magic_flags, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
 	desc = "A magnificent red gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
 	item_state = "redwizrobe"
+
+/obj/item/clothing/suit/wizrobe/violet
+	name = "violet wizard robe"
+	desc = "A magnificently long violet gem-lined robe that seems to radiate power."
+	icon_state = "violetwizard"
+	item_state = "violetwizrobe"
 
 /obj/item/clothing/suit/wizrobe/yellow
 	name = "yellow wizard robe"
@@ -108,7 +155,35 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
+/obj/item/clothing/suit/hooded/whitemage
+	name = "white mage robe"
+	desc = "A robe worn by flimsy healers and scorned by the rest of the Wizard Federation."
+	hoodtype = /obj/item/clothing/head/hooded/whitemage
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
+	allowed = list(/obj/item/teleportation_scroll, /obj/item/gun/magic/wand/resurrection)
+	flags_inv = HIDEJUMPSUIT
+	strip_delay = 50
+	equip_delay_other = 50
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/suit/hooded/whitemage/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+
+/obj/item/clothing/suit/wizrobe/master
+	name = "arch-wizard robe"
+	icon_state = "arch_mage"
+	item_state = "arch_mage"
+	item_color = "wizrobe"
+	desc = "<i>Woe be to the incautious adventurer who disturbs this mighty sorcerer!</i>"
+	icon_state = "arch_mage"
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
+	magic_flags = SPELL_SKIP_CLOTHES|SPELL_SKIP_VOCAL
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
@@ -198,6 +273,10 @@
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
+
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet.."
@@ -208,6 +287,10 @@
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
 	actions_types = null //No inbuilt light
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/Initialize()
+	. = ..()
+	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_HAT, ITEM_SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return

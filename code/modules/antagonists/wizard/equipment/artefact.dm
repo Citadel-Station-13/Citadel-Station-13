@@ -436,3 +436,46 @@
 /obj/effect/temp_visual/tornado/Initialize()
 	. = ..()
 	animate(src, pixel_x = -500, time = 40)
+
+/obj/item/magic_dye
+	name = "bottle of magical dye"
+	desc = "A small nozzled bottle of mana essence used to inbue clothing with magical properties. Do not ingest. Do not smoke. Keep away from fireballs and assistants. Not suitable for with chemistry."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "mana_spray"
+	item_state = "cleaner"
+	item_color = "cleaner"
+	var/uses = 2
+
+/obj/item/magic_dye/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!istype(I))
+		return
+	if(uses <= 0)
+		to_chat(user, "<span class='warning'>You try to pour mana onto \the [I], only to find out \the [src] is empty shortly after.</span>")
+		return
+	var/magic_flag
+	if(CHECK_BITFIELD(I.item_slot_flags, ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
+		magic_flag = SPELL_WIZARD_HAT
+	else if(CHECK_BITFIELD(I.item_slot_flags, ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
+		magic_flag = SPELL_WIZARD_ROBE
+	var/already_magical = CHECK_BITFIELD(SEND_SIGNAL(src, COMSIG_SPELL_CAST_CHECK), magic_flag)
+	if(!magic_flag || already_magical)
+		to_chat(user, "<span class='warning'>You try to pour mana onto \the [I], yet the fluid refuses to come out from the bottle's nozzle. Perhaps this garment is [already_magical ? "already inbued with magic powers" : "not fit for advanced spell casting"].</span>")
+		return
+	I.AddComponent(/datum/component/spellcasting, magic_flag, C.item_slot_flags, "<span class='notice'>It seems to radiate magical power.</span>")
+	to_chat(user, "<span class='notice'>You pour mana onto \the [I], inbuing it with magical power.</span>")
+
+/obj/item/magic_dye/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is chugging [src] down in one go! It looks like [user.p_theyre()] trying to [pick("attune", "empower", "level up", "fortify")] [user.p_their()] [pick("mana", "spells", "sorcery")]!</span>")
+	playsound(user.loc, 'sound/items/drink.ogg', rand(10,50), 1)
+	uses = 0
+	sleep(10)
+	user.say("[pick("Wizard, no sense of right and wrong!","Expeliarmus!", "By Merlins beard!", "Feel the power of the Dark Side!")]", forced = "magic dye suicide")
+	sleep(10)
+	user.say("[pick("You are a wizard, Harry!","Magic missile!","You shall not pass!","Greetings, we are the wizards from the Wizard Federation!")]", forced = "magic dye suicide")
+	sleep(10)
+	user.say("[pick("NEC CANTIO!","AULIE OXIN FIERA!","STI KALY!","EI NATH!","ONI SOMA!")]", forced = "magic dye suicide")
+	sleep(10)
+	return (TOXLOSS)

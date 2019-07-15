@@ -4,7 +4,6 @@
 	invocation_type = "none"
 	include_user = 1
 	range = -1
-	clothes_req = 0
 	item_type = /obj/item/reagent_containers/food/snacks/pie/cream
 
 	charge_max = 30
@@ -20,7 +19,7 @@
 	charge_type = "recharge"
 	charge_max	= 100
 	cooldown_min = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation_type = "none"
 	range = 7
 	selection_type = "view"
@@ -61,7 +60,7 @@
 	hand_path = /obj/item/melee/touch_attack/megahonk
 
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	cooldown_min = 100
 
 	action_icon = 'icons/mecha/mecha_equipment.dmi'
@@ -75,7 +74,7 @@
 	hand_path = /obj/item/melee/touch_attack/bspie
 
 	charge_max = 450
-	clothes_req = 0
+	clothes_req = NONE
 	cooldown_min = 450
 
 	action_icon = 'icons/obj/food/piecake.dmi'

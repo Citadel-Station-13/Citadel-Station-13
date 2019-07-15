@@ -146,5 +146,6 @@
 	if(transfer_name)
 		H.name = caster.name
 
-	clothes_req = 0
-	human_req = 0
+	clothes_req = NONE
+	mobs_whitelist = null
+	mobs_blacklist = null
