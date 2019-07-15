@@ -339,7 +339,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -350,11 +350,13 @@
 	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
 	var/datum/action/innate/cult/blood_spell/source
 
-/obj/item/melee/blood_magic/New(loc, spell)
+/obj/item/melee/blood_magic/Initialize(mapload, spell)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 	source = spell
 	uses = source.charges
 	health_cost = source.health_cost
-	..()
+
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))

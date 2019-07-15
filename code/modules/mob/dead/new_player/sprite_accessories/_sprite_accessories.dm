@@ -60,3 +60,7 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+
+/datum/sprite_accessory/underwear
+	icon = 'icons/mob/underwear.dmi'
+	var/has_color = FALSE

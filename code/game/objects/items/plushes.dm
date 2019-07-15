@@ -578,10 +578,6 @@
 	icon_state = "vulken"
 	item_state = "vulken"
 
-/obj/item/toy/plush/snakeplushie/jecca
-	icon_state = "jecca"
-	item_state = "jecca"
-
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
@@ -634,13 +630,9 @@
 /obj/item/toy/plush/mothplushie
 	name = "insect plushie"
 	desc = "An adorable stuffed toy that resembles some kind of insect"
-	icon_state = "cydia"
-	item_state = "cydia"
-	squeak_override = list('modular_citadel/sound/voice/mothsqueak.ogg' = 1)
-
-/obj/item/toy/plush/mothplushie/bumble
 	icon_state = "bumble"
 	item_state = "bumble"
+	squeak_override = list('modular_citadel/sound/voice/mothsqueak.ogg' = 1)
 
 /obj/item/toy/plush/mothplushie/nameko
 	icon_state = "nameko"

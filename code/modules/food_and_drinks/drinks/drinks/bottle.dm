@@ -202,6 +202,19 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)
 
+/obj/item/reagent_containers/food/drinks/holyoil
+	name = "flask of zelus oil"
+	desc = "A brass flask of Zelus oil, a viscous fluid with a scenting of brass - this flask may be sipped or thrown."
+	icon_state = "zelusflask"
+	list_reagents = list("holyoil" = 30) //Powerfull
+	volume = 30
+	foodtype = NONE
+	force = 12 //Same as a toolbox
+	throwforce = 18
+
+/obj/item/reagent_containers/food/drinks/holyoil/null
+	list_reagents = list("holyoil" = 0)
+
 /obj/item/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye vermouth"
 	desc = "Sweet, sweet dryness~"

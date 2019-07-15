@@ -108,6 +108,7 @@
 		else
 			Cinematic(CINEMATIC_MALF,world) //Here is the gang victory trigger on the dominator ending.
 			gang.winner = TRUE
+			SSticker.news_report = GANG_VICTORY
 			SSticker.force_ending = TRUE
 
 	if(!.)
