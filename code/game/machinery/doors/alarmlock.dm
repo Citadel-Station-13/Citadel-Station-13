@@ -1,5 +1,6 @@
 /obj/machinery/door/airlock/alarmlock
 	name = "glass alarm airlock"
+	desc = "A special airlock that automatically closes during an atmospheric alarm."
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0

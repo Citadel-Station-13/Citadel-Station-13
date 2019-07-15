@@ -186,6 +186,23 @@
 	dir = EAST
 	pixel_x = -24
 
+
+/obj/machinery/airalarm/server/directional/north //Pixel offsets get overwritten on New()
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/airalarm/server/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/airalarm/server/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/airalarm/server/directional/west
+	dir = EAST
+	pixel_x = -24
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()

@@ -316,17 +316,20 @@
 	glass = TRUE
 
 /obj/machinery/door/airlock/public/glass/incinerator
+	name = "heat-proof glass airlock"
+	desc = "A special heat-proof airlock that is suitable for high-temperature areas."
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+	locked = TRUE
 
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior
-	name = "Turbine Interior Airlock"
+	name = "\improper Turbine Interior Airlock"
 	id_tag = INCINERATOR_ATMOS_AIRLOCK_INTERIOR
 
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior
-	name = "Turbine Exterior Airlock"
+	name = "\improper Turbine Exterior Airlock"
 	id_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
 
 //////////////////////////////////

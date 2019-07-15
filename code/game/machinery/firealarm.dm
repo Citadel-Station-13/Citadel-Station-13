@@ -34,6 +34,19 @@
 	var/last_alarm = 0
 	var/area/myarea = null
 
+
+/obj/machinery/firealarm/north
+	pixel_y = 28
+
+/obj/machinery/firealarm/south
+	pixel_y = -28
+
+/obj/machinery/firealarm/east
+	pixel_x = 28
+
+/obj/machinery/firealarm/west
+	pixel_x = -28
+
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
 	if(dir)
