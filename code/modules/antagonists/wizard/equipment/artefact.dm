@@ -456,15 +456,15 @@
 		to_chat(user, "<span class='warning'>You try to pour mana onto \the [I], only to find out \the [src] is empty shortly after.</span>")
 		return
 	var/magic_flag
-	if(CHECK_BITFIELD(I.item_slot_flags, ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
+	if(CHECK_BITFIELD(I.slot_flags, ITEM_SLOT_MASK|ITEM_SLOT_HEAD))
 		magic_flag = SPELL_WIZARD_HAT
-	else if(CHECK_BITFIELD(I.item_slot_flags, ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
+	else if(CHECK_BITFIELD(I.slot_flags, ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING))
 		magic_flag = SPELL_WIZARD_ROBE
 	var/already_magical = CHECK_BITFIELD(SEND_SIGNAL(src, COMSIG_SPELL_CAST_CHECK), magic_flag)
 	if(!magic_flag || already_magical)
 		to_chat(user, "<span class='warning'>You try to pour mana onto \the [I], yet the fluid refuses to come out from the bottle's nozzle. Perhaps this garment is [already_magical ? "already inbued with magic powers" : "not fit for advanced spell casting"].</span>")
 		return
-	I.AddComponent(/datum/component/spellcasting, magic_flag, C.item_slot_flags, "<span class='notice'>It seems to radiate magical power.</span>")
+	I.AddComponent(/datum/component/spellcasting, magic_flag, I.slot_flags, "<span class='notice'>It seems to radiate magical power.</span>")
 	to_chat(user, "<span class='notice'>You pour mana onto \the [I], inbuing it with magical power.</span>")
 
 /obj/item/magic_dye/suicide_act(mob/user)
