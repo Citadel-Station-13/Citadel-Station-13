@@ -407,8 +407,8 @@ datum/gear/darksabresheath
 
 /datum/gear/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
-	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/mw2_russian_para
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/mw2_russian_para
 	ckeywhitelist = list("investigator77")
 
 /datum/gear/longblackgloves
@@ -422,6 +422,12 @@ datum/gear/darksabresheath
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/trendy_fit
 	ckeywhitelist = list("midgetdragon")
+
+/datum/gear/singery
+	name = "Yellow Performer Outfit"
+	category = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/singery
+	ckeywhitelist = list("maxlynchy")
 
 /datum/gear/csheet
 	name = "NT Bedsheet"

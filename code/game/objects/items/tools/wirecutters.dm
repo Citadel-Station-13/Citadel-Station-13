@@ -69,6 +69,13 @@
 	random_color = FALSE
 	toolspeed = 0.5
 
+/obj/item/wirecutters/bronze
+	name = "bronze plated wirecutters"
+	desc = "A pair of wirecutters plated with bronze."
+	icon_state = "cutters_brass"
+	random_color = FALSE
+	toolspeed = 0.95 //Wire cutters have 0 time bars though
+
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."

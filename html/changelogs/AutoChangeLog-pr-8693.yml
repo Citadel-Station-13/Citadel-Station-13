@@ -1,0 +1,4 @@
+author: "Ghommie (original PR by Tlaltecuhtli)"
+delete-after: True
+changes: 
+  - bugfix: "Other people's clothes burning no longer spam you"

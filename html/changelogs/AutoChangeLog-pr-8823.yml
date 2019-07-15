@@ -1,0 +1,4 @@
+author: "Ghommie (Original PR by tralezab)"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an issue with spontaneous appendicitis picking incompatible mob biotypes."

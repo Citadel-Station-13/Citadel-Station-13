@@ -382,6 +382,7 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define CLOCK_SILICONS 22
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
+#define GANG_VICTORY 25
 
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
@@ -490,3 +491,6 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define AREASELECT_CORNERB "corner B"
 
 #define PREF_SAVELOAD_COOLDOWN 5
+
+#define VOMIT_TOXIC 1
+#define VOMIT_PURPLE 2

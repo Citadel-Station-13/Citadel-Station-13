@@ -2,6 +2,7 @@
 /obj
 	var/crit_fail = FALSE
 	animate_movement = 2
+	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -203,9 +204,6 @@
 	..()
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
-
-/obj/get_spans()
-	return ..() | SPAN_ROBOT
 
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
