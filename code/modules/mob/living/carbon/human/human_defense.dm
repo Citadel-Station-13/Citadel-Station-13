@@ -751,7 +751,7 @@
 			else if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
-			..()
+			..() 
 
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
