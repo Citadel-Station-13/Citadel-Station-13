@@ -743,7 +743,7 @@
 	name = "Triple Citrus"
 	id = "triple_citrus"
 	description = "A solution."
-	color = "#C8A5DC"
+	color = "#fff12b"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
 	glass_icon_state = "triplecitrus" //needs own sprite mine are trash

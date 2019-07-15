@@ -122,6 +122,9 @@
  //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 
+// item traits
+#define TRAIT_NODROP            "nodrop"
+
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -161,6 +164,12 @@
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
 #define JOB_TRAIT "job"
+#define CYBORG_ITEM_TRAIT "cyborg-item"
+#define ADMIN_TRAIT "admin" // (B)admins only.
+#define CHANGELING_TRAIT "changeling"
+#define CULT_TRAIT "cult"
+#define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
+#define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
@@ -173,3 +182,24 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define CULT_TRAIT "cult"
+#define CLOWN_NUKE_TRAIT "clown-nuke"
+#define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
+#define CHAINSAW_FRENZY_TRAIT "chainsaw-frenzy"
+#define CHRONO_GUN_TRAIT "chrono-gun"
+#define REVERSE_BEAR_TRAP_TRAIT "reverse-bear-trap"
+#define GLUED_ITEM_TRAIT "glued-item"
+#define CURSED_MASK_TRAIT "cursed-mask"
+#define HIS_GRACE_TRAIT "his-grace"
+#define HAND_REPLACEMENT_TRAIT "magic-hand"
+#define HOT_POTATO_TRAIT "hot-potato"
+#define SABRE_SUICIDE_TRAIT "sabre-suicide"
+#define ABDUCTOR_VEST_TRAIT "abductor-vest"
+#define CAPTURE_THE_FLAG_TRAIT "capture-the-flag"
+#define EYE_OF_GOD_TRAIT "eye-of-god"
+#define SHAMEBRERO_TRAIT "shamebrero"
+#define CHRONOSUIT_TRAIT "chronosuit"
+#define FLIGHTSUIT_TRAIT "flightsuit"
+#define LOCKED_HELMET_TRAIT "locked-helmet"
+#define NINJA_SUIT_TRAIT "ninja-suit"
+#define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"

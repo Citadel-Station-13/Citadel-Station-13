@@ -927,7 +927,7 @@
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#e6f1f5" // rgb: 200, 165, 220
 	taste_description = "bitterness"
 	pH = 10.5
 
@@ -947,7 +947,7 @@
 	taste_description = "iron"
 	pH = 6
 
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c2391d"
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < (BLOOD_VOLUME_NORMAL*C.blood_ratio))
@@ -1149,7 +1149,7 @@
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizziness."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#7529b3" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
 	pH = 11.9
@@ -1165,7 +1165,7 @@
 	name = "Impedrezene"
 	id = "impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
-	color = "#C8A5DC" // rgb: 200, 165, 220A
+	color = "#587a31" // rgb: 200, 165, 220A
 	taste_description = "numbness"
 	pH = 9.1
 
@@ -1504,7 +1504,7 @@
 	id = "oil"
 	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#292929"
 	taste_description = "oil"
 
 /datum/reagent/stable_plasma
@@ -1512,7 +1512,7 @@
 	id = "stable_plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6b008f"
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	pH = 1.5
@@ -1526,7 +1526,7 @@
 	id = "iodine"
 	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#694600"
 	taste_description = "metal"
 	pH = 4.5
 
@@ -1535,8 +1535,8 @@
 	id = "carpet"
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
-	taste_description = "carpet" // Your tounge feels furry. Ick
+	color = "#b51d05"
+	taste_description = "carpet" // Your tounge feels furry.
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
@@ -1549,7 +1549,7 @@
 	id = "bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#b37740"
 	taste_description = "chemicals"
 	pH = 7.8
 
@@ -1558,16 +1558,16 @@
 	id = "phenol"
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
 	taste_description = "sweet and tarry" //Again, not a strong acid.
 	pH = 5.5
+	color = "#e6e8ff"
 
 /datum/reagent/ash
 	name = "Ash"
 	id = "ash"
 	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#665c56"
 	taste_description = "ash"
 	pH = 6.5
 
@@ -1576,15 +1576,15 @@
 	id = "acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
 	taste_description = "solvent"//It's neutral though..?
+	color = "#e6e6e6"
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#FFFF00"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
 	var/no_mob_color = FALSE
@@ -1614,7 +1614,7 @@
 	id = "hair_dye"
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ff00dd"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
 
@@ -1631,7 +1631,7 @@
 	id = "barbers_aid"
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#fac34b"
 	taste_description = "sourness"
 
 /datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1649,7 +1649,7 @@
 	id = "concentrated_barbers_aid"
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ffaf00"
 	taste_description = "sourness"
 
 /datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
