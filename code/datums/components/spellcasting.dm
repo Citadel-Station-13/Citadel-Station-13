@@ -1,5 +1,5 @@
 /datum/component/spellcasting
-	dupe_type = COMPONENT_DUPE_UNIQUE_PASSARGS
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/magical_flags
 	var/allowed_slots
 	var/examine_text
