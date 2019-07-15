@@ -148,6 +148,7 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
+	magic_flags = SPELL_WIZARD_ROBE|SPELL_CULT_ARMOR
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
@@ -175,7 +176,7 @@
 	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/wizrobe/master
-	name = "arch-wizard robe"
+	name = "grandwizard robe"
 	icon_state = "arch_mage"
 	item_state = "arch_mage"
 	item_color = "wizrobe"

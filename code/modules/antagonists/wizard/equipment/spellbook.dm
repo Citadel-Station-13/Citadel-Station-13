@@ -428,7 +428,7 @@
 	cost = 1
 
 /datum/spellbook_entry/item/archmage
-	name = "Archmage Robe"
+	name = "Grandwizard Robe"
 	desc = "A prestigious adorned robe usually worn by the more powerful practioneers of magic. Sturdier than your average wizard robe, it enables the wearer to cast magic without hat or while muted."
 	category = "Defensive"
 	cost = 2
@@ -440,8 +440,8 @@
 	category = "Mobility"
 	cost = 1
 
-/datum/spellbook_entry/item/mana_dye_bottle
-	name = "Bottle of magic dye"
+/datum/spellbook_entry/item/mana_bottle
+	name = "Bottle of magical essence"
 	desc = "A small vial of liquid magical essence used to inbue suits, uniforms, headwear and mask with the magic, essentially making them suitable as wizard robes and hats. "
 	item_path = /obj/item/magic_dye
 	category = "Support"

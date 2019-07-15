@@ -437,16 +437,16 @@
 	. = ..()
 	animate(src, pixel_x = -500, time = 40)
 
-/obj/item/magic_dye
-	name = "bottle of magical dye"
-	desc = "A small nozzled bottle of mana essence used to inbue clothing with magical properties. Do not ingest. Do not smoke. Keep away from fireballs and assistants. Not suitable for with chemistry."
+/obj/item/mana_bottle
+	name = "bottle of magical essence"
+	desc = "A small nozzled bottle of liquid mana used to inbue clothing with magical properties. Do not ingest. Do not smoke. Keep away from fireballs and assistants. Not suitable for chemistry."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "mana_spray"
 	item_state = "cleaner"
 	item_color = "cleaner"
 	var/uses = 2
 
-/obj/item/magic_dye/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/mana_bottle/afterattack(obj/item/I, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -467,7 +467,7 @@
 	I.AddComponent(/datum/component/spellcasting, magic_flag, I.slot_flags, "<span class='notice'>It seems to radiate magical power.</span>")
 	to_chat(user, "<span class='notice'>You pour mana onto \the [I], inbuing it with magical power.</span>")
 
-/obj/item/magic_dye/suicide_act(mob/user)
+/obj/item/mana_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chugging [src] down in one go! It looks like [user.p_theyre()] trying to [pick("attune", "empower", "level up", "fortify")] [user.p_their()] [pick("mana", "spells", "sorcery")]!</span>")
 	playsound(user.loc, 'sound/items/drink.ogg', rand(10,50), 1)
 	uses = 0
