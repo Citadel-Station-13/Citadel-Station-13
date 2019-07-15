@@ -427,10 +427,11 @@
 	category = "Defensive"
 	cost = 1
 
-/datum/spellbook_entry/item/archmage
+/datum/spellbook_entry/item/grandwizard
 	name = "Grandwizard Robe"
-	desc = "A prestigious adorned robe usually worn by the more powerful practioneers of magic. Sturdier than your average wizard robe, it enables the wearer to cast magic without hat or while muted."
+	desc = "A prestigiously adorned robe usually worn by the more powerful practioneers of magic. Sturdier than your average wizard robe, it enables the wearer to cast magic without hat or while muted."
 	category = "Defensive"
+	item_path = /obj/item/clothing/suit/wizrobe/grandwizard
 	cost = 2
 
 /datum/spellbook_entry/item/warpwhistle
@@ -443,7 +444,7 @@
 /datum/spellbook_entry/item/mana_bottle
 	name = "Bottle of magical essence"
 	desc = "A small vial of liquid magical essence used to inbue suits, uniforms, headwear and mask with the magic, essentially making them suitable as wizard robes and hats. "
-	item_path = /obj/item/magic_dye
+	item_path = /obj/item/mana_bottle
 	category = "Support"
 	cost = 1
 

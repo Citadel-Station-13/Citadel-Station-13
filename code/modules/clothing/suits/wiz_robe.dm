@@ -175,7 +175,7 @@
 	. = ..()
 	AddComponent(/datum/component/spellcasting, SPELL_WIZARD_ROBE, ITEM_SLOT_OCLOTHING)
 
-/obj/item/clothing/suit/wizrobe/master
+/obj/item/clothing/suit/wizrobe/grandwizard
 	name = "grandwizard robe"
 	icon_state = "arch_mage"
 	item_state = "arch_mage"
