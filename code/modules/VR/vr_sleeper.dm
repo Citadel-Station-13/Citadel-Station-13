@@ -168,8 +168,11 @@
 		vr_human.name = H.name
 		vr_human.real_name = H.real_name
 		vr_human.socks = H.socks
+		vr_human.socks_color = H.socks_color
 		vr_human.undershirt = H.undershirt
+		vr_human.shirt_color = H.shirt_color
 		vr_human.underwear = H.underwear
+		vr_human.undie_color = H.undie_color
 		vr_human.updateappearance(TRUE, TRUE, TRUE)
 		vr_human.give_genitals(TRUE) //CITADEL ADD
 		if(outfit)

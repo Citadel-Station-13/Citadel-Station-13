@@ -551,7 +551,8 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"applejack"
 	)
 	upgrade_reagents = list(
 		"ethanol",

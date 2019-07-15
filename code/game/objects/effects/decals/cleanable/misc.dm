@@ -219,7 +219,7 @@
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
-	color = "#C8A5DC"
+	color = "#9e0089"
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"

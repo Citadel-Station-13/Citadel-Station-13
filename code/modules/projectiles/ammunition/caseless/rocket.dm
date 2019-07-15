@@ -1,5 +1,13 @@
-/obj/item/ammo_casing/caseless/a84mm
-	desc = "An 84mm anti-armour rocket."
+/obj/item/ammo_casing/caseless/rocket
+	name = "\improper PM-9HE"
+	desc = "An 84mm High Explosive rocket. Fire at people and pray."
+	caliber = "84mm"
+	icon_state = "srm-8"
+	projectile_type = /obj/item/projectile/bullet/a84mm_he
+
+/obj/item/ammo_casing/caseless/rocket/hedp
+	name = "\improper PM-9HEDP"
+	desc = "An 84mm High Explosive Dual Purpose rocket. Pointy end toward mechs."
 	caliber = "84mm"
 	icon_state = "s-casing-live"
 	projectile_type = /obj/item/projectile/bullet/a84mm

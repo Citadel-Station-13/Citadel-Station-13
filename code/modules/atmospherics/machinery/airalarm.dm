@@ -650,7 +650,7 @@
 		if(0)
 			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
-			light_color = LIGHT_COLOR_PALEBLUE
+			light_color = LIGHT_COLOR_GREEN
 			set_light(brightness_on)
 		if(1)
 			add_overlay(AALARM_OVERLAY_WARN)

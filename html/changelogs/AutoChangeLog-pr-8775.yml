@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - tweak: "The crew monitor's entry for the Quartermaster will now appear bolded, while HoP's will be of the same color of the service/unknown/other jobs."

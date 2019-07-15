@@ -18,7 +18,7 @@
 	name = "Leporazine"
 	id = "leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#82b8aa"
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
@@ -31,7 +31,7 @@
 	name = "Adminordrazine"
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#ffffff"
 	can_synth = FALSE
 	taste_description = "badmins"
 
@@ -213,7 +213,7 @@
 	name = "Spaceacillin"
 	id = "spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#f2f2f2"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
@@ -222,7 +222,7 @@
 	id = "silver_sulfadiazine"
 	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ffeac9"
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -932,7 +932,7 @@
 	id = "bicaridine"
 	description = "Restores bruising. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#fc2626"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/carbon/M)
@@ -950,7 +950,7 @@
 	id = "dexalin"
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#13d2f0"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/carbon/M)
@@ -968,7 +968,7 @@
 	id = "kelotane"
 	description = "Restores fire damage. Overdose causes it instead."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#ffc400"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
@@ -986,7 +986,7 @@
 	id = "antitoxin"
 	description = "Heals toxin damage and removes toxins in the bloodstream. Overdose causes toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6aff00"
 	overdose_threshold = 30
 	taste_description = "a roll of gauze"
 
@@ -1007,7 +1007,7 @@
 	id = "inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#5dc1f0"
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)
@@ -1019,7 +1019,7 @@
 	id = "tricordrazine"
 	description = "Has a high chance to heal all types of damage. Overdose instead causes it."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#e650c0"
 	overdose_threshold = 30
 	taste_description = "grossness"
 
@@ -1151,7 +1151,7 @@
 	name = "Lavaland Extract"
 	id = "lavaland_extract"
 	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#a1a1a1"
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
@@ -1172,7 +1172,7 @@
 	name = "Changeling Adrenaline"
 	id = "changelingadrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
-	color = "#C8A5DC"
+	color = "#918e53"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
@@ -1193,7 +1193,7 @@
 	name = "Changeling Haste"
 	id = "changelinghaste"
 	description = "Drastically increases movement speed, but deals toxin damage."
-	color = "#C8A5DC"
+	color = "#669153"
 	metabolization_rate = 1
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)

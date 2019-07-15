@@ -298,6 +298,16 @@
 	icon = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
+/datum/barsign/cybersylph
+	name = "Cyber Sylph's"
+	icon = "cybersylph"
+	desc = "A cafe renowed for its out-of-boundaries futuristic insignia."
+
+/datum/barsign/meow_mix
+	name = "Meow Mix"
+	icon = "meow_mix"
+	desc = "No, we don't serve catnip, officer!"
+
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
