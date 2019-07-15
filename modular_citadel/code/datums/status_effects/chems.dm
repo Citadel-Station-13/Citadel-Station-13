@@ -598,7 +598,7 @@
 
 			//Echo (repeats message!) allows customisation, but won't display var calls! Defaults to hypnophrase.
 			else if (lowertext(customTriggers[trigger][1]) == "echo")//trigger2
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"), 5)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='velvet'><i>[customTriggers[trigger][2]]</i></span>"), 5)
 				//(to_chat(owner, "<span class='hypnophrase'><i>[customTriggers[trigger][2]]</i></span>"))//trigger3
 
 			//Shocking truth!
