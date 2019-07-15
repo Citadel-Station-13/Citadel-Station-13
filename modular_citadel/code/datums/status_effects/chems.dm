@@ -332,7 +332,7 @@
 				to_chat(owner, "<span class='notice'><i>The separation from [(owner.client?.prefs.lewdchem?"your [enthrallGender]":"[master]")] sparks a small flame of resistance in yourself, as your mind slowly starts to return to normal.</i></span>")
 				REMOVE_TRAIT(owner, TRAIT_PACIFISM, "MKUltra")
 			if(prob(1))
-				if(owner.client?.prefs.lewdchem)
+				if(owner.client?.prefs.lewdchem && !customEcho)
 					to_chat(owner, "<span class='love'><i>[pick("I belong to [enthrallGender].", "[enthrallGender] knows whats best for me.", "Obedence is pleasure.",  "I exist to serve [enthrallGender].", "[enthrallGender] is so dominant, it feels right to obey them.")].</i></span>")
 		if (4) //mindbroken
 			if (mental_capacity >= 499 && (owner.getBrainLoss() <=0 || HAS_TRAIT(M, TRAIT_MINDSHIELD)) && !owner.reagents.has_reagent("MKUltra"))
