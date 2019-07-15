@@ -3,9 +3,9 @@
 
 /obj/effect/proc_holder/changeling/strained_muscles
 	name = "Strained Muscles"
-	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
-	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
-	chemical_cost = 0
+	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move unemcumbered by heavy objects."
+	helptext = "The strain will make us stronger, and we can bear heavy weights effortlessly. Standard weight restrictions, like hardsuits, do not apply. Cannot be used in lesser form."
+	chemical_cost = 5
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
@@ -19,7 +19,7 @@
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
 	else
-		REMOVE_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
+		REMOVE_TRAIT(user, TRAIT_IGNORESLOWDOWN, "changeling_muscles")
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
 		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
@@ -32,12 +32,12 @@
 
 /obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
-		ADD_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
+		ADD_TRAIT(user, TRAIT_IGNORESLOWDOWN, "changeling_muscles")
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.Knockdown(40)
-			REMOVE_TRAIT(user, TRAIT_GOTTAGOFAST, "changeling_muscles")
+			REMOVE_TRAIT(user, TRAIT_IGNORESLOWDOWN, "changeling_muscles")
 			break
 
 		stacks++
