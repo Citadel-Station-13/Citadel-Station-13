@@ -503,7 +503,7 @@
 	alternate_worn_icon = 'icons/mob/custom_w.dmi'
 	mutantrace_variation = NO_MUTANTRACE_VARIATION
 
-/obj/item/clothing/suit/mw2_russian_para
+/obj/item/clothing/under/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
 	desc = "A Russian made old paratrooper jumpsuit, has many pockets for easy storage of gear from a by gone era. As bulky as it looks, its shockingly light!"
 	icon_state = "mw2_russian_para"
