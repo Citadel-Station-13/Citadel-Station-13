@@ -14,9 +14,11 @@
  *		ID and security PDA cart boxes,
  *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
- *		Replacement light boxes.
- *		Action Figure Boxes
- *		Various paper bags.
+ *		Replacement light boxes,
+ *		Ammo types,
+ *		Action Figure Boxes,
+ *		Various paper bags,
+ *		Colored boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -74,7 +76,6 @@
 		return 0
 	return ..()
 
-
 //Disk boxes
 /obj/item/storage/box/disks
 	name = "diskette box"
@@ -83,7 +84,6 @@
 /obj/item/storage/box/disks/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
-
 
 /obj/item/storage/box/disks_plantgene
 	name = "plant data disks box"
@@ -117,7 +117,6 @@
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-
 // Engineer survival box
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
@@ -142,6 +141,29 @@
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/seclooking
+	icon_state = "secbox"
+	illustration = null
+
+/obj/item/storage/box/cells
+	name = "box of powercells"
+	desc = "Contains powercells."
+	illustration = "power_cell"
+
+/obj/item/storage/box/ammoshells
+	name = "box of loose ammo"
+	desc = "Contains loose ammo."
+	illustration = "loose_ammo"
+
+/obj/item/storage/box/otwo
+	name = "box of o2 supplies"
+	desc = "Contains o2 supplies."
+	illustration = "02"
+
+/obj/item/storage/box/otwo/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -260,7 +282,6 @@
 	frame.id = id
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
-
 
 /obj/item/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
@@ -465,7 +486,7 @@
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
 	desc = "A box full of standard firing pins, to allow newly-developed firearms to operate."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
@@ -474,7 +495,7 @@
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
-	illustration = "id"
+	illustration = "firing_pins"
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
@@ -615,7 +636,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/light/bulb(src)
 
-
 /obj/item/storage/box/deputy
 	name = "box of deputy armbands"
 	desc = "To be issued to those authorized to act as deputy of security."
@@ -702,7 +722,7 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
+	name = "box of buckshot (Lethal)"
 	desc = "A box full of lethal shots, designed for riot shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
@@ -721,6 +741,46 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+/obj/item/storage/box/lethalslugs
+	name = "box of 12g shotgun slugs"
+	desc = "A box full of lethal 12g slug, designed for riot shotguns."
+	icon_state = "12g_box"
+	illustration = null
+
+/obj/item/storage/box/lethalslugs/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun(src)
+
+/obj/item/storage/box/stunslug
+	name = "box of stun slugs"
+	desc = "A box full of stun 12g slugs."
+	icon_state = "stunslug_box"
+	illustration = null
+
+/obj/item/storage/box/stunslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/stunslug(src)
+
+/obj/item/storage/box/techsslug
+	name = "box of tech shotgun shells"
+	desc = "A box full of tech shotgun shells."
+	icon_state = "techslug_box"
+	illustration = null
+
+/obj/item/storage/box/techsslug/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/techshell(src)
+
+/obj/item/storage/box/fireshot
+	name = "box of incendiary ammo"
+	desc = "A box full of incendiary ammo."
+	icon_state = "fireshot_box"
+	illustration = null
+
+/obj/item/storage/box/fireshot/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/incendiary(src)
+
 /obj/item/storage/box/actionfigure
 	name = "box of action figures"
 	desc = "The latest set of collectable action figures."
@@ -730,6 +790,19 @@
 	for(var/i in 1 to 4)
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
+
+/obj/item/storage/box/mechfigures
+	name = "box of mech figures"
+	desc = "The latest set of collectable mech figures."
+	icon_state = "box"
+
+/obj/item/storage/box/mechfigures/PopulateContents()
+	for(var/i in 1 to 4)
+		var/randomFigure = pick(subtypesof(/obj/item/toy/prize/))
+		new randomFigure(src)
+
+
+
 
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
@@ -966,7 +1039,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
-
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
@@ -1025,3 +1097,102 @@
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
 	new /obj/item/stock_parts/matter_bin/bluespace(src)
+
+//Colored boxes.
+/obj/item/storage/box/green
+	icon_state = "box_green"
+	illustration = null
+
+/obj/item/storage/box/blue
+	icon_state = "box_blue"
+	illustration = null
+
+/obj/item/storage/box/purple
+	icon_state = "box_purple"
+	illustration = null
+
+/obj/item/storage/box/red
+	icon_state = "box_red"
+	illustration = null
+
+/obj/item/storage/box/yellow
+	icon_state = "box_yellow"
+	illustration = null
+
+/obj/item/storage/box/brown
+	icon_state = "box_brown"
+	illustration = null
+
+/obj/item/storage/box/pink
+	icon_state = "box_pink"
+	illustration = null
+
+/obj/item/storage/box/mre //base MRE type.
+	name = "Nanotrasen MRE Ration Kit Menu 0"
+	desc = "A package containing food suspended in an outdated bluespace pocket which lasts for centuries. If you're lucky you may even be able to enjoy the meal without getting food poisoning."
+	icon_state = "mre"
+	var/can_expire = TRUE
+	var/spawner_chance = 2
+	var/expiration_date
+	var/expiration_date_min = 2300
+	var/expiration_date_max = 2700
+
+/obj/item/storage/box/mre/Initialize()
+	. = ..()
+	if(can_expire)
+		expiration_date = rand(expiration_date_min, expiration_date_max)
+		desc += "\n<span_clas='notice'>An expiry date is listed on it. It reads: [expiration_date]</span>"
+		var/spess_current_year = GLOB.year_integer + 540
+		if(expiration_date < spess_current_year)
+			var/gross_risk = min(round(spess_current_year - expiration_date * 0.1), 1)
+			var/toxic_risk = min(round(spess_current_year - expiration_date * 0.01), 1)
+			for(var/obj/item/reagent_containers/food/snacks/S in contents)
+				if(prob(gross_risk))
+					ENABLE_BITFIELD(S.foodtype, GROSS)
+				if(prob(toxic_risk))
+					ENABLE_BITFIELD(S.foodtype, TOXIC)
+
+/obj/item/storage/box/mre/menu1
+	name = "\improper Nanotrasen MRE Ration Kit Menu 1"
+
+/obj/item/storage/box/mre/menu1/safe
+	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
+	spawner_chance = 0
+	can_expire = FALSE
+
+/obj/item/storage/box/mre/menu1/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
+	new /obj/item/reagent_containers/food/snacks/breadslice/creamcheese(src)
+	new /obj/item/reagent_containers/food/condiment/pack/ketchup(src)
+	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/mre/menu2
+	name = "\improper Nanotrasen MRE Ration Kit Menu 2"
+
+/obj/item/storage/box/mre/menu2/safe
+	spawner_chance = 0
+	desc = "A package containing food suspended in a bluespace pocket capable of lasting till the end of time."
+	can_expire = FALSE
+
+/obj/item/storage/box/mre/menu2/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/omelette(src)
+	new /obj/item/reagent_containers/food/snacks/meat/cutlet/plain(src)
+	new /obj/item/reagent_containers/food/snacks/fries(src)
+	new /obj/item/reagent_containers/food/snacks/chocolatebar(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
+
+/obj/item/storage/box/mre/menu3
+	name = "\improper Nanotrasen MRE Ration Kit Menu 3"
+	desc = "The holy grail of MREs. This item contains the fabled MRE pizza and a sample of coffee instant type 2. Any NT employee lucky enough to get their hands on one of these is truly blessed."
+	icon_state = "menu3"
+	can_expire = FALSE //always fresh, never expired.
+	spawner_chance = 1
+
+/obj/item/storage/box/mre/menu3/PopulateContents()
+	new /obj/item/reagent_containers/food/snacks/pizzaslice/pepperoni(src)
+	new /obj/item/reagent_containers/food/snacks/breadslice/plain(src)
+	new /obj/item/reagent_containers/food/snacks/cheesewedge(src)
+	new /obj/item/reagent_containers/food/snacks/grown/chili(src)
+	new /obj/item/reagent_containers/food/drinks/coffee/type2(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)

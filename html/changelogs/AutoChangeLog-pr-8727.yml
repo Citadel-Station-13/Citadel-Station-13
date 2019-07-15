@@ -1,0 +1,5 @@
+author: "Ghommie (original PRs by Jujumatic and PKPenguin321, respectively)"
+delete-after: True
+changes: 
+  - rscadd: "Minesweeper Arcade machines. The higher the difficulty setting, the better the prizes will be."
+  - rscadd: "Also keep your eye out for another new (and rare) arcade game!"

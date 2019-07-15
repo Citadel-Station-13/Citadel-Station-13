@@ -1,0 +1,5 @@
+author: "Sishen1542"
+delete-after: True
+changes: 
+  - rscadd: "Ported addition of new CAS cards."
+  - bugfix: "Ported a fix for CAS."

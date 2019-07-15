@@ -239,6 +239,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
+"as" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/bedsheet/pirate,
+/turf/open/floor/plasteel,
+/area/shuttle/pirate)
+"at" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/bedsheet/pirate,
+/turf/open/floor/plasteel,
+/area/shuttle/pirate)
 "au" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "piratebridgebolt";
@@ -313,6 +330,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
+/area/shuttle/pirate)
+"aA" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/obj/item/bedsheet/pirate,
+/turf/open/floor/wood,
 /area/shuttle/pirate)
 "aB" = (
 /obj/machinery/light/small{
@@ -407,12 +431,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"aM" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/wood,
 /area/shuttle/pirate)
 "aN" = (
 /obj/machinery/light/small,
@@ -1022,12 +1040,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"mD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/closet/secure_closet/personal,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/shuttle/pirate)
 "mU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
@@ -1172,15 +1184,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
-"Ur" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/pirate)
 
 (1,1,1) = {"
 af
@@ -1231,7 +1234,7 @@ aq
 ar
 aj
 RY
-aM
+aA
 ep
 aH
 af
@@ -1406,9 +1409,9 @@ af
 af
 af
 aj
-mD
+as
 bB
-Ur
+at
 aj
 aj
 aj

@@ -60,7 +60,7 @@
 		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
-		// it's NODROP_1
+		// it's TRAIT_NODROP
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
 		// where is `SLOT_HEAD` defined? WHO KNOWS
@@ -225,6 +225,19 @@
 			var/obj/item/clothing/PCL = picked_item
 			CL.flags_cover = initial(PCL.flags_cover)
 	target.icon = initial(picked_item.icon)
+
+/datum/action/item_action/chameleon/change/pda/update_item(obj/item/pda/picked_item)
+	if(!istype(target, /obj/item/pda))
+		return ..()
+	var/obj/item/pda/P = target
+	P.name = initial(picked_item.name)
+	P.desc = initial(picked_item.desc)
+	P.icon_state = initial(picked_item.icon_state)
+	P.item_state = initial(picked_item.item_state)
+	P.item_color = initial(picked_item.item_color)
+	P.overlays_offsets = initial(picked_item.overlays_offsets)
+	P.set_new_overlays()
+	P.update_icon()
 
 /datum/action/item_action/chameleon/change/Trigger()
 	if(!IsAvailable())
@@ -405,12 +418,12 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	item_flags = NODROP
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// which means it offers no protection, it's just air and light
 
 /obj/item/clothing/head/chameleon/drone/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -459,13 +472,13 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	item_flags = NODROP
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
 /obj/item/clothing/mask/chameleon/drone/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
 	togglehatmask_action.UpdateButtonIcon()
@@ -584,7 +597,7 @@
 
 /obj/item/pda/chameleon
 	name = "PDA"
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	var/datum/action/item_action/chameleon/change/pda/chameleon_action
 
 /obj/item/pda/chameleon/Initialize()
 	. = ..()

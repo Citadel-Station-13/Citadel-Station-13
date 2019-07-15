@@ -44,16 +44,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/medicalkit
-	name = "Empty Medkit"
-	desc = "A plastic medical kit for storging medical items."
-	id = "medicalkit"
-	build_type = PROTOLATHE
-	materials = list(MAT_PLASTIC = 5000)
-	build_path = /obj/item/storage/firstaid //So we dont spawn medical items in it
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/xlarge_beaker
 	name = "X-large Beaker"
 	id = "xlarge_beaker"
@@ -82,16 +72,6 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/cloning_disk
-	name = "Cloning Data Disk"
-	desc = "Produce additional disks for storing genetic data."
-	id = "cloning_disk"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
-	build_path = /obj/item/disk/data
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/noreactsyringe
 	name = "Cryo Syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
@@ -109,6 +89,36 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/reagent_containers/syringe/piercing
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/medicinalsmartdart
+	name = "Medicinal Smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	id = "medicinalsmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 100, MAT_PLASTIC = 100, MAT_METAL = 100)
+	build_path = /obj/item/reagent_containers/syringe/dart
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/bluespacesmartdart
+	name = "bluespace smartdart"
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented. Has an extended volume capacity thanks to bluespace foam."
+	id = "bluespacesmartdart"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 250, MAT_PLASTIC = 250, MAT_METAL = 250, MAT_BLUESPACE = 250)
+	build_path = /obj/item/reagent_containers/syringe/dart/bluespace
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/smartdartgun
+	name = "dart gun"
+	desc = "A compressed air gun, designed to fit medicinal darts for application of medicine for those patients just out of reach."
+	id = "smartdartgun"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_PLASTIC = 1000, MAT_METAL = 500)
+	build_path = /obj/item/gun/syringe/dart
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -162,6 +172,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/medicalkit
+	name = "Empty Medkit"
+	desc = "A plastic medical kit for storging medical items."
+	id = "medicalkit"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASTIC = 5000)
+	build_path = /obj/item/storage/firstaid //So we dont spawn medical items in it
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/blood_bag
 	name = "Empty Blood Bag"
 	desc = "A small sterilized plastic bag for blood."
@@ -171,6 +191,26 @@
 	materials = list(MAT_GLASS = 1500, MAT_PLASTIC = 3500)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cloning_disk
+	name = "Cloning Data Disk"
+	desc = "Produce additional disks for storing genetic data."
+	id = "cloning_disk"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
+	build_path = /obj/item/disk/data
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/organbox
+	name = "Empty Organ Box"
+	desc = "A large cool box that can hold large amouts of medical tools or organs."
+	id = "organbox"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_SILVER= 3500, MAT_GOLD = 3500, MAT_PLASTIC = 5000)
+	build_path = /obj/item/storage/belt/organbox
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 ////////////////////////////////////////
 //////////Defibrillator Tech////////////
@@ -196,8 +236,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_heal
-	name = "Defibrillartor Healing disk"
-	desc = "A disk allowing for greater amounts of healing"
+	name = "Defibrillator Healing disk"
+	desc = "An upgrade which increases the healing power of the defibrillator"
 	id = "defib_heal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
@@ -207,8 +247,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_shock
-	name = "Defibrillartor Anit-Shock Disk"
-	desc = "A disk that helps agains shocking anyone, other then the intented target"
+	name = "Defibrillator Anti-Shock Disk"
+	desc = "A safety upgrade that guarantees only the patient will get shocked"
 	id = "defib_shock"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 6000, MAT_SILVER = 6000)
@@ -218,8 +258,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_decay
-	name = "Defibrillartor Body-Decay extender Disk"
-	desc = "A disk that helps defibrillator revive the longer decayed dead"
+	name = "Defibrillator Body-Decay Extender Disk"
+	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
 	id = "defib_decay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL=16000, MAT_GLASS = 18000, MAT_GOLD = 16000, MAT_SILVER = 6000, MAT_TITANIUM = 2000)
@@ -229,8 +269,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_speed
-	name = "Defibrllartor Pre-Primer Disk"
-	desc = "A disk that cuts the time charg time in half for defibrillator use"
+	name = "Defibrillator Fast Charge Disk"
+	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
 	id = "defib_speed"
 	build_type = PROTOLATHE
 	build_path = /obj/item/disk/medical/defib_speed
@@ -238,72 +278,6 @@
 	construction_time = 10
 	category = list("Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-
-/////////////////////////////////////////
-//////////Alien Surgery Tools////////////
-/////////////////////////////////////////
-
-/datum/design/alienscalpel
-	name = "Alien Scalpel"
-	desc = "An advanced scalpel obtained through Abductor technology."
-	id = "alien_scalpel"
-	build_path = /obj/item/scalpel/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienhemostat
-	name = "Alien Hemostat"
-	desc = "An advanced hemostat obtained through Abductor technology."
-	id = "alien_hemostat"
-	build_path = /obj/item/hemostat/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/alienretractor
-	name = "Alien Retractor"
-	desc = "An advanced retractor obtained through Abductor technology."
-	id = "alien_retractor"
-	build_path = /obj/item/retractor/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliensaw
-	name = "Alien Circular Saw"
-	desc = "An advanced surgical saw obtained through Abductor technology."
-	id = "alien_saw"
-	build_path = /obj/item/circular_saw/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliendrill
-	name = "Alien Drill"
-	desc = "An advanced drill obtained through Abductor technology."
-	id = "alien_drill"
-	build_path = /obj/item/surgicaldrill/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/aliencautery
-	name = "Alien Cautery"
-	desc = "An advanced cautery obtained through Abductor technology."
-	id = "alien_cautery"
-	build_path = /obj/item/cautery/alien
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -654,9 +628,74 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/////////////////////////////////////////
+//////////Alien Surgery Tools////////////
+/////////////////////////////////////////
+
+/datum/design/alienscalpel
+	name = "Alien Scalpel"
+	desc = "An advanced scalpel obtained through Abductor technology."
+	id = "alien_scalpel"
+	build_path = /obj/item/scalpel/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/alienhemostat
+	name = "Alien Hemostat"
+	desc = "An advanced hemostat obtained through Abductor technology."
+	id = "alien_hemostat"
+	build_path = /obj/item/hemostat/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/alienretractor
+	name = "Alien Retractor"
+	desc = "An advanced retractor obtained through Abductor technology."
+	id = "alien_retractor"
+	build_path = /obj/item/retractor/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/aliensaw
+	name = "Alien Circular Saw"
+	desc = "An advanced surgical saw obtained through Abductor technology."
+	id = "alien_saw"
+	build_path = /obj/item/circular_saw/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/aliendrill
+	name = "Alien Drill"
+	desc = "An advanced drill obtained through Abductor technology."
+	id = "alien_drill"
+	build_path = /obj/item/surgicaldrill/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/aliencautery
+	name = "Alien Cautery"
+	desc = "An advanced cautery obtained through Abductor technology."
+	id = "alien_cautery"
+	build_path = /obj/item/cautery/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /////////////////////
 ///Surgery Designs///
 /////////////////////
+
 /datum/design/surgery
 	name = "Surgery Design"
 	desc = "what"

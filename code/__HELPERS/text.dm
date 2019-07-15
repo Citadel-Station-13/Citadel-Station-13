@@ -94,6 +94,8 @@
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
+	if(isnull(name)) // Return null if canceled.
+		return null
 	if(no_trim)
 		return copytext(html_encode(name), 1, max_length)
 	else
@@ -765,3 +767,27 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			return "twelfth"
 		else
 			return "[number]\th"
+
+/proc/unintelligize(message)
+	var/prefix=copytext(message,1,2)
+	if(prefix == ";")
+		message = copytext(message,2)
+	else if(prefix in list(":","#"))
+		prefix += copytext(message,2,3)
+		message = copytext(message,3)
+	else
+		prefix=""
+
+	var/list/words = splittext(message," ")
+	var/list/rearranged = list()
+	for(var/i=1;i<=words.len;i++)
+		var/cword = pick(words)
+		words.Remove(cword)
+		var/suffix = copytext(cword,length(cword)-1,length(cword))
+		while(length(cword)>0 && suffix in list(".",",",";","!",":","?"))
+			cword  = copytext(cword,1              ,length(cword)-1)
+			suffix = copytext(cword,length(cword)-1,length(cword)  )
+		if(length(cword))
+			rearranged += cword
+	message = "[prefix][jointext(rearranged," ")]"
+	. = message

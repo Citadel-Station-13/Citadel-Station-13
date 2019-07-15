@@ -105,13 +105,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		return 0
 	return 1
 
-/datum/mutation/human/proc/say_mod(message)
-	if(message)
-		return message
-
-/datum/mutation/human/proc/get_spans()
-	return list()
-
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
 

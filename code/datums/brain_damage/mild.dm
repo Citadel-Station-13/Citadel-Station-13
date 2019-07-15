@@ -42,7 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
@@ -55,7 +55,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
@@ -68,18 +68,12 @@
 	lose_text = ""
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	owner.dna.add_mutation(UNINTELLIGIBLE)
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/mild/speech_impediment/on_life()
-	if(!(GLOB.mutations_list[UNINTELLIGIBLE] in owner.dna.mutations))
-		on_gain()
-	..()
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	. = ..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.dna.remove_mutation(UNINTELLIGIBLE)
-	..()
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
+	. = ..()
 
 /datum/brain_trauma/mild/concussion
 	name = "Concussion"

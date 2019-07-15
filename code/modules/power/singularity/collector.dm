@@ -43,11 +43,10 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			eject()
 		else
-			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
-			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
-			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
-			loaded_tank.air_contents.garbage_collect()
+			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma])
+			loaded_tank.air_contents.gases[/datum/gas/plasma] -= gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/tritium] += gasdrained
+			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 
 			var/power_produced = RAD_COLLECTOR_OUTPUT
 			add_avail(power_produced)
@@ -58,11 +57,10 @@
 			eject()
 		else
 			var/gasdrained = bitcoinproduction_drain*drainratio
-			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] -= gasdrained
-			loaded_tank.air_contents.gases[/datum/gas/oxygen][MOLES] -= gasdrained
-			loaded_tank.air_contents.assert_gas(/datum/gas/carbon_dioxide)
-			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
-			loaded_tank.air_contents.garbage_collect()
+			loaded_tank.air_contents.gases[/datum/gas/tritium] -= gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/oxygen] -= gasdrained
+			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide] += gasdrained*2
+			GAS_GARBAGE_COLLECT(loaded_tank.air_contents.gases)
 			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			stored_power-=bitcoins_mined
@@ -76,7 +74,6 @@
 			var/fuel
 			if(loaded_tank)
 				fuel = loaded_tank.air_contents.gases[/datum/gas/plasma]
-			fuel = fuel ? fuel[MOLES] : 0
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [key_name(user)]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else

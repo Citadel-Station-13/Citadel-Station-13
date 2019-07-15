@@ -54,7 +54,12 @@
 					else
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					return 0
+					if(!mind.martial_art.reroute_deflection)
+						return FALSE
+					else
+						P.firer = src
+						P.setAngle(rand(0, 360))//SHING
+						return FALSE
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(P.is_reflectable)
@@ -138,7 +143,7 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
+				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
@@ -153,7 +158,7 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_trait(TRAIT_FAT)) && ismonkey(pulling))
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (HAS_TRAIT(src, TRAIT_FAT)) && ismonkey(pulling))
 		devour_mob(pulling)
 	else
 		..()
@@ -256,7 +261,7 @@
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart(BODY_ZONE_CHEST)
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
+			var/armor_block = run_armor_check(affecting, "melee", null, null,10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
@@ -614,7 +619,7 @@
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"
 				update_hair()
-				add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()
 
@@ -669,7 +674,7 @@
 					if(prob(30))
 						burndamage += rand(30,40)
 
-				if(has_trait(TRAIT_SELF_AWARE))
+				if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 					status = "[brutedamage] brute damage and [burndamage] burn damage"
 					if(!brutedamage && !burndamage)
 						status = "no damage"
@@ -696,7 +701,7 @@
 				var/no_damage
 				if(status == "OK" || status == "no damage")
 					no_damage = TRUE
-				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
+				to_send += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [HAS_TRAIT(src, TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>\n"
 
 				for(var/obj/item/I in LB.embedded_objects)
 					to_send += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>\n"
@@ -711,7 +716,7 @@
 					to_send += "<span class='info'>You're completely exhausted.</span>\n"
 				else
 					to_send += "<span class='info'>You feel fatigued.</span>\n"
-			if(has_trait(TRAIT_SELF_AWARE))
+			if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 				if(toxloss)
 					if(toxloss > 10)
 						to_send += "<span class='danger'>You feel sick.</span>\n"
@@ -751,7 +756,7 @@
 			else if(w_uniform)
 				w_uniform.add_fingerprint(M)
 
-			..() 
+			..()
 
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)

@@ -1,3 +1,61 @@
+// trait accessor defines
+#define ADD_TRAIT(target, trait, source) \
+	do { \
+		var/list/_L; \
+		if (!target.status_traits) { \
+			target.status_traits = list(); \
+			_L = target.status_traits; \
+			_L[trait] = list(source); \
+		} else { \
+			_L = target.status_traits; \
+			if (_L[trait]) { \
+				_L[trait] |= list(source); \
+			} else { \
+				_L[trait] = list(source); \
+			} \
+		} \
+	} while (0)
+#define REMOVE_TRAIT(target, trait, sources) \
+	do { \
+		var/list/_L = target.status_traits; \
+		var/list/_S; \
+		if (sources && !islist(sources)) { \
+			_S = list(sources); \
+		} else { \
+			_S = sources\
+		}; \
+		if (_L && _L[trait]) { \
+			for (var/_T in _L[trait]) { \
+				if ((!_S && (_T != ROUNDSTART_TRAIT)) || (_T in _S)) { \
+					_L[trait] -= _T \
+				} \
+			};\
+			if (!length(_L[trait])) { \
+				_L -= trait \
+			}; \
+			if (!length(_L)) { \
+				target.status_traits = null \
+			}; \
+		} \
+	} while (0)
+#define REMOVE_TRAITS_NOT_IN(target, sources) \
+	do { \
+		var/list/_L = target.status_traits; \
+		var/list/_S = sources; \
+		if (_L) { \
+			for (var/_T in _L) { \
+				_L[_T] &= _S;\
+				if (!length(_L[_T])) { \
+					_L -= _T } \
+				};\
+				if (!length(_L)) { \
+					target.status_traits = null\
+				};\
+		}\
+	} while (0)
+#define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
+#define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
+
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -50,7 +108,20 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_PARALYSIS_L_ARM	"para-l-arm" //These are used for brain-based paralysis, where replacing the limb won't fix it
+#define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
+#define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
+#define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
+#define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
+#define	TRAIT_STRONG_GRABBER	"strong_grabber"
+#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
 
+ //non-mob traits
+#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+
+// item traits
+#define TRAIT_NODROP            "nodrop"
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
@@ -71,6 +142,12 @@
 #define	TRAIT_MUSICIAN			"musician"
 #define	TRAIT_CROCRIN_IMMUNE    "crocin_immune"
 #define TRAIT_NYMPHO			"nymphomania"
+#define TRAIT_MASO              "masochism"
+#define TRAIT_PARA              "paraplegic"
+#define TRAIT_EMPATH			"empath"
+#define TRAIT_FRIENDLY			"friendly"
+#define TRAIT_ASSBLASTUSA       "assblastusa"
+#define TRAIT_CULT_EYES 		"cult_eyes"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -81,6 +158,13 @@
 #define TRAUMA_TRAIT "trauma"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
+#define JOB_TRAIT "job"
+#define CYBORG_ITEM_TRAIT "cyborg-item"
+#define ADMIN_TRAIT "admin" // (B)admins only.
+#define CHANGELING_TRAIT "changeling"
+#define CULT_TRAIT "cult"
+#define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
+#define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
@@ -93,4 +177,24 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
-#define CULT_EYES "cult_eyes"
+#define CULT_TRAIT "cult"
+#define CLOWN_NUKE_TRAIT "clown-nuke"
+#define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
+#define CHAINSAW_FRENZY_TRAIT "chainsaw-frenzy"
+#define CHRONO_GUN_TRAIT "chrono-gun"
+#define REVERSE_BEAR_TRAP_TRAIT "reverse-bear-trap"
+#define GLUED_ITEM_TRAIT "glued-item"
+#define CURSED_MASK_TRAIT "cursed-mask"
+#define HIS_GRACE_TRAIT "his-grace"
+#define HAND_REPLACEMENT_TRAIT "magic-hand"
+#define HOT_POTATO_TRAIT "hot-potato"
+#define SABRE_SUICIDE_TRAIT "sabre-suicide"
+#define ABDUCTOR_VEST_TRAIT "abductor-vest"
+#define CAPTURE_THE_FLAG_TRAIT "capture-the-flag"
+#define EYE_OF_GOD_TRAIT "eye-of-god"
+#define SHAMEBRERO_TRAIT "shamebrero"
+#define CHRONOSUIT_TRAIT "chronosuit"
+#define FLIGHTSUIT_TRAIT "flightsuit"
+#define LOCKED_HELMET_TRAIT "locked-helmet"
+#define NINJA_SUIT_TRAIT "ninja-suit"
+#define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"

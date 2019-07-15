@@ -31,7 +31,7 @@
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -65,7 +65,7 @@
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access = CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT
+	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/medical
 	name = "\improper Med-U cartridge"
@@ -87,7 +87,7 @@
 
 /obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-eye"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
@@ -100,23 +100,25 @@
 
 /obj/item/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-law"
 	access = CART_SECURITY
 	spam_enabled = 1
 
 /obj/item/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
-	icon_state = "cart-s"
+	icon_state = "cart-lib"
 	access = CART_NEWSCASTER
 
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
+	icon_state = "cart-robo"
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	access = CART_DRONEPHONE
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
+	icon_state = "cart-sig"
 	desc = "A data cartridge with an integrated radio signaler module."
 
 /obj/item/cartridge/signal/toxins
@@ -160,7 +162,7 @@
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT
+	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
@@ -172,7 +174,7 @@
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 
 /obj/item/cartridge/rd/Initialize()
 	. = ..()
@@ -183,7 +185,7 @@
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
-	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
+	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 	spam_enabled = 1
 
 /obj/item/cartridge/captain/New()

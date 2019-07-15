@@ -257,8 +257,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
 	. = ..()
-	create_reagents(max_volume)
-	reagents.set_reacting(FALSE)
+	create_reagents(max_volume, NO_REACT)
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
@@ -274,7 +273,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
 	..()
 	if(reagents)
-		reagents.set_reacting(TRUE)
+		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())

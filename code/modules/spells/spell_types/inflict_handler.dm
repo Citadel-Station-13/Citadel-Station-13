@@ -3,10 +3,12 @@
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 
 	var/amt_knockdown = 0
+	var/amt_hardstun
 	var/amt_unconscious = 0
 	var/amt_stun = 0
 
 	//set to negatives for healing
+	var/amt_dam_stam
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
 	var/amt_dam_oxy = 0
@@ -41,7 +43,10 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Knockdown(amt_knockdown)
+		if(!amt_knockdown && amt_dam_stam)
+			target.adjustStaminaLoss(amt_dam_stam)
+		else
+			target.Knockdown(amt_knockdown, override_hardstun = amt_hardstun, amt_dam_stam)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 

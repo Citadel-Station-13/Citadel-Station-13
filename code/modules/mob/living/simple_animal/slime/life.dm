@@ -61,7 +61,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(issilicon(Target))
+				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
 						Atkcool = 1
 						spawn(45)
@@ -132,7 +132,7 @@
 	if(stat != DEAD)
 		var/bz_percentage =0
 		if(environment.gases[/datum/gas/bz])
-			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
+			bz_percentage = environment.gases[/datum/gas/bz] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
@@ -600,7 +600,8 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
-			say (pick(phrases))
+			if(!stat)
+				say (pick(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

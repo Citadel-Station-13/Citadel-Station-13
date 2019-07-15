@@ -20,6 +20,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 14
 	throwforce = 10
+	reach = 2
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
@@ -41,7 +42,7 @@
 	force = 20
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb = list("attacked", "impaled", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
@@ -91,8 +92,7 @@
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/i = 0
-	var/originally_nodropped = item_flags & NODROP
-	item_flags |= NODROP
+	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 	if(iscarbon(user))
 		var/mob/living/carbon/Cuser = user
 		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
@@ -117,7 +117,7 @@
 		for(bodypart in limbs_to_dismember)
 			i++
 			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), (5 SECONDS) * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), (5 SECONDS) * i)
 	return MANUAL_SUICIDE
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
@@ -130,8 +130,29 @@
 	if(!QDELETED(user))
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
-	if(!originally_nodropped)
-		item_flags &= ~NODROP
+	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+
+/obj/item/melee/rapier
+	name = "plastitanium rapier"
+	desc = "A impossibly thin blade made of plastitanium with a tip made of diamond. It looks to be able to cut through any armor."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "rapier"
+	item_state = "rapier"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 25
+	throwforce = 35
+	block_chance = 0
+	armour_penetration = 100
+	flags_1 = CONDUCT_1
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_BULKY
+	sharpness = IS_SHARP_ACCURATE //It cant be sharpend cook -_- 
+	attack_verb = list("slashed", "cut", "pierces", "pokes")
+
+/obj/item/melee/rapier/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 65, 0)
 
 /obj/item/melee/classic_baton
 	name = "police baton"
@@ -156,7 +177,7 @@
 		return //CIT CHANGE - ditto
 
 	add_fingerprint(user)
-	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
+	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))
@@ -283,7 +304,7 @@
 	else
 		var/turf/T = get_turf(src)
 		if(!isspaceturf(T))
-			consume_turf(T)
+			shard.consume_turf(T)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	. = ..()
@@ -330,18 +351,7 @@
 	else if(!isturf(target))
 		shard.Bumped(target)
 	else
-		consume_turf(target)
-
-/obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
-	var/oldtype = T.type
-	var/turf/newT = T.ScrapeAway()
-	if(newT.type == oldtype)
-		return
-	playsound(T, 'sound/effects/supermatter.ogg', 50, 1)
-	T.visible_message("<span class='danger'>[T] smacks into [src] and rapidly flashes to ash.</span>",\
-	"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
-	shard.Consume()
-	T.CalculateAdjacentTurfs()
+		shard.consume_turf(target)
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
