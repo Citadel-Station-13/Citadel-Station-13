@@ -246,10 +246,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return 0
 	to_chat(convertee, "<span class='cult italic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
 	and something evil takes root.</b></span>")
-	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie.</a> Or you could choose to continue resisting and suffer a fate worse than death...</span>")
+	to_chat(convertee, "<span class='cult italic'>Do you wish to embrace the Geometer of Blood? <a href='?src=\ref[src];signmeup=1'>Click here to become a follower of Nar'sie.</a> If you resist, you will be sacrificed and turned into a shade servant, rather than keeping your human form.</span>")
 	currentconversionman = convertee
-	conversiontimeout = world.time + (10 SECONDS)
-	convertee.Stun(100)
+	conversiontimeout = world.time + (30 SECONDS)
+	convertee.Stun(300)
 	ADD_TRAIT(convertee, TRAIT_MUTE, "conversionrune")
 	conversionresult = FALSE
 	while(world.time < conversiontimeout && convertee && !conversionresult)
