@@ -32,4 +32,4 @@
 				P.update_icon()
 
 /datum/round_event/mice_migration/start()
-	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))
+	SSminor_mapping.trigger_migration(rand(minimum_mice, maximum_mice))

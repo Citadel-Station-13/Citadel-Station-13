@@ -1,0 +1,6 @@
+author: "Ghommie (original PRs by Naksu and coiax, loser)"
+delete-after: True
+changes: 
+  - code_imp: "Cleaned up saycode"
+  - bugfix: "Taking mutadone while having the communication disorder brain trauma will no longer spam your chat with messages."
+  - rscadd: "IPCs now come with a subtype of robotic tongue without the omnilingual ability, instead of innately having robotic voice spans."

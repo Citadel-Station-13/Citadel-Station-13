@@ -43,6 +43,8 @@
 
 /obj/item/clothing/Initialize()
 	. = ..()
+	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
+		actions_types += /datum/action/item_action/toggle_voice_box
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
 
@@ -135,7 +137,7 @@
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
+		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
@@ -215,6 +217,34 @@ BLIND     // can't see anything
 			H.update_suit_sensors()
 
 	..()
+
+/obj/item/clothing/under/CtrlClick(mob/user)
+	. = ..()
+
+	if (!(item_flags & IN_INVENTORY))
+		return
+
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	if(has_sensor == LOCKED_SENSORS)
+		to_chat(user, "The controls are locked.")
+		return
+	if(has_sensor == BROKEN_SENSORS)
+		to_chat(user, "The sensors have shorted out!")
+		return
+	if(has_sensor <= NO_SENSORS)
+		to_chat(user, "This suit does not have any sensors.")
+		return
+
+	sensor_mode = SENSOR_COORDS
+
+	to_chat(user, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.w_uniform == src)
+			H.update_suit_sensors()
 
 /obj/item/clothing/under/AltClick(mob/user)
 	if(..())

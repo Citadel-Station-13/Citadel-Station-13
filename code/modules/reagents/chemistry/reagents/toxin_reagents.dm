@@ -97,7 +97,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
 
-	if(C.has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(C, TRAIT_NOBREATH))
 		. = FALSE
 
 	if(.)
@@ -135,7 +135,7 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_FAT))
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 	return ..()
 
@@ -156,11 +156,11 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
 	L.fakedeath(id)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(id)
 	..()
 
@@ -178,12 +178,12 @@
 	toxpwr = 0.8
 	taste_description = "death"
 
-/datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FAKEDEATH, id)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, id)
 
-/datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FAKEDEATH, id)
+/datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, id)
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
@@ -626,7 +626,7 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/amanitin/on_mob_end_metabolize(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
@@ -742,7 +742,7 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
-/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -779,7 +779,7 @@
 	*/
 	return ..()
 
-/datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/skewium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
@@ -798,7 +798,7 @@
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
-	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
+	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid") || holder.has_reagent("pen_jelly"))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,remove_amt)
@@ -882,8 +882,69 @@
 	toxpwr = 0
 	taste_description = "stillness"
 
-/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
-	L.add_trait(TRAIT_EMOTEMUTE, id)
+/datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/L)
+	ADD_TRAIT(L, TRAIT_EMOTEMUTE, id)
 
-/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_EMOTEMUTE, id)
+/datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/bonehurtingjuice //oof ouch
+	name = "Bone Hurting Juice"
+	id = "bonehurtingjuice"
+	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
+	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	toxpwr = 0
+	taste_description = "bone hurting"
+	overdose_threshold = 20
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(7.5, 0)
+	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
+		M.adjustBruteLoss(3.5, 0)
+	if(prob(12))
+		switch(rand(1, 3))
+			if(1)
+				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
+				M.say(pick(possible_says), forced = /datum/reagent/toxin/bonehurtingjuice)
+			if(2)
+				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
+				M.say("*custom " + pick(possible_mes), forced = /datum/reagent/toxin/bonehurtingjuice)
+			if(3)
+				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+	return ..()
+
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
+	if(prob(6) && iscarbon(M)) //big oof
+		var/selected_part
+		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
+			if(1)
+				selected_part = BODY_ZONE_L_ARM
+			if(2)
+				selected_part = BODY_ZONE_R_ARM
+			if(3)
+				selected_part = BODY_ZONE_L_LEG
+			if(4)
+				selected_part = BODY_ZONE_R_LEG
+		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
+		if(M.dna.species.type != /datum/species/skeleton || M.dna.species.type != /datum/species/plasmaman || M.dna.species.type != /datum/species/golem/bone) //We're so sorry skeletons, you're so misunderstood
+			if(bp)
+				bp.receive_damage(0, 0, 200)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+				M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
+			else //SUCH A LUST FOR REVENGE!!!
+				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+				M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
+		else //you just want to socialize
+			if(bp)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+				bp.receive_damage(200, 0, 0) //But I don't think we should
+			else
+				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+				M.emote("sigh")
+	return ..()

@@ -8,7 +8,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -36,7 +36,7 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(M.has_trait(TRAIT_VORACIOUS))
+		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
@@ -152,7 +152,6 @@
 	possible_transfer_amounts = list()
 	volume = 5
 	flags_1 = CONDUCT_1
-	container_type = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = FIRE_PROOF
 	isGlass = FALSE
@@ -204,6 +203,14 @@
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
+
+//Used by MREs
+/obj/item/reagent_containers/food/drinks/coffee/type2
+	name = "\improper Coffee, instant (type 2)"
+	desc = "Coffee that's been blow dried into a granulated powder. This packet includes self heating water for your nutritional pleasure."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "condi_cornoil"
+
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
@@ -399,7 +406,7 @@
 	name = "soda can"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	container_type = NONE
+	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
 
@@ -423,7 +430,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
+		ENABLE_BITFIELD(reagents.reagents_holder_flags, OPENCONTAINER)
 		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return
@@ -506,6 +513,13 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
+	name = "Grey Bull"
+	desc = "Grey Bull, it gives you gloves!"
+	icon_state = "energy_drink"
+	list_reagents = list("grey_bull" = 20)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air

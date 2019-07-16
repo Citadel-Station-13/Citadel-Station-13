@@ -5,7 +5,7 @@
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
 
-/datum/reagent/drug/on_mob_delete(mob/living/M)
+/datum/reagent/drug/on_mob_end_metabolize(mob/living/M)
 	if(trippy)
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
@@ -164,13 +164,16 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	var/brain_damage = TRUE
+	var/jitter = TRUE
+	var/confusion = TRUE
 
-/datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
+/datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.ignore_slowdown(id)
 
-/datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+/datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
+	L.unignore_slowdown(id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
@@ -181,10 +184,10 @@
 	M.AdjustKnockdown(-40, 0)
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-7.5 * REM, 0)
-	M.Jitter(2)
-	M.adjustBrainLoss(rand(1,4))
-	if(prob(30))
-		M.confused = max(1, M.confused)
+	if(jitter)
+		M.Jitter(2)
+	if(brain_damage)
+		M.adjustBrainLoss(rand(1,4))
 	M.heal_overall_damage(2, 2)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
@@ -240,6 +243,14 @@
 	..()
 	. = 1
 
+/datum/reagent/drug/methamphetamine/changeling
+	id = "changelingmeth"
+	name = "Changeling Adrenaline"
+	addiction_threshold = 35
+	overdose_threshold = 35
+	jitter = FALSE
+	brain_damage = FALSE
+
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
@@ -251,18 +262,18 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
-/datum/reagent/drug/bath_salts/on_mob_add(mob/living/L)
+/datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_STUNIMMUNE, id)
-	L.add_trait(TRAIT_SLEEPIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		rage = new()
 		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_STUNIMMUNE, id)
-	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+/datum/reagent/drug/bath_salts/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, id)
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, id)
 	if(rage)
 		QDEL_NULL(rage)
 	..()
@@ -370,9 +381,9 @@
 	addiction_stage3_end = 40
 	addiction_stage4_end = 240
 
-/datum/reagent/drug/skooma/on_mob_add(mob/living/L)
+/datum/reagent/drug/skooma/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	ADD_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 2
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -381,9 +392,9 @@
 		if(H.dna && H.dna.species)
 			H.dna.species.punchdamagehigh *= 5
 
-/datum/reagent/drug/skooma/on_mob_delete(mob/living/L)
+/datum/reagent/drug/skooma/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	REMOVE_TRAIT(L, TRAIT_GOTTAGOFAST, id)
 	L.next_move_modifier *= 0.5
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

@@ -49,13 +49,16 @@
 	var/sound/pred_death = sound(get_sfx("death_pred"))
 	var/turf/source = get_turf(owner)
 
-
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)
 		return SSBELLIES_PROCESSED
 
 //////////////////////////// DM_DIGEST ////////////////////////////
 	else if(digest_mode == DM_DIGEST)
+		if(HAS_TRAIT(owner, TRAIT_PACIFISM)) //obvious.
+			digest_mode = DM_NOISY
+			return
+
 		for (var/mob/living/M in contents)
 			if(prob(25))
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)
@@ -210,6 +213,10 @@
 //////////////////////////DM_DRAGON /////////////////////////////////////
 //because dragons need snowflake guts
 	if(digest_mode == DM_DRAGON)
+		if(HAS_TRAIT(owner, TRAIT_PACIFISM)) //imagine var editing this when you're a pacifist. smh
+			digest_mode = DM_NOISY
+			return
+
 		for (var/mob/living/M in contents)
 			if(prob(55)) //if you're hearing this, you're a vore ho anyway.
 				if((world.time - NORMIE_HEARCHECK) > last_hearcheck)

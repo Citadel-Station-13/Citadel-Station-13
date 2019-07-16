@@ -71,7 +71,6 @@
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
 
-
 /obj/item/gun/ballistic/shotgun/examine(mob/user)
 	..()
 	if (chambered)
@@ -117,6 +116,14 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 
+/obj/item/gun/ballistic/shotgun/boltaction/improvised
+	name = "Makeshift 7.62mm Rifle"
+	icon_state = "ishotgun"
+	item_state = "shotgun"
+	desc = "A large zip gun more or less that takes a single 7.62mm bullet"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
+	can_bayonet = FALSE
+
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	if(bolt_open)
@@ -137,7 +144,6 @@
 	..()
 	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
 
-
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
@@ -153,10 +159,8 @@
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	can_bayonet = FALSE
-
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
-
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
@@ -207,7 +211,6 @@
 						"Slick" = "cshotgun_slick"
 						)
 
-
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
 	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
@@ -217,7 +220,6 @@
 	unique_reskin = list("Tatical" = "cshotgunc",
 						"Slick" = "cshotgunc_slick"
 						)
-
 
 //Dual Feed Shotgun
 
@@ -260,6 +262,5 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	pump()
-
 
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
