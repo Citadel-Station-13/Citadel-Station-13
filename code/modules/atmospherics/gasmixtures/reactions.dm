@@ -3,7 +3,7 @@
 /proc/init_gas_reactions()
 	. = list()
 	for(var/type in subtypesof(/datum/gas))
-		. += new type
+		.[type] = list()
 
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
