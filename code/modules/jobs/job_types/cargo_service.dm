@@ -6,6 +6,7 @@ Quartermaster
 	flag = QUARTERMASTER
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
+	head_announce = list(RADIO_CHANNEL_SUPPLY)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
