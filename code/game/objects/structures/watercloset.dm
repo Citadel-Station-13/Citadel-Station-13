@@ -471,6 +471,21 @@
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = "water" // for whenever plumbing happens
 
+/obj/structure/sink/directional/north
+	pixel_y = 20
+	dir = SOUTH
+
+/obj/structure/sink/directional/south
+	pixel_y = -20
+	dir = NORTH
+
+/obj/structure/sink/directional/east
+	pixel_x = -20
+	dir = WEST
+
+/obj/structure/sink/directional/west
+	pixel_x = 20
+	dir = EAST
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
