@@ -43,6 +43,8 @@
 		if(prob(33))
 			new/obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, 1)
+		B.force = broken_force
+		B.throwforce = broken_throwforce
 	else
 		B.force = 0
 		B.throwforce = 0
