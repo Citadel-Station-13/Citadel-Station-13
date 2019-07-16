@@ -38,11 +38,11 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	for(var/id in cached_gases)
 		. += cached_gases[id] * cached_gasheats[id]
 
-/datum/gas_mixture/turf/heat_capacity(data = MOLES) // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+/datum/gas_mixture/turf/heat_capacity() // Same as above except vacuums return HEAT_CAPACITY_VACUUM
 	var/list/cached_gases = gases
+	var/list/cached_gasheats = GLOB.meta_gas_specific_heats
 	for(var/id in cached_gases)
-		var/gas_data = cached_gases[id]
-		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		. += cached_gases[id] * cached_gasheats[id]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
