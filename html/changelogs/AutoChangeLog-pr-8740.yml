@@ -1,0 +1,5 @@
+author: "Ghommie (original PR by Denton)"
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen has started shipping more types of bedsheets to its stations."
+  - rscadd: "Added in Runtime, Pirate and Gondola bedsheets. The second one can also be found in some pirate ships, while the last can be crafted from gondola hides."

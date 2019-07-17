@@ -1,7 +1,3 @@
-/obj/machinery/vending/security
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/ssword_kit = 1)
-	premium = list(/obj/item/coin/antagtoken = 1, /obj/item/ssword_kit = 1)
-
 /obj/machinery/vending/medical
 	products = list(/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
@@ -27,11 +23,11 @@
 					/obj/item/storage/hypospraykit/o2 = 2,
 					/obj/item/storage/hypospraykit/brute = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5)
-					
+
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	premium = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
-	
+
 #define STANDARD_CHARGE 1
 #define CONTRABAND_CHARGE 2
 #define COIN_CHARGE 3

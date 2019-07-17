@@ -1,0 +1,7 @@
+author: "Ghommie (original PRs by ShizCalev)"
+delete-after: True
+changes: 
+  - tweak: "Corgi collars can now be removed!"
+  - tweak: "Updated the corgi & parrot inventory panels to use the same formatting as other mobs"
+  - bugfix: "Fixed corgi inventory panels not closing properly."
+  - bugfix: "Fixed the parrot inventory panel not closing properly if you're not able to interact with it."
