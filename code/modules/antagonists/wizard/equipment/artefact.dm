@@ -404,6 +404,8 @@
 		return
 	var/breakout = 0
 	while(breakout < 50)
+		if(!T)
+			break
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			user.forceMove(potential_T)
