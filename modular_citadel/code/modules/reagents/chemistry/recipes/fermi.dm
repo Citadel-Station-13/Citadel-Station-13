@@ -146,8 +146,8 @@
 	OptimalTempMin 			= 200
 	OptimalTempMax			= 800
 	ExplodeTemp 			= 900
-	OptimalpHMin 			= 8
-	OptimalpHMax 			= 12
+	OptimalpHMin 			= 6
+	OptimalpHMax 			= 10
 	ReactpHLim 				= 3
 	CatalystFact 			= 0
 	CurveSharpT 			= 2
