@@ -126,6 +126,24 @@
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
+/obj/machinery/airalarm/server/directional/north //Pixel offsets get overwritten on New()
+	dir = SOUTH
+	pixel_y = 24
+
+/obj/machinery/airalarm/server/directional/south
+	dir = NORTH
+	pixel_y = -24
+
+/obj/machinery/airalarm/server/directional/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/airalarm/server/directional/west
+	dir = EAST
+	pixel_x = -24
+
+
+
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
